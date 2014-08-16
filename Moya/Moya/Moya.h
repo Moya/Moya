@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Ash Furrow. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 //! Project version number for Moya.
 FOUNDATION_EXPORT double MoyaVersionNumber;
 

@@ -12,7 +12,12 @@ public class Moya {
     
 }
 
-public protocol MoyaProvider {
+public class MoyaProvider {
+    public let endpoints: Array<Endpoint>
+    let stubResponses: Bool
     
+    public init (endpoints: Array<Endpoint>, stubResponses: Bool  = false) {
+        self.endpoints = endpoints
+        self.stubResponses = stubResponses
+    }
 }
-
