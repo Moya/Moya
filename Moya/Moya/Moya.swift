@@ -39,7 +39,6 @@ public class MoyaProvider {
             let sampleResponse: AnyObject = endpoint!.sampleResponse()
             completion(sampleResponse)
         } else {
-            // TODO: Call Alamofire or whatever
             AF.request(.GET, endpoint!.URL)
               .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     completion(data)

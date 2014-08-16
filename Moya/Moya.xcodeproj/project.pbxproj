@@ -16,7 +16,6 @@
 		5E796A1C199F4AA9005D6E86 /* 300_200.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E796A1B199F4AA9005D6E86 /* 300_200.png */; };
 		5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A1E199F4C0D005D6E86 /* Endpoint.swift */; };
 		5E796A22199F4F1F005D6E86 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969BA199F453E005D6E86 /* Moya.framework */; };
-		5E796A26199F4F6D005D6E86 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E796A25199F4F6D005D6E86 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E5F104A199FD552007B0C0F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E7969BA199F453E005D6E86 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7969BE199F453E005D6E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E7969BF199F453E005D6E86 /* Moya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Moya.h; sourceTree = "<group>"; };
@@ -98,7 +98,6 @@
 		5E796A18199F47C3005D6E86 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../../submodules/Alamofire/Source/Alamofire.swift; sourceTree = "<group>"; };
 		5E796A1B199F4AA9005D6E86 /* 300_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 300_200.png; path = ../../../../../Desktop/300_200.png; sourceTree = "<group>"; };
 		5E796A1E199F4C0D005D6E86 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		5E796A25199F4F6D005D6E86 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +105,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E796A26199F4F6D005D6E86 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +124,7 @@
 		5E7969B0199F453E005D6E86 = {
 			isa = PBXGroup;
 			children = (
-				5E796A25199F4F6D005D6E86 /* Foundation.framework */,
+				5E5F104A199FD552007B0C0F /* UIKit.framework */,
 				5E7969BC199F453E005D6E86 /* Moya */,
 				5E7969C6199F453E005D6E86 /* MoyaTests */,
 				5E7969BB199F453E005D6E86 /* Products */,

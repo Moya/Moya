@@ -13,38 +13,55 @@ import Moya
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
-        var endpoints: [Endpoint]?
-        beforeSuite {
-            let bundle = NSBundle(forClass: self.dynamicType)
-            
-            let endpoints = [
-                Endpoint(URL: "http://rdjpg.com/300/200", sampleResponse: {
-                    let path = bundle.pathForResource("300_200", ofType: "png")
-                    let data = NSData(contentsOfFile: path)
-                    return data
-                })
-            ]
-        }
-        
-        describe("when stubbing endpoints", { () -> () in
-            var provider: MoyaProvider?
-            beforeEach({
-                provider = MoyaProvider(endpoints: endpoints!)
-            })
-            
-            it("passes returns stubbed data") {
-                var response: AnyObject?
-                provider!.request("http://rdjpg.com/300/200", completion: { (object: AnyObject?) -> () in
-                    response = object
-                })
+        describe("valid enpoints") {
+            var endpoints: [Endpoint]!
+            var sampleData: NSData!
+            beforeEach {
+                let bundle = NSBundle(forClass: self.dynamicType)
+                let path = bundle.pathForResource("300_200", ofType: "png")
+                sampleData = NSData(contentsOfFile: path)
+                
+                endpoints = [
+                    Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
+                        return sampleData
+                    })
+                ]
             }
-        })
-        
-        describe("when accessing the network", { () -> () in
-            var provider: MoyaProvider?
-            beforeEach({ () -> () in
-                provider = MoyaProvider(endpoints: endpoints!)
-            })
-        })
+            
+            describe("with stubbed data") {
+                var provider: MoyaProvider!
+                beforeEach {
+                    provider = MoyaProvider(endpoints: endpoints, stubResponses: true)
+                }
+                
+                it("returns stubbed data for a request") {
+                    var response: NSData?
+                    provider!.request("http://rdjpg.com/300/200/", completion: { (object: AnyObject?) -> () in
+                        if let object = object as? NSData {
+                            response = object
+                        }
+                    })
+                    
+                    expect{response}.toEventually(equal(sampleData), timeout: 1, pollInterval: 0.1)
+                }
+            }
+            
+            describe("while hitting the network") {
+                var provider: MoyaProvider!
+                beforeEach {
+                    provider = MoyaProvider(endpoints: endpoints)
+                }
+                
+                it("returns representative data"){
+                    var image: UIImage?
+                    
+                    provider.request("http://rdjpg.com/300/200/", completion: { (object: AnyObject?) -> () in
+                        image = UIImage(data: object as? NSData)
+                    })
+                    
+                    expect{image?.size}.toEventually(equal(CGSizeMake(300, 200)), timeout: 10, pollInterval: 0.1)
+                }
+            }
+        }
     }
 }
