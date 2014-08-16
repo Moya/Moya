@@ -9,16 +9,20 @@
 import Foundation
 
 public typealias EndpointConfiguration = () -> ()
-public typealias EndpointSampleResponse = () -> ()
+public typealias EndpointSampleResponse = () -> (AnyObject)
 
 public class Endpoint {
-    var URL: String
-    var configuration: EndpointConfiguration
-    var sampleResponse: EndpointSampleResponse
+    public let URL: String
+    let configuration: EndpointConfiguration?
+    let sampleResponse: EndpointSampleResponse
     
-    public init (URL: String, configuration: EndpointConfiguration, sampleResponse: EndpointSampleResponse) {
+    public init (URL: String, configuration: EndpointConfiguration?, sampleResponse: EndpointSampleResponse) {
         self.URL = URL
         self.configuration = configuration
         self.sampleResponse = sampleResponse
+    }
+    
+    public convenience init (URL:String, sampleResponse: EndpointSampleResponse) {
+        self.init(URL: URL, configuration: nil, sampleResponse: sampleResponse)
     }
 }

@@ -597,6 +597,7 @@
 				5E7969CF199F453E005D6E86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5E7969D0199F453E005D6E86 /* Build configuration list for PBXNativeTarget "MoyaTests" */ = {
 			isa = XCConfigurationList;
@@ -605,6 +606,7 @@
 				5E7969D2199F453E005D6E86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
