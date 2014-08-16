@@ -4,3 +4,6 @@
 [submodule "submodules/Quick"]
 	path = submodules/Quick
 	url = git@github.com:Quick/Quick.git
+[submodule "submodules/Alamofire"]
+	path = submodules/Alamofire
+	url = git@github.com:Alamofire/Alamofire.git
