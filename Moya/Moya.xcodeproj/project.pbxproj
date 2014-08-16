@@ -11,6 +11,8 @@
 		5E7969CA199F453E005D6E86 /* MoyaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7969C9199F453E005D6E86 /* MoyaTests.swift */; };
 		5E796A14199F46FF005D6E86 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E796A0D199F46F8005D6E86 /* Nimble.framework */; };
 		5E796A15199F46FF005D6E86 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969FE199F46EF005D6E86 /* Quick.framework */; };
+		5E796A17199F475E005D6E86 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A16199F475E005D6E86 /* Moya.swift */; };
+		5E796A19199F47C3005D6E86 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A18199F47C3005D6E86 /* Alamofire.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		5E7969C9199F453E005D6E86 /* MoyaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests.swift; sourceTree = "<group>"; };
 		5E7969F5199F46EF005D6E86 /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = ../../submodules/Quick/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
 		5E796A05199F46F8005D6E86 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../submodules/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
+		5E796A16199F475E005D6E86 /* Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moya.swift; sourceTree = "<group>"; };
+		5E796A18199F47C3005D6E86 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../../submodules/Alamofire/Source/Alamofire.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +128,9 @@
 		5E7969BC199F453E005D6E86 /* Moya */ = {
 			isa = PBXGroup;
 			children = (
+				5E796A1A199F47C6005D6E86 /* Submodules */,
 				5E7969BF199F453E005D6E86 /* Moya.h */,
+				5E796A16199F475E005D6E86 /* Moya.swift */,
 				5E7969BD199F453E005D6E86 /* Supporting Files */,
 			);
 			path = Moya;
@@ -185,6 +191,14 @@
 				5E796A13199F46F8005D6E86 /* Nimble-OSXTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		5E796A1A199F47C6005D6E86 /* Submodules */ = {
+			isa = PBXGroup;
+			children = (
+				5E796A18199F47C3005D6E86 /* Alamofire.swift */,
+			);
+			name = Submodules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,6 +376,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E796A19199F47C3005D6E86 /* Alamofire.swift in Sources */,
+				5E796A17199F475E005D6E86 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +480,7 @@
 		5E7969CE199F453E005D6E86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -473,12 +490,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		5E7969CF199F453E005D6E86 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

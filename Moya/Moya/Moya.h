@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Ash Furrow. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 //! Project version number for Moya.
 FOUNDATION_EXPORT double MoyaVersionNumber;
 
