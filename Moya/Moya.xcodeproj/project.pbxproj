@@ -85,7 +85,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5E5F104A199FD552007B0C0F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5E7969BA199F453E005D6E86 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7969BE199F453E005D6E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E7969BF199F453E005D6E86 /* Moya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Moya.h; sourceTree = "<group>"; };
@@ -124,7 +123,6 @@
 		5E7969B0199F453E005D6E86 = {
 			isa = PBXGroup;
 			children = (
-				5E5F104A199FD552007B0C0F /* UIKit.framework */,
 				5E7969BC199F453E005D6E86 /* Moya */,
 				5E7969C6199F453E005D6E86 /* MoyaTests */,
 				5E7969BB199F453E005D6E86 /* Products */,
