@@ -27,7 +27,7 @@ class MoyaProviderSpec: QuickSpec {
             }
             
             describe("with stubbed data") {
-                let endpointsClosure = { (target: Target, method: Moya.Method) -> Endpoint<Target> in
+                let endpointsClosure = { (target: Target, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<Target> in
                     switch target {
                     case .MediumImage:
                         return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
@@ -58,7 +58,7 @@ class MoyaProviderSpec: QuickSpec {
                 var provider: MoyaProvider<Target>!
                 beforeEach {
                     
-                    let endpointsClosure = { (target: Target, method: Moya.Method) -> Endpoint<Target> in
+                    let endpointsClosure = { (target: Target, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<Target> in
                         switch target {
                         case .MediumImage:
                             return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {

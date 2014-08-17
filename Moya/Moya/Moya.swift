@@ -17,7 +17,7 @@ public class Moya {
 }
 
 public class MoyaProvider<T: Hashable> {
-    public typealias MoyaEndpointsClosure = (T, method: Moya.Method) -> (Endpoint<T>)
+    public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
     
@@ -25,9 +25,9 @@ public class MoyaProvider<T: Hashable> {
         self.endpointsClosure = endpointsClosure
         self.stubResponses = stubResponses
     }
-
-    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
-        let endpoint = endpointsClosure(token, method: method)
+    
+    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]?, completion: MoyaCompletion) {
+        let endpoint = endpointsClosure(token, method: method, parameters: parameters ?? [String: AnyObject]())
         
         if (stubResponses) {
             let sampleResponse: AnyObject = endpoint.sampleResponse()
@@ -39,6 +39,14 @@ public class MoyaProvider<T: Hashable> {
                     completion(data)
                 })
         }
+    }
+    
+    public func request(token: T, parameters: [String: AnyObject]?, completion: MoyaCompletion) {
+        request(token, method: Moya.Method.GET, parameters: parameters, completion: completion)
+    }
+
+    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
+        request(token, method: method, parameters: nil, completion: completion)
     }
     
     public func request(token: T, completion: MoyaCompletion) {
