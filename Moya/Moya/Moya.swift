@@ -8,14 +8,16 @@
 
 import Foundation
 
-public class Moya {
-    
-}
-
 public typealias MoyaCompletion = (AnyObject?) -> ()
 
+public class Moya {
+    public enum Method {
+        case GET, POST, PUT, DELETE
+    }
+}
+
 public class MoyaProvider<T: Hashable> {
-    public typealias MoyaEndpointsClosure = (T) -> (Endpoint<T>)
+    public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
     
@@ -24,18 +26,31 @@ public class MoyaProvider<T: Hashable> {
         self.stubResponses = stubResponses
     }
     
-    public func request (token: T, completion: MoyaCompletion) {
-        let endpoint = endpointsClosure(token)
-
+    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]?, completion: MoyaCompletion) {
+        let endpoint = endpointsClosure(token, method: method, parameters: parameters ?? [String: AnyObject]())
+        
         if (stubResponses) {
             let sampleResponse: AnyObject = endpoint.sampleResponse()
             completion(sampleResponse)
         } else {
-            AF.request(.GET, endpoint.URL)
-              .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+            let method: Alamofire.Method = methodFromMethod(endpoint.method)
+            AF.request(method, endpoint.URL)
+                .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     completion(data)
-              })
+                })
         }
+    }
+    
+    public func request(token: T, parameters: [String: AnyObject]?, completion: MoyaCompletion) {
+        request(token, method: Moya.Method.GET, parameters: parameters, completion: completion)
+    }
+
+    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
+        request(token, method: method, parameters: nil, completion: completion)
+    }
+    
+    public func request(token: T, completion: MoyaCompletion) {
+        request(token, method: Moya.Method.GET, completion)
     }
 }
 
