@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5E4E553A19A12FD900DB1FFE /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E553819A12FD900DB1FFE /* ReactiveCocoa.framework */; };
-		5E4E553B19A12FD900DB1FFE /* swiftz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E553919A12FD900DB1FFE /* swiftz.framework */; };
 		5E7969C0199F453E005D6E86 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E7969BF199F453E005D6E86 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E7969CA199F453E005D6E86 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7969C9199F453E005D6E86 /* MoyaProviderSpec.swift */; };
 		5E796A14199F46FF005D6E86 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E796A0D199F46F8005D6E86 /* Nimble.framework */; };
@@ -88,7 +87,6 @@
 
 /* Begin PBXFileReference section */
 		5E4E553819A12FD900DB1FFE /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../submodules/ReactiveCocoa/build/Debug-iphoneos/ReactiveCocoa.framework"; sourceTree = "<group>"; };
-		5E4E553919A12FD900DB1FFE /* swiftz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = swiftz.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Moya-frsedksyxbevhvegahxgoogetcnk/Build/Products/Debug/swiftz.framework"; sourceTree = "<group>"; };
 		5E7969BA199F453E005D6E86 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7969BE199F453E005D6E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E7969BF199F453E005D6E86 /* Moya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Moya.h; sourceTree = "<group>"; };
@@ -109,7 +107,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E4E553A19A12FD900DB1FFE /* ReactiveCocoa.framework in Frameworks */,
-				5E4E553B19A12FD900DB1FFE /* swiftz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				5E4E553819A12FD900DB1FFE /* ReactiveCocoa.framework */,
-				5E4E553919A12FD900DB1FFE /* swiftz.framework */,
 				5E7969BC199F453E005D6E86 /* Moya */,
 				5E7969C6199F453E005D6E86 /* MoyaTests */,
 				5E7969BB199F453E005D6E86 /* Products */,
