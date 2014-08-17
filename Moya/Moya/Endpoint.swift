@@ -13,12 +13,10 @@ public typealias EndpointSampleResponse = () -> (AnyObject)
 
 public class Endpoint<T: Hashable> {
     public let URL: String
-    let configuration: EndpointConfiguration?
     let sampleResponse: EndpointSampleResponse
     
     public init (URL: String, configuration: EndpointConfiguration?, sampleResponse: EndpointSampleResponse) {
         self.URL = URL
-        self.configuration = configuration
         self.sampleResponse = sampleResponse
     }
     
