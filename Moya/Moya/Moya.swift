@@ -10,13 +10,15 @@ import Foundation
 
 public typealias MoyaCompletion = (AnyObject?) -> ()
 
-public class Moya {
+private var MoyaProviderInflightRequestKey: Void?
+
+@objc public class Moya {
     public enum Method {
         case GET, POST, PUT, DELETE
     }
 }
 
-public class MoyaProvider<T: Hashable> {
+@objc public class MoyaProvider<T: Hashable> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
@@ -66,6 +68,16 @@ public class MoyaProvider<T: Hashable> {
     
     public func request(token: T) -> RACSignal {
         return request(token, method: Moya.Method.GET)
+    }
+    
+    var inflightRequests: [Endpoint<T>: RACSignal] {
+        if let requests = objc_getAssociatedObject(self, &MoyaProviderInflightRequestKey) as? [Endpoint<T>: RACSignal] {
+            return requests
+        } else {
+            var requests = [Endpoint<T>: RACSignal]()
+            objc_setAssociatedObject(self, &MoyaProviderInflightRequestKey, requests, UInt(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return requests
+        }
     }
 }
 
