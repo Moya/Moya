@@ -10,8 +10,14 @@ import Foundation
 
 public typealias MoyaCompletion = (AnyObject?) -> ()
 
+public class Moya {
+    public enum Method {
+        case GET, POST, PUT, DELETE
+    }
+}
+
 public class MoyaProvider<T: Hashable> {
-    public typealias MoyaEndpointsClosure = (T, method: Method) -> (Endpoint<T>)
+    public typealias MoyaEndpointsClosure = (T, method: Moya.Method) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
     
@@ -20,7 +26,7 @@ public class MoyaProvider<T: Hashable> {
         self.stubResponses = stubResponses
     }
 
-    public func request(token: T, method: Method, completion: MoyaCompletion) {
+    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
         let endpoint = endpointsClosure(token, method: method)
         
         if (stubResponses) {
@@ -36,7 +42,7 @@ public class MoyaProvider<T: Hashable> {
     }
     
     public func request(token: T, completion: MoyaCompletion) {
-        request(token, method: .GET, completion)
+        request(token, method: Moya.Method.GET, completion)
     }
 }
 

@@ -11,27 +11,23 @@ import Foundation
 public typealias EndpointConfiguration = () -> ()
 public typealias EndpointSampleResponse = () -> (AnyObject)
 
-public enum Method {
-    case GET, POST, PUT, DELETE
-}
-
 public class Endpoint<T: Hashable> {
     public let URL: String
-    public let method: Method
+    public let method: Moya.Method
     let sampleResponse: EndpointSampleResponse
     
-    public convenience init(URL: String, sampleResponse: EndpointSampleResponse) {
-        self.init(URL: URL, method: .GET, sampleResponse)
-    }
-    
-    public init(URL: String, method: Method, sampleResponse: EndpointSampleResponse) {
+    public init(URL: String, method: Moya.Method, sampleResponse: EndpointSampleResponse) {
         self.URL = URL
         self.sampleResponse = sampleResponse
         self.method = method
     }
+    
+    public convenience init(URL: String, sampleResponse: EndpointSampleResponse) {
+        self.init(URL: URL, method: Moya.Method.GET, sampleResponse: sampleResponse)
+    }
 }
 
-public func methodFromMethod(method: Method) -> Alamofire.Method {
+public func methodFromMethod(method: Moya.Method) -> Alamofire.Method {
     switch method {
     case .GET:
         return Alamofire.Method.GET
