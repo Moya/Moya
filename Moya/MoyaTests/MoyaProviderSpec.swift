@@ -18,7 +18,6 @@ enum APIEndpoint: Int {
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
         describe("valid enpoints") {
-//            var endpointsClosure: MoyaEndpointsClosure<APIEndpoint>!
             var sampleData: NSData!
             beforeEach {
                 let bundle = NSBundle(forClass: self.dynamicType)
@@ -55,24 +54,31 @@ class MoyaProviderSpec: QuickSpec {
                 }
             }
             
-            /*
             describe("while hitting the network") {
-                var provider: MoyaProvider!
+                var provider: MoyaProvider<APIEndpoint>!
                 beforeEach {
-                    provider = MoyaProvider(endpoints: endpoints)
+                    
+                    let endpointsClosure = { (endpoint: APIEndpoint) -> Endpoint<APIEndpoint> in
+                        switch endpoint {
+                        case .MediumImage:
+                            return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
+                                return sampleData
+                            })
+                        }
+                    }
+                    provider = MoyaProvider(endpointsClosure: endpointsClosure)
                 }
                 
                 it("returns representative data"){
                     var image: UIImage?
                     
-                    provider.request("http://rdjpg.com/300/200/", completion: { (object: AnyObject?) -> () in
+                    provider.request(.MediumImage, completion: { (object: AnyObject?) -> () in
                         image = UIImage(data: object as? NSData)
                     })
                     
                     expect{image?.size}.toEventually(equal(CGSizeMake(300, 200)), timeout: 10, pollInterval: 0.1)
                 }
             }
-*/
         }
     }
 }
