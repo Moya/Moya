@@ -7,3 +7,6 @@
 [submodule "submodules/Alamofire"]
 	path = submodules/Alamofire
 	url = git@github.com:Alamofire/Alamofire.git
+[submodule "submodules/ReactiveCocoa"]
+	path = submodules/ReactiveCocoa
+	url = git@github.com:ReactiveCocoa/ReactiveCocoa.git
