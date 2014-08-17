@@ -44,7 +44,7 @@ class MoyaProviderSpec: QuickSpec {
                 it("returns stubbed data for a request") {
                     var response: NSData?
                     
-                    provider!.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
+                    provider.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
                         response = object as? NSData
                     })
                     
@@ -71,7 +71,7 @@ class MoyaProviderSpec: QuickSpec {
                     var image: UIImage?
                     
                     
-                    provider!.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
+                    provider.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
                         image = UIImage(data: object as? NSData)
                     })
                     
