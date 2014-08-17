@@ -10,8 +10,6 @@ import Foundation
 
 public typealias MoyaCompletion = (AnyObject?) -> ()
 
-private var MoyaProviderInflightRequestKey: Void?
-
 public class Moya {
     public enum Method {
         case GET, POST, PUT, DELETE
