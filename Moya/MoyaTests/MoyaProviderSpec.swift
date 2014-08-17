@@ -11,7 +11,7 @@ import Quick
 import Nimble
 import Moya
 
-enum APIEndpoint: Int {
+enum Target: Int {
     case MediumImage = 0
 }
 
@@ -27,8 +27,8 @@ class MoyaProviderSpec: QuickSpec {
             }
             
             describe("with stubbed data") {
-                let endpointsClosure = { (endpoint: APIEndpoint) -> Endpoint<APIEndpoint> in
-                    switch endpoint {
+                let endpointsClosure = { (target: Target) -> Endpoint<Target> in
+                    switch target {
                     case .MediumImage:
                         return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
                             return sampleData
@@ -36,7 +36,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
                 
-                var provider: MoyaProvider<APIEndpoint>!
+                var provider: MoyaProvider<Target>!
                 beforeEach {
                     provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
                 }
@@ -55,11 +55,11 @@ class MoyaProviderSpec: QuickSpec {
             }
             
             describe("while hitting the network") {
-                var provider: MoyaProvider<APIEndpoint>!
+                var provider: MoyaProvider<Target>!
                 beforeEach {
                     
-                    let endpointsClosure = { (endpoint: APIEndpoint) -> Endpoint<APIEndpoint> in
-                        switch endpoint {
+                    let endpointsClosure = { (target: Target) -> Endpoint<Target> in
+                        switch target {
                         case .MediumImage:
                             return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
                                 return sampleData

@@ -18,6 +18,5 @@ public class Endpoint<T: Hashable> {
     public init (URL: String, sampleResponse: EndpointSampleResponse) {
         self.URL = URL
         self.sampleResponse = sampleResponse
-        
     }
 }
