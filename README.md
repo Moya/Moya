@@ -19,7 +19,7 @@ API. This is beneficial if one action can hit different endpoints; for example,
 if you want to GET a user profile, but the endpoint differs depending on if that
 user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 
-Project Statis
+Project Status
 ----------------
 
 This is still pretty early in its development, though it works now. There are 
