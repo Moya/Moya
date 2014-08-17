@@ -12,13 +12,13 @@ public typealias MoyaCompletion = (AnyObject?) -> ()
 
 private var MoyaProviderInflightRequestKey: Void?
 
-@objc public class Moya {
+public class Moya {
     public enum Method {
         case GET, POST, PUT, DELETE
     }
 }
 
-@objc public class MoyaProvider<T: Hashable> {
+public class MoyaProvider<T: Hashable> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
