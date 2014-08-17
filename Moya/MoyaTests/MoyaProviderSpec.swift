@@ -44,10 +44,8 @@ class MoyaProviderSpec: QuickSpec {
                 it("returns stubbed data for a request") {
                     var response: NSData?
                     
-                    provider!.request(.MediumImage, completion: { (object: AnyObject?) -> () in
-                        if let object = object as? NSData {
-                            response = object
-                        }
+                    provider!.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
+                        response = object as? NSData
                     })
                     
                     expect{response}.toEventually(equal(sampleData), timeout: 1, pollInterval: 0.1)
@@ -72,7 +70,8 @@ class MoyaProviderSpec: QuickSpec {
                 it("returns representative data"){
                     var image: UIImage?
                     
-                    provider.request(.MediumImage, completion: { (object: AnyObject?) -> () in
+                    
+                    provider!.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
                         image = UIImage(data: object as? NSData)
                     })
                     

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 //! Project version number for Moya.
 FOUNDATION_EXPORT double MoyaVersionNumber;

@@ -26,31 +26,46 @@ public class MoyaProvider<T: Hashable> {
         self.stubResponses = stubResponses
     }
     
-    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]?, completion: MoyaCompletion) {
+    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]?) -> RACSignal {
         let endpoint = endpointsClosure(token, method: method, parameters: parameters ?? [String: AnyObject]())
         
+        let subject = RACSubject()
+        
         if (stubResponses) {
-            let sampleResponse: AnyObject = endpoint.sampleResponse()
-            completion(sampleResponse)
+            // Need to dispatch to the next runloop to give the subject a chance to be subscribed to
+            dispatch_async(dispatch_get_main_queue(), {
+                let sampleResponse: AnyObject = endpoint.sampleResponse()
+                subject.sendNext(sampleResponse)
+                subject.sendCompleted()
+            })
         } else {
             let method: Alamofire.Method = methodFromMethod(endpoint.method)
             AF.request(method, endpoint.URL)
                 .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                    completion(data)
+                    if let error = error {
+                        subject.sendError(error)
+                    } else {
+                        if let data: AnyObject = data {
+                            subject.sendNext(data)
+                        }
+                        subject.sendCompleted()
+                    }
                 })
         }
+        
+        return subject
     }
     
-    public func request(token: T, parameters: [String: AnyObject]?, completion: MoyaCompletion) {
-        request(token, method: Moya.Method.GET, parameters: parameters, completion: completion)
+    public func request(token: T, parameters: [String: AnyObject]?) -> RACSignal {
+        return request(token, method: Moya.Method.GET, parameters: parameters)
     }
 
-    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
-        request(token, method: method, parameters: nil, completion: completion)
+    public func request(token: T, method: Moya.Method) -> RACSignal {
+        return request(token, method: method, parameters: nil)
     }
     
-    public func request(token: T, completion: MoyaCompletion) {
-        request(token, method: Moya.Method.GET, completion)
+    public func request(token: T) -> RACSignal {
+        return request(token, method: Moya.Method.GET)
     }
 }
 
