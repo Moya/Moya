@@ -63,7 +63,7 @@ all of your targets. The `enum` will need a base type that conforms to the
 ```swift
 enum Target: Int {
 	case MediumImage = 0
-	case 	
+	case LargeImage
 }
 ```
 
