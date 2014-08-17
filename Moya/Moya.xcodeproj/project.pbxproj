@@ -526,8 +526,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Moya-frsedksyxbevhvegahxgoogetcnk/Build/Products/Debug",
-					/Users/ash/Dropbox,
-					"(Personal)/bin/Moya/submodules/ReactiveCocoa/build/Debug-iphoneos",
+					"${SRCROOT}/submodules/ReactiveCocoa/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Moya/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -549,8 +548,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Moya-frsedksyxbevhvegahxgoogetcnk/Build/Products/Debug",
-					/Users/ash/Dropbox,
-					"(Personal)/bin/Moya/submodules/ReactiveCocoa/build/Debug-iphoneos",
+					"${SRCROOT}/submodules/ReactiveCocoa/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Moya/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
