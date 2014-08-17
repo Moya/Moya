@@ -14,32 +14,24 @@ public class Moya {
 
 public typealias MoyaCompletion = (AnyObject?) -> ()
 
-public class MoyaProvider {
-    public let endpoints: Array<Endpoint>
+public class MoyaProvider<T: Hashable> {
+    public typealias MoyaEndpointsClosure = (T) -> (Endpoint<T>)
+    public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
-    lazy var endpointDictionary: [String: Endpoint] = {
-        var result = Dictionary<String, Endpoint>()
-        for endpoint in self.endpoints {
-            let key: String = endpoint.URL
-            result[key] = endpoint
-        }
-        return result
-    }()
     
-    public init (endpoints: Array<Endpoint>, stubResponses: Bool  = false) {
-        self.endpoints = endpoints
+    public init (endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
+        self.endpointsClosure = endpointsClosure
         self.stubResponses = stubResponses
     }
     
-    public func request (URL: String, completion: MoyaCompletion) {
-        let endpoint = endpointDictionary[URL]
-        assert(endpoint.hasValue)
+    public func request (token: T, completion: MoyaCompletion) {
+        let endpoint = endpointsClosure(token)
 
         if (stubResponses) {
-            let sampleResponse: AnyObject = endpoint!.sampleResponse()
+            let sampleResponse: AnyObject = endpoint.sampleResponse()
             completion(sampleResponse)
         } else {
-            AF.request(.GET, endpoint!.URL)
+            AF.request(.GET, endpoint.URL)
               .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     completion(data)
               })
