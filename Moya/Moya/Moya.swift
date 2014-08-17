@@ -8,14 +8,10 @@
 
 import Foundation
 
-public class Moya {
-    
-}
-
 public typealias MoyaCompletion = (AnyObject?) -> ()
 
 public class MoyaProvider<T: Hashable> {
-    public typealias MoyaEndpointsClosure = (T) -> (Endpoint<T>)
+    public typealias MoyaEndpointsClosure = (T, method: Method) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
     
@@ -23,19 +19,24 @@ public class MoyaProvider<T: Hashable> {
         self.endpointsClosure = endpointsClosure
         self.stubResponses = stubResponses
     }
-    
-    public func request (token: T, completion: MoyaCompletion) {
-        let endpoint = endpointsClosure(token)
 
+    public func request(token: T, method: Method, completion: MoyaCompletion) {
+        let endpoint = endpointsClosure(token, method: method)
+        
         if (stubResponses) {
             let sampleResponse: AnyObject = endpoint.sampleResponse()
             completion(sampleResponse)
         } else {
-            AF.request(.GET, endpoint.URL)
-              .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+            let method: Alamofire.Method = methodFromMethod(endpoint.method)
+            AF.request(method, endpoint.URL)
+                .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     completion(data)
-              })
+                })
         }
+    }
+    
+    public func request(token: T, completion: MoyaCompletion) {
+        request(token, method: .GET, completion)
     }
 }
 
