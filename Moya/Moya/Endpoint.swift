@@ -15,12 +15,9 @@ public class Endpoint<T: Hashable> {
     public let URL: String
     let sampleResponse: EndpointSampleResponse
     
-    public init (URL: String, configuration: EndpointConfiguration?, sampleResponse: EndpointSampleResponse) {
+    public init (URL: String, sampleResponse: EndpointSampleResponse) {
         self.URL = URL
         self.sampleResponse = sampleResponse
-    }
-    
-    public convenience init (URL:String, sampleResponse: EndpointSampleResponse) {
-        self.init(URL: URL, configuration: nil, sampleResponse: sampleResponse)
+        
     }
 }
