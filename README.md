@@ -22,6 +22,8 @@ user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 Project Status
 ----------------
 
+*We're skipping beta 6* – ain't nobody got time for that. 
+
 This is still pretty early in its development, though it works now. There are 
 plenty of [issues](https://github.com/AshFurrow/Moya/issues) open, which should 
 give you an idea of our roadmap. If you have any suggestions on any of them, 
