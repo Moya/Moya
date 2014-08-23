@@ -37,14 +37,15 @@ dependency, and both [swfitz](https://github.com/maxpow4h/swiftz) and and the
 `swift-development` branch of [ReactiveCocoa](https://github.com/reactivecocoa/reactivecocoa/tree/swift-development)
 as optional ones. If you want to use this library, just grab those repos and 
 integrate them into your project. Then drag and drop the `Moya.swift` and 
-`Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions, oh
-boy. There's currently a [bug](http://openradar.appspot.com/radar?id=6365671290044416)
-in Xcode, so you'll have to copy the contents of the `Moya+ReactiveCocoa.swift` 
-file into the main `Moya.swift` file.  
+`Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions, 
+you can just include the `MoyaProvider+ReactiveCocoa.swift` file in your project. 
+However, there's currently a [bug](http://openradar.appspot.com/radar?id=6365671290044416)
+in Xcode, so the ReactiveCocoa extension is a *subclass* and not a Swift class
+extension, which is a shame. Oh well. 
 
-If that doesn't work for some reason, or you want to get the full monty to run
-the library's test and contribute back, clone this repo and set up the 
-submodules.
+So just drag the files you want into your Xcode project. If that doesn't work 
+for some reason, or you want to get the full monty to run the library's test and 
+contribute back, clone this repo and set up the submodules.
 
 ```sh
 git clone git@github.com:AshFurrow/Moya.git
