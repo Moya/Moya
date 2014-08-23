@@ -49,5 +49,5 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: { target.sampleData })
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: { target.sampleData })
 }
