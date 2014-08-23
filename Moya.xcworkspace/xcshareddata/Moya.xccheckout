@@ -12,12 +12,18 @@
 	<dict>
 		<key>15ADDC96148D8EC7ABACA3AFDED5D958C5D22840</key>
 		<string>github.com:AshFurrow/Moya.git</string>
+		<key>39C07F1822062044696C292623848404D8A25E25</key>
+		<string>https://github.com/maxpow4h/swiftz.git</string>
+		<key>51B210D0D41486D3ADD6940D57E4480BBD4DE4C5</key>
+		<string>github.com:ReactiveCocoa/ReactiveCocoa.git</string>
 		<key>67620B5EFA902936DF04070AF595B76AB0333747</key>
 		<string>github.com:Alamofire/Alamofire.git</string>
 		<key>95438028B10BBB846574013D29F154A00556A9D1</key>
 		<string>github.com:Quick/Nimble.git</string>
 		<key>D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64</key>
 		<string>github.com:Quick/Quick.git</string>
+		<key>E084C86B03F81D63323C9E7510697EA528A758C7</key>
+		<string>https://github.com/jspahrsummers/xcconfigs.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Moya/Moya.xcodeproj</string>
@@ -25,12 +31,18 @@
 	<dict>
 		<key>15ADDC96148D8EC7ABACA3AFDED5D958C5D22840</key>
 		<string>../../..</string>
+		<key>39C07F1822062044696C292623848404D8A25E25</key>
+		<string>../../../submodules/ReactiveCocoa/External/swiftz</string>
+		<key>51B210D0D41486D3ADD6940D57E4480BBD4DE4C5</key>
+		<string>../../../submodules/ReactiveCocoa</string>
 		<key>67620B5EFA902936DF04070AF595B76AB0333747</key>
 		<string>../../../submodules/Alamofire</string>
 		<key>95438028B10BBB846574013D29F154A00556A9D1</key>
 		<string>../../../submodules/Nimble</string>
 		<key>D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64</key>
 		<string>../../../submodules/Quick</string>
+		<key>E084C86B03F81D63323C9E7510697EA528A758C7</key>
+		<string>../../../submodules/ReactiveCocoa/External/xcconfigs</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:AshFurrow/Moya.git</string>
@@ -71,6 +83,30 @@
 			<string>D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Quick</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>51B210D0D41486D3ADD6940D57E4480BBD4DE4C5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ReactiveCocoa</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>39C07F1822062044696C292623848404D8A25E25</string>
+			<key>IDESourceControlWCCName</key>
+			<string>swiftz</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E084C86B03F81D63323C9E7510697EA528A758C7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>xcconfigs</string>
 		</dict>
 	</array>
 </dict>
