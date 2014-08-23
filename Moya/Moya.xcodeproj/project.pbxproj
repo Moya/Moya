@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5E4E553A19A12FD900DB1FFE /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E4E553819A12FD900DB1FFE /* ReactiveCocoa.framework */; };
+		5E6C632719A7C13400A435D4 /* Moya+ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6C632619A7C13400A435D4 /* Moya+ReactiveCocoa.swift */; };
 		5E7969C0199F453E005D6E86 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E7969BF199F453E005D6E86 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5E7969CA199F453E005D6E86 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7969C9199F453E005D6E86 /* MoyaProviderSpec.swift */; };
 		5E796A14199F46FF005D6E86 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E796A0D199F46F8005D6E86 /* Nimble.framework */; };
@@ -17,6 +18,8 @@
 		5E796A1C199F4AA9005D6E86 /* 300_200.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E796A1B199F4AA9005D6E86 /* 300_200.png */; };
 		5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A1E199F4C0D005D6E86 /* Endpoint.swift */; };
 		5E796A22199F4F1F005D6E86 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969BA199F453E005D6E86 /* Moya.framework */; };
+		5EECB54219A873AC00D07938 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */; };
+		5EECB54C19A873E300D07938 /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EECB54B19A873E300D07938 /* TestResources.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		5E4E553819A12FD900DB1FFE /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../submodules/ReactiveCocoa/build/Debug-iphoneos/ReactiveCocoa.framework"; sourceTree = "<group>"; };
+		5E6C632619A7C13400A435D4 /* Moya+ReactiveCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Moya+ReactiveCocoa.swift"; path = "../../Moya+ReactiveCocoa.swift"; sourceTree = "<group>"; };
 		5E7969BA199F453E005D6E86 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E7969BE199F453E005D6E86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5E7969BF199F453E005D6E86 /* Moya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Moya.h; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 		5E796A18199F47C3005D6E86 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../../submodules/Alamofire/Source/Alamofire.swift; sourceTree = "<group>"; };
 		5E796A1B199F4AA9005D6E86 /* 300_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 300_200.png; path = ../../../../../Desktop/300_200.png; sourceTree = "<group>"; };
 		5E796A1E199F4C0D005D6E86 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = ../../Endpoint.swift; sourceTree = "<group>"; };
+		5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
+		5EECB54B19A873E300D07938 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +153,7 @@
 			children = (
 				5E7969BF199F453E005D6E86 /* Moya.h */,
 				5E796A16199F475E005D6E86 /* Moya.swift */,
+				5E6C632619A7C13400A435D4 /* Moya+ReactiveCocoa.swift */,
 				5E796A1E199F4C0D005D6E86 /* Endpoint.swift */,
 				5E796A1A199F47C6005D6E86 /* Submodules */,
 				5E7969BD199F453E005D6E86 /* Supporting Files */,
@@ -167,7 +174,9 @@
 			children = (
 				5E796A1D199F4AB0005D6E86 /* Sample Data */,
 				5E7969D3199F45A7005D6E86 /* Submodules */,
+				5EECB54B19A873E300D07938 /* TestResources.swift */,
 				5E7969C9199F453E005D6E86 /* MoyaProviderSpec.swift */,
+				5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */,
 				5E7969C7199F453E005D6E86 /* Supporting Files */,
 			);
 			path = MoyaTests;
@@ -405,6 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E6C632719A7C13400A435D4 /* Moya+ReactiveCocoa.swift in Sources */,
 				5E796A19199F47C3005D6E86 /* Alamofire.swift in Sources */,
 				5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */,
 				5E796A17199F475E005D6E86 /* Moya.swift in Sources */,
@@ -416,6 +426,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E7969CA199F453E005D6E86 /* MoyaProviderSpec.swift in Sources */,
+				5EECB54C19A873E300D07938 /* TestResources.swift in Sources */,
+				5EECB54219A873AC00D07938 /* MoyaProviderIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,7 +538,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Moya-frsedksyxbevhvegahxgoogetcnk/Build/Products/Debug",
-					"${SRCROOT}/submodules/ReactiveCocoa/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Moya/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -548,7 +559,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Moya-frsedksyxbevhvegahxgoogetcnk/Build/Products/Debug",
-					"${SRCROOT}/submodules/ReactiveCocoa/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Moya/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
