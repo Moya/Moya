@@ -61,7 +61,7 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (object, error) in
+                        provider.request(target).subscribeNext({ (object) -> Void in
                             if let data = object as? NSData {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
@@ -75,7 +75,7 @@ class MoyaProviderSpec: QuickSpec {
                         var response: NSDictionary?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, error) in
+                        provider.request(target).subscribeNext({ (object) -> Void in
                             if let data = object as? NSData {
                                 response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
                             }

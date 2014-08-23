@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ReactiveMoyaProvider<T>: MoyaProvider<T> {
+public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     override public init(endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
         super.init(endpointsClosure: endpointsClosure, stubResponses: stubResponses)
     }

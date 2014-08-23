@@ -33,7 +33,7 @@ public protocol MoyaTarget : MoyaPath {
     var sampleData: NSData { get }
 }
 
-public class MoyaProvider<T> {
+public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
