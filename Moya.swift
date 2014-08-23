@@ -30,7 +30,7 @@ public protocol MoyaPath {
 
 public protocol MoyaTarget : MoyaPath {
     var baseURL: NSURL { get }
-    var sampleData: AnyObject { get }
+    var sampleData: NSData { get }
 }
 
 public class MoyaProvider<T> {
@@ -49,9 +49,7 @@ public class MoyaProvider<T> {
         if (stubResponses) {
             // Need to dispatch to the next runloop to give the subject a chance to be subscribed to
             dispatch_async(dispatch_get_main_queue(), {
-                let sampleResponse: AnyObject = endpoint.sampleResponse()
-                
-                completion(object: sampleResponse, error: nil)
+                completion(object: endpoint.sampleResponse, error: nil)
             })
         } else {
             let method: Alamofire.Method = methodFromMethod(endpoint.method)

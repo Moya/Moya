@@ -34,7 +34,7 @@ extension GitHub : MoyaPath {
 
 extension GitHub : MoyaTarget {
     var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
-    var sampleData: AnyObject {
+    var sampleData: NSData {
         switch self {
         case .Zen:
             return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
@@ -49,5 +49,5 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: { target.sampleData })
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: target.sampleData)
 }
