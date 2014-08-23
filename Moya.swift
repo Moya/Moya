@@ -14,6 +14,14 @@ public class Moya {
     public enum Method {
         case GET, POST, PUT, DELETE
     }
+    
+    public class func DefaultMethod() -> Method {
+        return Method.GET
+    }
+    
+    public class func DefaultParameters() -> [String: AnyObject] {
+        return Dictionary<String, AnyObject>()
+    }
 }
 
 public class MoyaProvider<T: Hashable> {
@@ -21,17 +29,9 @@ public class MoyaProvider<T: Hashable> {
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
     
-    public init (endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
+    public init(endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
         self.endpointsClosure = endpointsClosure
         self.stubResponses = stubResponses
-    }
-    
-    internal class func DefaultMethod() -> Moya.Method {
-        return Moya.Method.GET
-    }
-    
-    internal class func DefaultParameters() -> [String: AnyObject] {
-        return Dictionary<String, AnyObject>()
     }
     
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
@@ -54,15 +54,15 @@ public class MoyaProvider<T: Hashable> {
     }
     
     public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) {
-        request(token, method: MoyaProvider.DefaultMethod(), parameters: parameters, completion)
+        request(token, method: Moya.DefaultMethod(), parameters: parameters, completion)
     }
 
     public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
-        request(token, method: method, parameters: MoyaProvider.DefaultParameters(), completion)
+        request(token, method: method, parameters: Moya.DefaultParameters(), completion)
     }
     
     public func request(token: T, completion: MoyaCompletion) {
-        request(token, method: MoyaProvider.DefaultMethod(), completion)
+        request(token, method: Moya.DefaultMethod(), completion)
     }
 }
 

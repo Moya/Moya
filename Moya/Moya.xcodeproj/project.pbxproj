@@ -18,6 +18,8 @@
 		5E796A1C199F4AA9005D6E86 /* 300_200.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E796A1B199F4AA9005D6E86 /* 300_200.png */; };
 		5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A1E199F4C0D005D6E86 /* Endpoint.swift */; };
 		5E796A22199F4F1F005D6E86 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969BA199F453E005D6E86 /* Moya.framework */; };
+		5EECB54219A873AC00D07938 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */; };
+		5EECB54C19A873E300D07938 /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EECB54B19A873E300D07938 /* TestResources.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		5E796A18199F47C3005D6E86 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../../submodules/Alamofire/Source/Alamofire.swift; sourceTree = "<group>"; };
 		5E796A1B199F4AA9005D6E86 /* 300_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 300_200.png; path = ../../../../../Desktop/300_200.png; sourceTree = "<group>"; };
 		5E796A1E199F4C0D005D6E86 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = ../../Endpoint.swift; sourceTree = "<group>"; };
+		5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
+		5EECB54B19A873E300D07938 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +174,9 @@
 			children = (
 				5E796A1D199F4AB0005D6E86 /* Sample Data */,
 				5E7969D3199F45A7005D6E86 /* Submodules */,
+				5EECB54B19A873E300D07938 /* TestResources.swift */,
 				5E7969C9199F453E005D6E86 /* MoyaProviderSpec.swift */,
+				5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */,
 				5E7969C7199F453E005D6E86 /* Supporting Files */,
 			);
 			path = MoyaTests;
@@ -420,6 +426,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E7969CA199F453E005D6E86 /* MoyaProviderSpec.swift in Sources */,
+				5EECB54C19A873E300D07938 /* TestResources.swift in Sources */,
+				5EECB54219A873AC00D07938 /* MoyaProviderIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,7 +8,11 @@
 
 import Foundation
 
-extension MoyaProvider {
+public class ReactiveMoyaProvider<T where T: Hashable>: MoyaProvider<T> {
+    override public init(endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
+        super.init(endpointsClosure: endpointsClosure, stubResponses: stubResponses)
+    }
+    
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {
         let subject = RACSubject()
         
@@ -27,14 +31,14 @@ extension MoyaProvider {
     }
     
     public func request(token: T, parameters: [String: AnyObject]) -> RACSignal {
-        return request(token, method: MoyaProvider.DefaultMethod(), parameters: parameters)
+        return request(token, method: Moya.DefaultMethod(), parameters: parameters)
     }
     
     public func request(token: T, method: Moya.Method) -> RACSignal {
-        return request(token, method: method, parameters: MoyaProvider.DefaultParameters())
+        return request(token, method: method, parameters: Moya.DefaultParameters())
     }
     
     public func request(token: T) -> RACSignal {
-        return request(token, method: MoyaProvider.DefaultMethod())
+        return request(token, method: Moya.DefaultMethod())
     }
 }
