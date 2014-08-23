@@ -101,7 +101,7 @@
 		5E796A05199F46F8005D6E86 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../submodules/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
 		5E796A16199F475E005D6E86 /* Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Moya.swift; path = ../../Moya.swift; sourceTree = "<group>"; };
 		5E796A18199F47C3005D6E86 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../../submodules/Alamofire/Source/Alamofire.swift; sourceTree = "<group>"; };
-		5E796A1B199F4AA9005D6E86 /* 300_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 300_200.png; path = ../../../../../Desktop/300_200.png; sourceTree = "<group>"; };
+		5E796A1B199F4AA9005D6E86 /* 300_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300_200.png; sourceTree = "<group>"; };
 		5E796A1E199F4C0D005D6E86 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = ../../Endpoint.swift; sourceTree = "<group>"; };
 		5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
 		5EECB54B19A873E300D07938 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
