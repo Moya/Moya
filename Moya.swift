@@ -24,7 +24,16 @@ public class Moya {
     }
 }
 
-public class MoyaProvider<T: Hashable> {
+public protocol MoyaPath {
+    var path : String { get }
+}
+
+public protocol MoyaTarget : MoyaPath {
+    var baseURL: NSURL { get }
+    var sampleData: AnyObject { get }
+}
+
+public class MoyaProvider<T> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool

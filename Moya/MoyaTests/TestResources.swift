@@ -7,7 +7,47 @@
 //
 
 import Foundation
+import UIKit
+import Moya
 
-enum Target: Int {
-    case MediumImage = 0
+private extension String {
+    var URLEscapedString: String {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())
+    }
+}
+
+enum GitHub {
+    case Zen
+    case UserProfile(String)
+}
+
+extension GitHub : MoyaPath {
+    var path: String {
+        switch self {
+        case .Zen:
+            return "/zen"
+        case .UserProfile(let name):
+            return "/users/\(name.URLEscapedString)"
+        }
+    }
+}
+
+extension GitHub : MoyaTarget {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
+    var sampleData: AnyObject {
+        switch self {
+        case .Zen:
+            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .UserProfile(let name):
+            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
+}
+
+public func url(route: MoyaTarget) -> String {
+    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+}
+
+let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: { target.sampleData })
 }

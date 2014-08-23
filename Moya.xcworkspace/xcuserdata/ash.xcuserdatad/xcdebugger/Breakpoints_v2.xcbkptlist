@@ -2,4 +2,52 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Moya/MoyaTests/MoyaProviderSpec.swift"
+            timestampString = "430505302.701266"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "spec()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MoyaTests.MoyaProviderSpec.(spec (MoyaTests.MoyaProviderSpec) -&gt; () -&gt; ()).(closure #1).(closure #1).(closure #2).(closure #3)"
+                  moduleName = "MoyaTests"
+                  urlString = "file:///Users/ash/Dropbox%20(Personal)/bin/Moya/Moya/MoyaTests/MoyaProviderSpec.swift"
+                  timestampString = "430505200.617337"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "789">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MoyaTests.MoyaProviderSpec.(spec (MoyaTests.MoyaProviderSpec) -&gt; () -&gt; ()).(closure #1).(closure #1).(closure #2).(closure #3)"
+                  moduleName = "MoyaTests"
+                  urlString = "file:///Users/ash/Dropbox%20(Personal)/bin/Moya/Moya/MoyaTests/MoyaProviderSpec.swift"
+                  timestampString = "430505200.617546"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "85"
+                  endingLineNumber = "85"
+                  offsetFromSymbolStart = "890">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -15,7 +15,6 @@
 		5E796A15199F46FF005D6E86 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969FE199F46EF005D6E86 /* Quick.framework */; };
 		5E796A17199F475E005D6E86 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A16199F475E005D6E86 /* Moya.swift */; };
 		5E796A19199F47C3005D6E86 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A18199F47C3005D6E86 /* Alamofire.swift */; };
-		5E796A1C199F4AA9005D6E86 /* 300_200.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E796A1B199F4AA9005D6E86 /* 300_200.png */; };
 		5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A1E199F4C0D005D6E86 /* Endpoint.swift */; };
 		5E796A22199F4F1F005D6E86 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969BA199F453E005D6E86 /* Moya.framework */; };
 		5EECB54219A873AC00D07938 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */; };
@@ -101,7 +100,6 @@
 		5E796A05199F46F8005D6E86 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ../../submodules/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
 		5E796A16199F475E005D6E86 /* Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Moya.swift; path = ../../Moya.swift; sourceTree = "<group>"; };
 		5E796A18199F47C3005D6E86 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = ../../submodules/Alamofire/Source/Alamofire.swift; sourceTree = "<group>"; };
-		5E796A1B199F4AA9005D6E86 /* 300_200.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 300_200.png; path = ../../../../../Desktop/300_200.png; sourceTree = "<group>"; };
 		5E796A1E199F4C0D005D6E86 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = ../../Endpoint.swift; sourceTree = "<group>"; };
 		5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
 		5EECB54B19A873E300D07938 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 		5E7969C6199F453E005D6E86 /* MoyaTests */ = {
 			isa = PBXGroup;
 			children = (
-				5E796A1D199F4AB0005D6E86 /* Sample Data */,
 				5E7969D3199F45A7005D6E86 /* Submodules */,
 				5EECB54B19A873E300D07938 /* TestResources.swift */,
 				5E7969C9199F453E005D6E86 /* MoyaProviderSpec.swift */,
@@ -227,14 +224,6 @@
 				5E796A18199F47C3005D6E86 /* Alamofire.swift */,
 			);
 			name = Submodules;
-			sourceTree = "<group>";
-		};
-		5E796A1D199F4AB0005D6E86 /* Sample Data */ = {
-			isa = PBXGroup;
-			children = (
-				5E796A1B199F4AA9005D6E86 /* 300_200.png */,
-			);
-			name = "Sample Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,7 +392,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E796A1C199F4AA9005D6E86 /* 300_200.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
