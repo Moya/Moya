@@ -27,7 +27,7 @@ public class ReactiveMoyaProvider<T where T: Hashable>: MoyaProvider<T> {
             }
         }
         
-        return subject
+        return subject.publish().autoconnect()
     }
     
     public func request(token: T, parameters: [String: AnyObject]) -> RACSignal {
