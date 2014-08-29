@@ -25,8 +25,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (object, error) in
-                            if let data = object as? NSData {
+                        provider.request(target, completion: { (data, error) in
+                            if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
                         })
@@ -38,8 +38,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, error) in
-                            if let data = object as? NSData {
+                        provider.request(target, completion: { (data, error) in
+                            if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
                         })
@@ -58,8 +58,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (object, error) in
-                            if let data = object as? NSData {
+                        provider.request(target, completion: { (data, error) in
+                            if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
                         })
@@ -71,8 +71,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var response: NSDictionary?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, error) in
-                            if let data = object as? NSData {
+                        provider.request(target, completion: { (data, error) in
+                            if let data = data {
                                 response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
                             }
                         })

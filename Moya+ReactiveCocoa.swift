@@ -16,14 +16,14 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {
         let subject = RACSubject()
         
-        request(token, method: method, parameters: parameters) { (object: AnyObject?, error: NSError?) -> () in
+        request(token, method: method, parameters: parameters) { (data: NSData?, error: NSError?) -> () in
             if let error = error {
                 subject.sendError(error)
             } else {
-                if let object: AnyObject = object {
-                    subject.sendNext(object)
-                    subject.sendCompleted()
+                if let data = data {
+                    subject.sendNext(data)
                 }
+                subject.sendCompleted()
             }
         }
         

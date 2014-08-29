@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias MoyaCompletion = (object: AnyObject?, error: NSError?) -> ()
+public typealias MoyaCompletion = (data: NSData?, error: NSError?) -> ()
 
 public class Moya {
     public enum Method {
@@ -51,16 +51,22 @@ public class MoyaProvider<T: MoyaTarget> {
             dispatch_async(dispatch_get_main_queue(), {
                 switch endpoint.sampleResponse {
                 case .Success(let data):
-                    completion(object: data, error: nil)
+                    completion(data: data, error: nil)
                 case .Error(let error):
-                    completion(object: nil, error: error)
+                    completion(data: nil, error: error)
                 }
             })
         } else {
             let method: Alamofire.Method = methodFromMethod(endpoint.method)
             AF.request(method, endpoint.URL)
                 .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                    completion(object: data, error: error)
+                    // Alamofire always sense the data param as an NSData? type, but we'll
+                    // add a check just in case something changes in the future. 
+                    if let data = data as? NSData {
+                        completion(data: data, error: error)
+                    } else {
+                        completion(data: nil, error: error)
+                    }
                 })
         }
     }
