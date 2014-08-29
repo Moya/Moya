@@ -31,8 +31,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         })
                         
-                        let sampleData = target.sampleData as NSData
-                        expect{message}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        let sampleResponse = target.sampleData as NSData
+                        expect{message}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                     
                     it("returns stubbed data for user profile request") {
@@ -45,8 +45,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         })
                         
-                        let sampleData = target.sampleData as NSData
-                        expect{message}.toEventually(beNil(), timeout: 1, pollInterval: 0.1)
+                        let sampleResponse = target.sampleData as NSData
+                        expect{message}.toEventually(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                 })
                 
@@ -66,8 +66,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         })
                         
-                        let sampleData = target.sampleData as NSData
-                        expect{message}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        let sampleResponse = target.sampleData as NSData
+                        expect{message}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                     
                     it("returns some data for user profile request") {
@@ -82,7 +82,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let sampleData = target.sampleData as NSData
                         let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-                        expect{response}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        expect{response}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                 })
             }

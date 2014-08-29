@@ -22,8 +22,8 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             } else {
                 if let object: AnyObject = object {
                     subject.sendNext(object)
+                    subject.sendCompleted()
                 }
-                subject.sendCompleted()
             }
         }
         
