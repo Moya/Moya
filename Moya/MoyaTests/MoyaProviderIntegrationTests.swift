@@ -31,7 +31,6 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         })
                         
-                        let sampleResponse = target.sampleData as NSData
                         expect{message}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                     
@@ -45,7 +44,6 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         })
                         
-                        let sampleResponse = target.sampleData as NSData
                         expect{message}.toEventually(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                 })
@@ -66,7 +64,6 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         })
                         
-                        let sampleResponse = target.sampleData as NSData
                         expect{message}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                     
