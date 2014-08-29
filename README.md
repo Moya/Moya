@@ -127,7 +127,7 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: target.sampleData)
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(target.sampleData))
 }
 ```
 
@@ -142,7 +142,20 @@ example, though, they're just passed right through.
 Most of the time, this closure is just a straight translation from target, 
 method, and parameters, into an `Endpoint` instance. However, since it's a 
 closure, it'll be executed at each invocation of the API, so you could do 
-whatever you want. 
+whatever you want. Say you want to test errors, too. 
+
+```swift
+let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
+    let sampleResponse = { () -> (EndpointSampleResponse) in
+        if sendErrors {
+            return .Error(NSError())
+        } else {
+            return .Success(target.sampleData)
+        }
+    }()
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: sampleResponse)
+}
+```
 
 Notice that returning sample data is *required*. One of the key benefits of Moya
 is that it makes testing the app or running the app, using stubbed responses for

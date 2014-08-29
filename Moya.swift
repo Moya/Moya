@@ -49,7 +49,12 @@ public class MoyaProvider<T: MoyaTarget> {
         if (stubResponses) {
             // Need to dispatch to the next runloop to give the subject a chance to be subscribed to
             dispatch_async(dispatch_get_main_queue(), {
-                completion(object: endpoint.sampleResponse, error: nil)
+                switch endpoint.sampleResponse {
+                case .Success(let data):
+                    completion(object: data, error: nil)
+                case .Error(let error):
+                    completion(object: nil, error: error)
+                }
             })
         } else {
             let method: Alamofire.Method = methodFromMethod(endpoint.method)
