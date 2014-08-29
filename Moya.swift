@@ -24,7 +24,16 @@ public class Moya {
     }
 }
 
-public class MoyaProvider<T: Hashable> {
+public protocol MoyaPath {
+    var path : String { get }
+}
+
+public protocol MoyaTarget : MoyaPath {
+    var baseURL: NSURL { get }
+    var sampleData: NSData { get }
+}
+
+public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
     let stubResponses: Bool
@@ -40,9 +49,7 @@ public class MoyaProvider<T: Hashable> {
         if (stubResponses) {
             // Need to dispatch to the next runloop to give the subject a chance to be subscribed to
             dispatch_async(dispatch_get_main_queue(), {
-                let sampleResponse: AnyObject = endpoint.sampleResponse()
-                
-                completion(object: sampleResponse, error: nil)
+                completion(object: endpoint.sampleResponse, error: nil)
             })
         } else {
             let method: Alamofire.Method = methodFromMethod(endpoint.method)

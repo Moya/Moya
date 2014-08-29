@@ -6,9 +6,6 @@
 //  Copyright (c) 2014 Ash Furrow. All rights reserved.
 //
 
-import Quick
-import Nimble
-
 import UIKit
 import Quick
 import Nimble
@@ -17,53 +14,75 @@ import Moya
 class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
         describe("valid enpoints") {
-            var sampleData: NSData!
-            beforeEach {
-                let bundle = NSBundle(forClass: self.dynamicType)
-                let path = bundle.pathForResource("300_200", ofType: "png")
-                sampleData = NSData(contentsOfFile: path)
-            }
-            describe("while hitting the network") {
-                let endpointsClosure = { (target: Target, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<Target> in
-                    switch target {
-                    case .MediumImage:
-                        return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
-                            return sampleData
-                        })
-                    }
-                }
-                
+            describe("with live data") {
                 describe("a provider", { () -> () in
-                    var provider: MoyaProvider<Target>!
+                    var provider: MoyaProvider<GitHub>!
                     beforeEach {
                         provider = MoyaProvider(endpointsClosure: endpointsClosure)
                     }
                     
-                    it("returns representative data"){
-                        var image: UIImage?
+                    it("returns stubbed data for zen request") {
+                        var message: String?
                         
-                        provider.request(.MediumImage, completion: { (object: AnyObject?, error: NSError?) -> () in
-                            image = UIImage(data: object as? NSData)
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (object, error) in
+                            if let data = object as? NSData {
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            }
                         })
                         
-                        expect{image?.size}.toEventually(equal(CGSizeMake(300, 200)), timeout: 10, pollInterval: 0.1)
+                        let sampleData = target.sampleData as NSData
+                        expect{message}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                    }
+                    
+                    it("returns stubbed data for user profile request") {
+                        var message: String?
+                        
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        provider.request(target, completion: { (object, error) in
+                            if let data = object as? NSData {
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            }
+                        })
+                        
+                        let sampleData = target.sampleData as NSData
+                        expect{message}.toEventually(beNil(), timeout: 1, pollInterval: 0.1)
                     }
                 })
                 
                 describe("a reactive provider", { () -> () in
-                    var provider: ReactiveMoyaProvider<Target>!
+                    var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
                         provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure)
                     }
                     
-                    it("returns representative data"){
-                        var image: UIImage?
+                    it("returns some data for zen request") {
+                        var message: String?
                         
-                        provider.request(.MediumImage).subscribeNext({ (object: AnyObject!) -> Void in
-                            image = UIImage(data: object as? NSData)
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (object, error) in
+                            if let data = object as? NSData {
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            }
                         })
                         
-                        expect{image?.size}.toEventually(equal(CGSizeMake(300, 200)), timeout: 10, pollInterval: 0.1)
+                        let sampleData = target.sampleData as NSData
+                        expect{message}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                    }
+                    
+                    it("returns some data for user profile request") {
+                        var response: NSDictionary?
+                        
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        provider.request(target, completion: { (object, error) in
+                            if let data = object as? NSData {
+                                response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
+                            }
+                        })
+                        
+                        let sampleData = target.sampleData as NSData
+                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+                        expect{response}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
                     }
                 })
             }

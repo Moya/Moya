@@ -63,34 +63,71 @@ ReactiveCocoa requires its setup script to be run.
 Use
 ----------------
 
-So how do you use this library? Well, it's easy. First, set up an `enum` with 
-all of your targets. The `enum` will need a base type that conforms to the
-`Hashable` protocol – `Int`s work best. 
+So how do you use this library? Well, it's pretty easy. Just follow this 
+template. First, set up an `enum` with all of your API targets. Note that you 
+can include information as part of your enum. Let's look at a simple example.
 
 ```swift
-enum Target: Int {
-	case MediumImage = 0
-	case LargeImage
+enum GitHub {
+    case Zen
+    case UserProfile(String)
 }
 ```
 
 This enum is used to make sure that you provide implementation details for each
-target (at compile time).
+target (at compile time). The enum *must* conform to the `MoyaTarget` protocol, 
+and by extension, the `MoyaPath` one as well. Let's take a look at what that 
+might look like. 
+
+```swift
+private extension String {
+    var URLEscapedString: String {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())
+    }
+}
+
+extension GitHub : MoyaPath {
+    var path: String {
+        switch self {
+        case .Zen:
+            return "/zen"
+        case .UserProfile(let name):
+            return "/users/\(name.URLEscapedString)"
+        }
+    }
+}
+
+extension GitHub : MoyaTarget {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
+    var sampleData: NSData {
+        switch self {
+        case .Zen:
+            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .UserProfile(let name):
+            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
+}
+
+```
+
+(The `String` extension is just for convenience – you don't have to use it.)
+
+You can see that the `MoyaPath` protocol translates each value of the enum into
+a relative URL, which can use values embedded in the enum. Super cool. 
+The `MoyaTarget` specifies both a base URL for the API and the sample data for 
+each enum value. The sample data are `NSData` instances, and could represent 
+JSON, images, text, whatever you're expecting from that endpoint.
 
 Next, we'll set up the endpoints for use with our API. 
 
 ```swift
-let endpointsClosure = { (target: Target, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<Target> in
-    switch target {
-    case .MediumImage:
-        return Endpoint(URL: "http://rdjpg.com/300/200/", sampleResponse: {
-            return sampleData
-        })
-    case .LargeImage:
-        return Endpoint(URL: "http://rdjpg.com/500/600/", sampleResponse: {
-            return otherSampleData
-        })
-    }
+public func url(route: MoyaTarget) -> String {
+    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+}
+
+let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: target.sampleData)
 }
 ```
 
@@ -98,7 +135,14 @@ The block you provide will be invoked every time an API call is to be made. Its
 responsibility is to return an `Endpoint` instance configured for use by Moya. 
 The `parameters` parameter is passed into this block to allow you to configure
 the `Endpoint` instance – these parameters are *not* automatically passed onto
-the network request, so add them to the `Endpoint` if they should be. 
+the network request, so add them to the `Endpoint` if they should be. They could 
+be some data internal to the app that help configure the `Endpoint`. In this 
+example, though, they're just passed right through.
+
+Most of the time, this closure is just a straight translation from target, 
+method, and parameters, into an `Endpoint` instance. However, since it's a 
+closure, it'll be executed at each invocation of the API, so you could do 
+whatever you want. 
 
 Notice that returning sample data is *required*. One of the key benefits of Moya
 is that it makes testing the app or running the app, using stubbed responses for
@@ -108,7 +152,7 @@ Great, now we're all set. Just need to create our provider.
 
 ```swift
 // Tuck this away somewhere where it'll be visible to anyone who wants to use it
-var provider: MoyaProvider<Target>!
+var provider: MoyaProvider<GitHub>!
 
 // Create this instance at app launch
 let provider = MoyaProvider(endpointsClosure: endpointsClosure)
@@ -117,44 +161,32 @@ let provider = MoyaProvider(endpointsClosure: endpointsClosure)
 Neato. Now how do we make a request?
 
 ```swift
-provider.request(.LargeImage, completion: { (object: AnyObject?, error: NSError?) -> () in
-    image = UIImage(data: object as? NSData)
+provider.request(.Zen, completion: { (object, error) in
+    if let data = object as? NSData {
+        message = NSString(data: data, encoding: NSUTF8StringEncoding)
+    }
 })
 ```
-The `request` method is given a `Target` value and, optionally, an HTTP method 
+
+The `request` method is given a `GitHub` value and, optionally, an HTTP method 
 and parameters for the endpoint closure.
+
+ReactiveCocoa Extensions
+----------------
 
 Even cooler are the ReactiveCocoa extensions. It immediately returns a  
 `RACSignal` that you can subscribe to our bind or map or whatever you want to 
 do. To handle errors, for instance, we could do the following:
 
 ```swift
-provider.request(.LargeImage).subscribeNext({ (object: AnyObject!) -> Void in
-        image = UIImage(data: object as? NSData)
-    }, error: { (error: NSError!) -> Void in
-        println(error)
-    })
+provider.request(.UserProfile("ashfurrow")).subscribeNext({ (object) -> Void in
+    image = UIImage(data: object as? NSData)
+}, error: { (error) -> Void in
+    println(error)
+})
 ```
 
 License
 ----------------
 
-Copyright (c) Ash Furrow, 2014
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+Moya is released under an MIT license. See LICENSE for more information.
