@@ -174,8 +174,8 @@ let provider = MoyaProvider(endpointsClosure: endpointsClosure)
 Neato. Now how do we make a request?
 
 ```swift
-provider.request(.Zen, completion: { (object, error) in
-    if let data = object as? NSData {
+provider.request(.Zen, completion: { (data, error) in
+    if let data = data {
         message = NSString(data: data, encoding: NSUTF8StringEncoding)
     }
 })
