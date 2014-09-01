@@ -32,7 +32,7 @@ Setup
 ----------------
 
 This project has [Alamofire](https://github.com/Alamofire/Alamofire) as a direct
-dependency, and both [swfitz](https://github.com/maxpow4h/swiftz) and and the
+dependency, and both [swiftz](https://github.com/maxpow4h/swiftz) and and the
 `swift-development` branch of [ReactiveCocoa](https://github.com/reactivecocoa/reactivecocoa/tree/swift-development)
 as optional ones. If you want to use this library, just grab those repos and
 integrate them into your project. Then drag and drop the `Moya.swift` and
