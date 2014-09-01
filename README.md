@@ -1,5 +1,4 @@
-Moya
-================
+![Moya Logo](https://raw.github.com/ashfurrow/Moya/master/web/moya_logo_github.png)
 
 So the basic idea is that we want some network abstraction layer to satisfy
 all of the requirements listed [here](https://github.com/artsy/eidolon/issues/9).
@@ -8,13 +7,13 @@ Mainly:
 - Treat test stubs as first-class citizens.
 - Only allow endpoints clearly defined through Moya can be access through Moya,
 enforced by the compiler.
-- Allow iterating through all potential API requests at runtime for API sanity 
+- Allow iterating through all potential API requests at runtime for API sanity
 checks.
 - Keep track of inflight requests and don't support duplicates.
 
-Super-cool. We actually go a bit farther than other network libraries by 
-abstracting the API endpoints away, too. Instead of dealing with endpoints 
-(URLS) directly, we use *targets*, which represent actions to be take on the 
+Super-cool. We actually go a bit farther than other network libraries by
+abstracting the API endpoints away, too. Instead of dealing with endpoints
+(URLS) directly, we use *targets*, which represent actions to be take on the
 API. This is beneficial if one action can hit different endpoints; for example,
 if you want to GET a user profile, but the endpoint differs depending on if that
 user is a friend or not. Hey – I don't write these APIs, I just use 'em.
@@ -22,29 +21,29 @@ user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 Project Status
 ----------------
 
-*We're skipping beta 6* – ain't nobody got time for that. 
+*We're skipping beta 6* – ain't nobody got time for that.
 
-This is still pretty early in its development, though it works now. There are 
-plenty of [issues](https://github.com/AshFurrow/Moya/issues) open, which should 
-give you an idea of our roadmap. If you have any suggestions on any of them, 
-please do feel free to leave a comment. 
+This is still pretty early in its development, though it works now. There are
+plenty of [issues](https://github.com/AshFurrow/Moya/issues) open, which should
+give you an idea of our roadmap. If you have any suggestions on any of them,
+please do feel free to leave a comment.
 
 Setup
 ----------------
 
 This project has [Alamofire](https://github.com/Alamofire/Alamofire) as a direct
-dependency, and both [swfitz](https://github.com/maxpow4h/swiftz) and and the 
+dependency, and both [swfitz](https://github.com/maxpow4h/swiftz) and and the
 `swift-development` branch of [ReactiveCocoa](https://github.com/reactivecocoa/reactivecocoa/tree/swift-development)
-as optional ones. If you want to use this library, just grab those repos and 
-integrate them into your project. Then drag and drop the `Moya.swift` and 
-`Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions, 
-you can just include the `MoyaProvider+ReactiveCocoa.swift` file in your project. 
+as optional ones. If you want to use this library, just grab those repos and
+integrate them into your project. Then drag and drop the `Moya.swift` and
+`Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions,
+you can just include the `MoyaProvider+ReactiveCocoa.swift` file in your project.
 However, there's currently a [bug](http://openradar.appspot.com/radar?id=6365671290044416)
 in Xcode, so the ReactiveCocoa extension is a *subclass* and not a Swift class
-extension, which is a shame. Oh well. 
+extension, which is a shame. Oh well.
 
-So just drag the files you want into your Xcode project. If that doesn't work 
-for some reason, or you want to get the full monty to run the library's test and 
+So just drag the files you want into your Xcode project. If that doesn't work
+for some reason, or you want to get the full monty to run the library's test and
 contribute back, clone this repo and set up the submodules.
 
 ```sh
@@ -54,17 +53,17 @@ git submodule init
 git submodule update
 ```
 
-ReactiveCocoa requires its setup script to be run. 
+ReactiveCocoa requires its setup script to be run.
 
 ```sh
-./submodules/ReactiveCocoa/script/bootstrap 
+./submodules/ReactiveCocoa/script/bootstrap
 ```
 
 Use
 ----------------
 
-So how do you use this library? Well, it's pretty easy. Just follow this 
-template. First, set up an `enum` with all of your API targets. Note that you 
+So how do you use this library? Well, it's pretty easy. Just follow this
+template. First, set up an `enum` with all of your API targets. Note that you
 can include information as part of your enum. Let's look at a simple example.
 
 ```swift
@@ -75,9 +74,9 @@ enum GitHub {
 ```
 
 This enum is used to make sure that you provide implementation details for each
-target (at compile time). The enum *must* conform to the `MoyaTarget` protocol, 
-and by extension, the `MoyaPath` one as well. Let's take a look at what that 
-might look like. 
+target (at compile time). The enum *must* conform to the `MoyaTarget` protocol,
+and by extension, the `MoyaPath` one as well. Let's take a look at what that
+might look like.
 
 ```swift
 private extension String {
@@ -114,12 +113,12 @@ extension GitHub : MoyaTarget {
 (The `String` extension is just for convenience – you don't have to use it.)
 
 You can see that the `MoyaPath` protocol translates each value of the enum into
-a relative URL, which can use values embedded in the enum. Super cool. 
-The `MoyaTarget` specifies both a base URL for the API and the sample data for 
-each enum value. The sample data are `NSData` instances, and could represent 
+a relative URL, which can use values embedded in the enum. Super cool.
+The `MoyaTarget` specifies both a base URL for the API and the sample data for
+each enum value. The sample data are `NSData` instances, and could represent
 JSON, images, text, whatever you're expecting from that endpoint.
 
-Next, we'll set up the endpoints for use with our API. 
+Next, we'll set up the endpoints for use with our API.
 
 ```swift
 public func url(route: MoyaTarget) -> String {
@@ -132,17 +131,17 @@ let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [Stri
 ```
 
 The block you provide will be invoked every time an API call is to be made. Its
-responsibility is to return an `Endpoint` instance configured for use by Moya. 
+responsibility is to return an `Endpoint` instance configured for use by Moya.
 The `parameters` parameter is passed into this block to allow you to configure
 the `Endpoint` instance – these parameters are *not* automatically passed onto
-the network request, so add them to the `Endpoint` if they should be. They could 
-be some data internal to the app that help configure the `Endpoint`. In this 
+the network request, so add them to the `Endpoint` if they should be. They could
+be some data internal to the app that help configure the `Endpoint`. In this
 example, though, they're just passed right through.
 
-Most of the time, this closure is just a straight translation from target, 
-method, and parameters, into an `Endpoint` instance. However, since it's a 
-closure, it'll be executed at each invocation of the API, so you could do 
-whatever you want. Say you want to test errors, too. 
+Most of the time, this closure is just a straight translation from target,
+method, and parameters, into an `Endpoint` instance. However, since it's a
+closure, it'll be executed at each invocation of the API, so you could do
+whatever you want. Say you want to test errors, too.
 
 ```swift
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
@@ -159,9 +158,9 @@ let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters
 
 Notice that returning sample data is *required*. One of the key benefits of Moya
 is that it makes testing the app or running the app, using stubbed responses for
-API calls, really easy. 
+API calls, really easy.
 
-Great, now we're all set. Just need to create our provider. 
+Great, now we're all set. Just need to create our provider.
 
 ```swift
 // Tuck this away somewhere where it'll be visible to anyone who wants to use it
@@ -181,14 +180,14 @@ provider.request(.Zen, completion: { (data, error) in
 })
 ```
 
-The `request` method is given a `GitHub` value and, optionally, an HTTP method 
+The `request` method is given a `GitHub` value and, optionally, an HTTP method
 and parameters for the endpoint closure.
 
 ReactiveCocoa Extensions
 ----------------
 
 Even cooler are the ReactiveCocoa extensions. It immediately returns a  
-`RACSignal` that you can subscribe to our bind or map or whatever you want to 
+`RACSignal` that you can subscribe to our bind or map or whatever you want to
 do. To handle errors, for instance, we could do the following:
 
 ```swift
