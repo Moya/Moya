@@ -17,7 +17,9 @@ class EndpointSpec: QuickSpec {
             
             beforeEach({ () -> () in
                 let target: GitHub = .Zen
-                endpoint = Endpoint<GitHub>(URL: url(target), method: Moya.Method.GET, parameters: [String: AnyObject](), sampleResponse: .Success(target.sampleData))
+                let parameters = ["Nemesis": "Harvey"] as [String: AnyObject]
+                let headerFields = ["Title": "Dominar"] as [String: AnyObject]
+                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(target.sampleData), method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
             })
             
             it("returns a new endpoint for endpointByAddingParameters") {
@@ -26,7 +28,39 @@ class EndpointSpec: QuickSpec {
                 
                 let newEndpointMessageObject: AnyObject? = newEndpoint.parameters["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
+                // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointMessage).to(equal(message))
+                
+                // Compare other properties to ensure they've been copied correctly
+                expect(newEndpoint.URL).to(equal(endpoint.URL))
+                expect(newEndpoint.method).to(equal(endpoint.method))
+                expect(newEndpoint.parameterEncoding).to(equal(endpoint.parameterEncoding))
+                expect(newEndpoint.httpHeaderFields.count).to(equal(endpoint.httpHeaderFields.count))
+            }
+            
+            it("returns a new endpoint for endpointByAddingHTTPHeaderFields") {
+                let agent = "Zalbinian"
+                let newEndpoint = endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": agent])
+                
+                let newEndpointAgentObject: AnyObject? = newEndpoint.httpHeaderFields["User-Agent"]
+                let newEndpointAgent = newEndpointAgentObject as? String
+                // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
+                expect(newEndpointAgent).to(equal(agent))
+                
+                // Compare other properties to ensure they've been copied correctly
+                expect(newEndpoint.URL).to(equal(endpoint.URL))
+                expect(newEndpoint.method).to(equal(endpoint.method))
+                expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
+                expect(newEndpoint.parameterEncoding).to(equal(endpoint.parameterEncoding))
+            }
+            
+            it("returns a correct URL request") {
+                let request = endpoint.urlRequest
+                expect(request.URL.absoluteString).to(equal("https://api.github.com/zen"))
+                expect(NSString(data: request.HTTPBody!, encoding: 4)).to(equal("{\"Nemesis\":\"Harvey\"}"))
+                let titleObject: AnyObject? = endpoint.httpHeaderFields["Title"]
+                let title = titleObject as? String
+                expect(title).to(equal("Dominar"))
             }
         })
     }

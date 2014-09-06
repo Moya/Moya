@@ -44,14 +44,32 @@ extension GitHub : MoyaTarget {
     }
 }
 
+extension Moya.ParameterEncoding: Equatable {
+}
+
+public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
+    switch (lhs, rhs) {
+    case (.URL, .URL):
+        return true
+    case (.JSON, .JSON):
+        return true
+    case (.PropertyList(_), .PropertyList(_)):
+        return true
+    case (.Custom(_), .Custom(_)):
+        return true
+    default:
+        return false
+    }
+}
+
 public func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString!
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(target.sampleData))
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(target.sampleData), method: method, parameters: parameters)
 }
 
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Error(NSError()))
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(NSError()), method: method, parameters: parameters)
 }
