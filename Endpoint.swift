@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public enum EndpointSampleResponse {
     case Success(NSData)
