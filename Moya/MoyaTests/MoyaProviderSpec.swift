@@ -50,6 +50,26 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 })
                 
+                describe("a provider with an endpoint modifier", { () -> () in
+                    var provider: MoyaProvider<GitHub>!
+                    var executed = false
+                    beforeEach {
+                        let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
+                            executed = true
+                            return endpoint
+                        }
+                        provider = MoyaProvider(endpointsClosure: endpointsClosure, endpointModifier: endpointModification, stubResponses: true)
+                    }
+                    
+                    it("executes the endpoint modifier") {
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (data, error) in })
+                        
+                        let sampleData = target.sampleData as NSData
+                        expect{executed}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                    }
+                })
+                
                 describe("a reactive provider", { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {

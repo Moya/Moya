@@ -36,16 +36,19 @@ public protocol MoyaTarget : MoyaPath {
 
 public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
+    public typealias MoyaEndpointModification = (endpoint: Endpoint<T>) -> (Endpoint<T>)
     public let endpointsClosure: MoyaEndpointsClosure
+    let endpointModifier: MoyaEndpointModification
     let stubResponses: Bool
     
-    public init(endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
+    public init(endpointsClosure: MoyaEndpointsClosure, endpointModifier: MoyaEndpointModification = MoyaProvider.DefaultEnpointModification(), stubResponses: Bool  = false) {
         self.endpointsClosure = endpointsClosure
+        self.endpointModifier = endpointModifier
         self.stubResponses = stubResponses
     }
     
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
-        let endpoint = endpointsClosure(token, method: method, parameters: parameters)
+        let endpoint = self.endpointModifier(endpoint: endpointsClosure(token, method: method, parameters: parameters))
         
         if (stubResponses) {
             // Need to dispatch to the next runloop to give the subject a chance to be subscribed to
@@ -82,6 +85,12 @@ public class MoyaProvider<T: MoyaTarget> {
     
     public func request(token: T, completion: MoyaCompletion) {
         request(token, method: Moya.DefaultMethod(), completion)
+    }
+    
+    public class func DefaultEnpointModification() -> MoyaEndpointModification {
+        return { (endpoint: Endpoint<T>) -> (Endpoint<T>) in
+            return endpoint
+        }
     }
 }
 
