@@ -37,16 +37,16 @@ public class Endpoint<T> {
             newParameters[key] = value
         }
         
-        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: newParameters, httpHeaderFields: httpHeaderFields)
+        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: newParameters, parameterEncoding: parameterEncoding, httpHeaderFields: httpHeaderFields)
     }
     
     public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: AnyObject]) -> Endpoint<T> {
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: AnyObject]()
-        for (key, value) in parameters {
+        for (key, value) in httpHeaderFields {
             newHTTPHeaderFields[key] = value
         }
         
-        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, httpHeaderFields: newHTTPHeaderFields)
+        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 }
 
