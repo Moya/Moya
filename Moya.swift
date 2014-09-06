@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public typealias MoyaCompletion = (data: NSData?, error: NSError?) -> ()
 
@@ -58,7 +59,7 @@ public class MoyaProvider<T: MoyaTarget> {
             })
         } else {
             let method: Alamofire.Method = methodFromMethod(endpoint.method)
-            AF.request(method, endpoint.URL)
+            Alamofire.request(method, endpoint.URL)
                 .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     // Alamofire always sense the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future. 
