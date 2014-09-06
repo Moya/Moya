@@ -21,7 +21,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         provider = MoyaProvider(endpointsClosure: endpointsClosure)
                     }
                     
-                    it("returns stubbed data for zen request") {
+                    it("returns real data for zen request") {
                         var message: String?
                         
                         let target: GitHub = .Zen
@@ -34,7 +34,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect{message}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
                     }
                     
-                    it("returns stubbed data for user profile request") {
+                    it("returns real data for user profile request") {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
@@ -58,8 +58,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, error) in
-                            if let data = data {
+                        provider.request(target).subscribeNext({ (data) -> Void in
+                            if let data = data as? NSData {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
                         })
@@ -71,8 +71,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var response: NSDictionary?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (data, error) in
-                            if let data = data {
+                        provider.request(target).subscribeNext({ (data) -> Void in
+                            if let data = data as? NSData {
                                 response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
                             }
                         })
@@ -80,6 +80,18 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let sampleData = target.sampleData as NSData
                         let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
                         expect{response}.toEventuallyNot(beNil(), timeout: 10, pollInterval: 0.1)
+                    }
+                    
+                    it("returns identical signals for inflight requests") {
+                        let target: GitHub = .Zen
+                        let signal1 = provider.request(target)
+                        let signal2 = provider.request(target)
+                        expect(provider.inflightRequests.count).to(equal(1))
+                        
+                        expect(signal1).to(equal(signal2))
+                        
+                        // Allow for network request to complete
+                        expect(provider.inflightRequests.count).toEventually(equal(0), timeout: 10, pollInterval: 0.1)
                     }
                 })
             }
