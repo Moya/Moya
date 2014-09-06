@@ -54,6 +54,7 @@ class MoyaProviderSpec: QuickSpec {
                     var provider: MoyaProvider<GitHub>!
                     var executed = false
                     beforeEach {
+                        executed = false
                         let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
                             executed = true
                             return endpoint
