@@ -47,6 +47,14 @@ class MoyaProviderSpec: QuickSpec {
                         let sampleData = target.sampleData as NSData
                         expect{message}.toEventually(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)), timeout: 1, pollInterval: 0.1)
                     }
+                    
+                    it("returns equivalent Endpoint instances for the same target") {
+                        let target: GitHub = .Zen
+                        
+                        let endpoint1 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
+                        let endpoint2 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
+                        expect(endpoint1).to(equal(endpoint2))
+                    }
                 })
                 
                 describe("a provider with an endpoint modifier", { () -> () in
@@ -119,6 +127,17 @@ class MoyaProviderSpec: QuickSpec {
                         let sampleData = target.sampleData as NSData
                         let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
                         expect{response}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                    }
+                    
+                    it("returns identical signals for inflight requests") {
+                        let target: GitHub = .Zen
+                        let signal1 = provider.request(target)
+                        let signal2 = provider.request(target)
+                        expect(provider.inflightRequests.count).to(equal(1))
+                        
+                        expect(signal1).to(equal(signal2))
+                        
+                        expect(provider.inflightRequests.count).toEventually(equal(0), timeout: 1, pollInterval: 0.1)
                     }
                 })
             }

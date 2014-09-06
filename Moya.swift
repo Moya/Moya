@@ -80,11 +80,15 @@ public class MoyaProvider<T: MoyaTarget> {
         self.stubResponses = stubResponses
     }
     
+    public func endpoint(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<T> {
+        return endpointsClosure(token, method: method, parameters: parameters)
+    }
+    
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
-        let endpoint = self.endpointModifier(endpoint: endpointsClosure(token, method: method, parameters: parameters))
+        let endpoint = endpointModifier(endpoint: self.endpoint(token, method: method, parameters: parameters))
         
         if (stubResponses) {
-            // Need to dispatch to the next runloop to give the subject a chance to be subscribed to
+            // Need to dispatch to the next runloop to give the subject a chance to be subscribed to (useful for unit tests)
             dispatch_async(dispatch_get_main_queue(), {
                 switch endpoint.sampleResponse {
                 case .Success(let data):
@@ -98,7 +102,7 @@ public class MoyaProvider<T: MoyaTarget> {
             Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     // Alamofire always sense the data param as an NSData? type, but we'll
-                    // add a check just in case something changes in the future. 
+                    // add a check just in case something changes in the future.
                     if let data = data as? NSData {
                         completion(data: data, error: error)
                     } else {
