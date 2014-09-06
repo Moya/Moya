@@ -32,12 +32,6 @@ public extension RACSignal {
         })
     }
     
-    public func mapImageOnBackgroundScheduler() -> RACSignal {
-        return self.deliverOn(RACScheduler(priority: RACSchedulerPriorityDefault))
-            .mapImage()
-            .deliverOn(RACScheduler.mainThreadScheduler())
-    }
-    
     public func mapJSON() -> RACSignal {
         return self.tryMap({ (object, error) -> AnyObject! in
             var json: AnyObject?

@@ -46,19 +46,6 @@ class RACSignalMoyaSpec: QuickSpec {
                 expect(size).to(equal(image.size))
             }
             
-            it("maps data representing an image to an image on a background queue") {
-                let image = UIImage.testPNGImage(named: "testImage")
-                let data = UIImageJPEGRepresentation(image, 0.75)
-                let signal = signalSendingData(data)
-                
-                var size: CGSize?
-                signal.mapImageOnBackgroundScheduler().subscribeNext({ (image) -> Void in
-                    size = image.size
-                })
-                
-                expect{size}.toEventually(equal(image.size), timeout: 1, pollInterval: 0.1)
-            }
-            
             it("ignores invalid data") {
                 let data = NSData()
                 let signal = signalSendingData(data)
