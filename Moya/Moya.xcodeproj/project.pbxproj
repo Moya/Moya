@@ -24,6 +24,9 @@
 		5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E796A1E199F4C0D005D6E86 /* Endpoint.swift */; };
 		5E796A22199F4F1F005D6E86 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7969BA199F453E005D6E86 /* Moya.framework */; };
 		5EECB54C19A873E300D07938 /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EECB54B19A873E300D07938 /* TestResources.swift */; };
+		5EF7F68819BB795600F5BDE6 /* RACSignal+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7F68719BB795600F5BDE6 /* RACSignal+Moya.swift */; };
+		5EF7F69219BB79AE00F5BDE6 /* RACSignal+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF7F69119BB79AE00F5BDE6 /* RACSignal+MoyaSpec.swift */; };
+		5EF7F69419BB7AA100F5BDE6 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EF7F69319BB7AA100F5BDE6 /* testImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +121,9 @@
 		5E796A1E199F4C0D005D6E86 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = ../../Endpoint.swift; sourceTree = "<group>"; };
 		5EECB54119A873AC00D07938 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoyaProviderIntegrationTests.swift; path = ../MoyaTests/MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
 		5EECB54B19A873E300D07938 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
+		5EF7F68719BB795600F5BDE6 /* RACSignal+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "RACSignal+Moya.swift"; path = "../../RACSignal+Moya.swift"; sourceTree = "<group>"; };
+		5EF7F69119BB79AE00F5BDE6 /* RACSignal+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RACSignal+MoyaSpec.swift"; sourceTree = "<group>"; };
+		5EF7F69319BB7AA100F5BDE6 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +204,7 @@
 				5E7969BF199F453E005D6E86 /* Moya.h */,
 				5E796A16199F475E005D6E86 /* Moya.swift */,
 				5E6C632619A7C13400A435D4 /* Moya+ReactiveCocoa.swift */,
+				5EF7F68719BB795600F5BDE6 /* RACSignal+Moya.swift */,
 				5E796A1E199F4C0D005D6E86 /* Endpoint.swift */,
 				5E7969BD199F453E005D6E86 /* Supporting Files */,
 			);
@@ -219,6 +226,8 @@
 				5EECB54B19A873E300D07938 /* TestResources.swift */,
 				5E7969C9199F453E005D6E86 /* MoyaProviderSpec.swift */,
 				5E1A1CA119BB28D0006F63E2 /* EndpointSpec.swift */,
+				5EF7F69119BB79AE00F5BDE6 /* RACSignal+MoyaSpec.swift */,
+				5EF7F69319BB7AA100F5BDE6 /* testImage.png */,
 				5E7969C7199F453E005D6E86 /* Supporting Files */,
 			);
 			path = MoyaTests;
@@ -458,6 +467,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF7F69419BB7AA100F5BDE6 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +487,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EF7F68819BB795600F5BDE6 /* RACSignal+Moya.swift in Sources */,
 				5E6C632719A7C13400A435D4 /* Moya+ReactiveCocoa.swift in Sources */,
 				5E796A1F199F4C0D005D6E86 /* Endpoint.swift in Sources */,
 				5E796A17199F475E005D6E86 /* Moya.swift in Sources */,
@@ -490,6 +501,7 @@
 				5E7969CA199F453E005D6E86 /* MoyaProviderSpec.swift in Sources */,
 				5E1A1CA219BB28D0006F63E2 /* EndpointSpec.swift in Sources */,
 				5EECB54C19A873E300D07938 /* TestResources.swift in Sources */,
+				5EF7F69219BB79AE00F5BDE6 /* RACSignal+MoyaSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
