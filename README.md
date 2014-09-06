@@ -200,7 +200,7 @@ Let's take a look at a simple example.
 
 ```swift
 let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
-    return endpoint.endpointByAddingParameters(["User-Agent": "MyAppName"])
+    return endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": "MyAppName"])
 }
 provider = MoyaProvider(endpointsClosure: ..., endpointModifier: endpointModification)
 ```

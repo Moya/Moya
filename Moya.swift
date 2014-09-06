@@ -14,6 +14,39 @@ public typealias MoyaCompletion = (data: NSData?, error: NSError?) -> ()
 public class Moya {
     public enum Method {
         case GET, POST, PUT, DELETE
+        
+        func method() -> Alamofire.Method {
+            switch self {
+            case .GET:
+                return .GET
+            case .POST:
+                return .POST
+            case .PUT:
+                return .PUT
+            case .DELETE:
+                return .DELETE
+            }
+        }
+    }
+    
+    public enum ParameterEncoding {
+        case URL
+        case JSON
+        case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
+        case Custom((NSURLRequest, [String: AnyObject]?) -> (NSURLRequest, NSError?))
+        
+        func parameterEncoding() -> Alamofire.ParameterEncoding {
+            switch self {
+            case .URL:
+                return .URL
+            case .JSON:
+                return .JSON
+            case .PropertyList(let format, let options):
+                return .PropertyList(format, options)
+            case .Custom(let closure):
+                return .Custom(closure)
+            }
+        }
     }
     
     public class func DefaultMethod() -> Method {
@@ -61,8 +94,8 @@ public class MoyaProvider<T: MoyaTarget> {
                 }
             })
         } else {
-            let method: Alamofire.Method = methodFromMethod(endpoint.method)
-            Alamofire.request(method, endpoint.URL)
+            let request = endpoint.urlRequest
+            Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     // Alamofire always sense the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future. 

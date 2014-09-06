@@ -58,7 +58,7 @@ class MoyaProviderSpec: QuickSpec {
                         executed = false
                         let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
                             executed = true
-                            return Endpoint(URL: endpoint.URL, method: endpoint.method, parameters: endpoint.parameters, sampleResponse: .Success(newSampleResponse.dataUsingEncoding(NSUTF8StringEncoding)!))
+                            return Endpoint(URL: endpoint.URL, sampleResponse: .Success(newSampleResponse.dataUsingEncoding(NSUTF8StringEncoding)!), method: endpoint.method, parameters: endpoint.parameters)
                         }
                         provider = MoyaProvider(endpointsClosure: endpointsClosure, endpointModifier: endpointModification, stubResponses: true)
                     }

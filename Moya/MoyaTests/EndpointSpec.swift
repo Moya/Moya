@@ -17,7 +17,7 @@ class EndpointSpec: QuickSpec {
             
             beforeEach({ () -> () in
                 let target: GitHub = .Zen
-                endpoint = Endpoint<GitHub>(URL: url(target), method: Moya.Method.GET, parameters: [String: AnyObject](), sampleResponse: .Success(target.sampleData))
+                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(target.sampleData), method: Moya.Method.GET, parameters: [String: AnyObject]())
             })
             
             it("returns a new endpoint for endpointByAddingParameters") {
@@ -27,6 +27,15 @@ class EndpointSpec: QuickSpec {
                 let newEndpointMessageObject: AnyObject? = newEndpoint.parameters["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
                 expect(newEndpointMessage).to(equal(message))
+                //TODO: Compare other properties to ensure they've been copied correctly.
+            }
+            
+            pending("returns a new endpoint for endpointByAddingHTTPHeaderFields") {
+                //TODO:
+            }
+            
+            pending("returns a correct URL request") {
+                //TODO:
             }
         })
     }
