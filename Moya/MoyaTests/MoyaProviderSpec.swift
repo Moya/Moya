@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Ash Furrow. All rights reserved.
 //
 
-import UIKit
 import Quick
 import Nimble
 import Moya
@@ -47,6 +46,43 @@ class MoyaProviderSpec: QuickSpec {
                         
                         let sampleData = target.sampleData as NSData
                         expect{message}.toEventually(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)), timeout: 1, pollInterval: 0.1)
+                    }
+                })
+                
+                describe("a provider with an endpoint modifier", { () -> () in
+                    var provider: MoyaProvider<GitHub>!
+                    var executed = false
+                    let newSampleResponse = "New Sample Response"
+                    
+                    beforeEach {
+                        executed = false
+                        let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
+                            executed = true
+                            return Endpoint(URL: endpoint.URL, method: endpoint.method, parameters: endpoint.parameters, sampleResponse: .Success(newSampleResponse.dataUsingEncoding(NSUTF8StringEncoding)!))
+                        }
+                        provider = MoyaProvider(endpointsClosure: endpointsClosure, endpointModifier: endpointModification, stubResponses: true)
+                    }
+                    
+                    it("executes the endpoint modifier") {
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (data, error) in })
+                        
+                        let sampleData = target.sampleData as NSData
+                        expect{executed}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                    }
+                    
+                    it("returns new sample data") {
+                        var message: String?
+                        
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (data, error) in
+                            if let data = data {
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            }
+                        })
+                        
+                        let sampleData = target.sampleData as NSData
+                        expect{message}.toEventually(equal(newSampleResponse), timeout: 1, pollInterval: 0.1)
                     }
                 })
                 

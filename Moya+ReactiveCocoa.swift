@@ -9,8 +9,8 @@
 import Foundation
 
 public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
-    override public init(endpointsClosure: MoyaEndpointsClosure, stubResponses: Bool  = false) {
-        super.init(endpointsClosure: endpointsClosure, stubResponses: stubResponses)
+    override public init(endpointsClosure: MoyaEndpointsClosure, endpointModifier: MoyaEndpointModification = MoyaProvider.DefaultEnpointModification(), stubResponses: Bool = false) {
+        super.init(endpointsClosure: endpointsClosure, endpointModifier: endpointModifier, stubResponses: stubResponses)
     }
     
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {

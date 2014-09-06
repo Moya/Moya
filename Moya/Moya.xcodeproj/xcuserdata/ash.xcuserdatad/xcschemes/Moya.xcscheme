@@ -37,6 +37,11 @@
                BlueprintName = "MoyaTests"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "MoyaProviderIntegrationTests">
+               </Test>
+            </SkippedTests>
             <LocationScenarioReference
                identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
                referenceType = "1">

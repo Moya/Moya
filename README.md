@@ -21,12 +21,11 @@ user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 Project Status
 ----------------
 
-*We're skipping beta 6* – ain't nobody got time for that.
+Currently, we support Beta 7. 
 
-This is still pretty early in its development, though it works now. There are
-plenty of [issues](https://github.com/AshFurrow/Moya/issues) open, which should
-give you an idea of our roadmap. If you have any suggestions on any of them,
-please do feel free to leave a comment.
+This is nearing a 0.1 release, though it works now. There are plenty of [issues](https://github.com/AshFurrow/Moya/issues) 
+open, which should give you an idea of our roadmap. If you have any suggestions 
+on any of them, please do feel free to leave a comment.
 
 Setup
 ----------------
@@ -186,6 +185,30 @@ provider.request(.Zen, completion: { (data, error) in
 
 The `request` method is given a `GitHub` value and, optionally, an HTTP method
 and parameters for the endpoint closure.
+
+Modifying Requests
+----------------
+
+So this is great and all, but it's kind of a pain to set up something like 
+OAuth, or adding a special user agent string to your requests, or logging 
+requests for analytics purposes. Moya provides an optional, last-minute way to
+modify the Endpoint that is used to hit the network. This is the 
+`endpointModifier` parameter of the initialilzer, which has a default value of
+`DefaultEnpointModification()` (which does nothing). 
+
+Let's take a look at a simple example. 
+
+```swift
+let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
+    return endpoint.endpointByAddingParameters(["User-Agent": "MyAppName"])
+}
+provider = MoyaProvider(endpointsClosure: ..., endpointModifier: endpointModification)
+```
+
+This closure receives an `Endpoint` instance and is responsible for returning an
+instance. It's here that you'd do your OAuth signing or whatever. You can return
+the same instance that you're passed, which would not modify the request. That 
+could be useful for logging, for example. 
 
 ReactiveCocoa Extensions
 ----------------

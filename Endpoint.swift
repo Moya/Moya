@@ -17,8 +17,8 @@ public enum EndpointSampleResponse {
 public class Endpoint<T> {
     public let URL: String
     public let method: Moya.Method
-    let sampleResponse: EndpointSampleResponse
-    let parameters: [String: AnyObject]?
+    public let sampleResponse: EndpointSampleResponse
+    public let parameters: [String: AnyObject]
     
     public init(URL: String, method: Moya.Method, parameters: [String: AnyObject], sampleResponse: EndpointSampleResponse) {
         self.URL = URL
@@ -33,6 +33,15 @@ public class Endpoint<T> {
     
     public convenience init(URL: String, sampleResponse: EndpointSampleResponse) {
         self.init(URL: URL, parameters: Dictionary<String, AnyObject>(), sampleResponse: sampleResponse)
+    }
+    
+    public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<T> {
+        var newParameters = self.parameters ?? [String: AnyObject]()
+        for (key, value) in parameters {
+            newParameters[key] = value
+        }
+        
+        return Endpoint(URL: URL, method: method, parameters: newParameters, sampleResponse: sampleResponse)
     }
 }
 
