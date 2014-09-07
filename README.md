@@ -36,10 +36,8 @@ dependency, and both [swiftz](https://github.com/maxpow4h/swiftz) and and the
 as optional ones. If you want to use this library, just grab those repos and
 integrate them into your project. Then drag and drop the `Moya.swift` and
 `Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions,
-you can just include the `MoyaProvider+ReactiveCocoa.swift` file in your project.
-However, there's currently a [bug](http://openradar.appspot.com/radar?id=6365671290044416)
-in Xcode, so the ReactiveCocoa extension is a *subclass* and not a Swift class
-extension, which is a shame. Oh well.
+you can just include the `MoyaProvider+ReactiveCocoa.swift` and 
+`RACSignal+Moya.swift` files into your project.
 
 So just drag the files you want into your Xcode project. If that doesn't work
 for some reason, or you want to get the full monty to run the library's test and
