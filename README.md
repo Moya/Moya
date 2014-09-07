@@ -46,8 +46,7 @@ contribute back, clone this repo and set up the submodules.
 ```sh
 git clone git@github.com:AshFurrow/Moya.git
 cd Moya
-git submodule init
-git submodule update
+git submodule update --init
 ```
 
 ReactiveCocoa requires its setup script to be run.
