@@ -57,40 +57,26 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 })
                 
-                describe("a provider with an endpoint modifier", { () -> () in
+                describe("a provider with a custom endpoint resolver", { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     var executed = false
                     let newSampleResponse = "New Sample Response"
                     
                     beforeEach {
                         executed = false
-                        let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
+                        let endpointResolution = { (endpoint: Endpoint<GitHub>) -> (NSURLRequest) in
                             executed = true
-                            return Endpoint(URL: endpoint.URL, sampleResponse: .Success(newSampleResponse.dataUsingEncoding(NSUTF8StringEncoding)!), method: endpoint.method, parameters: endpoint.parameters)
+                            return endpoint.urlRequest
                         }
-                        provider = MoyaProvider(endpointsClosure: endpointsClosure, endpointModifier: endpointModification, stubResponses: true)
+                        provider = MoyaProvider(endpointsClosure: endpointsClosure, endpointResolver: endpointResolution, stubResponses: true)
                     }
                     
-                    it("executes the endpoint modifier") {
+                    it("executes the endpoint resolver") {
                         let target: GitHub = .Zen
                         provider.request(target, completion: { (data, error) in })
                         
                         let sampleData = target.sampleData as NSData
                         expect{executed}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
-                    }
-                    
-                    it("returns new sample data") {
-                        var message: String?
-                        
-                        let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, error) in
-                            if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
-                            }
-                        })
-                        
-                        let sampleData = target.sampleData as NSData
-                        expect{message}.toEventually(equal(newSampleResponse), timeout: 1, pollInterval: 0.1)
                     }
                 })
                 

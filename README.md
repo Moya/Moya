@@ -193,22 +193,25 @@ So this is great and all, but it's kind of a pain to set up something like
 OAuth, or adding a special user agent string to your requests, or logging 
 requests for analytics purposes. Moya provides an optional, last-minute way to
 modify the Endpoint that is used to hit the network. This is the 
-`endpointModifier` parameter of the initialilzer, which has a default value of
-`DefaultEnpointModification()` (which does nothing). 
+`endpointResolver` parameter of the initialilzer, which has a default value of
+`DefaultEnpointResolution()` (which leaves the request unchanged). 
 
 Let's take a look at a simple example. 
 
 ```swift
-let endpointModification = { (endpoint: Endpoint<GitHub>) -> (Endpoint<GitHub>) in
-    return endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": "MyAppName"])
+let endpointModification = { (endpoint: Endpoint<GitHub>) -> (NSURLRequest) in
+    let newEndpoint = endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": "MyAppName"])
+    return newEndpoint.urlRequest
 }
 provider = MoyaProvider(endpointsClosure: ..., endpointModifier: endpointModification)
 ```
 
-This closure receives an `Endpoint` instance and is responsible for returning an
-instance. It's here that you'd do your OAuth signing or whatever. You can return
-the same instance that you're passed, which would not modify the request. That 
-could be useful for logging, for example. 
+This closure receives an `Endpoint` instance and is responsible for returning a
+`NSURLRequest` that represents the resources to be accessed. It's here that 
+you'd do your OAuth signing or whatever. Since you return an `NSURLRequest`, you
+can use whatever general-purpose authentication library you want. You can return 
+the `urlRequest` property of the instance that you're passed in, which would not 
+change the request at all. That could be useful for logging, for example. 
 
 ReactiveCocoa Extensions
 ----------------
