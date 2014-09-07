@@ -11,8 +11,8 @@ import Foundation
 public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
     
-    override public init(endpointsClosure: MoyaEndpointsClosure, endpointModifier: MoyaEndpointModification = MoyaProvider.DefaultEnpointModification(), stubResponses: Bool = false) {
-        super.init(endpointsClosure: endpointsClosure, endpointModifier: endpointModifier, stubResponses: stubResponses)
+    override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false) {
+        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses)
     }
     
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {

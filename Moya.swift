@@ -69,14 +69,14 @@ public protocol MoyaTarget : MoyaPath {
 
 public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
-    public typealias MoyaEndpointModification = (endpoint: Endpoint<T>) -> (Endpoint<T>)
+    public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
     public let endpointsClosure: MoyaEndpointsClosure
-    let endpointModifier: MoyaEndpointModification
+    let endpointResolver: MoyaEndpointResolution
     let stubResponses: Bool
     
-    public init(endpointsClosure: MoyaEndpointsClosure, endpointModifier: MoyaEndpointModification = MoyaProvider.DefaultEnpointModification(), stubResponses: Bool  = false) {
+    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false) {
         self.endpointsClosure = endpointsClosure
-        self.endpointModifier = endpointModifier
+        self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
     }
     
@@ -85,7 +85,8 @@ public class MoyaProvider<T: MoyaTarget> {
     }
     
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
-        let endpoint = endpointModifier(endpoint: self.endpoint(token, method: method, parameters: parameters))
+        let endpoint = self.endpoint(token, method: method, parameters: parameters)
+        let request = endpointResolver(endpoint: endpoint)
         
         if (stubResponses) {
             // Need to dispatch to the next runloop to give the subject a chance to be subscribed to (useful for unit tests)
@@ -98,7 +99,6 @@ public class MoyaProvider<T: MoyaTarget> {
                 }
             })
         } else {
-            let request = endpoint.urlRequest
             Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     // Alamofire always sense the data param as an NSData? type, but we'll
@@ -124,9 +124,9 @@ public class MoyaProvider<T: MoyaTarget> {
         request(token, method: Moya.DefaultMethod(), completion)
     }
     
-    public class func DefaultEnpointModification() -> MoyaEndpointModification {
-        return { (endpoint: Endpoint<T>) -> (Endpoint<T>) in
-            return endpoint
+    public class func DefaultEnpointResolution() -> MoyaEndpointResolution {
+        return { (endpoint: Endpoint<T>) -> (NSURLRequest) in
+            return endpoint.urlRequest
         }
     }
 }
