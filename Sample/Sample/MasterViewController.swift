@@ -67,19 +67,14 @@ class MasterViewController: UITableViewController {
 
     @IBAction func searchWasPressed(sender: UIBarButtonItem) {
         var usernameTextField: UITextField?
-        let handler = { () -> () in
-            if let usernameTextField = usernameTextField {
-                self.downloadRepositories(usernameTextField.text)
-            }
-        }
         
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .Alert)
         let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            handler()
-            promptController.dismissViewControllerAnimated(true, completion: nil)
+            if let usernameTextField = usernameTextField {
+                self.downloadRepositories(usernameTextField.text)
+            }
         })
         let cancel = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
-            promptController.dismissViewControllerAnimated(true, completion: nil)
         }
         promptController.addAction(ok)
         promptController.addTextFieldWithConfigurationHandler { (textField) -> Void in
