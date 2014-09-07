@@ -18,14 +18,19 @@ API. This is beneficial if one action can hit different endpoints; for example,
 if you want to GET a user profile, but the endpoint differs depending on if that
 user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 
+Sample Project
+----------------
+
+There's a sample project in the Sample directory. Make sure to run the [setup
+instructions](#setup) below, since it relies on the Alamofire submodule. 
+
 Project Status
 ----------------
 
 Currently, we support Beta 7. 
 
-This is nearing a 0.1 release, though it works now. There are plenty of [issues](https://github.com/AshFurrow/Moya/issues) 
-open, which should give you an idea of our roadmap. If you have any suggestions 
-on any of them, please do feel free to leave a comment.
+This is nearing a 0.1 release, though it works now. We're using it in [Artsy's
+new auction app](https://github.com/Artsy/eidolon).
 
 Setup
 ----------------
