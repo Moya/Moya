@@ -8,13 +8,18 @@
 
 import Foundation
 
+/// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
 public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
+    /// Current requests that have not completed or errored yet.
+    /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
     public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
     
+    /// Initializes a reactive provider.
     override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false) {
         super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses)
     }
     
+    /// Designated request-making method.
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         
@@ -75,10 +80,12 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     }
 }
 
+/// Required for making Endpoint conform to Equatable.
 public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
     return lhs.urlRequest.isEqual(rhs.urlRequest)
 }
 
+/// Required for using Endpoint as a key type in a Dictionary.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
         return urlRequest.hash
