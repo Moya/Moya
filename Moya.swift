@@ -9,9 +9,13 @@
 import Foundation
 import Alamofire
 
+/// Block to be executed when a request has completed.
 public typealias MoyaCompletion = (data: NSData?, error: NSError?) -> ()
 
+/// General-purpose class to store some enums and class funcs.
 public class Moya {
+    
+    /// Represents an HTTP method.
     public enum Method {
         case GET, POST, PUT, DELETE
         
@@ -29,6 +33,7 @@ public class Moya {
         }
     }
     
+    /// Choice of parameter encoding.
     public enum ParameterEncoding {
         case URL
         case JSON
@@ -49,41 +54,52 @@ public class Moya {
         }
     }
     
+    /// Default HTTP method is GET.
     public class func DefaultMethod() -> Method {
         return Method.GET
     }
     
+    /// Default parameters are empty.
     public class func DefaultParameters() -> [String: AnyObject] {
         return Dictionary<String, AnyObject>()
     }
 }
 
+/// Protocol defining the relative path of an enum.
 public protocol MoyaPath {
     var path : String { get }
 }
 
+/// Protocol to define the base URL and sample data for an enum.
 public protocol MoyaTarget : MoyaPath {
     var baseURL: NSURL { get }
     var sampleData: NSData { get }
 }
 
+/// Request provider class. Requests should be made through this class only.
 public class MoyaProvider<T: MoyaTarget> {
+    /// Closure that defines the endpoints for the provider.
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
+    /// Closure that resolves an Endpoint into an NSURLRequest.
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
-    public let endpointsClosure: MoyaEndpointsClosure
+    
+    let endpointsClosure: MoyaEndpointsClosure
     let endpointResolver: MoyaEndpointResolution
     let stubResponses: Bool
     
+    /// Initializes a provider.
     public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
     }
     
+    /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
     public func endpoint(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<T> {
         return endpointsClosure(token, method: method, parameters: parameters)
     }
     
+    /// Designated request-making method.
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         let request = endpointResolver(endpoint: endpoint)
