@@ -11,8 +11,8 @@ import Alamofire
 
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
-    case Success(NSData)
-    case Error(NSError?)
+    case Success(Int, NSData)
+    case Error(Int?, NSError?)
 }
 
 /// Class for reifying a target of the T enum unto a concrete Endpoint

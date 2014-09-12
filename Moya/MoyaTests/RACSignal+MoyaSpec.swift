@@ -21,9 +21,9 @@ extension UIImage {
     }
 }
 
-func signalSendingData(data: NSData?) -> RACSignal {
+func signalSendingData(data: NSData, statusCode: Int = 200) -> RACSignal {
     return RACSignal.createSignal({ (subscriber) -> RACDisposable! in
-        subscriber.sendNext(data)
+        subscriber.sendNext(MoyaResponse(statusCode: statusCode, data: data))
         subscriber.sendCompleted()
         
         return nil
@@ -32,6 +32,48 @@ func signalSendingData(data: NSData?) -> RACSignal {
 
 class RACSignalMoyaSpec: QuickSpec {
     override func spec() {
+        describe("status codes filtering", {
+            it("filters out unrequested status codes") {
+                let data = NSData()
+                let signal = signalSendingData(data, statusCode: 10)
+
+                var errored = false
+                signal.filterStatusCodes(0...9).subscribeNext({ (object) -> Void in
+                    XCTFail("called on non-correct status code: \(object)")
+                }, error: { (error) -> Void in
+                    errored = true
+                })
+                
+                expect{errored}.toEventually(beTruthy(), timeout: 1.0, pollInterval: 0.1)
+            }
+            
+            it("filters out non-successful status codes") {
+                let data = NSData()
+                let signal = signalSendingData(data, statusCode: 404)
+                
+                var errored = false
+                signal.filterSuccessfulStatusCodes().subscribeNext({ (object) -> Void in
+                    XCTFail("called on non-success status code: \(object)")
+                }, error: { (error) -> Void in
+                    errored = true
+                })
+                
+                expect{errored}.toEventually(beTruthy(), timeout: 1.0, pollInterval: 0.1)
+            }
+            
+            it("passes through correct status codes") {
+                let data = NSData()
+                let signal = signalSendingData(data)
+                
+                var called = false
+                signal.filterSuccessfulStatusCodes().subscribeNext({ (object) -> Void in
+                    called = true
+                })
+                
+                expect{called}.toEventually(beTruthy(), timeout: 1.0, pollInterval: 0.1)
+            }
+        })
+        
         describe("image maping", {
             it("maps data representing an image to an image") {
                 let image = UIImage.testPNGImage(named: "testImage")
@@ -57,7 +99,6 @@ class RACSignalMoyaSpec: QuickSpec {
                     receivedError = error
                 })
                 
-                expect(receivedError).toNot(beNil())
                 expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.toRaw()))
             }
         })
@@ -65,8 +106,8 @@ class RACSignalMoyaSpec: QuickSpec {
         describe("JSON mapping", { () -> () in
             it("maps data representing some JSON to that JSON") {
                 let json = ["name": "John Crighton", "occupation": "Astronaut"]
-                let data = NSJSONSerialization.dataWithJSONObject(json, options: NSJSONWritingOptions.PrettyPrinted, error: nil)
-                let signal = signalSendingData(data)
+                let data = NSJSONSerialization.dataWithJSONObject(json, options: nil, error: nil)
+                let signal = signalSendingData(data!)
                 
                 var receivedJSON: [String: String]?
                 signal.mapJSON().subscribeNext({ (json) -> Void in
@@ -82,7 +123,7 @@ class RACSignalMoyaSpec: QuickSpec {
             it("returns a Cocoa error domain for invalid JSON") {
                 let json = "{ \"name\": \"john }"
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
-                let signal = signalSendingData(data)
+                let signal = signalSendingData(data!)
                 
                 var receivedError: NSError?
                 signal.mapJSON().subscribeNext({ (image) -> Void in
@@ -94,27 +135,13 @@ class RACSignalMoyaSpec: QuickSpec {
                 expect(receivedError).toNot(beNil())
                 expect(receivedError?.domain).to(equal(NSCocoaErrorDomain))
             }
-            
-            it("ignores missing data") {
-                let signal = signalSendingData(nil)
-                
-                var receivedError: NSError?
-                signal.mapJSON().subscribeNext({ (image) -> Void in
-                    XCTFail("next called for invalid data")
-                    }, error: { (error) -> Void in
-                        receivedError = error
-                })
-                
-                expect(receivedError).toNot(beNil())
-                expect(receivedError?.code).to(equal(MoyaErrorCode.JSONMapping.toRaw()))
-            }
         })
         
         describe("string mapping", { () -> () in
             it("maps data representing a string to a string") {
                 let string = "You have the rights to the remains of a silent attorney."
                 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
-                let signal = signalSendingData(data)
+                let signal = signalSendingData(data!)
                 
                 var receivedString: String?
                 signal.mapString().subscribeNext({ (string) -> Void in
@@ -123,20 +150,6 @@ class RACSignalMoyaSpec: QuickSpec {
                 })
                 
                 expect(receivedString).to(equal(string))
-            }
-            
-            it("ignores missing strings") {
-                let signal = signalSendingData(nil)
-                
-                var receivedError: NSError?
-                signal.mapString().subscribeNext({ (string) -> Void in
-                    XCTFail("next called for invalid data")
-                    }, error: { (error) -> Void in
-                        receivedError = error
-                })
-                
-                expect(receivedError).toNot(beNil())
-                expect(receivedError?.code).to(equal(MoyaErrorCode.StringMapping.toRaw()))
             }
         })
     }

@@ -8,6 +8,26 @@
 
 import Foundation
 
+public class MoyaResponse {
+    public let statusCode: Int
+    public let data: NSData
+    
+    public init(statusCode: Int, data: NSData) {
+        self.statusCode = statusCode
+        self.data = data
+    }
+}
+
+extension MoyaResponse: Printable, DebugPrintable {
+    public var description: String {
+        return "Status Code: \(statusCode), Data Length: \(data.length)"
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
+}
+
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
 public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     /// Current requests that have not completed or errored yet.
@@ -30,12 +50,12 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
         let signal = RACSignal.createSignal({ [weak self] (subscriber) -> RACDisposable! in
-            self?.request(token, method: method, parameters: parameters) { (data: NSData?, error: NSError?) -> () in
+            self?.request(token, method: method, parameters: parameters) { (data, statusCode, error) -> () in
                 if let error = error {
                     subscriber.sendError(error)
                 } else {
                     if let data = data {
-                        subscriber.sendNext(data)
+                        subscriber.sendNext(MoyaResponse(statusCode: statusCode!, data: data))
                     }
                     subscriber.sendCompleted()
                 }
