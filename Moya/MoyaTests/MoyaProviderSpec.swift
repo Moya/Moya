@@ -106,12 +106,12 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target).subscribeNext({ (object) -> Void in
                             if let data = object as? NSData {
-                                response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
+                                response = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary
                             }
                         })
                         
                         let sampleData = target.sampleData as NSData
-                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
+                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as NSDictionary
                         expect{response}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
                     }
                     

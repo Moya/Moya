@@ -40,7 +40,7 @@ public extension RACSignal {
         return self.tryMap({ (object, error) -> AnyObject! in
             var json: AnyObject?
             if let data = object as? NSData {
-                json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: error)
+                json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: error)
             }
             
             if json == nil && error != nil && error.memory == nil {
