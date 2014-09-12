@@ -10,6 +10,24 @@ import Quick
 import Nimble
 import Moya
 
+extension Moya.ParameterEncoding: Equatable {
+}
+
+public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
+    switch (lhs, rhs) {
+    case (.URL, .URL):
+        return true
+    case (.JSON, .JSON):
+        return true
+    case (.PropertyList(_), .PropertyList(_)):
+        return true
+    case (.Custom(_), .Custom(_)):
+        return true
+    default:
+        return false
+    }
+}
+
 class EndpointSpec: QuickSpec {
     override func spec() {
         describe("an enpoint", { () -> () in
