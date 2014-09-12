@@ -131,7 +131,7 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(target.sampleData))
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(200, target.sampleData))
 }
 ```
 
@@ -152,9 +152,9 @@ whatever you want. Say you want to test errors, too.
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
     let sampleResponse = { () -> (EndpointSampleResponse) in
         if sendErrors {
-            return .Error(NSError())
+            return .Error(404, NSError())
         } else {
-            return .Success(target.sampleData)
+            return .Success(200, target.sampleData)
         }
     }()
     return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: sampleResponse)
@@ -234,9 +234,10 @@ In addition to the option of using signals instead of callback blocks, there are
 also a series of signal operators that will attempt to map the data received 
 from the network response into either an image, some JSON, or a string, with 
 `mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is
-unsuccessful, you'll get an error on the signal. This means that you can place 
-your code for handling API errors like 400's in the same places as code for 
-handling invalid responses. 
+unsuccessful, you'll get an error on the signal. You also get handy methods for
+filtering out certain status codes. This means that you can place your code for 
+handling API errors like 400's in the same places as code for handling invalid 
+responses. 
 
 License
 ----------------
