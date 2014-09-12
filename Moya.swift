@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// Block to be executed when a request has completed.
-public typealias MoyaCompletion = (data: NSData?, error: NSError?) -> ()
+public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, error: NSError?) -> ()
 
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
@@ -108,21 +108,22 @@ public class MoyaProvider<T: MoyaTarget> {
             // Need to dispatch to the next runloop to give the subject a chance to be subscribed to (useful for unit tests)
             dispatch_async(dispatch_get_main_queue(), {
                 switch endpoint.sampleResponse {
-                case .Success(let data):
-                    completion(data: data, error: nil)
-                case .Error(let error):
-                    completion(data: nil, error: error)
+                case .Success(let statusCode, let data):
+                    completion(data: data, statusCode: statusCode, error: nil)
+                case .Error(let statusCode, let error):
+                    completion(data: nil, statusCode: statusCode, error: error)
                 }
             })
         } else {
             Alamofire.Manager.sharedInstance.request(request)
-                .response({(request: NSURLRequest, reponse: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+                .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     // Alamofire always sense the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future.
+                    let statusCode = response?.statusCode
                     if let data = data as? NSData {
-                        completion(data: data, error: error)
+                        completion(data: data, statusCode: statusCode, error: error)
                     } else {
-                        completion(data: nil, error: error)
+                        completion(data: nil, statusCode: statusCode, error: error)
                     }
                 })
         }

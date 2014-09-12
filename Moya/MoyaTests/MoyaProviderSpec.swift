@@ -24,7 +24,7 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, error) in
+                        provider.request(target, completion: { (data, statusCode, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
@@ -38,7 +38,7 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (data, error) in
+                        provider.request(target, completion: { (data, statusCode, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
@@ -73,7 +73,7 @@ class MoyaProviderSpec: QuickSpec {
                     
                     it("executes the endpoint resolver") {
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, error) in })
+                        provider.request(target, completion: { (data, statusCode, error) in })
                         
                         let sampleData = target.sampleData as NSData
                         expect{executed}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
@@ -86,13 +86,25 @@ class MoyaProviderSpec: QuickSpec {
                         provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
                     }
                     
+                    it("returns a MoyaResponse object") {
+                        var called = false
+                        
+                        provider.request(.Zen).subscribeNext({ (object) -> Void in
+                            if let response = object as? MoyaResponse {
+                                called = true
+                            }
+                        })
+                        
+                        expect{called}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                    }
+                    
                     it("returns stubbed data for zen request") {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target).subscribeNext({ (data) -> Void in
-                            if let data = data as? NSData {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                        provider.request(target).subscribeNext({ (object) -> Void in
+                            if let response = object as? MoyaResponse {
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding)
                             }
                         })
                         
@@ -101,18 +113,18 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     it("returns correct data for user profile request") {
-                        var response: NSDictionary?
+                        var receivedResponse: NSDictionary?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target).subscribeNext({ (object) -> Void in
-                            if let data = object as? NSData {
-                                response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary
+                            if let response = object as? MoyaResponse {
+                                receivedResponse = NSJSONSerialization.JSONObjectWithData(response.data, options: nil, error: nil) as? NSDictionary
                             }
                         })
                         
                         let sampleData = target.sampleData as NSData
-                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: NSJSONReadingOptions.MutableContainers, error: nil) as NSDictionary
-                        expect{response}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as NSDictionary
+                        expect{receivedResponse}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
                     }
                     
                     it("returns identical signals for inflight requests") {
@@ -139,7 +151,7 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (object, error) in
+                        provider.request(target, completion: { (object, statusCode, error) in
                             if error != nil {
                                 errored = true
                             }
@@ -153,7 +165,7 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, error) in
+                        provider.request(target, completion: { (object, statusCode, error) in
                             if error != nil {
                                 errored = true
                             }

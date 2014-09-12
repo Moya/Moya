@@ -67,9 +67,9 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(target.sampleData), method: method, parameters: parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, target.sampleData), method: method, parameters: parameters)
 }
 
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(NSError()), method: method, parameters: parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(nil, NSError()), method: method, parameters: parameters)
 }
