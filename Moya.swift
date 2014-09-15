@@ -105,15 +105,12 @@ public class MoyaProvider<T: MoyaTarget> {
         let request = endpointResolver(endpoint: endpoint)
         
         if (stubResponses) {
-            // Need to dispatch to the next runloop to give the subject a chance to be subscribed to (useful for unit tests)
-            dispatch_async(dispatch_get_main_queue(), {
-                switch endpoint.sampleResponse {
-                case .Success(let statusCode, let data):
-                    completion(data: data, statusCode: statusCode, error: nil)
-                case .Error(let statusCode, let error):
-                    completion(data: nil, statusCode: statusCode, error: error)
-                }
-            })
+            switch endpoint.sampleResponse {
+            case .Success(let statusCode, let data):
+                completion(data: data, statusCode: statusCode, error: nil)
+            case .Error(let statusCode, let error):
+                completion(data: nil, statusCode: statusCode, error: error)
+            }
         } else {
             Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in

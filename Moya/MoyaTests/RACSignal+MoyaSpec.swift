@@ -44,7 +44,7 @@ class RACSignalMoyaSpec: QuickSpec {
                     errored = true
                 })
                 
-                expect{errored}.toEventually(beTruthy(), timeout: 1.0, pollInterval: 0.1)
+                expect(errored).to(beTruthy())
             }
             
             it("filters out non-successful status codes") {
@@ -58,7 +58,7 @@ class RACSignalMoyaSpec: QuickSpec {
                     errored = true
                 })
                 
-                expect{errored}.toEventually(beTruthy(), timeout: 1.0, pollInterval: 0.1)
+                expect(errored).to(beTruthy())
             }
             
             it("passes through correct status codes") {
@@ -70,7 +70,7 @@ class RACSignalMoyaSpec: QuickSpec {
                     called = true
                 })
                 
-                expect{called}.toEventually(beTruthy(), timeout: 1.0, pollInterval: 0.1)
+                expect(called).to(beTruthy())
             }
         })
         
