@@ -43,48 +43,44 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         
-        if let existingSignal = inflightRequests[endpoint] {
-            return existingSignal
-        }
-        
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
-        let signal = RACSignal.createSignal({ [weak self] (subscriber) -> RACDisposable! in
-            self?.request(token, method: method, parameters: parameters) { (data, statusCode, error) -> () in
-                if let error = error {
-                    subscriber.sendError(error)
-                } else {
-                    if let data = data {
-                        subscriber.sendNext(MoyaResponse(statusCode: statusCode!, data: data))
-                    }
-                    subscriber.sendCompleted()
-                }
+        return RACSignal.defer { [weak self] () -> RACSignal! in
+            
+            if let existingSignal = self?.inflightRequests[endpoint] {
+                return existingSignal
             }
             
-            return nil
-        }).publish().autoconnect()
-        
-        objc_sync_enter(self)
-        self.inflightRequests[endpoint] = signal
-        objc_sync_exit(self)
-        
-        let removeSignal = { [weak self] () -> Void in
-            // Once the signal
+            let signal = RACSignal.createSignal({ (subscriber) -> RACDisposable! in
+                self?.request(token, method: method, parameters: parameters) { (data, statusCode, error) -> () in
+                    if let error = error {
+                        subscriber.sendError(error)
+                    } else {
+                        if let data = data {
+                            println(self?.inflightRequests)
+                            subscriber.sendNext(MoyaResponse(statusCode: statusCode!, data: data))
+                        }
+                        subscriber.sendCompleted()
+                    }
+                }
+                
+                return nil
+            }).finally({ [weak self] () -> Void in
+                if let weakSelf = self {
+                    objc_sync_enter(weakSelf)
+                    weakSelf.inflightRequests[endpoint] = nil
+                    objc_sync_exit(weakSelf)
+                }
+            }).publish().autoconnect()
+            
             if let weakSelf = self {
                 objc_sync_enter(weakSelf)
-                weakSelf.inflightRequests[endpoint] = nil
+                weakSelf.inflightRequests[endpoint] = signal
                 objc_sync_exit(weakSelf)
             }
+            
+            return signal
         }
-        
-        // Connect immediately, immitating the behaviour of our superclass
-        signal.subscribeError({ (_) -> Void in
-            removeSignal()
-        }, completed: { () -> Void in
-            removeSignal()
-        })
-        
-        return signal
     }
     
     public func request(token: T, parameters: [String: AnyObject]) -> RACSignal {

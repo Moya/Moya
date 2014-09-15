@@ -31,7 +31,7 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         let sampleData = target.sampleData as NSData
-                        expect{message}.toEventually(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)), timeout: 1, pollInterval: 0.1)
+                        expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
                     }
                     
                     it("returns stubbed data for user profile request") {
@@ -45,7 +45,7 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         let sampleData = target.sampleData as NSData
-                        expect{message}.toEventually(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)), timeout: 1, pollInterval: 0.1)
+                        expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
                     }
                     
                     it("returns equivalent Endpoint instances for the same target") {
@@ -76,7 +76,7 @@ class MoyaProviderSpec: QuickSpec {
                         provider.request(target, completion: { (data, statusCode, error) in })
                         
                         let sampleData = target.sampleData as NSData
-                        expect{executed}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                        expect(executed).to(beTruthy())
                     }
                 })
                 
@@ -95,7 +95,7 @@ class MoyaProviderSpec: QuickSpec {
                             }
                         })
                         
-                        expect{called}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        expect(called).to(beTruthy())
                     }
                     
                     it("returns stubbed data for zen request") {
@@ -109,7 +109,7 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         let sampleData = target.sampleData as NSData
-                        expect{message}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        expect(message).toNot(beNil())
                     }
                     
                     it("returns correct data for user profile request") {
@@ -124,18 +124,35 @@ class MoyaProviderSpec: QuickSpec {
                         
                         let sampleData = target.sampleData as NSData
                         let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as NSDictionary
-                        expect{receivedResponse}.toEventuallyNot(beNil(), timeout: 1, pollInterval: 0.1)
+                        expect(receivedResponse).toNot(beNil())
                     }
                     
                     it("returns identical signals for inflight requests") {
                         let target: GitHub = .Zen
-                        let signal1 = provider.request(target)
-                        let signal2 = provider.request(target)
-                        expect(provider.inflightRequests.count).to(equal(1))
                         
-                        expect(signal1).to(equal(signal2))
+                        var response: MoyaResponse!
                         
-                        expect(provider.inflightRequests.count).toEventually(equal(0), timeout: 1, pollInterval: 0.1)
+                        // The synchronous nature of stubbed responses makes this kind of tricky. We use the
+                        // subscribeNext closure to get the provider into a state where the signal has been
+                        // added to the inflightRequests dictionary. Then we ask for an identical request,
+                        // which should return the same signal. We can't *test* those signals equivalency 
+                        // due to the use of RACSignal.defer, but we can check if the number of inflight
+                        // requests went up or not.
+                        
+                        let outerSignal = provider.request(target)
+                        outerSignal.subscribeNext({ (object) -> Void in
+                            response = object as? MoyaResponse
+                            expect(provider.inflightRequests.count).to(equal(1))
+                            
+                            // Create a new signal and force subscription, so that the inflightRequests dictionary is accessed.
+                            let innerSignal = provider.request(target)
+                            innerSignal.subscribeNext({ (object) -> Void in
+                                // nop
+                            })
+                            expect(provider.inflightRequests.count).to(equal(1))
+                        })
+                        
+                        expect(provider.inflightRequests.count).to(equal(0))
                     }
                 })
             }
@@ -158,7 +175,7 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         let sampleData = target.sampleData as NSData
-                        expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                        expect(errored).toEventually(beTruthy())
                     }
                     
                     it("returns stubbed data for user profile request") {
@@ -190,7 +207,7 @@ class MoyaProviderSpec: QuickSpec {
                             errored = true
                         })
                         
-                        expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                        expect(errored).to(beTruthy())
                     }
                     
                     it("returns correct data for user profile request") {
@@ -201,7 +218,7 @@ class MoyaProviderSpec: QuickSpec {
                             errored = true
                         })
                         
-                        expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                        expect(errored).to(beTruthy())
                     }
                 })
             }
