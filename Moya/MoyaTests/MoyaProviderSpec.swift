@@ -221,6 +221,24 @@ class MoyaProviderSpec: QuickSpec {
                         expect(errored).to(beTruthy())
                     }
                 })
+
+                describe("a failing reactive provider") {
+                    var provider: ReactiveMoyaProvider<GitHub>!
+                    beforeEach {
+                        provider = ReactiveMoyaProvider(endpointsClosure: failureEndpointsClosure, stubResponses: true)
+                    }
+
+                    it("returns the HTTP status code as the error code") {
+                        var code: Int?
+
+                        provider.request(.Zen).subscribeError({ (error) -> Void in
+                            code = error.code
+                        })
+                        
+                        expect(code).toNot(beNil())
+                        expect(code).to(equal(401))
+                    }
+                }
             }
         }
     }

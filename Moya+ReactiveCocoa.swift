@@ -45,6 +45,7 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
         
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
+
         return RACSignal.defer { [weak self] () -> RACSignal! in
             
             if let existingSignal = self?.inflightRequests[endpoint] {
@@ -54,7 +55,11 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             let signal = RACSignal.createSignal({ (subscriber) -> RACDisposable! in
                 self?.request(token, method: method, parameters: parameters) { (data, statusCode, error) -> () in
                     if let error = error {
-                        subscriber.sendError(error)
+                        if let statusCode = statusCode {
+                            subscriber.sendError(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
+                        } else {
+                            subscriber.sendError(error)
+                        }
                     } else {
                         if let data = data {
                             println(self?.inflightRequests)

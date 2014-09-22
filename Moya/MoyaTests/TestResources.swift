@@ -53,5 +53,5 @@ let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [Stri
 }
 
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(nil, NSError()), method: method, parameters: parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil)), method: method, parameters: parameters)
 }

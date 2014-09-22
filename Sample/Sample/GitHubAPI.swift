@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Provider setup
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(target.sampleData), method: method, parameters: parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, target.sampleData), method: method, parameters: parameters)
 }
 
 let GitHubProvider = MoyaProvider(endpointsClosure: endpointsClosure)
