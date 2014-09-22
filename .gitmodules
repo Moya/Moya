@@ -1,12 +1,12 @@
 [submodule "submodules/Nimble"]
 	path = submodules/Nimble
-	url = git@github.com:Quick/Nimble.git
+	url = https://github.com/Quick/Nimble.git
 [submodule "submodules/Quick"]
 	path = submodules/Quick
-	url = git@github.com:Quick/Quick.git
+	url = https://github.com/Quick/Quick.git
 [submodule "submodules/Alamofire"]
 	path = submodules/Alamofire
-	url = git@github.com:Alamofire/Alamofire.git
+	url = https://github.com/Alamofire/Alamofire.git
 [submodule "submodules/ReactiveCocoa"]
 	path = submodules/ReactiveCocoa
-	url = git@github.com:ReactiveCocoa/ReactiveCocoa.git
+	url = https://github.com/ReactiveCocoa/ReactiveCocoa.git
