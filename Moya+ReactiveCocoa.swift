@@ -62,7 +62,6 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                         }
                     } else {
                         if let data = data {
-                            println(self?.inflightRequests)
                             subscriber.sendNext(MoyaResponse(statusCode: statusCode!, data: data))
                         }
                         subscriber.sendCompleted()
