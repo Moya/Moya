@@ -58,8 +58,8 @@ public class Endpoint<T> {
 /// Extension for converting an extension into an NSURLRequest.
 extension Endpoint {
     public var urlRequest: NSURLRequest {
-        var request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL))
-        request.HTTPMethod = method.method().toRaw()
+        var request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
+        request.HTTPMethod = method.method().rawValue
         request.allHTTPHeaderFields = httpHeaderFields
         return parameterEncoding.parameterEncoding().encode(request, parameters: parameters).0
     }
