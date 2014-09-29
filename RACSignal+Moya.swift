@@ -29,7 +29,7 @@ public extension RACSignal {
                     return object
                 } else {
                     if error != nil {
-                        error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StatusCode.toRaw(), userInfo: ["data": object])
+                        error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StatusCode.rawValue, userInfo: ["data": object])
                     }
                     
                     return nil
@@ -37,7 +37,7 @@ public extension RACSignal {
             }
             
             if error != nil {
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.Data.toRaw(), userInfo: ["data": object])
+                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.Data.rawValue, userInfo: ["data": object])
             }
             
             return nil
@@ -57,7 +57,7 @@ public extension RACSignal {
             }
             
             if image == nil && error != nil {
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.toRaw(), userInfo: ["data": object])
+                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.rawValue, userInfo: ["data": object])
             }
             
             return image
@@ -78,7 +78,7 @@ public extension RACSignal {
                     userInfo = ["data": object]
                 }
                 
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.JSONMapping.toRaw(), userInfo: userInfo)
+                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.JSONMapping.rawValue, userInfo: userInfo)
             }
             
             return json
@@ -100,7 +100,7 @@ public extension RACSignal {
                     userInfo = ["data": object]
                 }
                 
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StringMapping.toRaw(), userInfo: userInfo)
+                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StringMapping.rawValue, userInfo: userInfo)
             }
             
             return string
