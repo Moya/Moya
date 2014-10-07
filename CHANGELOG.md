@@ -2,6 +2,7 @@
 
 - Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow)](http://github.com/AshFurrow)
 - Migrate to support Xcode beta 6.1 -[@orta)](http://github.com/orta)
+- Adds the original NSURLResponse to a MoyaResponse -[@orta)](http://github.com/orta)
 
 # 0.4
 
