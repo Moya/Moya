@@ -43,7 +43,11 @@ public extension RACSignal {
             return nil
         })
     }
-    
+
+    public func filterStatusCode(code: Int) -> RACSignal {
+        return filterStatusCodes(code...code)
+    }
+
     public func filterSuccessfulStatusCodes() -> RACSignal {
         return filterStatusCodes(200...299)
     }
