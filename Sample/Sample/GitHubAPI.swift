@@ -45,7 +45,7 @@ extension GitHub : MoyaPath {
 }
 
 extension GitHub : MoyaTarget {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var sampleData: NSData {
         switch self {
         case .Zen:
