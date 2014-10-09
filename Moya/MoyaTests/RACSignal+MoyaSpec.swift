@@ -17,13 +17,13 @@ extension UIImage {
     class func testPNGImage(named name: String) -> UIImage {
         let bundle = NSBundle(forClass: TestClass().dynamicType)
         let path = bundle.pathForResource(name, ofType: "png")
-        return UIImage(contentsOfFile: path!)
+        return UIImage(contentsOfFile: path!)!
     }
 }
 
 func signalSendingData(data: NSData, statusCode: Int = 200) -> RACSignal {
     return RACSignal.createSignal({ (subscriber) -> RACDisposable! in
-        subscriber.sendNext(MoyaResponse(statusCode: statusCode, data: data))
+        subscriber.sendNext(MoyaResponse(statusCode: statusCode, data: data, response: nil))
         subscriber.sendCompleted()
         
         return nil
@@ -99,7 +99,7 @@ class RACSignalMoyaSpec: QuickSpec {
                     receivedError = error
                 })
                 
-                expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.toRaw()))
+                expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.rawValue))
             }
         })
 
