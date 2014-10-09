@@ -32,7 +32,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, statusCode, error) in
+                        provider.request(target, completion: { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
@@ -45,7 +45,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (data, statusCode, error) in
+                        provider.request(target, completion: { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
