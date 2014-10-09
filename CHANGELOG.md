@@ -1,8 +1,9 @@
-# Next
+# 0.4
 
 - Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow)](http://github.com/AshFurrow)
 - Migrate to support Xcode beta 6.1 -[@orta)](http://github.com/orta)
 - Adds the original NSURLResponse to a MoyaResponse -[@orta)](http://github.com/orta)
+- Fixes [#63](https://github.com/AshFurrow/Moya/issues/63), a problem where stale inflight requests were kept around if they error'd down the pipline (discussed [here](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1525#issuecomment-58559734)) -[@ashfurrow](http://github.com/AshFurrow)
 
 # 0.4
 
