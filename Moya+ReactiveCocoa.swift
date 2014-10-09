@@ -70,13 +70,13 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     }
                 }
                 
-                return nil
-            }).finally({ [weak self] () -> Void in
-                if let weakSelf = self {
-                    objc_sync_enter(weakSelf)
-                    weakSelf.inflightRequests[endpoint] = nil
-                    objc_sync_exit(weakSelf)
-                }
+                return RACDisposable(block: { () -> Void in
+                    if let weakSelf = self {
+                        objc_sync_enter(weakSelf)
+                        weakSelf.inflightRequests[endpoint] = nil
+                        objc_sync_exit(weakSelf)
+                    }
+                })
             }).publish().autoconnect()
             
             if let weakSelf = self {
