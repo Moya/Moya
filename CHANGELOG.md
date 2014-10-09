@@ -1,4 +1,4 @@
-# 0.4
+# 0.5
 
 - Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow)](http://github.com/AshFurrow)
 - Migrate to support Xcode beta 6.1 -[@orta)](http://github.com/orta)
