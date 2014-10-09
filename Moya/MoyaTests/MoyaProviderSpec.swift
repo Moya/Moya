@@ -24,7 +24,7 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, statusCode, error) in
+                        provider.request(target, completion: { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
@@ -38,7 +38,7 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (data, statusCode, error) in
+                        provider.request(target, completion: { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
@@ -73,7 +73,7 @@ class MoyaProviderSpec: QuickSpec {
                     
                     it("executes the endpoint resolver") {
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, statusCode, error) in })
+                        provider.request(target, completion: { (data, statusCode, response, error) in })
                         
                         let sampleData = target.sampleData as NSData
                         expect(executed).to(beTruthy())
@@ -168,7 +168,7 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (object, statusCode, error) in
+                        provider.request(target, completion: { (object, statusCode, response, error) in
                             if error != nil {
                                 errored = true
                             }
@@ -182,7 +182,7 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, statusCode, error) in
+                        provider.request(target, completion: { (object, statusCode, response, error) in
                             if error != nil {
                                 errored = true
                             }

@@ -8,12 +8,9 @@
       location = "group:submodules/Alamofire/Alamofire.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:submodules/ReactiveCocoa/External/LlamaKit/LlamaKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Moya/Moya/../../submodules/ReactiveCocoa/ReactiveCocoa.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:submodules/ReactiveCocoa/External/swiftz/swiftz.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:submodules/ReactiveCocoa/External/swiftz/swiftz_core/swiftz_core.xcodeproj">
    </FileRef>
 </Workspace>
