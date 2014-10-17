@@ -17,8 +17,8 @@ public class Moya {
     
     /// Represents an HTTP method.
     public enum Method {
-        case GET, POST, PUT, DELETE
-        
+        case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
+
         func method() -> Alamofire.Method {
             switch self {
             case .GET:
@@ -29,10 +29,20 @@ public class Moya {
                 return .PUT
             case .DELETE:
                 return .DELETE
+            case .HEAD:
+                return .HEAD
+            case .OPTIONS:
+                return .OPTIONS
+            case PATCH:
+                return .PATCH
+            case TRACE:
+                return .TRACE
+            case .CONNECT:
+                return .CONNECT
             }
         }
     }
-    
+
     /// Choice of parameter encoding.
     public enum ParameterEncoding {
         case URL
