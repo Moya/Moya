@@ -1,3 +1,8 @@
+# Master
+
+- Fixes [#66](https://github.com/AshFurrow/Moya/issues/66), a problem with outdated Alamofire dependency and it's serializer type signature. -[@garnett](http://github.com/garnett)
+- Delete note about ReactiveCocoa installation -[@garnett](http://github.com/garnett)
+
 # 0.5
 
 - Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow)](http://github.com/AshFurrow)

@@ -60,10 +60,6 @@ ReactiveCocoa requires its setup script to be run.
 ./submodules/ReactiveCocoa/script/bootstrap
 ```
 
-Oh, but we're not done yet. ReactiveCocoa currently has an [issue](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1480)
-causing it not to work on iOS 7. That's fine, Moya requires iOS 8. But you will
-need to manually change the ReactiveCocoa project's deployment target to iOS 8.
-
 Use
 ----------------
 
