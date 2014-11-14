@@ -97,7 +97,7 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 
         let object = repos[indexPath.row] as NSDictionary
-        cell.textLabel?.text = object["name"] as? String
+        cell.textLabel.text = object["name"] as? String
         return cell
     }
 }
