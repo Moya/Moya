@@ -5,7 +5,7 @@ all of the requirements listed [here](https://github.com/artsy/eidolon/issues/9)
 Mainly:
 
 - Treat test stubs as first-class citizens.
-- Only allow endpoints clearly defined through Moya can be access through Moya,
+- Only endpoints clearly defined through Moya can be accessed through Moya,
 enforced by the compiler.
 - Allow iterating through all potential API requests at runtime for API sanity
 checks.
