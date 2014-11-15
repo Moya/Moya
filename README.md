@@ -27,7 +27,7 @@ instructions](#setup) below, since it relies on the Alamofire submodule.
 Project Status
 ----------------
 
-Currently, we support Xcode 6.1 GM 2. 
+Currently, we support Xcode 6.1. 
 
 This is nearing a 1.0 release, though it works now. We're using it in [Artsy's
 new auction app](https://github.com/Artsy/eidolon).
