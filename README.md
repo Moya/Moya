@@ -19,21 +19,21 @@ if you want to GET a user profile, but the endpoint differs depending on if that
 user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 
 Sample Project
-----------------
+--------------
 
-There's a sample project in the Sample directory. Make sure to run the [setup
-instructions](#setup) below, since it relies on the Alamofire submodule. 
+There's a sample project in the Sample directory. Make sure to run the [installation
+instructions](#installation) below, since it relies on the Alamofire submodule. 
 
 Project Status
-----------------
+--------------
 
 Currently, we support Xcode 6.1. 
 
 This is nearing a 1.0 release, though it works now. We're using it in [Artsy's
 new auction app](https://github.com/Artsy/eidolon).
 
-Setup
-----------------
+Installation
+------------
 
 This project has [Alamofire](https://github.com/Alamofire/Alamofire) as a direct
 dependency, and both [swiftz](https://github.com/maxpow4h/swiftz) and and the
@@ -42,7 +42,7 @@ as optional ones. If you want to use this library, just grab those repos and
 integrate them into your project. Then drag and drop the `Moya.swift` and
 `Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions,
 you can just include the `MoyaProvider+ReactiveCocoa.swift` and 
-`RACSignal+Moya.swift` files into your project.
+`RACSignal+Moya.swift` files into your project as well.
 
 So just drag the files you want into your Xcode project. If that doesn't work
 for some reason, or you want to get the full monty to run the library's test and
@@ -65,7 +65,7 @@ causing it not to work on iOS 7. That's fine, Moya requires iOS 8. But you will
 need to manually change the ReactiveCocoa project's deployment target to iOS 8.
 
 Use
-----------------
+---
 
 So how do you use this library? Well, it's pretty easy. Just follow this
 template. First, set up an `enum` with all of your API targets. Note that you
@@ -162,8 +162,8 @@ let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters
 ```
 
 Notice that returning sample data is *required*. One of the key benefits of Moya
-is that it makes testing the app or running the app, using stubbed responses for
-API calls, really easy.
+is that it makes testing the app or running the app using stubbed responses for
+API calls really easy.
 
 Great, now we're all set. Just need to create our provider.
 
@@ -180,7 +180,7 @@ Neato. Now how do we make a request?
 ```swift
 provider.request(.Zen, completion: { (data, error) in
     if let data = data {
-        message = NSString(data: data, encoding: NSUTF8StringEncoding)
+        // do something with the data
     }
 })
 ```
@@ -188,35 +188,8 @@ provider.request(.Zen, completion: { (data, error) in
 The `request` method is given a `GitHub` value and, optionally, an HTTP method
 and parameters for the endpoint closure.
 
-Modifying Requests
-----------------
-
-So this is great and all, but it's kind of a pain to set up something like 
-OAuth, or adding a special user agent string to your requests, or logging 
-requests for analytics purposes. Moya provides an optional, last-minute way to
-modify the Endpoint that is used to hit the network. This is the 
-`endpointResolver` parameter of the initialilzer, which has a default value of
-`DefaultEnpointResolution()` (which leaves the request unchanged). 
-
-Let's take a look at a simple example. 
-
-```swift
-let endpointModification = { (endpoint: Endpoint<GitHub>) -> (NSURLRequest) in
-    let newEndpoint = endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": "MyAppName"])
-    return newEndpoint.urlRequest
-}
-provider = MoyaProvider(endpointsClosure: ..., endpointModifier: endpointModification)
-```
-
-This closure receives an `Endpoint` instance and is responsible for returning a
-`NSURLRequest` that represents the resources to be accessed. It's here that 
-you'd do your OAuth signing or whatever. Since you return an `NSURLRequest`, you
-can use whatever general-purpose authentication library you want. You can return 
-the `urlRequest` property of the instance that you're passed in, which would not 
-change the request at all. That could be useful for logging, for example. 
-
 ReactiveCocoa Extensions
-----------------
+------------------------
 
 Even cooler are the ReactiveCocoa extensions. It immediately returns a  
 `RACSignal` that you can subscribe to our bind or map or whatever you want to
@@ -240,6 +213,6 @@ handling API errors like 400's in the same places as code for handling invalid
 responses. 
 
 License
-----------------
+-------
 
 Moya is released under an MIT license. See LICENSE for more information.
