@@ -5,7 +5,7 @@ all of the requirements listed [here](https://github.com/artsy/eidolon/issues/9)
 Mainly:
 
 - Treat test stubs as first-class citizens.
-- Only allow endpoints clearly defined through Moya can be access through Moya,
+- Only endpoints clearly defined through Moya can be accessed through Moya,
 enforced by the compiler.
 - Allow iterating through all potential API requests at runtime for API sanity
 checks.
@@ -59,10 +59,6 @@ ReactiveCocoa requires its setup script to be run.
 ```sh
 ./submodules/ReactiveCocoa/script/bootstrap
 ```
-
-Oh, but we're not done yet. ReactiveCocoa currently has an [issue](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1480)
-causing it not to work on iOS 7. That's fine, Moya requires iOS 8. But you will
-need to manually change the ReactiveCocoa project's deployment target to iOS 8.
 
 Use
 ---
