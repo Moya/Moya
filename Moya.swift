@@ -77,7 +77,7 @@ public class Moya {
 
 /// Protocol defining the relative path of an enum.
 public protocol MoyaPath {
-    var path : String { get }
+    var path: String { get }
 }
 
 /// Protocol to define the base URL and sample data for an enum.
