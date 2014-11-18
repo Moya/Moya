@@ -37,30 +37,27 @@ new auction app](https://github.com/Artsy/eidolon).
 Installation
 ------------
 
-This project has [Alamofire](https://github.com/Alamofire/Alamofire) as a direct
-dependency, and both [swiftz](https://github.com/maxpow4h/swiftz) and and the
-`swift-development` branch of [ReactiveCocoa](https://github.com/reactivecocoa/reactivecocoa/tree/swift-development)
-as optional ones. If you want to use this library, just grab those repos and
-integrate them into your project. Then drag and drop the `Moya.swift` and
-`Endpoint.swift` files, and you're set. If you want ReactiveCocoa extensions,
-you can just include the `MoyaProvider+ReactiveCocoa.swift` and 
-`RACSignal+Moya.swift` files into your project as well.
+This project has some dependencies, which are currently managed by a pre-release
+version of CocoaPods. If you don't want to run the pre-release version, that's 
+ok! Just got to this [previous commit](https://github.com/ashfurrow/Moya/tree/b97472968e32a5f9c8900a1e7ad54dfd14ea2afa)
+and follow the instructions there. 
 
-So just drag the files you want into your Xcode project. If that doesn't work
-for some reason, or you want to get the full monty to run the library's test and
-contribute back, clone this repo and set up the submodules.
+If you want to use Moya with CocoaPods, use the Gemfile in this repo for your 
+own project folder and run `bundle install`. Then add the following lines to
+your podfile:
 
-```sh
-git clone git@github.com:AshFurrow/Moya.git
-cd Moya
-git submodule update --init
+```rb
+pod 'Alamofire', :git => "https://github.com/mrackwitz/Alamofire.git", :branch => "podspec"
+pod 'LlamaKit', :git => "https://github.com/AshFurrow/LlamaKit", :branch => "rac_podspec"
+pod 'Moya', :path => "https://github.com/AshFurrow/Moya"
+
+# Include the following only if you want to use ReactiveCocoa extensions with Moya
+pod 'ReactiveCocoa', :git => "https://github.com/AshFurrow/ReactiveCocoa", :branch => "podspec"
+pod 'Moya/Reactive', :path => "https://github.com/AshFurrow/Moya"
 ```
 
-ReactiveCocoa requires its setup script to be run.
-
-```sh
-./submodules/ReactiveCocoa/script/bootstrap
-```
+And finally run `bundle exec pod install`. Note the `bundle exec` – it is 
+important!
 
 Use
 ---
