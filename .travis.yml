@@ -1,0 +1,8 @@
+osx_image: xcode61
+language: objective-c
+
+before_script:
+  - make setup
+
+script:
+  - make test
