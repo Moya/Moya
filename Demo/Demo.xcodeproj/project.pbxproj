@@ -263,7 +263,6 @@
 					};
 					5EC197F61A1BB16D00F4DFD4 = {
 						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 5EC197DF1A1BB16D00F4DFD4;
 					};
 				};
 			};
@@ -524,7 +523,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3484162586C66FCDAE67ABAB /* Pods-DemoTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -536,7 +534,6 @@
 				INFOPLIST_FILE = "DemoTests copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "DemoTests copy";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
 			};
 			name = Debug;
 		};
@@ -544,7 +541,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 46D4FBD55F569CF25EE0BF6B /* Pods-DemoTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -552,7 +548,6 @@
 				INFOPLIST_FILE = "DemoTests copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "DemoTests copy";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
 			};
 			name = Release;
 		};
@@ -659,7 +654,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3484162586C66FCDAE67ABAB /* Pods-DemoTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -671,7 +665,6 @@
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
 			};
 			name = Debug;
 		};
@@ -679,7 +672,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 46D4FBD55F569CF25EE0BF6B /* Pods-DemoTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -687,7 +679,6 @@
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
 			};
 			name = Release;
 		};

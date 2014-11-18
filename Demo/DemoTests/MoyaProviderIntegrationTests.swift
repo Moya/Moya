@@ -10,7 +10,6 @@ import UIKit
 import Moya
 import Quick
 import Nimble
-import Demo
 
 func beIndenticalToResponse(expectedValue: MoyaResponse) -> MatcherFunc<MoyaResponse> {
     return MatcherFunc { actualExpression, failureMessage in

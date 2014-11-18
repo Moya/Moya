@@ -9,7 +9,6 @@
 import Quick
 import Moya
 import Nimble
-import Demo
 
 extension Moya.ParameterEncoding: Equatable {
 }

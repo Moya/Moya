@@ -9,7 +9,6 @@
 import Foundation
 import Moya
 import UIKit
-import Demo
 
 private extension String {
     var URLEscapedString: String {

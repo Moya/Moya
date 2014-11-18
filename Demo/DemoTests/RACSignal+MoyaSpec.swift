@@ -10,7 +10,6 @@ import Quick
 import Moya
 import ReactiveCocoa
 import Nimble
-import Demo
 
 @objc class TestClass { }
 

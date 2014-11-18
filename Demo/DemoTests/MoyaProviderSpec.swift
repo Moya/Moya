@@ -9,7 +9,6 @@
 import Quick
 import Moya
 import Nimble
-import Demo
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
