@@ -1,0 +1,58 @@
+PODS:
+  - Alamofire (1.1.0)
+  - LlamaKit (0.1.0)
+  - Moya/Core (0.5):
+    - Alamofire
+  - Moya/Reactive (0.5):
+    - Moya/Core
+    - ReactiveCocoa
+  - Nimble (0.0.1)
+  - Quick (0.1.0-beta)
+  - ReactiveCocoa (2.3.1):
+    - LlamaKit
+    - ReactiveCocoa/UI (= 2.3.1)
+  - ReactiveCocoa/Core (2.3.1):
+    - LlamaKit
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.3.1):
+    - LlamaKit
+  - ReactiveCocoa/UI (2.3.1):
+    - LlamaKit
+    - ReactiveCocoa/Core
+
+DEPENDENCIES:
+  - Alamofire (from `https://github.com/mrackwitz/Alamofire.git`, branch `podspec`)
+  - LlamaKit (from `https://github.com/AshFurrow/LlamaKit`, branch `rac_podspec`)
+  - Moya/Reactive (from `../`)
+  - Nimble (from `https://github.com/ashfurrow/Nimble`, branch `podspec`)
+  - Quick (from `https://github.com/orta/Quick`, branch `podspec`)
+  - ReactiveCocoa (from `https://github.com/AshFurrow/ReactiveCocoa`, branch `podspec`)
+
+EXTERNAL SOURCES:
+  Alamofire:
+    :branch: podspec
+    :git: https://github.com/mrackwitz/Alamofire.git
+  LlamaKit:
+    :branch: rac_podspec
+    :git: https://github.com/AshFurrow/LlamaKit
+  Moya:
+    :path: ../
+  Nimble:
+    :branch: podspec
+    :git: https://github.com/ashfurrow/Nimble
+  Quick:
+    :branch: podspec
+    :git: https://github.com/orta/Quick
+  ReactiveCocoa:
+    :branch: podspec
+    :git: https://github.com/AshFurrow/ReactiveCocoa
+
+SPEC CHECKSUMS:
+  Alamofire: 4cff790102216d69f3b12dd69885c468870d51e9
+  LlamaKit: 71673af25b2c733160d643e67c1f711d3afa4af2
+  Moya: 5c78199dca4481d07aa04e43d04d29e42933915d
+  Nimble: db730f43e133f0b79ea01dbaf3f454b6fb2879b6
+  Quick: e9bc3892e3a792a58167c154f9d29162c053b227
+  ReactiveCocoa: 991a58612852e1f4cc3e0073c664367508856e53
+
+COCOAPODS: 0.35.0.rc2

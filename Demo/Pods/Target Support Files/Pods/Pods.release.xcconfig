@@ -1,0 +1,8 @@
+FRAMEWORK_SEARCH_PATHS = "$PODS_FRAMEWORK_BUILD_PATH"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_FRAMEWORK_BUILD_PATH/Alamofire.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/LlamaKit.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/Moya.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/ReactiveCocoa.framework/Headers"
+OTHER_LDFLAGS = -ObjC -framework "Alamofire" -framework "Foundation" -framework "LlamaKit" -framework "Moya" -framework "ReactiveCocoa"
+OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
+OTHER_SWIFT_FLAGS = "-D COCOAPODS"
+PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods
+PODS_ROOT = ${SRCROOT}/Pods

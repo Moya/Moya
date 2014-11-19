@@ -19,8 +19,5 @@ DerivedData
 *.hmap
 *.xccheckout
 
-# CocoaPods
-Pods
-
 # AppCode
 .idea/
