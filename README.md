@@ -49,11 +49,11 @@ your podfile:
 ```rb
 pod 'Alamofire', :git => "https://github.com/mrackwitz/Alamofire.git", :branch => "podspec"
 pod 'LlamaKit', :git => "https://github.com/AshFurrow/LlamaKit", :branch => "rac_podspec"
-pod 'Moya', :path => "https://github.com/AshFurrow/Moya"
+pod 'Moya', :git => "https://github.com/AshFurrow/Moya"
 
 # Include the following only if you want to use ReactiveCocoa extensions with Moya
 pod 'ReactiveCocoa', :git => "https://github.com/AshFurrow/ReactiveCocoa", :branch => "podspec"
-pod 'Moya/Reactive', :path => "https://github.com/AshFurrow/Moya"
+pod 'Moya/Reactive', :git => "https://github.com/AshFurrow/Moya"
 ```
 
 And finally run `bundle exec pod install`. Note the `bundle exec` – it is 
