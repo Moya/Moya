@@ -93,9 +93,9 @@ public class MoyaProvider<T: MoyaTarget> {
     /// Closure that resolves an Endpoint into an NSURLRequest.
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
     
-    let endpointsClosure: MoyaEndpointsClosure
-    let endpointResolver: MoyaEndpointResolution
-    let stubResponses: Bool
+    public let endpointsClosure: MoyaEndpointsClosure
+    public let endpointResolver: MoyaEndpointResolution
+    public let stubResponses: Bool
     
     /// Initializes a provider.
     public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false) {
