@@ -187,7 +187,7 @@ ReactiveCocoa Extensions
 ------------------------
 
 Even cooler are the ReactiveCocoa extensions. It immediately returns a  
-`RACSignal` that you can subscribe to our bind or map or whatever you want to
+`RACSignal` that you can subscribe to or bind or map or whatever you want to
 do. To handle errors, for instance, we could do the following:
 
 ```swift
