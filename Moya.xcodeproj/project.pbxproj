@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9725E48C48D08468467B5100 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 915FBCA505EE721DCD909977 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BF28780C1A23DC6600ACDFB9 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF28780B1A23DC6600ACDFB9 /* Pods.framework */; };
 		BF28780F1A23E52900ACDFB9 /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A4E3E1A23B4BA00692967 /* TestResources.swift */; };
 		BF2878101A23E53700ACDFB9 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = BF8A4E3D1A23B4BA00692967 /* testImage.png */; };
@@ -15,6 +14,12 @@
 		BF8A4E451A23B5C300692967 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A4E3A1A23B4BA00692967 /* MoyaProviderIntegrationTests.swift */; };
 		BF8A4E461A23B5C300692967 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A4E3B1A23B4BA00692967 /* MoyaProviderSpec.swift */; };
 		BF8A4E471A23B5C300692967 /* RACSignal+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8A4E3C1A23B4BA00692967 /* RACSignal+MoyaSpec.swift */; };
+		BFB81E2F1A24077B001823F4 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB81E221A24025F001823F4 /* Alamofire.framework */; };
+		BFB81E321A2407C1001823F4 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB81E221A24025F001823F4 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFB81E331A2407D0001823F4 /* LlamaKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB81E241A24025F001823F4 /* LlamaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFB81E341A2407E0001823F4 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB81E261A24025F001823F4 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFB81E351A2407E0001823F4 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB81E281A24025F001823F4 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BFB81E361A2407E0001823F4 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB81E2A1A24025F001823F4 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BFEE98C01A22B606000B0B47 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = BFEE98BF1A22B606000B0B47 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BFEE98C61A22B606000B0B47 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEE98BA1A22B606000B0B47 /* Moya.framework */; };
 		BFEE98D81A22B630000B0B47 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEE98D41A22B630000B0B47 /* Endpoint.swift */; };
@@ -24,6 +29,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		BFB81E1F1A24025F001823F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 91DDA970D6C51E41D8B8F413;
+			remoteInfo = Pods;
+		};
+		BFB81E211A24025F001823F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D30C9B6ECA8BDD31B500177D;
+			remoteInfo = "Pods-Alamofire";
+		};
+		BFB81E231A24025F001823F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3E1999B2E09B64B355404D97;
+			remoteInfo = "Pods-LlamaKit";
+		};
+		BFB81E251A24025F001823F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 59F22E2C2EDA6F2201BB6A06;
+			remoteInfo = "Pods-Nimble";
+		};
+		BFB81E271A24025F001823F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5F5961CE205A20F1E73BD9E;
+			remoteInfo = "Pods-Quick";
+		};
+		BFB81E291A24025F001823F4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B91B5B4BE47606B719BD18F5;
+			remoteInfo = "Pods-ReactiveCocoa";
+		};
 		BFEE98C71A22B606000B0B47 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFEE98AF1A22B58C000B0B47 /* Project object */;
@@ -32,6 +79,23 @@
 			remoteInfo = Moya;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BFB81E301A2407A0001823F4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BFB81E341A2407E0001823F4 /* Nimble.framework in CopyFiles */,
+				BFB81E351A2407E0001823F4 /* Quick.framework in CopyFiles */,
+				BFB81E361A2407E0001823F4 /* ReactiveCocoa.framework in CopyFiles */,
+				BFB81E331A2407D0001823F4 /* LlamaKit.framework in CopyFiles */,
+				BFB81E321A2407C1001823F4 /* Alamofire.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		68454698BCB5D2CAB35128AA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -46,6 +110,7 @@
 		BF8A4E3C1A23B4BA00692967 /* RACSignal+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RACSignal+MoyaSpec.swift"; sourceTree = "<group>"; };
 		BF8A4E3D1A23B4BA00692967 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
 		BF8A4E3E1A23B4BA00692967 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestResources.swift; sourceTree = "<group>"; };
+		BFB81E161A24025F001823F4 /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		BFEE98BA1A22B606000B0B47 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFEE98BE1A22B606000B0B47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Framework Support/Info.plist"; sourceTree = "<group>"; };
 		BFEE98BF1A22B606000B0B47 /* Moya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Moya.h; path = "Framework Support/Moya.h"; sourceTree = "<group>"; };
@@ -62,7 +127,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9725E48C48D08468467B5100 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +134,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFB81E2F1A24077B001823F4 /* Alamofire.framework in Frameworks */,
 				BF28780C1A23DC6600ACDFB9 /* Pods.framework in Frameworks */,
 				BFEE98C61A22B606000B0B47 /* Moya.framework in Frameworks */,
 			);
@@ -98,9 +163,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		BFB81E171A24025F001823F4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BFB81E201A24025F001823F4 /* Pods.framework */,
+				BFB81E221A24025F001823F4 /* Alamofire.framework */,
+				BFB81E241A24025F001823F4 /* LlamaKit.framework */,
+				BFB81E261A24025F001823F4 /* Nimble.framework */,
+				BFB81E281A24025F001823F4 /* Quick.framework */,
+				BFB81E2A1A24025F001823F4 /* ReactiveCocoa.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BFEE98AE1A22B58C000B0B47 = {
 			isa = PBXGroup;
 			children = (
+				BFB81E161A24025F001823F4 /* Pods.xcodeproj */,
 				BFEE98DC1A22B74A000B0B47 /* Source */,
 				BFEE98DD1A22B758000B0B47 /* Framework Support */,
 				BFEE98C91A22B606000B0B47 /* Tests */,
@@ -174,8 +253,6 @@
 				BFEE98B51A22B606000B0B47 /* Sources */,
 				BFEE98B61A22B606000B0B47 /* Frameworks */,
 				BFEE98B71A22B606000B0B47 /* Headers */,
-				61E9071B4E2987731ED91BB6 /* Embed Pods Frameworks */,
-				1C60EFD449944FC85761CAC0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -193,6 +270,7 @@
 				BFEE98C11A22B606000B0B47 /* Sources */,
 				BFEE98C21A22B606000B0B47 /* Frameworks */,
 				BFEE98C31A22B606000B0B47 /* Resources */,
+				BFB81E301A2407A0001823F4 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -230,6 +308,12 @@
 			mainGroup = BFEE98AE1A22B58C000B0B47;
 			productRefGroup = BFEE98BB1A22B606000B0B47 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BFB81E171A24025F001823F4 /* Products */;
+					ProjectRef = BFB81E161A24025F001823F4 /* Pods.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				BFEE98B91A22B606000B0B47 /* Moya */,
@@ -237,6 +321,51 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BFB81E201A24025F001823F4 /* Pods.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Pods.framework;
+			remoteRef = BFB81E1F1A24025F001823F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BFB81E221A24025F001823F4 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = BFB81E211A24025F001823F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BFB81E241A24025F001823F4 /* LlamaKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LlamaKit.framework;
+			remoteRef = BFB81E231A24025F001823F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BFB81E261A24025F001823F4 /* Nimble.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Nimble.framework;
+			remoteRef = BFB81E251A24025F001823F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BFB81E281A24025F001823F4 /* Quick.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Quick.framework;
+			remoteRef = BFB81E271A24025F001823F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		BFB81E2A1A24025F001823F4 /* ReactiveCocoa.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ReactiveCocoa.framework;
+			remoteRef = BFB81E291A24025F001823F4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BFEE98C31A22B606000B0B47 /* Resources */ = {
@@ -248,39 +377,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		1C60EFD449944FC85761CAC0 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		61E9071B4E2987731ED91BB6 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BFEE98B51A22B606000B0B47 /* Sources */ = {
