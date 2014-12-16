@@ -1,11 +1,6 @@
 PODS:
   - Alamofire (1.1.0)
   - LlamaKit (0.1.0)
-  - Moya/Core (0.5):
-    - Alamofire
-  - Moya/Reactive (0.5):
-    - Moya/Core
-    - ReactiveCocoa
   - Nimble (0.1.0)
   - Quick (0.2.0)
   - ReactiveCocoa (2.3.1):
@@ -23,7 +18,6 @@ PODS:
 DEPENDENCIES:
   - Alamofire (from `https://github.com/mrackwitz/Alamofire.git`, branch `podspec`)
   - LlamaKit (from `https://github.com/AshFurrow/LlamaKit`, branch `rac_podspec`)
-  - Moya/Reactive (from `../`)
   - Nimble (from `https://github.com/ashfurrow/Nimble`, branch `podspec`)
   - Quick (from `https://github.com/orta/Quick`, branch `podspec`)
   - ReactiveCocoa (from `https://github.com/AshFurrow/ReactiveCocoa`, branch `podspec`)
@@ -35,8 +29,6 @@ EXTERNAL SOURCES:
   LlamaKit:
     :branch: rac_podspec
     :git: https://github.com/AshFurrow/LlamaKit
-  Moya:
-    :path: ../
   Nimble:
     :branch: podspec
     :git: https://github.com/ashfurrow/Nimble
@@ -47,12 +39,28 @@ EXTERNAL SOURCES:
     :branch: podspec
     :git: https://github.com/AshFurrow/ReactiveCocoa
 
+CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: caa66f74e10471e1577d73e16e8c03d0557a54ab
+    :git: https://github.com/mrackwitz/Alamofire.git
+  LlamaKit:
+    :commit: 3e1f3b480213992cbc4f5706e5c27e49f6c18d39
+    :git: https://github.com/AshFurrow/LlamaKit
+  Nimble:
+    :commit: 8db5bb2eba40ce71ea7b68d5ce81976142717b5e
+    :git: https://github.com/ashfurrow/Nimble
+  Quick:
+    :commit: 3fd413dd4fb1ab250a37aa766c60004d2ee03fac
+    :git: https://github.com/orta/Quick
+  ReactiveCocoa:
+    :commit: 53d7c15eaa4d2a3410a992283a80832d934cf83c
+    :git: https://github.com/AshFurrow/ReactiveCocoa
+
 SPEC CHECKSUMS:
   Alamofire: 4cff790102216d69f3b12dd69885c468870d51e9
   LlamaKit: 71673af25b2c733160d643e67c1f711d3afa4af2
-  Moya: 5c78199dca4481d07aa04e43d04d29e42933915d
   Nimble: a758538afa362515139cc23f17a19be9b0d20ae0
   Quick: 1b2e5892266a111ec2e13f925f8a4103978f13f8
   ReactiveCocoa: 991a58612852e1f4cc3e0073c664367508856e53
 
-COCOAPODS: 0.35.0.rc2
+COCOAPODS: 0.35.0

@@ -1,5 +1,5 @@
-WORKSPACE = Demo/Demo.xcworkspace
-SCHEME = Demo
+WORKSPACE = Moya.xcworkspace
+SCHEME = Moya
 CONFIGURATION = Debug
 
 # Default for `make`
@@ -15,8 +15,8 @@ test:
 	set -o pipefail && xcodebuild -workspace '$(WORKSPACE)' -scheme '$(SCHEME)' -configuration Debug test -sdk iphonesimulator -destination 'name=iPhone 5' | xcpretty -c --test
 
 setup:
-	bundle exec pod install --project-directory=Demo/
+	bundle exec pod install
 
-prepare_ci:	setup 
+prepare_ci:	setup
 
 ci: test
