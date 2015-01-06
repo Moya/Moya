@@ -31,12 +31,12 @@ we'll get you some help.
 Moya Setup
 ==========
 
-Setup instructions can be found in the [project README](http://AshFurrow.com/Moya#Installation).
+Setup instructions can be found in the [project README](http://github.com/ashfurrow/Moya#Installation).
 
 Basic Usage
 ===========
 
-Basic usage of Moya can also be found in the [project README](http://AshFurrow.com/Moya).
+Basic usage of Moya can also be found in the [project README](http://github.com/ashfurrow/Moya).
 However, let's revisit that a little bit and go into some more detail. 
 
 There's a clear line between what is inside Moya and what is inside your app. 
