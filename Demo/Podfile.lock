@@ -47,6 +47,11 @@ EXTERNAL SOURCES:
     :branch: podspec
     :git: https://github.com/AshFurrow/ReactiveCocoa
 
+CHECKOUT OPTIONS:
+  ReactiveCocoa:
+    :commit: 63abee7c5dc523673d353ea8f408a1afab072331
+    :git: https://github.com/AshFurrow/ReactiveCocoa
+
 SPEC CHECKSUMS:
   Alamofire: 4cff790102216d69f3b12dd69885c468870d51e9
   LlamaKit: 71673af25b2c733160d643e67c1f711d3afa4af2
@@ -55,4 +60,4 @@ SPEC CHECKSUMS:
   Quick: 1b2e5892266a111ec2e13f925f8a4103978f13f8
   ReactiveCocoa: 991a58612852e1f4cc3e0073c664367508856e53
 
-COCOAPODS: 0.35.0.rc2
+COCOAPODS: 0.36.0.beta.1
