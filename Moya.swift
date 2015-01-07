@@ -118,8 +118,8 @@ public class MoyaProvider<T: MoyaTarget> {
             switch endpoint.sampleResponse {
             case .Success(let statusCode, let data):
                 completion(data: data, statusCode: statusCode, response:nil, error: nil)
-            case .Error(let statusCode, let error):
-                completion(data: nil, statusCode: statusCode, response:nil, error: error)
+            case .Error(let statusCode, let error, let data):
+                completion(data: data, statusCode: statusCode, response:nil, error: error)
             }
         } else {
              Alamofire.Manager.sharedInstance.request(request)
