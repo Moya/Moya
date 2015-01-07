@@ -53,5 +53,6 @@ let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [Stri
 }
 
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil)), method: method, parameters: parameters)
+    let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), errorData), method: method, parameters: parameters)
 }

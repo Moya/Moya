@@ -191,6 +191,19 @@ class MoyaProviderSpec: QuickSpec {
                         let sampleData = target.sampleData as NSData
                         expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
                     }
+                    
+                    it("returns stubbed error data when present") {
+                        var errorMessage = ""
+                        
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        provider.request(target, completion: { (object, statusCode, response, error) in
+                            if let object = object {
+                                errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding)!
+                            }
+                        })
+
+                        expect{errorMessage}.toEventually(equal("Houston, we have a problem"), timeout: 1, pollInterval: 0.1)
+                    }
                 })
                 
                 describe("a reactive provider", { () -> () in
