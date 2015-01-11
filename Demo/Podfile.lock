@@ -21,7 +21,6 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
-  - Alamofire
   - LlamaKit (from `https://github.com/ashfurrow/LlamaKit`, branch `rac_podspec`)
   - Moya/Reactive (from `../`)
   - Nimble (from `https://github.com/ashfurrow/Nimble`, branch `podspec`)
