@@ -24,40 +24,33 @@ Sample Project
 --------------
 
 There's a sample project in the Sample directory. Make sure to run the [installation
-instructions](#installation) below, since it relies on the Alamofire submodule. 
+instructions](#installation) below, since it relies a pre-release version of CocoaPods. 
 
 Project Status
 --------------
 
-Currently, we support Xcode 6.1. 
-
 This is nearing a 1.0 release, though it works now. We're using it in [Artsy's
 new auction app](https://github.com/Artsy/eidolon).
+
+Currently, we support Xcode 6.1.1. 
 
 Installation
 ------------
 
 This project has some dependencies, which are currently managed by a pre-release
-version of CocoaPods. If you don't want to run the pre-release version, that's 
-ok! Just got to this [previous commit](https://github.com/ashfurrow/Moya/tree/b97472968e32a5f9c8900a1e7ad54dfd14ea2afa)
-and follow the instructions there. 
-
-If you want to use Moya with CocoaPods, use the Gemfile in this repo for your 
-own project folder and run `bundle install`. Then add the following lines to
-your podfile:
+version of CocoaPods (0.36 Beta 1). Add the following lines to your Podfile:
 
 ```rb
-pod 'Alamofire', :git => "https://github.com/mrackwitz/Alamofire.git", :branch => "podspec"
-pod 'LlamaKit', :git => "https://github.com/AshFurrow/LlamaKit", :branch => "rac_podspec"
 pod 'Moya', :git => "https://github.com/AshFurrow/Moya"
 
 # Include the following only if you want to use ReactiveCocoa extensions with Moya
+pod 'LlamaKit', :git => "https://github.com/AshFurrow/LlamaKit", :branch => "rac_podspec"
 pod 'ReactiveCocoa', :git => "https://github.com/AshFurrow/ReactiveCocoa", :branch => "podspec"
 pod 'Moya/Reactive', :git => "https://github.com/AshFurrow/Moya"
 ```
 
-And finally run `bundle exec pod install`. Note the `bundle exec` – it is 
-important!
+Then run `pod install`. In any file you'd like to use Moya in, don't forget to
+import the framework with `import Moya`.
 
 Use
 ---
