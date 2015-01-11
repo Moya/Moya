@@ -22,16 +22,16 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - LlamaKit (from `https://github.com/AshFurrow/LlamaKit`, branch `rac_podspec`)
+  - LlamaKit (from `https://github.com/ashfurrow/LlamaKit`, branch `rac_podspec`)
   - Moya/Reactive (from `../`)
   - Nimble (from `https://github.com/ashfurrow/Nimble`, branch `podspec`)
   - Quick (from `https://github.com/orta/Quick`, branch `podspec`)
-  - ReactiveCocoa (from `https://github.com/AshFurrow/ReactiveCocoa`, branch `podspec`)
+  - ReactiveCocoa (from `https://github.com/ashfurrow/ReactiveCocoa`, branch `podspec`)
 
 EXTERNAL SOURCES:
   LlamaKit:
     :branch: rac_podspec
-    :git: https://github.com/AshFurrow/LlamaKit
+    :git: https://github.com/ashfurrow/LlamaKit
   Moya:
     :path: ../
   Nimble:
@@ -42,12 +42,12 @@ EXTERNAL SOURCES:
     :git: https://github.com/orta/Quick
   ReactiveCocoa:
     :branch: podspec
-    :git: https://github.com/AshFurrow/ReactiveCocoa
+    :git: https://github.com/ashfurrow/ReactiveCocoa
 
 CHECKOUT OPTIONS:
   LlamaKit:
     :commit: acb03f22396ee8e2b990b45790ef5f2446278589
-    :git: https://github.com/AshFurrow/LlamaKit
+    :git: https://github.com/ashfurrow/LlamaKit
   Nimble:
     :commit: 8db5bb2eba40ce71ea7b68d5ce81976142717b5e
     :git: https://github.com/ashfurrow/Nimble
@@ -56,7 +56,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/orta/Quick
   ReactiveCocoa:
     :commit: 87376806926d0a1ab39412f7230fd4d4be2c7700
-    :git: https://github.com/AshFurrow/ReactiveCocoa
+    :git: https://github.com/ashfurrow/ReactiveCocoa
 
 SPEC CHECKSUMS:
   Alamofire: 4337b1484a062640f8caf6e96f03a511bf137536

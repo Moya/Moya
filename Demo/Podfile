@@ -3,8 +3,8 @@ platform :ios, '8.0'
 source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'Alamofire'
-pod 'LlamaKit', :git => "https://github.com/AshFurrow/LlamaKit", :branch => "rac_podspec"
-pod 'ReactiveCocoa', :git => "https://github.com/AshFurrow/ReactiveCocoa", :branch => "podspec"
+pod 'LlamaKit', :git => "https://github.com/ashfurrow/LlamaKit", :branch => "rac_podspec"
+pod 'ReactiveCocoa', :git => "https://github.com/ashfurrow/ReactiveCocoa", :branch => "podspec"
 pod 'Moya/Reactive', :path => "../"
 
 target 'DemoTests' do
