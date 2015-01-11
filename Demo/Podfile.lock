@@ -1,9 +1,9 @@
 PODS:
   - Alamofire (1.1.3)
   - LlamaKit (0.1.0)
-  - Moya/Core (0.5):
-    - Alamofire
-  - Moya/Reactive (0.5):
+  - Moya/Core (0.6):
+    - Alamofire (~> 1.1.0)
+  - Moya/Reactive (0.6):
     - Moya/Core
     - ReactiveCocoa
   - Nimble (0.1.0)
@@ -60,10 +60,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 4337b1484a062640f8caf6e96f03a511bf137536
-  LlamaKit: 71673af25b2c733160d643e67c1f711d3afa4af2
-  Moya: 5c78199dca4481d07aa04e43d04d29e42933915d
-  Nimble: a758538afa362515139cc23f17a19be9b0d20ae0
-  Quick: 1b2e5892266a111ec2e13f925f8a4103978f13f8
-  ReactiveCocoa: 991a58612852e1f4cc3e0073c664367508856e53
+  LlamaKit: f9e1b1740818d4d79eaed5a4f5d4db5f13fa720f
+  Moya: 938d5de3070411998c91c8a16c7610a2a4e7794f
+  Nimble: 3cb20ee52ff32eed1f69bc3edac80c7cbb4f17f5
+  Quick: fdcce541eb5d73f5ac78f95c770ca6d6d69f0b81
+  ReactiveCocoa: 3ccce60466bf2f89e9bed34435300321a698c1b5
 
 COCOAPODS: 0.36.0.beta.1
