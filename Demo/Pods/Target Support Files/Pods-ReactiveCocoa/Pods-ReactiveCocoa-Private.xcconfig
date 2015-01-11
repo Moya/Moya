@@ -1,0 +1,9 @@
+#include "Pods-ReactiveCocoa.xcconfig"
+CONFIGURATION_BUILD_DIR = $PODS_FRAMEWORK_BUILD_PATH
+FRAMEWORK_SEARCH_PATHS = "$PODS_FRAMEWORK_BUILD_PATH"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/ReactiveCocoa" "${PODS_ROOT}/Headers/Build/ReactiveCocoa/ReactiveCocoa" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Alamofire" "${PODS_ROOT}/Headers/Public/LlamaKit" "${PODS_ROOT}/Headers/Public/Moya" "${PODS_ROOT}/Headers/Public/Nimble" "${PODS_ROOT}/Headers/Public/Quick" "${PODS_ROOT}/Headers/Public/ReactiveCocoa" "${PODS_ROOT}/Headers/Public/ReactiveCocoa/ReactiveCocoa"
+OTHER_LDFLAGS = $(inherited) -framework "LlamaKit"
+OTHER_SWIFT_FLAGS = "-D COCOAPODS"
+PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods
+PODS_ROOT = ${SRCROOT}
