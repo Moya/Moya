@@ -1,5 +1,7 @@
-# Master
+# 0.6
 
+- First release on CocoaPods trunk. 
+- Add data support for [stubbed error responses](https://github.com/ashfurrow/Moya/pull/92). – [@steam](http://github.com.steam)
 - Fixes [#66](https://github.com/AshFurrow/Moya/issues/66), a problem with outdated Alamofire dependency and it's serializer type signature. -[@garnett](http://github.com/garnett)
 - Delete note about ReactiveCocoa installation -[@garnett](http://github.com/garnett)
 
