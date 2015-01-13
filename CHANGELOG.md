@@ -1,3 +1,7 @@
+# 0.6.1
+
+- Updates podspec to refer to `3.0.0-aplha.1` of ReactiveCocoa. -[@ashfurrow](http://github.com/ashfurrow)
+
 # 0.6
 
 - First release on CocoaPods trunk. 
