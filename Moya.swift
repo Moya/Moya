@@ -102,10 +102,10 @@ public class MoyaProvider<T: MoyaTarget> {
     public let endpointsClosure: MoyaEndpointsClosure
     public let endpointResolver: MoyaEndpointResolution
     public let stubResponses: Bool
-    public let stubBehavior: MoyaStubbedBehavior?
+    public let stubBehavior: MoyaStubbedBehavior
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior? = nil) {
+    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
@@ -123,7 +123,7 @@ public class MoyaProvider<T: MoyaTarget> {
         let request = endpointResolver(endpoint: endpoint)
         
         if (stubResponses) {
-            let behavior = stubBehavior?(token) ?? .Immediate
+            let behavior = stubBehavior(token)
 
             let stub: () -> () = {
                 switch endpoint.sampleResponse {
@@ -176,6 +176,10 @@ public class MoyaProvider<T: MoyaTarget> {
         return { (endpoint: Endpoint<T>) -> (NSURLRequest) in
             return endpoint.urlRequest
         }
+    }
+
+    public class func DefaultStubBehavior(_: T) -> Moya.StubbedBehavior {
+        return .Immediate
     }
 }
 

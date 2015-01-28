@@ -6,8 +6,8 @@ PODS:
   - Moya/Reactive (0.6.1):
     - Moya/Core
     - ReactiveCocoa (= 3.0.0-alpha.1)
-  - Nimble (0.1.0)
-  - Quick (0.2.0)
+  - Nimble (0.3.0)
+  - Quick (0.2.2)
   - ReactiveCocoa (3.0.0-alpha.1):
     - LlamaKit (= 0.1.1)
     - ReactiveCocoa/UI (= 3.0.0-alpha.1)
@@ -22,34 +22,20 @@ PODS:
 
 DEPENDENCIES:
   - Moya/Reactive (from `../`)
-  - Nimble (from `https://github.com/ashfurrow/Nimble`, branch `podspec`)
-  - Quick (from `https://github.com/orta/Quick`, branch `podspec`)
+  - Nimble
+  - Quick
   - ReactiveCocoa (= 3.0.0-alpha.1)
 
 EXTERNAL SOURCES:
   Moya:
     :path: ../
-  Nimble:
-    :branch: podspec
-    :git: https://github.com/ashfurrow/Nimble
-  Quick:
-    :branch: podspec
-    :git: https://github.com/orta/Quick
-
-CHECKOUT OPTIONS:
-  Nimble:
-    :commit: 8db5bb2eba40ce71ea7b68d5ce81976142717b5e
-    :git: https://github.com/ashfurrow/Nimble
-  Quick:
-    :commit: 3fd413dd4fb1ab250a37aa766c60004d2ee03fac
-    :git: https://github.com/orta/Quick
 
 SPEC CHECKSUMS:
   Alamofire: 4337b1484a062640f8caf6e96f03a511bf137536
   LlamaKit: 430d2ae678888d13fe87f8a01d0c4fb69c06eb93
   Moya: 6589de6c52d9d8e5ab0d9630b4cd5c4b7f898019
-  Nimble: 3cb20ee52ff32eed1f69bc3edac80c7cbb4f17f5
-  Quick: fdcce541eb5d73f5ac78f95c770ca6d6d69f0b81
+  Nimble: a4d9d978129e83d73e33b7d8bce57443bd556068
+  Quick: 7b89ff625e72ef931c2a9ef2f25ac3a9d2457763
   ReactiveCocoa: 90459e39e5d18f55e145237fcf6e1fb72fff0eb3
 
 COCOAPODS: 0.36.0.beta.1
