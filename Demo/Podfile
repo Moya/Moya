@@ -7,7 +7,7 @@ pod 'Moya/Reactive', :path => "../"
 
 target 'DemoTests' do
 
-  pod 'Quick', :git => "https://github.com/orta/Quick", :branch => "podspec"
-  pod 'Nimble', :git => "https://github.com/ashfurrow/Nimble", :branch => "podspec"
+  pod 'Quick'
+  pod 'Nimble'
 
 end

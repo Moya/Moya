@@ -56,7 +56,29 @@ class MoyaProviderSpec: QuickSpec {
                         expect(endpoint1).to(equal(endpoint2))
                     }
                 })
-                
+
+                it("delays execution when appropriate") {
+                    let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
+                        return .Delayed(seconds: 2)
+                    }
+
+                    let provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+
+                    let startDate = NSDate()
+                    var endDate: NSDate?
+                    let target: GitHub = .Zen
+                    waitUntil(timeout: 3){ done in
+                        provider.request(target, completion: { (data, statusCode, response, error) in
+                            endDate = NSDate()
+                            done()
+                        })
+                    }
+
+                    expect{
+                        return endDate?.timeIntervalSinceDate(startDate)
+                    }.to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
+                }
+
                 describe("a provider with a custom endpoint resolver", { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     var executed = false

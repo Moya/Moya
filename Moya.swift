@@ -63,6 +63,11 @@ public class Moya {
             }
         }
     }
+
+    public enum StubbedBehavior {
+        case Immediate
+        case Delayed(seconds: NSTimeInterval)
+    }
     
     /// Default HTTP method is GET.
     public class func DefaultMethod() -> Method {
@@ -92,16 +97,19 @@ public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
     /// Closure that resolves an Endpoint into an NSURLRequest.
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
+    public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
     
     public let endpointsClosure: MoyaEndpointsClosure
     public let endpointResolver: MoyaEndpointResolution
     public let stubResponses: Bool
+    public let stubBehavior: MoyaStubbedBehavior
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false) {
+    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
+        self.stubBehavior = stubBehavior
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -115,12 +123,28 @@ public class MoyaProvider<T: MoyaTarget> {
         let request = endpointResolver(endpoint: endpoint)
         
         if (stubResponses) {
-            switch endpoint.sampleResponse {
-            case .Success(let statusCode, let data):
-                completion(data: data, statusCode: statusCode, response:nil, error: nil)
-            case .Error(let statusCode, let error, let data):
-                completion(data: data, statusCode: statusCode, response:nil, error: error)
+            let behavior = stubBehavior(token)
+
+            let stub: () -> () = {
+                switch endpoint.sampleResponse {
+                case .Success(let statusCode, let data):
+                    completion(data: data, statusCode: statusCode, response:nil, error: nil)
+                case .Error(let statusCode, let error, let data):
+                    completion(data: data, statusCode: statusCode, response:nil, error: error)
+                }
             }
+
+            switch behavior {
+            case .Immediate:
+                stub()
+            case .Delayed(let delay):
+                let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
+                let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+                dispatch_after(killTime, dispatch_get_main_queue()) {
+                    stub()
+                }
+            }
+
         } else {
              Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
@@ -152,6 +176,10 @@ public class MoyaProvider<T: MoyaTarget> {
         return { (endpoint: Endpoint<T>) -> (NSURLRequest) in
             return endpoint.urlRequest
         }
+    }
+
+    public class func DefaultStubBehavior(_: T) -> Moya.StubbedBehavior {
+        return .Immediate
     }
 }
 
