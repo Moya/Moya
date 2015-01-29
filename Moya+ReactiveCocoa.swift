@@ -9,7 +9,7 @@
 import Foundation
 import ReactiveCocoa
 
-public class MoyaResponse {
+public class MoyaResponse: NSObject {
     public let statusCode: Int
     public let data: NSData
     public let response: NSURLResponse?
@@ -22,11 +22,11 @@ public class MoyaResponse {
 }
 
 extension MoyaResponse: Printable, DebugPrintable {
-    public var description: String {
+    override public var description: String {
         return "Status Code: \(statusCode), Data Length: \(data.length)"
     }
     
-    public var debugDescription: String {
+    override public var debugDescription: String {
         return description
     }
 }
