@@ -74,7 +74,7 @@ might look like.
 ```swift
 private extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
     }
 }
 
@@ -115,11 +115,11 @@ Next, we'll set up the endpoints for use with our API.
 
 ```swift
 public func url(route: MoyaTarget) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString!
 }
 
 let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(200, target.sampleData))
+    return Endpoint<GitHub>(URL: url(target),sampleResponse: .Success(200, target.sampleData), method: method, parameters: parameters )
 }
 ```
 
