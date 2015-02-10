@@ -126,11 +126,13 @@ public class MoyaProvider<T: MoyaTarget> {
             let behavior = stubBehavior(token)
 
             let stub: () -> () = {
-                switch endpoint.sampleResponse {
+                switch endpoint.sampleResponse.evaluate() {
                 case .Success(let statusCode, let data):
                     completion(data: data, statusCode: statusCode, response:nil, error: nil)
                 case .Error(let statusCode, let error, let data):
                     completion(data: data, statusCode: statusCode, response:nil, error: error)
+                default:
+                    Void()  // evaluate will always return Success or Error, but exhaustive switches and all that...
                 }
             }
 
