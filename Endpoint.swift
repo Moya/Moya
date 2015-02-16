@@ -11,17 +11,8 @@ import Alamofire
 
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
-    case Success(Int, NSData)
-    case Error(Int?, NSError?, NSData?)
-    case Lazy(()-> EndpointSampleResponse)
-
-    func evaluate() -> EndpointSampleResponse {
-        switch self {
-        case Success, Error: return self
-        case Lazy(let lazy):
-            return lazy().evaluate()
-        }
-    }
+    case Success(@autoclosure () -> (Int, NSData))
+    case Error(@autoclosure () -> (Int?, NSError?, NSData?))
 }
 
 
