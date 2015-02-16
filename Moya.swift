@@ -133,12 +133,10 @@ public class MoyaProvider<T: MoyaTarget> {
                 var optError : NSError?
 
                 switch endpoint.sampleResponse {
-                case .Success(let successClosure):
-                    (statusCode, data) = successClosure()
-                    completion(data: data, statusCode: statusCode, response:nil, error: nil)
-                case .Error(let failureClosure):
-                    (optStatusCode, optError, optData) = failureClosure()
-                    completion(data: optData, statusCode: optStatusCode, response:nil, error: optError)
+                case .Success(let statusCodeClosure, let dataClosure):
+                    completion(data: dataClosure(), statusCode: statusCodeClosure(), response:nil, error: nil)
+                case .Error(let statusCodeClosure, let errorClosure, let dataClosure):
+                    completion(data: dataClosure(), statusCode: statusCodeClosure(), response:nil, error: errorClosure())
                 }
             }
 

@@ -11,8 +11,8 @@ import Alamofire
 
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
-    case Success(@autoclosure () -> (Int, NSData))
-    case Error(@autoclosure () -> (Int?, NSError?, NSData?))
+    case Success(@autoclosure () -> Int, @autoclosure () -> NSData)
+    case Error(@autoclosure () -> Int?, @autoclosure () -> NSError?, @autoclosure () -> NSData?)
 }
 
 
