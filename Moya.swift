@@ -126,12 +126,6 @@ public class MoyaProvider<T: MoyaTarget> {
             let behavior = stubBehavior(token)
 
             let stub: () -> () = {
-                var statusCode : Int
-                var data : NSData
-                var optStatusCode : Int?
-                var optData : NSData?
-                var optError : NSError?
-
                 switch endpoint.sampleResponse {
                 case .Success(let statusCodeClosure, let dataClosure):
                     completion(data: dataClosure(), statusCode: statusCodeClosure(), response:nil, error: nil)
