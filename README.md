@@ -166,7 +166,7 @@ let provider = MoyaProvider(endpointsClosure: endpointsClosure)
 Neato. Now how do we make a request?
 
 ```swift
-provider.request(.Zen, completion: { (data, error) in
+provider.request(.Zen, completion: { (data, statusCode, response, error) in
     if let data = data {
         // do something with the data
     }
