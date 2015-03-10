@@ -12,7 +12,7 @@ import Nimble
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
-        describe("valid enpoints") {
+        describe("valid endpoints") {
             describe("with stubbed responses") {
                 describe("a provider", { () -> () in
                     var provider: MoyaProvider<GitHub>!

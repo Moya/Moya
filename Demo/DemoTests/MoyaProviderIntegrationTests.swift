@@ -20,7 +20,7 @@ func beIndenticalToResponse(expectedValue: MoyaResponse) -> MatcherFunc<MoyaResp
 
 class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
-        describe("valid enpoints") {
+        describe("valid endpoints") {
             describe("with live data") {
                 describe("a provider", { () -> () in
                     var provider: MoyaProvider<GitHub>!
