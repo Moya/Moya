@@ -13,7 +13,17 @@ import Alamofire
 public enum EndpointSampleResponse {
     case Success(Int, NSData)
     case Error(Int?, NSError?, NSData?)
+    case Closure(@autoclosure () -> EndpointSampleResponse)
+
+    func evaluate() -> EndpointSampleResponse {
+        switch self {
+        case Success, Error: return self
+        case Closure(let closure):
+            return closure().evaluate()
+        }
+    }
 }
+
 
 /// Class for reifying a target of the T enum unto a concrete Endpoint
 public class Endpoint<T> {

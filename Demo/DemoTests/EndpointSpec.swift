@@ -30,7 +30,7 @@ public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool
 
 class EndpointSpec: QuickSpec {
     override func spec() {
-        describe("an enpoint", { () -> () in
+        describe("an endpoint", { () -> () in
             var endpoint: Endpoint<GitHub>!
             
             beforeEach({ () -> () in

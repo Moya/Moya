@@ -121,16 +121,18 @@ public class MoyaProvider<T: MoyaTarget> {
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         let request = endpointResolver(endpoint: endpoint)
-        
-        if (stubResponses) {
+
+        if stubResponses {
             let behavior = stubBehavior(token)
 
             let stub: () -> () = {
-                switch endpoint.sampleResponse {
-                case .Success(let statusCode, let data):
-                    completion(data: data, statusCode: statusCode, response:nil, error: nil)
-                case .Error(let statusCode, let error, let data):
-                    completion(data: data, statusCode: statusCode, response:nil, error: error)
+                switch endpoint.sampleResponse.evaluate() {
+                    case .Success(let statusCode, let data):
+                        completion(data: data, statusCode: statusCode, response:nil, error: nil)
+                    case .Error(let statusCode, let error, let data):
+                        completion(data: data, statusCode: statusCode, response:nil, error: error)
+                    case .Closure:
+                        break  // the `evaluate()` method will never actually return a .Closure
                 }
             }
 

@@ -12,7 +12,7 @@ import Nimble
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
-        describe("valid enpoints") {
+        describe("valid endpoints") {
             describe("with stubbed responses") {
                 describe("a provider", { () -> () in
                     var provider: MoyaProvider<GitHub>!
@@ -54,6 +54,27 @@ class MoyaProviderSpec: QuickSpec {
                         let endpoint1 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
                         let endpoint2 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
                         expect(endpoint1).to(equal(endpoint2))
+                    }
+                })
+
+                describe("a provider with lazy data", { () -> () in
+                    var provider: MoyaProvider<GitHub>!
+                    beforeEach {
+                        provider = MoyaProvider(endpointsClosure: lazyEndpointsClosure, stubResponses: true)
+                    }
+
+                    it("returns stubbed data for zen request") {
+                        var message: String?
+
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (data, statusCode, response, error) in
+                            if let data = data {
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            }
+                        })
+
+                        let sampleData = target.sampleData as NSData
+                        expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
                     }
                 })
 
