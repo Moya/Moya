@@ -57,6 +57,27 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 })
 
+                describe("a provider with lazy data", { () -> () in
+                    var provider: MoyaProvider<GitHub>!
+                    beforeEach {
+                        provider = MoyaProvider(endpointsClosure: lazyEndpointsClosure, stubResponses: true)
+                    }
+
+                    it("returns stubbed data for zen request") {
+                        var message: String?
+
+                        let target: GitHub = .Zen
+                        provider.request(target, completion: { (data, statusCode, response, error) in
+                            if let data = data {
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            }
+                        })
+
+                        let sampleData = target.sampleData as NSData
+                        expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
+                    }
+                })
+
                 it("delays execution when appropriate") {
                     let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
                         return .Delayed(seconds: 2)
