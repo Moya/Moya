@@ -41,12 +41,11 @@ This project has some dependencies, which are currently managed by a pre-release
 version of CocoaPods (0.36 Beta 1). Add the following lines to your Podfile:
 
 ```rb
-pod 'Moya', :git => "https://github.com/AshFurrow/Moya"
+pod 'Moya'
 
 # Include the following only if you want to use ReactiveCocoa extensions with Moya
-pod 'LlamaKit', :git => "https://github.com/AshFurrow/LlamaKit", :branch => "rac_podspec"
-pod 'ReactiveCocoa', :git => "https://github.com/AshFurrow/ReactiveCocoa", :branch => "podspec"
-pod 'Moya/Reactive', :git => "https://github.com/AshFurrow/Moya"
+pod 'ReactiveCocoa', '3.0.0-alpha.1'
+pod 'Moya/Reactive'
 ```
 
 Then run `pod install`. In any file you'd like to use Moya in, don't forget to
