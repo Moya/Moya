@@ -53,6 +53,10 @@ public extension RACSignal {
         return filterStatusCodes(200...299)
     }
     
+    public func filterSuccessfulStatusAndRedirectCodes() -> RACSignal {
+        return filterStatusCodes(200...399)
+    }
+    
     /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
     public func mapImage() -> RACSignal {
         return tryMap({ (object, error) -> AnyObject! in
