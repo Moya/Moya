@@ -73,6 +73,44 @@ class RACSignalMoyaSpec: QuickSpec {
                 
                 expect(called).to(beTruthy())
             }
+            
+            it("filters out non-successful status and redirect codes") {
+                let data = NSData()
+                let signal = signalSendingData(data, statusCode: 404)
+                
+                var errored = false
+                signal.filterSuccessfulStatusAndRedirectCodes().subscribeNext({ (object) -> Void in
+                    XCTFail("called on non-success status code: \(object)")
+                    }, error: { (error) -> Void in
+                        errored = true
+                })
+                
+                expect(errored).to(beTruthy())
+            }
+            
+            it("passes through correct status codes") {
+                let data = NSData()
+                let signal = signalSendingData(data)
+                
+                var called = false
+                signal.filterSuccessfulStatusAndRedirectCodes().subscribeNext({ (object) -> Void in
+                    called = true
+                })
+                
+                expect(called).to(beTruthy())
+            }
+            
+            it("passes through correct redirect codes") {
+                let data = NSData()
+                let signal = signalSendingData(data, statusCode: 304)
+                
+                var called = false
+                signal.filterSuccessfulStatusAndRedirectCodes().subscribeNext({ (object) -> Void in
+                    called = true
+                })
+                
+                expect(called).to(beTruthy())
+            }
         })
         
         describe("image maping", {
