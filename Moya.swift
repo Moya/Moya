@@ -163,15 +163,15 @@ public class MoyaProvider<T: MoyaTarget> {
     }
     
     public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) {
-        request(token, method: Moya.DefaultMethod(), parameters: parameters, completion)
+        request(token, method: Moya.DefaultMethod(), parameters: parameters, completion: completion)
     }
 
     public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
-        request(token, method: method, parameters: Moya.DefaultParameters(), completion)
+        request(token, method: method, parameters: Moya.DefaultParameters(), completion: completion)
     }
     
     public func request(token: T, completion: MoyaCompletion) {
-        request(token, method: Moya.DefaultMethod(), completion)
+        request(token, method: Moya.DefaultMethod(), completion: completion)
     }
     
     public class func DefaultEnpointResolution() -> MoyaEndpointResolution {

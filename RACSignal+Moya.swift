@@ -100,7 +100,7 @@ public extension RACSignal {
             var string: String?
             
             if let response = object as? MoyaResponse {
-                string = NSString(data: response.data, encoding: NSUTF8StringEncoding)
+                string = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
             }
             
             if string == nil {
