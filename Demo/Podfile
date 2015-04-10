@@ -2,7 +2,9 @@ platform :ios, '8.0'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'ReactiveCocoa', '3.0.0-alpha.1'
+use_frameworks!
+
+pod 'ReactiveCocoa', '3.0-alpha.3'
 pod 'Moya/Reactive', :path => "../"
 
 target 'DemoTests' do

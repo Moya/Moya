@@ -1,41 +1,41 @@
 PODS:
-  - Alamofire (1.1.3)
-  - LlamaKit (0.1.1)
+  - Alamofire (1.1.5)
+  - LlamaKit (0.6.0)
   - Moya/Core (0.6.1):
     - Alamofire (~> 1.1.0)
   - Moya/Reactive (0.6.1):
     - Moya/Core
-    - ReactiveCocoa (= 3.0.0-alpha.1)
-  - Nimble (0.3.0)
-  - Quick (0.2.2)
-  - ReactiveCocoa (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
-    - ReactiveCocoa/UI (= 3.0.0-alpha.1)
-  - ReactiveCocoa/Core (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
+    - ReactiveCocoa (= 3.0-alpha.3)
+  - Nimble (0.4.2)
+  - Quick (0.3.1)
+  - ReactiveCocoa (3.0-alpha.3):
+    - LlamaKit (~> 0.6.0)
+    - ReactiveCocoa/UI (= 3.0-alpha.3)
+  - ReactiveCocoa/Core (3.0-alpha.3):
+    - LlamaKit (~> 0.6.0)
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
-  - ReactiveCocoa/UI (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
+  - ReactiveCocoa/no-arc (3.0-alpha.3):
+    - LlamaKit (~> 0.6.0)
+  - ReactiveCocoa/UI (3.0-alpha.3):
+    - LlamaKit (~> 0.6.0)
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
   - Moya/Reactive (from `../`)
   - Nimble
   - Quick
-  - ReactiveCocoa (= 3.0.0-alpha.1)
+  - ReactiveCocoa (= 3.0-alpha.3)
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 4337b1484a062640f8caf6e96f03a511bf137536
-  LlamaKit: 25f47a933b6580a6fc159d95adb2e2953c7012e9
-  Moya: 6589de6c52d9d8e5ab0d9630b4cd5c4b7f898019
-  Nimble: a4d9d978129e83d73e33b7d8bce57443bd556068
-  Quick: 7b89ff625e72ef931c2a9ef2f25ac3a9d2457763
-  ReactiveCocoa: 3b5e351bb3ab233d71f0329f36a7400af30d9783
+  Alamofire: 346a8798fe35b993e136041e14f0a3a30065f7a5
+  LlamaKit: dbb01a9e77a78c9f4c1a1c9fef6f2bcf04c38c42
+  Moya: 47d6091aa5c4c1b3c8cdd8bf00825f1178a44ea1
+  Nimble: 49b7a7da8919f42823d37c6d68cc6d15a7009f32
+  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
+  ReactiveCocoa: eb49bad623ce7c8a4c54d1c4049b5e68cd006a61
 
-COCOAPODS: 0.36.0.beta.1
+COCOAPODS: 0.36.3
