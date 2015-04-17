@@ -148,10 +148,10 @@ public class MoyaProvider<T: MoyaTarget> {
             }
 
         } else {
-			UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-					UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // Alamofire always sense the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future.
                     let statusCode = response?.statusCode
