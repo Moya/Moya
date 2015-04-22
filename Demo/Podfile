@@ -2,6 +2,8 @@ platform :ios, '8.0'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
+use_frameworks!
+
 pod 'ReactiveCocoa', '3.0.0-alpha.1'
 pod 'Moya/Reactive', :path => "../"
 
@@ -9,5 +11,6 @@ target 'DemoTests' do
 
   pod 'Quick'
   pod 'Nimble'
+  pod 'OHHTTPStubs'
 
 end

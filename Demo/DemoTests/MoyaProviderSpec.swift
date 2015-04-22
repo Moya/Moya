@@ -24,11 +24,11 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, statusCode, response, error) in
+                        provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
-                        })
+                        }
                         
                         let sampleData = target.sampleData as NSData
                         expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
@@ -38,11 +38,11 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (data, statusCode, response, error) in
+                        provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
-                        })
+                        }
                         
                         let sampleData = target.sampleData as NSData
                         expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
@@ -57,6 +57,34 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 })
 
+                it("notifies at the beginning of network requests") {
+                    var called = false
+                    var provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, networkActivityClosure: { (change) -> () in
+                        if change == .Began {
+                            called = true
+                        }
+                    })
+
+                    let target: GitHub = .Zen
+                    provider.request(target) { (data, statusCode, response, error) in }
+
+                    expect(called) == true
+                }
+
+                it("notifies at the end of network requests") {
+                    var called = false
+                    var provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, networkActivityClosure: { (change) -> () in
+                        if change == .Ended {
+                            called = true
+                        }
+                    })
+
+                    let target: GitHub = .Zen
+                    provider.request(target) { (data, statusCode, response, error) in }
+                    
+                    expect(called) == true
+                }
+
                 describe("a provider with lazy data", { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
@@ -67,11 +95,11 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
 
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (data, statusCode, response, error) in
+                        provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding)
                             }
-                        })
+                        }
 
                         let sampleData = target.sampleData as NSData
                         expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
@@ -88,11 +116,11 @@ class MoyaProviderSpec: QuickSpec {
                     let startDate = NSDate()
                     var endDate: NSDate?
                     let target: GitHub = .Zen
-                    waitUntil(timeout: 3){ done in
-                        provider.request(target, completion: { (data, statusCode, response, error) in
+                    waitUntil(timeout: 3) { done in
+                        provider.request(target) { (data, statusCode, response, error) in
                             endDate = NSDate()
                             done()
-                        })
+                        }
                     }
 
                     expect{
@@ -100,7 +128,7 @@ class MoyaProviderSpec: QuickSpec {
                     }.to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
                 }
 
-                describe("a provider with a custom endpoint resolver", { () -> () in
+                describe("a provider with a custom endpoint resolver") { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     var executed = false
                     let newSampleResponse = "New Sample Response"
@@ -121,7 +149,7 @@ class MoyaProviderSpec: QuickSpec {
                         let sampleData = target.sampleData as NSData
                         expect(executed).to(beTruthy())
                     }
-                })
+                }
                 
                 describe("a reactive provider", { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
@@ -132,11 +160,11 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns a MoyaResponse object") {
                         var called = false
                         
-                        provider.request(.Zen).subscribeNext({ (object) -> Void in
+                        provider.request(.Zen).subscribeNext { (object) -> Void in
                             if let response = object as? MoyaResponse {
                                 called = true
                             }
-                        })
+                        }
                         
                         expect(called).to(beTruthy())
                     }
@@ -145,11 +173,11 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target).subscribeNext({ (object) -> Void in
+                        provider.request(target).subscribeNext { (object) -> Void in
                             if let response = object as? MoyaResponse {
                                 message = NSString(data: response.data, encoding: NSUTF8StringEncoding)
                             }
-                        })
+                        }
                         
                         let sampleData = target.sampleData as NSData
                         expect(message).toNot(beNil())
@@ -159,11 +187,11 @@ class MoyaProviderSpec: QuickSpec {
                         var receivedResponse: NSDictionary?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target).subscribeNext({ (object) -> Void in
+                        provider.request(target).subscribeNext { (object) -> Void in
                             if let response = object as? MoyaResponse {
                                 receivedResponse = NSJSONSerialization.JSONObjectWithData(response.data, options: nil, error: nil) as? NSDictionary
                             }
-                        })
+                        }
                         
                         let sampleData = target.sampleData as NSData
                         let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as NSDictionary
@@ -183,17 +211,17 @@ class MoyaProviderSpec: QuickSpec {
                         // requests went up or not.
                         
                         let outerSignal = provider.request(target)
-                        outerSignal.subscribeNext({ (object) -> Void in
+                        outerSignal.subscribeNext { (object) -> Void in
                             response = object as? MoyaResponse
                             expect(provider.inflightRequests.count).to(equal(1))
                             
                             // Create a new signal and force subscription, so that the inflightRequests dictionary is accessed.
                             let innerSignal = provider.request(target)
-                            innerSignal.subscribeNext({ (object) -> Void in
+                            innerSignal.subscribeNext { (object) -> Void in
                                 // nop
-                            })
+                            }
                             expect(provider.inflightRequests.count).to(equal(1))
-                        })
+                        }
                         
                         expect(provider.inflightRequests.count).to(equal(0))
                     }
@@ -201,7 +229,7 @@ class MoyaProviderSpec: QuickSpec {
             }
             
             describe("with stubbed errors") {
-                describe("a provider", { () -> () in
+                describe("a provider") { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
                         provider = MoyaProvider(endpointsClosure: failureEndpointsClosure, stubResponses: true)
@@ -211,11 +239,11 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .Zen
-                        provider.request(target, completion: { (object, statusCode, response, error) in
+                        provider.request(target) { (object, statusCode, response, error) in
                             if error != nil {
                                 errored = true
                             }
-                        })
+                        }
                         
                         let sampleData = target.sampleData as NSData
                         expect(errored).toEventually(beTruthy())
@@ -225,11 +253,11 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, statusCode, response, error) in
+                        provider.request(target) { (object, statusCode, response, error) in
                             if error != nil {
                                 errored = true
                             }
-                        })
+                        }
                         
                         let sampleData = target.sampleData as NSData
                         expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
@@ -239,15 +267,15 @@ class MoyaProviderSpec: QuickSpec {
                         var errorMessage = ""
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target, completion: { (object, statusCode, response, error) in
+                        provider.request(target) { (object, statusCode, response, error) in
                             if let object = object {
                                 errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding)!
                             }
-                        })
+                        }
 
                         expect{errorMessage}.toEventually(equal("Houston, we have a problem"), timeout: 1, pollInterval: 0.1)
                     }
-                })
+                }
                 
                 describe("a reactive provider", { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
@@ -259,9 +287,9 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .Zen
-                        provider.request(target).subscribeError({ (error) -> Void in
+                        provider.request(target).subscribeError { (error) -> Void in
                             errored = true
-                        })
+                        }
                         
                         expect(errored).to(beTruthy())
                     }
@@ -270,9 +298,9 @@ class MoyaProviderSpec: QuickSpec {
                         var errored = false
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target).subscribeError({ (error) -> Void in
+                        provider.request(target).subscribeError { (error) -> Void in
                             errored = true
-                        })
+                        }
                         
                         expect(errored).to(beTruthy())
                     }
@@ -287,9 +315,9 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns the HTTP status code as the error code") {
                         var code: Int?
 
-                        provider.request(.Zen).subscribeError({ (error) -> Void in
+                        provider.request(.Zen).subscribeError { (error) -> Void in
                             code = error.code
-                        })
+                        }
                         
                         expect(code).toNot(beNil())
                         expect(code).to(equal(401))
