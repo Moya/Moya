@@ -103,13 +103,15 @@ public class MoyaProvider<T: MoyaTarget> {
     public let endpointResolver: MoyaEndpointResolution
     public let stubResponses: Bool
     public let stubBehavior: MoyaStubbedBehavior
-    
+    public var hasNetworkActivity: Bool
+
     /// Initializes a provider.
     public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
         self.stubBehavior = stubBehavior
+        self.hasNetworkActivity = false;
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -148,10 +150,10 @@ public class MoyaProvider<T: MoyaTarget> {
             }
 
         } else {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            Alamofire.Manager.sharedInstance.request(request)
+            self.hasNetworkActivity = true
+             Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                 self.hasNetworkActivity = false
                     // Alamofire always sense the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future.
                     let statusCode = response?.statusCode
