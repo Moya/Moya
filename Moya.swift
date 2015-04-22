@@ -150,7 +150,7 @@ public class MoyaProvider<T: MoyaTarget> {
         } else {
              Alamofire.Manager.sharedInstance.request(request)
                 .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                    // Alamofire always sense the data param as an NSData? type, but we'll
+                    // Alamofire always sends the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future.
                     let statusCode = response?.statusCode
                     if let data = data as? NSData {
