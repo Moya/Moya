@@ -7,6 +7,7 @@ PODS:
     - Moya/Core
     - ReactiveCocoa (= 3.0.0-alpha.1)
   - Nimble (0.3.0)
+  - OHHTTPStubs (4.0.0)
   - Quick (0.2.2)
   - ReactiveCocoa (3.0.0-alpha.1):
     - LlamaKit (= 0.1.1)
@@ -23,6 +24,7 @@ PODS:
 DEPENDENCIES:
   - Moya/Reactive (from `../`)
   - Nimble
+  - OHHTTPStubs
   - Quick
   - ReactiveCocoa (= 3.0.0-alpha.1)
 
@@ -35,6 +37,7 @@ SPEC CHECKSUMS:
   LlamaKit: 25f47a933b6580a6fc159d95adb2e2953c7012e9
   Moya: 6589de6c52d9d8e5ab0d9630b4cd5c4b7f898019
   Nimble: 55fef248ef3703024ce431db817160ad24d89ba3
+  OHHTTPStubs: 3d65d31dd8389a8adabcc086ff2cc99c02e49bcc
   Quick: 1bda8b4c8d43f6b4dd69ca001918b1767b3c9c93
   ReactiveCocoa: 3b5e351bb3ab233d71f0329f36a7400af30d9783
 

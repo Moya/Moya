@@ -11,5 +11,6 @@ target 'DemoTests' do
 
   pod 'Quick'
   pod 'Nimble'
+  pod 'OHHTTPStubs'
 
 end

@@ -15,10 +15,12 @@ public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response:NSU
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
 
+    /// Network activity change notification type.
     public enum NetworkActivityChangeType {
         case Began, Ended
     }
 
+    /// Network activity change notification closure typealias.
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
     
     /// Represents an HTTP method.
@@ -130,10 +132,13 @@ public class MoyaProvider<T: MoyaTarget> {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         let request = endpointResolver(endpoint: endpoint)
 
+        networkActivityClosure?(change: .Began)
+
         if stubResponses {
             let behavior = stubBehavior(token)
 
             let stub: () -> () = {
+                self.networkActivityClosure?(change: .Ended)
                 switch endpoint.sampleResponse.evaluate() {
                     case .Success(let statusCode, let data):
                         completion(data: data, statusCode: statusCode, response:nil, error: nil)
@@ -156,8 +161,7 @@ public class MoyaProvider<T: MoyaTarget> {
             }
 
         } else {
-            networkActivityClosure?(change: .Began)
-
+            // We need to keep a reference to the closure without a reference to ourself.
             let networkActivityCallback = networkActivityClosure
             Alamofire.Manager.sharedInstance.request(request)
                 .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in

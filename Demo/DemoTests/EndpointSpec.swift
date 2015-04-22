@@ -30,15 +30,15 @@ public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool
 
 class EndpointSpec: QuickSpec {
     override func spec() {
-        describe("an endpoint", { () -> () in
+        describe("an endpoint") { () -> () in
             var endpoint: Endpoint<GitHub>!
             
-            beforeEach({ () -> () in
+            beforeEach { () -> () in
                 let target: GitHub = .Zen
                 let parameters = ["Nemesis": "Harvey"] as [String: AnyObject]
                 let headerFields = ["Title": "Dominar"] as [String: AnyObject]
                 endpoint = Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, target.sampleData), method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
-            })
+            }
             
             it("returns a new endpoint for endpointByAddingParameters") {
                 let message = "I hate it when villains quote Shakespeare."
@@ -80,6 +80,6 @@ class EndpointSpec: QuickSpec {
                 let title = titleObject as? String
                 expect(title).to(equal("Dominar"))
             }
-        })
+        }
     }
 }
