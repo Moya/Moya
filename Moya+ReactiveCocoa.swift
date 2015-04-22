@@ -38,8 +38,8 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
     
     /// Initializes a reactive provider.
-    override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior? = MoyaProvider.DefaultStubBehavior) {
-        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses)
+    override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior? = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
     }
     
     /// Designated request-making method.

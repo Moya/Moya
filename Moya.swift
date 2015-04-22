@@ -14,6 +14,12 @@ public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response:NSU
 
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
+
+    public enum NetworkActivityChangeType {
+        case Began, Ended
+    }
+
+    public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
     
     /// Represents an HTTP method.
     public enum Method {
@@ -103,13 +109,15 @@ public class MoyaProvider<T: MoyaTarget> {
     public let endpointResolver: MoyaEndpointResolution
     public let stubResponses: Bool
     public let stubBehavior: MoyaStubbedBehavior
+    public let networkActivityClosure: Moya.NetworkActivityClosure?
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior) {
+    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
         self.stubBehavior = stubBehavior
+        self.networkActivityClosure = networkActivityClosure
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -148,8 +156,13 @@ public class MoyaProvider<T: MoyaTarget> {
             }
 
         } else {
-             Alamofire.Manager.sharedInstance.request(request)
-                .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+            networkActivityClosure?(change: .Began)
+
+            let networkActivityCallback = networkActivityClosure
+            Alamofire.Manager.sharedInstance.request(request)
+                .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+                    networkActivityCallback?(change: .Ended)
+
                     // Alamofire always sends the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future.
                     let statusCode = response?.statusCode
@@ -158,10 +171,10 @@ public class MoyaProvider<T: MoyaTarget> {
                     } else {
                         completion(data: nil, statusCode: statusCode, response:response, error: error)
                     }
-                })
+            }
         }
     }
-    
+
     public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) {
         request(token, method: Moya.DefaultMethod(), parameters: parameters, completion)
     }
