@@ -1,3 +1,7 @@
+# 0.7.0
+
+- Adds network activity closure to provider.
+
 # 0.6.1
 
 - Updates podspec to refer to `3.0.0-aplha.1` of ReactiveCocoa. -[@ashfurrow](http://github.com/ashfurrow)
