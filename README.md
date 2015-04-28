@@ -23,7 +23,7 @@ user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 Sample Project
 --------------
 
-There's a sample project in the Sample directory. Go nuts!
+There's a sample project in the Demo directory. Go nuts!
 
 Project Status
 --------------
