@@ -51,7 +51,7 @@ class ViewController: UITableViewController {
         GitHubProvider.request(.Zen, method: .GET, completion: { (data, status, response, error) -> () in
             var message = "Couldn't access API"
             if let data = data {
-                message = NSString(data: data, encoding: NSUTF8StringEncoding) ?? message
+                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String ?? message
             }
 
             let alertController = UIAlertController(title: "Zen", message: message, preferredStyle: .Alert)
