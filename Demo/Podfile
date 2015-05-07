@@ -6,6 +6,7 @@ use_frameworks!
 
 pod 'ReactiveCocoa', '3.0-alpha.3'
 pod 'Moya/Reactive', :path => "../"
+pod 'Moya', :path => "../"
 
 target 'DemoTests' do
 

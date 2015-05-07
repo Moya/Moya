@@ -1,6 +1,8 @@
 PODS:
   - Alamofire (1.2.1)
   - LlamaKit (0.6.0)
+  - Moya (0.6.1):
+    - Moya/Core (= 0.6.1)
   - Moya/Core (0.6.1):
     - Alamofire (~> 1.2.0)
   - Moya/Reactive (0.6.1):
@@ -21,6 +23,7 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
+  - Moya (from `../`)
   - Moya/Reactive (from `../`)
   - Nimble
   - Quick
@@ -38,4 +41,4 @@ SPEC CHECKSUMS:
   Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
   ReactiveCocoa: eb49bad623ce7c8a4c54d1c4049b5e68cd006a61
 
-COCOAPODS: 0.36.4
+COCOAPODS: 0.37.1
