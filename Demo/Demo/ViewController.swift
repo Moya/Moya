@@ -94,9 +94,9 @@ class ViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
 
-        let object = repos[indexPath.row] as NSDictionary
+        let object = repos[indexPath.row] as! NSDictionary
         (cell.textLabel as UILabel!).text = object["name"] as? String
         return cell
     }
