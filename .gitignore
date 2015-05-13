@@ -22,5 +22,9 @@ DerivedData
 # CocoaPods
 Pods
 
+# Carthage
+Carthage/Checkouts
+Carthage/Builds
+
 # AppCode
 .idea/
