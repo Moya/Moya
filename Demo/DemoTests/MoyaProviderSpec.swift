@@ -256,6 +256,31 @@ class MoyaProviderSpec: QuickSpec {
                         expect(provider.inflightRequests.count).to(equal(0))
                     }
                 })
+                
+                describe("a reactive provider with delayed stubs") {
+                    var provider: ReactiveMoyaProvider<GitHub>!
+                    beforeEach {
+                        let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
+                            return .Delayed(seconds: 2)
+                        }
+                        
+                        provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+                    }
+                    
+                    it("returns canceled error when delayed execution is canceled") {
+                        var receivedError: NSError?
+                        let target: GitHub = .Zen
+                        waitUntil(timeout: 3) { done in
+                            let disposable = provider.request(target).subscribeError { (error) -> Void in
+                                receivedError = error
+                                done()
+                            }
+                            disposable.dispose()
+                        }
+                        
+                        expect(receivedError).toNot(beNil())
+                    }
+                }
             }
             
             describe("with stubbed errors") {
