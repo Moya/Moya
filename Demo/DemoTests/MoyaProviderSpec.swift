@@ -55,6 +55,15 @@ class MoyaProviderSpec: QuickSpec {
                         let endpoint2 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
                         expect(endpoint1).to(equal(endpoint2))
                     }
+                    
+                    it("returns an cancelable object when a request is made") {
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        
+                        let cancelable: Cancelable = provider.request(target) { (_, _, _, _) in }
+                        
+                        expect(cancelable).toNot(beNil())
+
+                    }
                 })
 
                 it("notifies at the beginning of network requests") {
@@ -121,11 +130,32 @@ class MoyaProviderSpec: QuickSpec {
                             endDate = NSDate()
                             done()
                         }
+                        return
                     }
 
                     expect{
                         return endDate?.timeIntervalSinceDate(startDate)
                     }.to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
+                }
+                
+                it("returns canceled error when delayed execution is canceled") {
+                    let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
+                        return .Delayed(seconds: 2)
+                    }
+                    
+                    let provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+                    
+                    var receivedError: NSError?
+                    let target: GitHub = .Zen
+                    waitUntil(timeout: 3) { done in
+                        let token = provider.request(target) { (data, statusCode, response, error) in
+                            receivedError = error
+                            done()
+                        }
+                        token.cancel()
+                    }
+                    
+                    expect(receivedError).toNot(beNil())
                 }
 
                 describe("a provider with a custom endpoint resolver") { () -> () in

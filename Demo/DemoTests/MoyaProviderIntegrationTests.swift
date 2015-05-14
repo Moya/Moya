@@ -71,6 +71,18 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         expect{message}.toEventually( equal(userMessage) )
                     }
+                    
+                    it("returns an error when canceled") {
+                        var receivedError: NSError?
+                        
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        let token = provider.request(target) { (data, statusCode, response, error) in
+                            receivedError = error
+                        }
+                        token.cancel()
+                        
+                        expect(receivedError).toEventuallyNot(beNil())
+                    }
                 }
 
                 describe("a provider with network activity closures") {
