@@ -56,12 +56,12 @@ class MoyaProviderSpec: QuickSpec {
                         expect(endpoint1).to(equal(endpoint2))
                     }
                     
-                    it("returns an cancelable object when a request is made") {
+                    it("returns a cancellable object when a request is made") {
                         let target: GitHub = .UserProfile("ashfurrow")
                         
-                        let cancelable: Cancelable = provider.request(target) { (_, _, _, _) in }
+                        let cancellable: Cancellable = provider.request(target) { (_, _, _, _) in }
                         
-                        expect(cancelable).toNot(beNil())
+                        expect(cancellable).toNot(beNil())
 
                     }
                 })
@@ -138,7 +138,7 @@ class MoyaProviderSpec: QuickSpec {
                     }.to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
                 }
                 
-                it("returns canceled error when delayed execution is canceled") {
+                it("returns cancelled error when delayed execution is cancelled") {
                     let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
                         return .Delayed(seconds: 2)
                     }
@@ -147,7 +147,7 @@ class MoyaProviderSpec: QuickSpec {
                     
                     var receivedError: NSError?
                     let target: GitHub = .Zen
-                    waitUntil(timeout: 3) { done in
+                    waitUntil { done in
                         let token = provider.request(target) { (data, statusCode, response, error) in
                             receivedError = error
                             done()
@@ -267,18 +267,18 @@ class MoyaProviderSpec: QuickSpec {
                         provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
                     }
                     
-                    it("returns canceled error when delayed execution is canceled") {
-                        var receivedError: NSError?
+                    it("cancels subscriptions when delayed execution is cancelled") {
+                        var called = false
                         let target: GitHub = .Zen
                         waitUntil(timeout: 3) { done in
-                            let disposable = provider.request(target).subscribeError { (error) -> Void in
-                                receivedError = error
+                            let disposable = provider.request(target).subscribeError { _ -> Void in
+                                called = true
                                 done()
                             }
                             disposable.dispose()
                         }
                         
-                        expect(receivedError).toNot(beNil())
+                        expect(called).to(beFalse())
                     }
                 }
             }

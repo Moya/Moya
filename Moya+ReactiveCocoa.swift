@@ -56,7 +56,7 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
             
             let signal = RACSignal.createSignal({ (subscriber) -> RACDisposable! in
-                let cancelableToken = self?.request(token, method: method, parameters: parameters) { (data, statusCode, response, error) -> () in
+                let cancellableToken = self?.request(token, method: method, parameters: parameters) { (data, statusCode, response, error) -> () in
                     if let error = error {
                         if let statusCode = statusCode {
                             subscriber.sendError(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
@@ -75,7 +75,7 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     if let weakSelf = self {
                         objc_sync_enter(weakSelf)
                         weakSelf.inflightRequests[endpoint] = nil
-                        cancelableToken?.cancel()
+                        cancellableToken?.cancel()
                         objc_sync_exit(weakSelf)
                     }
                 })

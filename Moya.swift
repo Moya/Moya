@@ -100,18 +100,14 @@ public protocol MoyaTarget : MoyaPath {
 }
 
 /// Protocol to define the opaque type returned from a request
-public protocol Cancelable {
+public protocol Cancellable {
     func cancel()
 }
 
 /// Internal token that can be used to cancel requests
-struct CancelableToken : Cancelable {
+struct CancellableToken : Cancellable {
     
     let cancelAction: () -> ()
-    
-    init(cancelAction: () -> ()) {
-        self.cancelAction = cancelAction
-    }
     
     func cancel() {
         cancelAction()
@@ -147,7 +143,7 @@ public class MoyaProvider<T: MoyaTarget> {
     }
     
     /// Designated request-making method.
-    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancelable {
+    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         let request = endpointResolver(endpoint: endpoint)
 
@@ -156,7 +152,7 @@ public class MoyaProvider<T: MoyaTarget> {
         if stubResponses {
             
             var canceled = false
-            let cancelableToken = CancelableToken { canceled = true }
+            let cancellableToken = CancellableToken { canceled = true }
             
             let behavior = stubBehavior(token)
 
@@ -189,7 +185,7 @@ public class MoyaProvider<T: MoyaTarget> {
                 }
             }
             
-            return cancelableToken
+            return cancellableToken
 
         } else {
             // We need to keep a reference to the closure without a reference to ourself.
@@ -208,21 +204,21 @@ public class MoyaProvider<T: MoyaTarget> {
                     }
             }
             
-            return CancelableToken {
+            return CancellableToken {
                 request.cancel()
             }
         }
     }
 
-    public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancelable {
+    public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
         return request(token, method: Moya.DefaultMethod(), parameters: parameters, completion)
     }
 
-    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) -> Cancelable {
+    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) -> Cancellable {
         return request(token, method: method, parameters: Moya.DefaultParameters(), completion)
     }
     
-    public func request(token: T, completion: MoyaCompletion) -> Cancelable {
+    public func request(token: T, completion: MoyaCompletion) -> Cancellable {
         return request(token, method: Moya.DefaultMethod(), completion)
     }
     

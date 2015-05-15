@@ -72,7 +72,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect{message}.toEventually( equal(userMessage) )
                     }
                     
-                    it("returns an error when canceled") {
+                    it("returns an error when cancelled") {
                         var receivedError: NSError?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
@@ -81,7 +81,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         }
                         token.cancel()
                         
-                        expect(receivedError).toEventuallyNot(beNil())
+                        expect(receivedError).toEventuallyNot( beNil() )
                     }
                 }
 
