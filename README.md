@@ -1,3 +1,8 @@
+Pronunciation
+-------------
+
+Moya is pronounced "*moyer*".
+
 [![Build Status](https://travis-ci.org/ashfurrow/Moya.svg)](https://travis-ci.org/ashfurrow/Moya)
 
 ![Moya Logo](https://raw.github.com/ashfurrow/Moya/master/web/moya_logo_github.png)
