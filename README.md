@@ -23,8 +23,7 @@ user is a friend or not. Hey – I don't write these APIs, I just use 'em.
 Sample Project
 --------------
 
-There's a sample project in the Sample directory. Make sure to run the [installation
-instructions](#installation) below, since it relies a pre-release version of CocoaPods. 
+There's a sample project in the Demo directory. Go nuts!
 
 Project Status
 --------------
@@ -32,13 +31,18 @@ Project Status
 This is nearing a 1.0 release, though it works now. We're using it in [Artsy's
 new auction app](https://github.com/Artsy/eidolon).
 
-Currently, we support Xcode 6.1.1. 
+Currently, we support Xcode 6.2.
 
 Installation
 ------------
 
-This project has some dependencies, which are currently managed by a pre-release
-version of CocoaPods (0.36 Beta 1). Add the following lines to your Podfile:
+Just add `pod 'Moya'` to your Podfile and go!
+
+In any file you'd like to use Moya in, don't forget to
+import the framework with `import Moya`.
+
+For reactive extensions, his project has some dependencies. Add the following 
+lines to your Podfile:
 
 ```rb
 pod 'Moya'
@@ -48,8 +52,7 @@ pod 'ReactiveCocoa', '3.0.0-alpha.1'
 pod 'Moya/Reactive'
 ```
 
-Then run `pod install`. In any file you'd like to use Moya in, don't forget to
-import the framework with `import Moya`.
+Then run `pod install`. 
 
 Use
 ---

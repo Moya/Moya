@@ -1,44 +1,54 @@
 PODS:
-  - Alamofire (1.2.1)
-  - LlamaKit (0.6.0)
-  - Moya (0.6.1):
-    - Moya/Core (= 0.6.1)
-  - Moya/Core (0.6.1):
+  - Alamofire (1.2.2)
+  - Box (1.2.2)
+  - Moya (0.7.0):
+    - Moya/Core (= 0.7.0)
+  - Moya/Core (0.7.0):
     - Alamofire (~> 1.2.0)
-  - Moya/Reactive (0.6.1):
+  - Moya/Reactive (0.7.0):
     - Moya/Core
-    - ReactiveCocoa (= 3.0-alpha.3)
+    - ReactiveCocoa (= 3.0-beta.6)
   - Nimble (0.4.2)
+  - OHHTTPStubs (4.0.2)
   - Quick (0.3.1)
-  - ReactiveCocoa (3.0-alpha.3):
-    - LlamaKit (~> 0.6.0)
-    - ReactiveCocoa/UI (= 3.0-alpha.3)
-  - ReactiveCocoa/Core (3.0-alpha.3):
-    - LlamaKit (~> 0.6.0)
+  - ReactiveCocoa (3.0-beta.6):
+    - Box (~> 1.2.0)
+    - ReactiveCocoa/UI (= 3.0-beta.6)
+    - Result (~> 0.4.1)
+  - ReactiveCocoa/Core (3.0-beta.6):
+    - Box (~> 1.2.0)
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (3.0-alpha.3):
-    - LlamaKit (~> 0.6.0)
-  - ReactiveCocoa/UI (3.0-alpha.3):
-    - LlamaKit (~> 0.6.0)
+    - Result (~> 0.4.1)
+  - ReactiveCocoa/no-arc (3.0-beta.6):
+    - Box (~> 1.2.0)
+    - Result (~> 0.4.1)
+  - ReactiveCocoa/UI (3.0-beta.6):
+    - Box (~> 1.2.0)
     - ReactiveCocoa/Core
+    - Result (~> 0.4.1)
+  - Result (0.4.3):
+    - Box (~> 1.2)
 
 DEPENDENCIES:
   - Moya (from `../`)
   - Moya/Reactive (from `../`)
   - Nimble
+  - OHHTTPStubs
   - Quick
-  - ReactiveCocoa (= 3.0-alpha.3)
+  - ReactiveCocoa (= 3.0-beta.6)
 
 EXTERNAL SOURCES:
   Moya:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
-  LlamaKit: dbb01a9e77a78c9f4c1a1c9fef6f2bcf04c38c42
-  Moya: 69c0f4a87b57a17f1b70d1432cd4c86675296468
+  Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
+  Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
+  Moya: a7ef8ca00049dd4466a2238b14a4971029060eca
   Nimble: 49b7a7da8919f42823d37c6d68cc6d15a7009f32
+  OHHTTPStubs: dbd1957d414659783e07b49c961940b7564c23d9
   Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
-  ReactiveCocoa: eb49bad623ce7c8a4c54d1c4049b5e68cd006a61
+  ReactiveCocoa: 859d1dd9dd38d6f2fa4a6917259bb2b512f3c5f7
+  Result: 910839ce03c5c573ec94026678b7cecb69ee862e
 
 COCOAPODS: 0.37.1

@@ -14,6 +14,14 @@ public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response:NSU
 
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
+
+    /// Network activity change notification type.
+    public enum NetworkActivityChangeType {
+        case Began, Ended
+    }
+
+    /// Network activity change notification closure typealias.
+    public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
     
     /// Represents an HTTP method.
     public enum Method {
@@ -103,13 +111,15 @@ public class MoyaProvider<T: MoyaTarget> {
     public let endpointResolver: MoyaEndpointResolution
     public let stubResponses: Bool
     public let stubBehavior: MoyaStubbedBehavior
+    public let networkActivityClosure: Moya.NetworkActivityClosure?
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior) {
+    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
         self.stubBehavior = stubBehavior
+        self.networkActivityClosure = networkActivityClosure
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -122,10 +132,13 @@ public class MoyaProvider<T: MoyaTarget> {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         let request = endpointResolver(endpoint: endpoint)
 
+        networkActivityClosure?(change: .Began)
+
         if stubResponses {
             let behavior = stubBehavior(token)
 
             let stub: () -> () = {
+                self.networkActivityClosure?(change: .Ended)
                 switch endpoint.sampleResponse.evaluate() {
                     case .Success(let statusCode, let data):
                         completion(data: data, statusCode: statusCode, response:nil, error: nil)
@@ -148,9 +161,13 @@ public class MoyaProvider<T: MoyaTarget> {
             }
 
         } else {
-             Alamofire.Manager.sharedInstance.request(request)
-                .response({(request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                    // Alamofire always sense the data param as an NSData? type, but we'll
+            // We need to keep a reference to the closure without a reference to ourself.
+            let networkActivityCallback = networkActivityClosure
+            Alamofire.Manager.sharedInstance.request(request)
+                .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+                    networkActivityCallback?(change: .Ended)
+
+                    // Alamofire always sends the data param as an NSData? type, but we'll
                     // add a check just in case something changes in the future.
                     let statusCode = response?.statusCode
                     if let data = data as? NSData {
@@ -158,10 +175,10 @@ public class MoyaProvider<T: MoyaTarget> {
                     } else {
                         completion(data: nil, statusCode: statusCode, response:response, error: error)
                     }
-                })
+            }
         }
     }
-    
+
     public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) {
         request(token, method: Moya.DefaultMethod(), parameters: parameters, completion: completion)
     }
