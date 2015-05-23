@@ -2,4 +2,11 @@ machine:
   xcode:
     version: "6.3.1"
   ruby:
-    version: ruby-2.1.2
+    version: 2.1.2
+dependencies:
+  pre:
+    - gem update cocoapods
+test:
+  override:
+    - make setup
+    - make test
