@@ -1,8 +1,6 @@
 machine:
   xcode:
     version: "6.3.1"
-  ruby:
-    version: 2.1.2
 dependencies:
   pre:
     - gem update cocoapods
