@@ -1,3 +1,7 @@
+# 0.8.0
+
+- Updates to Swift 1.2.
+
 # 0.7.0
 
 - Adds network activity closure to provider.
