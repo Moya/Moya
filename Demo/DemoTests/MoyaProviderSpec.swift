@@ -9,6 +9,7 @@
 import Quick
 import Moya
 import Nimble
+import ReactiveCocoa
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -137,26 +138,6 @@ class MoyaProviderSpec: QuickSpec {
                         return endDate?.timeIntervalSinceDate(startDate)
                     }.to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
                 }
-                
-                it("returns cancelled error when delayed execution is cancelled") {
-                    let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
-                        return .Delayed(seconds: 2)
-                    }
-                    
-                    let provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
-                    
-                    var receivedError: NSError?
-                    let target: GitHub = .Zen
-                    waitUntil { done in
-                        let token = provider.request(target) { (data, statusCode, response, error) in
-                            receivedError = error
-                            done()
-                        }
-                        token.cancel()
-                    }
-                    
-                    expect(receivedError).toNot(beNil())
-                }
 
                 describe("a provider with a custom endpoint resolver") { () -> () in
                     var provider: MoyaProvider<GitHub>!
@@ -257,32 +238,50 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 })
                 
-                describe("a reactive provider with delayed stubs") {
+                describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
+                    struct TestCancellable: Cancellable {
+                        static var cancelled = false
+
+                        func cancel() {
+                            TestCancellable.cancelled = true
+                        }
+                    }
+
+                    class TestProvider<T: MoyaTarget>: ReactiveMoyaProvider<T> {
+                        override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior? = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+                            super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
+                        }
+
+                        override func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
+                            return TestCancellable()
+                        }
+                    }
+
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
+                        TestCancellable.cancelled = false
                         let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
-                            return .Delayed(seconds: 2)
+                            return .Delayed(seconds: 1)
                         }
                         
-                        provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+                        provider = TestProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
                     }
                     
-                    it("cancels subscriptions when delayed execution is cancelled") {
+                    it("cancels network request when subscription is cancelled") {
                         var called = false
                         let target: GitHub = .Zen
-                        waitUntil(timeout: 3) { done in
-                            let disposable = provider.request(target).subscribeError { _ -> Void in
-                                called = true
-                                done()
-                            }
-                            disposable.dispose()
+
+                        let disposable = provider.request(target).subscribeCompleted { () -> Void in
+                            // Should never be executed
+                            fail()
                         }
-                        
-                        expect(called).to(beFalse())
+                        disposable.dispose()
+
+                        expect(TestCancellable.cancelled).to( beTrue() )
                     }
                 }
             }
-            
+
             describe("with stubbed errors") {
                 describe("a provider") { () -> () in
                     var provider: MoyaProvider<GitHub>!

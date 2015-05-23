@@ -106,7 +106,6 @@ public protocol Cancellable {
 
 /// Internal token that can be used to cancel requests
 struct CancellableToken : Cancellable {
-    
     let cancelAction: () -> ()
     
     func cancel() {
