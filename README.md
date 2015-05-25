@@ -29,7 +29,7 @@ Project Status
 This is nearing a 1.0 release, though it works now. We're using it in [Artsy's
 new auction app](https://github.com/Artsy/eidolon).
 
-Currently, we support Xcode 6.2.
+Currently, we support Xcode 6.3.2 and Swift 1.2.
 
 Installation
 ------------
@@ -46,7 +46,7 @@ lines to your Podfile:
 pod 'Moya'
 
 # Include the following only if you want to use ReactiveCocoa extensions with Moya
-pod 'ReactiveCocoa', '3.0.0-alpha.1'
+pod 'ReactiveCocoa', '3.0.0-beta.6'
 pod 'Moya/Reactive'
 ```
 
