@@ -99,6 +99,20 @@ public protocol MoyaTarget : MoyaPath {
     var sampleData: NSData { get }
 }
 
+/// Protocol to define the opaque type returned from a request
+public protocol Cancellable {
+    func cancel()
+}
+
+/// Internal token that can be used to cancel requests
+struct CancellableToken : Cancellable {
+    let cancelAction: () -> ()
+    
+    func cancel() {
+        cancelAction()
+    }
+}
+
 /// Request provider class. Requests should be made through this class only.
 public class MoyaProvider<T: MoyaTarget> {
     /// Closure that defines the endpoints for the provider.
@@ -128,17 +142,27 @@ public class MoyaProvider<T: MoyaTarget> {
     }
     
     /// Designated request-making method.
-    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) {
+    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)
         let request = endpointResolver(endpoint: endpoint)
 
         networkActivityClosure?(change: .Began)
 
         if stubResponses {
+            
+            var canceled = false
+            let cancellableToken = CancellableToken { canceled = true }
+            
             let behavior = stubBehavior(token)
 
             let stub: () -> () = {
                 self.networkActivityClosure?(change: .Ended)
+                
+                if (canceled) {
+                    completion(data: nil, statusCode: nil, response: nil, error: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                    return
+                }
+                
                 switch endpoint.sampleResponse.evaluate() {
                     case .Success(let statusCode, let data):
                         completion(data: data, statusCode: statusCode, response:nil, error: nil)
@@ -159,11 +183,13 @@ public class MoyaProvider<T: MoyaTarget> {
                     stub()
                 }
             }
+            
+            return cancellableToken
 
         } else {
             // We need to keep a reference to the closure without a reference to ourself.
             let networkActivityCallback = networkActivityClosure
-            Alamofire.Manager.sharedInstance.request(request)
+            let request = Alamofire.Manager.sharedInstance.request(request)
                 .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                     networkActivityCallback?(change: .Ended)
 
@@ -176,19 +202,23 @@ public class MoyaProvider<T: MoyaTarget> {
                         completion(data: nil, statusCode: statusCode, response:response, error: error)
                     }
             }
+            
+            return CancellableToken {
+                request.cancel()
+            }
         }
     }
 
-    public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) {
-        request(token, method: Moya.DefaultMethod(), parameters: parameters, completion: completion)
+    public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
+        return request(token, method: Moya.DefaultMethod(), parameters: parameters, completion: completion)
     }
 
-    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) {
-        request(token, method: method, parameters: Moya.DefaultParameters(), completion: completion)
+    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) -> Cancellable {
+        return request(token, method: method, parameters: Moya.DefaultParameters(), completion: completion)
     }
     
-    public func request(token: T, completion: MoyaCompletion) {
-        request(token, method: Moya.DefaultMethod(), completion: completion)
+    public func request(token: T, completion: MoyaCompletion) -> Cancellable {
+        return request(token, method: Moya.DefaultMethod(), completion: completion)
     }
     
     public class func DefaultEnpointResolution() -> MoyaEndpointResolution {

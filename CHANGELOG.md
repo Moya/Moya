@@ -2,6 +2,10 @@
 
 - Updates to Swift 1.2.
 
+# 0.7.1
+
+- Adds cancellable requests -[@MichaelMcGuire](http://github.com/MichaelMcGuire)
+
 # 0.7.0
 
 - Adds network activity closure to provider.

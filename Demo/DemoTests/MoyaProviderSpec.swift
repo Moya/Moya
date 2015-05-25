@@ -9,12 +9,13 @@
 import Quick
 import Moya
 import Nimble
+import ReactiveCocoa
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
         describe("valid endpoints") {
             describe("with stubbed responses") {
-                describe("a provider", { () -> () in
+                describe("a provider", {
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
                         provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
@@ -26,7 +27,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -40,7 +41,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -54,6 +55,15 @@ class MoyaProviderSpec: QuickSpec {
                         let endpoint1 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
                         let endpoint2 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
                         expect(endpoint1).to(equal(endpoint2))
+                    }
+                    
+                    it("returns a cancellable object when a request is made") {
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        
+                        let cancellable: Cancellable = provider.request(target) { (_, _, _, _) in }
+                        
+                        expect(cancellable).toNot(beNil())
+
                     }
                 })
 
@@ -97,7 +107,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
 
@@ -121,6 +131,7 @@ class MoyaProviderSpec: QuickSpec {
                             endDate = NSDate()
                             done()
                         }
+                        return
                     }
 
                     expect{
@@ -175,7 +186,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target).subscribeNext { (object) -> Void in
                             if let response = object as? MoyaResponse {
-                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -194,7 +205,7 @@ class MoyaProviderSpec: QuickSpec {
                         }
                         
                         let sampleData = target.sampleData as NSData
-                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as NSDictionary
+                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as! NSDictionary
                         expect(receivedResponse).toNot(beNil())
                     }
                     
@@ -226,8 +237,51 @@ class MoyaProviderSpec: QuickSpec {
                         expect(provider.inflightRequests.count).to(equal(0))
                     }
                 })
+                
+                describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
+                    struct TestCancellable: Cancellable {
+                        static var cancelled = false
+
+                        func cancel() {
+                            TestCancellable.cancelled = true
+                        }
+                    }
+
+                    class TestProvider<T: MoyaTarget>: ReactiveMoyaProvider<T> {
+                        override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+                            super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
+                        }
+
+                        override func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
+                            return TestCancellable()
+                        }
+                    }
+
+                    var provider: ReactiveMoyaProvider<GitHub>!
+                    beforeEach {
+                        TestCancellable.cancelled = false
+                        let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
+                            return .Delayed(seconds: 1)
+                        }
+                        
+                        provider = TestProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+                    }
+                    
+                    it("cancels network request when subscription is cancelled") {
+                        var called = false
+                        let target: GitHub = .Zen
+
+                        let disposable = provider.request(target).subscribeCompleted { () -> Void in
+                            // Should never be executed
+                            fail()
+                        }
+                        disposable.dispose()
+
+                        expect(TestCancellable.cancelled).to( beTrue() )
+                    }
+                }
             }
-            
+
             describe("with stubbed errors") {
                 describe("a provider") { () -> () in
                     var provider: MoyaProvider<GitHub>!
@@ -269,7 +323,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target) { (object, statusCode, response, error) in
                             if let object = object {
-                                errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding)!
+                                errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding) as! String
                             }
                         }
 
