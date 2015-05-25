@@ -210,15 +210,15 @@ public class MoyaProvider<T: MoyaTarget> {
     }
 
     public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
-        return request(token, method: Moya.DefaultMethod(), parameters: parameters, completion)
+        return request(token, method: Moya.DefaultMethod(), parameters: parameters, completion: completion)
     }
 
     public func request(token: T, method: Moya.Method, completion: MoyaCompletion) -> Cancellable {
-        return request(token, method: method, parameters: Moya.DefaultParameters(), completion)
+        return request(token, method: method, parameters: Moya.DefaultParameters(), completion: completion)
     }
     
     public func request(token: T, completion: MoyaCompletion) -> Cancellable {
-        return request(token, method: Moya.DefaultMethod(), completion)
+        return request(token, method: Moya.DefaultMethod(), completion: completion)
     }
     
     public class func DefaultEnpointResolution() -> MoyaEndpointResolution {

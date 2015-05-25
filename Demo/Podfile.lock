@@ -1,44 +1,54 @@
 PODS:
-  - Alamofire (1.1.5)
-  - LlamaKit (0.1.1)
-  - Moya/Core (0.7.0):
-    - Alamofire (~> 1.1.0)
-  - Moya/Reactive (0.7.0):
+  - Alamofire (1.2.2)
+  - Box (1.2.2)
+  - Moya (0.8.0):
+    - Moya/Core (= 0.8.0)
+  - Moya/Core (0.8.0):
+    - Alamofire (~> 1.2.0)
+  - Moya/Reactive (0.8.0):
     - Moya/Core
-    - ReactiveCocoa (= 3.0.0-alpha.1)
-  - Nimble (0.3.0)
-  - OHHTTPStubs (4.0.0)
-  - Quick (0.2.2)
-  - ReactiveCocoa (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
-    - ReactiveCocoa/UI (= 3.0.0-alpha.1)
-  - ReactiveCocoa/Core (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
+    - ReactiveCocoa (= 3.0-beta.6)
+  - Nimble (0.4.2)
+  - OHHTTPStubs (4.0.2)
+  - Quick (0.3.1)
+  - ReactiveCocoa (3.0-beta.6):
+    - Box (~> 1.2.0)
+    - ReactiveCocoa/UI (= 3.0-beta.6)
+    - Result (~> 0.4.1)
+  - ReactiveCocoa/Core (3.0-beta.6):
+    - Box (~> 1.2.0)
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
-  - ReactiveCocoa/UI (3.0.0-alpha.1):
-    - LlamaKit (= 0.1.1)
+    - Result (~> 0.4.1)
+  - ReactiveCocoa/no-arc (3.0-beta.6):
+    - Box (~> 1.2.0)
+    - Result (~> 0.4.1)
+  - ReactiveCocoa/UI (3.0-beta.6):
+    - Box (~> 1.2.0)
     - ReactiveCocoa/Core
+    - Result (~> 0.4.1)
+  - Result (0.4.3):
+    - Box (~> 1.2)
 
 DEPENDENCIES:
+  - Moya (from `../`)
   - Moya/Reactive (from `../`)
   - Nimble
   - OHHTTPStubs
   - Quick
-  - ReactiveCocoa (= 3.0.0-alpha.1)
+  - ReactiveCocoa (= 3.0-beta.6)
 
 EXTERNAL SOURCES:
   Moya:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 346a8798fe35b993e136041e14f0a3a30065f7a5
-  LlamaKit: 25f47a933b6580a6fc159d95adb2e2953c7012e9
-  Moya: e25cddeb73b95a60d8702a9491844e8e190a04d5
-  Nimble: 55fef248ef3703024ce431db817160ad24d89ba3
-  OHHTTPStubs: 3d65d31dd8389a8adabcc086ff2cc99c02e49bcc
-  Quick: 1bda8b4c8d43f6b4dd69ca001918b1767b3c9c93
-  ReactiveCocoa: 3b5e351bb3ab233d71f0329f36a7400af30d9783
+  Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
+  Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
+  Moya: b44d544105d3f6515bcb2fb9fc40d829722f92d1
+  Nimble: 49b7a7da8919f42823d37c6d68cc6d15a7009f32
+  OHHTTPStubs: dbd1957d414659783e07b49c961940b7564c23d9
+  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
+  ReactiveCocoa: 859d1dd9dd38d6f2fa4a6917259bb2b512f3c5f7
+  Result: 910839ce03c5c573ec94026678b7cecb69ee862e
 
 COCOAPODS: 0.37.1

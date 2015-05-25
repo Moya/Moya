@@ -1,0 +1,12 @@
+machine:
+  xcode:
+    version: "6.3.1"
+dependencies:
+  pre:
+    - sudo gem install cocoapods --version 0.37.1
+    - pod setup
+    - cd Demo ; pod install ; cd ..
+test:
+  override:
+    - make setup
+    - make test

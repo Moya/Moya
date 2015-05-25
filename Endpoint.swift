@@ -13,7 +13,7 @@ import Alamofire
 public enum EndpointSampleResponse {
     case Success(Int, NSData)
     case Error(Int?, NSError?, NSData?)
-    case Closure(@autoclosure () -> EndpointSampleResponse)
+    case Closure(() -> EndpointSampleResponse)
 
     func evaluate() -> EndpointSampleResponse {
         switch self {

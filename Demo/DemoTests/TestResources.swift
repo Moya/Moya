@@ -53,7 +53,7 @@ let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [Stri
 }
 
 let lazyEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure(.Success(200, target.sampleData)), method: method, parameters: parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.Success(200, target.sampleData)}), method: method, parameters: parameters)
 }
 
 let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in

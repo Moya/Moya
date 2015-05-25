@@ -25,11 +25,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
         let zenMessage = NSString(data: GitHub.Zen.sampleData, encoding: NSUTF8StringEncoding)
 
         beforeEach { () -> () in
-            OHHTTPStubs.stubRequestsPassingTest({$0.URL.path == "/zen"}) { _ in
+            OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
                 return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil)
             }
 
-            OHHTTPStubs.stubRequestsPassingTest({$0.URL.path == "/users/ashfurrow"}) { _ in
+            OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
                 return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             }
         }
@@ -52,7 +52,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -65,7 +65,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -127,7 +127,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target).subscribeNext { (response) -> Void in
                             if let response = response as? MoyaResponse {
-                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
 
@@ -140,7 +140,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target).subscribeNext { (response) -> Void in
                             if let response = response as? MoyaResponse {
-                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
 
@@ -163,7 +163,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         signal2.subscribeNext { (response) -> Void in
                             expect(receivedResponse).toNot(beNil())
-                            expect(receivedResponse).to(beIndenticalToResponse(response as MoyaResponse))
+                            expect(receivedResponse).to(beIndenticalToResponse( response as! MoyaResponse) )
                             expect(provider.inflightRequests.count).to(equal(1))
                         }
                         

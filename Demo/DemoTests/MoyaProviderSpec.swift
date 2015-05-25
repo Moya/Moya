@@ -15,7 +15,7 @@ class MoyaProviderSpec: QuickSpec {
     override func spec() {
         describe("valid endpoints") {
             describe("with stubbed responses") {
-                describe("a provider", { () -> () in
+                describe("a provider", {
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
                         provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
@@ -27,7 +27,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -41,7 +41,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -107,7 +107,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
 
@@ -186,7 +186,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .Zen
                         provider.request(target).subscribeNext { (object) -> Void in
                             if let response = object as? MoyaResponse {
-                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding)
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -205,7 +205,7 @@ class MoyaProviderSpec: QuickSpec {
                         }
                         
                         let sampleData = target.sampleData as NSData
-                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as NSDictionary
+                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as! NSDictionary
                         expect(receivedResponse).toNot(beNil())
                     }
                     
@@ -248,7 +248,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
 
                     class TestProvider<T: MoyaTarget>: ReactiveMoyaProvider<T> {
-                        override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior? = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+                        override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
                             super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
                         }
 
@@ -323,7 +323,7 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target) { (object, statusCode, response, error) in
                             if let object = object {
-                                errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding)!
+                                errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding) as! String
                             }
                         }
 

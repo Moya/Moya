@@ -36,12 +36,16 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     /// Current requests that have not completed or errored yet.
     /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
     public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
-    
+
+//    public override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+//        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
+//    }
+
     /// Initializes a reactive provider.
-    override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior? = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+    override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
         super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
     }
-    
+
     /// Designated request-making method.
     public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {
         let endpoint = self.endpoint(token, method: method, parameters: parameters)

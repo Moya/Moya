@@ -1,3 +1,7 @@
+# 0.8.0
+
+- Updates to Swift 1.2.
+
 # 0.7.1
 
 - Adds cancellable requests -[@MichaelMcGuire](http://github.com/MichaelMcGuire)
