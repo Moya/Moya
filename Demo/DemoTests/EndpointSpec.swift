@@ -37,7 +37,7 @@ class EndpointSpec: QuickSpec {
                 let target: GitHub = .Zen
                 let parameters = ["Nemesis": "Harvey"] as [String: AnyObject]
                 let headerFields = ["Title": "Dominar"] as [String: AnyObject]
-                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, target.sampleData), method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
+                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
             }
             
             it("returns a new endpoint for endpointByAddingParameters") {

@@ -11,11 +11,7 @@ import Moya
 
 // MARK: - Provider setup
 
-let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, target.sampleData), method: method, parameters: parameters)
-}
-
-let GitHubProvider = MoyaProvider(endpointsClosure: endpointsClosure)
+let GitHubProvider = MoyaProvider<GitHub>()
 
 
 // MARK: - Provider support
@@ -47,6 +43,18 @@ extension GitHub : MoyaPath {
 
 extension GitHub : MoyaTarget {
     public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    public var method: Moya.Method {
+        return .GET
+    }
+    public var parameters: [String: AnyObject] {
+        switch self {
+        case .UserRepositories(_):
+            return ["sort": "pushed"]
+        default:
+            return [:]
+        }
+    }
+
     public var sampleData: NSData {
         switch self {
         case .Zen:
@@ -56,24 +64,6 @@ extension GitHub : MoyaTarget {
         case .UserRepositories(let name):
             return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
         }
-    }
-}
-
-extension Moya.ParameterEncoding: Equatable {
-}
-
-public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
-    switch (lhs, rhs) {
-    case (.URL, .URL):
-        return true
-    case (.JSON, .JSON):
-        return true
-    case (.PropertyList(_), .PropertyList(_)):
-        return true
-    case (.Custom(_), .Custom(_)):
-        return true
-    default:
-        return false
     }
 }
 

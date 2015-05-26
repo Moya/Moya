@@ -9,7 +9,7 @@
 import Foundation
 import ReactiveCocoa
 
-public class MoyaResponse: NSObject {
+public class MoyaResponse: NSObject, Printable, DebugPrintable {
     public let statusCode: Int
     public let data: NSData
     public let response: NSURLResponse?
@@ -19,9 +19,7 @@ public class MoyaResponse: NSObject {
         self.data = data
         self.response = response
     }
-}
-
-extension MoyaResponse: Printable, DebugPrintable {
+    
     override public var description: String {
         return "Status Code: \(statusCode), Data Length: \(data.length)"
     }
@@ -37,18 +35,14 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
     public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
 
-//    public override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-//        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
-//    }
-
     /// Initializes a reactive provider.
-    override public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+    override public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
         super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
     }
 
     /// Designated request-making method.
-    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> RACSignal {
-        let endpoint = self.endpoint(token, method: method, parameters: parameters)
+    public func request(token: T) -> RACSignal {
+        let endpoint = self.endpoint(token)
         
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
@@ -59,8 +53,8 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                 return existingSignal
             }
             
-            let signal = RACSignal.createSignal({ (subscriber) -> RACDisposable! in
-                let cancellableToken = self?.request(token, method: method, parameters: parameters) { (data, statusCode, response, error) -> () in
+            let signal = RACSignal.createSignal { (subscriber) -> RACDisposable! in
+                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
                     if let error = error {
                         if let statusCode = statusCode {
                             subscriber.sendError(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
@@ -75,15 +69,15 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     }
                 }
                 
-                return RACDisposable(block: { () -> Void in
+                return RACDisposable { () -> Void in
                     if let weakSelf = self {
                         objc_sync_enter(weakSelf)
                         weakSelf.inflightRequests[endpoint] = nil
                         cancellableToken?.cancel()
                         objc_sync_exit(weakSelf)
                     }
-                })
-            }).publish().autoconnect()
+                }
+            }.publish().autoconnect()
             
             if let weakSelf = self {
                 objc_sync_enter(weakSelf)
@@ -93,18 +87,6 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             
             return signal
         }
-    }
-    
-    public func request(token: T, parameters: [String: AnyObject]) -> RACSignal {
-        return request(token, method: Moya.DefaultMethod(), parameters: parameters)
-    }
-    
-    public func request(token: T, method: Moya.Method) -> RACSignal {
-        return request(token, method: method, parameters: Moya.DefaultParameters())
-    }
-    
-    public func request(token: T) -> RACSignal {
-        return request(token, method: Moya.DefaultMethod())
     }
 }
 
