@@ -2,4 +2,4 @@ source 'https://rubygems.org'
 
 gem 'xcpretty'
 
-gem 'cocoapods', :git => 'git@github.com:CocoaPods/CocoaPods.git'
+gem 'cocoapods', '>= 0.37.2'
