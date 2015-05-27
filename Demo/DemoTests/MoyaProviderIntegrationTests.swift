@@ -44,6 +44,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
                         provider = MoyaProvider(endpointsClosure: endpointsClosure)
+                        return
                     }
                     
                     it("returns real data for zen request") {

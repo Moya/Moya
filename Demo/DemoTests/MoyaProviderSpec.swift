@@ -52,8 +52,8 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns equivalent Endpoint instances for the same target") {
                         let target: GitHub = .Zen
                         
-                        let endpoint1 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
-                        let endpoint2 = provider.endpoint(target, method: Moya.DefaultMethod(), parameters: Moya.DefaultParameters())
+                        let endpoint1 = provider.endpoint(target)
+                        let endpoint2 = provider.endpoint(target)
                         expect(endpoint1).to(equal(endpoint2))
                     }
                     
@@ -252,7 +252,7 @@ class MoyaProviderSpec: QuickSpec {
                             super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
                         }
 
-                        override func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
+                        override func request(token: T, completion: MoyaCompletion) -> Cancellable {
                             return TestCancellable()
                         }
                     }

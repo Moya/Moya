@@ -20,7 +20,7 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(username: String) {
-        GitHubProvider.request(.UserRepositories(username), method: .GET, parameters: ["sort": "pushed"], completion: { (data, status, resonse, error) -> () in
+        GitHubProvider.request(.UserRepositories(username), completion: { (data, status, resonse, error) -> () in
             var success = error == nil
             if let data = data {
                 let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil)
@@ -48,7 +48,7 @@ class ViewController: UITableViewController {
     }
 
     func downloadZen() {
-        GitHubProvider.request(.Zen, method: .GET, completion: { (data, status, response, error) -> () in
+        GitHubProvider.request(.Zen, completion: { (data, status, response, error) -> () in
             var message = "Couldn't access API"
             if let data = data {
                 message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String ?? message

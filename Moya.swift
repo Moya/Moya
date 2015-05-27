@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// Block to be executed when a request has completed.
-public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response:NSURLResponse?, error: NSError?) -> ()
+public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: NSError?) -> ()
 
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
@@ -76,16 +76,6 @@ public class Moya {
         case Immediate
         case Delayed(seconds: NSTimeInterval)
     }
-    
-    /// Default HTTP method is GET.
-    public class func DefaultMethod() -> Method {
-        return Method.GET
-    }
-    
-    /// Default parameters are empty.
-    public class func DefaultParameters() -> [String: AnyObject] {
-        return Dictionary<String, AnyObject>()
-    }
 }
 
 /// Protocol defining the relative path of an enum.
@@ -96,6 +86,8 @@ public protocol MoyaPath {
 /// Protocol to define the base URL and sample data for an enum.
 public protocol MoyaTarget : MoyaPath {
     var baseURL: NSURL { get }
+    var method: Moya.Method { get }
+    var parameters: [String: AnyObject] { get }
     var sampleData: NSData { get }
 }
 
@@ -105,7 +97,7 @@ public protocol Cancellable {
 }
 
 /// Internal token that can be used to cancel requests
-struct CancellableToken : Cancellable {
+struct CancellableToken: Cancellable {
     let cancelAction: () -> ()
     
     func cancel() {
@@ -116,7 +108,7 @@ struct CancellableToken : Cancellable {
 /// Request provider class. Requests should be made through this class only.
 public class MoyaProvider<T: MoyaTarget> {
     /// Closure that defines the endpoints for the provider.
-    public typealias MoyaEndpointsClosure = (T, method: Moya.Method, parameters: [String: AnyObject]) -> (Endpoint<T>)
+    public typealias MoyaEndpointsClosure = (T) -> (Endpoint<T>)
     /// Closure that resolves an Endpoint into an NSURLRequest.
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
     public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
@@ -128,7 +120,7 @@ public class MoyaProvider<T: MoyaTarget> {
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool  = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+    public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubResponses = stubResponses
@@ -137,13 +129,13 @@ public class MoyaProvider<T: MoyaTarget> {
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
-    public func endpoint(token: T, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<T> {
-        return endpointsClosure(token, method: method, parameters: parameters)
+    public func endpoint(token: T) -> Endpoint<T> {
+        return endpointsClosure(token)
     }
     
     /// Designated request-making method.
-    public func request(token: T, method: Moya.Method, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
-        let endpoint = self.endpoint(token, method: method, parameters: parameters)
+    public func request(token: T, completion: MoyaCompletion) -> Cancellable {
+        let endpoint = self.endpoint(token)
         let request = endpointResolver(endpoint: endpoint)
 
         networkActivityClosure?(change: .Began)
@@ -165,9 +157,9 @@ public class MoyaProvider<T: MoyaTarget> {
                 
                 switch endpoint.sampleResponse.evaluate() {
                     case .Success(let statusCode, let data):
-                        completion(data: data, statusCode: statusCode, response:nil, error: nil)
+                        completion(data: data(), statusCode: statusCode, response:nil, error: nil)
                     case .Error(let statusCode, let error, let data):
-                        completion(data: data, statusCode: statusCode, response:nil, error: error)
+                        completion(data: data?(), statusCode: statusCode, response:nil, error: error)
                     case .Closure:
                         break  // the `evaluate()` method will never actually return a .Closure
                 }
@@ -209,18 +201,13 @@ public class MoyaProvider<T: MoyaTarget> {
         }
     }
 
-    public func request(token: T, parameters: [String: AnyObject], completion: MoyaCompletion) -> Cancellable {
-        return request(token, method: Moya.DefaultMethod(), parameters: parameters, completion: completion)
+    public class func DefaultEndpointMapping() -> MoyaEndpointsClosure {
+        return { (target: T) -> Endpoint<T> in
+            let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+            return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+        }
     }
 
-    public func request(token: T, method: Moya.Method, completion: MoyaCompletion) -> Cancellable {
-        return request(token, method: method, parameters: Moya.DefaultParameters(), completion: completion)
-    }
-    
-    public func request(token: T, completion: MoyaCompletion) -> Cancellable {
-        return request(token, method: Moya.DefaultMethod(), completion: completion)
-    }
-    
     public class func DefaultEnpointResolution() -> MoyaEndpointResolution {
         return { (endpoint: Endpoint<T>) -> (NSURLRequest) in
             return endpoint.urlRequest

@@ -1,3 +1,10 @@
+# 1.0.0
+
+-  **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
+- **Breaking change** Adds `method` to `MoyaTarget` protocol and removes `method` parameter from `request()` functions. Targets now specify GET, POST, etc on a per-target level, instead of per-request. 
+- **Breaking change** Adds `parameters` to `MoyaTarget` protocol and removes ability to pass parameters into `request()` functions. Targets now specify the parameters directly on a per-target level, instead of per-request.
+- Adds a sane default implementation of the `MoyaProvider` initializer's `endpointsClosure` parameter.
+
 # 0.8.0
 
 - Updates to Swift 1.2.
