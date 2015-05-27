@@ -25,7 +25,7 @@ only one public function, `cancel()`, which you can use to cancel the
 request. 
 
 Remember, *where* you put your target and the provider, are completely up 
-to you. You can check out [Artsy's implementation](https://github.com/Artsy/eidolon/Kiosk/AppNetworking/ArtsyAPI.swift)
+to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
 for an example. 
 
 Advanced Use
@@ -52,13 +52,13 @@ This `endpointsClosure` is about as simple as you can get. Check out the
 to do this.
 
 The next optional initializer parameter is `endpointResolver`, which resolves
-and `Endpoint` to an actual `NSURLrequest`. Again, check out the [Endpoints](Endpoints.md) 
+an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md) 
 documentation for how and why you'd do this. 
 
 The third optional parameter, `stubResponses`, is very straightforward: 
 should the provider access the API or should it return the stubbed data? 
 
-Another option is to provide a `stubBehavior` of either `.Immedaite` (the
+Another option is to provide a `stubBehavior` of either `.Immediate` (the
 default) or `.Delayed(seconds)`, where you can delay every stubbed request 
 by a certain number of seconds. For example, `.Delayed(0.2)` would delay
 every stubbed request. This can be good for simulating network delays in

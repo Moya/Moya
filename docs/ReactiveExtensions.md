@@ -1,11 +1,10 @@
 ReactiveCocoa
 =============
 
-Moya providers an optional `ReactiveMoyaProvider` subclass of
+Moya providers are an optional `ReactiveMoyaProvider` subclass of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
-to be executed when the request completes. Instead, we use
-`RACSignal`s. 
+to be executed when the request completes, we use `RACSignal`s. 
 
 (Yeah, `RACSignal`, like the Objective-C ReactiveCocoa API. I'll
 get around to updating it to RAC 3 one of these days...)
@@ -26,11 +25,11 @@ then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
 The `MoyaResponse` class contains a `statusCode`, some `data`,
-an a(n optional) `NSURLResponse`. You can use these values however
+and a(n optional) `NSURLResponse`. You can use these values however
 you like in `subscribeNext` or `map` calls. 
 
 To make things even awesomer, Moya provides some extensions to 
-`RACSignal` that make detail with `MoyaResponses` really easy. 
+`RACSignal` that make dealing with `MoyaResponses` really easy. 
 
 - `filterStatusCodes()` takes a range of status codes. If the 
   response's status code is not within that range, an error is
@@ -51,5 +50,5 @@ To make things even awesomer, Moya provides some extensions to
 In the error cases, the error's `domain` is `MoyaErrorDomain`. The code
 is one of `MoyaErrorCode`'s `rawValue`s, where appropriate. Wherever
 possible, underlying errors are provided and the original response
-data is included in the `NSError`'s `userInfo' dictionary using the
+data is included in the `NSError`'s `userInfo` dictionary using the
 "data" key. 

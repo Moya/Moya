@@ -1,9 +1,11 @@
 Targets
 =======
 
-You use Moya to define a Swift `enum` that will is your *target*. Then, the rest
-of your app deals *only* with those targets. Targets are usually some action 
-that you want to take on the API, like "`FavouriteTweet(tweetID: String)`". 
+Using Moya starts with defining a target – typsically some `enum` that conforms 
+to the `MoyaTarget` protocol. Then, the rest of your app deals *only* with 
+those targets. Targets are some action that you want to take on the API, 
+like "`FavouriteTweet(tweetID: String)`". 
+
 Here's an example:
 
 ```swift
@@ -20,7 +22,7 @@ base URL (more on that below). Here's a `MoyaPath` extension of our `GitHub`
 enum:
 
 ```swift
-extension GitHub : MoyaPath {
+extension GitHub: MoyaPath {
     public var path: String {
         switch self {
         case .Zen:
