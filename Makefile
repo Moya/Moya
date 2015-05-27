@@ -15,6 +15,7 @@ test:
 	set -o pipefail && xcodebuild -workspace '$(WORKSPACE)' -scheme '$(SCHEME)' -configuration Debug test -sdk iphonesimulator -destination 'name=iPhone 5' | xcpretty -c --test
 
 setup:
+	bundle install
 	bundle exec pod install --project-directory=Demo/
 
 prepare_ci:	setup 
