@@ -99,7 +99,7 @@ provider.request(.UserProfile("ashfurrow")) { (data, statusCode, response, error
 No more typos in URLs. No more missing parameter values. No more messing with
 parameter encoding.
 
-For more examples, see the [documentation](docs/Examples.md).
+For more examples, see the [documentation](docs/).
 
 ReactiveCocoa Extensions
 ------------------------
