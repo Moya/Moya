@@ -46,8 +46,9 @@ There's a sample project in the Demo directory. Go nuts!
 Project Status
 --------------
 
-This is nearing a 1.0 release, though it works now. We're using it in [Artsy's
-new auction app](https://github.com/Artsy/eidolon).
+This project has hit a 1.0 release, and we're using it in [Artsy's
+new auction app](https://github.com/Artsy/eidolon). We consider it
+ready for production use. 
 
 Currently, we support Xcode 6.3.1 and Swift 1.2.
 
