@@ -5,7 +5,7 @@
 You're a smart developer. You probably use Alamofire to abstract away access to
 NSURLSession and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
-are probably called "APIManager" or "NetworkModel", andprobably look something 
+are probably called "APIManager" or "NetworkModel", and probably look something 
 like this. 
 
 ![Ad hoc network layer](web/bad.png)
@@ -34,7 +34,7 @@ to abstract away the nitty gritty of URLs, parameters, etc?
 Some awesome features of Moya:
 
 - Compile-time checking for correct API endpoint accesses.
-- Let's you define a clear usage of different endpoints with associated enum values.
+- Lets you define a clear usage of different endpoints with associated enum values.
 - Keeps track of inflight requests with ReactiveCocoa and prevents duplicate requests.
 - Treats test stubs as first-class citizens so unit testing is super-easy.
 
@@ -60,7 +60,7 @@ Just add `pod 'Moya'` to your Podfile and go!
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For reactive extensions, his project has some dependencies. Add the following 
+For reactive extensions, this project has some dependencies. Add the following 
 lines to your Podfile:
 
 ```rb
