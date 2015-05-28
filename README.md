@@ -28,7 +28,7 @@ easy.
 
 Basically:
 
-> If you use Alamofire to abstract away `NSURSession`, why not use something
+> If you use Alamofire to abstract away `NSURLSession`, why not use something
 to abstract away the nitty gritty of URLs, parameters, etc?
 
 Some awesome features of Moya:
