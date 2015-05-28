@@ -1,7 +1,7 @@
 ReactiveCocoa
 =============
 
-Moya providers are an optional `ReactiveMoyaProvider` subclass of
+Moya provides an optional `ReactiveMoyaProvider` subclass of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `RACSignal`s. 
