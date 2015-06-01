@@ -36,7 +36,7 @@ extension GitHub: MoyaPath {
 }
 ```
 
-Note: we're cheating here and using a `URLEscappedString` extension on String. 
+Note: we're cheating here and using a `URLEscapedString` extension on String. 
 A sample implementation is given at the end of this document. 
 
 The `MoyaTarget` protocol requires a `baseURL` property to be defined on the 
