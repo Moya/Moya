@@ -9,26 +9,6 @@
 import Foundation
 import ReactiveCocoa
 
-public class MoyaResponse: NSObject, Printable, DebugPrintable {
-    public let statusCode: Int
-    public let data: NSData
-    public let response: NSURLResponse?
-
-    public init(statusCode: Int, data: NSData, response: NSURLResponse?) {
-        self.statusCode = statusCode
-        self.data = data
-        self.response = response
-    }
-    
-    override public var description: String {
-        return "Status Code: \(statusCode), Data Length: \(data.length)"
-    }
-    
-    override public var debugDescription: String {
-        return description
-    }
-}
-
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
 public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     /// Current requests that have not completed or errored yet.
