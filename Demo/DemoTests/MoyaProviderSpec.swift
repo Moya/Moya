@@ -10,6 +10,7 @@ import Quick
 import Moya
 import Nimble
 import ReactiveCocoa
+import RxSwift
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -234,6 +235,67 @@ class MoyaProviderSpec: QuickSpec {
                             expect(provider.inflightRequests.count).to(equal(1))
                         }
                         
+                        expect(provider.inflightRequests.count).to(equal(0))
+                    }
+                })
+                
+                describe("a RxSwift provider", { () -> () in
+                    var provider: RxMoyaProvider<GitHub>!
+                    
+                    beforeEach {
+                        provider = RxMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
+                    }
+                    
+                    it("returns a MoyaResponse object") {
+                        var called = false
+                        
+                        provider.request(.Zen) >- subscribeNext { (object) -> Void in
+                            called = true
+                        }
+                        
+                        expect(called).to(beTruthy())
+                    }
+                    
+                    it("returns stubbed data for zen request") {
+                        var message: String?
+                        
+                        let target: GitHub = .Zen
+                        provider.request(target) >- subscribeNext { (response) -> Void in
+                            message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                        }
+                        
+                        let sampleString = NSString(data: (target.sampleData as NSData), encoding: NSUTF8StringEncoding)
+                        expect(message).to(equal(sampleString))
+                    }
+
+                    it("returns correct data for user profile request") {
+                        var receivedResponse: NSDictionary?
+                        
+                        let target: GitHub = .UserProfile("ashfurrow")
+                        provider.request(target) >- subscribeNext { (response) -> Void in
+                            receivedResponse = NSJSONSerialization.JSONObjectWithData(response.data, options: nil, error: nil) as? NSDictionary
+                        }
+                        
+                        let sampleData = target.sampleData as NSData
+                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as! NSDictionary
+                        expect(receivedResponse).toNot(beNil())
+                    }
+                    
+                    it("returns identical signals for inflight requests") {
+                        let target: GitHub = .Zen
+
+                        var response: MoyaResponse!
+
+                        let outerSignal = provider.request(target)
+                        outerSignal >- subscribeNext { (response) -> Void in
+                            expect(provider.inflightRequests.count).to(equal(1))
+
+                            let innerSignal = provider.request(target)
+                            innerSignal >- subscribeNext { (object) -> Void in
+                                expect(provider.inflightRequests.count).to(equal(1))
+                            }
+                        }
+
                         expect(provider.inflightRequests.count).to(equal(0))
                     }
                 })

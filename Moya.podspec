@@ -3,8 +3,8 @@ Pod::Spec.new do |s|
   s.version      = "1.0.0"
   s.summary      = "Network abstraction layer written in Swift"
   s.description  = <<-EOS
-  Moya abstracts network commands using Swift Generics to provide developers 
-  with more compile-time confidence. 
+  Moya abstracts network commands using Swift Generics to provide developers
+  with more compile-time confidence.
 
   A ReactiveCocoa extension exists as well. Instructions for its installation
   are in [the README](https://github.com/ashfurrow/Moya).
@@ -24,9 +24,20 @@ Pod::Spec.new do |s|
     ss.framework  = "Foundation"
   end
 
+  s.subspec "ReactiveCore" do |ss|
+    ss.source_files = "MoyaResponse.swift"
+    ss.dependency "Moya/Core"
+  end
+
   s.subspec "Reactive" do |ss|
     ss.source_files = "Moya+ReactiveCocoa.swift", "RACSignal+Moya.swift"
-    ss.dependency "Moya/Core"
+    ss.dependency "Moya/ReactiveCore"
     ss.dependency "ReactiveCocoa", "3.0-beta.6"
+  end
+
+  s.subspec "RxSwift" do |ss|
+    ss.source_files = "Moya+RxSwift.swift"
+    ss.dependency "Moya/ReactiveCore"
+    ss.dependency "RxSwift", "1.4"
   end
 end
