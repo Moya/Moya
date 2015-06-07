@@ -1,6 +1,6 @@
 # 1.1.0
 
-- Adds support for RxSwift
+- Adds support for RxSwift – [@alcarvalho](http://github.com/alcarvalho)
 
 # 1.0.0
 
