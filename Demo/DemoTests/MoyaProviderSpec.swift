@@ -281,6 +281,23 @@ class MoyaProviderSpec: QuickSpec {
                         expect(receivedResponse).toNot(beNil())
                     }
                     
+                    it("returns identical signals for inflight requests") {
+                        let target: GitHub = .Zen
+
+                        var response: MoyaResponse!
+
+                        let outerSignal = provider.request(target)
+                        outerSignal >- subscribeNext { (response) -> Void in
+                            expect(provider.inflightRequests.count).to(equal(1))
+
+                            let innerSignal = provider.request(target)
+                            innerSignal >- subscribeNext { (object) -> Void in
+                                expect(provider.inflightRequests.count).to(equal(1))
+                            }
+                        }
+
+                        expect(provider.inflightRequests.count).to(equal(0))
+                    }
                 })
                 
                 describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {

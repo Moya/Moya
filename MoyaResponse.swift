@@ -1,9 +1,9 @@
 //
-//  File.swift
-//  Pods
+//  MoyaResponse.swift
+//  Moya
 //
-//  Created by Andre Carvalho on 06/06/15.
-//
+//  Created by Andre Carvalho on 2015-06-06
+//  Copyright (c) 2015 Ash Furrow. All rights reserved.
 //
 
 import Foundation
@@ -25,6 +25,18 @@ public class MoyaResponse: NSObject, Printable, DebugPrintable {
     
     override public var debugDescription: String {
         return description
+    }
+}
+
+/// Required for making Endpoint conform to Equatable.
+public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+    return lhs.urlRequest.isEqual(rhs.urlRequest)
+}
+
+/// Required for using Endpoint as a key type in a Dictionary.
+extension Endpoint: Equatable, Hashable {
+    public var hashValue: Int {
+        return urlRequest.hash
     }
 }
 
