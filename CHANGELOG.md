@@ -1,7 +1,11 @@
+# 1.1.0
+
+- Adds support for RxSwift
+
 # 1.0.0
 
 -  **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
-- **Breaking change** Adds `method` to `MoyaTarget` protocol and removes `method` parameter from `request()` functions. Targets now specify GET, POST, etc on a per-target level, instead of per-request. 
+- **Breaking change** Adds `method` to `MoyaTarget` protocol and removes `method` parameter from `request()` functions. Targets now specify GET, POST, etc on a per-target level, instead of per-request.
 - **Breaking change** Adds `parameters` to `MoyaTarget` protocol and removes ability to pass parameters into `request()` functions. Targets now specify the parameters directly on a per-target level, instead of per-request.
 - Adds a sane default implementation of the `MoyaProvider` initializer's `endpointsClosure` parameter.
 
@@ -23,7 +27,7 @@
 
 # 0.6
 
-- First release on CocoaPods trunk. 
+- First release on CocoaPods trunk.
 - Add data support for [stubbed error responses](https://github.com/ashfurrow/Moya/pull/92). – [@steam](http://github.com.steam)
 - Fixes [#66](https://github.com/AshFurrow/Moya/issues/66), a problem with outdated Alamofire dependency and it's serializer type signature. -[@garnett](http://github.com/garnett)
 - Delete note about ReactiveCocoa installation -[@garnett](http://github.com/garnett)
