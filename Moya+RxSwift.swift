@@ -17,7 +17,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
 
     /// Initializes a reactive provider.
     override public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
+        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
     }
 
     /// Designated request-making method.

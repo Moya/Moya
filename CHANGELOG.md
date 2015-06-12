@@ -1,3 +1,7 @@
+# 1.1.1
+
+- Fixes problem where `RxMoyaProvider` would not respect customized stubbing behaviour (delays).
+
 # 1.1.0
 
 - Adds support for RxSwift – [@alcarvalho](http://github.com/alcarvalho)
