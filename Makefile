@@ -20,4 +20,8 @@ setup:
 
 prepare_ci:	setup 
 
+lint:
+	bundle exec pod spec lint Moya.podspec
+
 ci: test
+ci: lint
