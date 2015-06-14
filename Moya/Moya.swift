@@ -155,8 +155,8 @@ public class MoyaProvider<T: MoyaTarget> {
         return .Immediate
     }
 
-    public class func DelayedStubbingBehaviour(seconds: NSTimeInterval)(_: T) -> Moya.StubbedBehavior {
-        return .Delayed(seconds: seconds)
+    public class func DelayedStubbingBehaviour(seconds: NSTimeInterval) -> MoyaStubbedBehavior {
+        return { (_: T) -> Moya.StubbedBehavior in return .Delayed(seconds: seconds) }
     }
 }
 
