@@ -55,14 +55,39 @@ The next optional initializer parameter is `endpointResolver`, which resolves
 an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md) 
 documentation for how and why you'd do this. 
 
-The third optional parameter, `stubResponses`, is very straightforward: 
-should the provider access the API or should it return the stubbed data? 
+The next option is to provide a `stubBehavior` of either `.NotStubbing` (the 
+default), `.Immediate` or `.Delayed(seconds)`, where you can delay the stubbed 
+request  by a certain number of seconds. For example, `.Delayed(0.2)` would delay
+every stubbed request. This can be good for simulating network delays in unit tests. 
 
-Another option is to provide a `stubBehavior` of either `.Immediate` (the
-default) or `.Delayed(seconds)`, where you can delay every stubbed request 
-by a certain number of seconds. For example, `.Delayed(0.2)` would delay
-every stubbed request. This can be good for simulating network delays in
-unit tests. Don't worry – Moya doesn't delay actual requests!
+What's nice is that if you need to stub some requests differently than others,
+you can use your own closure. 
+
+```swift
+let provider = MoyaProvider<MyTarget>(stubBehavior: { (target: MyTarget) -> Moya.StubbedBehavior in
+	switch target {
+		/* Return something different based on the target. */
+	}
+}
+```
+})
+
+But usually you want the same stubbing behaviour for all your targets. There are
+three class methods on `MoyaProvider` you can use instead.
+
+```swift
+MoyaProvider.NoStubbingBehavior
+MoyaProvider.ImmediateStubbingBehaviour
+MoyaProvider.DelayedStubbingBehaviour(seconds)
+```
+
+So, in the above example, if you wanted immediate stubbing behaviour for all 
+targets, either of the following would work.
+
+```swift
+let provider = MoyaProvider<MyTarget>(stubBehavior: { (_: MyTarget) -> Moya.StubbedBehavior in return .Immediate })
+let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+```
 
 Finally, there's the `networkActivityClosure` parameter. This is a closure
 that you can provide to be notified whenever a network request begins or
