@@ -20,7 +20,8 @@ public enum GitHub {
     case UserRepositories(String)
 }
 
-extension GitHub : MoyaPath {
+extension GitHub : MoyaTarget {
+    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     public var path: String {
         switch self {
         case .Zen:
@@ -31,10 +32,6 @@ extension GitHub : MoyaPath {
             return "/users/\(name.URLEscapedString)/repos"
         }
     }
-}
-
-extension GitHub : MoyaTarget {
-    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     public var method: Moya.Method {
         return .GET
     }

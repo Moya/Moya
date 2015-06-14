@@ -16,13 +16,21 @@ public enum GitHub {
 }
 ```
 
-Targets must conform to `MoyaTarget`, which extends the `MoyaPath` protocol. 
-This protocol specifies the locations of your API endpoints, relative to its 
-base URL (more on that below). Here's a `MoyaPath` extension of our `GitHub` 
-enum:
+Targets must conform to `MoyaTarget`. The `MoyaTarget` protocol requires a 
+`baseURL` property to be defined on the enum. Note that this should *not* depend 
+on the value of `self`, but should just return a single value (if you're using 
+more than one API base URL, separate them out into separate enums and Moya 
+providers). Here's the beginning of our extension:
 
 ```swift
-extension GitHub: MoyaPath {
+extension GitHub : MoyaTarget {
+    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+```
+
+OK, cool. So now we need to have a `method` for our enum values. In our case, we
+are always using the GET HTTP method, so this is pretty easy:
+
+```swift
     public var path: String {
         switch self {
         case .Zen:
@@ -33,24 +41,13 @@ extension GitHub: MoyaPath {
             return "/users/\(name.URLEscapedString)/repos"
         }
     }
-}
 ```
+
+This protocol specifies the locations of 
+your API endpoints, relative to its base URL (more on that below). 
 
 Note: we're cheating here and using a `URLEscapedString` extension on String. 
 A sample implementation is given at the end of this document. 
-
-The `MoyaTarget` protocol requires a `baseURL` property to be defined on the 
-enum. Note that this should *not* depend on the value of `self`, but should just
-return a single value (if you're using more than one API base URL, separate them
-out into separate enums and Moya providers). Here's the beginning of our extension:
-
-```swift
-extension GitHub : MoyaTarget {
-    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
-```
-
-OK, cool. So now we need to have a `method` for our enum values. In our case, we
-are always using the GET HTTP method, so this is pretty easy:
 
 ```swift
     public var method: Moya.Method {

@@ -13,7 +13,8 @@ enum GitHub {
     case UserProfile(String)
 }
 
-extension GitHub : MoyaPath {
+extension GitHub : MoyaTarget {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
         case .Zen:
@@ -22,10 +23,6 @@ extension GitHub : MoyaPath {
             return "/users/\(name.URLEscapedString)"
         }
     }
-}
-
-extension GitHub : MoyaTarget {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var method: Moya.Method {
         return .GET
     }

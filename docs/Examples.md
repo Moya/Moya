@@ -13,9 +13,8 @@ enum GitHub {
 ```
 
 This enum is used to make sure that you provide implementation details for each
-target (at compile time). The enum *must* conform to the `MoyaTarget` protocol,
-and by extension, the `MoyaPath` one as well. Let's take a look at what that
-might look like.
+target (at compile time). The enum *must* conform to the `MoyaTarget` protocol. 
+Let's take a look at what that might look like.
 
 ```swift
 private extension String {
@@ -24,7 +23,8 @@ private extension String {
     }
 }
 
-extension GitHub : MoyaPath {
+extension GitHub : MoyaTarget {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
     var path: String {
         switch self {
         case .Zen:
@@ -33,10 +33,12 @@ extension GitHub : MoyaPath {
             return "/users/\(name.URLEscapedString)"
         }
     }
-}
-
-extension GitHub : MoyaTarget {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject] {
+        return [:]
+    }
     var sampleData: NSData {
         switch self {
         case .Zen:
