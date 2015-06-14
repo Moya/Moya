@@ -70,14 +70,10 @@ public class Moya {
     }
 }
 
-/// Protocol defining the relative path of an enum.
-public protocol MoyaPath {
-    var path: String { get }
-}
-
-/// Protocol to define the base URL and sample data for an enum.
-public protocol MoyaTarget : MoyaPath {
+/// Protocol to define the base URL, path, method, parameters and sample data for a target.
+public protocol MoyaTarget {
     var baseURL: NSURL { get }
+    var path: String { get }
     var method: Moya.Method { get }
     var parameters: [String: AnyObject] { get }
     var sampleData: NSData { get }
