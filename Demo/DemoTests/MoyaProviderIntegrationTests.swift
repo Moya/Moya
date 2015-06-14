@@ -35,7 +35,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider") { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
-                        provider = MoyaProvider()
+                        provider = MoyaProvider<GitHub>()
                         return
                     }
                     
@@ -111,7 +111,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a reactive provider") { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveMoyaProvider()
+                        provider = ReactiveMoyaProvider<GitHub>()
                     }
                     
                     it("returns some data for zen request") {

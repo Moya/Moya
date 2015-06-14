@@ -110,11 +110,7 @@ class MoyaProviderSpec: QuickSpec {
                 })
 
                 it("delays execution when appropriate") {
-                    let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
-                        return .Delayed(seconds: 2)
-                    }
-
-                    let provider = MoyaProvider(stubBehavior: closure)
+                    let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider<GitHub>.DelayedStubbingBehaviour(2))
 
                     let startDate = NSDate()
                     var endDate: NSDate?
@@ -314,11 +310,8 @@ class MoyaProviderSpec: QuickSpec {
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
                         TestCancellable.cancelled = false
-                        let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
-                            return .Delayed(seconds: 1)
-                        }
                         
-                        provider = TestProvider<GitHub>(stubBehavior: closure)
+                        provider = TestProvider<GitHub>(stubBehavior: MoyaProvider<GitHub>.DelayedStubbingBehaviour(1))
                     }
                     
                     it("cancels network request when subscription is cancelled") {
