@@ -1,11 +1,3 @@
-//
-//  GitHubAPI.swift
-//  Sample
-//
-//  Created by Ash Furrow on 2014-09-07.
-//  Copyright (c) 2014 Ash Furrow. All rights reserved.
-//
-
 import Foundation
 import Moya
 

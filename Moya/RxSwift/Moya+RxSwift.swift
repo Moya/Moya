@@ -1,11 +1,3 @@
-//
-//  Moya+RxSwift.swift
-//  Moya
-//
-//  Created by Andre Carvalho on 2015-06-05
-//  Copyright (c) 2015 Ash Furrow. All rights reserved.
-//
-
 import Foundation
 import RxSwift
 
