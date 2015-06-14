@@ -1,11 +1,3 @@
-//
-//  MoyaProviderSpec.swift
-//  MoyaTests
-//
-//  Created by Ash Furrow on 2014-09-06.
-//  Copyright (c) 2014 Ash Furrow. All rights reserved.
-//
-
 import Quick
 import Moya
 import Nimble

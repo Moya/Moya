@@ -1,3 +1,8 @@
+# 2.0.0
+
+- **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.
+- **Breaking change** Renames `Moya/Reacitve` subspec to `Moya/ReactiveCocoa`.
+
 # 1.1.1
 
 - Fixes problem where `RxMoyaProvider` would not respect customized stubbing behaviour (delays).

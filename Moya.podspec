@@ -19,24 +19,24 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.subspec "Core" do |ss|
-    ss.source_files  = "Moya.swift", "Endpoint.swift"
+    ss.source_files  = "Moya/*.swift"
     ss.dependency "Alamofire", "~> 1.2.0"
     ss.framework  = "Foundation"
   end
 
   s.subspec "ReactiveCore" do |ss|
-    ss.source_files = "MoyaResponse.swift"
+    ss.source_files = "Moya/ReactiveCore/*.swift"
     ss.dependency "Moya/Core"
   end
 
-  s.subspec "Reactive" do |ss|
-    ss.source_files = "Moya+ReactiveCocoa.swift", "RACSignal+Moya.swift"
+  s.subspec "ReactiveCocoa" do |ss|
+    ss.source_files = "Moya/ReactiveCocoa/*.swift"
     ss.dependency "Moya/ReactiveCore"
     ss.dependency "ReactiveCocoa", "3.0-beta.6"
   end
 
   s.subspec "RxSwift" do |ss|
-    ss.source_files = "Moya+RxSwift.swift"
+    ss.source_files = "Moya/RxSwift/*.swift"
     ss.dependency "Moya/ReactiveCore"
     ss.dependency "RxSwift", "1.4"
   end

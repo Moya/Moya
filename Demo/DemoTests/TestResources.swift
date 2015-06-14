@@ -1,11 +1,3 @@
-//
-//  TestResources.swift
-//  Moya
-//
-//  Created by Ash Furrow on 2014-08-23.
-//  Copyright (c) 2014 Ash Furrow. All rights reserved.
-//
-
 import Foundation
 import Moya
 import UIKit
@@ -21,7 +13,8 @@ enum GitHub {
     case UserProfile(String)
 }
 
-extension GitHub : MoyaPath {
+extension GitHub : MoyaTarget {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
         case .Zen:
@@ -30,10 +23,6 @@ extension GitHub : MoyaPath {
             return "/users/\(name.URLEscapedString)"
         }
     }
-}
-
-extension GitHub : MoyaTarget {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var method: Moya.Method {
         return .GET
     }
