@@ -9,7 +9,7 @@ public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
 
     /// Initializes a reactive provider.
     override public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, networkActivityClosure: networkActivityClosure)
+        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
     }
 
     /// Designated request-making method.
