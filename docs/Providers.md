@@ -47,9 +47,10 @@ Notice that we don't have to specify the generic type in the `MoyaProvider`
 initializer anymore, since Swift will infer it from the type of our
 `endpointsClosure`. Neat!
 
-This `endpointsClosure` is about as simple as you can get. Check out the
-[Endpoints](Endpoints.md) documentation for more on _why_ you might want
-to do this.
+This `endpointsClosure` is about as simple as you can get. It's actually the 
+default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`. 
+Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you 
+might want to customize this.
 
 The next optional initializer parameter is `endpointResolver`, which resolves
 an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md) 

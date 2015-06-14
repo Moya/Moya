@@ -119,7 +119,7 @@ that Moya will use to reason about the network API call. At some point, that
 That's what the `endpointResolver` parameter is for. 
 
 The `endpointResolver` is an optional, last-minute way to modify the request 
-that hits the network. It has a default value of `DefaultEnpointResolution()`, 
+that hits the network. It has a default value of `MoyaProvider.DefaultEnpointResolution`, 
 which simply uses the `urlRequest` property of the `Endpoint` instance. 
 
 This closure receives an `Endpoint` instance and is responsible for returning a

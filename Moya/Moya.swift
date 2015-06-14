@@ -108,7 +108,7 @@ public class MoyaProvider<T: MoyaTarget> {
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+    public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
         self.endpointsClosure = endpointsClosure
         self.endpointResolver = endpointResolver
         self.stubBehavior = stubBehavior
@@ -134,17 +134,13 @@ public class MoyaProvider<T: MoyaTarget> {
         }
     }
 
-    public class func DefaultEndpointMapping() -> MoyaEndpointsClosure {
-        return { (target: T) -> Endpoint<T> in
-            let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-            return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
-        }
+    public class func DefaultEndpointMapping(target: T) -> Endpoint<T> {
+        let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+        return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    public class func DefaultEnpointResolution() -> MoyaEndpointResolution {
-        return { (endpoint: Endpoint<T>) -> (NSURLRequest) in
-            return endpoint.urlRequest
-        }
+    public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
+        return endpoint.urlRequest
     }
 
     public class func NoStubbingBehavior(_: T) -> Moya.StubbedBehavior {
