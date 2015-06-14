@@ -8,8 +8,8 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public var inflightRequests = Dictionary<Endpoint<T>, Observable<MoyaResponse>>()
 
     /// Initializes a reactive provider.
-    override public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
+    override public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+        super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
     }
 
     /// Designated request-making method.
