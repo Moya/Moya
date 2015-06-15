@@ -126,6 +126,26 @@ filtering out certain status codes. This means that you can place your code for
 handling API errors like 400's in the same places as code for handling invalid 
 responses. 
 
+Contributing
+------------
+
+Hey! Like Moya? Awesome! We could actually really use your help! 
+
+Open source isn't just writing code. Moya could use your help with any of the 
+following:
+
+- Finding (and reporting!) bugs.
+- New feature suggestions.
+- Answering questions on issues.
+- Documentation improvements.
+- Reviewing pull requests.
+- Helping to manage issue priorities.
+- Fixing bugs/new features.
+
+If any of that sounds cool to you, send a pull request! After a few 
+contributions, we'll add you as admins to the repo so you can merge pull 
+requests :tada:
+
 License
 -------
 
