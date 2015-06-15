@@ -36,18 +36,18 @@ endpoints closure, which is responsible for mapping a value of your enum to a
 concrete `Endpoint` instance. Let's take a look at what one might look like. 
 
 ```swift
-let endpointsClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
     return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
 }
-let provider = MoyaProvider(endpointsClosure: endpointsClosure)
+let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
 
 Notice that we don't have to specify the generic type in the `MoyaProvider` 
 initializer anymore, since Swift will infer it from the type of our
-`endpointsClosure`. Neat!
+`endpointClosure`. Neat!
 
-This `endpointsClosure` is about as simple as you can get. It's actually the 
+This `endpointClosure` is about as simple as you can get. It's actually the 
 default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`. 
 Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you 
 might want to customize this.

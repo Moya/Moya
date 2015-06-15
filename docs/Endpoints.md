@@ -23,7 +23,7 @@ There are two ways that you interact with Endpoints.
 The first might resemble the following:
 
 ```swift
-let endpointsClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
     return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
 }
@@ -46,12 +46,12 @@ From Target to Endpoint
 
 By default, `Endpoint` instances use the `.URL` type parameter encoding. You
 can specify how you'd like to encode parameters on a target-by-target basis in
-the `endpointsClosure` using the optional `parameterEncoding` parameter of the
-`Endpoint` initializer in your `endpointsClosure` when setting up the provider. 
+the `endpointClosure` using the optional `parameterEncoding` parameter of the
+`Endpoint` initializer in your `endpointClosure` when setting up the provider. 
 
 There are four parameter encoding types: `.URL`, `.JSON`, `.PropertyList`, and
 `.Custom`, which map directly to the corresponding types in Alamofire. These 
-are also configured in the `endpointsClosure` of the provider. Usually you just
+are also configured in the `endpointClosure` of the provider. Usually you just
 want `.URL`, but you can use whichever you like. These are mapped directly to
 the [Alamofire parameter encodings](https://github.com/Alamofire/Alamofire/blob/3d271dbbf12e104ab1373bff36c91c5ecbcc3890/Source/ParameterEncoding.swift#L47).
 
@@ -60,7 +60,7 @@ may wish to set our application name in the HTTP header fields for server-side
 analytics. 
 
 ```swift
-let endpointsClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     return endpoint.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
 }
@@ -70,10 +70,10 @@ This also means that you can provide additional parameters to some or all of
 your endpoints. For example, say that there is an authentication token we need
 for  all values of the hypothetical `MyTarget` target, with the exception of the 
 target that actually does the authentication. We could construct an 
-`endpointsClosure` resembling the following. 
+`endpointClosure` resembling the following. 
 
 ```swift
-let endpointsClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
 
     // Sign all non-authenticating requests
@@ -112,7 +112,7 @@ As we mentioned earlier, the purpose of this library is not really to provide a
 coding framework with which to access the network – that's Alamofire's job. 
 Instead, Moya is about a way to frame your thoughts about network access and 
 provide compile-time checking of well-defined network targets. You've already 
-seen how to map targets into endpoints using the `endpointsClosure` parameter
+seen how to map targets into endpoints using the `endpointClosure` parameter
 of the `MoyaProvider` initializer. That let you create an `Endpoint` instance
 that Moya will use to reason about the network API call. At some point, that
 `Endpoint` must be resolved into an actual `NSURLRequest` to give to Alamofire. 

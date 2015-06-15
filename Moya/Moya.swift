@@ -102,14 +102,14 @@ public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
     public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
     
-    public let endpointsClosure: MoyaEndpointsClosure
+    public let endpointClosure: MoyaEndpointsClosure
     public let endpointResolver: MoyaEndpointResolution
     public let stubBehavior: MoyaStubbedBehavior
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-        self.endpointsClosure = endpointsClosure
+    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+        self.endpointClosure = endpointClosure
         self.endpointResolver = endpointResolver
         self.stubBehavior = stubBehavior
         self.networkActivityClosure = networkActivityClosure
@@ -117,7 +117,7 @@ public class MoyaProvider<T: MoyaTarget> {
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
     public func endpoint(token: T) -> Endpoint<T> {
-        return endpointsClosure(token)
+        return endpointClosure(token)
     }
     
     /// Designated request-making method.
