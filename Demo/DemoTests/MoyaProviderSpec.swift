@@ -11,7 +11,7 @@ class MoyaProviderSpec: QuickSpec {
                 describe("a provider", {
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
-                        provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
+                        provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("returns stubbed data for zen request") {
@@ -62,7 +62,7 @@ class MoyaProviderSpec: QuickSpec {
 
                 it("notifies at the beginning of network requests") {
                     var called = false
-                    var provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, networkActivityClosure: { (change) -> () in
+                    var provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
                         if change == .Began {
                             called = true
                         }
@@ -76,7 +76,7 @@ class MoyaProviderSpec: QuickSpec {
 
                 it("notifies at the end of network requests") {
                     var called = false
-                    var provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, networkActivityClosure: { (change) -> () in
+                    var provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
                         if change == .Ended {
                             called = true
                         }
@@ -91,7 +91,7 @@ class MoyaProviderSpec: QuickSpec {
                 describe("a provider with lazy data", { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
-                        provider = MoyaProvider(endpointsClosure: lazyEndpointsClosure, stubResponses: true)
+                        provider = MoyaProvider<GitHub>(endpointClosure: lazyEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
 
                     it("returns stubbed data for zen request") {
@@ -110,11 +110,7 @@ class MoyaProviderSpec: QuickSpec {
                 })
 
                 it("delays execution when appropriate") {
-                    let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
-                        return .Delayed(seconds: 2)
-                    }
-
-                    let provider = MoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+                    let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStubbingBehaviour(2))
 
                     let startDate = NSDate()
                     var endDate: NSDate?
@@ -143,7 +139,7 @@ class MoyaProviderSpec: QuickSpec {
                             executed = true
                             return endpoint.urlRequest
                         }
-                        provider = MoyaProvider(endpointsClosure: endpointsClosure, endpointResolver: endpointResolution, stubResponses: true)
+                        provider = MoyaProvider<GitHub>(endpointResolver: endpointResolution, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("executes the endpoint resolver") {
@@ -158,7 +154,7 @@ class MoyaProviderSpec: QuickSpec {
                 describe("a reactive provider", { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
+                        provider = ReactiveMoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("returns a MoyaResponse object") {
@@ -235,7 +231,7 @@ class MoyaProviderSpec: QuickSpec {
                     var provider: RxMoyaProvider<GitHub>!
                     
                     beforeEach {
-                        provider = RxMoyaProvider(endpointsClosure: endpointsClosure, stubResponses: true)
+                        provider = RxMoyaProvider(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("returns a MoyaResponse object") {
@@ -302,8 +298,8 @@ class MoyaProviderSpec: QuickSpec {
                     }
 
                     class TestProvider<T: MoyaTarget>: ReactiveMoyaProvider<T> {
-                        override init(endpointsClosure: MoyaEndpointsClosure, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-                            super.init(endpointsClosure: endpointsClosure, endpointResolver: endpointResolver, stubResponses: stubResponses, networkActivityClosure: networkActivityClosure)
+                        override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+                            super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
                         }
 
                         override func request(token: T, completion: MoyaCompletion) -> Cancellable {
@@ -314,11 +310,8 @@ class MoyaProviderSpec: QuickSpec {
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
                         TestCancellable.cancelled = false
-                        let closure = { (target: GitHub) -> (Moya.StubbedBehavior) in
-                            return .Delayed(seconds: 1)
-                        }
                         
-                        provider = TestProvider(endpointsClosure: endpointsClosure, stubResponses: true, stubBehavior: closure)
+                        provider = TestProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStubbingBehaviour(1))
                     }
                     
                     it("cancels network request when subscription is cancelled") {
@@ -340,7 +333,7 @@ class MoyaProviderSpec: QuickSpec {
                 describe("a provider") { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
-                        provider = MoyaProvider(endpointsClosure: failureEndpointsClosure, stubResponses: true)
+                        provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("returns stubbed data for zen request") {
@@ -388,7 +381,7 @@ class MoyaProviderSpec: QuickSpec {
                 describe("a reactive provider", { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveMoyaProvider(endpointsClosure: failureEndpointsClosure, stubResponses: true)
+                        provider = ReactiveMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("returns stubbed data for zen request") {
@@ -417,7 +410,7 @@ class MoyaProviderSpec: QuickSpec {
                 describe("a failing reactive provider") {
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveMoyaProvider(endpointsClosure: failureEndpointsClosure, stubResponses: true)
+                        provider = ReactiveMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
 
                     it("returns the HTTP status code as the error code") {

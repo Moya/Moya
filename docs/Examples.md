@@ -66,7 +66,7 @@ public func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
-let endpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
+let endpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
     return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(200, target.sampleData))
 }
 ```
@@ -85,7 +85,7 @@ closure, it'll be executed at each invocation of the API, so you could do
 whatever you want. Say you want to test errors, too.
 
 ```swift
-let failureEndpointsClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
+let failureEndpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
     let sampleResponse = { () -> (EndpointSampleResponse) in
         if sendErrors {
             return .Error(404, NSError())
@@ -108,7 +108,7 @@ Great, now we're all set. Just need to create our provider.
 var provider: MoyaProvider<GitHub>!
 
 // Create this instance at app launch
-let provider = MoyaProvider(endpointsClosure: endpointsClosure)
+let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
 
 Neato. Now how do we make a request?

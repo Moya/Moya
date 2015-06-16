@@ -43,15 +43,11 @@ public func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString!
 }
 
-let endpointsClosure = { (target: GitHub) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
-}
-
-let lazyEndpointsClosure = { (target: GitHub) -> Endpoint<GitHub> in
+let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.Success(200, {target.sampleData})}), method: target.method, parameters: target.parameters)
 }
 
-let failureEndpointsClosure = { (target: GitHub) -> Endpoint<GitHub> in
+let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
     return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
 }

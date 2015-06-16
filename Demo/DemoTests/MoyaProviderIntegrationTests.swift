@@ -35,7 +35,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider") { () -> () in
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
-                        provider = MoyaProvider(endpointsClosure: endpointsClosure)
+                        provider = MoyaProvider<GitHub>()
                         return
                     }
                     
@@ -81,7 +81,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider with network activity closures") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        var provider = MoyaProvider(endpointsClosure: endpointsClosure, networkActivityClosure: { (change) -> () in
+                        var provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
                             if change == .Began {
                                 called = true
                             }
@@ -95,7 +95,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        var provider = MoyaProvider(endpointsClosure: endpointsClosure, networkActivityClosure: { (change) -> () in
+                        var provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
                             if change == .Ended {
                                 called = true
                             }
@@ -111,7 +111,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a reactive provider") { () -> () in
                     var provider: ReactiveMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveMoyaProvider(endpointsClosure: endpointsClosure)
+                        provider = ReactiveMoyaProvider<GitHub>()
                     }
                     
                     it("returns some data for zen request") {

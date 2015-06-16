@@ -65,6 +65,7 @@ public class Moya {
     }
 
     public enum StubbedBehavior {
+        case NoStubbing
         case Immediate
         case Delayed(seconds: NSTimeInterval)
     }
@@ -101,109 +102,124 @@ public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
     public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
     
-    public let endpointsClosure: MoyaEndpointsClosure
+    public let endpointClosure: MoyaEndpointsClosure
     public let endpointResolver: MoyaEndpointResolution
-    public let stubResponses: Bool
     public let stubBehavior: MoyaStubbedBehavior
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     
     /// Initializes a provider.
-    public init(endpointsClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping(), endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution(), stubResponses: Bool = false, stubBehavior: MoyaStubbedBehavior = MoyaProvider.DefaultStubBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-        self.endpointsClosure = endpointsClosure
+    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+        self.endpointClosure = endpointClosure
         self.endpointResolver = endpointResolver
-        self.stubResponses = stubResponses
         self.stubBehavior = stubBehavior
         self.networkActivityClosure = networkActivityClosure
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
     public func endpoint(token: T) -> Endpoint<T> {
-        return endpointsClosure(token)
+        return endpointClosure(token)
     }
     
     /// Designated request-making method.
     public func request(token: T, completion: MoyaCompletion) -> Cancellable {
         let endpoint = self.endpoint(token)
         let request = endpointResolver(endpoint: endpoint)
+        let stubBehavior = self.stubBehavior(token)
 
-        networkActivityClosure?(change: .Began)
-
-        if stubResponses {
-            
-            var canceled = false
-            let cancellableToken = CancellableToken { canceled = true }
-            
-            let behavior = stubBehavior(token)
-
-            let stub: () -> () = {
-                self.networkActivityClosure?(change: .Ended)
-                
-                if (canceled) {
-                    completion(data: nil, statusCode: nil, response: nil, error: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-                    return
-                }
-                
-                switch endpoint.sampleResponse.evaluate() {
-                    case .Success(let statusCode, let data):
-                        completion(data: data(), statusCode: statusCode, response:nil, error: nil)
-                    case .Error(let statusCode, let error, let data):
-                        completion(data: data?(), statusCode: statusCode, response:nil, error: error)
-                    case .Closure:
-                        break  // the `evaluate()` method will never actually return a .Closure
-                }
-            }
-
-            switch behavior {
-            case .Immediate:
-                stub()
-            case .Delayed(let delay):
-                let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
-                let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
-                dispatch_after(killTime, dispatch_get_main_queue()) {
-                    stub()
-                }
-            }
-            
-            return cancellableToken
-
-        } else {
-            // We need to keep a reference to the closure without a reference to ourself.
-            let networkActivityCallback = networkActivityClosure
-            let request = Alamofire.Manager.sharedInstance.request(request)
-                .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                    networkActivityCallback?(change: .Ended)
-
-                    // Alamofire always sends the data param as an NSData? type, but we'll
-                    // add a check just in case something changes in the future.
-                    let statusCode = response?.statusCode
-                    if let data = data as? NSData {
-                        completion(data: data, statusCode: statusCode, response:response, error: error)
-                    } else {
-                        completion(data: nil, statusCode: statusCode, response:response, error: error)
-                    }
-            }
-            
-            return CancellableToken {
-                request.cancel()
-            }
+        switch stubBehavior {
+        case .NoStubbing:
+            return sendRequest(request, completion: completion)
+        default:
+            return stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
     }
 
-    public class func DefaultEndpointMapping() -> MoyaEndpointsClosure {
-        return { (target: T) -> Endpoint<T> in
-            let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-            return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
-        }
+    public class func DefaultEndpointMapping(target: T) -> Endpoint<T> {
+        let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+        return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    public class func DefaultEnpointResolution() -> MoyaEndpointResolution {
-        return { (endpoint: Endpoint<T>) -> (NSURLRequest) in
-            return endpoint.urlRequest
-        }
+    public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
+        return endpoint.urlRequest
     }
 
-    public class func DefaultStubBehavior(_: T) -> Moya.StubbedBehavior {
+    public class func NoStubbingBehavior(_: T) -> Moya.StubbedBehavior {
+        return .NoStubbing
+    }
+
+    public class func ImmediateStubbingBehaviour(_: T) -> Moya.StubbedBehavior {
         return .Immediate
+    }
+
+    public class func DelayedStubbingBehaviour(seconds: NSTimeInterval) -> MoyaStubbedBehavior {
+        return { (_: T) -> Moya.StubbedBehavior in return .Delayed(seconds: seconds) }
     }
 }
 
+private extension MoyaProvider {
+    func sendRequest(request: NSURLRequest, completion: MoyaCompletion) -> CancellableToken {
+
+        networkActivityClosure?(change: .Began)
+
+        // We need to keep a reference to the closure without a reference to ourself.
+        let networkActivityCallback = networkActivityClosure
+        let request = Alamofire.Manager.sharedInstance.request(request)
+            .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+                networkActivityCallback?(change: .Ended)
+
+                // Alamofire always sends the data param as an NSData? type, but we'll
+                // add a check just in case something changes in the future.
+                let statusCode = response?.statusCode
+                if let data = data as? NSData {
+                    completion(data: data, statusCode: statusCode, response:response, error: error)
+                } else {
+                    completion(data: nil, statusCode: statusCode, response:response, error: error)
+                }
+        }
+
+        return CancellableToken {
+            request.cancel()
+        }
+    }
+
+    func stubRequest(request: NSURLRequest, completion: MoyaCompletion, endpoint: Endpoint<T>, stubBehavior: Moya.StubbedBehavior) -> CancellableToken {
+        var canceled = false
+        let cancellableToken = CancellableToken { canceled = true }
+
+        // Begin network activity closure
+        networkActivityClosure?(change: .Began)
+
+        let stub: () -> () = {
+            self.networkActivityClosure?(change: .Ended)
+
+            if (canceled) {
+                completion(data: nil, statusCode: nil, response: nil, error: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                return
+            }
+
+            switch endpoint.sampleResponse.evaluate() {
+            case .Success(let statusCode, let data):
+                completion(data: data(), statusCode: statusCode, response:nil, error: nil)
+            case .Error(let statusCode, let error, let data):
+                completion(data: data?(), statusCode: statusCode, response:nil, error: error)
+            case .Closure:
+                break  // the `evaluate()` method will never actually return a .Closure
+            }
+        }
+
+        switch stubBehavior {
+        case .Immediate:
+            stub()
+        case .Delayed(let delay):
+            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
+            let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+            dispatch_after(killTime, dispatch_get_main_queue()) {
+                stub()
+            }
+        case .NoStubbing:
+            fatalError("Method called to stub request when stubbing is disabled.")
+        }
+
+        return cancellableToken
+    }
+}
