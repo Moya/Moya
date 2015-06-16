@@ -19,5 +19,11 @@ DerivedData
 *.hmap
 *.xccheckout
 
+# Carthage
+Carthage
+
+# CocoaPods
+Pods
+
 # AppCode
 .idea/
