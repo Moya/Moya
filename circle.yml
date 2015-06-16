@@ -1,9 +1,6 @@
 machine:
   xcode:
     version: "6.3.1"
-dependencies:
-  override:
-    - make prepare_ci
 test:
   override:
     - make ci

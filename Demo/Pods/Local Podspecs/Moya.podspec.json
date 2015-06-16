@@ -1,0 +1,69 @@
+{
+  "name": "Moya",
+  "version": "1.1.1",
+  "summary": "Network abstraction layer written in Swift",
+  "description": "  Moya abstracts network commands using Swift Generics to provide developers\n  with more compile-time confidence.\n\n  A ReactiveCocoa extension exists as well. Instructions for its installation\n  are in [the README](https://github.com/ashfurrow/Moya).\n",
+  "homepage": "https://github.com/AshFurrow/Moya",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Ash Furrow": "ash@ashfurrow.com"
+  },
+  "social_media_url": "http://twitter.com/ashfurrow",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "https://github.com/ashfurrow/Moya.git",
+    "tag": "1.1.1"
+  },
+  "default_subspecs": "Core",
+  "requires_arc": true,
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "Moya/*.swift",
+      "dependencies": {
+        "Alamofire": [
+          "~> 1.2.0"
+        ]
+      },
+      "frameworks": "Foundation"
+    },
+    {
+      "name": "ReactiveCore",
+      "source_files": "Moya/ReactiveCore/*.swift",
+      "dependencies": {
+        "Moya/Core": [
+
+        ]
+      }
+    },
+    {
+      "name": "ReactiveCocoa",
+      "source_files": "Moya/ReactiveCocoa/*.swift",
+      "dependencies": {
+        "Moya/ReactiveCore": [
+
+        ],
+        "ReactiveCocoa": [
+          "3.0-beta.6"
+        ]
+      }
+    },
+    {
+      "name": "RxSwift",
+      "source_files": "Moya/RxSwift/*.swift",
+      "dependencies": {
+        "Moya/ReactiveCore": [
+
+        ],
+        "RxSwift": [
+          "1.4"
+        ]
+      }
+    }
+  ]
+}

@@ -17,6 +17,4 @@ test:
 setup:
 	cd Demo ; bundle install ; bundle exec pod install
 
-prepare_ci:	setup 
-
 ci: test
