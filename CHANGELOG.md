@@ -6,6 +6,7 @@
 - **Breaking change** Redefines types of `DefaultEndpointMapping` and `DefaultEnpointResolution` class functions on `MoyaProvider`. You no longer invoke these functions to return a closure, rather, you reference the functions themselves _as_ closures. 
 - **Breaking change** Renames `endpointsClosure` parameter and property of `MoyaProvider` to `endpointClosure`.
 - Fixes problem that the `ReactiveMoyaProvider` initializer would not respect the stubbing behaviour it was passed. 
+- Adds official Carthage support – [@neonichu](http://github.com/neonichu)
 
 # 1.1.1
 
