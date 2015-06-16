@@ -109,9 +109,9 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 }
                 
                 describe("a reactive provider") { () -> () in
-                    var provider: ReactiveMoyaProvider<GitHub>!
+                    var provider: ReactiveCocoaMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveMoyaProvider<GitHub>()
+                        provider = ReactiveCocoaMoyaProvider<GitHub>()
                     }
                     
                     it("returns some data for zen request") {

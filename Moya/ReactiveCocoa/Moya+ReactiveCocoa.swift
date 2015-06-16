@@ -2,7 +2,7 @@ import Foundation
 import ReactiveCocoa
 
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
-public class ReactiveMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
+public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     /// Current requests that have not completed or errored yet.
     /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
     public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
