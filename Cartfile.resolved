@@ -1,0 +1,4 @@
+github "Alamofire/Alamofire" "1.2.2"
+github "robrix/Box" "1.2.2"
+github "antitypical/Result" "0.4.3"
+github "ReactiveCocoa/ReactiveCocoa" "b15798ae4f6386b8461b3b06f49908f2009a28ce"

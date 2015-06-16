@@ -45,7 +45,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
@@ -58,4 +58,4 @@ SPEC CHECKSUMS:
   Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8
   RxSwift: db92214e17226bf61c3649180286c8c7baf3712b
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.37.2
