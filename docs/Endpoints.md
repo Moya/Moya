@@ -12,7 +12,7 @@ following data:
 - The HTTP request header fields.
 - The sample response (for unit testing).
 
-[Providers](Providers.md) map [Targets](targest.md) to Endpoints, then map
+[Providers](Providers.md) map [Targets](Targets.md) to Endpoints, then map
 Endpoints to actual network requests. 
 
 There are two ways that you interact with Endpoints. 
