@@ -1,5 +1,5 @@
 //
-//  Where.swift
+//  Filter.swift
 //  Rx
 //
 //  Created by Krunoslav Zaher on 2/17/15.
@@ -56,6 +56,6 @@ class Where<Element> : Producer<Element> {
     override func run<O: ObserverType where O.Element == Element>(observer: O, cancel: Disposable, setSink: (Disposable) -> Void) -> Disposable {
         let sink = Where_(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
-        return source.subscribe(sink)
+        return source.subscribeSafe(sink)
     }
 }
