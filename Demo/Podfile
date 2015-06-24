@@ -10,8 +10,8 @@ pod 'Moya', :path => "../"
 
 target 'DemoTests' do
 
-  pod 'Quick'
-  pod 'Nimble'
+  pod 'Quick', '~> 0.3.0'
+  pod 'Nimble', '~> 0.4.0'
   pod 'OHHTTPStubs'
 
 end

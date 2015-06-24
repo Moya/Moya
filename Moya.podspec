@@ -38,6 +38,6 @@ Pod::Spec.new do |s|
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Moya/RxSwift/*.swift"
     ss.dependency "Moya/ReactiveCore"
-    ss.dependency "RxSwift", "1.4"
+    ss.dependency "RxSwift", "~> 1.4"
   end
 end
