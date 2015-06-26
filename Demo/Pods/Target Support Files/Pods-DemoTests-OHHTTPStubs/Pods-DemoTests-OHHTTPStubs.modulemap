@@ -1,6 +1,0 @@
-framework module OHHTTPStubs {
-  umbrella header "Pods-DemoTests-OHHTTPStubs-umbrella.h"
-
-  export *
-  module * { export * }
-}
