@@ -16,7 +16,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public func request(token: T) -> Observable<MoyaResponse> {
         let endpoint = self.endpoint(token)
 
-        return defer {  [weak self] () -> Observable<MoyaResponse> in
+        return `defer` {  [weak self] () -> Observable<MoyaResponse> in
             if let existingObservable = self?.inflightRequests[endpoint] {
                 return existingObservable
             }
