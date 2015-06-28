@@ -59,6 +59,7 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     }
 }
 
+/// Extension for mapping to a certain response type
 public extension ReactiveCocoaMoyaProvider {
     public func requestJSON(token: T) -> SignalProducer<AnyObject, NSError> {
         return request(token) |> mapJSON()
@@ -72,6 +73,8 @@ public extension ReactiveCocoaMoyaProvider {
         return request(token) |> mapString()
     }
 }
+
+/// MoyaResponse free functions
 
 public func filterStatusCode(range: ClosedInterval<Int>) -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError>  {
     return attemptMap { (response: MoyaResponse) in
