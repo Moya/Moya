@@ -20,16 +20,6 @@
 		7CABCC6D1B40397300797B88 /* ReactiveMoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7CABCC691B40384700797B88 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C8F4E6B1B3CEDBC0039C15B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C8F4E731B3CEDBC0039C15B;
-			remoteInfo = Moya;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		7C8F4E741B3CEDBC0039C15B /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C8F4E771B3CEDBC0039C15B /* Moya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Moya.h; sourceTree = "<group>"; };
@@ -213,7 +203,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7CABCC6A1B40384700797B88 /* PBXTargetDependency */,
 			);
 			name = ReactiveMoya;
 			productName = ReactiveMoya;
@@ -294,14 +283,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7CABCC6A1B40384700797B88 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7C8F4E731B3CEDBC0039C15B /* Moya */;
-			targetProxy = 7CABCC691B40384700797B88 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7C8F4E861B3CEDBC0039C15B /* Debug */ = {
