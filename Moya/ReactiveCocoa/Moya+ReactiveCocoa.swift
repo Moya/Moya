@@ -1,6 +1,10 @@
 import Foundation
+import Moya
 import ReactiveCocoa
 import Result
+
+private let SuccessStatusCodeRange = 200...299
+private let SuccessRedirectCodeRange = 200...399
 
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
 public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
@@ -56,6 +60,7 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     }
 }
 
+/// Extension for mapping to a certain response type
 public extension ReactiveCocoaMoyaProvider {
     public func requestJSON(token: T) -> SignalProducer<AnyObject, NSError> {
         return request(token) |> mapJSON()
@@ -70,65 +75,10 @@ public extension ReactiveCocoaMoyaProvider {
     }
 }
 
-public let ReactiveMoyaErrorDomain = "Moya"
-
-public enum ReactiveMoyaError {
-    public enum ErrorCode: Int {
-        case ResponseMapping = -1
-        case ImageMapping
-        case JSONMapping
-        case StringMapping
-        case StatusCode
-        case Data
-    }
-    
-    case ResponseMapping(AnyObject)
-    case ImageMapping(AnyObject)
-    case JSONMapping(AnyObject)
-    case StringMapping(AnyObject)
-    case StatusCode(AnyObject)
-    case Data(AnyObject)
-    
-    func errorCode() -> Int {
-        switch self {
-        case ResponseMapping:
-            return ErrorCode.ResponseMapping.rawValue
-        case ImageMapping:
-            return ErrorCode.ImageMapping.rawValue
-        case JSONMapping:
-            return ErrorCode.JSONMapping.rawValue
-        case StringMapping:
-            return ErrorCode.StringMapping.rawValue
-        case StatusCode:
-            return ErrorCode.StatusCode.rawValue
-        case Data:
-            return ErrorCode.Data.rawValue
-        }
-    }
-    
-    func userInfo() -> [NSObject: AnyObject] {
-        switch self {
-        case .ResponseMapping(let object):
-            return ["data": object]
-        case .ImageMapping(let object):
-            return ["data": object]
-        case .JSONMapping(let object):
-            return ["data": object]
-        case .StringMapping(let object):
-            return ["data": object]
-        case .StatusCode(let object):
-            return ["data": object]
-        case .Data(let object):
-            return ["data": object]
-        }
-    }
-    
-    func toError() -> NSError {
-        return NSError(domain: ReactiveMoyaErrorDomain, code: errorCode(), userInfo: userInfo())
-    }
-}
+/// MoyaResponse free functions
 
 public func filterStatusCode(range: ClosedInterval<Int>) -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError>  {
+    /// ???: Should this use a filter block?
     return attemptMap { (response: MoyaResponse) in
         if range.contains(response.statusCode) {
             return Result.Success(response)
@@ -143,13 +93,14 @@ public func filterStatusCode(code: Int) -> Signal<MoyaResponse, NSError> -> Sign
 }
 
 public func filterSuccessfulStatusCodes() -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError> {
-    return filterStatusCode(200...299)
+    return filterStatusCode(SuccessStatusCodeRange)
 }
 
 public func filterSuccessfulAndRedirectCodes() -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError> {
-    return filterStatusCode(200...399)
+    return filterStatusCode(SuccessRedirectCodeRange)
 }
 
+/// Maps the `MoyaResponse` to a `UIImage`
 public func mapImage() -> Signal<MoyaResponse, NSError> -> Signal<UIImage, NSError> {
     return attemptMap { (response: MoyaResponse) -> Result<UIImage, NSError> in
         if let image = UIImage(data: response.data) {
@@ -160,6 +111,7 @@ public func mapImage() -> Signal<MoyaResponse, NSError> -> Signal<UIImage, NSErr
     }
 }
 
+/// Maps the `MoyaResponse` to JSON
 public func mapJSON() -> Signal<MoyaResponse, NSError> -> Signal<AnyObject, NSError> {
     return attemptMap { (response: MoyaResponse) -> Result<AnyObject, NSError> in
         do {
@@ -171,6 +123,7 @@ public func mapJSON() -> Signal<MoyaResponse, NSError> -> Signal<AnyObject, NSEr
     }
 }
 
+/// Maps the `MoyaResponse` to a String
 public func mapString() -> Signal<MoyaResponse, NSError> -> Signal<String, NSError> {
     return attemptMap { (response: MoyaResponse) -> Result<String, NSError> in
         if let string: String =  NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String {
