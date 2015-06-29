@@ -3,9 +3,6 @@ import Moya
 import ReactiveCocoa
 import Result
 
-private let SuccessStatusCodeRange = 200...299
-private let SuccessRedirectCodeRange = 200...399
-
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
 public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     /// Current requests that have not completed or errored yet.
@@ -93,11 +90,11 @@ public func filterStatusCode(code: Int) -> Signal<MoyaResponse, NSError> -> Sign
 }
 
 public func filterSuccessfulStatusCodes() -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError> {
-    return filterStatusCode(SuccessStatusCodeRange)
+    return filterStatusCode(200...299)
 }
 
 public func filterSuccessfulAndRedirectCodes() -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError> {
-    return filterStatusCode(SuccessRedirectCodeRange)
+    return filterStatusCode(200...399)
 }
 
 /// Maps the `MoyaResponse` to a `UIImage`

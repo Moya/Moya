@@ -18,6 +18,7 @@
 		7CFCE8A41B41DDF900B97F54 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
 		7CFCE8A61B41E08E00B97F54 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C8F4E9F1B3CEE230039C15B /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CFCE8A71B41E08E00B97F54 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C8F4EA01B3CEE230039C15B /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CFCE8B51B41EA0B00B97F54 /* Moya+ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E911B3CEDF90039C15B /* Moya+ReactiveCocoa.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CFCE8B51B41EA0B00B97F54 /* Moya+ReactiveCocoa.swift in Sources */,
 				7CFCE8A31B41DDB300B97F54 /* ReactiveMoyaError.swift in Sources */,
 				7CABCC681B40384200797B88 /* MoyaResponse.swift in Sources */,
 			);
