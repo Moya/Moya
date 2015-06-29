@@ -1,3 +1,3 @@
 github "Alamofire/Alamofire" "fd71afb3a0af2042b9f05a6b9f29317ad4903703"
-github "antitypical/Result" "18a10d680af395d93b47ff4a3d8b0af3b8cad094"
-github "ReactiveCocoa/ReactiveCocoa" "61a648e13f55584e382e179c5b9b506ebeda8144"
+github "antitypical/Result" "0.5"
+github "ReactiveCocoa/ReactiveCocoa" "462da2a6f511c72ced8239276422bf65017105b0"

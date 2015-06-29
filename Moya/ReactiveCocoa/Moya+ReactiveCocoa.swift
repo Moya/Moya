@@ -1,4 +1,5 @@
 import Foundation
+import Moya
 import ReactiveCocoa
 import Result
 
@@ -77,6 +78,7 @@ public extension ReactiveCocoaMoyaProvider {
 /// MoyaResponse free functions
 
 public func filterStatusCode(range: ClosedInterval<Int>) -> Signal<MoyaResponse, NSError> -> Signal<MoyaResponse, NSError>  {
+    /// ???: Should this use a filter block?
     return attemptMap { (response: MoyaResponse) in
         if range.contains(response.statusCode) {
             return Result.Success(response)

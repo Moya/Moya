@@ -14,11 +14,36 @@
 		7CABCC511B40382400797B88 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CABCC501B40382400797B88 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7CABCC651B40383300797B88 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E9F1B3CEE230039C15B /* ReactiveCocoa.framework */; };
 		7CABCC661B40383300797B88 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4EA01B3CEE230039C15B /* Result.framework */; };
-		7CABCC671B40384200797B88 /* Moya+ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E911B3CEDF90039C15B /* Moya+ReactiveCocoa.swift */; };
 		7CABCC681B40384200797B88 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */; };
-		7CABCC6B1B40384B00797B88 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
-		7CABCC6D1B40397300797B88 /* ReactiveMoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */; };
+		7CFCE8A31B41DDB300B97F54 /* ReactiveMoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */; };
+		7CFCE8A41B41DDF900B97F54 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
+		7CFCE8A61B41E08E00B97F54 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C8F4E9F1B3CEE230039C15B /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CFCE8A71B41E08E00B97F54 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C8F4EA01B3CEE230039C15B /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7CFCE8A11B41DD6300B97F54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7C8F4E6B1B3CEDBC0039C15B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7C8F4E731B3CEDBC0039C15B;
+			remoteInfo = Moya;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7CFCE8A51B41E08200B97F54 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7CFCE8A61B41E08E00B97F54 /* ReactiveCocoa.framework in CopyFiles */,
+				7CFCE8A71B41E08E00B97F54 /* Result.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7C8F4E741B3CEDBC0039C15B /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,8 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CABCC6B1B40384B00797B88 /* Moya.framework in Frameworks */,
 				7CABCC651B40383300797B88 /* ReactiveCocoa.framework in Frameworks */,
+				7CFCE8A41B41DDF900B97F54 /* Moya.framework in Frameworks */,
 				7CABCC661B40383300797B88 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,11 +223,12 @@
 				7CABCC491B40382400797B88 /* Sources */,
 				7CABCC4A1B40382400797B88 /* Frameworks */,
 				7CABCC4B1B40382400797B88 /* Headers */,
-				7CABCC4C1B40382400797B88 /* Resources */,
+				7CFCE8A51B41E08200B97F54 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7CFCE8A21B41DD6300B97F54 /* PBXTargetDependency */,
 			);
 			name = ReactiveMoya;
 			productName = ReactiveMoya;
@@ -253,13 +279,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7CABCC4C1B40382400797B88 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -269,7 +288,6 @@
 			files = (
 				7C8F4E971B3CEDF90039C15B /* Endpoint.swift in Sources */,
 				7C8F4E981B3CEDF90039C15B /* Moya.swift in Sources */,
-				7CABCC6D1B40397300797B88 /* ReactiveMoyaError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,12 +295,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CABCC671B40384200797B88 /* Moya+ReactiveCocoa.swift in Sources */,
+				7CFCE8A31B41DDB300B97F54 /* ReactiveMoyaError.swift in Sources */,
 				7CABCC681B40384200797B88 /* MoyaResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7CFCE8A21B41DD6300B97F54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7C8F4E731B3CEDBC0039C15B /* Moya */;
+			targetProxy = 7CFCE8A11B41DD6300B97F54 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7C8F4E861B3CEDBC0039C15B /* Debug */ = {
