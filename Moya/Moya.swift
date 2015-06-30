@@ -163,7 +163,6 @@ private extension MoyaProvider {
 
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
-        
         let request = Alamofire.Manager.sharedInstance.request(request).response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                 networkActivityCallback?(change: .Ended)
 
