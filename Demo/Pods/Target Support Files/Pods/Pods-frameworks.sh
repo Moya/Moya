@@ -49,17 +49,9 @@ code_sign() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Alamofire.framework'
-  install_framework 'Box.framework'
   install_framework 'Moya.framework'
-  install_framework 'ReactiveCocoa.framework'
-  install_framework 'Result.framework'
-  install_framework 'RxSwift.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Alamofire.framework'
-  install_framework 'Box.framework'
   install_framework 'Moya.framework'
-  install_framework 'ReactiveCocoa.framework'
-  install_framework 'Result.framework'
-  install_framework 'RxSwift.framework'
 fi

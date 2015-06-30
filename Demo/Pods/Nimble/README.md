@@ -1,6 +1,6 @@
 # Nimble
 
-[![Build Status](https://travis-ci.org/Quick/Nimble.svg?branch=swift-1.1)](https://travis-ci.org/Quick/Nimble)
+[![Circle CI](https://circleci.com/gh/Quick/Nimble/tree/master.svg?style=svg&circle-token=6115c5d83f74a6c59a484dd8921b97096404a5f3)](https://circleci.com/gh/Quick/Nimble/tree/master)
 
 Use Nimble to express the expected outcomes of Swift
 or Objective-C expressions. Inspired by
@@ -99,7 +99,7 @@ expect(seagull.squawk).to(equal("Squee!"))
 ```objc
 // Objective-C
 
-#import <Nimble/Nimble.h>
+@import Nimble;
 
 expect(seagull.squawk).to(equal(@"Squee!"));
 ```
@@ -123,7 +123,7 @@ expect(seagull.squawk).notTo(equal("Oh, hello there!"))
 ```objc
 // Objective-C
 
-#import <Nimble/Nimble.h>
+@import Nimble;
 
 expect(seagull.squawk).toNot(equal(@"Oh, hello there!"));
 expect(seagull.squawk).notTo(equal(@"Oh, hello there!"));
@@ -212,6 +212,11 @@ expectAction([exception raise]).to(raiseException().
     named(NSInternalInconsistencyException).
     reason("Not enough fish in the sea").
     userInfo(@{@"something": @"is fishy"}));
+
+// You can also pass a block for custom matching of the raised exception
+expectAction(exception.raise()).to(raiseException().satisfyingBlock(^(NSException *exception) {
+    expect(exception.name).to(beginWith(NSInternalInconsistencyException));
+}));
 ```
 
 ## C Primitives
@@ -346,7 +351,7 @@ to keep in mind when using Nimble in Objective-C:
    ```objc
    // Objective-C
 
-   #import <Nimble/Nimble.h>
+   @import Nimble;
 
    expect(@(1 + 1)).to(equal(@2));
    expect(@"Hello world").to(contain(@"world"));
@@ -372,7 +377,7 @@ importing Nimble:
 ```objc
 #define NIMBLE_DISABLE_SHORT_SYNTAX 1
 
-#import <Nimble/Nimble.h>
+@import Nimble;
 
 NMB_expect(^{ return seagull.squawk; }, __FILE__, __LINE__).to(NMB_equal(@"Squee!"));
 ```
@@ -631,15 +636,11 @@ expect(actual).to(raiseException(named: name))
 // Passes if actual raises an exception with the given name and reason:
 expect(actual).to(raiseException(named: name, reason: reason))
 
-// Passes if actual raises an exception with a name equal "a name"
-expect(actual).to(raiseException(named: equal("a name")))
-
-// Passes if actual raises an exception with a reason that begins with "a r"
-expect(actual).to(raiseException(reason: beginWith("a r")))
-
-// Passes if actual raises an exception with a name equal "a name"
-// and a reason that begins with "a r"
-expect(actual).to(raiseException(named: equal("a name"), reason: beginWith("a r")))
+// Passes if actual raises an exception and it passes expectations in the block
+// (in this case, if name begins with 'a r')
+expect { exception.raise() }.to(raiseException { exception in
+    expect(exception.name).to(beginWith("a r"))
+})
 ```
 
 ```objc
@@ -654,15 +655,11 @@ expect(actual).to(raiseException().named(name))
 // Passes if actual raises an exception with the given name and reason:
 expect(actual).to(raiseException().named(name).reason(reason))
 
-// Passes if actual raises an exception with a name equal "a name"
-expect(actual).to(raiseException().withName(equal("a name")))
-
-// Passes if actual raises an exception with a reason that begins with "a r"
-expect(actual).to(raiseException().withName(withReason(beginWith(@"a r")))
-
-// Passes if actual raises an exception with a name equal "a name"
-// and a reason that begins with "a r"
-expect(actual).to(raiseException().withName(equal("a name")).withReason(beginWith(@"a r")))
+// Passes if actual raises an exception and it passes expectations in the block
+// (in this case, if name begins with 'a r')
+expect(actual).to(raiseException().satisfyingBlock(^(NSException *exception) {
+    expect(exception.name).to(beginWith(@"a r"));
+}));
 ```
 
 Note: Swift currently doesn't have exceptions. Only Objective-C code can raise
@@ -997,7 +994,7 @@ public func beginWith<S: SequenceType, T: Equatable where S.Generator.Element ==
 
 extension NMBObjCMatcher {
     public class func beginWithMatcher(expected: AnyObject) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
             let actual = actualExpression.evaluate()
             let expr = actualExpression.cast { $0 as? NMBOrderedCollection }
             return beginWith(expected).matches(expr, failureMessage: failureMessage)

@@ -12,79 +12,15 @@
 #define COCOAPODS_VERSION_MINOR_Alamofire 2
 #define COCOAPODS_VERSION_PATCH_Alamofire 3
 
-// Box
-#define COCOAPODS_POD_AVAILABLE_Box
-#define COCOAPODS_VERSION_MAJOR_Box 1
-#define COCOAPODS_VERSION_MINOR_Box 2
-#define COCOAPODS_VERSION_PATCH_Box 2
-
 // Moya
 #define COCOAPODS_POD_AVAILABLE_Moya
-#define COCOAPODS_VERSION_MAJOR_Moya 1
-#define COCOAPODS_VERSION_MINOR_Moya 1
-#define COCOAPODS_VERSION_PATCH_Moya 1
+#define COCOAPODS_VERSION_MAJOR_Moya 2
+#define COCOAPODS_VERSION_MINOR_Moya 0
+#define COCOAPODS_VERSION_PATCH_Moya 0
 
 // Moya/Core
 #define COCOAPODS_POD_AVAILABLE_Moya_Core
-#define COCOAPODS_VERSION_MAJOR_Moya_Core 1
-#define COCOAPODS_VERSION_MINOR_Moya_Core 1
-#define COCOAPODS_VERSION_PATCH_Moya_Core 1
-
-// Moya/ReactiveCocoa
-#define COCOAPODS_POD_AVAILABLE_Moya_ReactiveCocoa
-#define COCOAPODS_VERSION_MAJOR_Moya_ReactiveCocoa 1
-#define COCOAPODS_VERSION_MINOR_Moya_ReactiveCocoa 1
-#define COCOAPODS_VERSION_PATCH_Moya_ReactiveCocoa 1
-
-// Moya/ReactiveCore
-#define COCOAPODS_POD_AVAILABLE_Moya_ReactiveCore
-#define COCOAPODS_VERSION_MAJOR_Moya_ReactiveCore 1
-#define COCOAPODS_VERSION_MINOR_Moya_ReactiveCore 1
-#define COCOAPODS_VERSION_PATCH_Moya_ReactiveCore 1
-
-// Moya/RxSwift
-#define COCOAPODS_POD_AVAILABLE_Moya_RxSwift
-#define COCOAPODS_VERSION_MAJOR_Moya_RxSwift 1
-#define COCOAPODS_VERSION_MINOR_Moya_RxSwift 1
-#define COCOAPODS_VERSION_PATCH_Moya_RxSwift 1
-
-// ReactiveCocoa
-#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 3.0-beta.6.
-
-// ReactiveCocoa/Core
-#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_Core
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 3.0-beta.6.
-
-// ReactiveCocoa/UI
-#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_UI
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 3.0-beta.6.
-
-// ReactiveCocoa/no-arc
-#define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_no_arc
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 3.0-beta.6.
-
-// Result
-#define COCOAPODS_POD_AVAILABLE_Result
-#define COCOAPODS_VERSION_MAJOR_Result 0
-#define COCOAPODS_VERSION_MINOR_Result 4
-#define COCOAPODS_VERSION_PATCH_Result 4
-
-// RxSwift
-#define COCOAPODS_POD_AVAILABLE_RxSwift
-#define COCOAPODS_VERSION_MAJOR_RxSwift 1
-#define COCOAPODS_VERSION_MINOR_RxSwift 4
-#define COCOAPODS_VERSION_PATCH_RxSwift 0
+#define COCOAPODS_VERSION_MAJOR_Moya_Core 2
+#define COCOAPODS_VERSION_MINOR_Moya_Core 0
+#define COCOAPODS_VERSION_PATCH_Moya_Core 0
 

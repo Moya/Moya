@@ -138,7 +138,7 @@ public func !=<T: Equatable, C: Equatable>(lhs: Expectation<[T: C]>, rhs: [T: C]
 
 extension NMBObjCMatcher {
     public class func equalMatcher(expected: NSObject) -> NMBMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
             return equal(expected).matches(actualExpression, failureMessage: failureMessage)
         }
     }

@@ -1,1 +1,0 @@
-../../../../ReactiveCocoa/ReactiveCocoa/Objective-C/NSObject+RACSelectorSignal.h

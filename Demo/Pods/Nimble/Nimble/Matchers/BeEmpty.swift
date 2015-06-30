@@ -60,7 +60,8 @@ public func beEmpty() -> NonNilMatcherFunc<NMBCollection> {
 
 extension NMBObjCMatcher {
     public class func beEmptyMatcher() -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
+            let location = actualExpression.location
             let actualValue = actualExpression.evaluate()
             failureMessage.postfixMessage = "be empty"
             if let value = actualValue as? NMBCollection {

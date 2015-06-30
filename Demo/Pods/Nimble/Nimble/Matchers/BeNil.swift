@@ -11,7 +11,7 @@ public func beNil<T>() -> MatcherFunc<T> {
 
 extension NMBObjCMatcher {
     public class func beNilMatcher() -> NMBObjCMatcher {
-        return NMBObjCMatcher { actualExpression, failureMessage, location in
+        return NMBObjCMatcher { actualExpression, failureMessage in
             return beNil().matches(actualExpression, failureMessage: failureMessage)
         }
     }

@@ -1,6 +1,14 @@
 #import <Nimble/DSL.h>
 #import <Nimble/Nimble-Swift.h>
 
+SWIFT_CLASS("_TtC6Nimble7NMBWait")
+@interface NMBWait : NSObject
+
++ (void)untilTimeout:(NSTimeInterval)timeout file:(NSString *)file line:(NSUInteger)line action:(void(^)())action;
++ (void)untilFile:(NSString *)file line:(NSUInteger)line action:(void(^)())action;
+
+@end
+
 NIMBLE_EXPORT NMBExpectation *NMB_expect(id(^actualBlock)(), const char *file, unsigned int line) {
     return [[NMBExpectation alloc] initWithActualBlock:actualBlock
                                               negative:NO
@@ -92,13 +100,13 @@ NIMBLE_EXPORT NMBObjCRaiseExceptionMatcher *NMB_raiseException() {
     return [NMBObjCMatcher raiseExceptionMatcher];
 }
 
-NIMBLE_EXPORT NMBWaitUntilTimeoutBlock nmb_wait_until_timeout_builder(NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBWaitUntilTimeoutBlock NMB_waitUntilTimeoutBuilder(NSString *file, NSUInteger line) {
     return ^(NSTimeInterval timeout, void (^action)(void (^)(void))) {
         [NMBWait untilTimeout:timeout file:file line:line action:action];
     };
 }
 
-NIMBLE_EXPORT NMBWaitUntilBlock nmb_wait_until_builder(NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBWaitUntilBlock NMB_waitUntilBuilder(NSString *file, NSUInteger line) {
   return ^(void (^action)(void (^)(void))) {
     [NMBWait untilFile:file line:line action:action];
   };

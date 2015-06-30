@@ -18,7 +18,7 @@ public func expect<T>(file: String = __FILE__, line: UInt = __LINE__, expression
 
 /// Always fails the test with a message and a specified location.
 public func fail(message: String, #location: SourceLocation) {
-    NimbleAssertionHandler.assert(false, message: message, location: location)
+    NimbleAssertionHandler.assert(false, message: FailureMessage(stringValue: message), location: location)
 }
 
 /// Always fails the test with a message.
@@ -28,5 +28,5 @@ public func fail(message: String, file: String = __FILE__, line: UInt = __LINE__
 
 /// Always fails the test.
 public func fail(file: String = __FILE__, line: UInt = __LINE__) {
-    fail("fail() always fails")
+    fail("fail() always fails", file: file, line: line)
 }

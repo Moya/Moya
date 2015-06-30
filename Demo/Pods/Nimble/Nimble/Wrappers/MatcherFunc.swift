@@ -1,5 +1,13 @@
-import Foundation
-
+/// A convenience API to build matchers that allow full control over
+/// to() and toNot() match cases.
+///
+/// The final bool argument in the closure is if the match is for negation.
+///
+/// You may use this when implementing your own custom matchers.
+///
+/// Use the Matcher protocol instead of this type to accept custom matchers as
+/// input parameters.
+/// @see allPass for an example that uses accepts other matchers as input.
 public struct FullMatcherFunc<T>: Matcher {
     public let matcher: (Expression<T>, FailureMessage, Bool) -> Bool
 
@@ -12,11 +20,22 @@ public struct FullMatcherFunc<T>: Matcher {
     }
 
     public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        return !matcher(actualExpression, failureMessage, true)
+        return matcher(actualExpression, failureMessage, true)
     }
 }
 
-public struct MatcherFunc<T>: BasicMatcher {
+/// A convenience API to build matchers that don't need special negation
+/// behavior. The toNot() behavior is the negation of to().
+///
+/// @see NonNilMatcherFunc if you prefer to have this matcher fail when nil
+///                        values are recieved in an expectation.
+///
+/// You may use this when implementing your own custom matchers.
+///
+/// Use the Matcher protocol instead of this type to accept custom matchers as
+/// input parameters.
+/// @see allPass for an example that uses accepts other matchers as input.
+public struct MatcherFunc<T>: Matcher {
     public let matcher: (Expression<T>, FailureMessage) -> Bool
 
     public init(_ matcher: (Expression<T>, FailureMessage) -> Bool) {
@@ -26,9 +45,24 @@ public struct MatcherFunc<T>: BasicMatcher {
     public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
         return matcher(actualExpression, failureMessage)
     }
+
+    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
+        return !matcher(actualExpression, failureMessage)
+    }
 }
 
-public struct NonNilMatcherFunc<T>: NonNilBasicMatcher {
+/// A convenience API to build matchers that don't need special negation
+/// behavior. The toNot() behavior is the negation of to().
+///
+/// Unlike MatcherFunc, this will always fail if an expectation contains nil.
+/// This applies regardless of using to() or toNot().
+///
+/// You may use this when implementing your own custom matchers.
+///
+/// Use the Matcher protocol instead of this type to accept custom matchers as
+/// input parameters.
+/// @see allPass for an example that uses accepts other matchers as input.
+public struct NonNilMatcherFunc<T>: Matcher {
     public let matcher: (Expression<T>, FailureMessage) -> Bool
 
     public init(_ matcher: (Expression<T>, FailureMessage) -> Bool) {
@@ -36,20 +70,26 @@ public struct NonNilMatcherFunc<T>: NonNilBasicMatcher {
     }
 
     public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        return matcher(actualExpression, failureMessage)
+        let pass = matcher(actualExpression, failureMessage)
+        if attachNilErrorIfNeeded(actualExpression, failureMessage: failureMessage) {
+            return false
+        }
+        return pass
     }
-}
 
-public func fullMatcherFromBasicMatcher<M: BasicMatcher>(matcher: M) -> FullMatcherFunc<M.ValueType> {
-    return FullMatcherFunc { actualExpression, failureMessage, expectingToNotMatch in
-        return matcher.matches(actualExpression, failureMessage: failureMessage) != expectingToNotMatch
+    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
+        let pass = !matcher(actualExpression, failureMessage)
+        if attachNilErrorIfNeeded(actualExpression, failureMessage: failureMessage) {
+            return false
+        }
+        return pass
     }
-}
 
-public func basicMatcherWithFailureMessage<M: NonNilBasicMatcher>(matcher: M, postprocessor: (FailureMessage) -> Void) -> NonNilMatcherFunc<M.ValueType> {
-    return NonNilMatcherFunc<M.ValueType> { actualExpression, failureMessage in
-        let result = matcher.matches(actualExpression, failureMessage: failureMessage)
-        postprocessor(failureMessage)
-        return result
+    internal func attachNilErrorIfNeeded(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
+        if actualExpression.evaluate() == nil {
+            failureMessage.postfixActual = " (use beNil() to match nils)"
+            return true
+        }
+        return false
     }
 }

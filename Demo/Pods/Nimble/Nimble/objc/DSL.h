@@ -106,11 +106,11 @@ NIMBLE_SHORT(id<NMBMatcher> allPass(id matcher),
 typedef void (^NMBWaitUntilTimeoutBlock)(NSTimeInterval timeout, void (^action)(void (^)(void)));
 typedef void (^NMBWaitUntilBlock)(void (^action)(void (^)(void)));
 
-NIMBLE_EXPORT NMBWaitUntilTimeoutBlock nmb_wait_until_timeout_builder(NSString *file, NSUInteger line);
-NIMBLE_EXPORT NMBWaitUntilBlock nmb_wait_until_builder(NSString *file, NSUInteger line);
+NIMBLE_EXPORT NMBWaitUntilTimeoutBlock NMB_waitUntilTimeoutBuilder(NSString *file, NSUInteger line);
+NIMBLE_EXPORT NMBWaitUntilBlock NMB_waitUntilBuilder(NSString *file, NSUInteger line);
 
-#define NMB_waitUntilTimeout nmb_wait_until_timeout_builder(@(__FILE__), __LINE__)
-#define NMB_waitUntil nmb_wait_until_builder(@(__FILE__), __LINE__)
+#define NMB_waitUntilTimeout NMB_waitUntilTimeoutBuilder(@(__FILE__), __LINE__)
+#define NMB_waitUntil NMB_waitUntilBuilder(@(__FILE__), __LINE__)
 
 #ifndef NIMBLE_DISABLE_SHORT_SYNTAX
 #define expect(...) NMB_expect(^id{ return (__VA_ARGS__); }, __FILE__, __LINE__)

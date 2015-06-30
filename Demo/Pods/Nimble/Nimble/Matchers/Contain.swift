@@ -54,7 +54,8 @@ public func contain(items: AnyObject?...) -> NonNilMatcherFunc<NMBContainer> {
 
 extension NMBObjCMatcher {
     public class func containMatcher(expected: NSObject?) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
+            let location = actualExpression.location
             let actualValue = actualExpression.evaluate()
             if let value = actualValue as? NMBContainer {
                 let expr = Expression(expression: ({ value as NMBContainer }), location: location)
