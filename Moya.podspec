@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Moya"
-  s.version      = "1.1.1"
+  s.version      = "2.0.0"
   s.summary      = "Network abstraction layer written in Swift"
   s.description  = <<-EOS
   Moya abstracts network commands using Swift Generics to provide developers
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Moya/*.swift"
-    ss.dependency "Alamofire", "~> 1.2.0"
+    ss.dependency "Alamofire"
     ss.framework  = "Foundation"
   end
 
@@ -38,6 +38,6 @@ Pod::Spec.new do |s|
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Moya/RxSwift/*.swift"
     ss.dependency "Moya/ReactiveCore"
-    ss.dependency "RxSwift", "~> 1.7"
+    ss.dependency "RxSwift"
   end
 end
