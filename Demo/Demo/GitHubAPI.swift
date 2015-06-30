@@ -50,12 +50,12 @@ extension GitHub : MoyaTarget {
             return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
         case .UserProfile(let name):
             return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserRepositories(let name):
+        case .UserRepositories(_):
             return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
         }
     }
 }
 
 public func url(route: MoyaTarget) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString!
+    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }

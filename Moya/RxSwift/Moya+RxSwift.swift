@@ -22,7 +22,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
 
             let observable: Observable<MoyaResponse> =  AnonymousObservable { observer in
-                let cancellableToken = self!.request(token) { (data, statusCode, response, error) -> () in
+                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
                     if let error = error {
                         if let statusCode = statusCode {
                             observer.on(.Error(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo)))
