@@ -1,6 +1,6 @@
 import Foundation
 
-let DefaultDelta = 0.0001
+internal let DefaultDelta = 0.0001
 
 internal func isCloseTo(actualValue: Double?, expectedValue: Double, delta: Double, failureMessage: FailureMessage) -> Bool {
     failureMessage.postfixMessage = "be close to <\(stringify(expectedValue))> (within \(stringify(delta)))"
@@ -45,7 +45,7 @@ public func beCloseTo(expectedValue: NMBDoubleConvertible, within delta: Double 
             return actualExpression() as? NMBDoubleConvertible
         })
         let expr = Expression(expression: actualBlock, location: location)
-        let matcher = NonNilMatcherWrapper(NonNilBasicMatcherWrapper(beCloseTo(self._expected, within: self._delta)))
+        let matcher = beCloseTo(self._expected, within: self._delta)
         return matcher.matches(expr, failureMessage: failureMessage)
     }
 
@@ -54,7 +54,7 @@ public func beCloseTo(expectedValue: NMBDoubleConvertible, within delta: Double 
             return actualExpression() as? NMBDoubleConvertible
         })
         let expr = Expression(expression: actualBlock, location: location)
-        let matcher = NonNilMatcherWrapper(NonNilBasicMatcherWrapper(beCloseTo(self._expected, within: self._delta)))
+        let matcher = beCloseTo(self._expected, within: self._delta)
         return matcher.doesNotMatch(expr, failureMessage: failureMessage)
     }
 

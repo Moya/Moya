@@ -1,6 +1,6 @@
 import Foundation
 
-struct AsyncMatcherWrapper<T, U where U: Matcher, U.ValueType == T>: Matcher {
+internal struct AsyncMatcherWrapper<T, U where U: Matcher, U.ValueType == T>: Matcher {
     let fullMatcher: U
     let timeoutInterval: NSTimeInterval
     let pollInterval: NSTimeInterval
@@ -40,75 +40,51 @@ struct AsyncMatcherWrapper<T, U where U: Matcher, U.ValueType == T>: Matcher {
     }
 }
 
-private let toEventuallyRequiresClosureError = "expect(...).toEventually(...) requires an explicit closure (eg - expect { ... }.toEventually(...) )\nSwift 1.2 @autoclosure behavior has changed in an incompatible way for Nimble to function"
+private let toEventuallyRequiresClosureError = FailureMessage(stringValue: "expect(...).toEventually(...) requires an explicit closure (eg - expect { ... }.toEventually(...) )\nSwift 1.2 @autoclosure behavior has changed in an incompatible way for Nimble to function")
 
 
 extension Expectation {
+    /// Tests the actual value using a matcher to match by checking continuously
+    /// at each pollInterval until the timeout is reached.
     public func toEventually<U where U: Matcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.01) {
         if expression.isClosure {
-            to(AsyncMatcherWrapper(
-                fullMatcher: FullMatcherWrapper(
-                    matcher: matcher,
-                    to: "to eventually",
-                    toNot: "to eventually not"),
-                timeoutInterval: timeout,
-                pollInterval: pollInterval))
+            let (pass, msg) = expressionMatches(
+                expression,
+                AsyncMatcherWrapper(
+                    fullMatcher: matcher,
+                    timeoutInterval: timeout,
+                    pollInterval: pollInterval),
+                to: "to eventually"
+            )
+            verify(pass, msg)
         } else {
             verify(false, toEventuallyRequiresClosureError)
         }
     }
 
+    /// Tests the actual value using a matcher to not match by checking
+    /// continuously at each pollInterval until the timeout is reached.
     public func toEventuallyNot<U where U: Matcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.01) {
         if expression.isClosure {
-            toNot(AsyncMatcherWrapper(
-                fullMatcher: FullMatcherWrapper(
-                    matcher: matcher,
-                    to: "to eventually",
-                    toNot: "to eventually not"),
-                timeoutInterval: timeout,
-                pollInterval: pollInterval))
+            let (pass, msg) = expressionDoesNotMatch(
+                expression,
+                AsyncMatcherWrapper(
+                    fullMatcher: matcher,
+                    timeoutInterval: timeout,
+                    pollInterval: pollInterval),
+                toNot: "to eventually not"
+            )
+            verify(pass, msg)
         } else {
             verify(false, toEventuallyRequiresClosureError)
         }
     }
 
-    public func toEventually<U where U: BasicMatcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.01) {
-        toEventually(
-            FullMatcherWrapper(
-                matcher: BasicMatcherWrapper(matcher: matcher),
-                to: "to eventually",
-                toNot: "to eventually not"),
-            timeout: timeout,
-            pollInterval: pollInterval)
-    }
-
-    public func toEventuallyNot<U where U: BasicMatcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.01) {
-        toEventuallyNot(
-            FullMatcherWrapper(
-                matcher: BasicMatcherWrapper(matcher: matcher),
-                to: "to eventually",
-                toNot: "to eventually not"),
-            timeout: timeout,
-            pollInterval: pollInterval)
-    }
-
-    public func toEventually<U where U: NonNilBasicMatcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.1) {
-        toEventually(
-            FullMatcherWrapper(
-                matcher: NonNilMatcherWrapper(NonNilBasicMatcherWrapper(matcher)),
-                to: "to eventually",
-                toNot: "to eventually not"),
-            timeout: timeout,
-            pollInterval: pollInterval)
-    }
-
-    public func toEventuallyNot<U where U: NonNilBasicMatcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.1) {
-        toEventuallyNot(
-            FullMatcherWrapper(
-                matcher: NonNilMatcherWrapper(NonNilBasicMatcherWrapper(matcher)),
-                to: "to eventually",
-                toNot: "to eventually not"),
-            timeout: timeout,
-            pollInterval: pollInterval)
+    /// Tests the actual value using a matcher to not match by checking
+    /// continuously at each pollInterval until the timeout is reached.
+    ///
+    /// Alias of toEventuallyNot()
+    public func toNotEventually<U where U: Matcher, U.ValueType == T>(matcher: U, timeout: NSTimeInterval = 1, pollInterval: NSTimeInterval = 0.01) {
+        return toEventuallyNot(matcher, timeout: timeout, pollInterval: pollInterval)
     }
 }

@@ -27,16 +27,16 @@ extension Request {
     /**
         A closure used to validate a request that takes a URL request and URL response, and returns whether the request was valid.
     */
-    public typealias Validation = (NSURLRequest, NSHTTPURLResponse) -> Bool
+    public typealias Validation = (NSURLRequest?, NSHTTPURLResponse) -> Bool
 
     /**
         Validates the request, using the specified closure.
 
         If validation fails, subsequent calls to response handlers will have an associated error.
 
-        :param: validation A closure to validate the request.
+        - parameter validation: A closure to validate the request.
 
-        :returns: The request.
+        - returns: The request.
     */
     public func validate(validation: Validation) -> Self {
         delegate.queue.addOperationWithBlock {
@@ -55,13 +55,13 @@ extension Request {
 
         If validation fails, subsequent calls to response handlers will have an associated error.
 
-        :param: range The range of acceptable status codes.
+        - parameter range: The range of acceptable status codes.
 
-        :returns: The request.
+        - returns: The request.
     */
     public func validate<S: SequenceType where S.Generator.Element == Int>(statusCode acceptableStatusCode: S) -> Self {
         return validate { _, response in
-            return contains(acceptableStatusCode, response.statusCode)
+            return acceptableStatusCode.contains(response.statusCode)
         }
     }
 
@@ -102,9 +102,9 @@ extension Request {
 
         If validation fails, subsequent calls to response handlers will have an associated error.
 
-        :param: contentType The acceptable content types, which may specify wildcard types and/or subtypes.
+        - parameter contentType: The acceptable content types, which may specify wildcard types and/or subtypes.
 
-        :returns: The request.
+        - returns: The request.
     */
     public func validate<S : SequenceType where S.Generator.Element == String>(contentType acceptableContentTypes: S) -> Self {
         return validate { _, response in
@@ -136,12 +136,12 @@ extension Request {
 
         If validation fails, subsequent calls to response handlers will have an associated error.
 
-        :returns: The request.
+        - returns: The request.
     */
     public func validate() -> Self {
         let acceptableStatusCodes: Range<Int> = 200..<300
         let acceptableContentTypes: [String] = {
-            if let accept = self.request.valueForHTTPHeaderField("Accept") {
+            if let accept = self.request?.valueForHTTPHeaderField("Accept") {
                 return accept.componentsSeparatedByString(",")
             }
 

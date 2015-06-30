@@ -31,7 +31,7 @@ public func >=<T: NMBComparable>(lhs: Expectation<T>, rhs: T) {
 
 extension NMBObjCMatcher {
     public class func beGreaterThanOrEqualToMatcher(expected: NMBComparable?) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
             let expr = actualExpression.cast { $0 as? NMBComparable }
             return beGreaterThanOrEqualTo(expected).matches(expr, failureMessage: failureMessage)
         }

@@ -73,7 +73,7 @@ public func describe(description: String, flags: FilterFlags = [:], closure: () 
     Defines an example group. Equivalent to `describe`.
 */
 public func context(description: String, flags: FilterFlags = [:], closure: () -> ()) {
-    describe(description, flags: flags, closure)
+    describe(description, flags: flags, closure: closure)
 }
 
 /**
@@ -82,7 +82,7 @@ public func context(description: String, flags: FilterFlags = [:], closure: () -
     An example group may contain an unlimited number of beforeEach. They'll be
     run in the order they're defined, but you shouldn't rely on that behavior.
 
-    :param: closure The closure to be run prior to each example.
+    - parameter closure: The closure to be run prior to each example.
 */
 public func beforeEach(closure: BeforeExampleClosure) {
     World.sharedWorld().beforeEach(closure)
@@ -92,7 +92,7 @@ public func beforeEach(closure: BeforeExampleClosure) {
     Identical to Quick.DSL.beforeEach, except the closure is provided with
     metadata on the example that the closure is being run prior to.
 */
-public func beforeEach(#closure: BeforeExampleWithMetadataClosure) {
+public func beforeEach(closure closure: BeforeExampleWithMetadataClosure) {
     World.sharedWorld().beforeEach(closure: closure)
 }
 
@@ -112,7 +112,7 @@ public func afterEach(closure: AfterExampleClosure) {
     Identical to Quick.DSL.afterEach, except the closure is provided with
     metadata on the example that the closure is being run after.
 */
-public func afterEach(#closure: AfterExampleWithMetadataClosure) {
+public func afterEach(closure closure: AfterExampleWithMetadataClosure) {
     World.sharedWorld().afterEach(closure: closure)
 }
 
@@ -144,7 +144,7 @@ public func it(description: String, flags: FilterFlags = [:], file: String = __F
     :param: line The line containing the current example group. A sensible default is provided.
 */
 public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__) {
-    itBehavesLike(name, flags: flags, file: file, line: line, { return [:] })
+    itBehavesLike(name, flags: flags, file: file, line: line, sharedExampleContext: { return [:] })
 }
 
 /**
@@ -191,7 +191,7 @@ public func xdescribe(description: String, flags: FilterFlags, closure: () -> ()
     This disables all examples within the closure.
 */
 public func xcontext(description: String, flags: FilterFlags, closure: () -> ()) {
-    xdescribe(description, flags, closure)
+    xdescribe(description, flags: flags, closure: closure)
 }
 
 /**
@@ -215,7 +215,7 @@ public func fdescribe(description: String, flags: FilterFlags = [:], closure: ()
     Use this to quickly focus a `context` closure. Equivalent to `fdescribe`.
 */
 public func fcontext(description: String, flags: FilterFlags = [:], closure: () -> ()) {
-    fdescribe(description, flags: flags, closure)
+    fdescribe(description, flags: flags, closure: closure)
 }
 
 /**

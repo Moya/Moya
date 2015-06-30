@@ -1,1 +1,0 @@
-../../../ReactiveCocoa/ReactiveCocoa/Objective-C/UISwitch+RACSignalSupport.h

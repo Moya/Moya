@@ -15,7 +15,7 @@ internal func arrayAsString<T>(items: [T], joiner: String = ", ") -> String {
     }
 }
 
-@objc protocol NMBStringer {
+@objc internal protocol NMBStringer {
     func NMB_stringify() -> String
 }
 

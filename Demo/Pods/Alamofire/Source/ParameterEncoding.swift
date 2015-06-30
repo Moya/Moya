@@ -1,4 +1,4 @@
-// ParameterEncoding.swift
+// Alamofire.swift
 //
 // Copyright (c) 2014–2015 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -63,35 +63,34 @@ public enum ParameterEncoding {
     /**
         Uses the associated closure value to construct a new request given an existing request and parameters.
     */
-    case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
+    case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSURLRequest, NSError?))
 
     /**
         Creates a URL request by encoding parameters and applying them onto an existing request.
 
-        :param: URLRequest The request to have parameters applied
-        :param: parameters The parameters to apply
+        - parameter URLRequest: The request to have parameters applied
+        - parameter parameters: The parameters to apply
 
-        :returns: A tuple containing the constructed request and the error that occurred during parameter encoding, if any.
+        - returns: A tuple containing the constructed request and the error that occurred during parameter encoding, if any.
     */
-    public func encode(URLRequest: URLRequestConvertible, parameters: [String: AnyObject]?) -> (NSMutableURLRequest, NSError?) {
-        var mutableURLRequest: NSMutableURLRequest = URLRequest.URLRequest.mutableCopy() as! NSMutableURLRequest
-
+    public func encode(URLRequest: URLRequestConvertible, parameters: [String: AnyObject]?) -> (NSURLRequest, NSError?) {
         if parameters == nil {
-            return (mutableURLRequest, nil)
+            return (URLRequest.URLRequest, nil)
         }
 
-        var error: NSError? = nil
+        var mutableURLRequest: NSMutableURLRequest! = URLRequest.URLRequest.mutableCopy() as! NSMutableURLRequest
+        var encodingError: NSError? = nil
 
         switch self {
         case .URL:
             func query(parameters: [String: AnyObject]) -> String {
                 var components: [(String, String)] = []
-                for key in sorted(Array(parameters.keys), <) {
+                for key in Array(parameters.keys).sort(<) {
                     let value: AnyObject! = parameters[key]
-                    components += queryComponents(key, value)
+                    components += self.queryComponents(key, value)
                 }
 
-                return join("&", components.map { "\($0)=\($1)" } as [String])
+                return "&".join(components.map{"\($0)=\($1)"} as [String])
             }
 
             func encodesParametersInURL(method: Method) -> Bool {
@@ -103,9 +102,10 @@ public enum ParameterEncoding {
                 }
             }
 
-            if let method = Method(rawValue: mutableURLRequest.HTTPMethod) where encodesParametersInURL(method) {
+            let method = Method(rawValue: mutableURLRequest.HTTPMethod)
+            if method != nil && encodesParametersInURL(method!) {
                 if let URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false) {
-                    URLComponents.percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters!)
+                    URLComponents.percentEncodedQuery = (URLComponents.percentEncodedQuery != nil ? URLComponents.percentEncodedQuery! + "&" : "") + query(parameters!)
                     mutableURLRequest.URL = URLComponents.URL
                 }
             } else {
@@ -116,22 +116,27 @@ public enum ParameterEncoding {
                 mutableURLRequest.HTTPBody = query(parameters!).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
             }
         case .JSON:
-            let options = NSJSONWritingOptions.allZeros
-
-            if let data = NSJSONSerialization.dataWithJSONObject(parameters!, options: options, error: &error) {
+            do {
+                let options = NSJSONWritingOptions()
+                let data = try NSJSONSerialization.dataWithJSONObject(parameters!, options: options)
                 mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 mutableURLRequest.HTTPBody = data
+            } catch {
+                encodingError = error as NSError
             }
         case .PropertyList(let (format, options)):
-            if let data = NSPropertyListSerialization.dataWithPropertyList(parameters!, format: format, options: options, error: &error) {
+            do {
+                let data = try NSPropertyListSerialization.dataWithPropertyList(parameters!, format: format, options: options)
                 mutableURLRequest.setValue("application/x-plist", forHTTPHeaderField: "Content-Type")
                 mutableURLRequest.HTTPBody = data
+            } catch {
+                encodingError = error as NSError
             }
         case .Custom(let closure):
-            (mutableURLRequest, error) = closure(mutableURLRequest, parameters)
+            return closure(mutableURLRequest, parameters)
         }
 
-        return (mutableURLRequest, error)
+        return (mutableURLRequest, encodingError)
     }
 
     func queryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
@@ -145,7 +150,7 @@ public enum ParameterEncoding {
                 components += queryComponents("\(key)[]", value)
             }
         } else {
-            components.append((escape(key), escape("\(value)")))
+            components.extend([(escape(key), escape("\(value)"))])
         }
 
         return components
@@ -179,9 +184,9 @@ public enum ParameterEncoding {
         query strings to include a URL. Therefore, all "reserved" characters with the exception of "?" and "/"
         should be percent escaped in the query string.
 
-        :param: string The string to be percent escaped.
+        - parameter string: The string to be percent escaped.
 
-        :returns: The percent escaped string.
+        - returns: The percent escaped string.
     */
     func escape(string: String) -> String {
         let generalDelimiters = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4

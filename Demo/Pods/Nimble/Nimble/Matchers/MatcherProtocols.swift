@@ -1,44 +1,13 @@
 import Foundation
 
-
-/// Implement this protocol if you want full control over to() and toNot() behaviors
-/// when matching a value.
+/// Implement this protocol to implement a custom matcher for Swift
 public protocol Matcher {
     typealias ValueType
     func matches(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) -> Bool
     func doesNotMatch(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) -> Bool
 }
 
-/// Implement this protocol if you just want a simplier matcher. The negation
-/// is provided for you automatically.
-///
-/// If you just want a very simplified usage of BasicMatcher,
-/// @see MatcherFunc.
-public protocol BasicMatcher {
-    typealias ValueType
-    func matches(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) -> Bool
-}
-
-
-/// Implement this protocol if you want a matcher only work for non-nil values.
-/// The matcher still needs to properly handle nil values, but using this type will
-/// tell Nimble to automatically postfix a nil match error (and automatically fail the match).
-///
-/// Unlike a naive implementation of the matches interface, NonNilBasicMatcher will also
-/// fail for the negation to a nil:
-///
-///   // objc
-///   expect(nil).to(matchWithMyCustomNonNilBasicMatcher()) // => fails
-///   expect(nil).toNot(matchWithMyCustomNonNilBasicMatcher()) // => fails
-///
-/// @see BasicMatcher
-public protocol NonNilBasicMatcher {
-    typealias ValueType
-    func matches(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) -> Bool
-}
-
-/// Objective-C interface to the Swift variant of Matcher. This gives you full control over
-/// to() and toNot() behaviors when matching a value.
+/// Objective-C interface to the Swift variant of Matcher.
 @objc public protocol NMBMatcher {
     func matches(actualBlock: () -> NSObject!, failureMessage: FailureMessage, location: SourceLocation) -> Bool
     func doesNotMatch(actualBlock: () -> NSObject!, failureMessage: FailureMessage, location: SourceLocation) -> Bool

@@ -135,7 +135,7 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
         // 1. Grab all included examples.
         let included = includedExamples
         // 2. Grab the intersection of (a) examples for this spec, and (b) included examples.
-        let spec = rootExampleGroupForSpecClass(specClass).examples.filter { contains(included, $0) }
+        let spec = rootExampleGroupForSpecClass(specClass).examples.filter { included.contains($0) }
         // 3. Remove all excluded examples.
         return spec.filter { example in
             !self.configuration.exclusionFilters.reduce(false) { $0 || $1(example: example) }
