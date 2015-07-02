@@ -67,8 +67,7 @@ lines to your Podfile:
 pod 'Moya'
 
 # Include the following only if you want to use ReactiveCocoa extensions with Moya
-pod 'ReactiveCocoa', '3.0-beta.6'
-pod 'Moya/Reactive'
+pod 'Moya/ReactiveCocoa'
 ```
 
 Then run `pod install`. 
