@@ -25,15 +25,15 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                 let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
                     if let error = error {
                         if let statusCode = statusCode {
-                            observer.on(.Error(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo)))
+                            sendError(observer, NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
                         } else {
-                            observer.on(.Error(error))
+                            sendError(observer, error)
                         }
                     } else {
                         if let data = data {
-                            observer.on(.Next(RxBox(MoyaResponse(statusCode: statusCode!, data: data, response: response))))
+                            sendNext(observer, MoyaResponse(statusCode: statusCode!, data: data, response: response))
                         }
-                        observer.on(.Completed)
+                        sendCompleted(observer)
                     }
                 }
 
@@ -46,7 +46,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     }
                 }
             }
-            
+
             if let weakSelf = self {
                 objc_sync_enter(weakSelf)
                 weakSelf.inflightRequests[endpoint] = observable
