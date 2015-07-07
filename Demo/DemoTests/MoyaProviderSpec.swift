@@ -269,7 +269,7 @@ class MoyaProviderSpec: QuickSpec {
                         expect(receivedResponse).toNot(beNil())
                     }
                     
-                    it("returns identical signals for inflight requests") {
+                    it("returns identical observables for inflight requests") {
                         let target: GitHub = .Zen
 
                         var response: MoyaResponse!
