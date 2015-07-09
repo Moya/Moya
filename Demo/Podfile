@@ -6,7 +6,7 @@ use_frameworks!
 
 #pod 'ReactiveCocoa', :git => "https://github.com/reactivecocoa/reactivecocoa.git", :branch => "swift2"
 pod 'RxSwift', :git => "https://github.com/kzaher/RxSwift.git", :branch => "feature/swift2.0"
-pod 'Alamofire', :path => "../../Alamofire/"
+pod 'Alamofire', :git => "https://github.com/Alamofire/Alamofire", :branch => "swift-2.0"
 
 pod 'Moya/RxSwift', :path => "../"
 #pod 'Moya/ReactiveCocoa', :path => "../"
