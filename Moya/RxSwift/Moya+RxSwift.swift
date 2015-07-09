@@ -16,13 +16,13 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public func request(token: T) -> Observable<MoyaResponse> {
         let endpoint = self.endpoint(token)
 
-        return defer {  [weak self] () -> Observable<MoyaResponse> in
-            if let existingObservable = self?.inflightRequests[endpoint] {
+        return { [weak self] () -> Observable<MoyaResponse> in
+            if let existingObservable = self!.inflightRequests[endpoint] {
                 return existingObservable
             }
 
             let observable: Observable<MoyaResponse> =  AnonymousObservable { observer in
-                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
+                let cancellableToken = self!.request(token) { (data, statusCode, response, error) -> () in
                     if let error = error {
                         if let statusCode = statusCode {
                             observer.on(.Error(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo)))
@@ -31,7 +31,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                         }
                     } else {
                         if let data = data {
-                            observer.on(.Next(RxBox(MoyaResponse(statusCode: statusCode!, data: data, response: response))))
+                            observer.on(.Next(MoyaResponse(statusCode: statusCode!, data: data, response: response)))
                         }
                         observer.on(.Completed)
                     }
@@ -41,7 +41,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     if let weakSelf = self {
                         objc_sync_enter(weakSelf)
                         weakSelf.inflightRequests[endpoint] = nil
-                        cancellableToken?.cancel()
+                        cancellableToken.cancel()
                         objc_sync_exit(weakSelf)
                     }
                 }
@@ -54,6 +54,6 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
 
             return observable
-        }
+        }()
     }
 }
