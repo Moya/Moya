@@ -16,29 +16,24 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public func request(token: T) -> Observable<MoyaResponse> {
         let endpoint = self.endpoint(token)
 
-        return defer {  [weak self] () -> Observable<MoyaResponse> in
-            if let weakSelf = self {
-                objc_sync_enter(weakSelf)
-                let inFlight = weakSelf.inflightRequests[endpoint]
-                objc_sync_exit(weakSelf)
-                if let existingObservable = inFlight {
-                    return existingObservable
-                }
+        return { [weak self] () -> Observable<MoyaResponse> in
+            if let existingObservable = self!.inflightRequests[endpoint] {
+                return existingObservable
             }
 
-            let observable: Observable<MoyaResponse> = create { observer in
-                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
+            let observable: Observable<MoyaResponse> =  AnonymousObservable { observer in
+                let cancellableToken = self!.request(token) { (data, statusCode, response, error) -> () in
                     if let error = error {
                         if let statusCode = statusCode {
-                            sendError(observer, NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
+                            observer.on(.Error(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo)))
                         } else {
-                            sendError(observer, error)
+                            observer.on(.Error(error))
                         }
                     } else {
                         if let data = data {
-                            sendNext(observer, MoyaResponse(statusCode: statusCode!, data: data, response: response))
+                            observer.on(.Next(MoyaResponse(statusCode: statusCode!, data: data, response: response)))
                         }
-                        sendCompleted(observer)
+                        observer.on(.Completed)
                     }
                 }
 
@@ -46,12 +41,12 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     if let weakSelf = self {
                         objc_sync_enter(weakSelf)
                         weakSelf.inflightRequests[endpoint] = nil
-                        cancellableToken?.cancel()
+                        cancellableToken.cancel()
                         objc_sync_exit(weakSelf)
                     }
                 }
-            } >- variable
-
+            }
+            
             if let weakSelf = self {
                 objc_sync_enter(weakSelf)
                 weakSelf.inflightRequests[endpoint] = observable
@@ -59,6 +54,6 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
 
             return observable
-        }
+        }()
     }
 }

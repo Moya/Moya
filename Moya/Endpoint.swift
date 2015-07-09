@@ -24,10 +24,10 @@ public class Endpoint<T> {
     public let sampleResponse: EndpointSampleResponse
     public let parameters: [String: AnyObject]
     public let parameterEncoding: Moya.ParameterEncoding
-    public let httpHeaderFields: [String: AnyObject]
+    public let httpHeaderFields: [String: String]
     
     /// Main initializer for Endpoint.
-    public init(URL: String, sampleResponse: EndpointSampleResponse, method: Moya.Method = Moya.Method.GET, parameters: [String: AnyObject] = [String: AnyObject](), parameterEncoding: Moya.ParameterEncoding = .URL, httpHeaderFields: [String: AnyObject] = [String: AnyObject]()) {
+    public init(URL: String, sampleResponse: EndpointSampleResponse, method: Moya.Method = Moya.Method.GET, parameters: [String: AnyObject] = [String: AnyObject](), parameterEncoding: Moya.ParameterEncoding = .URL, httpHeaderFields: [String: String] = [String: String]()) {
         self.URL = URL
         self.sampleResponse = sampleResponse
         self.method = method
@@ -47,8 +47,8 @@ public class Endpoint<T> {
     }
     
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
-    public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: AnyObject]) -> Endpoint<T> {
-        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: AnyObject]()
+    public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<T> {
+        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
         for (key, value) in httpHeaderFields {
             newHTTPHeaderFields[key] = value
         }
@@ -60,9 +60,10 @@ public class Endpoint<T> {
 /// Extension for converting an extension into an NSURLRequest.
 extension Endpoint {
     public var urlRequest: NSURLRequest {
-        var request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
         request.HTTPMethod = method.method().rawValue
         request.allHTTPHeaderFields = httpHeaderFields
+        httpHeaderFields
         return parameterEncoding.parameterEncoding().encode(request, parameters: parameters).0
     }
 }
