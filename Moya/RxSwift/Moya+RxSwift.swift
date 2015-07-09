@@ -41,7 +41,7 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     if let weakSelf = self {
                         objc_sync_enter(weakSelf)
                         weakSelf.inflightRequests[endpoint] = nil
-                        cancellableToken.cancel()
+                        cancellableToken?.cancel()
                         objc_sync_exit(weakSelf)
                     }
                 }
