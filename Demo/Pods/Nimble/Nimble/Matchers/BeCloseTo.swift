@@ -18,7 +18,7 @@ internal func isCloseTo(actualValue: Double?, expectedValue: Double, delta: Doub
 /// @see equal
 public func beCloseTo(expectedValue: Double, within delta: Double = DefaultDelta) -> NonNilMatcherFunc<Double> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
-        return isCloseTo(actualExpression.evaluate(), expectedValue, delta, failureMessage)
+        return isCloseTo(actualExpression.evaluate(), expectedValue: expectedValue, delta: delta, failureMessage: failureMessage)
     }
 }
 
@@ -28,7 +28,7 @@ public func beCloseTo(expectedValue: Double, within delta: Double = DefaultDelta
 /// @see equal
 public func beCloseTo(expectedValue: NMBDoubleConvertible, within delta: Double = DefaultDelta) -> NonNilMatcherFunc<NMBDoubleConvertible> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
-        return isCloseTo(actualExpression.evaluate()?.doubleValue, expectedValue.doubleValue, delta, failureMessage)
+        return isCloseTo(actualExpression.evaluate()?.doubleValue, expectedValue: expectedValue.doubleValue, delta: delta, failureMessage: failureMessage)
     }
 }
 
@@ -78,7 +78,7 @@ public func beCloseTo(expectedValues: [Double], within delta: Double = DefaultDe
             if actual.count != expectedValues.count {
                 return false
             } else {
-                for (index, actualItem) in enumerate(actual) {
+                for (index, actualItem) in actual.enumerate() {
                     if fabs(actualItem - expectedValues[index]) > delta {
                         return false
                     }

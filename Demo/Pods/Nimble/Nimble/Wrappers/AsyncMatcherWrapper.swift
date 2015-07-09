@@ -50,7 +50,7 @@ extension Expectation {
         if expression.isClosure {
             let (pass, msg) = expressionMatches(
                 expression,
-                AsyncMatcherWrapper(
+                matcher: AsyncMatcherWrapper(
                     fullMatcher: matcher,
                     timeoutInterval: timeout,
                     pollInterval: pollInterval),
@@ -68,7 +68,7 @@ extension Expectation {
         if expression.isClosure {
             let (pass, msg) = expressionDoesNotMatch(
                 expression,
-                AsyncMatcherWrapper(
+                matcher: AsyncMatcherWrapper(
                     fullMatcher: matcher,
                     timeoutInterval: timeout,
                     pollInterval: pollInterval),

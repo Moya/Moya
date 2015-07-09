@@ -24,9 +24,21 @@
 #define COCOAPODS_VERSION_MINOR_Moya_Core 0
 #define COCOAPODS_VERSION_PATCH_Moya_Core 0
 
+// Moya/ReactiveCore
+#define COCOAPODS_POD_AVAILABLE_Moya_ReactiveCore
+#define COCOAPODS_VERSION_MAJOR_Moya_ReactiveCore 2
+#define COCOAPODS_VERSION_MINOR_Moya_ReactiveCore 0
+#define COCOAPODS_VERSION_PATCH_Moya_ReactiveCore 0
+
+// Moya/RxSwift
+#define COCOAPODS_POD_AVAILABLE_Moya_RxSwift
+#define COCOAPODS_VERSION_MAJOR_Moya_RxSwift 2
+#define COCOAPODS_VERSION_MINOR_Moya_RxSwift 0
+#define COCOAPODS_VERSION_PATCH_Moya_RxSwift 0
+
 // Nimble
 #define COCOAPODS_POD_AVAILABLE_Nimble
-#define COCOAPODS_VERSION_MAJOR_Nimble 1
+#define COCOAPODS_VERSION_MAJOR_Nimble 2
 #define COCOAPODS_VERSION_MINOR_Nimble 0
 #define COCOAPODS_VERSION_PATCH_Nimble 0
 
@@ -41,4 +53,10 @@
 #define COCOAPODS_VERSION_MAJOR_Quick 0
 #define COCOAPODS_VERSION_MINOR_Quick 4
 #define COCOAPODS_VERSION_PATCH_Quick 0
+
+// RxSwift
+#define COCOAPODS_POD_AVAILABLE_RxSwift
+#define COCOAPODS_VERSION_MAJOR_RxSwift 1
+#define COCOAPODS_VERSION_MINOR_RxSwift 7
+#define COCOAPODS_VERSION_PATCH_RxSwift 0
 

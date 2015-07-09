@@ -1,7 +1,7 @@
 #import "QuickSpec.h"
 #import "QuickConfiguration.h"
 #import "NSString+QCKSelectorName.h"
-#import <Quick/Quick-Swift.h>
+#import "World.h"
 #import <objc/runtime.h>
 
 const void * const QCKExampleKey = &QCKExampleKey;

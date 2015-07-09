@@ -5,17 +5,17 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 #pod 'ReactiveCocoa', :git => "https://github.com/reactivecocoa/reactivecocoa.git", :branch => "swift2"
-#pod 'RxSwift', :git => "https://github.com/kzaher/RxSwift.git", :branch => "feature/swift2.0"
+pod 'RxSwift', :git => "https://github.com/kzaher/RxSwift.git", :branch => "feature/swift2.0"
 pod 'Alamofire', :path => "../../Alamofire/"
 
-#pod 'Moya/RxSwift', :path => "../"
+pod 'Moya/RxSwift', :path => "../"
 #pod 'Moya/ReactiveCocoa', :path => "../"
 pod 'Moya', :path => "../"
 
 target 'DemoTests' do
 
-  pod 'Quick'
-  pod 'Nimble'
+  pod 'Quick', :git => 'https://github.com/Quick/Quick', :branch => 'swift-2.0'
+  pod 'Nimble', :git => 'https://github.com/Quick/Nimble', :branch => 'swift-2.0'
   pod 'OHHTTPStubs'
 
 end

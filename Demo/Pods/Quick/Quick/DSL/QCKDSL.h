@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+@class ExampleMetadata;
+
 /**
  Provides a hook for Quick to be configured before any examples are run.
  Within this scope, override the +[QuickConfiguration configure:] method
@@ -46,6 +48,7 @@
 typedef NSDictionary *(^QCKDSLSharedExampleContext)(void);
 typedef void (^QCKDSLSharedExampleBlock)(QCKDSLSharedExampleContext);
 typedef void (^QCKDSLEmptyBlock)(void);
+typedef void (^QCKDSLExampleMetadataBlock)(ExampleMetadata *exampleMetadata);
 
 extern void qck_beforeSuite(QCKDSLEmptyBlock closure);
 extern void qck_afterSuite(QCKDSLEmptyBlock closure);
@@ -53,7 +56,9 @@ extern void qck_sharedExamples(NSString *name, QCKDSLSharedExampleBlock closure)
 extern void qck_describe(NSString *description, QCKDSLEmptyBlock closure);
 extern void qck_context(NSString *description, QCKDSLEmptyBlock closure);
 extern void qck_beforeEach(QCKDSLEmptyBlock closure);
+extern void qck_beforeEachWithMetadata(QCKDSLExampleMetadataBlock closure);
 extern void qck_afterEach(QCKDSLEmptyBlock closure);
+extern void qck_afterEachWithMetadata(QCKDSLExampleMetadataBlock closure);
 extern void qck_pending(NSString *description, QCKDSLEmptyBlock closure);
 extern void qck_xdescribe(NSString *description, QCKDSLEmptyBlock closure);
 extern void qck_xcontext(NSString *description, QCKDSLEmptyBlock closure);
@@ -135,6 +140,14 @@ static inline void beforeEach(QCKDSLEmptyBlock closure) {
 }
 
 /**
+    Identical to QCKDSL.beforeEach, except the closure is provided with
+    metadata on the example that the closure is being run prior to.
+ */
+static inline void beforeEachWithMetadata(QCKDSLExampleMetadataBlock closure) {
+    qck_beforeEachWithMetadata(closure);
+}
+
+/**
     Defines a closure to be run after each example in the current example
     group. This closure is not run for pending or otherwise disabled examples.
     An example group may contain an unlimited number of afterEach. They'll be
@@ -144,6 +157,14 @@ static inline void beforeEach(QCKDSLEmptyBlock closure) {
  */
 static inline void afterEach(QCKDSLEmptyBlock closure) {
     qck_afterEach(closure);
+}
+
+/**
+    Identical to QCKDSL.afterEach, except the closure is provided with
+    metadata on the example that the closure is being run after.
+ */
+static inline void afterEachWithMetadata(QCKDSLExampleMetadataBlock closure) {
+    qck_afterEachWithMetadata(closure);
 }
 
 /**

@@ -1,5 +1,5 @@
 #import "QuickConfiguration.h"
-#import <Quick/Quick-Swift.h>
+#import "World.h"
 #import <objc/runtime.h>
 
 typedef void (^QCKClassEnumerationBlock)(Class klass);

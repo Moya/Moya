@@ -30,8 +30,8 @@ internal class RunPromise {
 }
 
 internal func stopRunLoop(runLoop: NSRunLoop, delay: NSTimeInterval) -> RunPromise {
-    var promise = RunPromise()
-    var killQueue = dispatch_queue_create("nimble.waitUntil.queue", DISPATCH_QUEUE_SERIAL)
+    let promise = RunPromise()
+    let killQueue = dispatch_queue_create("nimble.waitUntil.queue", DISPATCH_QUEUE_SERIAL)
     let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
     let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
     dispatch_after(killTime, killQueue) {
@@ -42,10 +42,10 @@ internal func stopRunLoop(runLoop: NSRunLoop, delay: NSTimeInterval) -> RunPromi
     return promise
 }
 
-internal func pollBlock(#pollInterval: NSTimeInterval, #timeoutInterval: NSTimeInterval, expression: () -> Bool) -> PollResult {
+internal func pollBlock(pollInterval pollInterval: NSTimeInterval, timeoutInterval: NSTimeInterval, expression: () -> Bool) -> PollResult {
     let runLoop = NSRunLoop.mainRunLoop()
 
-    var promise = stopRunLoop(runLoop, min(timeoutInterval, 0.2))
+    let promise = stopRunLoop(runLoop, delay: min(timeoutInterval, 0.2))
 
     let startDate = NSDate()
 
@@ -59,7 +59,7 @@ internal func pollBlock(#pollInterval: NSTimeInterval, #timeoutInterval: NSTimeI
     }
 
     var pass: Bool = false
-    do {
+    repeat {
         pass = expression()
         if pass {
             break

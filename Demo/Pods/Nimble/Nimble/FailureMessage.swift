@@ -33,7 +33,7 @@ import Foundation
     }
 
     internal func stripNewlines(str: String) -> String {
-        var lines: [String] = (str as NSString).componentsSeparatedByString("\n") as! [String]
+        var lines: [String] = (str as NSString).componentsSeparatedByString("\n") as [String]
         let whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet()
         lines = lines.map { line in line.stringByTrimmingCharactersInSet(whitespace) }
         return "".join(lines)
