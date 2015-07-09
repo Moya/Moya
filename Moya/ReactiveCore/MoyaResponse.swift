@@ -1,6 +1,6 @@
 import Foundation
 
-public class MoyaResponse: NSObject, Printable, DebugPrintable {
+public class MoyaResponse: NSObject, CustomDebugStringConvertible {
     public let statusCode: Int
     public let data: NSData
     public let response: NSURLResponse?
