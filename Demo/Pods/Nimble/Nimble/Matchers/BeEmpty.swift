@@ -17,6 +17,16 @@ public func beEmpty<S: SequenceType>() -> NonNilMatcherFunc<S> {
 
 /// A Nimble matcher that succeeds when a value is "empty". For collections, this
 /// means the are no items in that collection. For strings, it is an empty string.
+public func beEmpty() -> NonNilMatcherFunc<String> {
+    return NonNilMatcherFunc { actualExpression, failureMessage in
+        failureMessage.postfixMessage = "be empty"
+        let actualString = actualExpression.evaluate()
+        return actualString == nil || (actualString! as NSString).length  == 0
+    }
+}
+
+/// A Nimble matcher that succeeds when a value is "empty". For collections, this
+/// means the are no items in that collection. For NSString instances, it is an empty string.
 public func beEmpty() -> NonNilMatcherFunc<NSString> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be empty"

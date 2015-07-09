@@ -6,7 +6,7 @@ public func allPass<T,U where U: SequenceType, U.Generator.Element == T>
 }
 
 public func allPass<T,U where U: SequenceType, U.Generator.Element == T>
-    (passName:String, passFunc: (T?) -> Bool) -> NonNilMatcherFunc<U> {
+    (passName: String, _ passFunc: (T?) -> Bool) -> NonNilMatcherFunc<U> {
         return createAllPassMatcher() {
             expression, failureMessage in
             failureMessage.postfixMessage = passName

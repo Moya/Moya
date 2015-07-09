@@ -1,5 +1,6 @@
 #import "QCKDSL.h"
-#import <Quick/Quick-Swift.h>
+#import "World.h"
+#import "World+DSL.h"
 
 void qck_beforeSuite(QCKDSLEmptyBlock closure) {
     [[World sharedWorld] beforeSuite:closure];
@@ -25,8 +26,16 @@ void qck_beforeEach(QCKDSLEmptyBlock closure) {
     [[World sharedWorld] beforeEach:closure];
 }
 
+void qck_beforeEachWithMetadata(QCKDSLExampleMetadataBlock closure) {
+    [[World sharedWorld] beforeEachWithMetadata:closure];
+}
+
 void qck_afterEach(QCKDSLEmptyBlock closure) {
     [[World sharedWorld] afterEach:closure];
+}
+
+void qck_afterEachWithMetadata(QCKDSLExampleMetadataBlock closure) {
+    [[World sharedWorld] afterEachWithMetadata:closure];
 }
 
 QCKItBlock qck_it_builder(NSDictionary *flags, NSString *file, NSUInteger line) {

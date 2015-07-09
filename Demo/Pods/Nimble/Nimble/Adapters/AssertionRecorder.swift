@@ -5,7 +5,7 @@ import Foundation
 ///
 /// @see AssertionRecorder
 /// @see AssertionHandler
-public struct AssertionRecord: Printable {
+public struct AssertionRecord: CustomStringConvertible {
     /// Whether the assertion succeeded or failed
     public let success: Bool
     /// The failure message the assertion would display on failure.
@@ -66,7 +66,7 @@ public func withAssertionHandler(tempAssertionHandler: AssertionHandler, closure
 /// @see gatherFailingExpectations
 public func gatherExpectations(silently: Bool = false, closure: () -> Void) -> [AssertionRecord] {
     let previousRecorder = NimbleAssertionHandler
-    var recorder = AssertionRecorder()
+    let recorder = AssertionRecorder()
     let handlers: [AssertionHandler]
 
     if silently {
@@ -75,8 +75,8 @@ public func gatherExpectations(silently: Bool = false, closure: () -> Void) -> [
         handlers = [recorder, previousRecorder]
     }
 
-    var dispatcher = AssertionDispatcher(handlers: handlers)
-    withAssertionHandler(dispatcher, closure)
+    let dispatcher = AssertionDispatcher(handlers: handlers)
+    withAssertionHandler(dispatcher, closure: closure)
     return recorder.assertions
 }
 
@@ -92,8 +92,8 @@ public func gatherExpectations(silently: Bool = false, closure: () -> Void) -> [
 /// @see gatherExpectations
 /// @see raiseException source for an example use case.
 public func gatherFailingExpectations(silently: Bool = false, closure: () -> Void) -> [AssertionRecord] {
-    let assertions = gatherExpectations(silently: silently, closure)
-    return filter(assertions) { assertion in
+    let assertions = gatherExpectations(silently, closure: closure)
+    return assertions.filter { assertion in
         !assertion.success
     }
 }

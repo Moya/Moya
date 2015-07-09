@@ -1,3 +1,5 @@
+import Foundation
+
 /**
     A mapping of string keys to booleans that can be used to
     filter examples or example groups. For example, a "focused"

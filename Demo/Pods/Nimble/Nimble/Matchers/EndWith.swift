@@ -11,7 +11,7 @@ public func endWith<S: SequenceType, T: Equatable where S.Generator.Element == T
             var actualGenerator = actualValue.generate()
             var lastItem: T?
             var item: T?
-            do {
+            repeat {
                 lastItem = item
                 item = actualGenerator.next()
             } while(item != nil)
@@ -50,9 +50,8 @@ public func endWith(endingSubstring: String) -> NonNilMatcherFunc<String> {
 extension NMBObjCMatcher {
     public class func endWithMatcher(expected: AnyObject) -> NMBObjCMatcher {
         return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
-            let location = actualExpression.location
             let actual = actualExpression.evaluate()
-            if let actualString = actual as? String {
+            if let _ = actual as? String {
                 let expr = actualExpression.cast { $0 as? String }
                 return endWith(expected as! String).matches(expr, failureMessage: failureMessage)
             } else {

@@ -1,7 +1,5 @@
 # Nimble
 
-[![Circle CI](https://circleci.com/gh/Quick/Nimble/tree/master.svg?style=svg&circle-token=6115c5d83f74a6c59a484dd8921b97096404a5f3)](https://circleci.com/gh/Quick/Nimble/tree/master)
-
 Use Nimble to express the expected outcomes of Swift
 or Objective-C expressions. Inspired by
 [Cedar](https://github.com/pivotal/cedar).
@@ -201,14 +199,14 @@ value:
 NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
                                                  reason:@"Not enough fish in the sea."
                                                userInfo:nil];
-expectAction([exception raise]).to(raiseException());
+expectAction(^{ [exception raise]; }).to(raiseException());
 
 // Use the property-block syntax to be more specific.
-expectAction([exception raise]).to(raiseException().named(NSInternalInconsistencyException));
-expectAction([exception raise]).to(raiseException().
+expectAction(^{ [exception raise]; }).to(raiseException().named(NSInternalInconsistencyException));
+expectAction(^{ [exception raise]; }).to(raiseException().
     named(NSInternalInconsistencyException).
     reason("Not enough fish in the sea"));
-expectAction([exception raise]).to(raiseException().
+expectAction(^{ [exception raise]; }).to(raiseException().
     named(NSInternalInconsistencyException).
     reason("Not enough fish in the sea").
     userInfo(@{@"something": @"is fishy"}));
@@ -364,7 +362,7 @@ to keep in mind when using Nimble in Objective-C:
    ```objc
    // Objective-C
 
-   expectAction([exception raise]).to(raiseException());
+   expectAction(^{ [exception raise]; }).to(raiseException());
    ```
 
 ## Disabling Objective-C Shorthand

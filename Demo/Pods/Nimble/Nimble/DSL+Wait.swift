@@ -4,7 +4,7 @@ import Foundation
 /// bridges to Objective-C via the @objc keyword. This class encapsulates callback-style
 /// asynchronous waiting logic so that it may be called from Objective-C and Swift.
 @objc internal class NMBWait {
-    internal class func until(#timeout: NSTimeInterval, file: String = __FILE__, line: UInt = __LINE__, action: (() -> Void) -> Void) -> Void {
+    internal class func until(timeout timeout: NSTimeInterval, file: String = __FILE__, line: UInt = __LINE__, action: (() -> Void) -> Void) -> Void {
         var completed = false
         var token: dispatch_once_t = 0
         let result = pollBlock(pollInterval: 0.01, timeoutInterval: timeout) {
@@ -23,6 +23,7 @@ import Foundation
         }
     }
 
+    @objc(untilFile:line:action:)
     internal class func until(file: String = __FILE__, line: UInt = __LINE__, action: (() -> Void) -> Void) -> Void {
         until(timeout: 1, file: file, line: line, action: action)
     }
@@ -31,7 +32,7 @@ import Foundation
 /// Wait asynchronously until the done closure is called.
 ///
 /// This will advance the run loop.
-public func waitUntil(#timeout: NSTimeInterval, file: String = __FILE__, line: UInt = __LINE__, action: (() -> Void) -> Void) -> Void {
+public func waitUntil(timeout timeout: NSTimeInterval, file: String = __FILE__, line: UInt = __LINE__, action: (() -> Void) -> Void) -> Void {
     NMBWait.until(timeout: timeout, file: file, line: line, action: action)
 }
 
@@ -39,5 +40,5 @@ public func waitUntil(#timeout: NSTimeInterval, file: String = __FILE__, line: U
 ///
 /// This will advance the run loop.
 public func waitUntil(file: String = __FILE__, line: UInt = __LINE__, action: (() -> Void) -> Void) -> Void {
-    NMBWait.until(file: file, line: line, action: action)
+    NMBWait.until(timeout: 1, file: file, line: line, action: action)
 }

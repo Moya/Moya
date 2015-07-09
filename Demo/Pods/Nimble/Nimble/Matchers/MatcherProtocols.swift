@@ -40,7 +40,6 @@ extension NSArray : NMBOrderedCollection {}
     var doubleValue: CDouble { get }
 }
 extension NSNumber : NMBDoubleConvertible { }
-extension NSDecimalNumber : NMBDoubleConvertible { } // TODO: not the best to downsize
 
 /// Protocol for types to support beLessThan(), beLessThanOrEqualTo(),
 ///  beGreaterThan(), beGreaterThanOrEqualTo(), and equal() matchers.
