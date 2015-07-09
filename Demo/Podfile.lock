@@ -15,7 +15,7 @@ PODS:
   - RxSwift (1.7)
 
 DEPENDENCIES:
-  - Alamofire (from `../../Alamofire/`)
+  - Alamofire (from `https://github.com/Alamofire/Alamofire`, branch `swift-2.0`)
   - Moya (from `../`)
   - Moya/RxSwift (from `../`)
   - Nimble (from `https://github.com/Quick/Nimble`, branch `swift-2.0`)
@@ -25,7 +25,8 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Alamofire:
-    :path: "../../Alamofire/"
+    :branch: swift-2.0
+    :git: https://github.com/Alamofire/Alamofire
   Moya:
     :path: "../"
   Nimble:
@@ -39,6 +40,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/kzaher/RxSwift.git
 
 CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: fd71afb3a0af2042b9f05a6b9f29317ad4903703
+    :git: https://github.com/Alamofire/Alamofire
   Nimble:
     :commit: 6f356f2db6de77883cab0e86a1fa5ebb20b6679f
     :git: https://github.com/Quick/Nimble
