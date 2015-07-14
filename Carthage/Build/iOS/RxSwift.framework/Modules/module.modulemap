@@ -1,0 +1,10 @@
+framework module RxSwift {
+  umbrella header "RxSwift.h"
+
+  export *
+  module * { export * }
+}
+
+module RxSwift.Swift {
+    header "RxSwift-Swift.h"
+}

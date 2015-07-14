@@ -1,0 +1,10 @@
+framework module ReactiveMoya {
+  umbrella header "ReactiveMoya.h"
+
+  export *
+  module * { export * }
+}
+
+module ReactiveMoya.Swift {
+    header "ReactiveMoya-Swift.h"
+}

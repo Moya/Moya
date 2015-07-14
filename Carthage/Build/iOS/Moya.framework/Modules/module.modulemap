@@ -1,0 +1,10 @@
+framework module Moya {
+  umbrella header "Moya.h"
+
+  export *
+  module * { export * }
+}
+
+module Moya.Swift {
+    header "Moya-Swift.h"
+}
