@@ -13,25 +13,24 @@ import Result
 
 let ReactiveGithubProvider = ReactiveCocoaMoyaProvider<Github>()
 
-class ReactiveMoyaViewController: UITableViewController {
+class ReactiveMoyaViewController: UITableViewController, UIGestureRecognizerDelegate {
     let repos = MutableProperty<NSArray>(NSArray())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        
-        downloadRepositories("justinmakaila")
     }
     
     // MARK: - API
     
     func downloadRepositories(username: String) {
-        ReactiveGithubProvider.requestJSONArray(Github.UserRepositories(username))
+        ReactiveGithubProvider.requestJSONArray(.UserRepositories(username))
             |> start(error: { (error: NSError) in
                 self.showErrorAlert("Github Fetch", error: error)
             },
             next: { (result: NSArray) in
                 self.repos.put(result)
+                self.title = "\(username)'s repos"
             })
     }
     
@@ -49,7 +48,7 @@ class ReactiveMoyaViewController: UITableViewController {
     // MARK: IBActions
     
     @IBAction func searchPressed(sender: UIBarButtonItem) {
-        self.showInputPrompt("Username", message: "Enter a github username", action: { username in
+        showInputPrompt("Username", message: "Enter a github username", action: { username in
             self.downloadRepositories(username)
         })
     }
@@ -78,10 +77,15 @@ class ReactiveMoyaViewController: UITableViewController {
     // MARK: - Setup
     
     private func setup() {
+        self.navigationController?.interactivePopGestureRecognizer.delegate = self
+        
         // When repos changes and is non-nil, reload the table view
         repos.producer
             |> start(next: { _ in
                 self.tableView.reloadData()
             })
+        
+        // Download all repositories for "justinmakaila"
+        downloadRepositories("justinmakaila")
     }
 }

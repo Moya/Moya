@@ -1,5 +1,5 @@
 //
-//  RxMoyaViewController.swift
+//  ReactiveMoyaViewController.swift
 //  MoyaExample
 //
 //  Created by Justin Makaila on 7/14/15.
@@ -7,91 +7,66 @@
 //
 
 import UIKit
+import RxMoya
 
-class RxMoyaViewController: UITableViewController {
+let RxGithubProvider = RxMoyaProvider<Github>()
 
+class RxMoyaViewController: UITableViewController, UIGestureRecognizerDelegate {
+    var repos = NSArray()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        setup()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // MARK: - API
+    
+    func downloadRepositories(username: String) {
+        // TODO: Handle success and error
+        RxGithubProvider.request(.UserRepositories(username))
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+    
+    func downloadZen() {
+        // TODO: Handle success and error
+        RxGithubProvider.request(.Zen)
     }
-
+    
+    // MARK: - Actions
+    // MARK: IBActions
+    
+    @IBAction func searchPressed(sender: UIBarButtonItem) {
+        showInputPrompt("Username", message: "Enter a github username", action: { username in
+            self.downloadRepositories(username)
+        })
+    }
+    
+    @IBAction func zenPressed(sender: UIBarButtonItem) {
+        downloadZen()
+    }
+    
+    // MARK: - Delegates
+    // MARK: UITableViewDataSource
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        return repos.count
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        
+        if let object = repos[indexPath.row] as? NSDictionary {
+            cell.textLabel?.text = object["name"] as? String
+        }
+        
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    
+    // MARK: - Setup
+    
+    private func setup() {
+        self.navigationController?.interactivePopGestureRecognizer.delegate = self
+        
+        // Download all repositories for "justinmakaila"
+        downloadRepositories("justinmakaila")
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

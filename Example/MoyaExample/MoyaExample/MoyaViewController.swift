@@ -3,13 +3,12 @@ import Moya
 
 let GitHubProvider = MoyaProvider<Github>()
 
-class ViewController: UITableViewController {
+class MoyaViewController: UITableViewController, UIGestureRecognizerDelegate {
     var repos = NSArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        downloadRepositories("ashfurrow")
+        setup()
     }
     
     // MARK: - API Stuff
@@ -50,13 +49,13 @@ class ViewController: UITableViewController {
     
     // MARK: - User Interaction
     
-    @IBAction func searchWasPressed(sender: UIBarButtonItem) {
+    @IBAction func searchPressed(sender: UIBarButtonItem) {
         self.showInputPrompt("Username", message: "Enter a github username", action: { username in
             self.downloadRepositories(username)
         })
     }
     
-    @IBAction func zenWasPressed(sender: UIBarButtonItem) {
+    @IBAction func zenPressed(sender: UIBarButtonItem) {
         downloadZen()
     }
     
@@ -72,5 +71,11 @@ class ViewController: UITableViewController {
         let object = repos[indexPath.row] as! NSDictionary
         (cell.textLabel as UILabel!).text = object["name"] as? String
         return cell
+    }
+    
+    private func setup() {
+        self.navigationController?.interactivePopGestureRecognizer.delegate = self
+        
+        downloadRepositories("ashfurrow")
     }
 }
