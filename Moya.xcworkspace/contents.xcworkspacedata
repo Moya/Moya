@@ -5,6 +5,6 @@
       location = "container:Moya.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Example/MoyaExample/MoyaExample.xcodeproj">
+      location = "group:Example/MoyaExample.xcodeproj">
    </FileRef>
 </Workspace>
