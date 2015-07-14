@@ -14,13 +14,13 @@
 		7CABCC651B40383300797B88 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E9F1B3CEE230039C15B /* ReactiveCocoa.framework */; };
 		7CABCC661B40383300797B88 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4EA01B3CEE230039C15B /* Result.framework */; };
 		7CABCC681B40384200797B88 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */; };
-		7CED32111B559C5800B97BBD /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CED32101B559C5800B97BBD /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7CED32251B559C6900B97BBD /* Moya+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CFCE8A91B41E22000B97F54 /* Moya+RxSwift.swift */; };
 		7CED32261B559C7400B97BBD /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */; };
 		7CED32271B559C7400B97BBD /* ReactiveMoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */; };
 		7CED322C1B559CF800B97BBD /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED322B1B559CED00B97BBD /* RxSwift.framework */; };
+		7CED322E1B55A1FD00B97BBD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CED322D1B55A1FD00B97BBD /* Info.plist */; };
+		7CED32301B55A20400B97BBD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7CED322F1B55A20400B97BBD /* Info.plist */; };
 		7CFCE8A31B41DDB300B97F54 /* ReactiveMoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */; };
-		7CFCE8A41B41DDF900B97F54 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
 		7CFCE8A61B41E08E00B97F54 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C8F4E9F1B3CEE230039C15B /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CFCE8A71B41E08E00B97F54 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C8F4EA01B3CEE230039C15B /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CFCE8B51B41EA0B00B97F54 /* Moya+ReactiveCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E911B3CEDF90039C15B /* Moya+ReactiveCocoa.swift */; };
@@ -73,12 +73,10 @@
 		7CABCC4E1B40382400797B88 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveMoyaError.swift; sourceTree = "<group>"; };
 		7CED320C1B559C5800B97BBD /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CED320F1B559C5800B97BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CED32101B559C5800B97BBD /* RxMoya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxMoya.h; sourceTree = "<group>"; };
-		7CED321C1B559C5800B97BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CED321D1B559C5800B97BBD /* RxMoyaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxMoyaTests.swift; sourceTree = "<group>"; };
 		7CED322A1B559CED00B97BBD /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
 		7CED322B1B559CED00B97BBD /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		7CED322D1B55A1FD00B97BBD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Moya/ReactiveMoya/Info.plist; sourceTree = SOURCE_ROOT; };
+		7CED322F1B55A20400B97BBD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Moya/RxMoya/Info.plist; sourceTree = SOURCE_ROOT; };
 		7CFCE8A91B41E22000B97F54 /* Moya+RxSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Moya+RxSwift.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,7 +94,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CABCC651B40383300797B88 /* ReactiveCocoa.framework in Frameworks */,
-				7CFCE8A41B41DDF900B97F54 /* Moya.framework in Frameworks */,
 				7CABCC661B40383300797B88 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,8 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				7C8F4E761B3CEDBC0039C15B /* Moya */,
-				7CED320D1B559C5800B97BBD /* RxMoya */,
-				7CED321A1B559C5800B97BBD /* RxMoyaTests */,
 				7C8F4E9D1B3CEE0E0039C15B /* Frameworks */,
 				7C8F4E821B3CEDBC0039C15B /* MoyaTests */,
 				7C8F4E751B3CEDBC0039C15B /* Products */,
@@ -155,12 +150,13 @@
 			path = MoyaTests;
 			sourceTree = "<group>";
 		};
-		7C8F4E901B3CEDF90039C15B /* ReactiveCocoa */ = {
+		7C8F4E901B3CEDF90039C15B /* ReactiveMoya */ = {
 			isa = PBXGroup;
 			children = (
+				7CED322D1B55A1FD00B97BBD /* Info.plist */,
 				7C8F4E911B3CEDF90039C15B /* Moya+ReactiveCocoa.swift */,
 			);
-			name = ReactiveCocoa;
+			name = ReactiveMoya;
 			path = ../ReactiveCocoa;
 			sourceTree = "<group>";
 		};
@@ -169,8 +165,8 @@
 			children = (
 				7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */,
 				7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */,
-				7C8F4E901B3CEDF90039C15B /* ReactiveCocoa */,
-				7CFCE8A81B41E22000B97F54 /* RxSwift */,
+				7C8F4E901B3CEDF90039C15B /* ReactiveMoya */,
+				7CFCE8A81B41E22000B97F54 /* RxMoya */,
 			);
 			path = ReactiveCore;
 			sourceTree = "<group>";
@@ -187,46 +183,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7CED320D1B559C5800B97BBD /* RxMoya */ = {
+		7CFCE8A81B41E22000B97F54 /* RxMoya */ = {
 			isa = PBXGroup;
 			children = (
-				7CED32101B559C5800B97BBD /* RxMoya.h */,
-				7CED320E1B559C5800B97BBD /* Supporting Files */,
-			);
-			path = RxMoya;
-			sourceTree = "<group>";
-		};
-		7CED320E1B559C5800B97BBD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7CED320F1B559C5800B97BBD /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7CED321A1B559C5800B97BBD /* RxMoyaTests */ = {
-			isa = PBXGroup;
-			children = (
-				7CED321D1B559C5800B97BBD /* RxMoyaTests.swift */,
-				7CED321B1B559C5800B97BBD /* Supporting Files */,
-			);
-			path = RxMoyaTests;
-			sourceTree = "<group>";
-		};
-		7CED321B1B559C5800B97BBD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7CED321C1B559C5800B97BBD /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7CFCE8A81B41E22000B97F54 /* RxSwift */ = {
-			isa = PBXGroup;
-			children = (
+				7CED322F1B55A20400B97BBD /* Info.plist */,
 				7CFCE8A91B41E22000B97F54 /* Moya+RxSwift.swift */,
 			);
-			name = RxSwift;
+			name = RxMoya;
 			path = ../RxSwift;
 			sourceTree = "<group>";
 		};
@@ -252,7 +215,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CED32111B559C5800B97BBD /* RxMoya.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +322,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CED32301B55A20400B97BBD /* Info.plist in Resources */,
+				7CED322E1B55A1FD00B97BBD /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +518,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"/Carthage/Build/iOS/";
-				INFOPLIST_FILE = ReactiveMoya/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Moya/ReactiveMoya/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -572,7 +536,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)\"/Carthage/Build/iOS/";
-				INFOPLIST_FILE = ReactiveMoya/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Moya/ReactiveMoya/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -599,9 +563,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = RxMoya/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Moya/RxMoya/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -619,9 +583,9 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = RxMoya/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Moya/RxMoya/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
