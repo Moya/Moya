@@ -136,7 +136,7 @@ public class MoyaProvider<T: MoyaTarget> {
 
     public class func DefaultEndpointMapping(target: T) -> Endpoint<T> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+        return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
     public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {

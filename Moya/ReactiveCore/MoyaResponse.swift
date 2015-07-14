@@ -1,7 +1,7 @@
 import Foundation
 import Moya
 
-public class MoyaResponse: NSObject, CustomDebugStringConvertible {
+public class MoyaResponse: NSObject, Printable {
     public let statusCode: Int
     public let data: NSData
     public let response: NSURLResponse?
@@ -20,16 +20,3 @@ public class MoyaResponse: NSObject, CustomDebugStringConvertible {
         return description
     }
 }
-
-/// Required for making Endpoint conform to Equatable.
-public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
-    return lhs.urlRequest.isEqual(rhs.urlRequest)
-}
-
-/// Required for using Endpoint as a key type in a Dictionary.
-extension Endpoint: Equatable, Hashable {
-    public var hashValue: Int {
-        return urlRequest.hash
-    }
-}
-

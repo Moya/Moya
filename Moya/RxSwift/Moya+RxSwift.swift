@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import Moya
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {

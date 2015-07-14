@@ -1,2 +1,4 @@
-github "Alamofire/Alamofire" "swift-2.0"
-github "ReactiveCocoa/ReactiveCocoa" "swift2"
+github "Alamofire/Alamofire"
+github "ReactiveCocoa/ReactiveCocoa" "v3.0-beta.9"
+
+github "kzaher/RxSwift" "latest-carthage/rxswift"

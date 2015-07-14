@@ -66,3 +66,15 @@ extension Endpoint {
         return parameterEncoding.parameterEncoding().encode(request, parameters: parameters).0
     }
 }
+
+/// Required for making Endpoint conform to Equatable.
+public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+    return lhs.urlRequest.isEqual(rhs.urlRequest)
+}
+
+/// Required for using Endpoint as a key type in a Dictionary.
+extension Endpoint: Equatable, Hashable {
+    public var hashValue: Int {
+        return urlRequest.hash
+    }
+}

@@ -1,3 +1,5 @@
-github "Alamofire/Alamofire" "fd71afb3a0af2042b9f05a6b9f29317ad4903703"
-github "antitypical/Result" "0.5"
-github "ReactiveCocoa/ReactiveCocoa" "462da2a6f511c72ced8239276422bf65017105b0"
+github "Alamofire/Alamofire" "1.2.3"
+github "robrix/Box" "1.2.2"
+github "kzaher/RxSwift" "f0cf4b709dbfbe25ceeb3fc0eead489e5d854e71"
+github "antitypical/Result" "0.4.4"
+github "ReactiveCocoa/ReactiveCocoa" "72854649533c4df644a896df7070a0cb835f8d60"
