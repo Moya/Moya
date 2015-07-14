@@ -89,12 +89,10 @@ To use `RxMoya`, you must include what's mentioned in "Using Moya", as well as `
 
 Be sure to add `import RxMoya` wherever you would like to use it.
 
-
-
-In any file you'd like to use Moya, don't forget to import the framework with `import Moya`.
-
 Use
 ---
+In any file where you'd like to use `Moya`, don't forget to import the framework with `import Moya`.
+
 
 After some setup, using Moya is really simple. You can access an API like this:
 
