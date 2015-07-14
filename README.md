@@ -41,7 +41,7 @@ Some awesome features of Moya:
 Sample Project
 --------------
 
-There's a sample project in the Demo directory. Go nuts!
+There's a sample project in the Example directory. Go nuts!
 
 Project Status
 --------------
@@ -55,10 +55,8 @@ Currently, we support Xcode 6.3.1 and Swift 1.2.
 Installation
 ------------
 
+###CocoaPods
 Just add `pod 'Moya'` to your Podfile and go!
-
-In any file you'd like to use Moya in, don't forget to
-import the framework with `import Moya`.
 
 For reactive extensions, this project has some dependencies. Add the following 
 lines to your Podfile:
@@ -72,6 +70,28 @@ pod 'Moya/Reactive'
 ```
 
 Then run `pod install`. 
+
+###Carthage
+Add `github "ashfurrow/Moya"` and run `carthage update`.
+
+This will build the reactive extensions by default. If you do not need them, do not add them to your project.
+
+####Using Moya
+To use `Moya`, you must add `Moya` and `Alamofire` to your application.
+
+####Using ReactiveMoya
+To use `ReactiveMoya`, you must include what's mentioned above, as well as `ReactiveCocoa`, `Result`, and `Box`.
+
+Be sure to add `import ReactiveMoya` wherever you would like to use it.
+
+####Using RxMoya
+To use `RxMoya`, you must include what's mentioned in "Using Moya", as well as `RxSwift`.
+
+Be sure to add `import RxMoya` wherever you would like to use it.
+
+
+
+In any file you'd like to use Moya, don't forget to import the framework with `import Moya`.
 
 Use
 ---
