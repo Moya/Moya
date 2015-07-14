@@ -63,6 +63,14 @@ public extension ReactiveCocoaMoyaProvider {
         return request(token) |> mapJSON()
     }
     
+    public func requestJSONArray(token: T) -> SignalProducer<NSArray, NSError> {
+        return requestJSON(token) |> mapJSONArray()
+    }
+    
+    public func requestJSONDictionary(token: T) -> SignalProducer<NSDictionary, NSError> {
+        return requestJSON(token) |> mapJSONDictionary()
+    }
+    
     public func requestImage(token: T) -> SignalProducer<UIImage, NSError> {
         return request(token) |> mapImage()
     }
@@ -115,6 +123,26 @@ public func mapJSON() -> Signal<MoyaResponse, NSError> -> Signal<AnyObject, NSEr
             return Result.success(json)
         } else {
             return Result.failure(ReactiveMoyaError.JSONMapping(response).toError())
+        }
+    }
+}
+
+public func mapJSONArray() -> Signal<AnyObject, NSError> -> Signal<NSArray, NSError> {
+    return tryMap { (json: AnyObject) in
+        if let json = json as? NSArray {
+            return Result.success(json)
+        } else {
+            return Result.failure(ReactiveMoyaError.JSONMapping(json).toError())
+        }
+    }
+}
+
+public func mapJSONDictionary() -> Signal<AnyObject, NSError> -> Signal<NSDictionary, NSError> {
+    return tryMap { (json: AnyObject) in
+        if let json = json as? NSDictionary {
+            return Result.success(json)
+        } else {
+            return Result.failure(ReactiveMoyaError.JSONMapping(json).toError())
         }
     }
 }
