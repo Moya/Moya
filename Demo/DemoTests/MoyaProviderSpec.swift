@@ -274,16 +274,23 @@ class MoyaProviderSpec: QuickSpec {
 
                         var response: MoyaResponse!
 
-                        let outerSignal = provider.request(target)
-                        outerSignal >- subscribeNext { (response) -> Void in
-                            expect(provider.inflightRequests.count).to(equal(1))
-
-                            let innerSignal = provider.request(target)
-                            innerSignal >- subscribeNext { (object) -> Void in
+                        let parallelCount = 10
+                        let observables = Array(0..<parallelCount).map { _ in provider.request(target) }
+                        var completions = Array(0..<parallelCount).map { _ in false }
+                        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                        dispatch_apply(observables.count, queue, { idx in
+                            let i = idx
+                            observables[i] >- subscribeNext { _ -> Void in
                                 expect(provider.inflightRequests.count).to(equal(1))
+                                completions[i] = true
                             }
+                        })
+                        
+                        func allTrue(cs: [Bool]) -> Bool {
+                            return cs.reduce(true) { (a,b) -> Bool in a && b }
                         }
-
+                        
+                        expect(allTrue(completions)).toEventually(beTrue())
                         expect(provider.inflightRequests.count).to(equal(0))
                     }
                 })
