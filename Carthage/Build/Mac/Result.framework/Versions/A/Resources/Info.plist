@@ -38,5 +38,9 @@
 	<string>6E35b</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2015 Rob Rix. All rights reserved.</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+	</array>
 </dict>
 </plist>
