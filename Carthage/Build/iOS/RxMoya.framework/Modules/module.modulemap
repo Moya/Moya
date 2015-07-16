@@ -1,0 +1,10 @@
+framework module RxMoya {
+  umbrella header "RxMoya.h"
+
+  export *
+  module * { export * }
+}
+
+module RxMoya.Swift {
+    header "RxMoya-Swift.h"
+}

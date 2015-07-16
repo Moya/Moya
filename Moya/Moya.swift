@@ -164,18 +164,18 @@ private extension MoyaProvider {
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
         let request = Alamofire.Manager.sharedInstance.request(request)
-            .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
-                networkActivityCallback?(change: .Ended)
+            .response{ (request: NSURLRequest?, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> Void in
+                    networkActivityCallback?(change: .Ended)
 
-                // Alamofire always sends the data param as an NSData? type, but we'll
-                // add a check just in case something changes in the future.
-                let statusCode = response?.statusCode
-                if let data = data as? NSData {
-                    completion(data: data, statusCode: statusCode, response:response, error: error)
-                } else {
-                    completion(data: nil, statusCode: statusCode, response:response, error: error)
-                }
-        }
+                    // Alamofire always sends the data param as an NSData? type, but we'll
+                    // add a check just in case something changes in the future.
+                    let statusCode = response?.statusCode
+                    if let data = data as? NSData {
+                        completion(data: data, statusCode: statusCode, response:response, error: error)
+                    } else {
+                        completion(data: nil, statusCode: statusCode, response:response, error: error)
+                    }
+            }
 
         return CancellableToken {
             request.cancel()

@@ -20,7 +20,7 @@ DerivedData
 *.xccheckout
 
 # Carthage
-Carthage
+Carthage/Checkouts
 
 # AppCode
 .idea/

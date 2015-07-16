@@ -1,0 +1,10 @@
+framework module Box {
+  umbrella header "Box.h"
+
+  export *
+  module * { export * }
+}
+
+module Box.Swift {
+    header "Box-Swift.h"
+}
