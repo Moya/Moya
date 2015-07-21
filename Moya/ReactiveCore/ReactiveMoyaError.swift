@@ -27,7 +27,7 @@ public enum ReactiveMoyaError {
     case StatusCode(AnyObject)
     case Data(AnyObject)
     
-    func errorCode() -> Int {
+    public func errorCode() -> Int {
         switch self {
         case ResponseMapping:
             return ErrorCode.ResponseMapping.rawValue
@@ -44,7 +44,7 @@ public enum ReactiveMoyaError {
         }
     }
     
-    func userInfo() -> [NSObject: AnyObject] {
+    public func userInfo() -> [NSObject: AnyObject] {
         switch self {
         case .ResponseMapping(let object):
             return ["data": object]
@@ -61,7 +61,7 @@ public enum ReactiveMoyaError {
         }
     }
     
-    func toError() -> NSError {
+    public func toError() -> NSError {
         return NSError(domain: ReactiveMoyaErrorDomain, code: errorCode(), userInfo: userInfo())
     }
 }

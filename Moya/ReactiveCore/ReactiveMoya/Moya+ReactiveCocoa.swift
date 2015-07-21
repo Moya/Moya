@@ -39,11 +39,14 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
             
             disposable.addDisposable {
+                println("\n\nInvoking the disposable!\n\n")
                 if let weakSelf = self {
                     objc_sync_enter(weakSelf)
+                    // Clear the inflight request
                     weakSelf.inflightRequests[endpoint] = nil
                     objc_sync_exit(weakSelf)
                     
+                    // Cancel the request
                     cancellableToken?.cancel()
                 }
             }
@@ -54,6 +57,10 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
         objc_sync_exit(self)
         
         return producer
+    }
+    
+    public func request(token: T) -> RACSignal {
+        return toRACSignal(self.request(token))
     }
 }
 

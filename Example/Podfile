@@ -8,10 +8,10 @@ pod 'Moya/RxSwift', :path => "../"
 pod 'Moya/ReactiveCocoa', :path => "../"
 pod 'Moya', :path => "../"
 
-#target 'DemoTests' do
+target 'MoyaTests' do
 
- # pod 'Quick', '~> 0.3.0'
- # pod 'Nimble', '~> 0.4.0'
- # pod 'OHHTTPStubs'
+ pod 'Quick', '~> 0.3.0'
+ pod 'Nimble', '~> 0.4.0'
+ pod 'OHHTTPStubs'
 
-#end
+end
