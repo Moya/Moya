@@ -20,7 +20,10 @@ DerivedData
 *.xccheckout
 
 # Carthage
-Carthage/Checkouts
+Carthage/
 
 # AppCode
 .idea/
+
+# CocoaPods
+Pods/
