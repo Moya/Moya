@@ -1,6 +1,6 @@
 EXAMPLE_DIR = Example
 WORKSPACE = MoyaExample.xcworkspace
-SCHEME = Demo
+SCHEME = MoyaExample
 CONFIGURATION = Debug
 
 # Default for `make`
