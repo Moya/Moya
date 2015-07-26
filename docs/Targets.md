@@ -1,7 +1,7 @@
 Targets
 =======
 
-Using Moya starts with defining a target – typsically some `enum` that conforms 
+Using Moya starts with defining a target – typically some `enum` that conforms 
 to the `MoyaTarget` protocol. Then, the rest of your app deals *only* with 
 those targets. Targets are some action that you want to take on the API, 
 like "`FavouriteTweet(tweetID: String)`". 
