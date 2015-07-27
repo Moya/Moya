@@ -14,7 +14,7 @@ public func beAnInstanceOf(expectedClass: Any) -> NonNilMatcherFunc<Any> {
 /// @see beAKindOf if you want to match against subclasses
 public func beAnInstanceOf(expectedClass: AnyClass) -> NonNilMatcherFunc<NSObject> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
-        let instance = actualExpression.evaluate()
+        let instance = try actualExpression.evaluate()
         if let validInstance = instance {
             failureMessage.actualValue = "<\(NSStringFromClass(validInstance.dynamicType)) instance>"
         } else {
@@ -28,7 +28,7 @@ public func beAnInstanceOf(expectedClass: AnyClass) -> NonNilMatcherFunc<NSObjec
 extension NMBObjCMatcher {
     public class func beAnInstanceOfMatcher(expected: AnyClass) -> NMBMatcher {
         return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
-            return beAnInstanceOf(expected).matches(actualExpression, failureMessage: failureMessage)
+            return try! beAnInstanceOf(expected).matches(actualExpression, failureMessage: failureMessage)
         }
     }
 }

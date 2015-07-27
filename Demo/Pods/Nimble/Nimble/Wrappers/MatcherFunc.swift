@@ -9,18 +9,18 @@
 /// input parameters.
 /// @see allPass for an example that uses accepts other matchers as input.
 public struct FullMatcherFunc<T>: Matcher {
-    public let matcher: (Expression<T>, FailureMessage, Bool) -> Bool
+    public let matcher: (Expression<T>, FailureMessage, Bool) throws -> Bool
 
-    public init(_ matcher: (Expression<T>, FailureMessage, Bool) -> Bool) {
+    public init(_ matcher: (Expression<T>, FailureMessage, Bool) throws -> Bool) {
         self.matcher = matcher
     }
 
-    public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        return matcher(actualExpression, failureMessage, false)
+    public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        return try matcher(actualExpression, failureMessage, false)
     }
 
-    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        return matcher(actualExpression, failureMessage, true)
+    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        return try matcher(actualExpression, failureMessage, true)
     }
 }
 
@@ -36,18 +36,18 @@ public struct FullMatcherFunc<T>: Matcher {
 /// input parameters.
 /// @see allPass for an example that uses accepts other matchers as input.
 public struct MatcherFunc<T>: Matcher {
-    public let matcher: (Expression<T>, FailureMessage) -> Bool
+    public let matcher: (Expression<T>, FailureMessage) throws -> Bool
 
-    public init(_ matcher: (Expression<T>, FailureMessage) -> Bool) {
+    public init(_ matcher: (Expression<T>, FailureMessage) throws -> Bool) {
         self.matcher = matcher
     }
 
-    public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        return matcher(actualExpression, failureMessage)
+    public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        return try matcher(actualExpression, failureMessage)
     }
 
-    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        return !matcher(actualExpression, failureMessage)
+    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        return try !matcher(actualExpression, failureMessage)
     }
 }
 
@@ -63,30 +63,30 @@ public struct MatcherFunc<T>: Matcher {
 /// input parameters.
 /// @see allPass for an example that uses accepts other matchers as input.
 public struct NonNilMatcherFunc<T>: Matcher {
-    public let matcher: (Expression<T>, FailureMessage) -> Bool
+    public let matcher: (Expression<T>, FailureMessage) throws -> Bool
 
-    public init(_ matcher: (Expression<T>, FailureMessage) -> Bool) {
+    public init(_ matcher: (Expression<T>, FailureMessage) throws -> Bool) {
         self.matcher = matcher
     }
 
-    public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        let pass = matcher(actualExpression, failureMessage)
-        if attachNilErrorIfNeeded(actualExpression, failureMessage: failureMessage) {
+    public func matches(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        let pass = try matcher(actualExpression, failureMessage)
+        if try attachNilErrorIfNeeded(actualExpression, failureMessage: failureMessage) {
             return false
         }
         return pass
     }
 
-    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        let pass = !matcher(actualExpression, failureMessage)
-        if attachNilErrorIfNeeded(actualExpression, failureMessage: failureMessage) {
+    public func doesNotMatch(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        let pass = try !matcher(actualExpression, failureMessage)
+        if try attachNilErrorIfNeeded(actualExpression, failureMessage: failureMessage) {
             return false
         }
         return pass
     }
 
-    internal func attachNilErrorIfNeeded(actualExpression: Expression<T>, failureMessage: FailureMessage) -> Bool {
-        if actualExpression.evaluate() == nil {
+    internal func attachNilErrorIfNeeded(actualExpression: Expression<T>, failureMessage: FailureMessage) throws -> Bool {
+        if try actualExpression.evaluate() == nil {
             failureMessage.postfixActual = " (use beNil() to match nils)"
             return true
         }

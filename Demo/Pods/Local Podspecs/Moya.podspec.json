@@ -2,7 +2,7 @@
   "name": "Moya",
   "version": "2.0.0",
   "summary": "Network abstraction layer written in Swift",
-  "description": "  Moya abstracts network commands using Swift Generics to provide developers\n  with more compile-time confidence.\n\n  A ReactiveCocoa extension exists as well. Instructions for its installation\n  are in [the README](https://github.com/ashfurrow/Moya).\n",
+  "description": "Moya abstracts network commands using Swift Generics to provide developers\nwith more compile-time confidence.\n\nA ReactiveCocoa extension exists as well. Instructions for its installation\nare in [the README](https://github.com/ashfurrow/Moya).",
   "homepage": "https://github.com/AshFurrow/Moya",
   "license": {
     "type": "MIT",

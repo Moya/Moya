@@ -5,7 +5,7 @@ import Foundation
 public func beGreaterThan<T: Comparable>(expectedValue: T?) -> NonNilMatcherFunc<T> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be greater than <\(stringify(expectedValue))>"
-        return actualExpression.evaluate() > expectedValue
+        return try actualExpression.evaluate() > expectedValue
     }
 }
 
@@ -13,7 +13,7 @@ public func beGreaterThan<T: Comparable>(expectedValue: T?) -> NonNilMatcherFunc
 public func beGreaterThan(expectedValue: NMBComparable?) -> NonNilMatcherFunc<NMBComparable> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be greater than <\(stringify(expectedValue))>"
-        let actualValue = actualExpression.evaluate()
+        let actualValue = try actualExpression.evaluate()
         let matches = actualValue != nil && actualValue!.NMB_compare(expectedValue) == NSComparisonResult.OrderedDescending
         return matches
     }
@@ -31,7 +31,7 @@ extension NMBObjCMatcher {
     public class func beGreaterThanMatcher(expected: NMBComparable?) -> NMBObjCMatcher {
         return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
             let expr = actualExpression.cast { $0 as? NMBComparable }
-            return beGreaterThan(expected).matches(expr, failureMessage: failureMessage)
+            return try! beGreaterThan(expected).matches(expr, failureMessage: failureMessage)
         }
     }
 }

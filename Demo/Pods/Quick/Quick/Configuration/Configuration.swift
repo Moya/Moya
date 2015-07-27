@@ -14,7 +14,7 @@ public typealias ExampleFilter = (example: Example) -> Bool
     A configuration encapsulates various options you can use
     to configure Quick's behavior.
 */
-@objc final public class Configuration {
+final public class Configuration: NSObject {
     internal let exampleHooks = ExampleHooks()
     internal let suiteHooks = SuiteHooks()
     internal var exclusionFilters: [ExampleFilter] = [{ example in

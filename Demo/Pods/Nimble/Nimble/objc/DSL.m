@@ -83,8 +83,22 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_beEmpty() {
     return [NMBObjCMatcher beEmptyMatcher];
 }
 
-NIMBLE_EXPORT id<NMBMatcher> NMB_contain(id itemOrSubstring) {
-    return [NMBObjCMatcher containMatcher:itemOrSubstring];
+NIMBLE_EXPORT id<NMBMatcher> NMB_containWithNilTermination(id itemOrSubstring, ...) {
+    NSMutableArray *itemOrSubstringArray = [NSMutableArray array];
+
+    if (itemOrSubstring) {
+        [itemOrSubstringArray addObject:itemOrSubstring];
+
+        va_list args;
+        va_start(args, itemOrSubstring);
+        id next;
+        while ((next = va_arg(args, id))) {
+            [itemOrSubstringArray addObject:next];
+        }
+        va_end(args);
+    }
+
+    return [NMBObjCMatcher containMatcher:itemOrSubstringArray];
 }
 
 NIMBLE_EXPORT id<NMBMatcher> NMB_endWith(id itemElementOrSubstring) {
