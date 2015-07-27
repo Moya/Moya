@@ -11,7 +11,7 @@ import Foundation
 public class ScheduledDisposable : Cancelable {
     public let scheduler: ImmediateScheduler
     var _disposable: Disposable?
-    var lock = SpinLock()
+    var lock = Lock()
 
     public var disposable: Disposable {
         get {

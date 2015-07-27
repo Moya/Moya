@@ -31,11 +31,11 @@ class SubscribeOnSink<O: ObserverType> : Sink<O>, ObserverType {
         let disposeEverything = SerialDisposable()
         let cancelSchedule = SingleAssignmentDisposable()
         
-        disposeEverything.disposable = cancelSchedule
+        disposeEverything.setDisposable(cancelSchedule)
         
         let scheduleResult = parent.scheduler.schedule(()) { (_) -> RxResult<Disposable> in
             let subscription = self.parent.source.subscribeSafe(self)
-            disposeEverything.disposable = ScheduledDisposable(scheduler: self.parent.scheduler, disposable: subscription)
+            disposeEverything.setDisposable(ScheduledDisposable(scheduler: self.parent.scheduler, disposable: subscription))
             return NopDisposableResult
         }
     

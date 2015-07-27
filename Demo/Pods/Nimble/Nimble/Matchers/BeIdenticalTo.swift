@@ -5,7 +5,7 @@ import Foundation
 /// as the expected instance.
 public func beIdenticalTo<T: AnyObject>(expected: T?) -> NonNilMatcherFunc<T> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
-        let actual = actualExpression.evaluate()
+        let actual = try actualExpression.evaluate()
         failureMessage.actualValue = "\(identityAsString(actual))"
         failureMessage.postfixMessage = "be identical to \(identityAsString(expected))"
         return actual === expected && actual !== nil
@@ -22,7 +22,7 @@ public func !==<T: AnyObject>(lhs: Expectation<T>, rhs: T?) {
 extension NMBObjCMatcher {
     public class func beIdenticalToMatcher(expected: NSObject?) -> NMBObjCMatcher {
         return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
-            return beIdenticalTo(expected).matches(actualExpression, failureMessage: failureMessage)
+            return try! beIdenticalTo(expected).matches(actualExpression, failureMessage: failureMessage)
         }
     }
 }

@@ -3,7 +3,7 @@ import Moya
 import ReactiveCocoa
 import Nimble
 
-@objc class TestClass { }
+class TestClass { }
 
 // Necessary since UIImage(named:) doesn't work correctly in the test bundle
 extension UIImage {

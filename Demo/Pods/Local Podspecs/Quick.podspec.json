@@ -1,0 +1,32 @@
+{
+  "name": "Quick",
+  "version": "0.5.1",
+  "summary": "The Swift (and Objective-C) testing framework.",
+  "description": "Quick is a behavior-driven development framework for Swift and Objective-C. Inspired by RSpec, Specta, and Ginkgo.",
+  "homepage": "https://github.com/Quick/Quick",
+  "license": {
+    "type": "Apache 2.0",
+    "file": "LICENSE"
+  },
+  "authors": "Quick Contributors",
+  "platforms": {
+    "ios": "7.0",
+    "osx": "10.9"
+  },
+  "source": {
+    "git": "https://github.com/Quick/Quick.git",
+    "tag": "v0.5.1"
+  },
+  "source_files": [
+    "Quick",
+    "Quick/**/*.{swift,h,m}"
+  ],
+  "public_header_files": [
+    "Quick/Configuration/QuickConfiguration.h",
+    "Quick/DSL/QCKDSL.h",
+    "Quick/Quick.h",
+    "Quick/QuickSpec.h"
+  ],
+  "frameworks": "XCTest",
+  "requires_arc": true
+}

@@ -3,8 +3,8 @@ import Foundation
 /// Implement this protocol to implement a custom matcher for Swift
 public protocol Matcher {
     typealias ValueType
-    func matches(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) -> Bool
-    func doesNotMatch(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) -> Bool
+    func matches(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) throws -> Bool
+    func doesNotMatch(actualExpression: Expression<ValueType>, failureMessage: FailureMessage) throws -> Bool
 }
 
 /// Objective-C interface to the Swift variant of Matcher.

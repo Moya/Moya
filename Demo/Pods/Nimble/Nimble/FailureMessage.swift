@@ -3,12 +3,13 @@ import Foundation
 /// Encapsulates the failure message that matchers can report to the end user.
 ///
 /// This is shared state between Nimble and matchers that mutate this value.
-@objc public class FailureMessage {
+public class FailureMessage: NSObject {
     public var expected: String = "expected"
     public var actualValue: String? = "" // empty string -> use default; nil -> exclude
     public var to: String = "to"
     public var postfixMessage: String = "match"
     public var postfixActual: String = ""
+    public var userDescription: String? = nil
 
     public var stringValue: String {
         get {
@@ -25,7 +26,7 @@ import Foundation
 
     internal var _stringValueOverride: String?
 
-    public init() {
+    public override init() {
     }
 
     public init(stringValue: String) {
@@ -44,6 +45,12 @@ import Foundation
         if let actualValue = actualValue {
             value = "\(expected) \(to) \(postfixMessage), got \(actualValue)\(postfixActual)"
         }
-        return stripNewlines(value)
+        value = stripNewlines(value)
+        
+        if let userDescription = userDescription {
+            return "\(userDescription)\n\(value)"
+        }
+        
+        return value
     }
 }

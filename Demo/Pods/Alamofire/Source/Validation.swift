@@ -25,7 +25,8 @@ import Foundation
 extension Request {
 
     /**
-        A closure used to validate a request that takes a URL request and URL response, and returns whether the request was valid.
+        A closure used to validate a request that takes a URL request and URL response, and returns whether the 
+        request was valid.
     */
     public typealias Validation = (NSURLRequest?, NSHTTPURLResponse) -> Bool
 
@@ -72,9 +73,11 @@ extension Request {
         let subtype: String
 
         init?(_ string: String) {
-            let components = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-                                   .substringToIndex(string.rangeOfString(";")?.endIndex ?? string.endIndex)
-                                   .componentsSeparatedByString("/")
+            let components: [String] = {
+                let stripped = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                let split = stripped.substringToIndex(stripped.rangeOfString(";")?.endIndex ?? stripped.endIndex)
+                return split.componentsSeparatedByString("/")
+            }()
 
             if let
                 type = components.first,
@@ -132,7 +135,8 @@ extension Request {
     // MARK: - Automatic
 
     /**
-        Validates that the response has a status code in the default acceptable range of 200...299, and that the content type matches any specified in the Accept HTTP header field.
+        Validates that the response has a status code in the default acceptable range of 200...299, and that the content 
+        type matches any specified in the Accept HTTP header field.
 
         If validation fails, subsequent calls to response handlers will have an associated error.
 
@@ -141,7 +145,7 @@ extension Request {
     public func validate() -> Self {
         let acceptableStatusCodes: Range<Int> = 200..<300
         let acceptableContentTypes: [String] = {
-            if let accept = self.request?.valueForHTTPHeaderField("Accept") {
+            if let accept = request?.valueForHTTPHeaderField("Accept") {
                 return accept.componentsSeparatedByString(",")
             }
 

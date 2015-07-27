@@ -2,8 +2,8 @@
   "name": "Moya",
   "version": "2.0.0",
   "summary": "Network abstraction layer written in Swift",
-  "description": "  Moya abstracts network commands using Swift Generics to provide developers\n  with more compile-time confidence.\n\n  ReactiveCocoa and RxSwift extensions exist as well. Instructions for installation\n  are in [the README](https://github.com/ashfurrow/Moya).\n",
-  "homepage": "https://github.com/ashfurrow/Moya",
+  "description": "Moya abstracts network commands using Swift Generics to provide developers\nwith more compile-time confidence.\n\nA ReactiveCocoa extension exists as well. Instructions for its installation\nare in [the README](https://github.com/ashfurrow/Moya).",
+  "homepage": "https://github.com/AshFurrow/Moya",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -27,7 +27,7 @@
       "source_files": "Moya/*.swift",
       "dependencies": {
         "Alamofire": [
-          "~> 1.3.0"
+
         ]
       },
       "frameworks": "Foundation"
@@ -49,7 +49,7 @@
 
         ],
         "ReactiveCocoa": [
-          "3.0-beta.6"
+
         ]
       }
     },
@@ -61,7 +61,7 @@
 
         ],
         "RxSwift": [
-          "~> 1.4"
+
         ]
       }
     }

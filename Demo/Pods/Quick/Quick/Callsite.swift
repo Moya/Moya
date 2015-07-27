@@ -2,7 +2,7 @@
     An object encapsulating the file and line number at which
     a particular example is defined.
 */
-@objc final public class Callsite: Equatable {
+final public class Callsite: NSObject {
     /**
         The absolute path of the file in which an example is defined.
     */
