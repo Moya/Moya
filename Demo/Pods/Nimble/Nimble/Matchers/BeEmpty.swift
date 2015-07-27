@@ -6,7 +6,7 @@ import Foundation
 public func beEmpty<S: SequenceType>() -> NonNilMatcherFunc<S> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be empty"
-        let actualSeq = actualExpression.evaluate()
+        let actualSeq = try actualExpression.evaluate()
         if actualSeq == nil {
             return true
         }
@@ -20,7 +20,7 @@ public func beEmpty<S: SequenceType>() -> NonNilMatcherFunc<S> {
 public func beEmpty() -> NonNilMatcherFunc<String> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be empty"
-        let actualString = actualExpression.evaluate()
+        let actualString = try actualExpression.evaluate()
         return actualString == nil || (actualString! as NSString).length  == 0
     }
 }
@@ -30,7 +30,7 @@ public func beEmpty() -> NonNilMatcherFunc<String> {
 public func beEmpty() -> NonNilMatcherFunc<NSString> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be empty"
-        let actualString = actualExpression.evaluate()
+        let actualString = try actualExpression.evaluate()
         return actualString == nil || actualString!.length == 0
     }
 }
@@ -43,7 +43,7 @@ public func beEmpty() -> NonNilMatcherFunc<NSString> {
 public func beEmpty() -> NonNilMatcherFunc<NSDictionary> {
 	return NonNilMatcherFunc { actualExpression, failureMessage in
 		failureMessage.postfixMessage = "be empty"
-		let actualDictionary = actualExpression.evaluate()
+		let actualDictionary = try actualExpression.evaluate()
 		return actualDictionary == nil || actualDictionary!.count == 0
 	}
 }
@@ -53,7 +53,7 @@ public func beEmpty() -> NonNilMatcherFunc<NSDictionary> {
 public func beEmpty() -> NonNilMatcherFunc<NSArray> {
 	return NonNilMatcherFunc { actualExpression, failureMessage in
 		failureMessage.postfixMessage = "be empty"
-		let actualArray = actualExpression.evaluate()
+		let actualArray = try actualExpression.evaluate()
 		return actualArray == nil || actualArray!.count == 0
 	}
 }
@@ -63,7 +63,7 @@ public func beEmpty() -> NonNilMatcherFunc<NSArray> {
 public func beEmpty() -> NonNilMatcherFunc<NMBCollection> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be empty"
-        let actual = actualExpression.evaluate()
+        let actual = try actualExpression.evaluate()
         return actual == nil || actual!.count == 0
     }
 }
@@ -72,14 +72,14 @@ extension NMBObjCMatcher {
     public class func beEmptyMatcher() -> NMBObjCMatcher {
         return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
             let location = actualExpression.location
-            let actualValue = actualExpression.evaluate()
+            let actualValue = try! actualExpression.evaluate()
             failureMessage.postfixMessage = "be empty"
             if let value = actualValue as? NMBCollection {
                 let expr = Expression(expression: ({ value as NMBCollection }), location: location)
-                return beEmpty().matches(expr, failureMessage: failureMessage)
+                return try! beEmpty().matches(expr, failureMessage: failureMessage)
             } else if let value = actualValue as? NSString {
                 let expr = Expression(expression: ({ value as String }), location: location)
-                return beEmpty().matches(expr, failureMessage: failureMessage)
+                return try! beEmpty().matches(expr, failureMessage: failureMessage)
             } else if let actualValue = actualValue {
                 failureMessage.postfixMessage = "be empty (only works for NSArrays, NSSets, NSDictionaries, NSHashTables, and NSStrings)"
                 failureMessage.actualValue = "\(NSStringFromClass(actualValue.dynamicType)) type"

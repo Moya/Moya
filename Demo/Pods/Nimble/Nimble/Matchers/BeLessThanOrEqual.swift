@@ -5,7 +5,7 @@ import Foundation
 public func beLessThanOrEqualTo<T: Comparable>(expectedValue: T?) -> NonNilMatcherFunc<T> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be less than or equal to <\(stringify(expectedValue))>"
-        return actualExpression.evaluate() <= expectedValue
+        return try actualExpression.evaluate() <= expectedValue
     }
 }
 
@@ -14,7 +14,7 @@ public func beLessThanOrEqualTo<T: Comparable>(expectedValue: T?) -> NonNilMatch
 public func beLessThanOrEqualTo<T: NMBComparable>(expectedValue: T?) -> NonNilMatcherFunc<T> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "be less than or equal to <\(stringify(expectedValue))>"
-        let actualValue = actualExpression.evaluate()
+        let actualValue = try actualExpression.evaluate()
         return actualValue != nil && actualValue!.NMB_compare(expectedValue) != NSComparisonResult.OrderedDescending
     }
 }
@@ -31,7 +31,7 @@ extension NMBObjCMatcher {
     public class func beLessThanOrEqualToMatcher(expected: NMBComparable?) -> NMBObjCMatcher {
         return NMBObjCMatcher(canMatchNil:false) { actualExpression, failureMessage in
             let expr = actualExpression.cast { $0 as? NMBComparable }
-            return beLessThanOrEqualTo(expected).matches(expr, failureMessage: failureMessage)
+            return try! beLessThanOrEqualTo(expected).matches(expr, failureMessage: failureMessage)
         }
     }
 }

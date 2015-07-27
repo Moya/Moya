@@ -22,7 +22,7 @@ public func raiseException(
             }), finally: nil)
 
             capture.tryBlock {
-                actualExpression.evaluate()
+                try! actualExpression.evaluate()
                 return
             }
 
@@ -97,7 +97,7 @@ internal func exceptionMatchesNonNilFieldsOrClosure(
         return matches
 }
 
-@objc public class NMBObjCRaiseExceptionMatcher : NMBMatcher {
+public class NMBObjCRaiseExceptionMatcher : NSObject, NMBMatcher {
     internal var _name: String?
     internal var _reason: String?
     internal var _userInfo: NSDictionary?
@@ -114,7 +114,7 @@ internal func exceptionMatchesNonNilFieldsOrClosure(
         let block: () -> Any? = ({ actualBlock(); return nil })
         let expr = Expression(expression: block, location: location)
 
-        return raiseException(
+        return try! raiseException(
             named: _name,
             reason: _reason,
             userInfo: _userInfo,

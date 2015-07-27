@@ -2,7 +2,7 @@ import Foundation
 
 public typealias MatcherBlock = (actualExpression: Expression<NSObject>, failureMessage: FailureMessage) -> Bool
 public typealias FullMatcherBlock = (actualExpression: Expression<NSObject>, failureMessage: FailureMessage, shouldNotMatch: Bool) -> Bool
-@objc public class NMBObjCMatcher : NMBMatcher {
+public class NMBObjCMatcher : NSObject, NMBMatcher {
     let _match: MatcherBlock
     let _doesNotMatch: MatcherBlock
     let canMatchNil: Bool
@@ -36,8 +36,15 @@ public typealias FullMatcherBlock = (actualExpression: Expression<NSObject>, fai
     }
 
     private func canMatch(actualExpression: Expression<NSObject>, failureMessage: FailureMessage) -> Bool {
-        if !canMatchNil && actualExpression.evaluate() == nil {
-            failureMessage.postfixActual = " (use beNil() to match nils)"
+        do {
+            if !canMatchNil {
+                if try actualExpression.evaluate() == nil {
+                    failureMessage.postfixActual = " (use beNil() to match nils)"
+                    return false
+                }
+            }
+        } catch let error {
+            failureMessage.actualValue = "an unexpected error thrown: \(error)"
             return false
         }
         return true

@@ -1,11 +1,11 @@
 import Foundation
 
 
-@objc public class SourceLocation : CustomStringConvertible {
+public class SourceLocation : NSObject {
     public let file: String
     public let line: UInt
 
-    init() {
+    override init() {
         file = "Unknown File"
         line = 0
     }
@@ -15,7 +15,7 @@ import Foundation
         self.line = line
     }
 
-    public var description: String {
+    override public var description: String {
         return "\(file):\(line)"
     }
 }

@@ -43,14 +43,14 @@ public class AssertionRecorder : AssertionHandler {
 /// Once the closure finishes, then the original Nimble assertion handler is restored.
 ///
 /// @see AssertionHandler
-public func withAssertionHandler(tempAssertionHandler: AssertionHandler, closure: () -> Void) {
+public func withAssertionHandler(tempAssertionHandler: AssertionHandler, closure: () throws -> Void) {
     let oldRecorder = NimbleAssertionHandler
     let capturer = NMBExceptionCapture(handler: nil, finally: ({
         NimbleAssertionHandler = oldRecorder
     }))
     NimbleAssertionHandler = tempAssertionHandler
     capturer.tryBlock {
-        closure()
+        try! closure()
     }
 }
 
@@ -64,7 +64,7 @@ public func withAssertionHandler(tempAssertionHandler: AssertionHandler, closure
 ///                 assertion handler when this is true. Defaults to false.
 ///
 /// @see gatherFailingExpectations
-public func gatherExpectations(silently: Bool = false, closure: () -> Void) -> [AssertionRecord] {
+public func gatherExpectations(silently silently: Bool = false, closure: () -> Void) -> [AssertionRecord] {
     let previousRecorder = NimbleAssertionHandler
     let recorder = AssertionRecorder()
     let handlers: [AssertionHandler]
@@ -91,8 +91,8 @@ public func gatherExpectations(silently: Bool = false, closure: () -> Void) -> [
 ///
 /// @see gatherExpectations
 /// @see raiseException source for an example use case.
-public func gatherFailingExpectations(silently: Bool = false, closure: () -> Void) -> [AssertionRecord] {
-    let assertions = gatherExpectations(silently, closure: closure)
+public func gatherFailingExpectations(silently silently: Bool = false, closure: () -> Void) -> [AssertionRecord] {
+    let assertions = gatherExpectations(silently: silently, closure: closure)
     return assertions.filter { assertion in
         !assertion.success
     }
