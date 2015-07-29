@@ -39,7 +39,6 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
             
             disposable.addDisposable {
-                println("\n\nInvoking the disposable!\n\n")
                 if let weakSelf = self {
                     objc_sync_enter(weakSelf)
                     // Clear the inflight request
