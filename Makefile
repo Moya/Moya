@@ -13,10 +13,13 @@ clean:
 	cd $(EXAMPLE_DIR) ; xcodebuild -project '$(PROJECT)' -scheme '$(SCHEME)' clean
 
 test:
-	carthage build --no-skip-current
+	# Ensure that Moya, RxMoya, and ReactiveMoya are built
+	carthage build --no-skip-current;
+	# Execute the test suite
 	cd $(EXAMPLE_DIR) ; set -o pipefail && xcodebuild -project '$(PROJECT)' -scheme '$(SCHEME)' -configuration '$(CONFIGURATION)' test -sdk iphonesimulator -destination 'name=iPhone 5' | xcpretty -c --test
 
 setup:
-	cd $(EXAMPLE_DIR) ; brew install carthage; carthage update;
+	# Install carthage, and update dependencies
+	brew install carthage; carthage update;
 
 ci: test
