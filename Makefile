@@ -17,6 +17,6 @@ test:
 	carthage build --no-skip-current
 
 setup:
-	cd $(EXAMPLE_DIR) ; bundle install ; bundle exec pod install ; brew install carthage
+	cd $(EXAMPLE_DIR) ; bundle install ; bundle exec pod install ; brew install carthage; carthage checkout; carthage build --no-skip-current;
 
 ci: test
