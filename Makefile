@@ -17,6 +17,6 @@ test:
 	cd $(EXAMPLE_DIR) ; set -o pipefail && xcodebuild -project '$(PROJECT)' -scheme '$(SCHEME)' -configuration '$(CONFIGURATION)' test -sdk iphonesimulator -destination 'name=iPhone 5' | xcpretty -c --test
 
 setup:
-	cd $(EXAMPLE_DIR) ; bundle install ; bundle exec pod install ; brew install carthage; carthage update;
+	cd $(EXAMPLE_DIR) ; brew install carthage; carthage update;
 
 ci: test
