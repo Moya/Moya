@@ -56,7 +56,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         }
                         
-                        expect{message}.toEventually( equal(zenMessage) )
+                        expect{ message }.toEventually( equal(zenMessage) )
                     }
                     
                     it("returns real data for user profile request") {
@@ -69,7 +69,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             }
                         }
                         
-                        expect{message}.toEventually( equal(userMessage) )
+                        expect{ message }.toEventually( equal(userMessage) )
                     }
                     
                     it("returns an error when cancelled") {
@@ -132,7 +132,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                                 }
                             }
 
-                            expect{message}.toEventually( equal(zenMessage) )
+                            expect{ message }.toEventually( equal(zenMessage) )
                         }
                         
                         it("returns some data for user profile request") {
@@ -145,31 +145,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                                 }
                             }
 
-                            expect{message}.toEventually( equal(userMessage) )
-                        }
-                        
-                        it("returns identical signals for inflight requests") {
-                            let target: Github = .Zen
-                            let signal1: RACSignal = provider.request(target)
-                            let signal2: RACSignal = provider.request(target)
-                            
-                            expect(provider.inflightRequests.count).to(equal(0))
-                            
-                            var receivedResponse: MoyaResponse!
-                            
-                            signal1.subscribeNext { (response) -> Void in
-                                receivedResponse = response as? MoyaResponse
-                                expect(provider.inflightRequests.count).to(equal(1))
-                            }
-                            
-                            signal2.subscribeNext { (response) -> Void in
-                                expect(receivedResponse).toNot(beNil())
-                                expect(receivedResponse).to(beIdenticalToResponse( response as! MoyaResponse) )
-                                expect(provider.inflightRequests.count).to(equal(1))
-                            }
-                            
-                            // Allow for network request to complete
-                            expect(provider.inflightRequests.count).toEventually( equal(0) )
+                            expect{ message }.toEventually( equal(userMessage) )
                         }
                     }
                     
@@ -198,7 +174,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             expect { message }.toEventually( equal(userMessage) )
                         }
                         
-                        it("returns identical signals for inflight requests") {
+                        it("returns identical signal producers for inflight requests") {
                             let target: Github = .Zen
                             let signal1: SignalProducer<MoyaResponse, NSError> = provider.request(target)
                             let signal2: SignalProducer<MoyaResponse, NSError> = provider.request(target)
@@ -208,17 +184,18 @@ class MoyaProviderIntegrationTests: QuickSpec {
                             var receivedResponse: MoyaResponse!
                             
                             signal1
-                                |> start(next: { (response: MoyaResponse) in
+                                |> on(next: { (response: MoyaResponse) in
                                     receivedResponse = response
                                     expect(provider.inflightRequests.count).to( equal(1) )
                                 })
                             
                             signal2
-                                |> start(next: { (response: MoyaResponse) in
+                                |> on(next: { (response: MoyaResponse) in
                                     expect(receivedResponse).toNot( beNil() )
                                     expect(receivedResponse).to( beIdenticalToResponse(response) )
-                                    expect(provider.inflightRequests.count).to( equal(0) )
+                                    expect(provider.inflightRequests.count).to( equal(1) )
                                 })
+                            
                             
                             expect(provider.inflightRequests.count).toEventually( equal(0) )
                         }

@@ -1,7 +1,7 @@
 import Foundation
 import Moya
 
-public class MoyaResponse: NSObject, Printable {
+public class MoyaResponse: NSObject, Equatable, Printable {
     public let statusCode: Int
     public let data: NSData
     public let response: NSURLResponse?
@@ -19,4 +19,8 @@ public class MoyaResponse: NSObject, Printable {
     override public var debugDescription: String {
         return description
     }
+}
+
+public func == (lhs: MoyaResponse, rhs: MoyaResponse) -> Bool {
+    return (lhs.statusCode == rhs.statusCode) && (lhs.data.length == rhs.data.length)
 }

@@ -17,8 +17,8 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
     public func request(token: T) -> SignalProducer<MoyaResponse, NSError> {
         let endpoint = self.endpoint(token)
         
-        if let existingSignal = inflightRequests[endpoint] {
-            return existingSignal
+        if let existingProducer = inflightRequests[endpoint] {
+            return existingProducer
         }
         
         let producer: SignalProducer<MoyaResponse, NSError> = SignalProducer { [weak self] sink, disposable in
@@ -33,13 +33,14 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                     if let data = data {
                         sendNext(sink, MoyaResponse(statusCode: statusCode!, data: data, response: response))
                     }
-                    
-                    sendCompleted(sink)
                 }
+                
+                sendCompleted(sink)
             }
             
             disposable.addDisposable {
                 if let weakSelf = self {
+                    println("\n\n\nDisposing request\n\n\n")
                     objc_sync_enter(weakSelf)
                     // Clear the inflight request
                     weakSelf.inflightRequests[endpoint] = nil
@@ -50,9 +51,9 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                 }
             }
         }
-    
+        
         objc_sync_enter(self)
-        inflightRequests[endpoint] = producer
+        self.inflightRequests[endpoint] = producer
         objc_sync_exit(self)
         
         return producer

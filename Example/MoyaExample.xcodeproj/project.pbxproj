@@ -23,18 +23,35 @@
 		7C0AC51E1B5E8F3300F8C173 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5151B5E8F3300F8C173 /* RxSwift.framework */; };
 		7C0AC5251B5E926600F8C173 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5231B5E926600F8C173 /* Nimble.framework */; };
 		7C0AC5261B5E926600F8C173 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5241B5E926600F8C173 /* Quick.framework */; };
-		7C0AC5391B5EA27100F8C173 /* RxMoya.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CED32A11B55BC7200B97BBD /* RxMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7C0AC53A1B5EA27100F8C173 /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CED32A21B55BC7200B97BBD /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7C0AC53B1B5EA27100F8C173 /* Box.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CED32991B55BC6200B97BBD /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7C0AC53C1B5EA27100F8C173 /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CED329A1B55BC6200B97BBD /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7C0AC53D1B5EA27100F8C173 /* ReactiveMoya.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CED329B1B55BC6200B97BBD /* ReactiveMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7C0AC53E1B5EA27100F8C173 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CED329C1B55BC6200B97BBD /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C0AC53F1B5EA2BE00F8C173 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C0AC5231B5E926600F8C173 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C0AC5401B5EA2BE00F8C173 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C0AC5241B5E926600F8C173 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C0AC5421B5EA2CD00F8C173 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5411B5EA2CD00F8C173 /* OHHTTPStubs.framework */; };
 		7C0AC5431B5EA2D300F8C173 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C0AC5411B5EA2CD00F8C173 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C0AC5451B5EA2FC00F8C173 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C0AC5441B5EA2FC00F8C173 /* testImage.png */; };
-		7C99E5901B686C2200E5714F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E58F1B686C2200E5714F /* Alamofire.framework */; };
+		7C99E5B41B69093500E5714F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5AC1B69093500E5714F /* Alamofire.framework */; };
+		7C99E5B51B69093500E5714F /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5AD1B69093500E5714F /* Box.framework */; };
+		7C99E5B61B69093500E5714F /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5AE1B69093500E5714F /* Moya.framework */; };
+		7C99E5B71B69093500E5714F /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5AF1B69093500E5714F /* ReactiveCocoa.framework */; };
+		7C99E5B81B69093500E5714F /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5B01B69093500E5714F /* ReactiveMoya.framework */; };
+		7C99E5B91B69093500E5714F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5B11B69093500E5714F /* Result.framework */; };
+		7C99E5BA1B69093500E5714F /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5B21B69093500E5714F /* RxMoya.framework */; };
+		7C99E5BB1B69093500E5714F /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C99E5B31B69093500E5714F /* RxSwift.framework */; };
+		7C99E5BC1B6909AA00E5714F /* Alamofire.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5AC1B69093500E5714F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5BD1B6909AA00E5714F /* Box.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5AD1B69093500E5714F /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5BE1B6909AA00E5714F /* Moya.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5AE1B69093500E5714F /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5BF1B6909AA00E5714F /* ReactiveCocoa.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5AF1B69093500E5714F /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C01B6909AA00E5714F /* ReactiveMoya.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5B01B69093500E5714F /* ReactiveMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C11B6909AA00E5714F /* Result.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5B11B69093500E5714F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C21B6909AA00E5714F /* RxMoya.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5B21B69093500E5714F /* RxMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C31B6909AA00E5714F /* RxSwift.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7C99E5B31B69093500E5714F /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C41B6909C000E5714F /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5AC1B69093500E5714F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C51B6909C000E5714F /* Box.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5AD1B69093500E5714F /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C61B6909C000E5714F /* Moya.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5AE1B69093500E5714F /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C71B6909C000E5714F /* ReactiveCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5AF1B69093500E5714F /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C81B6909C000E5714F /* ReactiveMoya.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5B01B69093500E5714F /* ReactiveMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5C91B6909C000E5714F /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5B11B69093500E5714F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5CA1B6909C000E5714F /* RxMoya.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5B21B69093500E5714F /* RxMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C99E5CB1B6909C000E5714F /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C99E5B31B69093500E5714F /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7CED32441B55A81A00B97BBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32431B55A81A00B97BBD /* AppDelegate.swift */; };
 		7CED32461B55A81A00B97BBD /* MoyaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32451B55A81A00B97BBD /* MoyaViewController.swift */; };
 		7CED32491B55A81A00B97BBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CED32471B55A81A00B97BBD /* Main.storyboard */; };
@@ -44,18 +61,6 @@
 		7CED32841B55AACB00B97BBD /* ReactiveMoyaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32831B55AACB00B97BBD /* ReactiveMoyaViewController.swift */; };
 		7CED32861B55AAD700B97BBD /* RxMoyaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32851B55AAD700B97BBD /* RxMoyaViewController.swift */; };
 		7CED32891B55B23D00B97BBD /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32881B55B23D00B97BBD /* UIViewControllerExtensions.swift */; };
-		7CED329D1B55BC6200B97BBD /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED32991B55BC6200B97BBD /* Box.framework */; };
-		7CED329E1B55BC6200B97BBD /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED329A1B55BC6200B97BBD /* ReactiveCocoa.framework */; };
-		7CED329F1B55BC6200B97BBD /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED329B1B55BC6200B97BBD /* ReactiveMoya.framework */; };
-		7CED32A01B55BC6200B97BBD /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED329C1B55BC6200B97BBD /* Result.framework */; };
-		7CED32A31B55BC7200B97BBD /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED32A11B55BC7200B97BBD /* RxMoya.framework */; };
-		7CED32A41B55BC7200B97BBD /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CED32A21B55BC7200B97BBD /* RxSwift.framework */; };
-		7CED32A71B55BC9000B97BBD /* RxMoya.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CED32A11B55BC7200B97BBD /* RxMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CED32A81B55BC9000B97BBD /* RxSwift.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CED32A21B55BC7200B97BBD /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CED32A91B55BC9000B97BBD /* Box.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CED32991B55BC6200B97BBD /* Box.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CED32AA1B55BC9000B97BBD /* ReactiveCocoa.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CED329A1B55BC6200B97BBD /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CED32AB1B55BC9000B97BBD /* ReactiveMoya.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CED329B1B55BC6200B97BBD /* ReactiveMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CED32AC1B55BC9000B97BBD /* Result.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CED329C1B55BC6200B97BBD /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,15 +80,17 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7C99E5C41B6909C000E5714F /* Alamofire.framework in CopyFiles */,
+				7C99E5C51B6909C000E5714F /* Box.framework in CopyFiles */,
+				7C99E5C61B6909C000E5714F /* Moya.framework in CopyFiles */,
+				7C99E5C71B6909C000E5714F /* ReactiveCocoa.framework in CopyFiles */,
+				7C99E5C81B6909C000E5714F /* ReactiveMoya.framework in CopyFiles */,
+				7C99E5C91B6909C000E5714F /* Result.framework in CopyFiles */,
+				7C99E5CA1B6909C000E5714F /* RxMoya.framework in CopyFiles */,
+				7C99E5CB1B6909C000E5714F /* RxSwift.framework in CopyFiles */,
 				7C0AC5431B5EA2D300F8C173 /* OHHTTPStubs.framework in CopyFiles */,
 				7C0AC53F1B5EA2BE00F8C173 /* Nimble.framework in CopyFiles */,
 				7C0AC5401B5EA2BE00F8C173 /* Quick.framework in CopyFiles */,
-				7C0AC5391B5EA27100F8C173 /* RxMoya.framework in CopyFiles */,
-				7C0AC53A1B5EA27100F8C173 /* RxSwift.framework in CopyFiles */,
-				7C0AC53B1B5EA27100F8C173 /* Box.framework in CopyFiles */,
-				7C0AC53C1B5EA27100F8C173 /* ReactiveCocoa.framework in CopyFiles */,
-				7C0AC53D1B5EA27100F8C173 /* ReactiveMoya.framework in CopyFiles */,
-				7C0AC53E1B5EA27100F8C173 /* Result.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,12 +100,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7CED32A71B55BC9000B97BBD /* RxMoya.framework in Copy Dependencies */,
-				7CED32A81B55BC9000B97BBD /* RxSwift.framework in Copy Dependencies */,
-				7CED32A91B55BC9000B97BBD /* Box.framework in Copy Dependencies */,
-				7CED32AA1B55BC9000B97BBD /* ReactiveCocoa.framework in Copy Dependencies */,
-				7CED32AB1B55BC9000B97BBD /* ReactiveMoya.framework in Copy Dependencies */,
-				7CED32AC1B55BC9000B97BBD /* Result.framework in Copy Dependencies */,
+				7C99E5BC1B6909AA00E5714F /* Alamofire.framework in Copy Dependencies */,
+				7C99E5BD1B6909AA00E5714F /* Box.framework in Copy Dependencies */,
+				7C99E5BE1B6909AA00E5714F /* Moya.framework in Copy Dependencies */,
+				7C99E5BF1B6909AA00E5714F /* ReactiveCocoa.framework in Copy Dependencies */,
+				7C99E5C01B6909AA00E5714F /* ReactiveMoya.framework in Copy Dependencies */,
+				7C99E5C11B6909AA00E5714F /* Result.framework in Copy Dependencies */,
+				7C99E5C21B6909AA00E5714F /* RxMoya.framework in Copy Dependencies */,
+				7C99E5C31B6909AA00E5714F /* RxSwift.framework in Copy Dependencies */,
 			);
 			name = "Copy Dependencies";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,7 +138,14 @@
 		7C0AC5241B5E926600F8C173 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		7C0AC5411B5EA2CD00F8C173 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = ../../Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		7C0AC5441B5EA2FC00F8C173 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testImage.png; path = ExampleTests/testImage.png; sourceTree = SOURCE_ROOT; };
-		7C99E58F1B686C2200E5714F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../../../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		7C99E5AC1B69093500E5714F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		7C99E5AD1B69093500E5714F /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = ../../Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
+		7C99E5AE1B69093500E5714F /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = ../../Carthage/Build/iOS/Moya.framework; sourceTree = "<group>"; };
+		7C99E5AF1B69093500E5714F /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = ../../Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		7C99E5B01B69093500E5714F /* ReactiveMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMoya.framework; path = ../../Carthage/Build/iOS/ReactiveMoya.framework; sourceTree = "<group>"; };
+		7C99E5B11B69093500E5714F /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = ../../Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		7C99E5B21B69093500E5714F /* RxMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxMoya.framework; path = ../../Carthage/Build/iOS/RxMoya.framework; sourceTree = "<group>"; };
+		7C99E5B31B69093500E5714F /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = ../../Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		7CED323E1B55A81A00B97BBD /* MoyaExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoyaExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CED32421B55A81A00B97BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CED32431B55A81A00B97BBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -141,12 +157,6 @@
 		7CED32831B55AACB00B97BBD /* ReactiveMoyaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveMoyaViewController.swift; sourceTree = "<group>"; };
 		7CED32851B55AAD700B97BBD /* RxMoyaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxMoyaViewController.swift; sourceTree = "<group>"; };
 		7CED32881B55B23D00B97BBD /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
-		7CED32991B55BC6200B97BBD /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = ../../../../Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
-		7CED329A1B55BC6200B97BBD /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = ../../../../Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
-		7CED329B1B55BC6200B97BBD /* ReactiveMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMoya.framework; path = ../../../../Carthage/Build/iOS/ReactiveMoya.framework; sourceTree = "<group>"; };
-		7CED329C1B55BC6200B97BBD /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = ../../../../Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		7CED32A11B55BC7200B97BBD /* RxMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxMoya.framework; path = ../../../../Carthage/Build/iOS/RxMoya.framework; sourceTree = "<group>"; };
-		7CED32A21B55BC7200B97BBD /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = ../../../../Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		A681BC5939CFF84882C8AFC7 /* Pods-MoyaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests/Pods-MoyaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EC760B98DEBD7841064FCF27 /* Pods_MoyaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoyaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF655966D30D823E61D50E8E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -176,13 +186,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CED329F1B55BC6200B97BBD /* ReactiveMoya.framework in Frameworks */,
-				7CED329D1B55BC6200B97BBD /* Box.framework in Frameworks */,
-				7CED32A01B55BC6200B97BBD /* Result.framework in Frameworks */,
-				7CED32A41B55BC7200B97BBD /* RxSwift.framework in Frameworks */,
-				7C99E5901B686C2200E5714F /* Alamofire.framework in Frameworks */,
-				7CED32A31B55BC7200B97BBD /* RxMoya.framework in Frameworks */,
-				7CED329E1B55BC6200B97BBD /* ReactiveCocoa.framework in Frameworks */,
+				7C99E5B51B69093500E5714F /* Box.framework in Frameworks */,
+				7C99E5B81B69093500E5714F /* ReactiveMoya.framework in Frameworks */,
+				7C99E5B61B69093500E5714F /* Moya.framework in Frameworks */,
+				7C99E5B91B69093500E5714F /* Result.framework in Frameworks */,
+				7C99E5BB1B69093500E5714F /* RxSwift.framework in Frameworks */,
+				7C99E5B41B69093500E5714F /* Alamofire.framework in Frameworks */,
+				7C99E5BA1B69093500E5714F /* RxMoya.framework in Frameworks */,
+				7C99E5B71B69093500E5714F /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +243,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		7C99E5AB1B69091600E5714F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7C99E5AC1B69093500E5714F /* Alamofire.framework */,
+				7C99E5AD1B69093500E5714F /* Box.framework */,
+				7C99E5AE1B69093500E5714F /* Moya.framework */,
+				7C99E5AF1B69093500E5714F /* ReactiveCocoa.framework */,
+				7C99E5B01B69093500E5714F /* ReactiveMoya.framework */,
+				7C99E5B11B69093500E5714F /* Result.framework */,
+				7C99E5B21B69093500E5714F /* RxMoya.framework */,
+				7C99E5B31B69093500E5714F /* RxSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7CED32351B55A81A00B97BBD = {
 			isa = PBXGroup;
 			children = (
@@ -262,7 +288,7 @@
 				7CED328B1B55B53C00B97BBD /* MoyaExample */,
 				7CED328A1B55B53100B97BBD /* Models */,
 				7CED32411B55A81A00B97BBD /* Supporting Files */,
-				7CED326C1B55A8CE00B97BBD /* Frameworks */,
+				7C99E5AB1B69091600E5714F /* Frameworks */,
 			);
 			path = MoyaExample;
 			sourceTree = "<group>";
@@ -276,36 +302,6 @@
 				7CED32421B55A81A00B97BBD /* Info.plist */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7CED326C1B55A8CE00B97BBD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				7C99E58F1B686C2200E5714F /* Alamofire.framework */,
-				7CED327C1B55AA7200B97BBD /* RxMoya */,
-				7CED32731B55AA5C00B97BBD /* ReactiveMoya */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		7CED32731B55AA5C00B97BBD /* ReactiveMoya */ = {
-			isa = PBXGroup;
-			children = (
-				7CED32991B55BC6200B97BBD /* Box.framework */,
-				7CED329A1B55BC6200B97BBD /* ReactiveCocoa.framework */,
-				7CED329B1B55BC6200B97BBD /* ReactiveMoya.framework */,
-				7CED329C1B55BC6200B97BBD /* Result.framework */,
-			);
-			path = ReactiveMoya;
-			sourceTree = "<group>";
-		};
-		7CED327C1B55AA7200B97BBD /* RxMoya */ = {
-			isa = PBXGroup;
-			children = (
-				7CED32A11B55BC7200B97BBD /* RxMoya.framework */,
-				7CED32A21B55BC7200B97BBD /* RxSwift.framework */,
-			);
-			path = RxMoya;
 			sourceTree = "<group>";
 		};
 		7CED32811B55AAAC00B97BBD /* ReactiveMoyaExample */ = {
