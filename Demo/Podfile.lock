@@ -4,7 +4,7 @@ PODS:
   - Moya (1.1.1):
     - Moya/Core (= 1.1.1)
   - Moya/Core (1.1.1):
-    - Alamofire (~> 1.2.0)
+    - Alamofire (~> 1.3.0)
   - Moya/ReactiveCocoa (1.1.1):
     - Moya/ReactiveCore
     - ReactiveCocoa (= 3.0-beta.6)
