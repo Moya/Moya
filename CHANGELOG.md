@@ -1,7 +1,7 @@
 # 2.0.0
 
 - **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.
-- **Breaking change** Renames `Moya/Reacitve` subspec to `Moya/ReactiveCocoa`.
+- **Breaking change** Renames `Moya/Reactive` subspec to `Moya/ReactiveCocoa`.
 - **Breaking change** Removes `stubResponses` from initializer; replaced with new stubbing behavior `.NoStubbing`. Added class methods to `MoyaProvider` to provide defaults, while allowing users to still change stubbing behaviour on a per-request basis.
 - **Breaking change** Redefines types of `DefaultEndpointMapping` and `DefaultEnpointResolution` class functions on `MoyaProvider`. You no longer invoke these functions to return a closure, rather, you reference the functions themselves _as_ closures.
 - **Breaking change** Renames `endpointsClosure` parameter and property of `MoyaProvider` to `endpointClosure`.
