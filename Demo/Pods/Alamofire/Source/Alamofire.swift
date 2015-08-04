@@ -24,6 +24,8 @@ import Foundation
 
 /// Alamofire errors
 public let AlamofireErrorDomain = "com.alamofire.error"
+public let AlamofireInputStreamReadFailed = -6000
+public let AlamofireOutputStreamWriteFailed = -6001
 
 // MARK: - URLStringConvertible
 
@@ -85,9 +87,15 @@ extension NSURLRequest: URLRequestConvertible {
 
 // MARK: - Convenience
 
-func URLRequest(method: Method, URL: URLStringConvertible) -> NSURLRequest {
-    let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL.URLString)!)
+func URLRequest(method: Method, URLString: URLStringConvertible, headers: [String: String]? = nil) -> NSMutableURLRequest {
+    let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URLString.URLString)!)
     mutableURLRequest.HTTPMethod = method.rawValue
+
+    if let headers = headers {
+        for (headerField, headerValue) in headers {
+            mutableURLRequest.setValue(headerValue, forHTTPHeaderField: headerField)
+        }
+    }
 
     return mutableURLRequest
 }
@@ -101,11 +109,12 @@ func URLRequest(method: Method, URL: URLStringConvertible) -> NSURLRequest {
     :param: URLString The URL string.
     :param: parameters The parameters. `nil` by default.
     :param: encoding The parameter encoding. `.URL` by default.
+    :param: headers The HTTP headers. `nil` by default.
 
     :returns: The created request.
 */
-public func request(method: Method, URLString: URLStringConvertible, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL) -> Request {
-    return Manager.sharedInstance.request(method, URLString, parameters: parameters, encoding: encoding)
+public func request(method: Method, URLString: URLStringConvertible, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL, headers: [String: String]? = nil) -> Request {
+    return Manager.sharedInstance.request(method, URLString, parameters: parameters, encoding: encoding, headers: headers)
 }
 
 /**
@@ -130,12 +139,13 @@ public func request(URLRequest: URLRequestConvertible) -> Request {
 
     :param: method The HTTP method.
     :param: URLString The URL string.
+    :param: headers The HTTP headers. `nil` by default.
     :param: file The file to upload.
 
     :returns: The created upload request.
 */
-public func upload(method: Method, URLString: URLStringConvertible, file: NSURL) -> Request {
-    return Manager.sharedInstance.upload(method, URLString, file: file)
+public func upload(method: Method, URLString: URLStringConvertible, headers: [String: String]? = nil, #file: NSURL) -> Request {
+    return Manager.sharedInstance.upload(method, URLString, headers: headers, file: file)
 }
 
 /**
@@ -146,7 +156,7 @@ public func upload(method: Method, URLString: URLStringConvertible, file: NSURL)
 
     :returns: The created upload request.
 */
-public func upload(URLRequest: URLRequestConvertible, file: NSURL) -> Request {
+public func upload(URLRequest: URLRequestConvertible, #file: NSURL) -> Request {
     return Manager.sharedInstance.upload(URLRequest, file: file)
 }
 
@@ -157,12 +167,13 @@ public func upload(URLRequest: URLRequestConvertible, file: NSURL) -> Request {
 
     :param: method The HTTP method.
     :param: URLString The URL string.
+    :param: headers The HTTP headers. `nil` by default.
     :param: data The data to upload.
 
     :returns: The created upload request.
 */
-public func upload(method: Method, URLString: URLStringConvertible, data: NSData) -> Request {
-    return Manager.sharedInstance.upload(method, URLString, data: data)
+public func upload(method: Method, URLString: URLStringConvertible, headers: [String: String]? = nil, #data: NSData) -> Request {
+    return Manager.sharedInstance.upload(method, URLString, headers: headers, data: data)
 }
 
 /**
@@ -173,7 +184,7 @@ public func upload(method: Method, URLString: URLStringConvertible, data: NSData
 
     :returns: The created upload request.
 */
-public func upload(URLRequest: URLRequestConvertible, data: NSData) -> Request {
+public func upload(URLRequest: URLRequestConvertible, #data: NSData) -> Request {
     return Manager.sharedInstance.upload(URLRequest, data: data)
 }
 
@@ -184,12 +195,13 @@ public func upload(URLRequest: URLRequestConvertible, data: NSData) -> Request {
 
     :param: method The HTTP method.
     :param: URLString The URL string.
+    :param: headers The HTTP headers. `nil` by default.
     :param: stream The stream to upload.
 
     :returns: The created upload request.
 */
-public func upload(method: Method, URLString: URLStringConvertible, stream: NSInputStream) -> Request {
-    return Manager.sharedInstance.upload(method, URLString, stream: stream)
+public func upload(method: Method, URLString: URLStringConvertible, headers: [String: String]? = nil, #stream: NSInputStream) -> Request {
+    return Manager.sharedInstance.upload(method, URLString, headers: headers, stream: stream)
 }
 
 /**
@@ -200,8 +212,62 @@ public func upload(method: Method, URLString: URLStringConvertible, stream: NSIn
 
     :returns: The created upload request.
 */
-public func upload(URLRequest: URLRequestConvertible, stream: NSInputStream) -> Request {
+public func upload(URLRequest: URLRequestConvertible, #stream: NSInputStream) -> Request {
     return Manager.sharedInstance.upload(URLRequest, stream: stream)
+}
+
+// MARK: MultipartFormData
+
+/**
+    Creates an upload request using the shared manager instance for the specified method and URL string.
+
+    :param: method                  The HTTP method.
+    :param: URLString               The URL string.
+    :param: headers The HTTP headers. `nil` by default.
+    :param: multipartFormData       The closure used to append body parts to the `MultipartFormData`.
+    :param: encodingMemoryThreshold The encoding memory threshold in bytes. `MultipartFormDataEncodingMemoryThreshold` 
+                                    by default.
+    :param: encodingCompletion      The closure called when the `MultipartFormData` encoding is complete.
+*/
+public func upload(
+    method: Method,
+    #URLString: URLStringConvertible,
+    headers: [String: String]? = nil,
+    #multipartFormData: MultipartFormData -> Void,
+    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+    #encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+{
+    return Manager.sharedInstance.upload(
+        method,
+        URLString,
+        headers: headers,
+        multipartFormData: multipartFormData,
+        encodingMemoryThreshold: encodingMemoryThreshold,
+        encodingCompletion: encodingCompletion
+    )
+}
+
+/**
+    Creates an upload request using the shared manager instance for the specified method and URL string.
+
+    :param: URLRequest              The URL request.
+    :param: multipartFormData       The closure used to append body parts to the `MultipartFormData`.
+    :param: encodingMemoryThreshold The encoding memory threshold in bytes. `MultipartFormDataEncodingMemoryThreshold`
+                                    by default.
+    :param: encodingCompletion      The closure called when the `MultipartFormData` encoding is complete.
+*/
+public func upload(
+    URLRequest: URLRequestConvertible,
+    #multipartFormData: MultipartFormData -> Void,
+    encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+    #encodingCompletion: (Manager.MultipartFormDataEncodingResult -> Void)?)
+{
+    return Manager.sharedInstance.upload(
+        URLRequest,
+        multipartFormData: multipartFormData,
+        encodingMemoryThreshold: encodingMemoryThreshold,
+        encodingCompletion: encodingCompletion
+    )
 }
 
 // MARK: - Download Methods
@@ -213,12 +279,13 @@ public func upload(URLRequest: URLRequestConvertible, stream: NSInputStream) -> 
 
     :param: method The HTTP method.
     :param: URLString The URL string.
+    :param: headers The HTTP headers. `nil` by default.
     :param: destination The closure used to determine the destination of the downloaded file.
 
     :returns: The created download request.
 */
-public func download(method: Method, URLString: URLStringConvertible, destination: Request.DownloadFileDestination) -> Request {
-    return Manager.sharedInstance.download(method, URLString, destination: destination)
+public func download(method: Method, URLString: URLStringConvertible, headers: [String: String]? = nil, #destination: Request.DownloadFileDestination) -> Request {
+    return Manager.sharedInstance.download(method, URLString, headers: headers, destination: destination)
 }
 
 /**
@@ -229,7 +296,7 @@ public func download(method: Method, URLString: URLStringConvertible, destinatio
 
     :returns: The created download request.
 */
-public func download(URLRequest: URLRequestConvertible, destination: Request.DownloadFileDestination) -> Request {
+public func download(URLRequest: URLRequestConvertible, #destination: Request.DownloadFileDestination) -> Request {
     return Manager.sharedInstance.download(URLRequest, destination: destination)
 }
 
@@ -243,6 +310,6 @@ public func download(URLRequest: URLRequestConvertible, destination: Request.Dow
 
     :returns: The created download request.
 */
-public func download(resumeData data: NSData, destination: Request.DownloadFileDestination) -> Request {
+public func download(resumeData data: NSData, #destination: Request.DownloadFileDestination) -> Request {
     return Manager.sharedInstance.download(data, destination: destination)
 }

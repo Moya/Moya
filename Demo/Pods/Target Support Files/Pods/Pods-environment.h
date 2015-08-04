@@ -9,8 +9,8 @@
 // Alamofire
 #define COCOAPODS_POD_AVAILABLE_Alamofire
 #define COCOAPODS_VERSION_MAJOR_Alamofire 1
-#define COCOAPODS_VERSION_MINOR_Alamofire 2
-#define COCOAPODS_VERSION_PATCH_Alamofire 3
+#define COCOAPODS_VERSION_MINOR_Alamofire 3
+#define COCOAPODS_VERSION_PATCH_Alamofire 0
 
 // Box
 #define COCOAPODS_POD_AVAILABLE_Box
@@ -85,6 +85,6 @@
 // RxSwift
 #define COCOAPODS_POD_AVAILABLE_RxSwift
 #define COCOAPODS_VERSION_MAJOR_RxSwift 1
-#define COCOAPODS_VERSION_MINOR_RxSwift 6
+#define COCOAPODS_VERSION_MINOR_RxSwift 9
 #define COCOAPODS_VERSION_PATCH_RxSwift 0
 
