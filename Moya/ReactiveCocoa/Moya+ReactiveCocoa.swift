@@ -21,8 +21,13 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
 
         return RACSignal.defer { [weak self] () -> RACSignal! in
             
-            if let existingSignal = self?.inflightRequests[endpoint] {
-                return existingSignal
+            if let weakSelf = self {
+                objc_sync_enter(weakSelf)
+                let inFlight = weakSelf.inflightRequests[endpoint]
+                objc_sync_exit(weakSelf)
+                if let existingSignal = inFlight {
+                    return existingSignal
+                }
             }
             
             let signal = RACSignal.createSignal { (subscriber) -> RACDisposable! in
