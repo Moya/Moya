@@ -277,7 +277,7 @@ class MoyaProviderSpec: QuickSpec {
                         let parallelCount = 10
                         let observables = Array(0..<parallelCount).map { _ in provider.request(target) }
                         var completions = Array(0..<parallelCount).map { _ in false }
-                        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                        let queue = dispatch_queue_create("testing", DISPATCH_QUEUE_CONCURRENT)
                         dispatch_apply(observables.count, queue, { idx in
                             let i = idx
                             observables[i] >- subscribeNext { _ -> Void in
