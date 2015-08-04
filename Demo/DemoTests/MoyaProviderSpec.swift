@@ -281,7 +281,9 @@ class MoyaProviderSpec: QuickSpec {
                         dispatch_apply(observables.count, queue, { idx in
                             let i = idx
                             observables[i] >- subscribeNext { _ -> Void in
-                                expect(provider.inflightRequests.count).to(equal(1))
+                                if i == 5 { // We only need to check it once.
+                                    expect(provider.inflightRequests.count).to(equal(1))
+                                }
                                 completions[i] = true
                             }
                         })
