@@ -13,6 +13,7 @@ import Foundation
 // used to detect resource leaks during unit tests
 // it's not perfect, but works well
 public var resourceCount: Int32 = 0
+public var numberOfSerialDispatchQueueObservables: Int32 = 0
 #endif
 
 // This is the pipe operator (left associative function application operator)
@@ -46,4 +47,13 @@ func abstractMethod<T>() -> T {
 func rxFatalError(lastMessage: String) {
     // The temptation to comment this line is great, but please don't, it's for your own good. The choice is yours.
     fatalError(lastMessage)
+}
+
+extension NSObject {
+    func rx_synchronized<T>(@noescape action: () -> T) -> T {
+        objc_sync_enter(self)
+        let result = action()
+        objc_sync_exit(self)
+        return result
+    }
 }

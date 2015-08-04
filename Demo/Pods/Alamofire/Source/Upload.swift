@@ -1,4 +1,4 @@
-// Alamofire.swift
+// Upload.swift
 //
 // Copyright (c) 2014–2015 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -46,15 +46,18 @@ extension Manager {
             dispatch_sync(queue) {
                 uploadTask = self.session.uploadTaskWithStreamedRequest(request)
             }
+
             HTTPBodyStream = stream
         }
 
         let request = Request(session: session, task: uploadTask)
+
         if HTTPBodyStream != nil {
             request.delegate.taskNeedNewBodyStream = { _, _ in
                 return HTTPBodyStream
             }
         }
+
         delegate[request.delegate.task] = request.delegate
 
         if startRequestsImmediately {
@@ -87,12 +90,14 @@ extension Manager {
 
         :param: method The HTTP method.
         :param: URLString The URL string.
-        :param: file The file to upload
+        :param: headers The HTTP headers. `nil` by default.
+        :param: file The file to upload.
 
         :returns: The created upload request.
     */
-    public func upload(method: Method, _ URLString: URLStringConvertible, file: NSURL) -> Request {
-        return upload(URLRequest(method, URLString), file: file)
+    public func upload(method: Method, _ URLString: URLStringConvertible, headers: [String: String]? = nil, file: NSURL) -> Request {
+        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
+        return upload(mutableURLRequest, file: file)
     }
 
     // MARK: Data
@@ -102,8 +107,8 @@ extension Manager {
 
         If `startRequestsImmediately` is `true`, the request will have `resume()` called before being returned.
 
-        :param: URLRequest The URL request
-        :param: data The data to upload
+        :param: URLRequest The URL request.
+        :param: data The data to upload.
 
         :returns: The created upload request.
     */
@@ -118,12 +123,15 @@ extension Manager {
 
         :param: method The HTTP method.
         :param: URLString The URL string.
-        :param: data The data to upload
+        :param: headers The HTTP headers. `nil` by default.
+        :param: data The data to upload.
 
         :returns: The created upload request.
     */
-    public func upload(method: Method, _ URLString: URLStringConvertible, data: NSData) -> Request {
-        return upload(URLRequest(method, URLString), data: data)
+    public func upload(method: Method, _ URLString: URLStringConvertible, headers: [String: String]? = nil, data: NSData) -> Request {
+        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
+
+        return upload(mutableURLRequest, data: data)
     }
 
     // MARK: Stream
@@ -133,8 +141,8 @@ extension Manager {
 
         If `startRequestsImmediately` is `true`, the request will have `resume()` called before being returned.
 
-        :param: URLRequest The URL request
-        :param: stream The stream to upload
+        :param: URLRequest The URL request.
+        :param: stream The stream to upload.
 
         :returns: The created upload request.
     */
@@ -149,12 +157,164 @@ extension Manager {
 
         :param: method The HTTP method.
         :param: URLString The URL string.
+        :param: headers The HTTP headers. `nil` by default.
         :param: stream The stream to upload.
 
         :returns: The created upload request.
     */
-    public func upload(method: Method, _ URLString: URLStringConvertible, stream: NSInputStream) -> Request {
-        return upload(URLRequest(method, URLString), stream: stream)
+    public func upload(method: Method, _ URLString: URLStringConvertible, headers: [String: String]? = nil, stream: NSInputStream) -> Request {
+        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
+
+        return upload(mutableURLRequest, stream: stream)
+    }
+
+    // MARK: MultipartFormData
+
+    /// Default memory threshold used when encoding `MultipartFormData`.
+    public static let MultipartFormDataEncodingMemoryThreshold: UInt64 = 10 * 1024 * 1024
+
+    /**
+        Defines whether the `MultipartFormData` encoding was successful and contains result of the encoding as 
+        associated values.
+
+        - Success: Represents a successful `MultipartFormData` encoding and contains the new `Request` along with 
+                   streaming information.
+        - Failure: Used to represent a failure in the `MultipartFormData` encoding and also contains the encoding 
+                   error.
+    */
+    public enum MultipartFormDataEncodingResult {
+        case Success(request: Request, streamingFromDisk: Bool, streamFileURL: NSURL?)
+        case Failure(NSError)
+    }
+
+    /**
+        Encodes the `MultipartFormData` and creates a request to upload the result to the specified URL request.
+
+        It is important to understand the memory implications of uploading `MultipartFormData`. If the cummulative 
+        payload is small, encoding the data in-memory and directly uploading to a server is the by far the most 
+        efficient approach. However, if the payload is too large, encoding the data in-memory could cause your app to 
+        be terminated. Larger payloads must first be written to disk using input and output streams to keep the memory 
+        footprint low, then the data can be uploaded as a stream from the resulting file. Streaming from disk MUST be 
+        used for larger payloads such as video content.
+
+        The `encodingMemoryThreshold` parameter allows Alamofire to automatically determine whether to encode in-memory 
+        or stream from disk. If the content length of the `MultipartFormData` is below the `encodingMemoryThreshold`,
+        encoding takes place in-memory. If the content length exceeds the threshold, the data is streamed to disk 
+        during the encoding process. Then the result is uploaded as data or as a stream depending on which encoding 
+        technique was used.
+
+        If `startRequestsImmediately` is `true`, the request will have `resume()` called before being returned.
+
+        :param: method                  The HTTP method.
+        :param: URLString               The URL string.
+        :param: headers                 The HTTP headers. `nil` by default.
+        :param: multipartFormData       The closure used to append body parts to the `MultipartFormData`.
+        :param: encodingMemoryThreshold The encoding memory threshold in bytes. `MultipartFormDataEncodingMemoryThreshold`
+                                        by default.
+        :param: encodingCompletion      The closure called when the `MultipartFormData` encoding is complete.
+    */
+    public func upload(
+        method: Method,
+        _ URLString: URLStringConvertible,
+        headers: [String: String]? = nil,
+        multipartFormData: MultipartFormData -> Void,
+        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+        encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
+    {
+        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
+
+        return upload(
+            mutableURLRequest,
+            multipartFormData: multipartFormData,
+            encodingMemoryThreshold: encodingMemoryThreshold,
+            encodingCompletion: encodingCompletion
+        )
+    }
+
+    /**
+        Encodes the `MultipartFormData` and creates a request to upload the result to the specified URL request.
+
+        It is important to understand the memory implications of uploading `MultipartFormData`. If the cummulative
+        payload is small, encoding the data in-memory and directly uploading to a server is the by far the most
+        efficient approach. However, if the payload is too large, encoding the data in-memory could cause your app to
+        be terminated. Larger payloads must first be written to disk using input and output streams to keep the memory
+        footprint low, then the data can be uploaded as a stream from the resulting file. Streaming from disk MUST be
+        used for larger payloads such as video content.
+
+        The `encodingMemoryThreshold` parameter allows Alamofire to automatically determine whether to encode in-memory
+        or stream from disk. If the content length of the `MultipartFormData` is below the `encodingMemoryThreshold`,
+        encoding takes place in-memory. If the content length exceeds the threshold, the data is streamed to disk
+        during the encoding process. Then the result is uploaded as data or as a stream depending on which encoding
+        technique was used.
+
+        If `startRequestsImmediately` is `true`, the request will have `resume()` called before being returned.
+
+        :param: URLRequest              The URL request.
+        :param: multipartFormData       The closure used to append body parts to the `MultipartFormData`.
+        :param: encodingMemoryThreshold The encoding memory threshold in bytes. `MultipartFormDataEncodingMemoryThreshold`
+                                        by default.
+        :param: encodingCompletion      The closure called when the `MultipartFormData` encoding is complete.
+    */
+    public func upload(
+        URLRequest: URLRequestConvertible,
+        multipartFormData: MultipartFormData -> Void,
+        encodingMemoryThreshold: UInt64 = Manager.MultipartFormDataEncodingMemoryThreshold,
+        encodingCompletion: (MultipartFormDataEncodingResult -> Void)?)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let formData = MultipartFormData()
+            multipartFormData(formData)
+
+            let URLRequestWithContentType = URLRequest.URLRequest.mutableCopy() as! NSMutableURLRequest
+            URLRequestWithContentType.setValue(formData.contentType, forHTTPHeaderField: "Content-Type")
+
+            if formData.contentLength < encodingMemoryThreshold {
+                let encodingResult = formData.encode()
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    switch encodingResult {
+                    case .Success(let data):
+                        let encodingResult = MultipartFormDataEncodingResult.Success(
+                            request: self.upload(URLRequestWithContentType, data: data),
+                            streamingFromDisk: false,
+                            streamFileURL: nil
+                        )
+                        encodingCompletion?(encodingResult)
+                    case .Failure(let error):
+                        encodingCompletion?(.Failure(error))
+                    }
+                }
+            } else {
+                let fileManager = NSFileManager.defaultManager()
+                let tempDirectoryURL = NSURL(fileURLWithPath: NSTemporaryDirectory())!
+                let directoryURL = tempDirectoryURL.URLByAppendingPathComponent("com.alamofire.manager/multipart.form.data")
+                let fileName = NSUUID().UUIDString
+                let fileURL = directoryURL.URLByAppendingPathComponent(fileName)
+
+                var error: NSError?
+
+                if fileManager.createDirectoryAtURL(directoryURL, withIntermediateDirectories: true, attributes: nil, error: &error) {
+                    formData.writeEncodedDataToDisk(fileURL) { error in
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let error = error {
+                                encodingCompletion?(.Failure(error))
+                            } else {
+                                let encodingResult = MultipartFormDataEncodingResult.Success(
+                                    request: self.upload(URLRequestWithContentType, file: fileURL),
+                                    streamingFromDisk: true,
+                                    streamFileURL: fileURL
+                                )
+                                encodingCompletion?(encodingResult)
+                            }
+                        }
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        encodingCompletion?(.Failure(error!))
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -177,8 +337,8 @@ extension Request {
         // MARK: Delegate Methods
 
         func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-            if taskDidSendBodyData != nil {
-                taskDidSendBodyData!(session, task, bytesSent, totalBytesSent, totalBytesExpectedToSend)
+            if let taskDidSendBodyData = taskDidSendBodyData {
+                taskDidSendBodyData(session, task, bytesSent, totalBytesSent, totalBytesExpectedToSend)
             } else {
                 progress.totalUnitCount = totalBytesExpectedToSend
                 progress.completedUnitCount = totalBytesSent

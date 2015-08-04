@@ -1,4 +1,4 @@
-// Alamofire.swift
+// Download.swift
 //
 // Copyright (c) 2014–2015 Alamofire Software Foundation (http://alamofire.org/)
 //
@@ -43,11 +43,13 @@ extension Manager {
         }
 
         let request = Request(session: session, task: downloadTask)
+
         if let downloadDelegate = request.delegate as? Request.DownloadTaskDelegate {
             downloadDelegate.downloadTaskDidFinishDownloadingToURL = { session, downloadTask, URL in
                 return destination(URL, downloadTask.response as! NSHTTPURLResponse)
             }
         }
+
         delegate[request.delegate.task] = request.delegate
 
         if startRequestsImmediately {
@@ -64,12 +66,14 @@ extension Manager {
 
         :param: method The HTTP method.
         :param: URLString The URL string.
+        :param: headers The HTTP headers. `nil` by default.
         :param: destination The closure used to determine the destination of the downloaded file.
 
         :returns: The created download request.
     */
-    public func download(method: Method, _ URLString: URLStringConvertible, destination: Request.DownloadFileDestination) -> Request {
-        return download(URLRequest(method, URLString), destination: destination)
+    public func download(method: Method, _ URLString: URLStringConvertible, headers: [String: String]? = nil, destination: Request.DownloadFileDestination) -> Request {
+        let mutableURLRequest = URLRequest(method, URLString, headers: headers)
+        return download(mutableURLRequest, destination: destination)
     }
 
     /**
@@ -130,6 +134,17 @@ extension Request {
         }
     }
 
+    /// The resume data of the underlying download task if available after a failure.
+    public var resumeData: NSData? {
+        var data: NSData?
+
+        if let delegate = delegate as? DownloadTaskDelegate {
+            data = delegate.resumeData
+        }
+
+        return data
+    }
+
     // MARK: - DownloadTaskDelegate
 
     class DownloadTaskDelegate: TaskDelegate, NSURLSessionDownloadDelegate {
@@ -150,8 +165,8 @@ extension Request {
         // MARK: Delegate Methods
 
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
-            if downloadTaskDidFinishDownloadingToURL != nil {
-                let destination = downloadTaskDidFinishDownloadingToURL!(session, downloadTask, location)
+            if let downloadTaskDidFinishDownloadingToURL = downloadTaskDidFinishDownloadingToURL {
+                let destination = downloadTaskDidFinishDownloadingToURL(session, downloadTask, location)
                 var fileManagerError: NSError?
 
                 NSFileManager.defaultManager().moveItemAtURL(location, toURL: destination, error: &fileManagerError)
@@ -163,8 +178,8 @@ extension Request {
         }
 
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-            if downloadTaskDidWriteData != nil {
-                downloadTaskDidWriteData!(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
+            if let downloadTaskDidWriteData = downloadTaskDidWriteData {
+                downloadTaskDidWriteData(session, downloadTask, bytesWritten, totalBytesWritten, totalBytesExpectedToWrite)
             } else {
                 progress.totalUnitCount = totalBytesExpectedToWrite
                 progress.completedUnitCount = totalBytesWritten
@@ -174,8 +189,8 @@ extension Request {
         }
 
         func URLSession(session: NSURLSession, downloadTask: NSURLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
-            if downloadTaskDidResumeAtOffset != nil {
-                downloadTaskDidResumeAtOffset!(session, downloadTask, fileOffset, expectedTotalBytes)
+            if let downloadTaskDidResumeAtOffset = downloadTaskDidResumeAtOffset {
+                downloadTaskDidResumeAtOffset(session, downloadTask, fileOffset, expectedTotalBytes)
             } else {
                 progress.totalUnitCount = expectedTotalBytes
                 progress.completedUnitCount = fileOffset
