@@ -9,6 +9,7 @@
 - Fixes problem that the `ReactiveMoyaProvider` initializer would not respect the stubbing behaviour it was passed.
 - Adds official Carthage support – [@neonichu](http://github.com/neonichu)
 - Relaxes version dependency on RxSwift - [@alcarvalho](http://github.com/alcarvalho)
+- Fixes possible concurrency bugs with reactive providers - [@alcarvalho](http://github.com/alcarvalho)
 
 # 1.1.1
 
