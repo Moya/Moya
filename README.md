@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/ashfurrow/Moya.svg?style=svg)](https://circleci.com/gh/ashfurrow/Moya)
+[![Circle CI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya)
 
 ![Moya Logo](web/moya_logo_github.png)
 
