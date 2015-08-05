@@ -7,14 +7,14 @@ Pod::Spec.new do |s|
   with more compile-time confidence.
 
   ReactiveCocoa and RxSwift extensions exist as well. Instructions for installation
-  are in [the README](https://github.com/ashfurrow/Moya).
+  are in [the README](https://github.com/Moya/Moya).
   EOS
-  s.homepage     = "https://github.com/ashfurrow/Moya"
+  s.homepage     = "https://github.com/Moya/Moya"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/ashfurrow/Moya.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
   s.requires_arc = true
 
