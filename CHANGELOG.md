@@ -1,3 +1,7 @@
+# 2.0.1
+
+- Updates Demo directory's Moya version for `pod try` compatbility.
+
 # 2.0.0
 
 - **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.
