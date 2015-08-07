@@ -163,22 +163,29 @@ public enum ServerTrustPolicy {
 
         switch self {
         case let .PerformDefaultEvaluation(validateHost):
-            let policy = validateHost ? SecPolicyCreateSSL(1, host as CFString) : SecPolicyCreateBasicX509()
+            let policy = validateHost ? SecPolicyCreateSSL(true, host as CFString) : SecPolicyCreateBasicX509()
             SecTrustSetPolicies(serverTrust, [policy])
 
             serverTrustIsValid = trustIsValid(serverTrust)
         case let .PinCertificates(pinnedCertificates, validateCertificateChain, validateHost):
             if validateCertificateChain {
-                let policy = validateHost ? SecPolicyCreateSSL(1, host as CFString) : SecPolicyCreateBasicX509()
+                let policy = validateHost ? SecPolicyCreateSSL(true, host as CFString) : SecPolicyCreateBasicX509()
                 SecTrustSetPolicies(serverTrust, [policy])
 
                 SecTrustSetAnchorCertificates(serverTrust, pinnedCertificates)
-                SecTrustSetAnchorCertificatesOnly(serverTrust, 1)
+                SecTrustSetAnchorCertificatesOnly(serverTrust, true)
 
                 serverTrustIsValid = trustIsValid(serverTrust)
             } else {
                 let serverCertificatesDataArray = certificateDataForTrust(serverTrust)
-                let pinnedCertificatesDataArray = certificateDataForCertificates(pinnedCertificates)
+
+                //======================================================================================================
+                // The following `[] +` is a temporary workaround for a Swift 2.0 compiler error. This workaround should
+                // be removed once the following radar has been resolved:
+                //   - http://openradar.appspot.com/radar?id=6082025006039040
+                //======================================================================================================
+
+                let pinnedCertificatesDataArray = certificateDataForCertificates([] + pinnedCertificates)
 
                 outerLoop: for serverCertificateData in serverCertificatesDataArray {
                     for pinnedCertificateData in pinnedCertificatesDataArray {
@@ -193,7 +200,7 @@ public enum ServerTrustPolicy {
             var certificateChainEvaluationPassed = true
 
             if validateCertificateChain {
-                let policy = validateHost ? SecPolicyCreateSSL(1, host as CFString) : SecPolicyCreateBasicX509()
+                let policy = validateHost ? SecPolicyCreateSSL(true, host as CFString) : SecPolicyCreateBasicX509()
                 SecTrustSetPolicies(serverTrust, [policy])
 
                 certificateChainEvaluationPassed = trustIsValid(serverTrust)

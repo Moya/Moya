@@ -652,19 +652,24 @@ expect(actual).to(beNil());
 
 ## Swift Error Handling
 
-If you're using Swift 2.0+, you can use the `throwAnError` matcher to check if an error is thrown.
+If you're using Swift 2.0+, you can use the `throwError` matcher to check if an error is thrown.
 
 ```swift
 // Swift
 
 // Passes if somethingThatThrows() throws an ErrorType:
-expect{ try somethingThatThrows() }.to(throwAnError())
+expect{ try somethingThatThrows() }.to(throwError())
 
 // Passes if somethingThatThrows() throws an error with a given domain:
-expect{ try somethingThatThrows() }.to(throwAnError { error in
-    let nserror = error as NSError
-    expect(nserror.domain).to(equal(NSInternalInconsistencyException))
+expect{ try somethingThatThrows() }.to(throwError { error in
+    expect(error._domain).to(equal(NSCocoaErrorDomain))
 })
+
+// Passes if somethingThatThrows() throws an error with a given case:
+expect{ try somethingThatThrows() }.to(throwError(NSCocoaError.PropertyListReadCorruptError))
+
+// Passes if somethingThatThrows() throws an error with a given type:
+expect{ try somethingThatThrows() }.to(throwError(errorType: MyError.self))
 ```
 
 Note: This feature is only available in Swift.

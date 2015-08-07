@@ -23,26 +23,25 @@
  ***********************************************************************************/
 
 
-#import "OHHTTPStubsResponse+JSON.h"
+/*
+ * This file allows to keep compatibility with older SDKs which didn't have
+ * the latest features and associated macros yet.
+ */
 
-@implementation OHHTTPStubsResponse (JSON)
 
-/*! @name Building a response from JSON objects */
+#ifndef NS_DESIGNATED_INITIALIZER
+  #if __has_attribute(objc_designated_initializer)
+    #define NS_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
+  #else
+    #define NS_DESIGNATED_INITIALIZER
+  #endif
+#endif
 
-+ (instancetype)responseWithJSONObject:(id)jsonObject
-                            statusCode:(int)statusCode
-                               headers:(nullable NSDictionary *)httpHeaders
-{
-    if (!httpHeaders[@"Content-Type"])
-    {
-        NSMutableDictionary* mutableHeaders = [NSMutableDictionary dictionaryWithDictionary:httpHeaders];
-        mutableHeaders[@"Content-Type"] = @"application/json";
-        httpHeaders = [NSDictionary dictionaryWithDictionary:mutableHeaders]; // make immutable again
-    }
-    
-    return [self responseWithData:[NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:nil]
-                       statusCode:statusCode
-                          headers:httpHeaders];
-}
-
-@end
+// Allow to use nullability macros and keywords even if not supported yet
+#if ! __has_feature(nullability)
+  #define NS_ASSUME_NONNULL_BEGIN
+  #define NS_ASSUME_NONNULL_END
+  #define nullable
+  #define __nullable
+  #define __nonnull
+#endif

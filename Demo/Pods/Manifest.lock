@@ -10,9 +10,9 @@ PODS:
     - Moya/ReactiveCore
     - RxSwift
   - Nimble (2.0.0-rc.2)
-  - OHHTTPStubs (4.0.2)
+  - OHHTTPStubs (4.1.0)
   - Quick (0.5.1)
-  - RxSwift (1.8.1)
+  - RxSwift (1.9)
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire`, branch `swift-2.0`)
@@ -41,24 +41,24 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: ae07d613f0b6b1f88724b7a5457effedc6207fcd
+    :commit: 61d6ddf9c91da83a062cbe29dc6b7f6a0a5d8789
     :git: https://github.com/Alamofire/Alamofire
   Nimble:
-    :commit: 371f9699af53d50b26186f6700166116fb26c8e6
+    :commit: a6b4f6553b8d8662cb8fb4f9c0624e30576d6075
     :git: https://github.com/Quick/Nimble
   Quick:
-    :commit: 210c7a0edcfabbd20e71a258fa2a7c943769a8c1
+    :commit: 4f7480ff9560e3791096e1a58ce09b6c0a8c926c
     :git: https://github.com/Quick/Quick
   RxSwift:
-    :commit: b42c76735e5789c1c354e37f298c75757dbb74f2
+    :commit: bd514d2d1575845e5965a3480b09f2c2ea0bb77b
     :git: https://github.com/kzaher/RxSwift.git
 
 SPEC CHECKSUMS:
   Alamofire: e57db85401895fda01783b3b9bda5b32d9f347ff
   Moya: 4f6ee0cc668b80d6eed825ba48b571a67781240f
   Nimble: e3cf5e73a491daf21c2bc88783dbfc55ce8b8e02
-  OHHTTPStubs: dbd1957d414659783e07b49c961940b7564c23d9
+  OHHTTPStubs: f3473ab21dbf0815253ac96b977d5c36f1daad09
   Quick: 7426537a99e75076d6930c5b6da58006e4a9f38a
-  RxSwift: 7f3af11a6923f772d21a1e2723f7be660c6ee24f
+  RxSwift: 204bf4262908521aa815ec850d93e87e9d635dd5
 
 COCOAPODS: 0.38.2

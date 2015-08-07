@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+#import "Compatibility.h"
 #import "OHHTTPStubs.h"
 #import "OHHTTPStubsResponse+HTTPMessage.h"
 #import "OHHTTPStubsResponse+JSON.h"
