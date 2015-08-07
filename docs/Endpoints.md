@@ -29,7 +29,7 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
 }
 ```
 
-This is actually the deafult implementation Moya provides. If you need something 
+This is actually the default implementation Moya provides. If you need something 
 custom, like if your API requires custom parameter mapping, or if you're 
 creating a test provider that returns non-200 HTTP statuses in unit tests, this
 is where you would do it. 
@@ -39,7 +39,7 @@ about low-level details. But it's there if you need it. Its use is covered
 further below.
 
 Let's take a look at an example of the flexibility mapping from a Target to 
-and Endpoint can provide. 
+an Endpoint can provide. 
 
 From Target to Endpoint 
 -----------------------
