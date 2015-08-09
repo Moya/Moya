@@ -1,5 +1,4 @@
 import Foundation
-import Moya
 
 public class MoyaResponse: NSObject, Equatable, Printable {
     public let statusCode: Int
