@@ -12,15 +12,6 @@
 		7C0AC50A1B5E8CA200F8C173 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0AC5051B5E8CA200F8C173 /* MoyaProviderSpec.swift */; };
 		7C0AC50B1B5E8CA200F8C173 /* RACSignal+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0AC5061B5E8CA200F8C173 /* RACSignal+MoyaSpec.swift */; };
 		7C0AC50C1B5E8CA200F8C173 /* TestResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0AC5071B5E8CA200F8C173 /* TestResources.swift */; };
-		7C0AC5161B5E8F3300F8C173 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC50D1B5E8F3300F8C173 /* Alamofire.framework */; };
-		7C0AC5171B5E8F3300F8C173 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC50E1B5E8F3300F8C173 /* Box.framework */; };
-		7C0AC5181B5E8F3300F8C173 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC50F1B5E8F3300F8C173 /* Moya.framework */; };
-		7C0AC5191B5E8F3300F8C173 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5101B5E8F3300F8C173 /* Nimble.framework */; };
-		7C0AC51A1B5E8F3300F8C173 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5111B5E8F3300F8C173 /* OHHTTPStubs.framework */; };
-		7C0AC51B1B5E8F3300F8C173 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5121B5E8F3300F8C173 /* Quick.framework */; };
-		7C0AC51C1B5E8F3300F8C173 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5131B5E8F3300F8C173 /* ReactiveCocoa.framework */; };
-		7C0AC51D1B5E8F3300F8C173 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5141B5E8F3300F8C173 /* Result.framework */; };
-		7C0AC51E1B5E8F3300F8C173 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5151B5E8F3300F8C173 /* RxSwift.framework */; };
 		7C0AC5251B5E926600F8C173 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5231B5E926600F8C173 /* Nimble.framework */; };
 		7C0AC5261B5E926600F8C173 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C0AC5241B5E926600F8C173 /* Quick.framework */; };
 		7C0AC53F1B5EA2BE00F8C173 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C0AC5231B5E926600F8C173 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -115,9 +106,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0570850C177E8533663802F5 /* Pods-MoyaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests/Pods-MoyaTests.release.xcconfig"; sourceTree = "<group>"; };
-		1B3FBF8DD5A8B7F48E895E81 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		6D83EEDC26228BF0F4CAD7BD /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C0AC4F81B5E8C3A00F8C173 /* MoyaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoyaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C0AC4FB1B5E8C3A00F8C173 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C0AC5031B5E8CA200F8C173 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = EndpointSpec.swift; path = ExampleTests/EndpointSpec.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -125,15 +113,6 @@
 		7C0AC5051B5E8CA200F8C173 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MoyaProviderSpec.swift; path = ExampleTests/MoyaProviderSpec.swift; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7C0AC5061B5E8CA200F8C173 /* RACSignal+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "RACSignal+MoyaSpec.swift"; path = "ExampleTests/RACSignal+MoyaSpec.swift"; sourceTree = SOURCE_ROOT; };
 		7C0AC5071B5E8CA200F8C173 /* TestResources.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestResources.swift; path = ExampleTests/TestResources.swift; sourceTree = SOURCE_ROOT; };
-		7C0AC50D1B5E8F3300F8C173 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/Alamofire.framework"; sourceTree = "<group>"; };
-		7C0AC50E1B5E8F3300F8C173 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/Box.framework"; sourceTree = "<group>"; };
-		7C0AC50F1B5E8F3300F8C173 /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/Moya.framework"; sourceTree = "<group>"; };
-		7C0AC5101B5E8F3300F8C173 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/Nimble.framework"; sourceTree = "<group>"; };
-		7C0AC5111B5E8F3300F8C173 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/OHHTTPStubs.framework"; sourceTree = "<group>"; };
-		7C0AC5121B5E8F3300F8C173 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/Quick.framework"; sourceTree = "<group>"; };
-		7C0AC5131B5E8F3300F8C173 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/ReactiveCocoa.framework"; sourceTree = "<group>"; };
-		7C0AC5141B5E8F3300F8C173 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/Result.framework"; sourceTree = "<group>"; };
-		7C0AC5151B5E8F3300F8C173 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = "Pods/../build/Debug-iphoneos/Pods-MoyaTests/RxSwift.framework"; sourceTree = "<group>"; };
 		7C0AC5231B5E926600F8C173 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = ../../Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		7C0AC5241B5E926600F8C173 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = ../../Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		7C0AC5411B5EA2CD00F8C173 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = ../../Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
@@ -157,9 +136,6 @@
 		7CED32831B55AACB00B97BBD /* ReactiveMoyaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveMoyaViewController.swift; sourceTree = "<group>"; };
 		7CED32851B55AAD700B97BBD /* RxMoyaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxMoyaViewController.swift; sourceTree = "<group>"; };
 		7CED32881B55B23D00B97BBD /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
-		A681BC5939CFF84882C8AFC7 /* Pods-MoyaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests/Pods-MoyaTests.debug.xcconfig"; sourceTree = "<group>"; };
-		EC760B98DEBD7841064FCF27 /* Pods_MoyaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoyaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FF655966D30D823E61D50E8E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,18 +143,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C0AC5161B5E8F3300F8C173 /* Alamofire.framework in Frameworks */,
-				7C0AC5171B5E8F3300F8C173 /* Box.framework in Frameworks */,
-				7C0AC5181B5E8F3300F8C173 /* Moya.framework in Frameworks */,
-				7C0AC5191B5E8F3300F8C173 /* Nimble.framework in Frameworks */,
-				7C0AC51A1B5E8F3300F8C173 /* OHHTTPStubs.framework in Frameworks */,
 				7C0AC5251B5E926600F8C173 /* Nimble.framework in Frameworks */,
 				7C0AC5261B5E926600F8C173 /* Quick.framework in Frameworks */,
-				7C0AC51B1B5E8F3300F8C173 /* Quick.framework in Frameworks */,
-				7C0AC51C1B5E8F3300F8C173 /* ReactiveCocoa.framework in Frameworks */,
 				7C0AC5421B5EA2CD00F8C173 /* OHHTTPStubs.framework in Frameworks */,
-				7C0AC51D1B5E8F3300F8C173 /* Result.framework in Frameworks */,
-				7C0AC51E1B5E8F3300F8C173 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,17 +170,6 @@
 		5EEFF9FC997906773315E24A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7C0AC50D1B5E8F3300F8C173 /* Alamofire.framework */,
-				7C0AC50E1B5E8F3300F8C173 /* Box.framework */,
-				7C0AC50F1B5E8F3300F8C173 /* Moya.framework */,
-				7C0AC5101B5E8F3300F8C173 /* Nimble.framework */,
-				7C0AC5111B5E8F3300F8C173 /* OHHTTPStubs.framework */,
-				7C0AC5121B5E8F3300F8C173 /* Quick.framework */,
-				7C0AC5131B5E8F3300F8C173 /* ReactiveCocoa.framework */,
-				7C0AC5141B5E8F3300F8C173 /* Result.framework */,
-				7C0AC5151B5E8F3300F8C173 /* RxSwift.framework */,
-				6D83EEDC26228BF0F4CAD7BD /* Pods.framework */,
-				EC760B98DEBD7841064FCF27 /* Pods_MoyaTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -264,7 +220,6 @@
 				7CED32401B55A81A00B97BBD /* MoyaExample */,
 				7C0AC4F91B5E8C3A00F8C173 /* MoyaTests */,
 				7CED323F1B55A81A00B97BBD /* Products */,
-				E8474AB132798E3D73C9C31E /* Pods */,
 				5EEFF9FC997906773315E24A /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -342,17 +297,6 @@
 				7CED32451B55A81A00B97BBD /* MoyaViewController.swift */,
 			);
 			path = MoyaExample;
-			sourceTree = "<group>";
-		};
-		E8474AB132798E3D73C9C31E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				1B3FBF8DD5A8B7F48E895E81 /* Pods.debug.xcconfig */,
-				FF655966D30D823E61D50E8E /* Pods.release.xcconfig */,
-				A681BC5939CFF84882C8AFC7 /* Pods-MoyaTests.debug.xcconfig */,
-				0570850C177E8533663802F5 /* Pods-MoyaTests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

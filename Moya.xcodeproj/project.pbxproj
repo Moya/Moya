@@ -55,9 +55,9 @@
 		7C8F4E8E1B3CEDF90039C15B /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		7C8F4E8F1B3CEDF90039C15B /* Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moya.swift; sourceTree = "<group>"; };
 		7C8F4E911B3CEDF90039C15B /* Moya+ReactiveCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Moya+ReactiveCocoa.swift"; sourceTree = "<group>"; };
-		7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
+		7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoyaResponse.swift; path = ReactiveCore/MoyaResponse.swift; sourceTree = "<group>"; };
 		7CABCC4E1B40382400797B88 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveMoyaError.swift; sourceTree = "<group>"; };
+		7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactiveMoyaError.swift; path = Moya/ReactiveCore/ReactiveMoyaError.swift; sourceTree = SOURCE_ROOT; };
 		7CED320C1B559C5800B97BBD /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CED322D1B55A1FD00B97BBD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CED322F1B55A20400B97BBD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -121,6 +121,7 @@
 				7C8F4E771B3CEDBC0039C15B /* Moya.h */,
 				7C8F4E8E1B3CEDF90039C15B /* Endpoint.swift */,
 				7C8F4E8F1B3CEDF90039C15B /* Moya.swift */,
+				7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */,
 				7C8F4E931B3CEDF90039C15B /* ReactiveCore */,
 				7C8F4E791B3CEDBC0039C15B /* Info.plist */,
 			);
@@ -133,6 +134,7 @@
 				7CED32311B55A43700B97BBD /* ReactiveMoya.h */,
 				7C8F4E911B3CEDF90039C15B /* Moya+ReactiveCocoa.swift */,
 				7C0AC5281B5E975100F8C173 /* RACSignal+Moya.swift */,
+				7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */,
 				7CED322D1B55A1FD00B97BBD /* Info.plist */,
 			);
 			path = ReactiveMoya;
@@ -141,8 +143,6 @@
 		7C8F4E931B3CEDF90039C15B /* ReactiveCore */ = {
 			isa = PBXGroup;
 			children = (
-				7C8F4E941B3CEDF90039C15B /* MoyaResponse.swift */,
-				7CABCC6C1B40397300797B88 /* ReactiveMoyaError.swift */,
 				7C8F4E901B3CEDF90039C15B /* ReactiveMoya */,
 				7CFCE8A81B41E22000B97F54 /* RxMoya */,
 			);
