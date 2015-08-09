@@ -1,4 +1,2 @@
 github "Alamofire/Alamofire"
-github "ReactiveCocoa/ReactiveCocoa" "v3.0-RC.1"
 
-github "kzaher/RxSwift" "latest-carthage/rxswift"
