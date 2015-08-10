@@ -1,3 +1,7 @@
+# 2.0.2
+
+- Updates Demo directory's RxSwift version.
+
 # 2.0.1
 
 - Updates Demo directory's Moya version for `pod try` compatbility.
