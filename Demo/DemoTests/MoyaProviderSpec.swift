@@ -68,7 +68,7 @@ class MoyaProviderSpec: QuickSpec {
                         let manager = Manager()
                         let provider = MoyaProvider<GitHub>(manager: manager)
 
-                        expect(manager).to(beIdenticalTo(manager))
+                        expect(provider.manager).to(beIdenticalTo(manager))
                     }
                 })
 
