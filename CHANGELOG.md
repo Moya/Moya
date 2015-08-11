@@ -1,3 +1,7 @@
+# 2.1.0
+
+- Add option to pass an `Alamofire.Manager` to `MoyaProvider` initializer
+
 # 2.0.2
 
 - Updates Demo directory's RxSwift version.
