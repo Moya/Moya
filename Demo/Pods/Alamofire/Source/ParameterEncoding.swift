@@ -73,7 +73,7 @@ public enum ParameterEncoding {
     {
         var mutableURLRequest = URLRequest.URLRequest
 
-        if parameters == nil {
+        guard let parameters = parameters else {
             return (mutableURLRequest, nil)
         }
 
@@ -84,7 +84,7 @@ public enum ParameterEncoding {
             func query(parameters: [String: AnyObject]) -> String {
                 var components: [(String, String)] = []
                 for key in Array(parameters.keys).sort(<) {
-                    let value: AnyObject! = parameters[key]
+                    let value = parameters[key]!
                     components += queryComponents(key, value)
                 }
 
@@ -102,7 +102,7 @@ public enum ParameterEncoding {
 
             if let method = Method(rawValue: mutableURLRequest.HTTPMethod) where encodesParametersInURL(method) {
                 if let URLComponents = NSURLComponents(URL: mutableURLRequest.URL!, resolvingAgainstBaseURL: false) {
-                    let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters!)
+                    let percentEncodedQuery = (URLComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
                     URLComponents.percentEncodedQuery = percentEncodedQuery
                     mutableURLRequest.URL = URLComponents.URL
                 }
@@ -111,7 +111,7 @@ public enum ParameterEncoding {
                     mutableURLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
                 }
 
-                mutableURLRequest.HTTPBody = query(parameters!).dataUsingEncoding(
+                mutableURLRequest.HTTPBody = query(parameters).dataUsingEncoding(
                     NSUTF8StringEncoding,
                     allowLossyConversion: false
                 )
@@ -119,7 +119,7 @@ public enum ParameterEncoding {
         case .JSON:
             do {
                 let options = NSJSONWritingOptions()
-                let data = try NSJSONSerialization.dataWithJSONObject(parameters!, options: options)
+                let data = try NSJSONSerialization.dataWithJSONObject(parameters, options: options)
 
                 mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 mutableURLRequest.HTTPBody = data
@@ -129,7 +129,7 @@ public enum ParameterEncoding {
         case .PropertyList(let format, let options):
             do {
                 let data = try NSPropertyListSerialization.dataWithPropertyList(
-                    parameters!,
+                    parameters,
                     format: format,
                     options: options
                 )
@@ -145,7 +145,15 @@ public enum ParameterEncoding {
         return (mutableURLRequest, encodingError)
     }
 
-    func queryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
+    /**
+        Creates percent-escaped, URL encoded query string components from the given key-value pair using recursion.
+
+        - parameter key:   The key of the query component.
+        - parameter value: The value of the query component.
+
+        - returns: The percent-escaped, URL encoded query string components.
+    */
+    public func queryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
         var components: [(String, String)] = []
         if let dictionary = value as? [String: AnyObject] {
             for (nestedKey, value) in dictionary {
@@ -163,7 +171,7 @@ public enum ParameterEncoding {
     }
 
     /**
-        Returns a percent escaped string following RFC 3986 for a query string key or value.
+        Returns a percent-escaped string following RFC 3986 for a query string key or value.
 
         RFC 3986 states that the following characters are "reserved" characters.
 
@@ -172,13 +180,13 @@ public enum ParameterEncoding {
 
         In RFC 3986 - Section 3.4, it states that the "?" and "/" characters should not be escaped to allow
         query strings to include a URL. Therefore, all "reserved" characters with the exception of "?" and "/"
-        should be percent escaped in the query string.
+        should be percent-escaped in the query string.
 
-        - parameter string: The string to be percent escaped.
+        - parameter string: The string to be percent-escaped.
 
-        - returns: The percent escaped string.
+        - returns: The percent-escaped string.
     */
-    func escape(string: String) -> String {
+    public func escape(string: String) -> String {
         let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
         let subDelimitersToEncode = "!$&'()*+,;="
 

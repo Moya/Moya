@@ -46,7 +46,7 @@ Alamofire is an HTTP networking library written in Swift.
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
-CocoaPods 0.36 adds supports for Swift and embedded frameworks. You can install it with the following command:
+CocoaPods 0.38.2 is required to build Alamofire on the `swift-2.0` branch. It adds support for Xcode 7, Swift 2.0 and embedded frameworks. You can install it with the following command:
 
 ```bash
 $ gem install cocoapods
@@ -677,7 +677,7 @@ extension Request {
                     return .Success(responseObject)
                 } else {
                     let failureReason = "JSON could not be serialized into response object: \(value)"
-                    let error = Error.errorWithCode(.StringSerializationFailed, failureReason: failureReason)
+                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
                     return .Failure(data, error)
                 }
             case .Failure(let data, let error):
@@ -728,7 +728,7 @@ extension Alamofire.Request {
                     return .Success(T.collection(response: response, representation: value))
                 } else {
                     let failureReason = "Response collection could not be serialized due to nil response"
-                    let error = Error.errorWithCode(.StringSerializationFailed, failureReason: failureReason)
+                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
                     return .Failure(data, error)
                 }
             case .Failure(let data, let error):
@@ -978,6 +978,8 @@ let manager = Manager(
 )
 ```
 
+> Make sure to keep a reference to the new `Manager` instance, otherwise your requests will all get cancelled when your `manager` is deallocated.
+
 These server trust policies will result in the following behavior:
 
 * `test.example.com` will always use certificate pinning with certificate chain and host validation enabled thus requiring the following criteria to be met to allow the TLS handshake to succeed:
@@ -1009,6 +1011,13 @@ Use AFNetworking for any of the following:
 ### What's the origin of the name Alamofire?
 
 Alamofire is named after the [Alamo Fire flower](https://aggie-horticulture.tamu.edu/wildseed/alamofire.html), a hybrid variant of the Bluebonnet, the official state flower of Texas.
+
+## Open Rdars
+
+The following rdars have some affect on the current implementation of Alamofire.
+
+* [rdar://22024442](http://openradar.appspot.com/radar?id=6082025006039040) - Array of [SecCertificate] crashing Swift 2.0 compiler in optimized builds
+* [rdar://21349340](https://openradar.appspot.com/radar?id=5517037090635776) - Compiler throwing warning due to toll-free bridging issue in test case
 
 * * *
 

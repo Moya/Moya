@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "80E873684406BFEF0FF8E8A9"
+               BlueprintIdentifier = "BFAE21E38CEFF012D3109B67"
                BuildableName = "Moya.framework"
                BlueprintName = "Moya"
                ReferencedContainer = "container:Pods.xcodeproj">
