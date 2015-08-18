@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-
 extension UIViewController {
 
     func showErrorAlert(title: String, error: NSError, action: (Void -> Void)? = nil) {

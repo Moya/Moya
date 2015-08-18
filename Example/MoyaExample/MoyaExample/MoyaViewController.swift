@@ -14,7 +14,7 @@ class MoyaViewController: UITableViewController, UIGestureRecognizerDelegate {
     // MARK: - API Stuff
     
     func downloadRepositories(username: String) {
-        GitHubProvider.request(.UserRepositories(username), completion: { (data, status, resonse, error) -> () in
+        GitHubProvider.request(.UserRepositories(username), completion: { (data, status, response, error) -> () in
             var success = error == nil
             if let data = data {
                 let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil)

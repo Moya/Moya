@@ -1,7 +1,19 @@
+# 2.1.0
+
+- Add option to pass an `Alamofire.Manager` to `MoyaProvider` initializer
+
+# 2.0.2
+
+- Updates Demo directory's RxSwift version.
+
+# 2.0.1
+
+- Updates Demo directory's Moya version for `pod try` compatbility.
+
 # 2.0.0
 
 - **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.
-- **Breaking change** Renames `Moya/Reacitve` subspec to `Moya/ReactiveCocoa`.
+- **Breaking change** Renames `Moya/Reactive` subspec to `Moya/ReactiveCocoa`.
 - **Breaking change** Removes `stubResponses` from initializer; replaced with new stubbing behavior `.NoStubbing`. Added class methods to `MoyaProvider` to provide defaults, while allowing users to still change stubbing behaviour on a per-request basis.
 - **Breaking change** Redefines types of `DefaultEndpointMapping` and `DefaultEnpointResolution` class functions on `MoyaProvider`. You no longer invoke these functions to return a closure, rather, you reference the functions themselves _as_ closures.
 - **Breaking change** Renames `endpointsClosure` parameter and property of `MoyaProvider` to `endpointClosure`.
@@ -9,6 +21,7 @@
 - Fixes problem that the `ReactiveMoyaProvider` initializer would not respect the stubbing behaviour it was passed.
 - Adds official Carthage support – [@neonichu](http://github.com/neonichu)
 - Relaxes version dependency on RxSwift - [@alcarvalho](http://github.com/alcarvalho)
+- Fixes possible concurrency bugs with reactive providers - [@alcarvalho](http://github.com/alcarvalho)
 
 # 1.1.1
 

@@ -37,8 +37,6 @@
 		7CED324B1B55A81A00B97BBD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CED324A1B55A81A00B97BBD /* Images.xcassets */; };
 		7CED324E1B55A81A00B97BBD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7CED324C1B55A81A00B97BBD /* LaunchScreen.xib */; };
 		7CED32721B55A93600B97BBD /* Github.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32711B55A93600B97BBD /* Github.swift */; };
-		7CED32841B55AACB00B97BBD /* ReactiveMoyaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32831B55AACB00B97BBD /* ReactiveMoyaViewController.swift */; };
-		7CED32861B55AAD700B97BBD /* RxMoyaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32851B55AAD700B97BBD /* RxMoyaViewController.swift */; };
 		7CED32891B55B23D00B97BBD /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CED32881B55B23D00B97BBD /* UIViewControllerExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -108,8 +106,6 @@
 		7CED324A1B55A81A00B97BBD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7CED324D1B55A81A00B97BBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7CED32711B55A93600B97BBD /* Github.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Github.swift; sourceTree = "<group>"; };
-		7CED32831B55AACB00B97BBD /* ReactiveMoyaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveMoyaViewController.swift; sourceTree = "<group>"; };
-		7CED32851B55AAD700B97BBD /* RxMoyaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxMoyaViewController.swift; sourceTree = "<group>"; };
 		7CED32881B55B23D00B97BBD /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,8 +180,6 @@
 			children = (
 				7CED32431B55A81A00B97BBD /* AppDelegate.swift */,
 				7CED32871B55B23300B97BBD /* Extensions */,
-				7CED32821B55AAB300B97BBD /* RxMoyaExample */,
-				7CED32811B55AAAC00B97BBD /* ReactiveMoyaExample */,
 				7CED328B1B55B53C00B97BBD /* MoyaExample */,
 				7CED328A1B55B53100B97BBD /* Models */,
 				7CED32411B55A81A00B97BBD /* Supporting Files */,
@@ -203,22 +197,6 @@
 				7CED32421B55A81A00B97BBD /* Info.plist */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7CED32811B55AAAC00B97BBD /* ReactiveMoyaExample */ = {
-			isa = PBXGroup;
-			children = (
-				7CED32831B55AACB00B97BBD /* ReactiveMoyaViewController.swift */,
-			);
-			path = ReactiveMoyaExample;
-			sourceTree = "<group>";
-		};
-		7CED32821B55AAB300B97BBD /* RxMoyaExample */ = {
-			isa = PBXGroup;
-			children = (
-				7CED32851B55AAD700B97BBD /* RxMoyaViewController.swift */,
-			);
-			path = RxMoyaExample;
 			sourceTree = "<group>";
 		};
 		7CED32871B55B23300B97BBD /* Extensions */ = {
@@ -355,9 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CED32721B55A93600B97BBD /* Github.swift in Sources */,
-				7CED32861B55AAD700B97BBD /* RxMoyaViewController.swift in Sources */,
 				7CED32461B55A81A00B97BBD /* MoyaViewController.swift in Sources */,
-				7CED32841B55AACB00B97BBD /* ReactiveMoyaViewController.swift in Sources */,
 				7CED32891B55B23D00B97BBD /* UIViewControllerExtensions.swift in Sources */,
 				7CED32441B55A81A00B97BBD /* AppDelegate.swift in Sources */,
 			);

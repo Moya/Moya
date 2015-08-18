@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/ashfurrow/Moya.svg?style=svg)](https://circleci.com/gh/ashfurrow/Moya)
+[![Circle CI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya)
 
 ![Moya Logo](web/moya_logo_github.png)
 
@@ -139,6 +139,8 @@ following:
 If any of that sounds cool to you, send a pull request! After a few 
 contributions, we'll add you as admins to the repo so you can merge pull 
 requests :tada:
+
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/code-of-conduct).
 
 License
 -------

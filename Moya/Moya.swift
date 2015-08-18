@@ -106,13 +106,15 @@ public class MoyaProvider<T: MoyaTarget> {
     public let endpointResolver: MoyaEndpointResolution
     public let stubBehavior: MoyaStubbedBehavior
     public let networkActivityClosure: Moya.NetworkActivityClosure?
-    
+    public let manager: Manager
+
     /// Initializes a provider.
-    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
+    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
         self.endpointClosure = endpointClosure
         self.endpointResolver = endpointResolver
         self.stubBehavior = stubBehavior
         self.networkActivityClosure = networkActivityClosure
+        self.manager = manager
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -163,19 +165,19 @@ private extension MoyaProvider {
 
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
-        let request = Alamofire.Manager.sharedInstance.request(request)
-            .response{ (request: NSURLRequest?, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> Void in
-                    networkActivityCallback?(change: .Ended)
+        let request = manager.request(request)
+            .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+                networkActivityCallback?(change: .Ended)
 
-                    // Alamofire always sends the data param as an NSData? type, but we'll
-                    // add a check just in case something changes in the future.
-                    let statusCode = response?.statusCode
-                    if let data = data as? NSData {
-                        completion(data: data, statusCode: statusCode, response:response, error: error)
-                    } else {
-                        completion(data: nil, statusCode: statusCode, response:response, error: error)
-                    }
-            }
+                // Alamofire always sends the data param as an NSData? type, but we'll
+                // add a check just in case something changes in the future.
+                let statusCode = response?.statusCode
+                if let data = data as? NSData {
+                    completion(data: data, statusCode: statusCode, response:response, error: error)
+                } else {
+                    completion(data: nil, statusCode: statusCode, response:response, error: error)
+                }
+        }
 
         return CancellableToken {
             request.cancel()

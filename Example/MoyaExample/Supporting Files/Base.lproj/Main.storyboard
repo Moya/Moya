@@ -4,46 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Reactive Moya View Controller-->
-        <scene sceneID="cYb-I4-fZK">
-            <objects>
-                <tableViewController id="qRX-Xf-7jl" customClass="ReactiveMoyaViewController" customModule="MoyaExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Shd-JY-QkC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="SiI-1l-cpy">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SiI-1l-cpy" id="sCb-aT-uCB">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="qRX-Xf-7jl" id="ZA3-hR-WSz"/>
-                            <outlet property="delegate" destination="qRX-Xf-7jl" id="ylo-pi-4Uc"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="rAV-iD-qke">
-                        <barButtonItem key="leftBarButtonItem" title="Zen" id="QTo-RM-awS">
-                            <connections>
-                                <action selector="zenPressed:" destination="qRX-Xf-7jl" id="S1q-Bc-MHm"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Search" id="f7M-C0-2m2">
-                            <connections>
-                                <action selector="searchPressed:" destination="qRX-Xf-7jl" id="cLh-Su-GK5"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PvX-kY-9DP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1875" y="203"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="r9c-Hz-4ap">
             <objects>
@@ -55,85 +15,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Ey5-HA-egO" kind="relationship" relationship="rootViewController" id="vkw-fN-04b"/>
+                        <segue destination="mWy-UQ-DTo" kind="relationship" relationship="rootViewController" id="GaU-ry-IMm"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PBg-Dy-oo3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="455" y="207"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="guc-PZ-OvR">
-            <objects>
-                <viewController id="Ey5-HA-egO" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="g5Y-vx-oM2"/>
-                        <viewControllerLayoutGuide type="bottom" id="Xuc-2P-cRh"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jhq-wl-Gn3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Moya Example Project" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehs-6t-SnN">
-                                <rect key="frame" x="214" y="90" width="172.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A project demonstrating how to use Moya, based on the Github API." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFT-eg-Au2">
-                                <rect key="frame" x="38" y="125" width="523.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTn-Qn-dVe">
-                                <rect key="frame" x="281" y="208" width="38" height="30"/>
-                                <state key="normal" title="Moya">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="mWy-UQ-DTo" kind="show" id="2bz-Mp-ws1"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TvN-LJ-bVK">
-                                <rect key="frame" x="251" y="283" width="98" height="30"/>
-                                <state key="normal" title="ReactiveMoya">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="qRX-Xf-7jl" kind="show" id="nJb-Bx-YGv"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m70-5r-VkM">
-                                <rect key="frame" x="272" y="358" width="57" height="30"/>
-                                <state key="normal" title="RxMoya">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="LfI-WX-NAS" kind="show" id="eMD-mD-reH"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="bFT-eg-Au2" firstAttribute="top" secondItem="Ehs-6t-SnN" secondAttribute="bottom" constant="15" id="4Bj-h8-nFA"/>
-                            <constraint firstAttribute="trailing" secondItem="bFT-eg-Au2" secondAttribute="trailing" constant="38" id="91u-1f-vuK"/>
-                            <constraint firstItem="bTn-Qn-dVe" firstAttribute="top" secondItem="bFT-eg-Au2" secondAttribute="bottom" constant="62.5" id="ABr-vS-jn4"/>
-                            <constraint firstItem="Ehs-6t-SnN" firstAttribute="top" secondItem="g5Y-vx-oM2" secondAttribute="bottom" constant="26" id="BRn-Q4-QOm"/>
-                            <constraint firstAttribute="centerX" secondItem="m70-5r-VkM" secondAttribute="centerX" id="J7f-Z0-CqD"/>
-                            <constraint firstItem="TvN-LJ-bVK" firstAttribute="top" secondItem="bTn-Qn-dVe" secondAttribute="bottom" constant="45" id="TW2-T1-KES"/>
-                            <constraint firstItem="bFT-eg-Au2" firstAttribute="leading" secondItem="jhq-wl-Gn3" secondAttribute="leading" constant="38.5" id="cwN-Jo-46M"/>
-                            <constraint firstAttribute="centerX" secondItem="Ehs-6t-SnN" secondAttribute="centerX" id="hj4-BB-9hV"/>
-                            <constraint firstAttribute="centerX" secondItem="bTn-Qn-dVe" secondAttribute="centerX" id="jKh-JO-0Ek"/>
-                            <constraint firstItem="m70-5r-VkM" firstAttribute="top" secondItem="TvN-LJ-bVK" secondAttribute="bottom" constant="45" id="yxD-5p-G1g"/>
-                            <constraint firstAttribute="centerX" secondItem="TvN-LJ-bVK" secondAttribute="centerX" id="z9U-e3-TXp"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="ZtR-4v-jMF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ax4-LT-f76" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1143" y="207"/>
         </scene>
         <!--Moya View Controller-->
         <scene sceneID="Wqa-Kz-cmW">
@@ -173,47 +60,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Xn-Mz-Uz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1875" y="-501"/>
-        </scene>
-        <!--Rx Moya View Controller-->
-        <scene sceneID="fsp-kY-Aq6">
-            <objects>
-                <tableViewController id="LfI-WX-NAS" customClass="RxMoyaViewController" customModule="MoyaExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0CS-u4-UhM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="7Mc-TQ-wpr">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Mc-TQ-wpr" id="etU-K8-DH6">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="LfI-WX-NAS" id="0xk-wG-y50"/>
-                            <outlet property="delegate" destination="LfI-WX-NAS" id="1mJ-QP-h6z"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="1Ig-7i-bxn">
-                        <barButtonItem key="leftBarButtonItem" title="Zen" id="1PN-xM-s2A">
-                            <connections>
-                                <action selector="zenPressed:" destination="LfI-WX-NAS" id="TvS-KY-I3Z"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Search" id="cSy-xa-txi">
-                            <connections>
-                                <action selector="searchPressed:" destination="LfI-WX-NAS" id="3gy-t9-0fx"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Le8-F9-BXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1875" y="917"/>
+            <point key="canvasLocation" x="1187" y="207"/>
         </scene>
     </scenes>
 </document>

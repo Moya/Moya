@@ -90,9 +90,30 @@ let provider = MoyaProvider<MyTarget>(stubBehavior: { (_: MyTarget) -> Moya.Stub
 let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
 ```
 
-Finally, there's the `networkActivityClosure` parameter. This is a closure
+Next, there's the `networkActivityClosure` parameter. This is a closure
 that you can provide to be notified whenever a network request begins or
 ends. This is useful for working with the [network activitiy indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
 Note that signature of this closure is `(change: NetworkActivityChangeType) -> ()`, 
 so you will only be notified when a request has `.Began` or `.Ended` – 
 you aren't provided any other details about the request itself. 
+
+Finally, there's the `manager` parameter. By default you'll get `Alamofire.Manager.sharedinstance`.
+If you'd like to customize the manager, for example, to add SSL pinning, create one and pass it in,
+all requests will route through the custom configured manager.
+
+```swift
+let policies: [String: ServerTrustPolicy] = [
+    "example.com": .PinPublicKeys(
+        publicKeys: ServerTrustPolicy.publicKeysInBundle(),
+        validateCertificateChain: true,
+        validateHost: true
+    )
+]
+
+let manager = Manager(
+    configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+    serverTrustPolicyManager: ServerTrustPolicyManager(policies: policies)
+)
+
+let provider = MoyaProvider<MyTarget>(manager: manager)
+```
