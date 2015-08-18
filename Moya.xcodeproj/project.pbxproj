@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7C5251FD1B6FEB680017138A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251F81B6FEB680017138A /* Alamofire.framework */; };
-		7C5252021B6FEBAE0017138A /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251F91B6FEB680017138A /* Box.framework */; };
-		7C5252031B6FEBAE0017138A /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251FA1B6FEB680017138A /* ReactiveCocoa.framework */; };
-		7C5252041B6FEBAE0017138A /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251FB1B6FEB680017138A /* Result.framework */; };
-		7C5252051B6FEBB20017138A /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251FC1B6FEB680017138A /* RxSwift.framework */; };
 		7C86B2371B778B1900EA7CE3 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
 		7C86B2441B778BA500EA7CE3 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */; };
 		7C86B24A1B778BB300EA7CE3 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C86B2451B778BB300EA7CE3 /* EndpointSpec.swift */; };
@@ -32,28 +28,10 @@
 			remoteGlobalIDString = 7C8F4E731B3CEDBC0039C15B;
 			remoteInfo = Moya;
 		};
-		7CED32281B559C7800B97BBD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C8F4E6B1B3CEDBC0039C15B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C8F4E731B3CEDBC0039C15B;
-			remoteInfo = Moya;
-		};
-		7CFCE8A11B41DD6300B97F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C8F4E6B1B3CEDBC0039C15B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C8F4E731B3CEDBC0039C15B;
-			remoteInfo = Moya;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		7C5251F81B6FEB680017138A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		7C5251F91B6FEB680017138A /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = "<group>"; };
-		7C5251FA1B6FEB680017138A /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
-		7C5251FB1B6FEB680017138A /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		7C5251FC1B6FEB680017138A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		7C86B2311B778B1900EA7CE3 /* Moya Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moya Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C86B2341B778B1900EA7CE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
@@ -67,8 +45,6 @@
 		7C8F4E791B3CEDBC0039C15B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C8F4E8E1B3CEDF90039C15B /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		7C8F4E8F1B3CEDF90039C15B /* Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Moya.swift; sourceTree = "<group>"; };
-		7CABCC4E1B40382400797B88 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7CED320C1B559C5800B97BBD /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,24 +61,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C5251FD1B6FEB680017138A /* Alamofire.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7CABCC4A1B40382400797B88 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C5252021B6FEBAE0017138A /* Box.framework in Frameworks */,
-				7C5252031B6FEBAE0017138A /* ReactiveCocoa.framework in Frameworks */,
-				7C5252041B6FEBAE0017138A /* Result.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7CED32081B559C5800B97BBD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C5252051B6FEBB20017138A /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,8 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				7C8F4E741B3CEDBC0039C15B /* Moya.framework */,
-				7CABCC4E1B40382400797B88 /* ReactiveMoya.framework */,
-				7CED320C1B559C5800B97BBD /* RxMoya.framework */,
 				7C86B2311B778B1900EA7CE3 /* Moya Tests.xctest */,
 			);
 			name = Products;
@@ -167,10 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				7C5251F81B6FEB680017138A /* Alamofire.framework */,
-				7C5251F91B6FEB680017138A /* Box.framework */,
-				7C5251FA1B6FEB680017138A /* ReactiveCocoa.framework */,
-				7C5251FB1B6FEB680017138A /* Result.framework */,
-				7C5251FC1B6FEB680017138A /* RxSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -183,20 +135,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C8F4E781B3CEDBC0039C15B /* Moya.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7CABCC4B1B40382400797B88 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7CED32091B559C5800B97BBD /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,42 +177,6 @@
 			productReference = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		7CABCC4D1B40382400797B88 /* ReactiveMoya */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7CABCC5F1B40382400797B88 /* Build configuration list for PBXNativeTarget "ReactiveMoya" */;
-			buildPhases = (
-				7CABCC491B40382400797B88 /* Sources */,
-				7CABCC4A1B40382400797B88 /* Frameworks */,
-				7CABCC4B1B40382400797B88 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7CFCE8A21B41DD6300B97F54 /* PBXTargetDependency */,
-			);
-			name = ReactiveMoya;
-			productName = ReactiveMoya;
-			productReference = 7CABCC4E1B40382400797B88 /* ReactiveMoya.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		7CED320B1B559C5800B97BBD /* RxMoya */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7CED32231B559C5800B97BBD /* Build configuration list for PBXNativeTarget "RxMoya" */;
-			buildPhases = (
-				7CED32071B559C5800B97BBD /* Sources */,
-				7CED32081B559C5800B97BBD /* Frameworks */,
-				7CED32091B559C5800B97BBD /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7CED32291B559C7800B97BBD /* PBXTargetDependency */,
-			);
-			name = RxMoya;
-			productName = RxMoya;
-			productReference = 7CED320C1B559C5800B97BBD /* RxMoya.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -291,12 +193,6 @@
 					7C8F4E731B3CEDBC0039C15B = {
 						CreatedOnToolsVersion = 7.0;
 					};
-					7CABCC4D1B40382400797B88 = {
-						CreatedOnToolsVersion = 7.0;
-					};
-					7CED320B1B559C5800B97BBD = {
-						CreatedOnToolsVersion = 6.4;
-					};
 				};
 			};
 			buildConfigurationList = 7C8F4E6E1B3CEDBC0039C15B /* Build configuration list for PBXProject "Moya" */;
@@ -312,8 +208,6 @@
 			projectRoot = "";
 			targets = (
 				7C8F4E731B3CEDBC0039C15B /* Moya */,
-				7CABCC4D1B40382400797B88 /* ReactiveMoya */,
-				7CED320B1B559C5800B97BBD /* RxMoya */,
 				7C86B2301B778B1900EA7CE3 /* Moya Tests */,
 			);
 		};
@@ -359,20 +253,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7CABCC491B40382400797B88 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7CED32071B559C5800B97BBD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -380,16 +260,6 @@
 			isa = PBXTargetDependency;
 			target = 7C8F4E731B3CEDBC0039C15B /* Moya */;
 			targetProxy = 7C86B2381B778B1900EA7CE3 /* PBXContainerItemProxy */;
-		};
-		7CED32291B559C7800B97BBD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7C8F4E731B3CEDBC0039C15B /* Moya */;
-			targetProxy = 7CED32281B559C7800B97BBD /* PBXContainerItemProxy */;
-		};
-		7CFCE8A21B41DD6300B97F54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7C8F4E731B3CEDBC0039C15B /* Moya */;
-			targetProxy = 7CFCE8A11B41DD6300B97F54 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -563,94 +433,6 @@
 			};
 			name = Release;
 		};
-		7CABCC601B40382400797B88 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"/Carthage/Build/iOS/",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/Moya/ReactiveCore/ReactiveMoya/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.moya.ReactiveMoya;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		7CABCC611B40382400797B88 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"/Carthage/Build/iOS/",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/Moya/ReactiveCore/ReactiveMoya/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.moya.ReactiveMoya;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		7CED321F1B559C5800B97BBD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "$(SRCROOT)/Moya/ReactiveCore/RxMoya/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		7CED32201B559C5800B97BBD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/Moya/ReactiveCore/RxMoya/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -661,6 +443,7 @@
 				7C86B23C1B778B1900EA7CE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7C8F4E6E1B3CEDBC0039C15B /* Build configuration list for PBXProject "Moya" */ = {
 			isa = XCConfigurationList;
@@ -676,24 +459,6 @@
 			buildConfigurations = (
 				7C8F4E891B3CEDBC0039C15B /* Debug */,
 				7C8F4E8A1B3CEDBC0039C15B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7CABCC5F1B40382400797B88 /* Build configuration list for PBXNativeTarget "ReactiveMoya" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7CABCC601B40382400797B88 /* Debug */,
-				7CABCC611B40382400797B88 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7CED32231B559C5800B97BBD /* Build configuration list for PBXNativeTarget "RxMoya" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7CED321F1B559C5800B97BBD /* Debug */,
-				7CED32201B559C5800B97BBD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
