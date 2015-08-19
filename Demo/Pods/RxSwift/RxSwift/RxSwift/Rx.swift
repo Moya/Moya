@@ -36,7 +36,7 @@ func contract(@autoclosure  condition: () -> Bool) {
     }
 }
 
-// Swift doesn't have a concept of abstract metods.
+// Swift doesn't have a concept of abstract methods.
 // This function is being used as a runtime check that abstract methods aren't being called.
 func abstractMethod<T>() -> T {
     rxFatalError("Abstract method")

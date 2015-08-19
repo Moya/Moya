@@ -109,7 +109,7 @@ public class MoyaProvider<T: MoyaTarget> {
     public let manager: Manager
 
     /// Initializes a provider.
-    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
         self.endpointClosure = endpointClosure
         self.endpointResolver = endpointResolver
         self.stubBehavior = stubBehavior
@@ -142,6 +142,10 @@ public class MoyaProvider<T: MoyaTarget> {
     }
 
     public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
+        return DefaultEndpointResolution(endpoint)
+    }
+
+    public class func DefaultEndpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
         return endpoint.urlRequest
     }
 
