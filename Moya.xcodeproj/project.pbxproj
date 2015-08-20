@@ -13,7 +13,6 @@
 		7C6A67C11B865D4300C5B387 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C6A67BA1B865B2B00C5B387 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C6A67C21B865D4300C5B387 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C6A67BB1B865B2B00C5B387 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C6A67C31B865D4300C5B387 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C5251F81B6FEB680017138A /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7C6A67C51B865DBB00C5B387 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C6A67C41B865DBB00C5B387 /* OHHTTPStubs.framework */; };
 		7C6A67C61B865DC000C5B387 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C6A67C41B865DBB00C5B387 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C86B2371B778B1900EA7CE3 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
 		7C86B2441B778BA500EA7CE3 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */; };
@@ -91,7 +90,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C5251FD1B6FEB680017138A /* Alamofire.framework in Frameworks */,
-				7C6A67C51B865DBB00C5B387 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
