@@ -6,7 +6,7 @@
     If the test suite crashes before the first example is run, this closure
     will not be executed.
 
-    :param: closure The closure to be run prior to any examples in the test suite.
+    - parameter closure: The closure to be run prior to any examples in the test suite.
 */
 public func beforeSuite(closure: BeforeSuiteClosure) {
     World.sharedWorld().beforeSuite(closure)
@@ -20,7 +20,7 @@ public func beforeSuite(closure: BeforeSuiteClosure) {
     If the test suite crashes before all examples are run, this closure
     will not be executed.
 
-    :param: closure The closure to be run after all of the examples in the test suite.
+    - parameter closure: The closure to be run after all of the examples in the test suite.
 */
 public func afterSuite(closure: AfterSuiteClosure) {
     World.sharedWorld().afterSuite(closure)
@@ -30,9 +30,9 @@ public func afterSuite(closure: AfterSuiteClosure) {
     Defines a group of shared examples. These examples can be re-used in several locations
     by using the `itBehavesLike` function.
 
-    :param: name The name of the shared example group. This must be unique across all shared example
+    - parameter name: The name of the shared example group. This must be unique across all shared example
                  groups defined in a test suite.
-    :param: closure A closure containing the examples. This behaves just like an example group defined
+    - parameter closure: A closure containing the examples. This behaves just like an example group defined
                     using `describe` or `context`--the closure may contain any number of `beforeEach`
                     and `afterEach` closures, as well as any number of examples (defined using `it`).
 */
@@ -44,9 +44,9 @@ public func sharedExamples(name: String, closure: () -> ()) {
     Defines a group of shared examples. These examples can be re-used in several locations
     by using the `itBehavesLike` function.
 
-    :param: name The name of the shared example group. This must be unique across all shared example
+    - parameter name: The name of the shared example group. This must be unique across all shared example
                  groups defined in a test suite.
-    :param: closure A closure containing the examples. This behaves just like an example group defined
+    - parameter closure: A closure containing the examples. This behaves just like an example group defined
                     using `describe` or `context`--the closure may contain any number of `beforeEach`
                     and `afterEach` closures, as well as any number of examples (defined using `it`).
 
@@ -61,9 +61,9 @@ public func sharedExamples(name: String, closure: SharedExampleClosure) {
     Defines an example group. Example groups are logical groupings of examples.
     Example groups can share setup and teardown code.
 
-    :param: description An arbitrary string describing the example group.
-    :param: closure A closure that can contain other examples.
-    :param: flags A mapping of string keys to booleans that can be used to filter examples or example groups.
+    - parameter description: An arbitrary string describing the example group.
+    - parameter closure: A closure that can contain other examples.
+    - parameter flags: A mapping of string keys to booleans that can be used to filter examples or example groups.
 */
 public func describe(description: String, flags: FilterFlags = [:], closure: () -> ()) {
     World.sharedWorld().describe(description, flags: flags, closure: closure)
@@ -73,7 +73,7 @@ public func describe(description: String, flags: FilterFlags = [:], closure: () 
     Defines an example group. Equivalent to `describe`.
 */
 public func context(description: String, flags: FilterFlags = [:], closure: () -> ()) {
-    describe(description, flags: flags, closure)
+    describe(description, flags: flags, closure: closure)
 }
 
 /**
@@ -82,7 +82,7 @@ public func context(description: String, flags: FilterFlags = [:], closure: () -
     An example group may contain an unlimited number of beforeEach. They'll be
     run in the order they're defined, but you shouldn't rely on that behavior.
 
-    :param: closure The closure to be run prior to each example.
+    - parameter closure: The closure to be run prior to each example.
 */
 public func beforeEach(closure: BeforeExampleClosure) {
     World.sharedWorld().beforeEach(closure)
@@ -92,7 +92,7 @@ public func beforeEach(closure: BeforeExampleClosure) {
     Identical to Quick.DSL.beforeEach, except the closure is provided with
     metadata on the example that the closure is being run prior to.
 */
-public func beforeEach(#closure: BeforeExampleWithMetadataClosure) {
+public func beforeEach(closure: BeforeExampleWithMetadataClosure) {
     World.sharedWorld().beforeEach(closure: closure)
 }
 
@@ -102,7 +102,7 @@ public func beforeEach(#closure: BeforeExampleWithMetadataClosure) {
     An example group may contain an unlimited number of afterEach. They'll be
     run in the order they're defined, but you shouldn't rely on that behavior.
 
-    :param: closure The closure to be run after each example.
+    - parameter closure: The closure to be run after each example.
 */
 public func afterEach(closure: AfterExampleClosure) {
     World.sharedWorld().afterEach(closure)
@@ -112,7 +112,7 @@ public func afterEach(closure: AfterExampleClosure) {
     Identical to Quick.DSL.afterEach, except the closure is provided with
     metadata on the example that the closure is being run after.
 */
-public func afterEach(#closure: AfterExampleWithMetadataClosure) {
+public func afterEach(closure: AfterExampleWithMetadataClosure) {
     World.sharedWorld().afterEach(closure: closure)
 }
 
@@ -120,12 +120,12 @@ public func afterEach(#closure: AfterExampleWithMetadataClosure) {
     Defines an example. Examples use assertions to demonstrate how code should
     behave. These are like "tests" in XCTest.
 
-    :param: description An arbitrary string describing what the example is meant to specify.
-    :param: closure A closure that can contain assertions.
-    :param: flags A mapping of string keys to booleans that can be used to filter examples or example groups.
+    - parameter description: An arbitrary string describing what the example is meant to specify.
+    - parameter closure: A closure that can contain assertions.
+    - parameter flags: A mapping of string keys to booleans that can be used to filter examples or example groups.
                   Empty by default.
-    :param: file The absolute path to the file containing the example. A sensible default is provided.
-    :param: line The line containing the example. A sensible default is provided.
+    - parameter file: The absolute path to the file containing the example. A sensible default is provided.
+    - parameter line: The line containing the example. A sensible default is provided.
 */
 public func it(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__, closure: () -> ()) {
     World.sharedWorld().it(description, flags: flags, file: file, line: line, closure: closure)
@@ -135,16 +135,16 @@ public func it(description: String, flags: FilterFlags = [:], file: String = __F
     Inserts the examples defined using a `sharedExamples` function into the current example group.
     The shared examples are executed at this location, as if they were written out manually.
 
-    :param: name The name of the shared examples group to be executed. This must be identical to the
+    - parameter name: The name of the shared examples group to be executed. This must be identical to the
                  name of a shared examples group defined using `sharedExamples`. If there are no shared
                  examples that match the name given, an exception is thrown and the test suite will crash.
-    :param: flags A mapping of string keys to booleans that can be used to filter examples or example groups.
+    - parameter flags: A mapping of string keys to booleans that can be used to filter examples or example groups.
                   Empty by default.
-    :param: file The absolute path to the file containing the current example group. A sensible default is provided.
-    :param: line The line containing the current example group. A sensible default is provided.
+    - parameter file: The absolute path to the file containing the current example group. A sensible default is provided.
+    - parameter line: The line containing the current example group. A sensible default is provided.
 */
 public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__) {
-    itBehavesLike(name, flags: flags, file: file, line: line, { return [:] })
+    itBehavesLike(name, flags: flags, file: file, line: line, sharedExampleContext: { return [:] })
 }
 
 /**
@@ -153,15 +153,15 @@ public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String =
     This function also passes those shared examples a context that can be evaluated to give the shared
     examples extra information on the subject of the example.
 
-    :param: name The name of the shared examples group to be executed. This must be identical to the
+    - parameter name: The name of the shared examples group to be executed. This must be identical to the
                  name of a shared examples group defined using `sharedExamples`. If there are no shared
                  examples that match the name given, an exception is thrown and the test suite will crash.
-    :param: sharedExampleContext A closure that, when evaluated, returns key-value pairs that provide the
+    - parameter sharedExampleContext: A closure that, when evaluated, returns key-value pairs that provide the
                                  shared examples with extra information on the subject of the example.
-    :param: flags A mapping of string keys to booleans that can be used to filter examples or example groups.
+    - parameter flags: A mapping of string keys to booleans that can be used to filter examples or example groups.
                   Empty by default.
-    :param: file The absolute path to the file containing the current example group. A sensible default is provided.
-    :param: line The line containing the current example group. A sensible default is provided.
+    - parameter file: The absolute path to the file containing the current example group. A sensible default is provided.
+    - parameter line: The line containing the current example group. A sensible default is provided.
 */
 public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__, sharedExampleContext: SharedExampleContext) {
     World.sharedWorld().itBehavesLike(name, sharedExampleContext: sharedExampleContext, flags: flags, file: file, line: line)
@@ -171,8 +171,8 @@ public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String =
     Defines an example or example group that should not be executed. Use `pending` to temporarily disable
     examples or groups that should not be run yet.
 
-    :param: description An arbitrary string describing the example or example group.
-    :param: closure A closure that will not be evaluated.
+    - parameter description: An arbitrary string describing the example or example group.
+    - parameter closure: A closure that will not be evaluated.
 */
 public func pending(description: String, closure: () -> ()) {
     World.sharedWorld().pending(description, closure: closure)
@@ -191,7 +191,7 @@ public func xdescribe(description: String, flags: FilterFlags, closure: () -> ()
     This disables all examples within the closure.
 */
 public func xcontext(description: String, flags: FilterFlags, closure: () -> ()) {
-    xdescribe(description, flags, closure)
+    xdescribe(description, flags: flags, closure: closure)
 }
 
 /**
@@ -215,7 +215,7 @@ public func fdescribe(description: String, flags: FilterFlags = [:], closure: ()
     Use this to quickly focus a `context` closure. Equivalent to `fdescribe`.
 */
 public func fcontext(description: String, flags: FilterFlags = [:], closure: () -> ()) {
-    fdescribe(description, flags: flags, closure)
+    fdescribe(description, flags: flags, closure: closure)
 }
 
 /**

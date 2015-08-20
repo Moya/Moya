@@ -2,9 +2,15 @@ import Foundation
 
 internal enum PollResult : BooleanType {
     case Success, Failure, Timeout
+    case ErrorThrown(ErrorType)
 
     var boolValue : Bool {
-        return self == .Success
+        switch (self) {
+        case .Success:
+            return true
+        default:
+            return false
+        }
     }
 }
 
@@ -30,8 +36,8 @@ internal class RunPromise {
 }
 
 internal func stopRunLoop(runLoop: NSRunLoop, delay: NSTimeInterval) -> RunPromise {
-    var promise = RunPromise()
-    var killQueue = dispatch_queue_create("nimble.waitUntil.queue", DISPATCH_QUEUE_SERIAL)
+    let promise = RunPromise()
+    let killQueue = dispatch_queue_create("nimble.waitUntil.queue", DISPATCH_QUEUE_SERIAL)
     let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
     let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
     dispatch_after(killTime, killQueue) {
@@ -42,10 +48,10 @@ internal func stopRunLoop(runLoop: NSRunLoop, delay: NSTimeInterval) -> RunPromi
     return promise
 }
 
-internal func pollBlock(#pollInterval: NSTimeInterval, #timeoutInterval: NSTimeInterval, expression: () -> Bool) -> PollResult {
+internal func pollBlock(pollInterval pollInterval: NSTimeInterval, timeoutInterval: NSTimeInterval, expression: () throws -> Bool) -> PollResult {
     let runLoop = NSRunLoop.mainRunLoop()
 
-    var promise = stopRunLoop(runLoop, min(timeoutInterval, 0.2))
+    let promise = stopRunLoop(runLoop, delay: min(timeoutInterval, 0.2))
 
     let startDate = NSDate()
 
@@ -58,16 +64,20 @@ internal func pollBlock(#pollInterval: NSTimeInterval, #timeoutInterval: NSTimeI
         return .Timeout
     }
 
-    var pass: Bool = false
+    var pass = false
     do {
-        pass = expression()
-        if pass {
-            break
-        }
+        repeat {
+            pass = try expression()
+            if pass {
+                break
+            }
 
-        let runDate = NSDate().dateByAddingTimeInterval(pollInterval) as NSDate
-        runLoop.runUntilDate(runDate)
-    } while(NSDate().timeIntervalSinceDate(startDate) < timeoutInterval);
+            let runDate = NSDate().dateByAddingTimeInterval(pollInterval)
+            runLoop.runUntilDate(runDate)
+        } while(NSDate().timeIntervalSinceDate(startDate) < timeoutInterval)
+    } catch let error {
+        return .ErrorThrown(error)
+    }
 
     return pass ? .Success : .Failure
 }

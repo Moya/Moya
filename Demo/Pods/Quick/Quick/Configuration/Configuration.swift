@@ -14,7 +14,7 @@ public typealias ExampleFilter = (example: Example) -> Bool
     A configuration encapsulates various options you can use
     to configure Quick's behavior.
 */
-@objc final public class Configuration {
+final public class Configuration: NSObject {
     internal let exampleHooks = ExampleHooks()
     internal let suiteHooks = SuiteHooks()
     internal var exclusionFilters: [ExampleFilter] = [{ example in
@@ -43,7 +43,7 @@ public typealias ExampleFilter = (example: Example) -> Bool
         All examples are filtered using all inclusion filters.
         The remaining examples are run. If no examples remain, all examples are run.
 
-        :param: filter A filter that, given an example, returns a value indicating
+        - parameter filter: A filter that, given an example, returns a value indicating
                        whether that example should be included in the examples
                        that are run.
     */
@@ -57,7 +57,7 @@ public typealias ExampleFilter = (example: Example) -> Bool
         All examples that remain after being filtered by the inclusion filters are
         then filtered via all exclusion filters.
 
-        :param: filter A filter that, given an example, returns a value indicating
+        - parameter filter: A filter that, given an example, returns a value indicating
                        whether that example should be excluded from the examples
                        that are run.
     */
@@ -89,7 +89,7 @@ public typealias ExampleFilter = (example: Example) -> Bool
         either. Mulitple beforeEach defined on a single configuration, however,
         will be executed in the order they're defined.
 
-        :param: closure The closure to be executed before each example
+        - parameter closure: The closure to be executed before each example
                         in the test suite.
     */
     public func beforeEach(closure: BeforeExampleClosure) {
@@ -120,7 +120,7 @@ public typealias ExampleFilter = (example: Example) -> Bool
         either. Mulitple afterEach defined on a single configuration, however,
         will be executed in the order they're defined.
 
-        :param: closure The closure to be executed before each example
+        - parameter closure: The closure to be executed before each example
                         in the test suite.
     */
     public func afterEach(closure: AfterExampleClosure) {

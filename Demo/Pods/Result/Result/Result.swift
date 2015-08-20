@@ -1,59 +1,58 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// An enum representing either a failure with an explanatory error, or a success with a result value.
-public enum Result<T, Error>: Printable, DebugPrintable {
-	case Success(Box<T>)
-	case Failure(Box<Error>)
+public enum Result<T, Error: ErrorType>: ResultType, CustomStringConvertible, CustomDebugStringConvertible {
+	case Success(T)
+	case Failure(Error)
 
 	// MARK: Constructors
 
 	/// Constructs a success wrapping a `value`.
 	public init(value: T) {
-		self = .Success(Box(value))
+		self = .Success(value)
 	}
 
 	/// Constructs a failure wrapping an `error`.
 	public init(error: Error) {
-		self = .Failure(Box(error))
+		self = .Failure(error)
 	}
 
 	/// Constructs a result from an Optional, failing with `Error` if `nil`
 	public init(_ value: T?, @autoclosure failWith: () -> Error) {
-		self = value.map { .success($0) } ?? .failure(failWith())
+		self = value.map(Result.Success) ?? .Failure(failWith())
 	}
 
-	/// Constructs a success wrapping a `value`.
-	public static func success(value: T) -> Result {
-		return Result(value: value)
+	/// Constructs a result from a function that uses `throw`, failing with `Error` if throws
+	public init(@autoclosure _ f: () throws -> T) {
+		do {
+			self = .Success(try f())
+		} catch {
+			self = .Failure(error as! Error)
+		}
 	}
-
-	/// Constructs a failure wrapping an `error`.
-	public static func failure(error: Error) -> Result {
-		return Result(error: error)
-	}
-
+	
 
 	// MARK: Deconstruction
 
-	/// Returns the value from `Success` Results, `nil` otherwise.
-	public var value: T? {
-		return analysis(ifSuccess: { $0 }, ifFailure: { _ in nil })
-	}
-
-	/// Returns the error from `Failure` Results, `nil` otherwise.
-	public var error: Error? {
-		return analysis(ifSuccess: { _ in nil }, ifFailure: { $0 })
+	/// Returns the value from `Success` Results or `throw`s the error
+	public func dematerialize() throws -> T {
+		switch self {
+		case let .Success(value):
+			return value
+		case let .Failure(error):
+			throw error
+		}
 	}
 
 	/// Case analysis for Result.
 	///
 	/// Returns the value produced by applying `ifFailure` to `Failure` Results, or `ifSuccess` to `Success` Results.
-	public func analysis<Result>(@noescape #ifSuccess: T -> Result, @noescape ifFailure: Error -> Result) -> Result {
+	public func analysis<Result>(@noescape ifSuccess ifSuccess: T -> Result, @noescape ifFailure: Error -> Result) -> Result {
 		switch self {
 		case let .Success(value):
-			return ifSuccess(value.value)
+			return ifSuccess(value)
 		case let .Failure(value):
-			return ifFailure(value.value)
+			return ifFailure(value)
 		}
 	}
 
@@ -62,14 +61,14 @@ public enum Result<T, Error>: Printable, DebugPrintable {
 
 	/// Returns a new Result by mapping `Success`es’ values using `transform`, or re-wrapping `Failure`s’ errors.
 	public func map<U>(@noescape transform: T -> U) -> Result<U, Error> {
-		return flatMap { .success(transform($0)) }
+		return flatMap { .Success(transform($0)) }
 	}
 
 	/// Returns the result of applying `transform` to `Success`es’ values, or re-wrapping `Failure`’s errors.
 	public func flatMap<U>(@noescape transform: T -> Result<U, Error>) -> Result<U, Error> {
 		return analysis(
 			ifSuccess: transform,
-			ifFailure: Result<U, Error>.failure)
+			ifFailure: Result<U, Error>.Failure)
 	}
 	
 	/// Returns `self.value` if this result is a .Success, or the given value otherwise. Equivalent with `??`
@@ -83,6 +82,17 @@ public enum Result<T, Error>: Printable, DebugPrintable {
 			ifSuccess: { _ in self },
 			ifFailure: { _ in result() })
 	}
+
+	/// Transform a function from one that uses `throw` to one that returns a `Result`
+//	public static func materialize<T, U>(f: T throws -> U) -> T -> Result<U, ErrorType> {
+//		return { x in
+//			do {
+//				return .Success(try f(x))
+//			} catch {
+//				return .Failure(error)
+//			}
+//		}
+//	}
 
 
 	// MARK: Errors
@@ -115,7 +125,7 @@ public enum Result<T, Error>: Printable, DebugPrintable {
 	}
 
 
-	// MARK: Printable
+	// MARK: CustomStringConvertible
 
 	public var description: String {
 		return analysis(
@@ -124,7 +134,7 @@ public enum Result<T, Error>: Printable, DebugPrintable {
 	}
 
 
-	// MARK: DebugPrintable
+	// MARK: CustomDebugStringConvertible
 
 	public var debugDescription: String {
 		return description
@@ -158,6 +168,16 @@ public func ?? <T, Error> (left: Result<T, Error>, @autoclosure right: () -> Res
 	return left.recoverWith(right())
 }
 
+// MARK: - Derive result from failable closure
+
+// Disable until http://www.openradar.me/21341337 is fixed.
+//public func materialize<T>(f: () throws -> T) -> Result<T, ErrorType> {
+//	do {
+//		return .Success(try f())
+//	} catch {
+//		return .Failure(error)
+//	}
+//}
 
 // MARK: - Cocoa API conveniences
 
@@ -166,9 +186,9 @@ public func ?? <T, Error> (left: Result<T, Error>, @autoclosure right: () -> Res
 /// This is convenient for wrapping Cocoa API which returns an object or `nil` + an error, by reference. e.g.:
 ///
 ///     Result.try { NSData(contentsOfURL: URL, options: .DataReadingMapped, error: $0) }
-public func try<T>(function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__, try: NSErrorPointer -> T?) -> Result<T, NSError> {
+public func `try`<T>(function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__, `try`: NSErrorPointer -> T?) -> Result<T, NSError> {
 	var error: NSError?
-	return try(&error).map(Result.success) ?? Result.failure(error ?? Result<T, NSError>.error(function: function, file: file, line: line))
+	return `try`(&error).map(Result.Success) ?? .Failure(error ?? Result<T, NSError>.error(function: function, file: file, line: line))
 }
 
 /// Constructs a Result with the result of calling `try` with an error pointer.
@@ -176,11 +196,11 @@ public func try<T>(function: String = __FUNCTION__, file: String = __FILE__, lin
 /// This is convenient for wrapping Cocoa API which returns a `Bool` + an error, by reference. e.g.:
 ///
 ///     Result.try { NSFileManager.defaultManager().removeItemAtURL(URL, error: $0) }
-public func try(function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__, try: NSErrorPointer -> Bool) -> Result<(), NSError> {
+public func `try`(function: String = __FUNCTION__, file: String = __FILE__, line: Int = __LINE__, `try`: NSErrorPointer -> Bool) -> Result<(), NSError> {
 	var error: NSError?
-	return try(&error) ?
-		.success(())
-	:	.failure(error ?? Result<(), NSError>.error(function: function, file: file, line: line))
+	return `try`(&error) ?
+		.Success(())
+	:	.Failure(error ?? Result<(), NSError>.error(function: function, file: file, line: line))
 }
 
 
@@ -215,5 +235,4 @@ public func &&& <T, U, Error> (left: Result<T, Error>, @autoclosure right: () ->
 }
 
 
-import Box
 import Foundation

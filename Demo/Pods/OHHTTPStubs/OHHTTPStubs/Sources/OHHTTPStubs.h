@@ -22,39 +22,27 @@
  *
  ***********************************************************************************/
 
-// For SDK 7.1 Compatibility (as this macro was only included starting SDK 8.0)
-#ifndef NS_DESIGNATED_INITIALIZER
-  #if __has_attribute(objc_designated_initializer)
-    #define NS_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
-  #else
-    #define NS_DESIGNATED_INITIALIZER
-  #endif
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Imports
 
 #import <Foundation/Foundation.h>
+
+#import "Compatibility.h"
 #import "OHHTTPStubsResponse.h"
+
 // Because this is supposed to be an umbrella header, we should import every public headers here
 #import "OHHTTPStubsResponse+HTTPMessage.h"
 #import "OHHTTPStubsResponse+JSON.h"
 #import "OHPathHelpers.h"
 
-#ifdef NS_ASSUME_NONNULL_BEGIN
-  NS_ASSUME_NONNULL_BEGIN
-  #define _nullable_ __nullable
-  #define _nonnull_ __nonnull
-#else
-  #define _nullable_
-  #define _nonnull_
-#endif
+NS_ASSUME_NONNULL_BEGIN
 
 ////////////////////////////////////////////////////////////////////////////////
 #pragma mark - Types
 
 typedef BOOL(^OHHTTPStubsTestBlock)(NSURLRequest* request);
-typedef OHHTTPStubsResponse* _nonnull_ (^OHHTTPStubsResponseBlock)( NSURLRequest* request);
+typedef OHHTTPStubsResponse* __nonnull (^OHHTTPStubsResponseBlock)( NSURLRequest* request);
 
 /**
  *  This opaque type represents an installed stub and is used to uniquely
@@ -74,7 +62,7 @@ typedef OHHTTPStubsResponse* _nonnull_ (^OHHTTPStubsResponseBlock)( NSURLRequest
  *  This is especially useful if you dump all installed stubs using `allStubs`
  *  or if you want to log which stubs are being triggered using `onStubActivation:`.
  */
-@property(nonatomic, strong) NSString* _nullable_ name;
+@property(nonatomic, strong, nullable) NSString* name;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -190,6 +178,4 @@ typedef OHHTTPStubsResponse* _nonnull_ (^OHHTTPStubsResponseBlock)( NSURLRequest
 
 @end
 
-#ifdef NS_ASSUME_NONNULL_END
-  NS_ASSUME_NONNULL_END
-#endif
+NS_ASSUME_NONNULL_END

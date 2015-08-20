@@ -19,7 +19,7 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
 
-        return RACSignal.defer { [weak self] () -> RACSignal! in
+        return RACSignal.`defer` { [weak self] () -> RACSignal! in
             
             if let weakSelf = self {
                 objc_sync_enter(weakSelf)

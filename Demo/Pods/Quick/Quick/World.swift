@@ -23,13 +23,13 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
     You may configure how Quick behaves by calling the -[World configure:]
     method from within an overridden +[QuickConfiguration configure:] method.
 */
-@objc final public class World {
+final internal class World: NSObject {
     /**
         The example group that is currently being run.
         The DSL requires that this group is correctly set in order to build a
         correct hierarchy of example groups and their examples.
     */
-    public var currentExampleGroup: ExampleGroup?
+    internal var currentExampleGroup: ExampleGroup?
 
     /**
         The example metadata of the test that is currently being run.
@@ -37,14 +37,14 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
         runtime.
     */
 
-    public var currentExampleMetadata: ExampleMetadata?
+    internal var currentExampleMetadata: ExampleMetadata?
 
     /**
         A flag that indicates whether additional test suites are being run
         within this test suite. This is only true within the context of Quick
         functional tests.
     */
-    public var isRunningAdditionalSuites = false
+    internal var isRunningAdditionalSuites = false
 
     private var specs: Dictionary<String, ExampleGroup> = [:]
     private var sharedExamples: [String: SharedExampleClosure] = [:]
@@ -56,11 +56,11 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
 
     // MARK: Singleton Constructor
 
-    private init() {}
+    private override init() {}
     private struct Shared {
         static let instance = World()
     }
-    public class func sharedWorld() -> World {
+    internal class func sharedWorld() -> World {
         return Shared.instance
     }
 
@@ -71,10 +71,10 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
         so that it may be configured. This method must not be called outside of
         an overridden +[QuickConfiguration configure:] method.
 
-        :param: closure  A closure that takes a Configuration object that can
+        - parameter closure:  A closure that takes a Configuration object that can
                          be mutated to change Quick's behavior.
     */
-    public func configure(closure: QuickConfigurer) {
+    internal func configure(closure: QuickConfigurer) {
         assert(!isConfigurationFinalized,
                "Quick cannot be configured outside of a +[QuickConfiguration configure:] method. You should not call -[World configure:] directly. Instead, subclass QuickConfiguration and override the +[QuickConfiguration configure:] method.")
         closure(configuration: configuration)
@@ -84,7 +84,7 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
         Finalizes the World's configuration.
         Any subsequent calls to World.configure() will raise.
     */
-    public func finalizeConfiguration() {
+    internal func finalizeConfiguration() {
         isConfigurationFinalized = true
     }
 
@@ -103,10 +103,10 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
                 it("is at the top level") {}
             }
 
-        :param: cls The QuickSpec class for which to retrieve the root example group.
-        :returns: The root example group for the class.
+        - parameter cls: The QuickSpec class for which to retrieve the root example group.
+        - returns: The root example group for the class.
     */
-    public func rootExampleGroupForSpecClass(cls: AnyClass) -> ExampleGroup {
+    internal func rootExampleGroupForSpecClass(cls: AnyClass) -> ExampleGroup {
         let name = NSStringFromClass(cls)
         if let group = specs[name] {
             return group
@@ -127,15 +127,15 @@ public typealias SharedExampleClosure = (SharedExampleContext) -> ()
         That is, these examples are the ones that are included by inclusion filters, and are
         not excluded by exclusion filters.
 
-        :param: specClass The QuickSpec subclass for which examples are to be returned.
-        :returns: A list of examples to be run as test invocations.
+        - parameter specClass: The QuickSpec subclass for which examples are to be returned.
+        - returns: A list of examples to be run as test invocations.
     */
     @objc(examplesForSpecClass:)
-    public func examples(specClass: AnyClass) -> [Example] {
+    internal func examples(specClass: AnyClass) -> [Example] {
         // 1. Grab all included examples.
         let included = includedExamples
         // 2. Grab the intersection of (a) examples for this spec, and (b) included examples.
-        let spec = rootExampleGroupForSpecClass(specClass).examples.filter { contains(included, $0) }
+        let spec = rootExampleGroupForSpecClass(specClass).examples.filter { included.contains($0) }
         // 3. Remove all excluded examples.
         return spec.filter { example in
             !self.configuration.exclusionFilters.reduce(false) { $0 || $1(example: example) }

@@ -3,7 +3,7 @@
     including the index at which the example was executed, as
     well as the example itself.
 */
-@objc final public class ExampleMetadata {
+final public class ExampleMetadata: NSObject {
     /**
         The example for which this metadata was collected.
     */

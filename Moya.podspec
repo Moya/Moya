@@ -6,10 +6,10 @@ Pod::Spec.new do |s|
   Moya abstracts network commands using Swift Generics to provide developers
   with more compile-time confidence.
 
-  ReactiveCocoa and RxSwift extensions exist as well. Instructions for installation
+  A ReactiveCocoa extension exists as well. Instructions for its installation
   are in [the README](https://github.com/ashfurrow/Moya).
   EOS
-  s.homepage     = "https://github.com/ashfurrow/Moya"
+  s.homepage     = "https://github.com/AshFurrow/Moya"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Moya/*.swift"
-    ss.dependency "Alamofire", "~> 1.3.0"
+    ss.dependency "Alamofire"
     ss.framework  = "Foundation"
   end
 
@@ -32,12 +32,12 @@ Pod::Spec.new do |s|
   s.subspec "ReactiveCocoa" do |ss|
     ss.source_files = "Moya/ReactiveCocoa/*.swift"
     ss.dependency "Moya/ReactiveCore"
-    ss.dependency "ReactiveCocoa", "3.0-beta.6"
+    ss.dependency "ReactiveCocoa"
   end
 
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Moya/RxSwift/*.swift"
     ss.dependency "Moya/ReactiveCore"
-    ss.dependency "RxSwift", "~> 1.4"
+    ss.dependency "RxSwift"
   end
 end

@@ -1,11 +1,30 @@
 #import <Nimble/DSL.h>
 #import <Nimble/Nimble-Swift.h>
 
-NIMBLE_EXPORT NMBExpectation *NMB_expect(id(^actualBlock)(), const char *file, unsigned int line) {
+SWIFT_CLASS("_TtC6Nimble7NMBWait")
+@interface NMBWait : NSObject
+
++ (void)untilTimeout:(NSTimeInterval)timeout file:(NSString *)file line:(NSUInteger)line action:(void(^)())action;
++ (void)untilFile:(NSString *)file line:(NSUInteger)line action:(void(^)())action;
+
+@end
+
+NIMBLE_EXPORT NMBExpectation *NMB_expect(id(^actualBlock)(), NSString *file, NSUInteger line) {
     return [[NMBExpectation alloc] initWithActualBlock:actualBlock
                                               negative:NO
-                                                  file:[[NSString alloc] initWithFormat:@"%s", file]
+                                                  file:file
                                                   line:line];
+}
+
+NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), NSString *file, NSUInteger line) {
+    return NMB_expect(^id{
+        actualBlock();
+        return nil;
+    }, file, line);
+}
+
+NIMBLE_EXPORT void NMB_failWithMessage(NSString *msg, NSString *file, NSUInteger line) {
+    return [NMBExpectation failWithMessage:msg file:file line:line];
 }
 
 NIMBLE_EXPORT id<NMBMatcher> NMB_beAnInstanceOf(Class expectedClass) {
@@ -68,8 +87,22 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_beEmpty() {
     return [NMBObjCMatcher beEmptyMatcher];
 }
 
-NIMBLE_EXPORT id<NMBMatcher> NMB_contain(id itemOrSubstring) {
-    return [NMBObjCMatcher containMatcher:itemOrSubstring];
+NIMBLE_EXPORT id<NMBMatcher> NMB_containWithNilTermination(id itemOrSubstring, ...) {
+    NSMutableArray *itemOrSubstringArray = [NSMutableArray array];
+
+    if (itemOrSubstring) {
+        [itemOrSubstringArray addObject:itemOrSubstring];
+
+        va_list args;
+        va_start(args, itemOrSubstring);
+        id next;
+        while ((next = va_arg(args, id))) {
+            [itemOrSubstringArray addObject:next];
+        }
+        va_end(args);
+    }
+
+    return [NMBObjCMatcher containMatcher:itemOrSubstringArray];
 }
 
 NIMBLE_EXPORT id<NMBMatcher> NMB_endWith(id itemElementOrSubstring) {
@@ -92,13 +125,13 @@ NIMBLE_EXPORT NMBObjCRaiseExceptionMatcher *NMB_raiseException() {
     return [NMBObjCMatcher raiseExceptionMatcher];
 }
 
-NIMBLE_EXPORT NMBWaitUntilTimeoutBlock nmb_wait_until_timeout_builder(NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBWaitUntilTimeoutBlock NMB_waitUntilTimeoutBuilder(NSString *file, NSUInteger line) {
     return ^(NSTimeInterval timeout, void (^action)(void (^)(void))) {
         [NMBWait untilTimeout:timeout file:file line:line action:action];
     };
 }
 
-NIMBLE_EXPORT NMBWaitUntilBlock nmb_wait_until_builder(NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBWaitUntilBlock NMB_waitUntilBuilder(NSString *file, NSUInteger line) {
   return ^(void (^action)(void (^)(void))) {
     [NMBWait untilFile:file line:line action:action];
   };

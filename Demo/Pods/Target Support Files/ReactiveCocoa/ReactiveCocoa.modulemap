@@ -1,0 +1,14 @@
+framework module ReactiveCocoa {
+  umbrella header "ReactiveCocoa-umbrella.h"
+
+  export *
+  module * { export * }
+
+  private header "RACMulticastConnection+Private.h"
+  private header "RACScheduler+Private.h"
+  private header "RACStream+Private.h"
+  private header "RACSubscriber+Private.h"
+  private header "EXTRuntimeExtensions.h"
+  private header "RACEmptySequence.h"
+  private header "RACEmptySignal.h"
+}

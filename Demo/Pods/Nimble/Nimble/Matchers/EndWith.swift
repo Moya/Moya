@@ -7,11 +7,11 @@ public func endWith<S: SequenceType, T: Equatable where S.Generator.Element == T
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "end with <\(endingElement)>"
 
-        if let actualValue = actualExpression.evaluate() {
+        if let actualValue = try actualExpression.evaluate() {
             var actualGenerator = actualValue.generate()
             var lastItem: T?
             var item: T?
-            do {
+            repeat {
                 lastItem = item
                 item = actualGenerator.next()
             } while(item != nil)
@@ -27,7 +27,7 @@ public func endWith<S: SequenceType, T: Equatable where S.Generator.Element == T
 public func endWith(endingElement: AnyObject) -> NonNilMatcherFunc<NMBOrderedCollection> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "end with <\(endingElement)>"
-        let collection = actualExpression.evaluate()
+        let collection = try actualExpression.evaluate()
         return collection != nil && collection!.indexOfObject(endingElement) == collection!.count - 1
     }
 }
@@ -39,7 +39,7 @@ public func endWith(endingElement: AnyObject) -> NonNilMatcherFunc<NMBOrderedCol
 public func endWith(endingSubstring: String) -> NonNilMatcherFunc<String> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "end with <\(endingSubstring)>"
-        if let collection = actualExpression.evaluate() {
+        if let collection = try actualExpression.evaluate() {
             let range = collection.rangeOfString(endingSubstring)
             return range != nil && range!.endIndex == collection.endIndex
         }
@@ -49,14 +49,14 @@ public func endWith(endingSubstring: String) -> NonNilMatcherFunc<String> {
 
 extension NMBObjCMatcher {
     public class func endWithMatcher(expected: AnyObject) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
-            let actual = actualExpression.evaluate()
-            if let actualString = actual as? String {
-                let expr = Expression(expression: ({ actualString }), location: location)
-                return endWith(expected as! String).matches(expr, failureMessage: failureMessage)
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
+            let actual = try! actualExpression.evaluate()
+            if let _ = actual as? String {
+                let expr = actualExpression.cast { $0 as? String }
+                return try! endWith(expected as! String).matches(expr, failureMessage: failureMessage)
             } else {
-                let expr = Expression(expression: ({ actual as? NMBOrderedCollection }), location: location)
-                return endWith(expected).matches(expr, failureMessage: failureMessage)
+                let expr = actualExpression.cast { $0 as? NMBOrderedCollection }
+                return try! endWith(expected).matches(expr, failureMessage: failureMessage)
             }
         }
     }

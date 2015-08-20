@@ -1,7 +1,5 @@
 # Nimble
 
-[![Build Status](https://travis-ci.org/Quick/Nimble.svg?branch=swift-1.1)](https://travis-ci.org/Quick/Nimble)
-
 Use Nimble to express the expected outcomes of Swift
 or Objective-C expressions. Inspired by
 [Cedar](https://github.com/pivotal/cedar).
@@ -99,7 +97,7 @@ expect(seagull.squawk).to(equal("Squee!"))
 ```objc
 // Objective-C
 
-#import <Nimble/Nimble.h>
+@import Nimble;
 
 expect(seagull.squawk).to(equal(@"Squee!"));
 ```
@@ -123,10 +121,40 @@ expect(seagull.squawk).notTo(equal("Oh, hello there!"))
 ```objc
 // Objective-C
 
-#import <Nimble/Nimble.h>
+@import Nimble;
 
 expect(seagull.squawk).toNot(equal(@"Oh, hello there!"));
 expect(seagull.squawk).notTo(equal(@"Oh, hello there!"));
+```
+
+## Custom Failure Messages
+
+Would you like to add more information to the test's failure messages? Use the `description` optional argument to add your own text:
+
+```swift
+// Swift
+
+expect(1 + 1).to(equal(3))
+// failed - expected to equal <3>, got <2>
+
+expect(1 + 1).to(equal(3), description: "Make sure libKindergartenMath is loaded")
+// failed - Make sure libKindergartenMath is loaded
+// expected to equal <3>, got <2>
+```
+
+Or the *WithDescription version in Objective-C:
+
+```objc
+// Objective-C
+
+@import Nimble;
+
+expect(@(1+1)).to(equal(@3));
+// failed - expected to equal <3.0000>, got <2.0000>
+
+expect(@(1+1)).toWithDescription(equal(@3), @"Make sure libKindergartenMath is loaded");
+// failed - Make sure libKindergartenMath is loaded
+// expected to equal <3.0000>, got <2.0000>
 ```
 
 ## Type Checking
@@ -201,17 +229,22 @@ value:
 NSException *exception = [NSException exceptionWithName:NSInternalInconsistencyException
                                                  reason:@"Not enough fish in the sea."
                                                userInfo:nil];
-expectAction([exception raise]).to(raiseException());
+expectAction(^{ [exception raise]; }).to(raiseException());
 
 // Use the property-block syntax to be more specific.
-expectAction([exception raise]).to(raiseException().named(NSInternalInconsistencyException));
-expectAction([exception raise]).to(raiseException().
+expectAction(^{ [exception raise]; }).to(raiseException().named(NSInternalInconsistencyException));
+expectAction(^{ [exception raise]; }).to(raiseException().
     named(NSInternalInconsistencyException).
     reason("Not enough fish in the sea"));
-expectAction([exception raise]).to(raiseException().
+expectAction(^{ [exception raise]; }).to(raiseException().
     named(NSInternalInconsistencyException).
     reason("Not enough fish in the sea").
     userInfo(@{@"something": @"is fishy"}));
+
+// You can also pass a block for custom matching of the raised exception
+expectAction(exception.raise()).to(raiseException().satisfyingBlock(^(NSException *exception) {
+    expect(exception.name).to(beginWith(NSInternalInconsistencyException));
+}));
 ```
 
 ## C Primitives
@@ -346,7 +379,7 @@ to keep in mind when using Nimble in Objective-C:
    ```objc
    // Objective-C
 
-   #import <Nimble/Nimble.h>
+   @import Nimble;
 
    expect(@(1 + 1)).to(equal(@2));
    expect(@"Hello world").to(contain(@"world"));
@@ -359,7 +392,7 @@ to keep in mind when using Nimble in Objective-C:
    ```objc
    // Objective-C
 
-   expectAction([exception raise]).to(raiseException());
+   expectAction(^{ [exception raise]; }).to(raiseException());
    ```
 
 ## Disabling Objective-C Shorthand
@@ -372,7 +405,7 @@ importing Nimble:
 ```objc
 #define NIMBLE_DISABLE_SHORT_SYNTAX 1
 
-#import <Nimble/Nimble.h>
+@import Nimble;
 
 NMB_expect(^{ return seagull.squawk; }, __FILE__, __LINE__).to(NMB_equal(@"Squee!"));
 ```
@@ -617,6 +650,30 @@ expect(actual).to(beFalse());
 expect(actual).to(beNil());
 ```
 
+## Swift Error Handling
+
+If you're using Swift 2.0+, you can use the `throwError` matcher to check if an error is thrown.
+
+```swift
+// Swift
+
+// Passes if somethingThatThrows() throws an ErrorType:
+expect{ try somethingThatThrows() }.to(throwError())
+
+// Passes if somethingThatThrows() throws an error with a given domain:
+expect{ try somethingThatThrows() }.to(throwError { error in
+    expect(error._domain).to(equal(NSCocoaErrorDomain))
+})
+
+// Passes if somethingThatThrows() throws an error with a given case:
+expect{ try somethingThatThrows() }.to(throwError(NSCocoaError.PropertyListReadCorruptError))
+
+// Passes if somethingThatThrows() throws an error with a given type:
+expect{ try somethingThatThrows() }.to(throwError(errorType: MyError.self))
+```
+
+Note: This feature is only available in Swift.
+
 ## Exceptions
 
 ```swift
@@ -631,15 +688,11 @@ expect(actual).to(raiseException(named: name))
 // Passes if actual raises an exception with the given name and reason:
 expect(actual).to(raiseException(named: name, reason: reason))
 
-// Passes if actual raises an exception with a name equal "a name"
-expect(actual).to(raiseException(named: equal("a name")))
-
-// Passes if actual raises an exception with a reason that begins with "a r"
-expect(actual).to(raiseException(reason: beginWith("a r")))
-
-// Passes if actual raises an exception with a name equal "a name"
-// and a reason that begins with "a r"
-expect(actual).to(raiseException(named: equal("a name"), reason: beginWith("a r")))
+// Passes if actual raises an exception and it passes expectations in the block
+// (in this case, if name begins with 'a r')
+expect { exception.raise() }.to(raiseException { exception in
+    expect(exception.name).to(beginWith("a r"))
+})
 ```
 
 ```objc
@@ -654,15 +707,11 @@ expect(actual).to(raiseException().named(name))
 // Passes if actual raises an exception with the given name and reason:
 expect(actual).to(raiseException().named(name).reason(reason))
 
-// Passes if actual raises an exception with a name equal "a name"
-expect(actual).to(raiseException().withName(equal("a name")))
-
-// Passes if actual raises an exception with a reason that begins with "a r"
-expect(actual).to(raiseException().withName(withReason(beginWith(@"a r")))
-
-// Passes if actual raises an exception with a name equal "a name"
-// and a reason that begins with "a r"
-expect(actual).to(raiseException().withName(equal("a name")).withReason(beginWith(@"a r")))
+// Passes if actual raises an exception and it passes expectations in the block
+// (in this case, if name begins with 'a r')
+expect(actual).to(raiseException().satisfyingBlock(^(NSException *exception) {
+    expect(exception.name).to(beginWith(@"a r"));
+}));
 ```
 
 Note: Swift currently doesn't have exceptions. Only Objective-C code can raise
@@ -997,7 +1046,7 @@ public func beginWith<S: SequenceType, T: Equatable where S.Generator.Element ==
 
 extension NMBObjCMatcher {
     public class func beginWithMatcher(expected: AnyObject) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
             let actual = actualExpression.evaluate()
             let expr = actualExpression.cast { $0 as? NMBOrderedCollection }
             return beginWith(expected).matches(expr, failureMessage: failureMessage)
@@ -1013,9 +1062,12 @@ extension NMBObjCMatcher {
   Quick and Nimble, follow [the installation instructions in the Quick
   README](https://github.com/Quick/Quick#how-to-install-quick).
 
-Nimble can currently be installed in one of two ways: using CocoaPods, or with git submodules. The master branch of
-Nimble supports Swift 1.2. For Swift 1.1 support, use the `swift-1.1`
-branch.
+Nimble can currently be installed in one of two ways: using CocoaPods, or with
+git submodules.
+
+- The `swift-2.0` branch support Swift 2.0.
+- The `master` branch of Nimble supports Swift 1.2.
+- For Swift 1.1 support, use the `swift-1.1` branch.
 
 ## Installing Nimble as a Submodule
 
@@ -1034,8 +1086,9 @@ install just Nimble.
 
 ## Installing Nimble via CocoaPods
 
-To use Nimble in CocoaPods to test your iOS or OS X applications, update CocoaPods to Version 0.36.0.
-Then add Nimble to your podfile and add the ```use_frameworks!``` line to enable Swift support for Cocoapods.
+To use Nimble in CocoaPods to test your iOS or OS X applications, add Nimble to
+your podfile and add the ```use_frameworks!``` line to enable Swift support for
+Cocoapods.
 
 ```ruby
 platform :ios, '8.0'
@@ -1046,11 +1099,13 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target 'YOUR_APP_NAME_HERE_Tests', :exclusive => true do
   use_frameworks!
-  # If you're using Swift 1.2 (Xcode 6.3 beta), use this:
-  pod 'Nimble', '~> 0.4.0'
+  # If you're using Swift 2.0 (Xcode 7), use this:
+  pod 'Nimble', '2.0.0-rc.2'
+  # If you're using Swift 1.2 (Xcode 6), use this:
+  pod 'Nimble', '~> 1.0.0'
   # Otherwise, use this commented out line for Swift 1.1 (Xcode 6.2):
   # pod 'Nimble', '~> 0.3.0'
 end
 ```
 
-Finally run `pod install`. 
+Finally run `pod install`.

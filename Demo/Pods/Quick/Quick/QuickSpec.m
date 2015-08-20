@@ -1,8 +1,10 @@
 #import "QuickSpec.h"
 #import "QuickConfiguration.h"
 #import "NSString+QCKSelectorName.h"
-#import <Quick/Quick-Swift.h>
+#import "World.h"
 #import <objc/runtime.h>
+
+static QuickSpec *currentSpec = nil;
 
 const void * const QCKExampleKey = &QCKExampleKey;
 
@@ -97,11 +99,25 @@ const void * const QCKExampleKey = &QCKExampleKey;
  @return The selector of the newly defined instance method.
  */
 + (SEL)addInstanceMethodForExample:(Example *)example {
-    IMP implementation = imp_implementationWithBlock(^(id self){
+    IMP implementation = imp_implementationWithBlock(^(QuickSpec *self){
+        currentSpec = self;
         [example run];
     });
+    NSCharacterSet *characterSet = [NSCharacterSet alphanumericCharacterSet];
+    NSMutableString *sanitizedFileName = [NSMutableString string];
+    for (NSUInteger i = 0; i < example.callsite.file.length; i++) {
+        unichar ch = [example.callsite.file characterAtIndex:i];
+        if ([characterSet characterIsMember:ch]) {
+            [sanitizedFileName appendFormat:@"%c", ch];
+        }
+    }
+
     const char *types = [[NSString stringWithFormat:@"%s%s%s", @encode(id), @encode(id), @encode(SEL)] UTF8String];
-    SEL selector = NSSelectorFromString(example.name.qck_selectorName);
+    NSString *selectorName = [NSString stringWithFormat:@"%@_%@_%ld",
+                              example.name.qck_selectorName,
+                              sanitizedFileName,
+                              (long)example.callsite.line];
+    SEL selector = NSSelectorFromString(selectorName);
     class_addMethod(self, selector, implementation, types);
 
     return selector;
@@ -133,10 +149,10 @@ const void * const QCKExampleKey = &QCKExampleKey;
         filePath = self.example.callsite.file;
         lineNumber = self.example.callsite.line;
     }
-    [super recordFailureWithDescription:description
-                                 inFile:filePath
-                                 atLine:lineNumber
-                               expected:expected];
+    [currentSpec.testRun recordFailureWithDescription:description
+                                               inFile:filePath
+                                               atLine:lineNumber
+                                             expected:expected];
 }
 
 @end

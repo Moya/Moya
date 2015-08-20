@@ -4,7 +4,7 @@ private var numberOfExamplesRun = 0
     Examples, defined with the `it` function, use assertions to
     demonstrate how code should behave. These are like "tests" in XCTest.
 */
-@objc final public class Example: Equatable {
+final public class Example: NSObject {
     /**
         A boolean indicating whether the example is a shared example;
         i.e.: whether it is an example defined with `itBehavesLike`.
@@ -20,15 +20,19 @@ private var numberOfExamplesRun = 0
 
     weak internal var group: ExampleGroup?
 
-    private let description: String
+    private let internalDescription: String
     private let closure: () -> ()
     private let flags: FilterFlags
 
     internal init(description: String, callsite: Callsite, flags: FilterFlags, closure: () -> ()) {
-        self.description = description
+        self.internalDescription = description
         self.closure = closure
         self.callsite = callsite
         self.flags = flags
+    }
+    
+    public override var description: String {
+        return internalDescription
     }
 
     /**

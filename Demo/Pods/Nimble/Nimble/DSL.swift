@@ -1,5 +1,5 @@
 /// Make an expectation on a given actual value. The value given is lazily evaluated.
-public func expect<T>(@autoclosure(escaping) expression: () -> T?, file: String = __FILE__, line: UInt = __LINE__) -> Expectation<T> {
+public func expect<T>(@autoclosure(escaping) expression: () throws -> T?, file: String = __FILE__, line: UInt = __LINE__) -> Expectation<T> {
     return Expectation(
         expression: Expression(
             expression: expression,
@@ -8,7 +8,7 @@ public func expect<T>(@autoclosure(escaping) expression: () -> T?, file: String 
 }
 
 /// Make an expectation on a given actual value. The closure is lazily invoked.
-public func expect<T>(file: String = __FILE__, line: UInt = __LINE__, expression: () -> T?) -> Expectation<T> {
+public func expect<T>(file: String = __FILE__, line: UInt = __LINE__, expression: () throws -> T?) -> Expectation<T> {
     return Expectation(
         expression: Expression(
             expression: expression,
@@ -17,8 +17,8 @@ public func expect<T>(file: String = __FILE__, line: UInt = __LINE__, expression
 }
 
 /// Always fails the test with a message and a specified location.
-public func fail(message: String, #location: SourceLocation) {
-    NimbleAssertionHandler.assert(false, message: message, location: location)
+public func fail(message: String, location: SourceLocation) {
+    NimbleAssertionHandler.assert(false, message: FailureMessage(stringValue: message), location: location)
 }
 
 /// Always fails the test with a message.
@@ -28,5 +28,5 @@ public func fail(message: String, file: String = __FILE__, line: UInt = __LINE__
 
 /// Always fails the test.
 public func fail(file: String = __FILE__, line: UInt = __LINE__) {
-    fail("fail() always fails")
+    fail("fail() always fails", file: file, line: line)
 }

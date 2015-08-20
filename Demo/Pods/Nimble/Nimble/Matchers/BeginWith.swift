@@ -6,7 +6,7 @@ import Foundation
 public func beginWith<S: SequenceType, T: Equatable where S.Generator.Element == T>(startingElement: T) -> NonNilMatcherFunc<S> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "begin with <\(startingElement)>"
-        if let actualValue = actualExpression.evaluate() {
+        if let actualValue = try actualExpression.evaluate() {
             var actualGenerator = actualValue.generate()
             return actualGenerator.next() == startingElement
         }
@@ -19,7 +19,7 @@ public func beginWith<S: SequenceType, T: Equatable where S.Generator.Element ==
 public func beginWith(startingElement: AnyObject) -> NonNilMatcherFunc<NMBOrderedCollection> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "begin with <\(startingElement)>"
-        let collection = actualExpression.evaluate()
+        let collection = try actualExpression.evaluate()
         return collection != nil && collection!.indexOfObject(startingElement) == 0
     }
 }
@@ -29,7 +29,7 @@ public func beginWith(startingElement: AnyObject) -> NonNilMatcherFunc<NMBOrdere
 public func beginWith(startingSubstring: String) -> NonNilMatcherFunc<String> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
         failureMessage.postfixMessage = "begin with <\(startingSubstring)>"
-        if let actual = actualExpression.evaluate() {
+        if let actual = try actualExpression.evaluate() {
             let range = actual.rangeOfString(startingSubstring)
             return range != nil && range!.startIndex == actual.startIndex
         }
@@ -39,14 +39,14 @@ public func beginWith(startingSubstring: String) -> NonNilMatcherFunc<String> {
 
 extension NMBObjCMatcher {
     public class func beginWithMatcher(expected: AnyObject) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
-            let actual = actualExpression.evaluate()
-            if let actualString = actual as? String {
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
+            let actual = try! actualExpression.evaluate()
+            if let _ = actual as? String {
                 let expr = actualExpression.cast { $0 as? String }
-                return beginWith(expected as! String).matches(expr, failureMessage: failureMessage)
+                return try! beginWith(expected as! String).matches(expr, failureMessage: failureMessage)
             } else {
                 let expr = actualExpression.cast { $0 as? NMBOrderedCollection }
-                return beginWith(expected).matches(expr, failureMessage: failureMessage)
+                return try! beginWith(expected).matches(expr, failureMessage: failureMessage)
             }
         }
     }

@@ -1,1 +1,0 @@
-../../../Quick/Quick/QuickSpec.h

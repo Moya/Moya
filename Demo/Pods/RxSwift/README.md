@@ -1,7 +1,7 @@
 <img src="assets/Rx_Logo_M.png" width="36" height="36"> RxSwift: ReactiveX for Swift
 ======================================
 
-[![Travis CI](https://travis-ci.org/kzaher/RxSwift.svg?branch=master)](https://travis-ci.org/kzaher/RxSwift)
+[![Travis CI](https://travis-ci.org/ReactiveX/RxSwift.svg?branch=master)](https://travis-ci.org/ReactiveX/RxSwift)
 
 Xcode 6.3 / Swift 1.2 required
 
@@ -289,7 +289,7 @@ This is how that API can be now used
 
 searchBar.rx_searchText
     >- subscribeNext { searchText in
-        println("Current search text '\(searchText)'")
+        print("Current search text '\(searchText)'")
     }
 
 ```
@@ -345,7 +345,7 @@ This is how they can be used:
 ```swift
 view.rx_observe("frame")
     >- subscribeNext { (frame: CGRect?) in
-        println("Got new frame \(frame)")
+        print("Got new frame \(frame)")
     }
 ```
 
@@ -354,7 +354,7 @@ or
 ```swift
 someSuspiciousViewController.rx_observeWeakly("behavingOk")
     >- subscribeNext { (behavingOk: Bool?) in
-        println("Cats can purr? \(behavingOk)")
+        print("Cats can purr? \(behavingOk)")
     }
 ```
 

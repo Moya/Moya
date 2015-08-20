@@ -6,40 +6,30 @@ public func allPass<T,U where U: SequenceType, U.Generator.Element == T>
 }
 
 public func allPass<T,U where U: SequenceType, U.Generator.Element == T>
-    (passName:String, passFunc: (T?) -> Bool) -> NonNilMatcherFunc<U> {
+    (passName: String, _ passFunc: (T?) -> Bool) -> NonNilMatcherFunc<U> {
         return createAllPassMatcher() {
             expression, failureMessage in
             failureMessage.postfixMessage = passName
-            return passFunc(expression.evaluate())
+            return passFunc(try expression.evaluate())
         }
-}
-
-public func allPass<U,V where U: SequenceType, V: NonNilBasicMatcher, U.Generator.Element == V.ValueType>
-    (matcher: V) -> NonNilMatcherFunc<U> {
-        let wrapper = NonNilMatcherWrapper(NonNilBasicMatcherWrapper(matcher))
-        return createAllPassMatcher() {wrapper.matches($0, failureMessage: $1)}
-}
-
-public func allPass<U,V where U: SequenceType, V: BasicMatcher, U.Generator.Element == V.ValueType>
-    (matcher: V) -> NonNilMatcherFunc<U> {
-        let wrapper = BasicMatcherWrapper(matcher: matcher)
-        return createAllPassMatcher() {wrapper.matches($0, failureMessage: $1)}
 }
 
 public func allPass<U,V where U: SequenceType, V: Matcher, U.Generator.Element == V.ValueType>
     (matcher: V) -> NonNilMatcherFunc<U> {
-        return createAllPassMatcher() {matcher.matches($0, failureMessage: $1)}
+        return createAllPassMatcher() {
+            try matcher.matches($0, failureMessage: $1)
+        }
 }
 
 private func createAllPassMatcher<T,U where U: SequenceType, U.Generator.Element == T>
-    (elementEvaluator:(Expression<T>, FailureMessage) -> Bool) -> NonNilMatcherFunc<U> {
+    (elementEvaluator:(Expression<T>, FailureMessage) throws -> Bool) -> NonNilMatcherFunc<U> {
         return NonNilMatcherFunc { actualExpression, failureMessage in
             failureMessage.actualValue = nil
-            if let actualValue = actualExpression.evaluate() {
+            if let actualValue = try actualExpression.evaluate() {
                 for currentElement in actualValue {
                     let exp = Expression(
                         expression: {currentElement}, location: actualExpression.location)
-                    if !elementEvaluator(exp, failureMessage) {
+                    if try !elementEvaluator(exp, failureMessage) {
                         failureMessage.postfixMessage =
                             "all \(failureMessage.postfixMessage),"
                             + " but failed first at element <\(stringify(currentElement))>"
@@ -59,8 +49,9 @@ private func createAllPassMatcher<T,U where U: SequenceType, U.Generator.Element
 
 extension NMBObjCMatcher {
     public class func allPassMatcher(matcher: NMBObjCMatcher) -> NMBObjCMatcher {
-        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage, location in
-            let actualValue = actualExpression.evaluate()
+        return NMBObjCMatcher(canMatchNil: false) { actualExpression, failureMessage in
+            let location = actualExpression.location
+            let actualValue = try! actualExpression.evaluate()
             var nsObjects = [NSObject]()
             
             var collectionIsUsable = true
@@ -90,9 +81,9 @@ extension NMBObjCMatcher {
             let elementEvaluator: (Expression<NSObject>, FailureMessage) -> Bool = {
                 expression, failureMessage in
                 return matcher.matches(
-                    {expression.evaluate()}, failureMessage: failureMessage, location: expr.location)
+                    {try! expression.evaluate()}, failureMessage: failureMessage, location: expr.location)
             }
-            return createAllPassMatcher(elementEvaluator).matches(
+            return try! createAllPassMatcher(elementEvaluator).matches(
                 expr, failureMessage: failureMessage)
         }
     }

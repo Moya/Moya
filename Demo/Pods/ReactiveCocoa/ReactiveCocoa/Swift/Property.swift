@@ -10,8 +10,7 @@ public protocol PropertyType {
 	var producer: SignalProducer<Value, NoError> { get }
 }
 
-/// Represents a read-only view to a property of type T that allows observation
-/// of its changes.
+/// A read-only property that allows observation of its changes.
 public struct PropertyOf<T>: PropertyType {
 	public typealias Value = T
 
@@ -25,17 +24,33 @@ public struct PropertyOf<T>: PropertyType {
 	public var producer: SignalProducer<T, NoError> {
 		return _producer()
 	}
-
-	/// Initializes the receiver as a wrapper around the given property.
+	
+	/// Initializes a property as a read-only view of the given property.
 	public init<P: PropertyType where P.Value == T>(_ property: P) {
 		_value = { property.value }
 		_producer = { property.producer }
+	}
+	
+	/// Initializes a property that first takes on `initialValue`, then each value 
+	/// sent on a signal created by `producer`.
+	public init(initialValue: T, producer: SignalProducer<T, NoError>) {
+		let mutableProperty = MutableProperty(initialValue)
+		mutableProperty <~ producer
+		self.init(mutableProperty)
+	}
+	
+	/// Initializes a property that first takes on `initialValue`, then each value
+	/// sent on `signal`.
+	public init(initialValue: T, signal: Signal<T, NoError>) {
+		let mutableProperty = MutableProperty(initialValue)
+		mutableProperty <~ signal
+		self.init(mutableProperty)
 	}
 }
 
 /// A property that never changes.
 public struct ConstantProperty<T>: PropertyType {
-	typealias Value = T
+	public typealias Value = T
 
 	public let value: T
 	public let producer: SignalProducer<T, NoError>
@@ -63,18 +78,29 @@ public final class MutableProperty<T>: MutablePropertyType {
 
 	private let observer: Signal<T, NoError>.Observer
 
+	/// Need a recursive lock around `value` to allow recursive access to
+	/// `value`. Note that recursive sets will still deadlock because the
+	/// underlying producer prevents sending recursive events.
+	private let lock = NSRecursiveLock()
+	private var _value: T
+
 	/// The current value of the property.
 	///
 	/// Setting this to a new value will notify all observers of any Signals
 	/// created from the `values` producer.
 	public var value: T {
 		get {
-			let result = producer |> first
-			return result!.value!
+			lock.lock()
+			let value = _value
+			lock.unlock()
+			return value
 		}
 
-		set(x) {
-			sendNext(observer, x)
+		set {
+			lock.lock()
+			_value = newValue
+			sendNext(observer, newValue)
+			lock.unlock()
 		}
 	}
 
@@ -85,21 +111,16 @@ public final class MutableProperty<T>: MutablePropertyType {
 
 	/// Initializes the property with the given value to start.
 	public init(_ initialValue: T) {
-		let (producer, observer) = SignalProducer<T, NoError>.buffer(1)
-		self.producer = producer
-		self.observer = observer
+		lock.name = "org.reactivecocoa.ReactiveCocoa.MutableProperty"
 
-		value = initialValue
+		(producer, observer) = SignalProducer<T, NoError>.buffer(1)
+
+		_value = initialValue
+		sendNext(observer, initialValue)
 	}
 
 	deinit {
 		sendCompleted(observer)
-	}
-}
-
-extension MutableProperty: SinkType {
-	public func put(value: T) {
-		self.value = value
 	}
 }
 
@@ -137,7 +158,7 @@ extension MutableProperty: SinkType {
 		if let object = object {
 			return object.rac_valuesForKeyPath(keyPath, observer: nil).toSignalProducer()
 				// Errors aren't possible, but the compiler doesn't know that.
-				|> catch { error in
+				.flatMapError { error in
 					assert(false, "Received unexpected error from KVO signal: \(error)")
 					return .empty
 				}
@@ -161,7 +182,9 @@ extension MutableProperty: SinkType {
 
 infix operator <~ {
 	associativity right
-	precedence 90
+
+	// Binds tighter than assignment but looser than everything else
+	precedence 93
 }
 
 /// Binds a signal to a property, updating the property's value to the latest
@@ -171,19 +194,16 @@ infix operator <~ {
 /// or when the signal sends a `Completed` event.
 public func <~ <P: MutablePropertyType>(property: P, signal: Signal<P.Value, NoError>) -> Disposable {
 	let disposable = CompositeDisposable()
-	let propertyDisposable = property.producer.start(completed: {
+	disposable += property.producer.start(completed: {
 		disposable.dispose()
 	})
 
-	disposable.addDisposable(propertyDisposable)
-
-	let signalDisposable = signal.observe(next: { [weak property] value in
+	disposable += signal.observe(next: { [weak property] value in
 		property?.value = value
 	}, completed: {
 		disposable.dispose()
 	})
 
-	disposable.addDisposable(signalDisposable)
 	return disposable
 }
 

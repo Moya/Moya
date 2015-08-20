@@ -136,7 +136,7 @@ public class MoyaProvider<T: MoyaTarget> {
 
     public class func DefaultEndpointMapping(target: T) -> Endpoint<T> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+        return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
     public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
@@ -163,8 +163,7 @@ private extension MoyaProvider {
 
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
-        let request = Alamofire.Manager.sharedInstance.request(request)
-            .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+        let request = Alamofire.Manager.sharedInstance.request(request).response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
                 networkActivityCallback?(change: .Ended)
 
                 // Alamofire always sends the data param as an NSData? type, but we'll
