@@ -18,6 +18,7 @@
 		7C8F4E781B3CEDBC0039C15B /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C8F4E771B3CEDBC0039C15B /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7C8F4E971B3CEDF90039C15B /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E8E1B3CEDF90039C15B /* Endpoint.swift */; };
 		7C8F4E981B3CEDF90039C15B /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8F4E8F1B3CEDF90039C15B /* Moya.swift */; };
+		7CBD9D781B8389D70035A6FE /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251F81B6FEB680017138A /* Alamofire.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C86B2371B778B1900EA7CE3 /* Moya.framework in Frameworks */,
+				7CBD9D781B8389D70035A6FE /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +273,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -290,6 +293,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Moya Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;

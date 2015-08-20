@@ -1,8 +1,6 @@
 import Quick
 import Moya
 import Nimble
-import ReactiveCocoa
-import RxSwift
 import Alamofire
 
 class MoyaProviderSpec: QuickSpec {
