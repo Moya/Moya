@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		7C5251FD1B6FEB680017138A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5251F81B6FEB680017138A /* Alamofire.framework */; };
+		7C6A67BE1B865B2D00C5B387 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C6A67BA1B865B2B00C5B387 /* Nimble.framework */; };
+		7C6A67BF1B865B3000C5B387 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C6A67BB1B865B2B00C5B387 /* Quick.framework */; };
+		7C6A67C11B865D4300C5B387 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C6A67BA1B865B2B00C5B387 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C6A67C21B865D4300C5B387 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C6A67BB1B865B2B00C5B387 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C6A67C31B865D4300C5B387 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C5251F81B6FEB680017138A /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7C6A67C51B865DBB00C5B387 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C6A67C41B865DBB00C5B387 /* OHHTTPStubs.framework */; };
+		7C6A67C61B865DC000C5B387 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7C6A67C41B865DBB00C5B387 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7C86B2371B778B1900EA7CE3 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C8F4E741B3CEDBC0039C15B /* Moya.framework */; };
 		7C86B2441B778BA500EA7CE3 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */; };
 		7C86B24A1B778BB300EA7CE3 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C86B2451B778BB300EA7CE3 /* EndpointSpec.swift */; };
@@ -31,8 +38,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7C6A67C01B865D3900C5B387 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7C6A67C61B865DC000C5B387 /* OHHTTPStubs.framework in CopyFiles */,
+				7C6A67C11B865D4300C5B387 /* Nimble.framework in CopyFiles */,
+				7C6A67C21B865D4300C5B387 /* Quick.framework in CopyFiles */,
+				7C6A67C31B865D4300C5B387 /* Alamofire.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		7C5251F81B6FEB680017138A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		7C6A67BA1B865B2B00C5B387 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		7C6A67BB1B865B2B00C5B387 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		7C6A67C41B865DBB00C5B387 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		7C86B2311B778B1900EA7CE3 /* Moya Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moya Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C86B2341B778B1900EA7CE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaResponse.swift; sourceTree = "<group>"; };
@@ -53,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C6A67BF1B865B3000C5B387 /* Quick.framework in Frameworks */,
+				7C6A67BE1B865B2D00C5B387 /* Nimble.framework in Frameworks */,
 				7C86B2371B778B1900EA7CE3 /* Moya.framework in Frameworks */,
 				7CBD9D781B8389D70035A6FE /* Alamofire.framework in Frameworks */,
 			);
@@ -63,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C5251FD1B6FEB680017138A /* Alamofire.framework in Frameworks */,
+				7C6A67C51B865DBB00C5B387 /* OHHTTPStubs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,8 +141,8 @@
 		7C8F4E761B3CEDBC0039C15B /* Moya */ = {
 			isa = PBXGroup;
 			children = (
-				7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */,
 				7C8F4E771B3CEDBC0039C15B /* Moya.h */,
+				7C86B2431B778BA500EA7CE3 /* MoyaResponse.swift */,
 				7C8F4E8E1B3CEDF90039C15B /* Endpoint.swift */,
 				7C8F4E8F1B3CEDF90039C15B /* Moya.swift */,
 				7C8F4E791B3CEDBC0039C15B /* Info.plist */,
@@ -124,6 +153,9 @@
 		7C8F4E9D1B3CEE0E0039C15B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7C6A67C41B865DBB00C5B387 /* OHHTTPStubs.framework */,
+				7C6A67BA1B865B2B00C5B387 /* Nimble.framework */,
+				7C6A67BB1B865B2B00C5B387 /* Quick.framework */,
 				7C5251F81B6FEB680017138A /* Alamofire.framework */,
 			);
 			name = Frameworks;
@@ -150,6 +182,7 @@
 				7C86B22D1B778B1900EA7CE3 /* Sources */,
 				7C86B22E1B778B1900EA7CE3 /* Frameworks */,
 				7C86B22F1B778B1900EA7CE3 /* Resources */,
+				7C6A67C01B865D3900C5B387 /* CopyFiles */,
 			);
 			buildRules = (
 			);

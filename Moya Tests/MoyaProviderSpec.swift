@@ -8,15 +8,15 @@ class MoyaProviderSpec: QuickSpec {
         describe("valid endpoints") {
             describe("with stubbed responses") {
                 describe("a provider", {
-                    var provider: MoyaProvider<GitHub>!
+                    var provider: MoyaProvider<Github>!
                     beforeEach {
-                        provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                        provider = MoyaProvider<Github>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("returns stubbed data for zen request") {
                         var message: String?
                         
-                        let target: GitHub = .Zen
+                        let target: Github = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
@@ -30,7 +30,7 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns stubbed data for user profile request") {
                         var message: String?
                         
-                        let target: GitHub = .UserProfile("ashfurrow")
+                        let target: Github = .UserProfile("ashfurrow")
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
@@ -42,7 +42,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     it("returns equivalent Endpoint instances for the same target") {
-                        let target: GitHub = .Zen
+                        let target: Github = .Zen
                         
                         let endpoint1 = provider.endpoint(target)
                         let endpoint2 = provider.endpoint(target)
@@ -50,7 +50,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     it("returns a cancellable object when a request is made") {
-                        let target: GitHub = .UserProfile("ashfurrow")
+                        let target: Github = .UserProfile("ashfurrow")
                         
                         let cancellable: Cancellable = provider.request(target) { (_, _, _, _) in }
                         
@@ -64,7 +64,7 @@ class MoyaProviderSpec: QuickSpec {
 
                     it("accepts a custom Alamofire.Manager") {
                         let manager = Manager()
-                        let provider = MoyaProvider<GitHub>(manager: manager)
+                        let provider = MoyaProvider<Github>(manager: manager)
 
                         expect(provider.manager).to(beIdenticalTo(manager))
                     }
@@ -72,13 +72,13 @@ class MoyaProviderSpec: QuickSpec {
 
                 it("notifies at the beginning of network requests") {
                     var called = false
-                    var provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
+                    var provider = MoyaProvider<Github>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
                         if change == .Began {
                             called = true
                         }
                     })
 
-                    let target: GitHub = .Zen
+                    let target: Github = .Zen
                     provider.request(target) { (data, statusCode, response, error) in }
 
                     expect(called) == true
@@ -86,28 +86,28 @@ class MoyaProviderSpec: QuickSpec {
 
                 it("notifies at the end of network requests") {
                     var called = false
-                    var provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
+                    var provider = MoyaProvider<Github>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
                         if change == .Ended {
                             called = true
                         }
                     })
 
-                    let target: GitHub = .Zen
+                    let target: Github = .Zen
                     provider.request(target) { (data, statusCode, response, error) in }
                     
                     expect(called) == true
                 }
 
                 describe("a provider with lazy data", { () -> () in
-                    var provider: MoyaProvider<GitHub>!
+                    var provider: MoyaProvider<Github>!
                     beforeEach {
-                        provider = MoyaProvider<GitHub>(endpointClosure: lazyEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                        provider = MoyaProvider<Github>(endpointClosure: lazyEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
 
                     it("returns stubbed data for zen request") {
                         var message: String?
 
-                        let target: GitHub = .Zen
+                        let target: Github = .Zen
                         provider.request(target) { (data, statusCode, response, error) in
                             if let data = data {
                                 message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
@@ -120,11 +120,11 @@ class MoyaProviderSpec: QuickSpec {
                 })
 
                 it("delays execution when appropriate") {
-                    let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStubbingBehaviour(2))
+                    let provider = MoyaProvider<Github>(stubBehavior: MoyaProvider.DelayedStubbingBehaviour(2))
 
                     let startDate = NSDate()
                     var endDate: NSDate?
-                    let target: GitHub = .Zen
+                    let target: Github = .Zen
                     waitUntil(timeout: 3) { done in
                         provider.request(target) { (data, statusCode, response, error) in
                             endDate = NSDate()
@@ -139,21 +139,21 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 describe("a provider with a custom endpoint resolver") { () -> () in
-                    var provider: MoyaProvider<GitHub>!
+                    var provider: MoyaProvider<Github>!
                     var executed = false
                     let newSampleResponse = "New Sample Response"
                     
                     beforeEach {
                         executed = false
-                        let endpointResolution = { (endpoint: Endpoint<GitHub>) -> (NSURLRequest) in
+                        let endpointResolution = { (endpoint: Endpoint<Github>) -> (NSURLRequest) in
                             executed = true
                             return endpoint.urlRequest
                         }
-                        provider = MoyaProvider<GitHub>(endpointResolver: endpointResolution, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                        provider = MoyaProvider<Github>(endpointResolver: endpointResolution, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
                     
                     it("executes the endpoint resolver") {
-                        let target: GitHub = .Zen
+                        let target: Github = .Zen
                         provider.request(target, completion: { (data, statusCode, response, error) in })
                         
                         let sampleData = target.sampleData as NSData
@@ -164,7 +164,7 @@ class MoyaProviderSpec: QuickSpec {
 
             describe("with stubbed errors") {
                 describe("a provider") { () -> () in
-                    var provider: MoyaProvider<GitHub>!
+                    var provider: MoyaProvider<Github>!
                     beforeEach {
                         provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
                     }
@@ -172,7 +172,7 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns stubbed data for zen request") {
                         var errored = false
                         
-                        let target: GitHub = .Zen
+                        let target: Github = .Zen
                         provider.request(target) { (object, statusCode, response, error) in
                             if error != nil {
                                 errored = true
@@ -186,7 +186,7 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns stubbed data for user profile request") {
                         var errored = false
                         
-                        let target: GitHub = .UserProfile("ashfurrow")
+                        let target: Github = .UserProfile("ashfurrow")
                         provider.request(target) { (object, statusCode, response, error) in
                             if error != nil {
                                 errored = true
@@ -200,7 +200,7 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns stubbed error data when present") {
                         var errorMessage = ""
                         
-                        let target: GitHub = .UserProfile("ashfurrow")
+                        let target: Github = .UserProfile("ashfurrow")
                         provider.request(target) { (object, statusCode, response, error) in
                             if let object = object {
                                 errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding) as! String

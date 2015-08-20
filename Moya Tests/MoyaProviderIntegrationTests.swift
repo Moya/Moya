@@ -1,9 +1,6 @@
 import UIKit
 import Alamofire
 import Moya
-import ReactiveMoya
-import ReactiveCocoa
-import RxMoya
 import Quick
 import Nimble
 import OHHTTPStubs
