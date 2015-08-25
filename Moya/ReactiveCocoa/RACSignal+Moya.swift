@@ -70,7 +70,7 @@ public extension RACSignal {
         return tryMap({ (object, error) -> AnyObject! in
             var json: AnyObject?
             if let response = object as? MoyaResponse {
-                json = NSJSONSerialization.JSONObjectWithData(response.data, options: nil, error: error)
+                json = try? NSJSONSerialization.JSONObjectWithData(response.data, options: .AllowFragments)
             }
             
             if json == nil && error != nil && error.memory == nil {
