@@ -25,7 +25,7 @@ public class Endpoint<T> {
     public let parameters: [String: AnyObject]
     public let parameterEncoding: Moya.ParameterEncoding
     public let httpHeaderFields: [String: AnyObject]
-    
+
     /// Main initializer for Endpoint.
     public init(URL: String, sampleResponse: EndpointSampleResponse, method: Moya.Method = Moya.Method.GET, parameters: [String: AnyObject] = [String: AnyObject](), parameterEncoding: Moya.ParameterEncoding = .URL, httpHeaderFields: [String: AnyObject] = [String: AnyObject]()) {
         self.URL = URL
@@ -35,29 +35,29 @@ public class Endpoint<T> {
         self.parameterEncoding = parameterEncoding
         self.httpHeaderFields = httpHeaderFields
     }
-    
+
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added parameters.
     public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<T> {
         var newParameters = self.parameters ?? [String: AnyObject]()
         for (key, value) in parameters {
             newParameters[key] = value
         }
-        
+
         return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: newParameters, parameterEncoding: parameterEncoding, httpHeaderFields: httpHeaderFields)
     }
-    
+
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
     public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: AnyObject]) -> Endpoint<T> {
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: AnyObject]()
         for (key, value) in httpHeaderFields {
             newHTTPHeaderFields[key] = value
         }
-        
+
         return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 }
 
-/// Extension for converting an extension into an NSURLRequest.
+/// Extension for converting an Endpoint into an NSURLRequest.
 extension Endpoint {
     public var urlRequest: NSURLRequest {
         var request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
