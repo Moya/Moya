@@ -320,7 +320,7 @@ class MoyaProviderSpec: QuickSpec {
 
                     class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
                         override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-                            super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
+                            super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
                         }
 
                         override func request(token: T, completion: MoyaCompletion) -> Cancellable {
