@@ -14,7 +14,7 @@ public class Moya {
 
     /// Network activity change notification closure typealias.
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
-    
+
     /// Represents an HTTP method.
     public enum Method {
         case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
@@ -49,7 +49,7 @@ public class Moya {
         case JSON
         case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
         case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
-        
+
         func parameterEncoding() -> Alamofire.ParameterEncoding {
             switch self {
             case .URL:
@@ -88,7 +88,7 @@ public protocol Cancellable {
 /// Internal token that can be used to cancel requests
 struct CancellableToken: Cancellable {
     let cancelAction: () -> ()
-    
+
     func cancel() {
         cancelAction()
     }
@@ -102,7 +102,7 @@ public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
     public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
     public typealias MoyaCredentialClosure = (T) -> (NSURLCredential?)
-    
+
     public let endpointClosure: MoyaEndpointsClosure
     public let endpointResolver: MoyaEndpointResolution
     public let credentialClosure: MoyaCredentialClosure?
@@ -119,12 +119,12 @@ public class MoyaProvider<T: MoyaTarget> {
         self.networkActivityClosure = networkActivityClosure
         self.manager = manager
     }
-    
+
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
     public func endpoint(token: T) -> Endpoint<T> {
         return endpointClosure(token)
     }
-    
+
     /// Designated request-making method.
     public func request(token: T, completion: MoyaCompletion) -> Cancellable {
         let endpoint = self.endpoint(token)
@@ -145,6 +145,7 @@ public class MoyaProvider<T: MoyaTarget> {
         return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
+    @availability(*, unavailable, renamed="DefaultEndpointResolution", message="Use #DefaultEndpointResolution method instead")
     public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
         return DefaultEndpointResolution(endpoint)
     }
