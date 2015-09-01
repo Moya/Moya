@@ -80,6 +80,7 @@ public protocol MoyaTarget {
     var baseURL: NSURL { get }
     var path: String { get }
     var method: Moya.Method { get }
+    var encoding: Moya.ParameterEncoding { get }
     var parameters: [String: AnyObject] { get }
     var sampleData: NSData { get }
 }
