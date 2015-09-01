@@ -16,7 +16,7 @@ public class Moya {
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
 
     /// Represents an HTTP method.
-    public enum Method {
+    public enum Method: Printable {
         case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
 
         func method() -> Alamofire.Method {
@@ -40,6 +40,10 @@ public class Moya {
             case .CONNECT:
                 return .CONNECT
             }
+        }
+        
+        public var description: String {
+            return method().rawValue
         }
     }
 
