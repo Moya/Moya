@@ -41,7 +41,7 @@ Some awesome features of Moya:
 Sample Project
 --------------
 
-There's a sample project in the Demo directory. Go nuts!
+There's a sample project in the Example directory. Go nuts!
 
 Project Status
 --------------
@@ -55,10 +55,8 @@ Currently, we support Xcode 6.3.1 and Swift 1.2.
 Installation
 ------------
 
+###CocoaPods
 Just add `pod 'Moya'` to your Podfile and go!
-
-In any file you'd like to use Moya in, don't forget to
-import the framework with `import Moya`.
 
 For reactive extensions, this project has some dependencies. Add the following 
 lines to your Podfile:
@@ -73,8 +71,28 @@ pod 'Moya/Reactive'
 
 Then run `pod install`. 
 
+###Carthage
+Add `github "ashfurrow/Moya"` and run `carthage update`.
+
+This will build the reactive extensions by default. If you do not need them, do not add them to your project.
+
+####Using Moya
+To use `Moya`, you must add `Moya` and `Alamofire` to your application.
+
+####Using ReactiveMoya
+To use `ReactiveMoya`, you must include what's mentioned above, as well as `ReactiveCocoa`, `Result`, and `Box`.
+
+Be sure to add `import ReactiveMoya` wherever you would like to use it.
+
+####Using RxMoya
+To use `RxMoya`, you must include what's mentioned in "Using Moya", as well as `RxSwift`.
+
+Be sure to add `import RxMoya` wherever you would like to use it.
+
 Use
 ---
+In any file where you'd like to use `Moya`, don't forget to import the framework with `import Moya`.
+
 
 After some setup, using Moya is really simple. You can access an API like this:
 
@@ -101,30 +119,6 @@ No more typos in URLs. No more missing parameter values. No more messing with
 parameter encoding.
 
 For more examples, see the [documentation](docs/).
-
-ReactiveCocoa Extensions
-------------------------
-
-Even cooler are the ReactiveCocoa extensions. It immediately returns a  
-`RACSignal` that you can subscribe to or bind or map or whatever you want to
-do. To handle errors, for instance, we could do the following:
-
-```swift
-provider.request(.UserProfile("ashfurrow")).subscribeNext { (object) -> Void in
-    image = UIImage(data: object as? NSData)
-}, error: { (error) -> Void in
-    println(error)
-}
-```
-
-In addition to the option of using signals instead of callback blocks, there are
-also a series of signal operators that will attempt to map the data received 
-from the network response into either an image, some JSON, or a string, with 
-`mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is
-unsuccessful, you'll get an error on the signal. You also get handy methods for
-filtering out certain status codes. This means that you can place your code for 
-handling API errors like 400's in the same places as code for handling invalid 
-responses. 
 
 Contributing
 ------------
