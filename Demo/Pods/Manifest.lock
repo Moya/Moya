@@ -9,18 +9,18 @@ PODS:
   - Moya/RxSwift (2.0.0):
     - Moya/ReactiveCore
     - RxSwift
-  - Nimble (2.0.0-rc.2)
+  - Nimble (2.0.0-rc.3)
   - OHHTTPStubs (4.1.0)
-  - Quick (0.5.1)
+  - Quick (0.6.0)
   - RxSwift (2.0.0-alpha.2)
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire`)
   - Moya (from `../`)
   - Moya/RxSwift (from `../`)
-  - Nimble (from `https://github.com/Quick/Nimble`, branch `swift-2.0`)
+  - Nimble (from `https://github.com/Quick/Nimble`)
   - OHHTTPStubs
-  - Quick (from `https://github.com/Quick/Quick`, branch `swift-2.0`)
+  - Quick (from `https://github.com/Quick/Quick`)
   - RxSwift (from `https://github.com/ReactiveX/RxSwift`, branch `rxswift-2.0`)
 
 EXTERNAL SOURCES:
@@ -29,10 +29,8 @@ EXTERNAL SOURCES:
   Moya:
     :path: ../
   Nimble:
-    :branch: swift-2.0
     :git: https://github.com/Quick/Nimble
   Quick:
-    :branch: swift-2.0
     :git: https://github.com/Quick/Quick
   RxSwift:
     :branch: rxswift-2.0
@@ -40,13 +38,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: 343e24073990172de3c55871762f68d49838a3ce
+    :commit: 6ad63253bdf79c6bc35d92a011976bc19737c6b7
     :git: https://github.com/Alamofire/Alamofire
   Nimble:
-    :commit: dbfc4ebd53395361c14eb2c9b13f629fc541bba2
+    :commit: 8baefcc94bc2b58b7be3cd9ebfc3984ea5c8b87e
     :git: https://github.com/Quick/Nimble
   Quick:
-    :commit: 4f7480ff9560e3791096e1a58ce09b6c0a8c926c
+    :commit: ac5eadd202dd67741628f80fb96e8c57388d954d
     :git: https://github.com/Quick/Quick
   RxSwift:
     :commit: d4b39565c83c5827a40c523164c123e6dc6605eb
@@ -55,9 +53,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 2f13548b29d25a58ecd91c9225fb51493e2b782b
   Moya: 4f6ee0cc668b80d6eed825ba48b571a67781240f
-  Nimble: e3cf5e73a491daf21c2bc88783dbfc55ce8b8e02
+  Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   OHHTTPStubs: f3473ab21dbf0815253ac96b977d5c36f1daad09
-  Quick: 7426537a99e75076d6930c5b6da58006e4a9f38a
+  Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
   RxSwift: 0450126df5f8de3ec7ee789b420d7ba98baea364
 
 COCOAPODS: 0.38.2

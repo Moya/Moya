@@ -1,2 +1,3 @@
+QUICK_ENABLE_BITCODE = NO
 QUICK_FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks" "$(PLATFORM_DIR)/Developer/Library/Frameworks"
 QUICK_OTHER_LDFLAGS = -framework "XCTest"

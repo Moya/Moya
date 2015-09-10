@@ -35,9 +35,10 @@ internal class RunPromise {
     }
 }
 
+let killQueue = dispatch_queue_create("nimble.waitUntil.queue", DISPATCH_QUEUE_SERIAL)
+
 internal func stopRunLoop(runLoop: NSRunLoop, delay: NSTimeInterval) -> RunPromise {
     let promise = RunPromise()
-    let killQueue = dispatch_queue_create("nimble.waitUntil.queue", DISPATCH_QUEUE_SERIAL)
     let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
     let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
     dispatch_after(killTime, killQueue) {
@@ -58,7 +59,9 @@ internal func pollBlock(pollInterval pollInterval: NSTimeInterval, timeoutInterv
     // trigger run loop to make sure enqueued tasks don't block our assertion polling
     // the stop run loop task above will abort us if necessary
     runLoop.runUntilDate(startDate)
-    promise.succeed()
+    dispatch_sync(killQueue) {
+        promise.succeed()
+    }
 
     if promise.didFail {
         return .Timeout

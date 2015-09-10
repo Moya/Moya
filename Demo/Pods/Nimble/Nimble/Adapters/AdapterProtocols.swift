@@ -8,5 +8,10 @@ public protocol AssertionHandler {
 /// Global backing interface for assertions that Nimble creates.
 /// Defaults to a private test handler that passes through to XCTest.
 ///
+/// If XCTest is not available, you must assign your own assertion handler
+/// before using any matchers, otherwise Nimble will abort the program.
+///
 /// @see AssertionHandler
-public var NimbleAssertionHandler: AssertionHandler = NimbleXCTestHandler()
+public var NimbleAssertionHandler: AssertionHandler = { () -> AssertionHandler in
+    return isXCTestAvailable() ? NimbleXCTestHandler() : NimbleXCTestUnavailableHandler()
+}()

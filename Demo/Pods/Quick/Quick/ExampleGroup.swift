@@ -30,7 +30,7 @@ final public class ExampleGroup: NSObject {
     public var examples: [Example] {
         var examples = childExamples
         for group in childGroups {
-            examples.extend(group.examples)
+            examples.appendContentsOf(group.examples)
         }
         return examples
     }
@@ -59,7 +59,7 @@ final public class ExampleGroup: NSObject {
     internal var befores: [BeforeExampleWithMetadataClosure] {
         var closures = Array(hooks.befores.reverse())
         walkUp() { (group: ExampleGroup) -> () in
-            closures.extend(Array(group.hooks.befores.reverse()))
+            closures.appendContentsOf(Array(group.hooks.befores.reverse()))
         }
         return Array(closures.reverse())
     }
@@ -67,7 +67,7 @@ final public class ExampleGroup: NSObject {
     internal var afters: [AfterExampleWithMetadataClosure] {
         var closures = hooks.afters
         walkUp() { (group: ExampleGroup) -> () in
-            closures.extend(group.hooks.afters)
+            closures.appendContentsOf(group.hooks.afters)
         }
         return closures
     }

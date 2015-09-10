@@ -2,14 +2,14 @@ import Foundation
 
 internal let DefaultDelta = 0.0001
 
-internal func isCloseTo(actualValue: Double?, expectedValue: Double, delta: Double, failureMessage: FailureMessage) -> Bool {
+internal func isCloseTo(actualValue: NMBDoubleConvertible?, expectedValue: NMBDoubleConvertible, delta: Double, failureMessage: FailureMessage) -> Bool {
     failureMessage.postfixMessage = "be close to <\(stringify(expectedValue))> (within \(stringify(delta)))"
     if actualValue != nil {
         failureMessage.actualValue = "<\(stringify(actualValue!))>"
     } else {
         failureMessage.actualValue = "<nil>"
     }
-    return actualValue != nil && abs(actualValue! - expectedValue) < delta
+    return actualValue != nil && abs(actualValue!.doubleValue - expectedValue.doubleValue) < delta
 }
 
 /// A Nimble matcher that succeeds when a value is close to another. This is used for floating
@@ -28,7 +28,7 @@ public func beCloseTo(expectedValue: Double, within delta: Double = DefaultDelta
 /// @see equal
 public func beCloseTo(expectedValue: NMBDoubleConvertible, within delta: Double = DefaultDelta) -> NonNilMatcherFunc<NMBDoubleConvertible> {
     return NonNilMatcherFunc { actualExpression, failureMessage in
-        return isCloseTo(try actualExpression.evaluate()?.doubleValue, expectedValue: expectedValue.doubleValue, delta: delta, failureMessage: failureMessage)
+        return isCloseTo(try actualExpression.evaluate(), expectedValue: expectedValue, delta: delta, failureMessage: failureMessage)
     }
 }
 
