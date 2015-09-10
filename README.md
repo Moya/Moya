@@ -1,17 +1,17 @@
-[![Circle CI](https://circleci.com/gh/ashfurrow/Moya.svg?style=svg)](https://circleci.com/gh/ashfurrow/Moya)
+![CI Status](http://img.shields.io/travis/Moya/Moya.svg?style=flat)](https://travis-ci.org/Moya/Moya)
 
 ![Moya Logo](web/moya_logo_github.png)
 
 You're a smart developer. You probably use Alamofire to abstract away access to
 NSURLSession and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
-are probably called "APIManager" or "NetworkModel", and probably look something 
-like this. 
+are probably called "APIManager" or "NetworkModel", and probably look something
+like this.
 
 ![Ad hoc network layer](web/bad.png)
 
 It's leaky, meaning your app touches Alamofire directly and your layer bypasses
-Alamofire to access the network directly sometimes. 
+Alamofire to access the network directly sometimes.
 
 This kind of ad hoc network layer is common in iOS apps. It's bad for a few reasons:
 
@@ -48,7 +48,7 @@ Project Status
 
 This project has hit a 1.0 release, and we're using it in [Artsy's
 new auction app](https://github.com/Artsy/eidolon). We consider it
-ready for production use. 
+ready for production use.
 
 Currently, we support Xcode 6.3.1 and Swift 1.2.
 
@@ -60,7 +60,7 @@ Just add `pod 'Moya'` to your Podfile and go!
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For reactive extensions, this project has some dependencies. Add the following 
+For reactive extensions, this project has some dependencies. Add the following
 lines to your Podfile:
 
 ```rb
@@ -71,7 +71,7 @@ pod 'ReactiveCocoa', '3.0-beta.6'
 pod 'Moya/Reactive'
 ```
 
-Then run `pod install`. 
+Then run `pod install`.
 
 Use
 ---
@@ -118,20 +118,20 @@ provider.request(.UserProfile("ashfurrow")).subscribeNext { (object) -> Void in
 ```
 
 In addition to the option of using signals instead of callback blocks, there are
-also a series of signal operators that will attempt to map the data received 
-from the network response into either an image, some JSON, or a string, with 
+also a series of signal operators that will attempt to map the data received
+from the network response into either an image, some JSON, or a string, with
 `mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is
 unsuccessful, you'll get an error on the signal. You also get handy methods for
-filtering out certain status codes. This means that you can place your code for 
-handling API errors like 400's in the same places as code for handling invalid 
-responses. 
+filtering out certain status codes. This means that you can place your code for
+handling API errors like 400's in the same places as code for handling invalid
+responses.
 
 Contributing
 ------------
 
-Hey! Like Moya? Awesome! We could actually really use your help! 
+Hey! Like Moya? Awesome! We could actually really use your help!
 
-Open source isn't just writing code. Moya could use your help with any of the 
+Open source isn't just writing code. Moya could use your help with any of the
 following:
 
 - Finding (and reporting!) bugs.
@@ -142,8 +142,8 @@ following:
 - Helping to manage issue priorities.
 - Fixing bugs/new features.
 
-If any of that sounds cool to you, send a pull request! After a few 
-contributions, we'll add you as admins to the repo so you can merge pull 
+If any of that sounds cool to you, send a pull request! After a few
+contributions, we'll add you as admins to the repo so you can merge pull
 requests :tada:
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/code-of-conduct).
