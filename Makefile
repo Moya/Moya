@@ -13,9 +13,8 @@ clean:
 
 test:
 	cd Demo ; set -o pipefail && xcodebuild -workspace '$(WORKSPACE)' -scheme '$(SCHEME)' -configuration '$(CONFIGURATION)' build test -sdk iphonesimulator -destination 'name=iPhone 5' | xcpretty -c --test
-	carthage build --no-skip-current
 
 setup:
-	cd Demo ; bundle install ; bundle exec pod install ; brew install carthage
+	cd Demo ; bundle install ; bundle exec pod install
 
 ci: test
