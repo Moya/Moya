@@ -16,7 +16,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/ashfurrow/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
-  s.requires_arc = true
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Moya/*.swift"

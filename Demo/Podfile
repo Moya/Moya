@@ -4,12 +4,11 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-#pod 'ReactiveCocoa', :git => "https://github.com/esttorhe/ReactiveCocoa.git", :branch => "swift2"
-pod 'RxSwift', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'rxswift-2.0'
-pod 'Alamofire', :git => "https://github.com/Alamofire/Alamofire"
+pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
+pod 'RxSwift'
+pod 'Alamofire'
 
 pod 'Moya/RxSwift', :path => "../"
-#pod 'Moya/ReactiveCocoa', :path => "../"
 pod 'Moya', :path => "../"
 
 target 'DemoTests' do
