@@ -11,9 +11,9 @@ final public class Callsite: NSObject {
     /**
         The line number on which an example is defined.
     */
-    public let line: Int
+    public let line: UInt
 
-    internal init(file: String, line: Int) {
+    internal init(file: String, line: UInt) {
         self.file = file
         self.line = line
     }

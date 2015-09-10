@@ -40,7 +40,7 @@ extension GitHub : MoyaTarget {
 }
 
 public func url(route: MoyaTarget) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString!
+    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
 let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in

@@ -1,2 +1,3 @@
-NIMBLE_FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks" "$(PLATFORM_DIR)/Developer/Library/Frameworks"
-NIMBLE_OTHER_LDFLAGS = -framework "XCTest"
+NIMBLE_ENABLE_BITCODE = NO
+NIMBLE_FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+NIMBLE_OTHER_LDFLAGS = -weak-lswiftXCTest -weak_framework "XCTest"

@@ -59,28 +59,28 @@ extension World {
     }
 
     @objc(itWithDescription:flags:file:line:closure:)
-    internal func it(description: String, flags: FilterFlags, file: String, line: Int, closure: () -> ()) {
+    internal func it(description: String, flags: FilterFlags, file: String, line: UInt, closure: () -> ()) {
         let callsite = Callsite(file: file, line: line)
         let example = Example(description: description, callsite: callsite, flags: flags, closure: closure)
         currentExampleGroup!.appendExample(example)
     }
 
     @objc(fitWithDescription:flags:file:line:closure:)
-    internal func fit(description: String, flags: FilterFlags, file: String, line: Int, closure: () -> ()) {
+    internal func fit(description: String, flags: FilterFlags, file: String, line: UInt, closure: () -> ()) {
         var focusedFlags = flags
         focusedFlags[Filter.focused] = true
         self.it(description, flags: focusedFlags, file: file, line: line, closure: closure)
     }
 
     @objc(xitWithDescription:flags:file:line:closure:)
-    internal func xit(description: String, flags: FilterFlags, file: String, line: Int, closure: () -> ()) {
+    internal func xit(description: String, flags: FilterFlags, file: String, line: UInt, closure: () -> ()) {
         var pendingFlags = flags
         pendingFlags[Filter.pending] = true
         self.it(description, flags: pendingFlags, file: file, line: line, closure: closure)
     }
 
     @objc(itBehavesLikeSharedExampleNamed:sharedExampleContext:flags:file:line:)
-    internal func itBehavesLike(name: String, sharedExampleContext: SharedExampleContext, flags: FilterFlags, file: String, line: Int) {
+    internal func itBehavesLike(name: String, sharedExampleContext: SharedExampleContext, flags: FilterFlags, file: String, line: UInt) {
         let callsite = Callsite(file: file, line: line)
         let closure = World.sharedWorld().sharedExample(name)
 

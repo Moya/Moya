@@ -1,89 +1,61 @@
 PODS:
-  - Alamofire (2.0.0-beta.1)
+  - Alamofire (2.0.0)
   - Moya (2.0.0):
     - Moya/Core (= 2.0.0)
   - Moya/Core (2.0.0):
     - Alamofire
-  - Moya/ReactiveCocoa (2.0.0):
-    - Moya/ReactiveCore
-    - ReactiveCocoa
   - Moya/ReactiveCore (2.0.0):
     - Moya/Core
   - Moya/RxSwift (2.0.0):
     - Moya/ReactiveCore
     - RxSwift
-  - Nimble (2.0.0-rc.2)
+  - Nimble (2.0.0-rc.3)
   - OHHTTPStubs (4.1.0)
-  - Quick (0.5.1)
-  - ReactiveCocoa (3.0-beta.9):
-    - ReactiveCocoa/UI (= 3.0-beta.9)
-    - Result (~> 0.6-beta.1)
-  - ReactiveCocoa/Core (3.0-beta.9):
-    - ReactiveCocoa/no-arc
-    - Result (~> 0.6-beta.1)
-  - ReactiveCocoa/no-arc (3.0-beta.9):
-    - Result (~> 0.6-beta.1)
-  - ReactiveCocoa/UI (3.0-beta.9):
-    - ReactiveCocoa/Core
-    - Result (~> 0.6-beta.1)
-  - Result (0.6-beta.1)
-  - RxSwift (1.9)
+  - Quick (0.6.0)
+  - RxSwift (2.0.0-alpha.2)
 
 DEPENDENCIES:
-  - Alamofire (from `https://github.com/Alamofire/Alamofire`, branch `swift-2.0`)
+  - Alamofire (from `https://github.com/Alamofire/Alamofire`)
   - Moya (from `../`)
-  - Moya/ReactiveCocoa (from `../`)
   - Moya/RxSwift (from `../`)
-  - Nimble (from `https://github.com/Quick/Nimble`, branch `swift-2.0`)
+  - Nimble (from `https://github.com/Quick/Nimble`)
   - OHHTTPStubs
-  - Quick (from `https://github.com/Quick/Quick`, branch `swift-2.0`)
-  - ReactiveCocoa (from `https://github.com/esttorhe/ReactiveCocoa.git`, branch `swift2`)
-  - RxSwift (from `https://github.com/kzaher/RxSwift.git`, branch `feature/swift2.0`)
+  - Quick (from `https://github.com/Quick/Quick`)
+  - RxSwift (from `https://github.com/ReactiveX/RxSwift`, branch `rxswift-2.0`)
 
 EXTERNAL SOURCES:
   Alamofire:
-    :branch: swift-2.0
     :git: https://github.com/Alamofire/Alamofire
   Moya:
-    :path: "../"
+    :path: ../
   Nimble:
-    :branch: swift-2.0
     :git: https://github.com/Quick/Nimble
   Quick:
-    :branch: swift-2.0
     :git: https://github.com/Quick/Quick
-  ReactiveCocoa:
-    :branch: swift2
-    :git: https://github.com/esttorhe/ReactiveCocoa.git
   RxSwift:
-    :branch: feature/swift2.0
-    :git: https://github.com/kzaher/RxSwift.git
+    :branch: rxswift-2.0
+    :git: https://github.com/ReactiveX/RxSwift
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: 9a1e321cf0a345b32142394446fa1a7e08cf6942
+    :commit: 6ad63253bdf79c6bc35d92a011976bc19737c6b7
     :git: https://github.com/Alamofire/Alamofire
   Nimble:
-    :commit: dbfc4ebd53395361c14eb2c9b13f629fc541bba2
+    :commit: 8baefcc94bc2b58b7be3cd9ebfc3984ea5c8b87e
     :git: https://github.com/Quick/Nimble
   Quick:
-    :commit: 4f7480ff9560e3791096e1a58ce09b6c0a8c926c
+    :commit: ac5eadd202dd67741628f80fb96e8c57388d954d
     :git: https://github.com/Quick/Quick
-  ReactiveCocoa:
-    :commit: 36a860ba427abe95163d9b6e5310c42848f04f38
-    :git: https://github.com/esttorhe/ReactiveCocoa.git
   RxSwift:
-    :commit: 1251f2ce14f7b173be09a2a186daf02865528e98
-    :git: https://github.com/kzaher/RxSwift.git
+    :commit: d4b39565c83c5827a40c523164c123e6dc6605eb
+    :git: https://github.com/ReactiveX/RxSwift
 
 SPEC CHECKSUMS:
-  Alamofire: 96feccc1e48a735edb92395cf023ba4ed52bdb45
+  Alamofire: 2f13548b29d25a58ecd91c9225fb51493e2b782b
   Moya: 4f6ee0cc668b80d6eed825ba48b571a67781240f
-  Nimble: e3cf5e73a491daf21c2bc88783dbfc55ce8b8e02
+  Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   OHHTTPStubs: f3473ab21dbf0815253ac96b977d5c36f1daad09
-  Quick: 7426537a99e75076d6930c5b6da58006e4a9f38a
-  ReactiveCocoa: 58436b7aecf4ab16280bafc9d1cec2daf59f0768
-  Result: 6c990ec4a72470672f9fc5b6fef009da0f6f40d1
-  RxSwift: 204bf4262908521aa815ec850d93e87e9d635dd5
+  Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
+  RxSwift: 0450126df5f8de3ec7ee789b420d7ba98baea364
 
 COCOAPODS: 0.38.2

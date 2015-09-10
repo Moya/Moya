@@ -48,6 +48,7 @@ expect(ocean.isClean).toEventually(beTruthy())
 - [Installing Nimble](#installing-nimble)
   - [Installing Nimble as a Submodule](#installing-nimble-as-a-submodule)
   - [Installing Nimble via CocoaPods](#installing-nimble-via-cocoapods)
+  - [Using Nimble without XCTest](#using-nimble-without-xctest)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -661,7 +662,7 @@ If you're using Swift 2.0+, you can use the `throwError` matcher to check if an 
 expect{ try somethingThatThrows() }.to(throwError())
 
 // Passes if somethingThatThrows() throws an error with a given domain:
-expect{ try somethingThatThrows() }.to(throwError { error in
+expect{ try somethingThatThrows() }.to(throwError { (error: ErrorType) in
     expect(error._domain).to(equal(NSCocoaErrorDomain))
 })
 
@@ -690,7 +691,7 @@ expect(actual).to(raiseException(named: name, reason: reason))
 
 // Passes if actual raises an exception and it passes expectations in the block
 // (in this case, if name begins with 'a r')
-expect { exception.raise() }.to(raiseException { exception in
+expect { exception.raise() }.to(raiseException { (exception: NSException) in
     expect(exception.name).to(beginWith("a r"))
 })
 ```
@@ -1109,3 +1110,40 @@ end
 ```
 
 Finally run `pod install`.
+
+## Using Nimble without XCTest
+
+Nimble is integrated with XCTest to allow it work well when used in Xcode test
+bundles, however it can also be used in a standalone app. After installing
+Nimble using one of the above methods, there are two additional steps required
+to make this work.
+
+1. Create a custom assertion handler and assign an instance of it to the
+   global `NimbleAssertionHandler` variable. For example:
+
+```swift
+class MyAssertionHandler : AssertionHandler {
+    func assert(assertion: Bool, message: FailureMessage, location: SourceLocation) {
+        if (!assertion) {
+            print("Expectation failed: \(message.stringValue)")
+        }
+    }
+}
+```
+```swift
+// Somewhere before you use any assertions
+NimbleAssertionHandler = MyAssertionHandler()
+```
+
+2. Add a post-build action to fix an issue with the Swift XCTest support
+   library being unnecessarily copied into your app
+  * Edit your scheme in Xcode, and navigate to Build -> Post-actions
+  * Click the "+" icon and select "New Run Script Action"
+  * Open the "Provide build settings from" dropdown and select your target
+  * Enter the following script contents:
+```
+rm "${SWIFT_STDLIB_TOOL_DESTINATION_DIR}/libswiftXCTest.dylib"
+```
+
+You can now use Nimble assertions in your code and handle failures as you see
+fit.

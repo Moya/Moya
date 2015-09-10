@@ -33,7 +33,14 @@ class ViewController: UITableViewController {
             }
 
             if !success {
-                let alertController = UIAlertController(title: "GitHub Fetch", message: error?.description, preferredStyle: .Alert)
+                let message: String
+                if let error = error as? NSError {
+                    message = error.description
+                } else {
+                    message = "Unable to fetch from GitHub"
+                }
+                
+                let alertController = UIAlertController(title: "GitHub Fetch", message: message, preferredStyle: .Alert)
                 let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
                     alertController.dismissViewControllerAnimated(true, completion: nil)
                 })

@@ -39,7 +39,45 @@ extension NSArray : NMBOrderedCollection {}
 @objc public protocol NMBDoubleConvertible {
     var doubleValue: CDouble { get }
 }
-extension NSNumber : NMBDoubleConvertible { }
+extension NSNumber : NMBDoubleConvertible {
+}
+
+private let dateFormatter: NSDateFormatter = {
+    let formatter = NSDateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
+    formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+    
+    return formatter
+    }()
+
+extension NSDate: NMBDoubleConvertible {
+    public var doubleValue: CDouble {
+        get {
+            return self.timeIntervalSinceReferenceDate
+        }
+    }
+}
+
+
+extension NMBDoubleConvertible {
+    public var stringRepresentation: String {
+        get {
+            if let date = self as? NSDate {
+                return dateFormatter.stringFromDate(date)
+            }
+            
+            if let debugStringConvertible = self as? CustomDebugStringConvertible {
+                return debugStringConvertible.debugDescription
+            }
+            
+            if let stringConvertible = self as? CustomStringConvertible {
+                return stringConvertible.description
+            }
+            
+            return ""
+        }
+    }
+}
 
 /// Protocol for types to support beLessThan(), beLessThanOrEqualTo(),
 ///  beGreaterThan(), beGreaterThanOrEqualTo(), and equal() matchers.

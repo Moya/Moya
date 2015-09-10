@@ -54,8 +54,6 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods-DemoTests/Alamofire.framework'
   install_framework 'Pods-DemoTests/Moya.framework'
-  install_framework 'Pods-DemoTests/ReactiveCocoa.framework'
-  install_framework 'Pods-DemoTests/Result.framework'
   install_framework 'Pods-DemoTests/RxSwift.framework'
   install_framework 'Pods-DemoTests/Nimble.framework'
   install_framework 'Pods-DemoTests/OHHTTPStubs.framework'
@@ -64,8 +62,6 @@ fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods-DemoTests/Alamofire.framework'
   install_framework 'Pods-DemoTests/Moya.framework'
-  install_framework 'Pods-DemoTests/ReactiveCocoa.framework'
-  install_framework 'Pods-DemoTests/Result.framework'
   install_framework 'Pods-DemoTests/RxSwift.framework'
   install_framework 'Pods-DemoTests/Nimble.framework'
   install_framework 'Pods-DemoTests/OHHTTPStubs.framework'

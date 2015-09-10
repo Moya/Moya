@@ -6,8 +6,12 @@ import OHHTTPStubs
 
 func beIndenticalToResponse(expectedValue: MoyaResponse) -> MatcherFunc<MoyaResponse> {
     return MatcherFunc { actualExpression, failureMessage in
-        let instance = actualExpression.evaluate()
-        return instance === expectedValue
+        do {
+            let instance = try actualExpression.evaluate()
+            return instance === expectedValue
+        } catch {
+            return false
+        }
     }
 }
 
@@ -66,7 +70,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                     
                     it("returns an error when cancelled") {
-                        var receivedError: NSError?
+                        var receivedError: ErrorType?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
                         let token = provider.request(target) { (data, statusCode, response, error) in
@@ -81,7 +85,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider with network activity closures") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        var provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
                             if change == .Began {
                                 called = true
                             }
@@ -95,7 +99,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        var provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
                             if change == .Ended {
                                 called = true
                             }
@@ -108,62 +112,62 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a reactive provider") { () -> () in
-                    var provider: ReactiveCocoaMoyaProvider<GitHub>!
-                    beforeEach {
-                        provider = ReactiveCocoaMoyaProvider<GitHub>()
-                    }
-                    
-                    it("returns some data for zen request") {
-                        var message: String?
-                        
-                        let target: GitHub = .Zen
-                        provider.request(target).subscribeNext { (response) -> Void in
-                            if let response = response as? MoyaResponse {
-                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
-                            }
-                        }
-
-                        expect{message}.toEventually( equal(zenMessage) )
-                    }
-                    
-                    it("returns some data for user profile request") {
-                        var message: String?
-                        
-                        let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target).subscribeNext { (response) -> Void in
-                            if let response = response as? MoyaResponse {
-                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
-                            }
-                        }
-
-                        expect{message}.toEventually( equal(userMessage) )
-                    }
-                    
-                    it("returns identical signals for inflight requests") {
-                        let target: GitHub = .Zen
-                        let signal1 = provider.request(target)
-                        let signal2 = provider.request(target)
-                        
-                        expect(provider.inflightRequests.count).to(equal(0))
-                        
-                        var receivedResponse: MoyaResponse!
-                        
-                        signal1.subscribeNext { (response) -> Void in
-                            receivedResponse = response as? MoyaResponse
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        
-                        signal2.subscribeNext { (response) -> Void in
-                            expect(receivedResponse).toNot(beNil())
-                            expect(receivedResponse).to(beIndenticalToResponse( response as! MoyaResponse) )
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        
-                        // Allow for network request to complete
-                        expect(provider.inflightRequests.count).toEventually( equal(0) )
-                    }
-                }
+//                describe("a reactive provider") { () -> () in
+//                    var provider: ReactiveCocoaMoyaProvider<GitHub>!
+//                    beforeEach {
+//                        provider = ReactiveCocoaMoyaProvider<GitHub>()
+//                    }
+//                    
+//                    it("returns some data for zen request") {
+//                        var message: String?
+//                        
+//                        let target: GitHub = .Zen
+//                        provider.request(target).subscribeNext { (response) -> Void in
+//                            if let response = response as? MoyaResponse {
+//                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+//                            }
+//                        }
+//
+//                        expect{message}.toEventually( equal(zenMessage) )
+//                    }
+//                    
+//                    it("returns some data for user profile request") {
+//                        var message: String?
+//                        
+//                        let target: GitHub = .UserProfile("ashfurrow")
+//                        provider.request(target).subscribeNext { (response) -> Void in
+//                            if let response = response as? MoyaResponse {
+//                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+//                            }
+//                        }
+//
+//                        expect{message}.toEventually( equal(userMessage) )
+//                    }
+//                    
+//                    it("returns identical signals for inflight requests") {
+//                        let target: GitHub = .Zen
+//                        let signal1 = provider.request(target)
+//                        let signal2 = provider.request(target)
+//                        
+//                        expect(provider.inflightRequests.count).to(equal(0))
+//                        
+//                        var receivedResponse: MoyaResponse!
+//                        
+//                        signal1.subscribeNext { (response) -> Void in
+//                            receivedResponse = response as? MoyaResponse
+//                            expect(provider.inflightRequests.count).to(equal(1))
+//                        }
+//                        
+//                        signal2.subscribeNext { (response) -> Void in
+//                            expect(receivedResponse).toNot(beNil())
+//                            expect(receivedResponse).to(beIndenticalToResponse( response as! MoyaResponse) )
+//                            expect(provider.inflightRequests.count).to(equal(1))
+//                        }
+//                        
+//                        // Allow for network request to complete
+//                        expect(provider.inflightRequests.count).toEventually( equal(0) )
+//                    }
+//                }
             }
         }
     }

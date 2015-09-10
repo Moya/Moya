@@ -127,7 +127,7 @@ public func afterEach(closure: AfterExampleWithMetadataClosure) {
     - parameter file: The absolute path to the file containing the example. A sensible default is provided.
     - parameter line: The line containing the example. A sensible default is provided.
 */
-public func it(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__, closure: () -> ()) {
+public func it(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: UInt = __LINE__, closure: () -> ()) {
     World.sharedWorld().it(description, flags: flags, file: file, line: line, closure: closure)
 }
 
@@ -143,7 +143,7 @@ public func it(description: String, flags: FilterFlags = [:], file: String = __F
     - parameter file: The absolute path to the file containing the current example group. A sensible default is provided.
     - parameter line: The line containing the current example group. A sensible default is provided.
 */
-public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__) {
+public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: UInt = __LINE__) {
     itBehavesLike(name, flags: flags, file: file, line: line, sharedExampleContext: { return [:] })
 }
 
@@ -163,7 +163,7 @@ public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String =
     - parameter file: The absolute path to the file containing the current example group. A sensible default is provided.
     - parameter line: The line containing the current example group. A sensible default is provided.
 */
-public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__, sharedExampleContext: SharedExampleContext) {
+public func itBehavesLike(name: String, flags: FilterFlags = [:], file: String = __FILE__, line: UInt = __LINE__, sharedExampleContext: SharedExampleContext) {
     World.sharedWorld().itBehavesLike(name, sharedExampleContext: sharedExampleContext, flags: flags, file: file, line: line)
 }
 
@@ -198,7 +198,7 @@ public func xcontext(description: String, flags: FilterFlags, closure: () -> ())
     Use this to quickly mark an `it` closure as pending.
     This disables the example and ensures the code within the closure is never run.
 */
-public func xit(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__, closure: () -> ()) {
+public func xit(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: UInt = __LINE__, closure: () -> ()) {
     World.sharedWorld().xit(description, flags: flags, file: file, line: line, closure: closure)
 }
 
@@ -222,6 +222,6 @@ public func fcontext(description: String, flags: FilterFlags = [:], closure: () 
     Use this to quickly focus an `it` closure, focusing the example.
     If any examples in the test suite are focused, only those examples are executed.
 */
-public func fit(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: Int = __LINE__, closure: () -> ()) {
+public func fit(description: String, flags: FilterFlags = [:], file: String = __FILE__, line: UInt = __LINE__, closure: () -> ()) {
     World.sharedWorld().fit(description, flags: flags, file: file, line: line, closure: closure)
 }

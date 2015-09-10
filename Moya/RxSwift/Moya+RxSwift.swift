@@ -23,18 +23,19 @@ public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
 
             let observable: Observable<MoyaResponse> =  AnonymousObservable { observer in
                 let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
-                    if let error = error {
-                        if let statusCode = statusCode {
-                            observer.on(.Error(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo)))
-                        } else {
-                            observer.on(.Error(error))
-                        }
+                    if let error = error as? NSError, statusCode = statusCode {
+                        // if we received an NSError, let's use its domain and userInfo and replace
+                        // the status code.
+                        observer.on(.Error(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo)))
+                    } else if let error = error {
+                        // the error is not an NSError but a more generic ErrorType.
+                        observer.on(.Error(error))
                     } else {
                         if let data = data {
                             observer.on(.Next(MoyaResponse(statusCode: statusCode!, data: data, response: response)))
                         }
                         observer.on(.Completed)
-                    }
+                    }                    
                 }
 
                 return AnonymousDisposable {

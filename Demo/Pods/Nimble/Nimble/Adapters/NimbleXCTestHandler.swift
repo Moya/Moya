@@ -26,3 +26,15 @@ public class NimbleShortXCTestHandler: AssertionHandler {
         }
     }
 }
+
+/// Fallback handler in case XCTest is unavailable. This assertion handler will abort
+/// the program if it is invoked.
+class NimbleXCTestUnavailableHandler : AssertionHandler {
+    func assert(assertion: Bool, message: FailureMessage, location: SourceLocation) {
+        fatalError("XCTest is not available and no custom assertion handler was configured. Aborting.")
+    }
+}
+
+func isXCTestAvailable() -> Bool {
+    return NSClassFromString("XCTestCase") != nil
+}
