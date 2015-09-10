@@ -24,6 +24,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
                 return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             }
+            
+            OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/basic-auth/user/passwd"}) { _ in
+                return OHHTTPStubsResponse(data: HTTPBin.BasicAuth.sampleData, statusCode: 200, headers: nil)
+            }
+            
         }
 
         afterEach { () -> () in
@@ -75,6 +80,41 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         token.cancel()
                         
                         expect(receivedError).toEventuallyNot( beNil() )
+                    }
+                }
+                
+                describe("a provider with credential closures") {
+                    it("credential closure returns nil") {
+                        var called = false
+                        var provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
+                            
+                            called = true
+                            return nil
+                        })
+                        
+                        let target: HTTPBin = .BasicAuth
+                        provider.request(target) { (data, statusCode, response, error) in }
+                        
+                        expect(called).toEventually( beTrue() )
+                        
+                    }
+                    
+                    it("credential closure returns valid username and password") {
+                        var called = false
+                        var returnedData: NSData?
+                        var provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
+                            
+                            called = true
+                            return NSURLCredential(user: "user", password: "passwd", persistence: .None)
+                        })
+                        
+                        let target: HTTPBin = .BasicAuth
+                        provider.request(target) { (data, statusCode, response, error) in
+                            returnedData = data
+                        }
+                        
+                        expect(called).toEventually( beTrue() )
+                        expect(returnedData).toEventually(equal(target.sampleData))
                     }
                 }
 

@@ -71,6 +71,32 @@ class MoyaProviderSpec: QuickSpec {
                         expect(provider.manager).to(beIdenticalTo(manager))
                     }
                 })
+                
+                it("credential closure returns nil") {
+                    var called = false
+                    var provider = MoyaProvider<HTTPBin>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, credentialClosure: { (target) -> NSURLCredential? in
+                            called = true
+                            return nil
+                    })
+                    
+                    let target: HTTPBin = .BasicAuth
+                    provider.request(target) { (data, statusCode, response, error) in }
+                    
+                    expect(called) == true
+                }
+                
+                it("credential closure returns valid username and password") {
+                    var called = false
+                    var provider = MoyaProvider<HTTPBin>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, credentialClosure: { (target) -> NSURLCredential? in
+                        called = true
+                        return NSURLCredential(user: "user", password: "passwd", persistence: .None)
+                    })
+                    
+                    let target: HTTPBin = .BasicAuth
+                    provider.request(target) { (data, statusCode, response, error) in }
+                    
+                    expect(called) == true
+                }
 
                 it("notifies at the beginning of network requests") {
                     var called = false
