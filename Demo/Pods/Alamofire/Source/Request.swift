@@ -193,7 +193,7 @@ public class Request {
         let progress: NSProgress
 
         var data: NSData? { return nil }
-        var error: NSError?
+        var error: ErrorType?
 
         var credential: NSURLCredential?
 
@@ -215,7 +215,7 @@ public class Request {
 
         deinit {
             queue.cancelAllOperations()
-            queue.suspended = true
+            queue.suspended = false
         }
 
         // MARK: - NSURLSessionTaskDelegate
@@ -444,7 +444,7 @@ extension Request: CustomStringConvertible {
             components.append("(\(response.statusCode))")
         }
 
-        return " ".join(components)
+        return components.joinWithSeparator(" ")
     }
 }
 
@@ -473,7 +473,7 @@ extension Request: CustomDebugStringConvertible {
                 authenticationMethod: NSURLAuthenticationMethodHTTPBasic
             )
 
-            if let credentials = credentialStorage.credentialsForProtectionSpace(protectionSpace)?.values.array {
+            if let credentials = credentialStorage.credentialsForProtectionSpace(protectionSpace)?.values {
                 for credential in credentials {
                     components.append("-u \(credential.user!):\(credential.password!)")
                 }
@@ -526,7 +526,7 @@ extension Request: CustomDebugStringConvertible {
 
         components.append("\"\(URL!.absoluteString)\"")
 
-        return " \\\n\t".join(components)
+        return components.joinWithSeparator(" \\\n\t")
     }
 
     /// The textual representation used when written to an output stream, in the form of a cURL command.
