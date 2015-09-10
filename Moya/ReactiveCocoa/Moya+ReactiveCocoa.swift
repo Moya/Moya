@@ -31,14 +31,13 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
             
             let signal = RACSignal.createSignal { (subscriber) -> RACDisposable! in
-                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
-                    if let error = error as? NSError where statusCode = statusCode {
-                        // if we received an NSError, let's use its domain and userInfo and replace
-                        // the status code.
-                        subscriber.sendError(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
-                    } else if let error = error {
-                        // the error is not an NSError but a more generic ErrorType.
-                        subscriber.sendError(error)
+                let cancellableToken = self?.request(token) { data, statusCode, response, error in
+                    if let error = error {
+                        if let statusCode = statusCode {
+                            subscriber.sendError(NSError(domain: MoyaErrorDomain, code: statusCode, userInfo: [NSUnderlyingErrorKey: error as NSError]))
+                        } else {
+                            subscriber.sendError(error as NSError)
+                        }
                     } else {
                         if let data = data {
                             subscriber.sendNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))

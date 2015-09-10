@@ -123,7 +123,7 @@ class RACSignalMoyaSpec: QuickSpec {
                 let data = NSData()
                 let signal = signalSendingData(data)
                 
-                var receivedError: NSError?
+                var receivedError: ErrorType?
                 signal.mapImage().subscribeNext({ (image) -> Void in
                     XCTFail("next called for invalid data")
                 }, error: { (error) -> Void in
@@ -156,7 +156,7 @@ class RACSignalMoyaSpec: QuickSpec {
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
                 let signal = signalSendingData(data!)
                 
-                var receivedError: NSError?
+                var receivedError: ErrorType?
                 signal.mapJSON().subscribeNext({ (image) -> Void in
                     XCTFail("next called for invalid data")
                 }, error: { (error) -> Void in
