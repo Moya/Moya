@@ -60,18 +60,34 @@ Just add `pod 'Moya'` to your Podfile and go!
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For reactive extensions, this project has some dependencies. Add the following
+For ReactiveCocoa extensions, this project has some dependencies. Add the following
 lines to your Podfile:
 
 ```rb
 pod 'Moya'
 
 # Include the following only if you want to use ReactiveCocoa extensions with Moya
-pod 'ReactiveCocoa', '3.0-beta.6'
+pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
 pod 'Moya/Reactive'
 ```
 
 Then run `pod install`.
+
+For RxSwift extensions, use the following Podfile.
+
+```rb
+pod 'RxSwift', '~> 2.0.0-alpha'
+pod 'RxMoya'
+```
+
+----------------
+
+Carthage users can point to this repository and use whichever 
+generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
+
+```
+github "Moya/Moya"
+```
 
 Use
 ---
