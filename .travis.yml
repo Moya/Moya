@@ -11,4 +11,4 @@ cache:
   - cocoapods
 
 script:
-  - make ci
+  - rake test
