@@ -2,7 +2,7 @@ import Foundation
 import Alamofire
 
 /// Block to be executed when a request has completed.
-public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: NSError?) -> ()
+public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
 
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
@@ -138,10 +138,10 @@ public class MoyaProvider<T: MoyaTarget> {
 
     public class func DefaultEndpointMapping(target: T) -> Endpoint<T> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+        return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    @availability(*, unavailable, renamed="DefaultEndpointResolution", message="Use #DefaultEndpointResolution method instead")
+    @available(*, unavailable, renamed="DefaultEndpointResolution", message="Use #DefaultEndpointResolution method instead")
     public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
         return DefaultEndpointResolution(endpoint)
     }
@@ -170,17 +170,17 @@ private extension MoyaProvider {
 
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
-        let request = manager.request(request)
-            .response { (request: NSURLRequest, response: NSHTTPURLResponse?, data: AnyObject?, error: NSError?) -> () in
+
+        let request = Alamofire.Manager.sharedInstance.request(request).response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
                 networkActivityCallback?(change: .Ended)
 
                 // Alamofire always sends the data param as an NSData? type, but we'll
                 // add a check just in case something changes in the future.
                 let statusCode = response?.statusCode
-                if let data = data as? NSData {
-                    completion(data: data, statusCode: statusCode, response:response, error: error)
+                if let data = data {
+                    completion(data: data, statusCode: statusCode, response: response, error: error)
                 } else {
-                    completion(data: nil, statusCode: statusCode, response:response, error: error)
+                    completion(data: nil, statusCode: statusCode, response: response, error: error)
                 }
         }
 

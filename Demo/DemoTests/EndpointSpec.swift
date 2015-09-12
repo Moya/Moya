@@ -27,8 +27,8 @@ class EndpointSpec: QuickSpec {
             
             beforeEach { () -> () in
                 let target: GitHub = .Zen
-                let parameters = ["Nemesis": "Harvey"] as [String: AnyObject]
-                let headerFields = ["Title": "Dominar"] as [String: AnyObject]
+                let parameters = ["Nemesis": "Harvey"]
+                let headerFields = ["Title": "Dominar"]
                 endpoint = Endpoint<GitHub>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
             }
             

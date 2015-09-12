@@ -6,8 +6,12 @@ import OHHTTPStubs
 
 func beIndenticalToResponse(expectedValue: MoyaResponse) -> MatcherFunc<MoyaResponse> {
     return MatcherFunc { actualExpression, failureMessage in
-        let instance = actualExpression.evaluate()
-        return instance === expectedValue
+        do {
+            let instance = try actualExpression.evaluate()
+            return instance === expectedValue
+        } catch {
+            return false
+        }
     }
 }
 
@@ -18,11 +22,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
         beforeEach { () -> () in
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil)
+                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil).responseTime(0.5)
             }
 
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
+                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil).responseTime(0.5)
             }
         }
 
@@ -66,14 +70,14 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                     
                     it("returns an error when cancelled") {
-                        var receivedError: NSError?
-                        
+                        var receivedError: ErrorType?
+
                         let target: GitHub = .UserProfile("ashfurrow")
                         let token = provider.request(target) { (data, statusCode, response, error) in
                             receivedError = error
                         }
                         token.cancel()
-                        
+
                         expect(receivedError).toEventuallyNot( beNil() )
                     }
                 }
@@ -81,7 +85,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider with network activity closures") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        var provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
                             if change == .Began {
                                 called = true
                             }
@@ -95,7 +99,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        var provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
                             if change == .Ended {
                                 called = true
                             }

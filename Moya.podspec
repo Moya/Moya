@@ -16,11 +16,10 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
-  s.requires_arc = true
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Moya/*.swift"
-    ss.dependency "Alamofire", "~> 1.3.0"
+    ss.dependency "Alamofire"
     ss.framework  = "Foundation"
   end
 
@@ -32,12 +31,12 @@ Pod::Spec.new do |s|
   s.subspec "ReactiveCocoa" do |ss|
     ss.source_files = "Moya/ReactiveCocoa/*.swift"
     ss.dependency "Moya/ReactiveCore"
-    ss.dependency "ReactiveCocoa", "3.0-beta.6"
+    ss.dependency "ReactiveCocoa"
   end
 
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Moya/RxSwift/*.swift"
     ss.dependency "Moya/ReactiveCore"
-    ss.dependency "RxSwift", "~> 1.4"
+    ss.dependency "RxSwift"
   end
 end

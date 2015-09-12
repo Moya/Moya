@@ -15,11 +15,15 @@ class ViewController: UITableViewController {
         GitHubProvider.request(.UserRepositories(username), completion: { (data, status, resonse, error) -> () in
             var success = error == nil
             if let data = data {
-                let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil)
-                if let json = json as? NSArray {
-                    // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
-                    self.repos = json
-                } else {
+                do {
+                    let json: AnyObject? = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
+                    if let json = json as? NSArray {
+                        // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
+                        self.repos = json
+                    } else {
+                        success = false
+                    }
+                } catch {
                     success = false
                 }
 
@@ -29,7 +33,14 @@ class ViewController: UITableViewController {
             }
 
             if !success {
-                let alertController = UIAlertController(title: "GitHub Fetch", message: error?.description, preferredStyle: .Alert)
+                let message: String
+                if let error = error as? NSError {
+                    message = error.description
+                } else {
+                    message = "Unable to fetch from GitHub"
+                }
+                
+                let alertController = UIAlertController(title: "GitHub Fetch", message: message, preferredStyle: .Alert)
                 let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
                     alertController.dismissViewControllerAnimated(true, completion: nil)
                 })
@@ -63,10 +74,10 @@ class ViewController: UITableViewController {
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .Alert)
         let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
             if let usernameTextField = usernameTextField {
-                self.downloadRepositories(usernameTextField.text)
+                self.downloadRepositories(usernameTextField.text!)
             }
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
+        _ = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
         }
         promptController.addAction(ok)
         promptController.addTextFieldWithConfigurationHandler { (textField) -> Void in
@@ -86,7 +97,7 @@ class ViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
 
         let object = repos[indexPath.row] as! NSDictionary
         (cell.textLabel as UILabel!).text = object["name"] as? String

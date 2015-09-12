@@ -20,7 +20,7 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
 
-        return RACSignal.defer { [weak self] () -> RACSignal! in
+        return RACSignal.`defer` { [weak self] () -> RACSignal! in
             
             if let weakSelf = self {
                 objc_sync_enter(weakSelf)
@@ -32,12 +32,12 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
             }
             
             let signal = RACSignal.createSignal { (subscriber) -> RACDisposable! in
-                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
+                let cancellableToken = self?.request(token) { data, statusCode, response, error in
                     if let error = error {
                         if let statusCode = statusCode {
-                            subscriber.sendError(NSError(domain: error.domain, code: statusCode, userInfo: error.userInfo))
+                            subscriber.sendError(NSError(domain: MoyaErrorDomain, code: statusCode, userInfo: [NSUnderlyingErrorKey: error as NSError]))
                         } else {
-                            subscriber.sendError(error)
+                            subscriber.sendError(error as NSError)
                         }
                     } else {
                         if let data = data {

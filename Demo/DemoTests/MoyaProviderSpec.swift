@@ -201,12 +201,12 @@ class MoyaProviderSpec: QuickSpec {
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target).subscribeNext { (object) -> Void in
                             if let response = object as? MoyaResponse {
-                                receivedResponse = NSJSONSerialization.JSONObjectWithData(response.data, options: nil, error: nil) as? NSDictionary
+                                receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
                             }
                         }
                         
                         let sampleData = target.sampleData as NSData
-                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as! NSDictionary
+                        let sampleResponse = try! NSJSONSerialization.JSONObjectWithData(sampleData, options: []) as! NSDictionary
                         expect(receivedResponse).toNot(beNil())
                     }
                     
@@ -238,7 +238,7 @@ class MoyaProviderSpec: QuickSpec {
                         expect(provider.inflightRequests.count).to(equal(0))
                     }
                 })
-                
+
                 describe("a RxSwift provider", { () -> () in
                     var provider: RxMoyaProvider<GitHub>!
                     
@@ -249,7 +249,7 @@ class MoyaProviderSpec: QuickSpec {
                     it("returns a MoyaResponse object") {
                         var called = false
                         
-                        provider.request(.Zen) >- subscribeNext { (object) -> Void in
+                        provider.request(.Zen).subscribeNext { (object) -> Void in
                             called = true
                         }
                         
@@ -260,7 +260,7 @@ class MoyaProviderSpec: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target) >- subscribeNext { (response) -> Void in
+                        provider.request(target).subscribeNext { (response) -> Void in
                             message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                         }
                         
@@ -272,12 +272,12 @@ class MoyaProviderSpec: QuickSpec {
                         var receivedResponse: NSDictionary?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target) >- subscribeNext { (response) -> Void in
-                            receivedResponse = NSJSONSerialization.JSONObjectWithData(response.data, options: nil, error: nil) as? NSDictionary
+                        provider.request(target).subscribeNext { (response) -> Void in
+                            receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
                         }
                         
                         let sampleData = target.sampleData as NSData
-                        let sampleResponse: NSDictionary = NSJSONSerialization.JSONObjectWithData(sampleData, options: nil, error: nil) as! NSDictionary
+                        let sampleResponse: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(sampleData, options: []) as! NSDictionary
                         expect(receivedResponse).toNot(beNil())
                     }
                     
@@ -292,7 +292,7 @@ class MoyaProviderSpec: QuickSpec {
                         let queue = dispatch_queue_create("testing", DISPATCH_QUEUE_CONCURRENT)
                         dispatch_apply(observables.count, queue, { idx in
                             let i = idx
-                            observables[i] >- subscribeNext { _ -> Void in
+                            observables[i].subscribeNext { _ -> Void in
                                 if i == 5 { // We only need to check it once.
                                     expect(provider.inflightRequests.count).to(equal(1))
                                 }
@@ -336,7 +336,6 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     it("cancels network request when subscription is cancelled") {
-                        var called = false
                         let target: GitHub = .Zen
 
                         let disposable = provider.request(target).subscribeCompleted { () -> Void in
@@ -367,7 +366,7 @@ class MoyaProviderSpec: QuickSpec {
                             }
                         }
                         
-                        let sampleData = target.sampleData as NSData
+                        let _ = target.sampleData
                         expect(errored).toEventually(beTruthy())
                     }
                     
@@ -381,7 +380,7 @@ class MoyaProviderSpec: QuickSpec {
                             }
                         }
                         
-                        let sampleData = target.sampleData as NSData
+                        let _ = target.sampleData
                         expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
                     }
                     
