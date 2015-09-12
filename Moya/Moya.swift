@@ -178,9 +178,9 @@ private extension MoyaProvider {
                 // add a check just in case something changes in the future.
                 let statusCode = response?.statusCode
                 if let data = data {
-                    completion(data: data, statusCode: statusCode, response:response, error: error)
+                    completion(data: data, statusCode: statusCode, response: response, error: error)
                 } else {
-                    completion(data: nil, statusCode: statusCode, response:response, error: error)
+                    completion(data: nil, statusCode: statusCode, response: response, error: error)
                 }
         }
 
