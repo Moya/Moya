@@ -35,6 +35,8 @@ PODS:
     - Box
     - ReactiveCocoa/Core
     - Result
+  - ReactiveMoya (2.1.0):
+    - ReactiveCocoa
   - Result (HEAD based on 0.6-beta.1)
   - RxMoya (2.1.0):
     - RxSwift
@@ -48,6 +50,7 @@ DEPENDENCIES:
   - OHHTTPStubs
   - Quick (from `https://github.com/Quick/Quick`)
   - ReactiveCocoa (from `https://github.com/ashfurrow/ReactiveCocoa.git`, branch `swift2`)
+  - ReactiveMoya (from `../`)
   - Result (HEAD)
   - RxMoya (from `../`)
   - RxSwift (~> 2.0.0-alpha)
@@ -62,6 +65,8 @@ EXTERNAL SOURCES:
   ReactiveCocoa:
     :branch: swift2
     :git: https://github.com/ashfurrow/ReactiveCocoa.git
+  ReactiveMoya:
+    :path: "../"
   RxMoya:
     :path: "../"
 
@@ -84,8 +89,9 @@ SPEC CHECKSUMS:
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
   ReactiveCocoa: d99571cf654b8e6703f338ca13f486b999c51969
+  ReactiveMoya: 3902ba07ad4ae55f4bf994a016d9fec1d8a47010
   Result: 6c990ec4a72470672f9fc5b6fef009da0f6f40d1
   RxMoya: 5297d569a237fbbd5cfd2c62d3993162984abde2
   RxSwift: 0450126df5f8de3ec7ee789b420d7ba98baea364
 
-COCOAPODS: 0.39.0.beta.1
+COCOAPODS: 0.39.0.beta.4

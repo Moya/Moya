@@ -1,5 +1,7 @@
 import Quick
 import Moya
+import RxMoya
+import ReactiveMoya
 import Nimble
 import ReactiveCocoa
 import RxSwift

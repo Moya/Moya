@@ -2,6 +2,7 @@ import UIKit
 import Moya
 import Quick
 import Nimble
+import ReactiveMoya
 import OHHTTPStubs
 
 func beIndenticalToResponse(expectedValue: MoyaResponse) -> MatcherFunc<MoyaResponse> {

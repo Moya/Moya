@@ -15,6 +15,7 @@ pod 'Alamofire'
 # pod 'Moya/ReactiveCocoa', :path => "../"
 
 pod 'RxMoya', :path => "../"
+pod 'ReactiveMoya', :path => "../"
 pod 'Moya', :path => "../"
 
 target 'DemoTests' do
