@@ -469,10 +469,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABDB32862C71E98BCE40F1FE /* Pods-DemoTests.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -488,10 +484,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E66A55196C6C3276E3E853BA /* Pods-DemoTests.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ashfurrow.$(PRODUCT_NAME:rfc1034identifier)";

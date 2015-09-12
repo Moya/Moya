@@ -336,7 +336,6 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     it("cancels network request when subscription is cancelled") {
-                        var called = false
                         let target: GitHub = .Zen
 
                         let disposable = provider.request(target).subscribeCompleted { () -> Void in
