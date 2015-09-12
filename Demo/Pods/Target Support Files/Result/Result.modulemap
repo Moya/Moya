@@ -1,0 +1,6 @@
+framework module Result {
+  umbrella header "Result-umbrella.h"
+
+  export *
+  module * { export * }
+}

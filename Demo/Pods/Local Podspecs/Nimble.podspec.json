@@ -1,0 +1,31 @@
+{
+  "name": "Nimble",
+  "version": "2.0.0-rc.3",
+  "summary": "A Matcher Framework for Swift and Objective-C",
+  "description": "Use Nimble to express the expected outcomes of Swift or Objective-C expressions. Inspired by Cedar.",
+  "homepage": "https://github.com/Quick/Nimble",
+  "license": {
+    "type": "Apache 2.0",
+    "file": "LICENSE.md"
+  },
+  "authors": "Quick Contributors",
+  "platforms": {
+    "ios": "7.0",
+    "osx": "10.9"
+  },
+  "source": {
+    "git": "https://github.com/Quick/Nimble.git",
+    "tag": "v2.0.0-rc.3"
+  },
+  "source_files": [
+    "Nimble",
+    "Nimble/**/*.{swift,h,m}"
+  ],
+  "weak_frameworks": "XCTest",
+  "requires_arc": true,
+  "pod_target_xcconfig": {
+    "ENABLE_BITCODE": "NO",
+    "OTHER_LDFLAGS": "-weak-lswiftXCTest",
+    "FRAMEWORK_SEARCH_PATHS": "$(inherited) \"$(PLATFORM_DIR)/Developer/Library/Frameworks\""
+  }
+}
