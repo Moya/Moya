@@ -1,20 +1,20 @@
 Pod::Spec.new do |s|
   s.name         = "Moya"
-  s.version      = "2.0.0"
+  s.version      = "2.1.0"
   s.summary      = "Network abstraction layer written in Swift"
   s.description  = <<-EOS
   Moya abstracts network commands using Swift Generics to provide developers
   with more compile-time confidence.
 
-  A ReactiveCocoa extension exists as well. Instructions for its installation
-  are in [the README](https://github.com/ashfurrow/Moya).
+  ReactiveCocoa and RxSwift extensions exist as well. Instructions for installation
+  are in [the README](https://github.com/Moya/Moya).
   EOS
-  s.homepage     = "https://github.com/AshFurrow/Moya"
+  s.homepage     = "https://github.com/Moya/Moya"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/ashfurrow/Moya.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
 
   s.subspec "Core" do |ss|

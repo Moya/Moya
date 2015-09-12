@@ -1,3 +1,17 @@
+- Add backward-compatible call from `DefaultEnpointResolution` to `DefaultEndpointResolution` on `MoyaProvider` class. `DefaultEndpointResolution` is now used internally as the default resolver. `DefaultEnpointResolution` can be removed in a future major release.
+
+# 2.1.0
+
+- Add option to pass an `Alamofire.Manager` to `MoyaProvider` initializer
+
+# 2.0.2
+
+- Updates Demo directory's RxSwift version.
+
+# 2.0.1
+
+- Updates Demo directory's Moya version for `pod try` compatbility.
+
 # 2.0.0
 
 - **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.

@@ -4,7 +4,7 @@ Documentation
 Moya is about working at *high levels of abstraction* in your application. 
 It accomplishes this with the following pipline. 
 
-![Pipeline](https://raw.github.com/ashfurrow/Moya/master/web/pipeline.png)
+![Pipeline](https://raw.github.com/Moya/Moya/master/web/pipeline.png)
 
 ----------------
 
@@ -24,5 +24,5 @@ super-flexible and accommodate the needs of every developer. It's less of a
 framework _of code_ and more of a framework of _how to think_ about network 
 requests. 
 
-Remember, if at any point you have a question, just [open an issue](http://github.com/AshFurrow/Moya/issues/new) 
+Remember, if at any point you have a question, just [open an issue](http://github.com/Moya/Moya/issues/new) 
 and we'll get you some help.
