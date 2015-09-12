@@ -12,8 +12,9 @@ pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :
 pod 'RxSwift', '~> 2.0.0-alpha'
 pod 'Alamofire'
 
-pod 'Moya/ReactiveCocoa', :path => "../"
-pod 'Moya/RxSwift', :path => "../"
+# pod 'Moya/ReactiveCocoa', :path => "../"
+
+pod 'RxMoya', :path => "../"
 pod 'Moya', :path => "../"
 
 target 'DemoTests' do

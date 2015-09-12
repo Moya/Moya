@@ -1,4 +1,5 @@
-github "Alamofire/Alamofire" "1.2.3"
+github "Alamofire/Alamofire" "2.0.0"
 github "robrix/Box" "1.2.2"
+git "git@github.com:ReactiveX/RxSwift.git" "d4b39565c83c5827a40c523164c123e6dc6605eb"
 github "antitypical/Result" "0.4.4"
-github "ReactiveCocoa/ReactiveCocoa" "v3.0-beta.8"
+github "ReactiveCocoa/ReactiveCocoa" "v3.0-beta.9"
