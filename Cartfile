@@ -1,3 +1,0 @@
-github "Alamofire/Alamofire" ~> 2.0
-github "ReactiveCocoa/ReactiveCocoa" ~> 3.0
-git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-alpha.2"
