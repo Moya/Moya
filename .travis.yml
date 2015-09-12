@@ -10,8 +10,5 @@ cache:
   - bundler
   - cocoapods
 
-before_script:
-  - make setup
-
 script:
   - make ci

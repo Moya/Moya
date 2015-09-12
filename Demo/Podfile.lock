@@ -1,20 +1,32 @@
 PODS:
   - Alamofire (2.0.0)
   - Box (HEAD based on 1.2.2)
-  - Moya (2.0.0):
-    - Moya/Core (= 2.0.0)
-  - Moya/Core (2.0.0):
+  - Moya (2.1.0):
+    - Moya/Core (= 2.1.0)
+  - Moya/Core (2.1.0):
     - Alamofire
-  - Moya/ReactiveCocoa (2.0.0):
+  - Moya/ReactiveCocoa (2.1.0):
     - Moya/ReactiveCore
     - ReactiveCocoa
-  - Moya/ReactiveCore (2.0.0):
+  - Moya/ReactiveCore (2.1.0):
     - Moya/Core
-  - Moya/RxSwift (2.0.0):
+  - Moya/RxSwift (2.1.0):
     - Moya/ReactiveCore
     - RxSwift
   - Nimble (2.0.0-rc.3)
-  - OHHTTPStubs (4.1.0)
+  - OHHTTPStubs (4.2.0):
+    - OHHTTPStubs/Default (= 4.2.0)
+  - OHHTTPStubs/Core (4.2.0)
+  - OHHTTPStubs/Default (4.2.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (4.2.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (4.2.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (4.2.0)
   - Quick (0.6.0)
   - ReactiveCocoa (3.0-swift2):
     - Box
@@ -60,7 +72,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Nimble:
-    :commit: 8baefcc94bc2b58b7be3cd9ebfc3984ea5c8b87e
+    :commit: 91f3921fbfdae1b02def17b27267a13f4606ec03
     :git: https://github.com/Quick/Nimble
   Quick:
     :commit: ac5eadd202dd67741628f80fb96e8c57388d954d
@@ -72,9 +84,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 2f13548b29d25a58ecd91c9225fb51493e2b782b
   Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
-  Moya: bcedfe036d33a2bc3d4800df9e7d49752e4350b1
+  Moya: cf40dc2fef002d59b6745cac715d6016bc0428aa
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
-  OHHTTPStubs: f3473ab21dbf0815253ac96b977d5c36f1daad09
+  OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
   ReactiveCocoa: d99571cf654b8e6703f338ca13f486b999c51969
   Result: 6c990ec4a72470672f9fc5b6fef009da0f6f40d1

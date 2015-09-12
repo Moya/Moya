@@ -22,11 +22,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
         beforeEach { () -> () in
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil)
+                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil).responseTime(0.5)
             }
 
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
+                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil).responseTime(0.5)
             }
         }
 
@@ -71,13 +71,13 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     
                     it("returns an error when cancelled") {
                         var receivedError: ErrorType?
-                        
+
                         let target: GitHub = .UserProfile("ashfurrow")
                         let token = provider.request(target) { (data, statusCode, response, error) in
                             receivedError = error
                         }
                         token.cancel()
-                        
+
                         expect(receivedError).toEventuallyNot( beNil() )
                     }
                 }

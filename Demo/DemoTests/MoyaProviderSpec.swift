@@ -3,6 +3,7 @@ import Moya
 import Nimble
 import ReactiveCocoa
 import RxSwift
+import Alamofire
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -57,6 +58,17 @@ class MoyaProviderSpec: QuickSpec {
                         
                         expect(cancellable).toNot(beNil())
 
+                    }
+
+                    it("uses the Alamofire.Manager.sharedInstance by default") {
+                        expect(provider.manager).to(beIdenticalTo(Alamofire.Manager.sharedInstance))
+                    }
+
+                    it("accepts a custom Alamofire.Manager") {
+                        let manager = Manager()
+                        let provider = MoyaProvider<GitHub>(manager: manager)
+
+                        expect(provider.manager).to(beIdenticalTo(manager))
                     }
                 })
 
@@ -307,8 +319,8 @@ class MoyaProviderSpec: QuickSpec {
                     }
 
                     class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
-                        override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEnpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil) {
-                            super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure)
+                        override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+                            super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
                         }
 
                         override func request(token: T, completion: MoyaCompletion) -> Cancellable {
@@ -324,7 +336,6 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     it("cancels network request when subscription is cancelled") {
-                        var called = false
                         let target: GitHub = .Zen
 
                         let disposable = provider.request(target).subscribeCompleted { () -> Void in

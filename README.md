@@ -1,4 +1,4 @@
-![CI Status](http://img.shields.io/travis/Moya/Moya.svg?style=flat)](https://travis-ci.org/Moya/Moya)
+[![Circle CI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya)
 
 ![Moya Logo](web/moya_logo_github.png)
 
@@ -105,7 +105,7 @@ For more examples, see the [documentation](docs/).
 ReactiveCocoa Extensions
 ------------------------
 
-Even cooler are the ReactiveCocoa extensions. It immediately returns a  
+Even cooler are the ReactiveCocoa extensions. It immediately returns a
 `RACSignal` that you can subscribe to or bind or map or whatever you want to
 do. To handle errors, for instance, we could do the following:
 
