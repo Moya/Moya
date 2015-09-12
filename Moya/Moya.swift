@@ -141,7 +141,7 @@ public class MoyaProvider<T: MoyaTarget> {
         return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    @availability(*, unavailable, renamed="DefaultEndpointResolution", message="Use #DefaultEndpointResolution method instead")
+    @available(*, unavailable, renamed="DefaultEndpointResolution", message="Use #DefaultEndpointResolution method instead")
     public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
         return DefaultEndpointResolution(endpoint)
     }
