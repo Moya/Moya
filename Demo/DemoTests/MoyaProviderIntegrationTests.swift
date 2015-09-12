@@ -21,7 +21,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
         let userMessage = NSString(data: GitHub.UserProfile("ashfurrow").sampleData, encoding: NSUTF8StringEncoding)
         let zenMessage = NSString(data: GitHub.Zen.sampleData, encoding: NSUTF8StringEncoding)
 
-        beforeEach { () -> () in
+        beforeEach {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
                 return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil).responseTime(0.5)
             }
@@ -31,13 +31,13 @@ class MoyaProviderIntegrationTests: QuickSpec {
             }
         }
 
-        afterEach { () -> () in
+        afterEach {
             OHHTTPStubs.removeAllStubs()
         }
 
         describe("valid endpoints") {
             describe("with live data") {
-                describe("a provider") { () -> () in
+                describe("a provider") {
                     var provider: MoyaProvider<GitHub>!
                     beforeEach {
                         provider = MoyaProvider<GitHub>()
@@ -113,7 +113,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a reactive provider") { () -> () in
+                describe("a reactive provider") {
                     var provider: ReactiveCocoaMoyaProvider<GitHub>!
                     beforeEach {
                         provider = ReactiveCocoaMoyaProvider<GitHub>()
