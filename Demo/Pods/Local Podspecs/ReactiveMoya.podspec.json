@@ -9,6 +9,7 @@
     "tag": "2.1.0"
   },
   "source_files": [
+    "Moya/*.swift",
     "Moya/ReactiveCore/*.swift",
     "Moya/ReactiveCocoa/*.swift"
   ],
