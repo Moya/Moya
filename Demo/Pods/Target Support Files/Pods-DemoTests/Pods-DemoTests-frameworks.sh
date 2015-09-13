@@ -82,25 +82,11 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-DemoTests/Alamofire.framework"
-  install_framework "Pods-DemoTests/Moya.framework"
-  install_framework "Pods-DemoTests/ReactiveCocoa.framework"
-  install_framework "Pods-DemoTests/ReactiveMoya.framework"
-  install_framework "Pods-DemoTests/Result.framework"
-  install_framework "Pods-DemoTests/RxMoya.framework"
-  install_framework "Pods-DemoTests/RxSwift.framework"
   install_framework "Pods-DemoTests/Nimble.framework"
   install_framework "Pods-DemoTests/OHHTTPStubs.framework"
   install_framework "Pods-DemoTests/Quick.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-DemoTests/Alamofire.framework"
-  install_framework "Pods-DemoTests/Moya.framework"
-  install_framework "Pods-DemoTests/ReactiveCocoa.framework"
-  install_framework "Pods-DemoTests/ReactiveMoya.framework"
-  install_framework "Pods-DemoTests/Result.framework"
-  install_framework "Pods-DemoTests/RxMoya.framework"
-  install_framework "Pods-DemoTests/RxSwift.framework"
   install_framework "Pods-DemoTests/Nimble.framework"
   install_framework "Pods-DemoTests/OHHTTPStubs.framework"
   install_framework "Pods-DemoTests/Quick.framework"

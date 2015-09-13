@@ -82,20 +82,20 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods/Alamofire.framework"
-  install_framework "Pods/Moya.framework"
-  install_framework "Pods/ReactiveCocoa.framework"
-  install_framework "Pods/ReactiveMoya.framework"
-  install_framework "Pods/Result.framework"
-  install_framework "Pods/RxMoya.framework"
-  install_framework "Pods/RxSwift.framework"
+  install_framework "Pods-Demo/Alamofire.framework"
+  install_framework "Pods-Demo/Moya.framework"
+  install_framework "Pods-Demo/ReactiveCocoa.framework"
+  install_framework "Pods-Demo/ReactiveMoya.framework"
+  install_framework "Pods-Demo/Result.framework"
+  install_framework "Pods-Demo/RxMoya.framework"
+  install_framework "Pods-Demo/RxSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods/Alamofire.framework"
-  install_framework "Pods/Moya.framework"
-  install_framework "Pods/ReactiveCocoa.framework"
-  install_framework "Pods/ReactiveMoya.framework"
-  install_framework "Pods/Result.framework"
-  install_framework "Pods/RxMoya.framework"
-  install_framework "Pods/RxSwift.framework"
+  install_framework "Pods-Demo/Alamofire.framework"
+  install_framework "Pods-Demo/Moya.framework"
+  install_framework "Pods-Demo/ReactiveCocoa.framework"
+  install_framework "Pods-Demo/ReactiveMoya.framework"
+  install_framework "Pods-Demo/Result.framework"
+  install_framework "Pods-Demo/RxMoya.framework"
+  install_framework "Pods-Demo/RxSwift.framework"
 fi
