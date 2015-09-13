@@ -31,9 +31,11 @@ PODS:
     - ReactiveCocoa/Core
     - Result
   - ReactiveMoya (2.1.0):
+    - Moya
     - ReactiveCocoa
   - Result (HEAD based on 0.6-beta.1)
   - RxMoya (2.1.0):
+    - Moya
     - RxSwift
   - RxSwift (2.0.0-alpha.3)
 
@@ -81,9 +83,9 @@ SPEC CHECKSUMS:
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
   ReactiveCocoa: 0ed8c7c91c84652437e38d5bd4e54ac1523d06a5
-  ReactiveMoya: ec39e38e5356d8cfff7ef1cea7f3da1f73b91975
+  ReactiveMoya: 6d025949390528a2b8774a51b71678a00a0d623a
   Result: 6c990ec4a72470672f9fc5b6fef009da0f6f40d1
-  RxMoya: bc568b1198a9f30a78a05446b44d967dce64f608
+  RxMoya: b21a310cb2576646abd478e03e11cb9999ce6d0a
   RxSwift: c66f7956b2e5fb397a62bf4a3ec6072749a816a7
 
 COCOAPODS: 0.39.0.beta.4
