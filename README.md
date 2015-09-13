@@ -46,11 +46,11 @@ There's a sample project in the Demo directory. Go nuts!
 Project Status
 --------------
 
-This project has hit a 1.0 release, and we're using it in [Artsy's
+This project is actively under development, and is being used in [Artsy's
 new auction app](https://github.com/Artsy/eidolon). We consider it
 ready for production use.
 
-Currently, we support Xcode 6.3.1 and Swift 1.2.
+Currently, we support Xcode 7 and Swift 2.
 
 Installation
 ------------
@@ -64,9 +64,7 @@ For ReactiveCocoa extensions, this project has some dependencies. Add the follow
 lines to your Podfile:
 
 ```rb
-pod 'Moya'
-
-# Include the following only if you want to use ReactiveCocoa extensions with Moya
+pod 'Result', :head
 pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
 pod 'Moya/Reactive'
 ```
