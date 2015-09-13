@@ -9,7 +9,6 @@
 import Foundation
 
 class Subscription<Element> : Disposable {
-    typealias ObserverType = Observer<Element>
     typealias KeyType = Bag<ObserverOf<Element>>.KeyType
     
     private var lock = SpinLock()
@@ -51,7 +50,7 @@ public class PublishSubject<Element> : Observable<Element>, SubjectType, Cancela
     
     typealias DisposeKey = Bag<ObserverOf<Element>>.KeyType
     
-    private var lock = NSRecursiveLock()
+    private let lock = NSRecursiveLock()
     
     // state
     var _disposed = false

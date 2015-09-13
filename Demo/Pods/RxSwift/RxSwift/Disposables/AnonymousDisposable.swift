@@ -16,17 +16,15 @@ When dispose method is called, disposal action will be dereferenced.
 public final class AnonymousDisposable : DisposeBase, Cancelable {
     public typealias DisposeAction = () -> Void
     
-    var lock = SpinLock()
-    var disposeAction: DisposeAction?
+    private var _disposed: Int32 = 0
+    private var disposeAction: DisposeAction?
     
     /**
     - returns: Was resource disposed.
     */
     public var disposed: Bool {
         get {
-            return lock.calculateLocked {
-                return self.disposeAction == nil
-            }
+            return _disposed == 1
         }
     }
     
@@ -46,14 +44,10 @@ public final class AnonymousDisposable : DisposeBase, Cancelable {
     After invoking disposal action, disposal action will be dereferenced.
     */
     public func dispose() {
-        let toDispose: DisposeAction? = lock.calculateLocked {
-            let action = self.disposeAction
+        if OSAtomicCompareAndSwap32(0, 1, &_disposed) {
+            let action = self.disposeAction!
             self.disposeAction = nil
-            return action
-        }
-        
-        if let toDispose = toDispose {
-            toDispose()
+            action()
         }
     }
 }

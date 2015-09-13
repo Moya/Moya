@@ -26,7 +26,7 @@
       "source_files": "Moya/*.swift",
       "dependencies": {
         "Alamofire": [
-
+          "~> 2.0"
         ]
       },
       "frameworks": "Foundation"

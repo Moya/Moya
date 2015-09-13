@@ -114,3 +114,48 @@ public func deferred<E>(observableFactory: () throws -> Observable<E>)
     -> Observable<E> {
     return Deferred(observableFactory: observableFactory)
 }
+
+/**
+Generates an observable sequence by running a state-driven loop producing the sequence's elements, using the specified scheduler 
+to run the loop send out observer messages.
+
+- parameter initialState: Initial state.
+- parameter condition: Condition to terminate generation (upon returning `false`).
+- parameter iterate: Iteration step function.
+- parameter scheduler: Scheduler on which to run the generator loop.
+- returns: The generated sequence.
+*/
+public func generate<E>(initialState: E, condition: E throws -> Bool, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance, iterate: E throws -> E) -> Observable<E> {
+    return Generate(initialState: initialState, condition: condition, iterate: iterate, resultSelector: { $0 }, scheduler: scheduler)
+}
+
+/**
+Generates an observable sequence of integral numbers within a specified range, using the specified scheduler to generate and send out observer messages.
+
+- parameter start: The value of the first integer in the sequence.
+- parameter count: The number of sequential integers to generate.
+- parameter scheduler: Scheduler to run the generator loop on.
+- returns: An observable sequence that contains a range of sequential integral numbers.
+*/
+public func range(start: Int, _ count: Int, _ scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<Int> {
+    if count < 0 {
+        rxFatalError("count can't be negative")
+    }
+
+    if start &+ (count - 1) < start {
+        rxFatalError("overflow of count")
+    }
+    
+    return RangeProducer<Int>(start: start, count: count, scheduler: scheduler)
+}
+
+/**
+Generates an observable sequence that repeats the given element infinitely, using the specified scheduler to send out observer messages.
+
+- parameter element: Element to repeat.
+- parameter scheduler: Scheduler to run the producer loop on.
+- returns: An observable sequence that repeats the given element infinitely.
+*/
+public func repeatElement<E>(element: E, _ scheduler: ImmediateSchedulerType) -> Observable<E> {
+    return RepeatElement(element: element, scheduler: scheduler)
+}

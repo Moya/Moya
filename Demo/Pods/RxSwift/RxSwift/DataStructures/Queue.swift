@@ -42,7 +42,12 @@ public struct Queue<T>: SequenceType {
         _count = 0
         pushNextIndex = 0
      
-        storage = [T?](count: capacity, repeatedValue: nil)
+        if capacity > 0 {
+            storage = [T?](count: capacity, repeatedValue: nil)
+        }
+        else {
+            storage = []
+        }
     }
     
     private var dequeueIndex: Int {
@@ -108,9 +113,8 @@ public struct Queue<T>: SequenceType {
     public mutating func enqueue(element: T) {
         version++
         
-        _ = count == storage.count
         if count == storage.count {
-            resizeTo(storage.count * resizeFactor)
+            resizeTo(max(storage.count, 1) * resizeFactor)
         }
         
         storage[pushNextIndex] = element
@@ -135,6 +139,19 @@ public struct Queue<T>: SequenceType {
         _count = _count - 1
         
         return value
+    }
+    
+    /**
+    Dequeues element and returns it, or returns `nil` in case queue is empty.
+    
+    - returns: Dequeued element.
+    */
+    public mutating func tryDequeue() -> T? {
+        if self.count == 0 {
+            return nil
+        }
+        
+        return dequeue()
     }
     
     /**

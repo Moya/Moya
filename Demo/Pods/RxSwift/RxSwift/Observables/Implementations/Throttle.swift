@@ -8,13 +8,14 @@
 
 import Foundation
 
-class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, ObserverType {
+class ThrottleSink<O: ObserverType, Scheduler: SchedulerType> : Sink<O>, ObserverType {
     typealias Element = O.E
-    typealias ParentType = Throttle<Element, SchedulerType>
+    typealias ParentType = Throttle<Element, Scheduler>
     
     let parent: ParentType
     
-    var lock = NSRecursiveLock()
+    let lock = NSRecursiveLock()
+    
     // state
     var id = 0 as UInt64
     var value: Element? = nil
@@ -101,13 +102,13 @@ class ThrottleSink<O: ObserverType, SchedulerType: Scheduler> : Sink<O>, Observe
     }
 }
 
-class Throttle<Element, SchedulerType: Scheduler> : Producer<Element> {
+class Throttle<Element, Scheduler: SchedulerType> : Producer<Element> {
     
     let source: Observable<Element>
-    let dueTime: SchedulerType.TimeInterval
-    let scheduler: SchedulerType
+    let dueTime: Scheduler.TimeInterval
+    let scheduler: Scheduler
     
-    init(source: Observable<Element>, dueTime: SchedulerType.TimeInterval, scheduler: SchedulerType) {
+    init(source: Observable<Element>, dueTime: Scheduler.TimeInterval, scheduler: Scheduler) {
         self.source = source
         self.dueTime = dueTime
         self.scheduler = scheduler

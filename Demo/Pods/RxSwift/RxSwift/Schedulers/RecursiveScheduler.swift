@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecursiveScheduler<State, S: Scheduler>: RecursiveSchedulerOf<State, S.TimeInterval> {
+class RecursiveScheduler<State, S: SchedulerType>: RecursiveSchedulerOf<State, S.TimeInterval> {
     let scheduler: S
     
     init(scheduler: S, action: Action) {
@@ -32,6 +32,8 @@ public class RecursiveSchedulerOf<State, TimeInterval> {
     typealias Action =  (state: State, scheduler: RecursiveSchedulerOf<State, TimeInterval>) -> Void
 
     let lock = NSRecursiveLock()
+    
+    // state
     let group = CompositeDisposable()
     
     var action: Action?
@@ -155,9 +157,9 @@ public class RecursiveImmediateSchedulerOf<State> {
     let group = CompositeDisposable()
     
     var action: Action?
-    let scheduler: ImmediateScheduler
+    let scheduler: ImmediateSchedulerType
     
-    init(action: Action, scheduler: ImmediateScheduler) {
+    init(action: Action, scheduler: ImmediateSchedulerType) {
         self.action = action
         self.scheduler = scheduler
     }

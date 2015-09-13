@@ -12,26 +12,19 @@ import Foundation
 Represents a disposable resource whose disposal invocation will be scheduled on the specified scheduler.
 */
 public class ScheduledDisposable : Cancelable {
-    public let scheduler: ImmediateScheduler
-    var _disposable: Disposable?
-    var lock = SpinLock()
-
-    var disposable: Disposable {
-        get {
-            return lock.calculateLocked {
-                _disposable ?? NopDisposable.instance
-            }
-        }
-    }
+    public let scheduler: ImmediateSchedulerType
     
+    private var _disposed: Int32 = 0
+    
+    // state
+    private var _disposable: Disposable?
+
     /**
     - returns: Was resource disposed.
     */
     public var disposed: Bool {
         get {
-            return lock.calculateLocked {
-                return _disposable == nil
-            }
+            return _disposed == 1
         }
     }
     
@@ -41,7 +34,7 @@ public class ScheduledDisposable : Cancelable {
     - parameter scheduler: Scheduler where the disposable resource will be disposed on.
     - parameter disposable: Disposable resource to dispose on the given scheduler.
     */
-    init(scheduler: ImmediateScheduler, disposable: Disposable) {
+    init(scheduler: ImmediateSchedulerType, disposable: Disposable) {
         self.scheduler = scheduler
         self._disposable = disposable
     }
@@ -57,11 +50,9 @@ public class ScheduledDisposable : Cancelable {
     }
     
     func disposeInner() {
-        lock.performLocked {
-            if let disposable = _disposable {
-                disposable.dispose()
-                _disposable = nil
-            }
+        if OSAtomicCompareAndSwap32(0, 1, &_disposed) {
+            _disposable!.dispose()
+            _disposable = nil
         }
     }
 }
