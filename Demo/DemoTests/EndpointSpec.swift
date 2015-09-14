@@ -22,10 +22,10 @@ public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool
 
 class EndpointSpec: QuickSpec {
     override func spec() {
-        describe("an endpoint") { () -> () in
+        describe("an endpoint") {
             var endpoint: Endpoint<GitHub>!
             
-            beforeEach { () -> () in
+            beforeEach {
                 let target: GitHub = .Zen
                 let parameters = ["Nemesis": "Harvey"]
                 let headerFields = ["Title": "Dominar"]

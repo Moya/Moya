@@ -1,0 +1,76 @@
+{
+  "name": "ReactiveCocoa",
+  "version": "3.0-swift2",
+  "summary": "A framework for composing and transforming streams of values",
+  "description": "ReactiveCocoa (RAC) is an Objective-C framework for Functional Reactive Programming. It provides APIs for composing and transforming streams of values.\n",
+  "homepage": "https://github.com/ReactiveCocoa/ReactiveCocoa",
+  "license": "MIT",
+  "authors": {
+    "Josh Abernathy": "josh@github.com"
+  },
+  "platforms": {
+    "ios": "8.0",
+    "osx": "10.10"
+  },
+  "source": {
+    "git": "https://github.com/ashfurrow/ReactiveCocoa.git",
+    "branch": "swift2"
+  },
+  "default_subspecs": "UI",
+  "dependencies": {
+    "Result": [
+
+    ]
+  },
+  "subspecs": [
+    {
+      "name": "no-arc",
+      "source_files": "ReactiveCocoa/Objective-C/RACObjCRuntime.{h,m}",
+      "requires_arc": false,
+      "frameworks": "Foundation"
+    },
+    {
+      "name": "Core",
+      "source_files": "ReactiveCocoa/**/*.{d,h,m,swift}",
+      "exclude_files": [
+        "**/ReactiveCocoa.h",
+        "ReactiveCocoa/**/*{RACObjCRuntime,AppKit,NSControl,NSText,NSTable,UIActionSheet,UIAlertView,UIBarButtonItem,UIButton,UICollectionReusableView,UIControl,UIDatePicker,UIGestureRecognizer,UIImagePicker,UIRefreshControl,UISegmentedControl,UISlider,UIStepper,UISwitch,UITableViewCell,UITableViewHeaderFooterView,UIText,MK}*"
+      ],
+      "header_dir": "ReactiveCocoa",
+      "private_header_files": [
+        "**/*Private.h",
+        "**/*EXTRuntimeExtensions.h",
+        "**/RACEmpty*.h"
+      ],
+      "frameworks": "Foundation",
+      "dependencies": {
+        "ReactiveCocoa/no-arc": [
+
+        ]
+      }
+    },
+    {
+      "name": "UI",
+      "dependencies": {
+        "ReactiveCocoa/Core": [
+
+        ]
+      },
+      "frameworks": "Foundation",
+      "ios": {
+        "source_files": [
+          "**/ReactiveCocoa.h",
+          "ReactiveCocoa/**/*{UIActionSheet,UIAlertView,UIBarButtonItem,UIButton,UICollectionReusableView,UIControl,UIDatePicker,UIGestureRecognizer,UIImagePicker,UIRefreshControl,UISegmentedControl,UISlider,UIStepper,UISwitch,UITableViewCell,UITableViewHeaderFooterView,UIText,MK}*"
+        ],
+        "frameworks": "UIKit"
+      },
+      "osx": {
+        "source_files": [
+          "**/ReactiveCocoa.h",
+          "ReactiveCocoa/**/*{AppKit,NSControl,NSText,NSTable}*"
+        ],
+        "frameworks": "AppKit"
+      }
+    }
+  ]
+}

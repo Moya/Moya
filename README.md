@@ -46,11 +46,11 @@ There's a sample project in the Demo directory. Go nuts!
 Project Status
 --------------
 
-This project has hit a 1.0 release, and we're using it in [Artsy's
+This project is actively under development, and is being used in [Artsy's
 new auction app](https://github.com/Artsy/eidolon). We consider it
 ready for production use.
 
-Currently, we support Xcode 6.3.1 and Swift 1.2.
+Currently, we support Xcode 7 and Swift 2.
 
 Installation
 ------------
@@ -60,18 +60,32 @@ Just add `pod 'Moya'` to your Podfile and go!
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For reactive extensions, this project has some dependencies. Add the following
+For ReactiveCocoa extensions, this project has some dependencies. Add the following
 lines to your Podfile:
 
 ```rb
-pod 'Moya'
-
-# Include the following only if you want to use ReactiveCocoa extensions with Moya
-pod 'ReactiveCocoa', '3.0-beta.6'
+pod 'Result', :head
+pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
 pod 'Moya/Reactive'
 ```
 
 Then run `pod install`.
+
+For RxSwift extensions, use the following Podfile.
+
+```rb
+pod 'RxSwift', '~> 2.0.0-alpha'
+pod 'RxMoya'
+```
+
+----------------
+
+Carthage users can point to this repository and use whichever 
+generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
+
+```
+github "Moya/Moya"
+```
 
 Use
 ---

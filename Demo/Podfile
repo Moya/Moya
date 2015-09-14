@@ -4,17 +4,19 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-# Swift indirect dependencies we need to force to Swift 2
-pod 'Box', :head
-pod 'Result', :head
+target 'Demo' do
 
-pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
-pod 'RxSwift', '~> 2.0.0-alpha'
-pod 'Alamofire'
+  # Swift indirect dependencies we need to force to Swift 2
+  pod 'Result', :head
+  pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
+  pod 'RxSwift', '~> 2.0.0-alpha'
 
-pod 'Moya/ReactiveCocoa', :path => "../"
-pod 'Moya/RxSwift', :path => "../"
-pod 'Moya', :path => "../"
+  # Our libraries
+  pod 'RxMoya', :path => "../"
+  pod 'ReactiveMoya', :path => "../"
+  pod 'Moya', :path => "../"
+
+end
 
 target 'DemoTests' do
 

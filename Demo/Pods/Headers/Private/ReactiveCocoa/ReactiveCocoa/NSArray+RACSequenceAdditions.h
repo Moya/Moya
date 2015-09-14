@@ -1,0 +1,1 @@
+../../../../ReactiveCocoa/ReactiveCocoa/Objective-C/NSArray+RACSequenceAdditions.h
