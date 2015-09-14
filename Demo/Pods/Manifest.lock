@@ -19,24 +19,24 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.2.0)
   - Quick (0.6.0)
-  - ReactiveCocoa (3.0-swift2):
-    - ReactiveCocoa/UI (= 3.0-swift2)
-    - Result
-  - ReactiveCocoa/Core (3.0-swift2):
+  - ReactiveCocoa (3.0.0-swift2):
+    - ReactiveCocoa/UI (= 3.0.0-swift2)
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/Core (3.0.0-swift2):
     - ReactiveCocoa/no-arc
-    - Result
-  - ReactiveCocoa/no-arc (3.0-swift2):
-    - Result
-  - ReactiveCocoa/UI (3.0-swift2):
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/no-arc (3.0.0-swift2):
+    - Result (~> 0.6-beta.1)
+  - ReactiveCocoa/UI (3.0.0-swift2):
     - ReactiveCocoa/Core
-    - Result
+    - Result (~> 0.6-beta.1)
   - ReactiveMoya (2.2.0):
     - Moya
-    - ReactiveCocoa
-  - Result (HEAD based on 0.6-beta.1)
+    - ReactiveCocoa (= 3.0.0-swift2)
+  - Result (0.6-beta.1)
   - RxMoya (2.2.0):
     - Moya
-    - RxSwift
+    - RxSwift (~> 2.0.0-alpha)
   - RxSwift (2.0.0-alpha.3)
 
 DEPENDENCIES:
@@ -44,11 +44,8 @@ DEPENDENCIES:
   - Nimble (from `https://github.com/Quick/Nimble`)
   - OHHTTPStubs
   - Quick (from `https://github.com/Quick/Quick`)
-  - ReactiveCocoa (from `https://github.com/ashfurrow/ReactiveCocoa.git`, branch `swift2`)
   - ReactiveMoya (from `../`)
-  - Result (HEAD)
   - RxMoya (from `../`)
-  - RxSwift (~> 2.0.0-alpha)
 
 EXTERNAL SOURCES:
   Moya:
@@ -57,9 +54,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/Quick/Nimble
   Quick:
     :git: https://github.com/Quick/Quick
-  ReactiveCocoa:
-    :branch: swift2
-    :git: https://github.com/ashfurrow/ReactiveCocoa.git
   ReactiveMoya:
     :path: "../"
   RxMoya:
@@ -72,20 +66,17 @@ CHECKOUT OPTIONS:
   Quick:
     :commit: ac5eadd202dd67741628f80fb96e8c57388d954d
     :git: https://github.com/Quick/Quick
-  ReactiveCocoa:
-    :commit: fadc75cbeecd18867fa1c3e9a442b1363246d105
-    :git: https://github.com/ashfurrow/ReactiveCocoa.git
 
 SPEC CHECKSUMS:
   Alamofire: 2f13548b29d25a58ecd91c9225fb51493e2b782b
-  Moya: fa01dc278e289a1a740ef461e8884ae537ba3bba
+  Moya: ab101dac67b81b1752a6354ccfd20b07db6c459d
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
-  ReactiveCocoa: 0ed8c7c91c84652437e38d5bd4e54ac1523d06a5
-  ReactiveMoya: b87448117725931159bdbcfbe9c7e14cda907154
+  ReactiveCocoa: b17191e37a655ff35d095040a203ecd9dd04e8bd
+  ReactiveMoya: d8f5bb134adad3c74248f83d24c418e06435da23
   Result: 6c990ec4a72470672f9fc5b6fef009da0f6f40d1
-  RxMoya: 8dad736b6b04069338bcf0935d33259535f3efbe
+  RxMoya: fd1597625f16d41eae4e8e2ac81c160f7e1da502
   RxSwift: c66f7956b2e5fb397a62bf4a3ec6072749a816a7
 
 COCOAPODS: 0.39.0.beta.4
