@@ -1,5 +1,7 @@
 # Next
 
+# 2.2.1
+
 - Adds Moya files as members of RxMoya and ReactiveMoya frameworks.
 
 # 2.2.0
