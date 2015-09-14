@@ -64,9 +64,7 @@ For ReactiveCocoa extensions, this project has some dependencies. Add the follow
 lines to your Podfile:
 
 ```rb
-pod 'Result', :head
-pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
-pod 'Moya/Reactive'
+pod 'Moya/ReactiveCocoa'
 ```
 
 Then run `pod install`.
@@ -74,14 +72,16 @@ Then run `pod install`.
 For RxSwift extensions, use the following Podfile.
 
 ```rb
-pod 'RxSwift', '~> 2.0.0-alpha'
-pod 'RxMoya'
+pod 'Moya/RxSwift'
 ```
 
 ----------------
 
-Carthage users can point to this repository and use whichever 
+Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
+The full Moya framework is bundled in each of those frameworks;
+importing more than one framework in a single file will result in 
+ambiguous lookups at compile time.
 
 ```
 github "Moya/Moya"
