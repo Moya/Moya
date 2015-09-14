@@ -1,12 +1,12 @@
 {
   "name": "RxMoya",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "platforms": {
     "ios": "8.0"
   },
   "source": {
     "git": "https://github.com/Moya/Moya.git",
-    "tag": "2.1.0"
+    "tag": "2.2.0"
   },
   "source_files": [
     "Moya/ReactiveCore/*.swift",

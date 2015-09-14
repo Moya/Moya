@@ -1,5 +1,7 @@
 # Next
 
+# 2.2.0
+
 - Add backward-compatible call from `DefaultEnpointResolution` to `DefaultEndpointResolution` on `MoyaProvider` class. `DefaultEndpointResolution` is now used internally as the default resolver. `DefaultEnpointResolution` can be removed in a future major release.
 - Carthage support.
 
