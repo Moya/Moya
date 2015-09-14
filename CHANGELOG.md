@@ -1,5 +1,9 @@
 # Next
 
+# 2.2.2
+
+- Adds convenience `endpointByAddingParameterEncoding` method.
+
 # 2.2.1
 
 - Adds Moya files as members of RxMoya and ReactiveMoya frameworks.
