@@ -6,11 +6,6 @@ use_frameworks!
 
 target 'Demo' do
 
-  # Swift indirect dependencies we need to force to Swift 2
-  pod 'Result', :head
-  pod 'ReactiveCocoa', :git => 'https://github.com/ashfurrow/ReactiveCocoa.git', :branch => 'swift2'
-  pod 'RxSwift', '~> 2.0.0-alpha'
-
   # Our libraries
   pod 'RxMoya', :path => "../"
   pod 'ReactiveMoya', :path => "../"

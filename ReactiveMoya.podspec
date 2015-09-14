@@ -4,7 +4,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
 
-  s.source_files = ["Moya/ReactiveCore/*.swift", "Moya/ReactiveCocoa/*.swift"]
-  s.dependency "Moya"
-  s.dependency "ReactiveCocoa"
+  s.source_files = ["Moya/*swift", "Moya/ReactiveCore/*.swift", "Moya/ReactiveCocoa/*.swift"]
+  s.dependency "ReactiveCocoa", "3.0.0-swift2"
 end

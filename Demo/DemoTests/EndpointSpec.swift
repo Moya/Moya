@@ -75,3 +75,45 @@ class EndpointSpec: QuickSpec {
         }
     }
 }
+
+private extension String {
+    var URLEscapedString: String {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    }
+}
+
+private enum GitHub {
+    case Zen
+    case UserProfile(String)
+}
+
+extension GitHub : MoyaTarget {
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    var path: String {
+        switch self {
+        case .Zen:
+            return "/zen"
+        case .UserProfile(let name):
+            return "/users/\(name.URLEscapedString)"
+        }
+    }
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject] {
+        return [:]
+    }
+    var sampleData: NSData {
+        switch self {
+        case .Zen:
+            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .UserProfile(let name):
+            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
+}
+
+private func url(route: MoyaTarget) -> String {
+    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+}
+

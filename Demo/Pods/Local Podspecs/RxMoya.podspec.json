@@ -9,15 +9,13 @@
     "tag": "2.2.0"
   },
   "source_files": [
+    "Moya/*swift",
     "Moya/ReactiveCore/*.swift",
     "Moya/RxSwift/*.swift"
   ],
   "dependencies": {
-    "Moya": [
-
-    ],
     "RxSwift": [
-
+      "~> 2.0.0-alpha"
     ]
   }
 }

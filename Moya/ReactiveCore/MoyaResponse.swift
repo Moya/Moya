@@ -1,5 +1,4 @@
 import Foundation
-import Moya
 
 public class MoyaResponse: NSObject, CustomDebugStringConvertible {
     public let statusCode: Int
