@@ -63,6 +63,20 @@ class EndpointSpec: QuickSpec {
                 expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
                 expect(newEndpoint.parameterEncoding).to(equal(endpoint.parameterEncoding))
             }
+
+            it ("returns a new endpoint for endpointByAddingParameterEncoding") {
+                let parameterEncoding = Moya.ParameterEncoding.JSON
+                let newEndpoint = endpoint.endpointByAddingParameterEncoding(parameterEncoding)
+
+                // Make sure we updated the parameter encoding
+                expect(newEndpoint.parameterEncoding).to(equal(parameterEncoding))
+
+                // Compare other properties to ensure they've been copied correctly
+                expect(newEndpoint.URL).to(equal(endpoint.URL))
+                expect(newEndpoint.method).to(equal(endpoint.method))
+                expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
+                expect(newEndpoint.httpHeaderFields.count).to(equal(endpoint.httpHeaderFields.count))
+            }
             
             it("returns a correct URL request") {
                 let request = endpoint.urlRequest
