@@ -2,6 +2,8 @@
 
 # 2.2.2
 
+# 2.2.2
+
 - Adds convenience `endpointByAddingParameterEncoding` method.
 
 # 2.2.1
