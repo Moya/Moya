@@ -55,6 +55,12 @@ public class Endpoint<T> {
 
         return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
+    
+    /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
+    public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<T> {
+        
+        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
+    }
 }
 
 /// Extension for converting an Endpoint into an NSURLRequest.
