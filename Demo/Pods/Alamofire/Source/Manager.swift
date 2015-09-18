@@ -645,5 +645,24 @@ public class Manager {
         var _streamTaskWriteClosed: Any?
         var _streamTaskBetterRouteDiscovered: Any?
         var _streamTaskDidBecomeInputStream: Any?
+
+        // MARK: - NSObject
+
+        public override func respondsToSelector(selector: Selector) -> Bool {
+            switch selector {
+            case "URLSession:didBecomeInvalidWithError:":
+                return sessionDidBecomeInvalidWithError != nil
+            case "URLSession:didReceiveChallenge:completionHandler:":
+                return sessionDidReceiveChallenge != nil
+            case "URLSessionDidFinishEventsForBackgroundURLSession:":
+                return sessionDidFinishEventsForBackgroundURLSession != nil
+            case "URLSession:task:willPerformHTTPRedirection:newRequest:completionHandler:":
+                return taskWillPerformHTTPRedirection != nil
+            case "URLSession:dataTask:didReceiveResponse:completionHandler:":
+                return dataTaskDidReceiveResponse != nil
+            default:
+                return self.dynamicType.instancesRespondToSelector(selector)
+            }
+        }
     }
 }

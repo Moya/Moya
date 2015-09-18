@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "ReactiveCocoa": [
-      "3.0.0-swift2"
+      "~> 4.0-alpha.1"
     ]
   }
 }
