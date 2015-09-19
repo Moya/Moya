@@ -7,13 +7,13 @@ extension SignalProducerType where T: MoyaResponse, E == NSError {
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filterStatusCodes(range: ClosedInterval<Int>) -> SignalProducer<T, E> {
         return producer.flatMap(.Latest) { response in
-            return SignalProducer<T, E> { sink, disposable in
-                if range.contains(response.statusCode) {
-                    sendNext(sink, response)
-                    sendCompleted(sink)
-                } else {
+            SignalProducer { sink, _ in
+                guard range.contains(response.statusCode) else {
                     sendError(sink, NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StatusCode.rawValue, userInfo: ["data": response]))
+                    return
                 }
+                sendNext(sink, response)
+                sendCompleted(sink)
             }
         }
     }
@@ -32,8 +32,8 @@ extension SignalProducerType where T: MoyaResponse, E == NSError {
     
     /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
     public func mapImage() -> SignalProducer<UIImage, E> {
-        return producer.flatMap(.Latest, transform: { response in
-            return SignalProducer<UIImage, E> { sink, disposable in
+        return producer.flatMap(.Latest) { response in
+            SignalProducer { sink, _ in
                 guard let image = UIImage(data: response.data) else {
                     sendError(sink, NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.rawValue, userInfo: ["data": response]))
                     return
@@ -41,16 +41,15 @@ extension SignalProducerType where T: MoyaResponse, E == NSError {
                 sendNext(sink, image)
                 sendCompleted(sink)
             }
-        })
+        }
     }
     
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
     public func mapJSON() -> SignalProducer<AnyObject, E> {
         return producer.flatMap(.Latest) { response in
-            return SignalProducer<AnyObject, E> { sink, disposable in
+            SignalProducer { sink, _ in
                 do {
-                    let jsonObject = try NSJSONSerialization.JSONObjectWithData(response.data, options: NSJSONReadingOptions.AllowFragments)
-                    sendNext(sink, jsonObject)
+                    sendNext(sink, try NSJSONSerialization.JSONObjectWithData(response.data, options: .AllowFragments))
                     sendCompleted(sink)
                 } catch {
                     sendError(sink, error as NSError)
@@ -62,12 +61,12 @@ extension SignalProducerType where T: MoyaResponse, E == NSError {
     /// Maps data received from the signal into a String. If the conversion fails, the signal errors.
     public func mapString() -> SignalProducer<String, E> {
         return producer.flatMap(.Latest) { response in
-            return SignalProducer<String, E> { sink, disposable in
-                guard let string = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String else {
+            SignalProducer { sink, _ in
+                guard let string = NSString(data: response.data, encoding: NSUTF8StringEncoding) else {
                     sendError(sink, NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StringMapping.rawValue, userInfo: ["data": response]))
                     return
                 }
-                sendNext(sink, string)
+                sendNext(sink, string as String)
                 sendCompleted(sink)
             }
         }
