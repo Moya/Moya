@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0649AB6B1BAE131A00DB0C77 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0649AB6A1BAE131A00DB0C77 /* Observable+MoyaSpec.swift */; settings = {ASSET_TAGS = (); }; };
 		54080C1FB2F773BE61D4944E /* Pods_DemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97BC4C2770696BC2300D71D6 /* Pods_DemoTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5E70E8C31A1BB32400F00C49 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BD1A1BB32400F00C49 /* EndpointSpec.swift */; };
 		5E70E8C51A1BB32400F00C49 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BF1A1BB32400F00C49 /* MoyaProviderSpec.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0649AB6A1BAE131A00DB0C77 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
 		3CD4AE4F5363436C904237B7 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		487360B8D68DE97717CCAC7B /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		5E70E8BD1A1BB32400F00C49 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				5EBA229D1BA4AF18000622AB /* ReactiveCocoaMoyaProviderTests.swift */,
 				5EBA229F1BA4AF69000622AB /* RxSwiftMoyaProviderTests.swift */,
 				5E70E8C01A1BB32400F00C49 /* RACSignal+MoyaSpec.swift */,
+				0649AB6A1BAE131A00DB0C77 /* Observable+MoyaSpec.swift */,
 				5E70E8C11A1BB32400F00C49 /* testImage.png */,
 				5EC197FB1A1BB16D00F4DFD4 /* Supporting Files */,
 			);
@@ -388,6 +391,7 @@
 				5E70E8C51A1BB32400F00C49 /* MoyaProviderSpec.swift in Sources */,
 				5EBA22A01BA4AF69000622AB /* RxSwiftMoyaProviderTests.swift in Sources */,
 				5E70E8C31A1BB32400F00C49 /* EndpointSpec.swift in Sources */,
+				0649AB6B1BAE131A00DB0C77 /* Observable+MoyaSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

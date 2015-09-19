@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (2.0.0)
+  - Alamofire (2.0.1)
   - Moya (2.2.2):
     - Moya/Core (= 2.2.2)
   - Moya/Core (2.2.2):
@@ -66,7 +66,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Quick/Quick
 
 SPEC CHECKSUMS:
-  Alamofire: 2f13548b29d25a58ecd91c9225fb51493e2b782b
+  Alamofire: 1d8e208d616fbbfd2391b15eae766d07c96cdc49
   Moya: 9a98841c81a45c3cc9059cec26920122c1035839
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
