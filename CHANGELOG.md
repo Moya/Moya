@@ -1,5 +1,7 @@
 # Next
 
+- Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
+
 # 2.2.2
 
 # 2.2.2
