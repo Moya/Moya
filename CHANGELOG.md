@@ -1,5 +1,7 @@
 # Next
 
+- Adds data processing functions for use with `RxMoyaProvider`
+
 # 2.2.2
 
 # 2.2.2
