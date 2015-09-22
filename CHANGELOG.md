@@ -1,5 +1,7 @@
 # Next
 
+- Corrects problem with ignoring the specified Alamofire manager
+
 # 2.4.0
 
 - Adds HTTP basic auth support.

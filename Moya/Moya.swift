@@ -174,6 +174,7 @@ private extension MoyaProvider {
 
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
+
         var request = manager.request(request)
         
         if let cred = credential {
@@ -181,6 +182,7 @@ private extension MoyaProvider {
         }
         
         request.response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+
                 networkActivityCallback?(change: .Ended)
 
                 // Alamofire always sends the data param as an NSData? type, but we'll
