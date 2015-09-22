@@ -64,8 +64,8 @@ public class Moya {
         }
     }
 
-    public enum StubbedBehavior {
-        case NoStubbing
+    public enum StubBehavior {
+        case Never
         case Immediate
         case Delayed(seconds: NSTimeInterval)
     }
@@ -100,16 +100,16 @@ public class MoyaProvider<T: MoyaTarget> {
     public typealias MoyaEndpointsClosure = (T) -> (Endpoint<T>)
     /// Closure that resolves an Endpoint into an NSURLRequest.
     public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
-    public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
+    public typealias StubClosure = (T -> Moya.StubBehavior)
 
     public let endpointClosure: MoyaEndpointsClosure
     public let endpointResolver: MoyaEndpointResolution
-    public let stubBehavior: MoyaStubbedBehavior
+    public let stubBehavior: StubClosure
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     public let manager: Manager
 
     /// Initializes a provider.
-    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: StubClosure = MoyaProvider.NeverStub, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
         self.endpointClosure = endpointClosure
         self.endpointResolver = endpointResolver
         self.stubBehavior = stubBehavior
@@ -129,7 +129,7 @@ public class MoyaProvider<T: MoyaTarget> {
         let stubBehavior = self.stubBehavior(token)
 
         switch stubBehavior {
-        case .NoStubbing:
+        case .Never:
             return sendRequest(request, completion: completion)
         default:
             return stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
@@ -150,16 +150,16 @@ public class MoyaProvider<T: MoyaTarget> {
         return endpoint.urlRequest
     }
 
-    public class func NoStubbingBehavior(_: T) -> Moya.StubbedBehavior {
-        return .NoStubbing
+    public class func NeverStub(_: T) -> Moya.StubBehavior {
+        return .Never
     }
 
-    public class func ImmediateStubbingBehaviour(_: T) -> Moya.StubbedBehavior {
+    public class func ImmediatelyStub(_: T) -> Moya.StubBehavior {
         return .Immediate
     }
 
-    public class func DelayedStubbingBehaviour(seconds: NSTimeInterval) -> MoyaStubbedBehavior {
-        return { (_: T) -> Moya.StubbedBehavior in return .Delayed(seconds: seconds) }
+    public class func DelayedStub(seconds: NSTimeInterval)(_: T) -> Moya.StubBehavior {
+        return .Delayed(seconds: seconds)
     }
 }
 
@@ -189,7 +189,7 @@ private extension MoyaProvider {
         }
     }
 
-    func stubRequest(request: NSURLRequest, completion: MoyaCompletion, endpoint: Endpoint<T>, stubBehavior: Moya.StubbedBehavior) -> CancellableToken {
+    func stubRequest(request: NSURLRequest, completion: MoyaCompletion, endpoint: Endpoint<T>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         var canceled = false
         let cancellableToken = CancellableToken { canceled = true }
 
@@ -223,7 +223,7 @@ private extension MoyaProvider {
             dispatch_after(killTime, dispatch_get_main_queue()) {
                 stub()
             }
-        case .NoStubbing:
+        case .Never:
             fatalError("Method called to stub request when stubbing is disabled.")
         }
 

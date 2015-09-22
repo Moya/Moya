@@ -8,7 +8,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: ReactiveCocoaMoyaProvider<GitHub>!
         beforeEach {
-            provider = ReactiveCocoaMoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+            provider = ReactiveCocoaMoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediatelyStub)
         }
 
         it("returns a MoyaResponse object") {
@@ -81,7 +81,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         describe("failing") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
-                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediatelyStub)
             }
 
             it("returns the HTTP status code as the error code") {
@@ -117,7 +117,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
-                override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+                override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: StubClosure = MoyaProvider.NeverStub, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
                     super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
                 }
 
@@ -130,7 +130,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             beforeEach {
                 TestCancellable.cancelled = false
 
-                provider = TestProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStubbingBehaviour(1))
+                provider = TestProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStub(1))
             }
 
             it("cancels network request when subscription is cancelled") {

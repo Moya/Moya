@@ -9,7 +9,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         var provider: RxMoyaProvider<GitHub>!
 
         beforeEach {
-            provider = RxMoyaProvider(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+            provider = RxMoyaProvider(stubBehavior: MoyaProvider.ImmediatelyStub)
         }
 
         it("returns a MoyaResponse object") {
