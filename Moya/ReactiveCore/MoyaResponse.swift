@@ -31,4 +31,3 @@ extension Endpoint: Equatable, Hashable {
         return urlRequest.hash
     }
 }
-
