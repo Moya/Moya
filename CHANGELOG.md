@@ -1,5 +1,6 @@
 # Next
 
+- Makes `parameters` on `MoyaTarget` an optional `[String: AnyObject]` dictionary.
 - Renamed stubbing identifiers: **Breaking Change**
   - `Moya.StubbedBehavior` renamed to `Moya.StubBehavior`
   - `Moya.MoyaStubbedBehavior` renamed to `Moya.StubClosure`

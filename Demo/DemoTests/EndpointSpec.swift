@@ -36,7 +36,7 @@ class EndpointSpec: QuickSpec {
                 let message = "I hate it when villains quote Shakespeare."
                 let newEndpoint = endpoint.endpointByAddingParameters(["message": message])
                 
-                let newEndpointMessageObject: AnyObject? = newEndpoint.parameters["message"]
+                let newEndpointMessageObject: AnyObject? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointMessage).to(equal(message))
@@ -60,7 +60,7 @@ class EndpointSpec: QuickSpec {
                 // Compare other properties to ensure they've been copied correctly
                 expect(newEndpoint.URL).to(equal(endpoint.URL))
                 expect(newEndpoint.method).to(equal(endpoint.method))
-                expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
+                expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
                 expect(newEndpoint.parameterEncoding).to(equal(endpoint.parameterEncoding))
             }
 
@@ -74,7 +74,7 @@ class EndpointSpec: QuickSpec {
                 // Compare other properties to ensure they've been copied correctly
                 expect(newEndpoint.URL).to(equal(endpoint.URL))
                 expect(newEndpoint.method).to(equal(endpoint.method))
-                expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
+                expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
                 expect(newEndpoint.httpHeaderFields.count).to(equal(endpoint.httpHeaderFields.count))
             }
             
@@ -114,8 +114,8 @@ extension GitHub : MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
-        return [:]
+    var parameters: [String: AnyObject]? {
+        return nil
     }
     var sampleData: NSData {
         switch self {
