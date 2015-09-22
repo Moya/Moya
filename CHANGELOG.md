@@ -1,5 +1,23 @@
 # Next
 
+- Renamed stubbing identifiers: **Breaking Change**
+  - `Moya.StubbedBehavior` renamed to `Moya.StubBehavior`
+  - `Moya.MoyaStubbedBehavior` renamed to `Moya.StubClosure`
+  - `Moya.NoStubbingBehavior` -> `Moya.NeverStub`
+  - `Moya.ImmediateStubbingBehaviour` -> `Moya.NeverStub`
+  - `Moya.DelayedStubbingBehaviour` -> `Moya.DelayedStub`
+- Default class functions have been moved to extensions to prevent inadvertent subclassing.
+- Renamed other identifiers: **Breaking Change**
+  - `MoyaProvider.MoyaEndpointsClosure` to `MoyaProvider.EndpointClosure`
+  - `MoyaProvider.MoyaEndpointResolution` to `MoyaProvider.RequestClosure`
+  - `MoyaProvider.endpointResolver` to `MoyaProvider.requestClosure`
+  - `MoyaProvider.stubBehavior` to `MoyaProvider.stubClosure`
+  - `MoyaProvider` initializer parameter names.
+  - `MoyaCompletion` to `Moya.Completion`
+  - `DefaultEndpointResolution` to `DefaultRequestMapping`
+- Renamed `T` generic types of `MoyaProvider` and `Endpoint` classes to `Target`.
+- Removed errantly named `DefaultEndpointResolution`
+
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`

@@ -8,7 +8,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: ReactiveCocoaMoyaProvider<GitHub>!
         beforeEach {
-            provider = ReactiveCocoaMoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediatelyStub)
+            provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
         }
 
         it("returns a MoyaResponse object") {
@@ -81,7 +81,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         describe("failing") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
-                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediatelyStub)
+                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
 
             it("returns the HTTP status code as the error code") {
@@ -117,11 +117,15 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
-                override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: StubClosure = MoyaProvider.NeverStub, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-                    super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
+                override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                    requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+                    stubClosure: StubClosure = MoyaProvider.NeverStub,
+                    networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+                    manager: Manager = Alamofire.Manager.sharedInstance) {
+                    super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, manager: manager)
                 }
 
-                override func request(token: T, completion: MoyaCompletion) -> Cancellable {
+                override func request(token: T, completion: Moya.Completion) -> Cancellable {
                     return TestCancellable()
                 }
             }
@@ -130,7 +134,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             beforeEach {
                 TestCancellable.cancelled = false
 
-                provider = TestProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStub(1))
+                provider = TestProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(1))
             }
 
             it("cancels network request when subscription is cancelled") {

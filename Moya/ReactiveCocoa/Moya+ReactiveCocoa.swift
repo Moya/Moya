@@ -3,18 +3,23 @@ import ReactiveCocoa
 import Alamofire
 
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
-public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
+public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Target> {
     /// Current requests that have not completed or errored yet.
     /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
-    public var inflightRequests = Dictionary<Endpoint<T>, RACSignal>()
+    public var inflightRequests = Dictionary<Endpoint<Target>, RACSignal>()
 
     /// Initializes a reactive provider.
-    override public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: StubClosure = MoyaProvider.NeverStub, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
+    override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider.NeverStub,
+        networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+        manager: Manager = Alamofire.Manager.sharedInstance) {
+        
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, manager: manager)
     }
 
     /// Designated request-making method.
-    public func request(token: T) -> RACSignal {
+    public func request(token: Target) -> RACSignal {
         let endpoint = self.endpoint(token)
         
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,

@@ -7,7 +7,7 @@ class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
         beforeEach {
-            provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediatelyStub)
+            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
         }
         
         it("returns stubbed data for zen request") {
@@ -68,7 +68,7 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the beginning of network requests") {
             var called = false
-            let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediatelyStub, networkActivityClosure: { (change) -> () in
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, networkActivityClosure: { (change) -> () in
                 if change == .Began {
                     called = true
                 }
@@ -82,7 +82,7 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the end of network requests") {
             var called = false
-            let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediatelyStub, networkActivityClosure: { (change) -> () in
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, networkActivityClosure: { (change) -> () in
                 if change == .Ended {
                     called = true
                 }
@@ -95,7 +95,7 @@ class MoyaProviderSpec: QuickSpec {
         }
 
         it("delays execution when appropriate") {
-            let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStub(2))
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(2))
 
             let startDate = NSDate()
             var endDate: NSDate?
@@ -123,7 +123,7 @@ class MoyaProviderSpec: QuickSpec {
                     executed = true
                     return endpoint.urlRequest
                 }
-                provider = MoyaProvider<GitHub>(endpointResolver: endpointResolution, stubBehavior: MoyaProvider.ImmediatelyStub)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("executes the endpoint resolver") {
@@ -137,7 +137,7 @@ class MoyaProviderSpec: QuickSpec {
         describe("with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediatelyStub)
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("returns stubbed data for zen request") {
@@ -185,7 +185,7 @@ class MoyaProviderSpec: QuickSpec {
         describe("with lazy data") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: lazyEndpointClosure, stubBehavior: MoyaProvider.ImmediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: lazyEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
 
             it("returns stubbed data for zen request") {
