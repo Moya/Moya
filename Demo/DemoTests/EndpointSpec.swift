@@ -130,4 +130,3 @@ extension GitHub : MoyaTarget {
 private func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
-

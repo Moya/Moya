@@ -1,10 +1,10 @@
 # Next
 
+- Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
+
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
-
-# 2.2.2
 
 # 2.2.2
 
