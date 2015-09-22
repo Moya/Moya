@@ -1,5 +1,7 @@
 # Next
 
+- Adds HTTP basic auth support.
+
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
