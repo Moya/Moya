@@ -145,13 +145,12 @@ public class MoyaProvider<Target: MoyaTarget> {
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(token: Target, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(token)
+        let stubBehavior = self.stubClosure(token)
 
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in
             if cancellableToken.isCancelled { return }
-
-            let stubBehavior = self.stubClosure(token)
 
             switch stubBehavior {
             case .Never:
