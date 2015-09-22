@@ -3,11 +3,10 @@ import Moya
 import ReactiveCocoa
 import Nimble
 
-class TestClass { }
-
 // Necessary since UIImage(named:) doesn't work correctly in the test bundle
-extension UIImage {
+private extension UIImage {
     class func testPNGImage(named name: String) -> UIImage {
+        class TestClass { }
         let bundle = NSBundle(forClass: TestClass().dynamicType)
         let path = bundle.pathForResource(name, ofType: "png")
         return UIImage(contentsOfFile: path!)!
