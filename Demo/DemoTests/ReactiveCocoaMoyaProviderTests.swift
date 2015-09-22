@@ -117,8 +117,8 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
-                    override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-                        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
+                    override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+                        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, credentialClosure: credentialClosure, networkActivityClosure: networkActivityClosure, manager: manager)
                     }
                     
                     override func request(token: T, completion: MoyaCompletion) -> Cancellable {
@@ -185,33 +185,6 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 expect(receivedResponse) == sampleResponse
             }
             
-            it("returns identical signals for inflight requests") {
-                let target: GitHub = .Zen
-                
-                var response: MoyaResponse!
-                
-                let parallelCount = 10
-                let providers = Array(0..<parallelCount).map { _ in provider.request(target) as SignalProducer<MoyaResponse, NSError> }
-                var completions = Array(0..<parallelCount).map { _ in false }
-                let queue = dispatch_queue_create("testing-signal-producer", DISPATCH_QUEUE_CONCURRENT)
-                dispatch_apply(providers.count, queue) { idx in
-                    let i = idx
-                    providers[i].startWithNext { _ -> Void in
-                        if i == 5 { // We only need to check it once.
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        completions[i] = true
-                    }
-                }
-                
-                func allTrue(cs: [Bool]) -> Bool {
-                    return cs.reduce(true) { (a,b) -> Bool in a && b }
-                }
-                
-                expect(allTrue(completions)).toEventually(beTrue())
-                expect(provider.inflightRequests.count).to(equal(0))
-            }
-            
             describe("failing") {
                 var provider: ReactiveCocoaMoyaProvider<GitHub>!
                 beforeEach {
@@ -251,8 +224,8 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
-                    override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-                        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
+                    override init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+                        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, credentialClosure: credentialClosure, networkActivityClosure: networkActivityClosure, manager: manager)
                     }
                     
                     override func request(token: T, completion: MoyaCompletion) -> Cancellable {
@@ -331,4 +304,33 @@ private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
     return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
+}
+
+private enum HTTPBin: MoyaTarget {
+    case BasicAuth
+
+    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var path: String {
+        switch self {
+        case .BasicAuth:
+            return "/basic-auth/user/passwd"
+        }
+    }
+
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject] {
+        switch self {
+        default:
+            return [:]
+        }
+    }
+
+    var sampleData: NSData {
+        switch self {
+        case .BasicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
 }

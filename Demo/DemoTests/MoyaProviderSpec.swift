@@ -58,12 +58,58 @@ class MoyaProviderSpec: QuickSpec {
         it("uses the Alamofire.Manager.sharedInstance by default") {
             expect(provider.manager).to(beIdenticalTo(Alamofire.Manager.sharedInstance))
         }
+                
+        it("credential closure returns nil") {
+            var called = false
+            let provider = MoyaProvider<HTTPBin>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, credentialClosure: { (target) -> NSURLCredential? in
+                    called = true
+                    return nil
+            })
+            
+            let target: HTTPBin = .BasicAuth
+            provider.request(target) { (data, statusCode, response, error) in }
+            
+            expect(called) == true
+        }
+        
+        it("credential closure returns valid username and password") {
+            var called = false
+            let provider = MoyaProvider<HTTPBin>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, credentialClosure: { (target) -> NSURLCredential? in
+                called = true
+                return NSURLCredential(user: "user", password: "passwd", persistence: .None)
+            })
+            
+            let target: HTTPBin = .BasicAuth
+            provider.request(target) { (data, statusCode, response, error) in }
+            
+            expect(called) == true
+        }
 
         it("accepts a custom Alamofire.Manager") {
             let manager = Manager()
             let provider = MoyaProvider<GitHub>(manager: manager)
 
             expect(provider.manager).to(beIdenticalTo(manager))
+        }
+
+        it("uses a custom Alamofire.Manager for session challenges") {
+            var called = false
+            let manager = Manager()
+            manager.delegate.sessionDidReceiveChallenge = { (session, challenge) in
+                called = true
+                let disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
+                return (disposition, nil)
+            }
+            let provider = MoyaProvider<GitHub>(manager: manager)
+            let target: GitHub = .Zen
+            waitUntil(timeout: 3) { done in
+                provider.request(target) { (data, statusCode, response, error) in
+                    done()
+                }
+                return
+            }
+
+            expect(called) == true
         }
 
         it("notifies at the beginning of network requests") {
@@ -253,4 +299,33 @@ private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
     return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
+}
+
+private enum HTTPBin: MoyaTarget {
+    case BasicAuth
+
+    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var path: String {
+        switch self {
+        case .BasicAuth:
+            return "/basic-auth/user/passwd"
+        }
+    }
+
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject] {
+        switch self {
+        default:
+            return [:]
+        }
+    }
+
+    var sampleData: NSData {
+        switch self {
+        case .BasicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
 }

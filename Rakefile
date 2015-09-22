@@ -39,7 +39,7 @@ task :release, :version do |task, args|
 
   puts "Updating Demo project."
   Dir.chdir('Demo') do
-    sh "pod update Moya"
+    sh "pod update Moya ReactiveMoya RxMoya"
   end
 
   puts "Updating changelog."
