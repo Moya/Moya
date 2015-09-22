@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C8A15104D994C6FB8188CF8B"
+               BlueprintIdentifier = "388F83453D50D2C61264EB92"
                BuildableName = "ReactiveMoya.framework"
                BlueprintName = "ReactiveMoya"
                ReferencedContainer = "container:Pods.xcodeproj">

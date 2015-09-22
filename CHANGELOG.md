@@ -1,5 +1,7 @@
 # Next
 
+# 2.4.1
+
 - Corrects problem with ignoring the specified Alamofire manager
 
 # 2.4.0
