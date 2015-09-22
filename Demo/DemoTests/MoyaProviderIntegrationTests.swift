@@ -194,30 +194,6 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect{message}.toEventually( equal(userMessage) )
                     }
-                    
-                    it("returns identical signals for inflight requests") {
-                        let target: GitHub = .Zen
-                        let signal1 = provider.request(target)
-                        let signal2 = provider.request(target)
-                        
-                        expect(provider.inflightRequests.count).to(equal(0))
-                        
-                        var receivedResponse: MoyaResponse!
-                        
-                        signal1.subscribeNext { (response) -> Void in
-                            receivedResponse = response as? MoyaResponse
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        
-                        signal2.subscribeNext { (response) -> Void in
-                            expect(receivedResponse).toNot(beNil())
-                            expect(receivedResponse).to(beIndenticalToResponse( response as! MoyaResponse) )
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        
-                        // Allow for network request to complete
-                        expect(provider.inflightRequests.count).toEventually( equal(0) )
-                    }
                 }
             }
         }

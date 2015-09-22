@@ -1,5 +1,7 @@
 # Next
 
+- Removes inflight request tracking for ReactiveCocoa and RxSwift providers. **Breaking Change**
+
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
