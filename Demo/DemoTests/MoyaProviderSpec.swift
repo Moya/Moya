@@ -119,9 +119,9 @@ class MoyaProviderSpec: QuickSpec {
             
             beforeEach {
                 executed = false
-                let endpointResolution = { (endpoint: Endpoint<GitHub>) -> (NSURLRequest) in
+                let endpointResolution = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) in
                     executed = true
-                    return endpoint.urlRequest
+                    done(endpoint.urlRequest)
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }

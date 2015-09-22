@@ -113,21 +113,31 @@ coding framework with which to access the network – that's Alamofire's job.
 Instead, Moya is about a way to frame your thoughts about network access and 
 provide compile-time checking of well-defined network targets. You've already 
 seen how to map targets into endpoints using the `endpointClosure` parameter
-of the `MoyaProvider` initializer. That let you create an `Endpoint` instance
+of the `MoyaProvider` initializer. That lets you create an `Endpoint` instance
 that Moya will use to reason about the network API call. At some point, that
 `Endpoint` must be resolved into an actual `NSURLRequest` to give to Alamofire. 
-That's what the `endpointResolver` parameter is for. 
+That's what the `requestClosure` parameter is for. 
 
-The `endpointResolver` is an optional, last-minute way to modify the request 
-that hits the network. It has a default value of `MoyaProvider.DefaultEnpointResolution`, 
+The `requestClosure` is an optional, last-minute way to modify the request 
+that hits the network. It has a default value of `MoyaProvider.DefaultRequestMapper`, 
 which simply uses the `urlRequest` property of the `Endpoint` instance. 
 
-This closure receives an `Endpoint` instance and is responsible for returning a
-`NSURLRequest` that represents the resources to be accessed. It's here that 
-you'd do your OAuth signing or whatever. Since you return an `NSURLRequest`, you
-can use whatever general-purpose authentication library you want. You can return 
-the `urlRequest` property of the instance that you're passed in, which would not 
-change the request at all. That could be useful for logging, for example. 
+This closure receives an `Endpoint` instance and is responsible for invoking a
+its argument of `NSURLRequest -> Void` with a request that represents the Endpoint.
+It's here that you'd do your OAuth signing or whatever. Since you may invoke the 
+closure asynchronously, you can use whatever authentication library you like ([example](https://github.com/rheinfabrik/Heimdall.swift)). 
+Instead of modifying the request, you could simply log it, instead.
+
+```swift
+let requestClosure = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) in
+    let request = endpoint.urlRequest
+
+    // Modify the request however you like.
+
+    done(request)
+}
+provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
+```
 
 Note that the `endpointResolver` is *not* intended to be used for any sort of 
 application-level mapping. This closure is really about modifying properties 

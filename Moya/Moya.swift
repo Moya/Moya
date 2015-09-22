@@ -87,10 +87,20 @@ public protocol Cancellable {
 
 /// Internal token that can be used to cancel requests
 struct CancellableToken: Cancellable {
-    let cancelAction: () -> ()
+    let cancelAction: () -> Void
 
     func cancel() {
         cancelAction()
+    }
+}
+
+struct CancellableWrapper: Cancellable {
+    var innerCancellable: CancellableToken? = nil
+
+    private var isCancelled = false
+
+    func cancel() {
+        innerCancellable?.cancel()
     }
 }
 
@@ -101,7 +111,7 @@ public class MoyaProvider<Target: MoyaTarget> {
     public typealias EndpointClosure = Target -> Endpoint<Target>
 
     /// Closure that resolves an Endpoint into an NSURLRequest.
-    public typealias RequestClosure = Endpoint<Target> -> NSURLRequest
+    public typealias RequestClosure = (Endpoint<Target>, NSURLRequest -> Void) -> Void
 
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = Target -> Moya.StubBehavior
@@ -135,15 +145,25 @@ public class MoyaProvider<Target: MoyaTarget> {
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(token: Target, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(token)
-        let request = requestClosure(endpoint)
-        let stubBehavior = self.stubClosure(token)
 
-        switch stubBehavior {
-        case .Never:
-            return sendRequest(request, completion: completion)
-        default:
-            return stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+        var cancellableToken = CancellableWrapper()
+
+        let performNetworking = { (request: NSURLRequest) in
+            if cancellableToken.isCancelled { return }
+
+            let stubBehavior = self.stubClosure(token)
+
+            switch stubBehavior {
+            case .Never:
+                cancellableToken.innerCancellable = self.sendRequest(request, completion: completion)
+            default:
+                cancellableToken.innerCancellable = self.stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            }
         }
+
+        requestClosure(endpoint, performNetworking)
+
+        return cancellableToken
     }
 }
 
@@ -158,8 +178,8 @@ public extension MoyaProvider {
         return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    public class func DefaultRequestMapping(endpoint: Endpoint<Target>) -> NSURLRequest {
-        return endpoint.urlRequest
+    public class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
+        return closure(endpoint.urlRequest)
     }
 }
 
