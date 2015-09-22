@@ -1,5 +1,7 @@
 # Next
 
+# 2.4.0
+
 - Adds HTTP basic auth support.
 
 # 2.3.0
