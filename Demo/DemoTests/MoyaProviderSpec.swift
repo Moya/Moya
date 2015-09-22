@@ -66,6 +66,26 @@ class MoyaProviderSpec: QuickSpec {
             expect(provider.manager).to(beIdenticalTo(manager))
         }
 
+        it("uses a custom Alamofire.Manager for session challenges") {
+            var called = false
+            let manager = Manager()
+            manager.delegate.sessionDidReceiveChallenge = { (session, challenge) in
+                called = true
+                let disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
+                return (disposition, nil)
+            }
+            let provider = MoyaProvider<GitHub>(manager: manager)
+            let target: GitHub = .Zen
+            waitUntil(timeout: 3) { done in
+              provider.request(target) { (data, statusCode, response, error) in
+                done()
+              }
+              return
+            }
+
+            expect(called) == true
+        }
+
         it("notifies at the beginning of network requests") {
             var called = false
             let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
