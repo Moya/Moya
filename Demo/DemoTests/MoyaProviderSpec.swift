@@ -77,10 +77,10 @@ class MoyaProviderSpec: QuickSpec {
             let provider = MoyaProvider<GitHub>(manager: manager)
             let target: GitHub = .Zen
             waitUntil(timeout: 3) { done in
-              provider.request(target) { (data, statusCode, response, error) in
-                done()
-              }
-              return
+                provider.request(target) { (data, statusCode, response, error) in
+                    done()
+                }
+                return
             }
 
             expect(called) == true
