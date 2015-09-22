@@ -54,28 +54,12 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 
                 expect(receivedResponse) == sampleResponse
             }
-            
-            it("returns identical signals for inflight requests") {
-                let target: GitHub = .Zen
-                
-                // The synchronous nature of stubbed responses makes this kind of tricky. We use the
-                // subscribeNext closure to get the provider into a state where the signal has been
-                // added to the inflightRequests dictionary. Then we ask for an identical request,
-                // which should return the same signal. We can't *test* those signals equivalency
-                // due to the use of RACSignal.defer, but we can check if the number of inflight
-                // requests went up or not.
-                
-                provider.request(target).subscribeNext { (object) -> Void in
-                    expect(provider.inflightRequests.count).to(equal(1))
-                    
-                    // Create a new signal and force subscription, so that the inflightRequests dictionary is accessed.
-                    provider.request(target).subscribeNext { (object) -> Void in
-                        // nop
-                    }
-                    expect(provider.inflightRequests.count).to(equal(1))
-                }
-                
-                expect(provider.inflightRequests.count).to(equal(0))
+        }
+
+        describe("failing") {
+            var provider: ReactiveCocoaMoyaProvider<GitHub>!
+            beforeEach {
+                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
             }
             
             describe("failing") {

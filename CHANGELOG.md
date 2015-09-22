@@ -1,5 +1,6 @@
 # Next
 
+- Removes inflight request tracking for ReactiveCocoa and RxSwift providers. **Breaking Change**
 - Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
 
 # 2.4.1
