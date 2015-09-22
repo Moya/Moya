@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya)
+[![Build Status](https://travis-ci.org/Moya/Moya.svg?branch=master)](https://travis-ci.org/Moya/Moya)
 
 ![Moya Logo](web/moya_logo_github.png)
 
