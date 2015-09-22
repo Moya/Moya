@@ -2,43 +2,53 @@ import Foundation
 import ReactiveCocoa
 import Alamofire
 
-/// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
+/// Subclass of MoyaProvider that returns SignalProducer<MoyaReponse, NSError> instances when requests are made. Much better than using completion closures.
 public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
 
     /// Initializes a reactive provider.
-    override public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, networkActivityClosure: networkActivityClosure, manager: manager)
+    override public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, credentialClosure: credentialClosure, networkActivityClosure: networkActivityClosure, manager: manager)
     }
-
+    
     /// Designated request-making method.
-    public func request(token: T) -> RACSignal {
-        // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
-        // and we're connecting immediately (below), so self in the block will always be non-nil
+    public func request(token: T) -> SignalProducer<MoyaResponse, NSError> {
 
-        return RACSignal.`defer` { [weak self] () -> RACSignal! in
+        /// returns a new producer which starts a new producer which invokes the requests. The created signal of the inner producer is saved for inflight request
+        return SignalProducer { [weak self] outerSink, outerDisposable in
             
-            let signal = RACSignal.createSignal { (subscriber) -> RACDisposable! in
+            let producer: SignalProducer<MoyaResponse, NSError> = SignalProducer { [weak self] requestSink, requestDisposable in
+                
                 let cancellableToken = self?.request(token) { data, statusCode, response, error in
                     if let error = error {
                         if let statusCode = statusCode {
-                            subscriber.sendError(NSError(domain: MoyaErrorDomain, code: statusCode, userInfo: [NSUnderlyingErrorKey: error as NSError]))
+                            sendError(requestSink, NSError(domain: MoyaErrorDomain, code: statusCode, userInfo: [NSUnderlyingErrorKey: error as NSError]))
                         } else {
-                            subscriber.sendError(error as NSError)
+                            sendError(requestSink, error as NSError)
                         }
                     } else {
                         if let data = data {
-                            subscriber.sendNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
+                            sendNext(requestSink, MoyaResponse(statusCode: statusCode!, data: data, response: response))
                         }
-                        subscriber.sendCompleted()
+                        sendCompleted(requestSink)
                     }
                 }
                 
-                return RACDisposable { () -> Void in
+                requestDisposable.addDisposable {
+                    // Cancel the request
                     cancellableToken?.cancel()
                 }
             }
 
-            return signal
+            /// starts the inner signal producer and store the created signal.
+            producer.startWithSignal { signal, innerDisposable in
+                /// connect all events of the signal to the observer of this signal producer
+                signal.observe(outerSink)
+                outerDisposable.addDisposable(innerDisposable)
+            }
         }
+    }
+    
+    public func request(token: T) -> RACSignal {
+        return toRACSignal(request(token))
     }
 }

@@ -41,6 +41,35 @@ extension GitHub : MoyaTarget {
     }
 }
 
+private enum HTTPBin: MoyaTarget {
+    case BasicAuth
+
+    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var path: String {
+        switch self {
+        case .BasicAuth:
+            return "/basic-auth/user/passwd"
+        }
+    }
+
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject] {
+        switch self {
+        default:
+            return [:]
+        }
+    }
+
+    var sampleData: NSData {
+        switch self {
+        case .BasicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
+}
+
 private func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
@@ -79,6 +108,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
                 return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil).responseTime(0.5)
             }
+            
+            OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/basic-auth/user/passwd"}) { _ in
+                return OHHTTPStubsResponse(data: HTTPBin.BasicAuth.sampleData, statusCode: 200, headers: nil)
+            }
+            
         }
 
         afterEach {
@@ -132,6 +166,41 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(receivedError).toEventuallyNot( beNil() )
                     }
                 }
+                
+                describe("a provider with credential closures") {
+                    it("credential closure returns nil") {
+                        var called = false
+                        let provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
+                            
+                            called = true
+                            return nil
+                        })
+                        
+                        let target: HTTPBin = .BasicAuth
+                        provider.request(target) { (data, statusCode, response, error) in }
+                        
+                        expect(called).toEventually( beTrue() )
+                        
+                    }
+                    
+                    it("credential closure returns valid username and password") {
+                        var called = false
+                        var returnedData: NSData?
+                        let provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
+                            
+                            called = true
+                            return NSURLCredential(user: "user", password: "passwd", persistence: .None)
+                        })
+                        
+                        let target: HTTPBin = .BasicAuth
+                        provider.request(target) { (data, statusCode, response, error) in
+                            returnedData = data
+                        }
+                        
+                        expect(called).toEventually( beTrue() )
+                        expect(returnedData).toEventually(equal(target.sampleData))
+                    }
+                }
 
                 describe("a provider with network activity closures") {
                     it("notifies at the beginning of network requests") {
@@ -163,7 +232,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a reactive provider") {
+                describe("a reactive provider with RACSignal") {
                     var provider: ReactiveCocoaMoyaProvider<GitHub>!
                     beforeEach {
                         provider = ReactiveCocoaMoyaProvider<GitHub>()
@@ -194,6 +263,35 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect{message}.toEventually( equal(userMessage) )
                     }
+                }
+            }
+            
+            describe("a reactive provider with SignalProducer") {
+                var provider: ReactiveCocoaMoyaProvider<GitHub>!
+                beforeEach {
+                    provider = ReactiveCocoaMoyaProvider<GitHub>()
+                }
+                
+                it("returns some data for zen request") {
+                    var message: String?
+                    
+                    let target: GitHub = .Zen
+                    provider.request(target).startWithNext { (response) -> Void in
+                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                    }
+                    
+                    expect{message}.toEventually( equal(zenMessage) )
+                }
+                
+                it("returns some data for user profile request") {
+                    var message: String?
+                    
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    provider.request(target).startWithNext { (response) -> Void in
+                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                    }
+                    
+                    expect{message}.toEventually( equal(userMessage) )
                 }
             }
         }

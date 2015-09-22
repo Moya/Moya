@@ -1,12 +1,19 @@
 # Next
 
 - Removes inflight request tracking for ReactiveCocoa and RxSwift providers. **Breaking Change**
+- Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
+
+# 2.4.1
+
+- Corrects problem with ignoring the specified Alamofire manager
+
+# 2.4.0
+
+- Adds HTTP basic auth support.
 
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
-
-# 2.2.2
 
 # 2.2.2
 

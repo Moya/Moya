@@ -1,12 +1,12 @@
 {
   "name": "ReactiveMoya",
-  "version": "2.3.0",
+  "version": "2.4.1",
   "platforms": {
     "ios": "8.0"
   },
   "source": {
     "git": "https://github.com/Moya/Moya.git",
-    "tag": "2.3.0"
+    "tag": "2.4.1"
   },
   "source_files": [
     "Moya/*swift",
@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "ReactiveCocoa": [
-      "3.0.0-swift2"
+      "~> 4.0-alpha.1"
     ]
   }
 }
