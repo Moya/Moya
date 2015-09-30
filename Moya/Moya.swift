@@ -177,7 +177,7 @@ private extension MoyaProvider {
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
 
-        //Log network request to the console
+        //Print network request 
         self.logger?.logNetworkRequest(request)
         
         var request = manager.request(request)
@@ -190,14 +190,14 @@ private extension MoyaProvider {
 
                 networkActivityCallback?(change: .Ended)
 
-                //Log network response to the console
+                //Print network response
                 self.logger?.logNetworkResponse(response)
             
                 // Alamofire always sends the data param as an NSData? type, but we'll
                 // add a check just in case something changes in the future.
                 let statusCode = response?.statusCode
                 if let data = data {
-                    //Log response data
+                    //Print network response data
                     self.logger?.logNetworkResponseData(data)
                     
                     completion(data: data, statusCode: statusCode, response: response, error: error)

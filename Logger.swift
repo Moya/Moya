@@ -1,8 +1,3 @@
-
-//  Created by Alexander Karaberov on 9/30/15.
-//
-//
-
 import Foundation
 
 
