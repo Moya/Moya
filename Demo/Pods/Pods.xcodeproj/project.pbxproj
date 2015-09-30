@@ -35,6 +35,8 @@
 		0E8003AAE8B9F3B063534D856E0F934F /* RxSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CC75A70CD8250B2E7D3256A2A8D9174C /* RxSwift-dummy.m */; };
 		0ED5A23AAB18676CABEB4D0D20D87F12 /* Concat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC63F5C1EF75F3DAEF1724E0D531CDA0 /* Concat.swift */; };
 		0F34EA0B7421AC539D4657B2B4B5E3F9 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554C4EAB1CBA05A60BEFB4F2B6B3984B /* Closures.swift */; };
+		115969381BBC606000C5758C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115969371BBC606000C5758C /* Logger.swift */; settings = {ASSET_TAGS = (); }; };
+		1159693A1BBC608500C5758C /* MoyaLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115969391BBC608500C5758C /* MoyaLogger.swift */; settings = {ASSET_TAGS = (); }; };
 		1291D8BBE5F28DD5DA646FAE9CB20664 /* RACPassthroughSubscriber.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B0A7A3BD62198A36135BEB036F5E12 /* RACPassthroughSubscriber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12D6B8C40B6C66D2FA91A3EA916848B2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F8C487AAEEFDBEB20DA9358700D068 /* Foundation.framework */; };
 		12F199EC4BB04F82D27715FC61CA4773 /* NSInvocation+RACTypeParsing.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFC451D5D251ABF8213B71E235BEAAE /* NSInvocation+RACTypeParsing.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -607,6 +609,8 @@
 		10949FF48589B6CC028C1C63FC85A8AF /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EXTRuntimeExtensions.h; path = "ReactiveCocoa/Objective-C/extobjc/EXTRuntimeExtensions.h"; sourceTree = "<group>"; };
 		1107E656C360E44D319C54C9EF8FA051 /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = RxSwift/Error.swift; sourceTree = "<group>"; };
 		112BDAE8004BF953BF3BAF9AEA3705E3 /* Nimble.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = Nimble.modulemap; sourceTree = "<group>"; };
+		115969371BBC606000C5758C /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		115969391BBC608500C5758C /* MoyaLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaLogger.swift; sourceTree = "<group>"; };
 		121C5F1D16C9A5C3D5A253F43CF44AA6 /* RACSerialDisposable.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACSerialDisposable.m; path = "ReactiveCocoa/Objective-C/RACSerialDisposable.m"; sourceTree = "<group>"; };
 		123070BE45E21584665FAE9B32439066 /* QCKDSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QCKDSL.m; path = Quick/DSL/QCKDSL.m; sourceTree = "<group>"; };
 		124E5891CAE7B7BA844CD7308EAF7EB6 /* RACStringSequence.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACStringSequence.m; path = "ReactiveCocoa/Objective-C/RACStringSequence.m"; sourceTree = "<group>"; };
@@ -1259,6 +1263,15 @@
 			path = RxSwift;
 			sourceTree = "<group>";
 		};
+		115969361BBC604D00C5758C /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				115969371BBC606000C5758C /* Logger.swift */,
+				115969391BBC608500C5758C /* MoyaLogger.swift */,
+			);
+			name = Logger;
+			sourceTree = "<group>";
+		};
 		15A137714EC75138D616B6823466C970 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1770,6 +1783,7 @@
 		7215885C592D5B3665F84207A3096F21 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				115969361BBC604D00C5758C /* Logger */,
 				539D3C9D43732102222C0387D70F8FF9 /* Moya */,
 			);
 			name = Core;
@@ -2920,6 +2934,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B639404F0D7CC7383D490451F84FCFA /* Alamofire-dummy.m in Sources */,
+				1159693A1BBC608500C5758C /* MoyaLogger.swift in Sources */,
 				851953ACA5191E3C6E2310F34F3D6EA8 /* Alamofire.swift in Sources */,
 				53EC488CE419D85A0D281F6EB0C80AFF /* Download.swift in Sources */,
 				D31845F9CC44E66462C3F1732E8D0FFC /* Error.swift in Sources */,
@@ -2929,6 +2944,7 @@
 				885F87161947200A93B065DFB3CF1B25 /* Request.swift in Sources */,
 				BFF11F029B52E1F6C538D234441B4FC5 /* ResponseSerialization.swift in Sources */,
 				4443BFB06570202BC11B8EC1C4DE1B21 /* Result.swift in Sources */,
+				115969381BBC606000C5758C /* Logger.swift in Sources */,
 				DE453144851445928190E8AC00B21A87 /* ServerTrustPolicy.swift in Sources */,
 				A397147E55F16A784FDA2F094EF8CF1F /* Stream.swift in Sources */,
 				A12BDD79F4AA8CCE50A62F55CA6350B5 /* Upload.swift in Sources */,
