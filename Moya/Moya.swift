@@ -109,15 +109,17 @@ public class MoyaProvider<T: MoyaTarget> {
     public let stubBehavior: MoyaStubbedBehavior
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     public let manager: Manager
+    public let logger: Logger?
 
     /// Initializes a provider.
-    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance, logger: Logger? = nil) {
         self.endpointClosure = endpointClosure
         self.endpointResolver = endpointResolver
         self.credentialClosure = credentialClosure
         self.stubBehavior = stubBehavior
         self.networkActivityClosure = networkActivityClosure
         self.manager = manager
+        self.logger = logger
     }
 
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -175,6 +177,9 @@ private extension MoyaProvider {
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
 
+        //Log network request to the console
+        self.logger?.logNetworkRequest(request)
+        
         var request = manager.request(request)
         
         if let cred = credential {
@@ -185,10 +190,16 @@ private extension MoyaProvider {
 
                 networkActivityCallback?(change: .Ended)
 
+                //Log network response to the console
+                self.logger?.logNetworkResponse(response)
+            
                 // Alamofire always sends the data param as an NSData? type, but we'll
                 // add a check just in case something changes in the future.
                 let statusCode = response?.statusCode
                 if let data = data {
+                    //Log response data
+                    self.logger?.logNetworkResponseData(data)
+                    
                     completion(data: data, statusCode: statusCode, response: response, error: error)
                 } else {
                     completion(data: nil, statusCode: statusCode, response: response, error: error)
