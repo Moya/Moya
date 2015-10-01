@@ -53,31 +53,6 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             expect(receivedResponse) == sampleResponse
         }
 
-        it("returns identical signals for inflight requests") {
-            let target: GitHub = .Zen
-
-            // The synchronous nature of stubbed responses makes this kind of tricky. We use the
-            // subscribeNext closure to get the provider into a state where the signal has been
-            // added to the inflightRequests dictionary. Then we ask for an identical request,
-            // which should return the same signal. We can't *test* those signals equivalency
-            // due to the use of RACSignal.defer, but we can check if the number of inflight
-            // requests went up or not.
-
-            let outerSignal = provider.request(target)
-            outerSignal.subscribeNext { (object) -> Void in
-                expect(provider.inflightRequests.count).to(equal(1))
-
-                // Create a new signal and force subscription, so that the inflightRequests dictionary is accessed.
-                let innerSignal = provider.request(target)
-                innerSignal.subscribeNext { (object) -> Void in
-                    // nop
-                }
-                expect(provider.inflightRequests.count).to(equal(1))
-            }
-
-            expect(provider.inflightRequests.count).to(equal(0))
-        }
-
         describe("failing") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
@@ -117,14 +92,17 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<T: MoyaTarget>: ReactiveCocoaMoyaProvider<T> {
+
                 override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                     requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                     stubClosure: StubClosure = MoyaProvider.NeverStub,
                     networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+                    credentialClosure: CredentialClosure? = nil,
                     manager: Manager = Alamofire.Manager.sharedInstance) {
-                    super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, manager: manager)
-                }
 
+                        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
+                }
+                
                 override func request(token: T, completion: Moya.Completion) -> Cancellable {
                     return TestCancellable()
                 }
@@ -200,4 +178,33 @@ private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
     return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
+}
+
+private enum HTTPBin: MoyaTarget {
+    case BasicAuth
+
+    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var path: String {
+        switch self {
+        case .BasicAuth:
+            return "/basic-auth/user/passwd"
+        }
+    }
+
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject]? {
+        switch self {
+        default:
+            return [:]
+        }
+    }
+
+    var sampleData: NSData {
+        switch self {
+        case .BasicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
 }

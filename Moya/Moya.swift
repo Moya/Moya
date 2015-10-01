@@ -13,6 +13,7 @@ public class Moya {
     }
 
     /// Network activity change notification closure typealias.
+    /// Explicitly outside the MoyaProvider type since it doesn't touch the Target generic.
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
 
     /// Represents an HTTP method.
@@ -116,10 +117,13 @@ public class MoyaProvider<Target: MoyaTarget> {
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = Target -> Moya.StubBehavior
 
+    public typealias CredentialClosure = Target -> NSURLCredential?
 
     public let endpointClosure: EndpointClosure
     public let requestClosure: RequestClosure
     public let stubClosure: StubClosure
+    public let credentialClosure: CredentialClosure?
+
     public let networkActivityClosure: Moya.NetworkActivityClosure?
     public let manager: Manager
 
@@ -128,12 +132,14 @@ public class MoyaProvider<Target: MoyaTarget> {
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+        credentialClosure: CredentialClosure? = nil,
         manager: Manager = Alamofire.Manager.sharedInstance) {
 
         self.endpointClosure = endpointClosure
         self.requestClosure = requestClosure
         self.stubClosure = stubClosure
         self.networkActivityClosure = networkActivityClosure
+        self.credentialClosure = credentialClosure
         self.manager = manager
     }
 
@@ -147,6 +153,8 @@ public class MoyaProvider<Target: MoyaTarget> {
         let endpoint = self.endpoint(token)
         let stubBehavior = self.stubClosure(token)
 
+        let credential = credentialClosure?(token)
+
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in
@@ -154,7 +162,7 @@ public class MoyaProvider<Target: MoyaTarget> {
 
             switch stubBehavior {
             case .Never:
-                cancellableToken.innerCancellable = self.sendRequest(request, completion: completion)
+                cancellableToken.innerCancellable = self.sendRequest(request, credential: credential, completion: completion)
             default:
                 cancellableToken.innerCancellable = self.stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
@@ -203,14 +211,21 @@ public extension MoyaProvider {
 }
 
 private extension MoyaProvider {
-    func sendRequest(request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
 
+    func sendRequest(request: NSURLRequest, credential: NSURLCredential?, completion: Moya.Completion) -> CancellableToken {
         networkActivityClosure?(change: .Began)
 
         // We need to keep a reference to the closure without a reference to ourself.
         let networkActivityCallback = networkActivityClosure
 
-        let request = Alamofire.Manager.sharedInstance.request(request).response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+        var request = manager.request(request)
+        
+        if let cred = credential {
+            request = request.authenticate(usingCredential: cred)
+        }
+        
+        request.response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+
                 networkActivityCallback?(change: .Ended)
 
                 // Alamofire always sends the data param as an NSData? type, but we'll

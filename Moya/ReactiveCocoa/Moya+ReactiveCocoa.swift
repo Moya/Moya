@@ -4,38 +4,26 @@ import Alamofire
 
 /// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
 public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Target> {
-    /// Current requests that have not completed or errored yet.
-    /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
-    public var inflightRequests = Dictionary<Endpoint<Target>, RACSignal>()
 
     /// Initializes a reactive provider.
     override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+        credentialClosure: CredentialClosure? = nil,
         manager: Manager = Alamofire.Manager.sharedInstance) {
         
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, manager: manager)
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
     }
 
     /// Designated request-making method.
     public func request(token: Target) -> RACSignal {
-        let endpoint = self.endpoint(token)
         
         // weak self just for best practices – RACSignal will take care of any retain cycles anyway,
         // and we're connecting immediately (below), so self in the block will always be non-nil
 
         return RACSignal.`defer` { [weak self] () -> RACSignal! in
-            
-            if let weakSelf = self {
-                objc_sync_enter(weakSelf)
-                let inFlight = weakSelf.inflightRequests[endpoint]
-                objc_sync_exit(weakSelf)
-                if let existingSignal = inFlight {
-                    return existingSignal
-                }
-            }
-            
+
             let signal = RACSignal.createSignal { (subscriber) -> RACDisposable! in
                 let cancellableToken = self?.request(token) { data, statusCode, response, error in
                     if let error = error {
@@ -53,20 +41,10 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
                 }
                 
                 return RACDisposable { () -> Void in
-                    if let weakSelf = self {
-                        objc_sync_enter(weakSelf)
-                        weakSelf.inflightRequests[endpoint] = nil
-                        cancellableToken?.cancel()
-                        objc_sync_exit(weakSelf)
-                    }
+                    cancellableToken?.cancel()
                 }
             }.publish().autoconnect()
-            
-            if let weakSelf = self {
-                objc_sync_enter(weakSelf)
-                weakSelf.inflightRequests[endpoint] = signal
-                objc_sync_exit(weakSelf)
-            }
+
             
             return signal
         }

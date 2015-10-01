@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ReactiveMoya"
-  s.version      = "2.3.0"
+  s.version      = "2.4.1"
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
 

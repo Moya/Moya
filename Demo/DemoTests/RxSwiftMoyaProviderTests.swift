@@ -46,33 +46,6 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             let sampleResponse: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(sampleData, options: []) as! NSDictionary
             expect(receivedResponse).toNot(beNil())
         }
-
-        it("returns identical observables for inflight requests") {
-            let target: GitHub = .Zen
-
-            var response: MoyaResponse!
-
-            let parallelCount = 10
-            let observables = Array(0..<parallelCount).map { _ in provider.request(target) }
-            var completions = Array(0..<parallelCount).map { _ in false }
-            let queue = dispatch_queue_create("testing", DISPATCH_QUEUE_CONCURRENT)
-            dispatch_apply(observables.count, queue) { idx in
-                let i = idx
-                observables[i].subscribeNext { _ -> Void in
-                    if i == 5 { // We only need to check it once.
-                        expect(provider.inflightRequests.count).to(equal(1))
-                    }
-                    completions[i] = true
-                }
-            }
-
-            func allTrue(cs: [Bool]) -> Bool {
-                return cs.reduce(true) { (a,b) -> Bool in a && b }
-            }
-
-            expect(allTrue(completions)).toEventually(beTrue())
-            expect(provider.inflightRequests.count).to(equal(0))
-        }
     }
 }
 
@@ -124,4 +97,33 @@ private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
     return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
+}
+
+private enum HTTPBin: MoyaTarget {
+    case BasicAuth
+
+    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var path: String {
+        switch self {
+        case .BasicAuth:
+            return "/basic-auth/user/passwd"
+        }
+    }
+
+    var method: Moya.Method {
+        return .GET
+    }
+    var parameters: [String: AnyObject]? {
+        switch self {
+        default:
+            return [:]
+        }
+    }
+
+    var sampleData: NSData {
+        switch self {
+        case .BasicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        }
+    }
 }

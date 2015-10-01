@@ -13,9 +13,10 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+        credentialClosure: CredentialClosure? = nil,
         manager: Manager = Alamofire.Manager.sharedInstance) {
         
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, manager: manager)
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
     }
 
     /// Designated request-making method.

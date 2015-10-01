@@ -20,6 +20,14 @@
 - Removed errantly named `DefaultEndpointResolution`
 - Changes the closure to map `Endpoint`s to `NSURLRequest`s asynchonous.
 
+# 2.4.1
+
+- Corrects problem with ignoring the specified Alamofire manager
+
+# 2.4.0
+
+- Adds HTTP basic auth support.
+
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
