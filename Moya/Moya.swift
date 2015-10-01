@@ -180,12 +180,12 @@ public extension MoyaProvider {
 
     // These functions are default mappings to endpoings and requests.
 
-    public class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
+    public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
         return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    public class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
+    public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
         return closure(endpoint.urlRequest)
     }
 }
@@ -197,15 +197,15 @@ public extension MoyaProvider {
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
     // at least add some class functions to allow easy access to common stubbing closures.
 
-    public class func NeverStub(_: Target) -> Moya.StubBehavior {
+    public final class func NeverStub(_: Target) -> Moya.StubBehavior {
         return .Never
     }
 
-    public class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
+    public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
         return .Immediate
     }
 
-    public class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
+    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
         return .Delayed(seconds: seconds)
     }
 }
