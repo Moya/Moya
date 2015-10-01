@@ -26,7 +26,7 @@ public class Endpoint<Target> {
     public let sampleResponse: EndpointSampleResponse
     public let parameters: [String: AnyObject]?
     public let parameterEncoding: Moya.ParameterEncoding
-    public let httpHeaderFields: [String: String]
+    public let httpHeaderFields: [String: String]?
 
     /// Main initializer for Endpoint.
     public init(URL: String,
@@ -34,7 +34,7 @@ public class Endpoint<Target> {
         method: Moya.Method = Moya.Method.GET,
         parameters: [String: AnyObject]? = nil,
         parameterEncoding: Moya.ParameterEncoding = .URL,
-        httpHeaderFields: [String: String] = [String: String]()) {
+        httpHeaderFields: [String: String]? = nil) {
 
         self.URL = URL
         self.sampleResponse = sampleResponse

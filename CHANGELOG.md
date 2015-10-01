@@ -1,6 +1,7 @@
 # Next
 
 - Makes `parameters` on `MoyaTarget` an optional `[String: AnyObject]` dictionary.
+- Makes `parameters` and `httpHeaderFields` on `Endpoint` to be optionals.
 - Renamed stubbing identifiers: **Breaking Change**
   - `Moya.StubbedBehavior` renamed to `Moya.StubBehavior`
   - `Moya.MoyaStubbedBehavior` renamed to `Moya.StubClosure`
