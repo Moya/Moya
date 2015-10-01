@@ -2,7 +2,7 @@ import Foundation
 import ReactiveCocoa
 import Alamofire
 
-/// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
+/// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
 public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Target> {
 
     /// Initializes a reactive provider.

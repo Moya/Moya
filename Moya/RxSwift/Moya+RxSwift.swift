@@ -4,10 +4,6 @@ import Alamofire
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Target> {
-    /// Current requests that have not completed or errored yet.
-    /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
-    public var inflightRequests = Dictionary<Endpoint<Target>, Observable<MoyaResponse>>()
-
     /// Initializes a reactive provider.
     override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
