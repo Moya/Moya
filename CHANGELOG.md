@@ -18,6 +18,7 @@
   - `DefaultEndpointResolution` to `DefaultRequestMapping`
 - Renamed `T` generic types of `MoyaProvider` and `Endpoint` classes to `Target`.
 - Removed errantly named `DefaultEndpointResolution`
+- Changes the closure to map `Endpoint`s to `NSURLRequest`s asynchonous.
 
 # 2.3.0
 
