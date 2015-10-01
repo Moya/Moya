@@ -2,22 +2,28 @@ import Foundation
 import ReactiveCocoa
 import Alamofire
 
-/// Subclass of MoyaProvider that returns SignalProducer<MoyaReponse, NSError> instances when requests are made. Much better than using completion closures.
-public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
+/// Subclass of MoyaProvider that returns RACSignal instances when requests are made. Much better than using completion closures.
+public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Target> {
 
     /// Initializes a reactive provider.
-    override public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, credentialClosure: credentialClosure, networkActivityClosure: networkActivityClosure, manager: manager)
+    override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider.NeverStub,
+        networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+        credentialClosure: CredentialClosure? = nil,
+        manager: Manager = Alamofire.Manager.sharedInstance) {
+        
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
     }
     
     /// Designated request-making method.
-    public func request(token: T) -> SignalProducer<MoyaResponse, NSError> {
+    public func request(token: Target) -> SignalProducer<MoyaResponse, NSError> {
 
         /// returns a new producer which starts a new producer which invokes the requests. The created signal of the inner producer is saved for inflight request
         return SignalProducer { [weak self] outerSink, outerDisposable in
             
             let producer: SignalProducer<MoyaResponse, NSError> = SignalProducer { [weak self] requestSink, requestDisposable in
-                
+
                 let cancellableToken = self?.request(token) { data, statusCode, response, error in
                     if let error = error {
                         if let statusCode = statusCode {
@@ -32,7 +38,7 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
                         sendCompleted(requestSink)
                     }
                 }
-                
+
                 requestDisposable.addDisposable {
                     // Cancel the request
                     cancellableToken?.cancel()
@@ -48,7 +54,7 @@ public class ReactiveCocoaMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
         }
     }
     
-    public func request(token: T) -> RACSignal {
+    public func request(token: Target) -> RACSignal {
         return toRACSignal(request(token))
     }
 }

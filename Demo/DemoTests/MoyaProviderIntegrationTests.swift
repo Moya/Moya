@@ -28,8 +28,8 @@ extension GitHub : MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
-        return [:]
+    var parameters: [String: AnyObject]? {
+        return nil
     }
     var sampleData: NSData {
         switch self {
@@ -55,7 +55,7 @@ private enum HTTPBin: MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
+    var parameters: [String: AnyObject]? {
         switch self {
         default:
             return [:]

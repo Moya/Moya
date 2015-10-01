@@ -3,15 +3,24 @@ import RxSwift
 import Alamofire
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
-public class RxMoyaProvider<T where T: MoyaTarget>: MoyaProvider<T> {
+public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Target> {
+    /// Current requests that have not completed or errored yet.
+    /// Note: Do not access this directly. It is public only for unit-testing purposes (sigh).
+    public var inflightRequests = Dictionary<Endpoint<Target>, Observable<MoyaResponse>>()
 
     /// Initializes a reactive provider.
-    override public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
-        super.init(endpointClosure: endpointClosure, endpointResolver: endpointResolver, stubBehavior: stubBehavior, credentialClosure: credentialClosure, networkActivityClosure: networkActivityClosure, manager: manager)
+    override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider.NeverStub,
+        networkActivityClosure: Moya.NetworkActivityClosure? = nil,
+        credentialClosure: CredentialClosure? = nil,
+        manager: Manager = Alamofire.Manager.sharedInstance) {
+        
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
     }
 
     /// Designated request-making method.
-    public func request(token: T) -> Observable<MoyaResponse> {
+    public func request(token: Target) -> Observable<MoyaResponse> {
 
         return deferred { [weak self] () -> Observable<MoyaResponse> in
 

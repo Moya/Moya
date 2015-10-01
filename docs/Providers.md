@@ -36,7 +36,7 @@ endpoints closure, which is responsible for mapping a value of your enum to a
 concrete `Endpoint` instance. Let's take a look at what one might look like. 
 
 ```swift
-let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { target: MyTarget -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
     return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
 }
@@ -52,20 +52,20 @@ default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`.
 Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you 
 might want to customize this.
 
-The next optional initializer parameter is `endpointResolver`, which resolves
+The next optional initializer parameter is `requestClosure`, which resolves
 an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md) 
 documentation for how and why you'd do this. 
 
-The next option is to provide a `stubBehavior` of either `.NotStubbing` (the 
+The next option is to provide a `stubClosure`. This returns one of either `.Never` (the 
 default), `.Immediate` or `.Delayed(seconds)`, where you can delay the stubbed 
-request  by a certain number of seconds. For example, `.Delayed(0.2)` would delay
+request by a certain number of seconds. For example, `.Delayed(0.2)` would delay
 every stubbed request. This can be good for simulating network delays in unit tests. 
 
 What's nice is that if you need to stub some requests differently than others,
 you can use your own closure. 
 
 ```swift
-let provider = MoyaProvider<MyTarget>(stubBehavior: { (target: MyTarget) -> Moya.StubbedBehavior in
+let provider = MoyaProvider<MyTarget>(stubClosure: { target: MyTarget -> Moya.StubBehavior in
 	switch target {
 		/* Return something different based on the target. */
 	}
@@ -77,17 +77,17 @@ But usually you want the same stubbing behaviour for all your targets. There are
 three class methods on `MoyaProvider` you can use instead.
 
 ```swift
-MoyaProvider.NoStubbingBehavior
-MoyaProvider.ImmediateStubbingBehaviour
-MoyaProvider.DelayedStubbingBehaviour(seconds)
+MoyaProvider.NeverStub
+MoyaProvider.ImmediatelyStub
+MoyaProvider.DelayedStub(seconds)
 ```
 
 So, in the above example, if you wanted immediate stubbing behaviour for all 
 targets, either of the following would work.
 
 ```swift
-let provider = MoyaProvider<MyTarget>(stubBehavior: { (_: MyTarget) -> Moya.StubbedBehavior in return .Immediate })
-let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubBehavior in return .Immediate })
+let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediatelyStub)
 ```
 
 Next, there's the `networkActivityClosure` parameter. This is a closure
