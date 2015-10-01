@@ -21,12 +21,8 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
 
     /// Designated request-making method.
     public func request(token: Target) -> Observable<MoyaResponse> {
-        let endpoint = self.endpoint(token)
 
         return deferred { [weak self] () -> Observable<MoyaResponse> in
-            if let existingObservable = self!.inflightRequests[endpoint] {
-                return existingObservable
-            }
 
             let observable: Observable<MoyaResponse> =  AnonymousObservable { observer in
                 let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
@@ -41,19 +37,8 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
                 }
 
                 return AnonymousDisposable {
-                    if let weakSelf = self {
-                        objc_sync_enter(weakSelf)
-                        weakSelf.inflightRequests[endpoint] = nil
-                        cancellableToken?.cancel()
-                        objc_sync_exit(weakSelf)
-                    }
+                    cancellableToken?.cancel()
                 }
-            }
-            
-            if let weakSelf = self {
-                objc_sync_enter(weakSelf)
-                weakSelf.inflightRequests[endpoint] = observable
-                objc_sync_exit(weakSelf)
             }
 
             return observable

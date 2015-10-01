@@ -35,7 +35,6 @@ Some awesome features of Moya:
 
 - Compile-time checking for correct API endpoint accesses.
 - Lets you define a clear usage of different endpoints with associated enum values.
-- Keeps track of inflight requests with ReactiveCocoa and prevents duplicate requests.
 - Treats test stubs as first-class citizens so unit testing is super-easy.
 
 Sample Project

@@ -232,7 +232,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a reactive provider") {
+                describe("a reactive provider with RACSignal") {
                     var provider: ReactiveCocoaMoyaProvider<GitHub>!
                     beforeEach {
                         provider = ReactiveCocoaMoyaProvider<GitHub>()
@@ -263,6 +263,35 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect{message}.toEventually( equal(userMessage) )
                     }
+                }
+            }
+            
+            describe("a reactive provider with SignalProducer") {
+                var provider: ReactiveCocoaMoyaProvider<GitHub>!
+                beforeEach {
+                    provider = ReactiveCocoaMoyaProvider<GitHub>()
+                }
+                
+                it("returns some data for zen request") {
+                    var message: String?
+                    
+                    let target: GitHub = .Zen
+                    provider.request(target).startWithNext { (response) -> Void in
+                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                    }
+                    
+                    expect{message}.toEventually( equal(zenMessage) )
+                }
+                
+                it("returns some data for user profile request") {
+                    var message: String?
+                    
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    provider.request(target).startWithNext { (response) -> Void in
+                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                    }
+                    
+                    expect{message}.toEventually( equal(userMessage) )
                 }
             }
         }

@@ -159,4 +159,3 @@ private enum HTTPBin: MoyaTarget {
         }
     }
 }
-

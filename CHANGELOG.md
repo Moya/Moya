@@ -13,12 +13,15 @@
   - `MoyaProvider.MoyaEndpointResolution` to `MoyaProvider.RequestClosure`
   - `MoyaProvider.endpointResolver` to `MoyaProvider.requestClosure`
   - `MoyaProvider.stubBehavior` to `MoyaProvider.stubClosure`
-  - `MoyaProvider` initializer parameter names.
+  - `MoyaCredentialClosure` to `CredentialClosure`
+  - `MoyaProvider` initializer parameter names
   - `MoyaCompletion` to `Moya.Completion`
   - `DefaultEndpointResolution` to `DefaultRequestMapping`
 - Renamed `T` generic types of `MoyaProvider` and `Endpoint` classes to `Target`.
 - Removed errantly named `DefaultEndpointResolution`
 - Changes the closure to map `Endpoint`s to `NSURLRequest`s asynchonous.
+- Removes inflight request tracking for ReactiveCocoa and RxSwift providers. **Breaking Change**
+- Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
 
 # 2.4.1
 
@@ -31,8 +34,6 @@
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
-
-# 2.2.2
 
 # 2.2.2
 
