@@ -202,9 +202,7 @@ private extension MoyaProvider {
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        for p in plugins {
-            request = p.willSendRequest(token, request: request)
-        }
+        plugins.forEach { request = $0.willSendRequest(token, request: request) }
         
         // Perform the actual request
         request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
