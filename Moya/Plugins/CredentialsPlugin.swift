@@ -25,7 +25,7 @@ public class CredentialsPlugin<Target: MoyaTarget>: Plugin<Target> {
     override func willSendStubbedRequest(token: Target, request: NSURLRequest) {
         // Just call the closure here to make it possible to test the 
         // credentials closure when stubbed requests are turned on
-        let _ = credentialsClosure(token)
+        _ = credentialsClosure(token)
     }
     
 }
