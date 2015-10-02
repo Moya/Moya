@@ -98,11 +98,10 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                     requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                     stubClosure: StubClosure = MoyaProvider.NeverStub,
-                    networkActivityClosure: Moya.NetworkActivityClosure? = nil,
-                    credentialClosure: CredentialClosure? = nil,
-                    manager: Manager = Alamofire.Manager.sharedInstance) {
+                    manager: Manager = Alamofire.Manager.sharedInstance,
+                    plugins: [Plugin<Target>] = []) {
 
-                        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
+                        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
 
                 override func request(token: Target, completion: Moya.Completion) -> Cancellable {
@@ -210,11 +209,10 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                         stubClosure: StubClosure = MoyaProvider.NeverStub,
-                        networkActivityClosure: Moya.NetworkActivityClosure? = nil,
-                        credentialClosure: CredentialClosure? = nil,
-                        manager: Manager = Alamofire.Manager.sharedInstance) {
+                        manager: Manager = Alamofire.Manager.sharedInstance,
+                        plugins: [Plugin<Target>] = []) {
 
-                            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
+                            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }
                     
                     override func request(token: Target, completion: Moya.Completion) -> Cancellable {

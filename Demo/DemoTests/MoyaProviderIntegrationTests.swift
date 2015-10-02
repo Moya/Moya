@@ -167,14 +167,16 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a provider with credential closures") {
+                describe("a provider with credential plugin") {
                     it("credential closure returns nil") {
                         var called = false
-                        let provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
-                            
+                        let plugin = CredentialsPlugin<HTTPBin> { (target) -> (NSURLCredential?) in
                             called = true
                             return nil
-                        })
+                        }
+                        
+                        let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
+                        expect(provider.plugins.count).to(equal(1))
                         
                         let target: HTTPBin = .BasicAuth
                         provider.request(target) { (data, statusCode, response, error) in }
@@ -186,12 +188,12 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     it("credential closure returns valid username and password") {
                         var called = false
                         var returnedData: NSData?
-                        let provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
-                            
+                        let plugin = CredentialsPlugin<HTTPBin> { (target) -> (NSURLCredential?) in
                             called = true
                             return NSURLCredential(user: "user", password: "passwd", persistence: .None)
-                        })
+                        }
                         
+                        let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
                         let target: HTTPBin = .BasicAuth
                         provider.request(target) { (data, statusCode, response, error) in
                             returnedData = data
@@ -202,15 +204,16 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
 
-                describe("a provider with network activity closures") {
+                describe("a provider with network activity plugin") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                             if change == .Began {
                                 called = true
                             }
-                        })
-
+                        }
+                        
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in }
 
@@ -219,12 +222,13 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                             if change == .Ended {
                                 called = true
                             }
-                        })
+                        }
 
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in }
 
