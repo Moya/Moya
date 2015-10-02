@@ -7,7 +7,7 @@ class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
         beforeEach {
-            provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
         }
         
         it("returns stubbed data for zen request") {
@@ -61,11 +61,12 @@ class MoyaProviderSpec: QuickSpec {
                 
         it("credential closure returns nil") {
             var called = false
-            let provider = MoyaProvider<HTTPBin>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, credentialClosure: { (target) -> NSURLCredential? in
-                    called = true
-                    return nil
-            })
+            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
+                called = true
+                return nil
+            }
             
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
             provider.request(target) { (data, statusCode, response, error) in }
             
@@ -74,11 +75,12 @@ class MoyaProviderSpec: QuickSpec {
         
         it("credential closure returns valid username and password") {
             var called = false
-            let provider = MoyaProvider<HTTPBin>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, credentialClosure: { (target) -> NSURLCredential? in
+            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
                 called = true
                 return NSURLCredential(user: "user", password: "passwd", persistence: .None)
-            })
+            }
             
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
             provider.request(target) { (data, statusCode, response, error) in }
             
@@ -114,12 +116,13 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the beginning of network requests") {
             var called = false
-            let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
+            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                 if change == .Began {
                     called = true
                 }
-            })
-
+            }
+            
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
             provider.request(target) { (data, statusCode, response, error) in }
 
@@ -128,12 +131,13 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the end of network requests") {
             var called = false
-            let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour, networkActivityClosure: { (change) -> () in
+            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                 if change == .Ended {
                     called = true
                 }
-            })
+            }
 
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
             provider.request(target) { (data, statusCode, response, error) in }
             
@@ -141,7 +145,7 @@ class MoyaProviderSpec: QuickSpec {
         }
 
         it("delays execution when appropriate") {
-            let provider = MoyaProvider<GitHub>(stubBehavior: MoyaProvider.DelayedStubbingBehaviour(2))
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(2))
 
             let startDate = NSDate()
             var endDate: NSDate?
@@ -165,11 +169,11 @@ class MoyaProviderSpec: QuickSpec {
             
             beforeEach {
                 executed = false
-                let endpointResolution = { (endpoint: Endpoint<GitHub>) -> (NSURLRequest) in
+                let endpointResolution = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) in
                     executed = true
-                    return endpoint.urlRequest
+                    done(endpoint.urlRequest)
                 }
-                provider = MoyaProvider<GitHub>(endpointResolver: endpointResolution, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("executes the endpoint resolver") {
@@ -183,7 +187,7 @@ class MoyaProviderSpec: QuickSpec {
         describe("with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("returns stubbed data for zen request") {
@@ -231,7 +235,7 @@ class MoyaProviderSpec: QuickSpec {
         describe("with lazy data") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: lazyEndpointClosure, stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+                provider = MoyaProvider<GitHub>(endpointClosure: lazyEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
 
             it("returns stubbed data for zen request") {
@@ -275,8 +279,8 @@ extension GitHub : MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
-        return [:]
+    var parameters: [String: AnyObject]? {
+        return nil
     }
     var sampleData: NSData {
         switch self {
@@ -315,7 +319,7 @@ private enum HTTPBin: MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
+    var parameters: [String: AnyObject]? {
         switch self {
         default:
             return [:]

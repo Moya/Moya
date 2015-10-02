@@ -6,9 +6,6 @@ Moya provides an optional `ReactiveMoyaProvider` subclass of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `RACSignal`s. 
 
-(Yeah, `RACSignal`, like the Objective-C ReactiveCocoa API. I'll
-get around to updating it to RAC 3 one of these days...)
-
 The network request is not started until the signal is subscribed
 to. If a request is made while an identical request is already 
 in-progress, the original signal is returned, instead. If the

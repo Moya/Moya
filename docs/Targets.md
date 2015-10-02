@@ -63,12 +63,12 @@ Our `MoyaTarget` is shaping up, but we're not done yet. We also need a `paramete
 computed property that returns parameters defined by the enum case. Here's an example:
 
 ```swift
-    public var parameters: [String: AnyObject] {
+    public var parameters: [String: AnyObject]? {
         switch self {
         case .UserRepositories(_):
             return ["sort": "pushed"]
         default:
-            return [:]
+            return nil
         }
     }
 ```

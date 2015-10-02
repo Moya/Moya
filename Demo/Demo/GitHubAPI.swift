@@ -35,12 +35,12 @@ extension GitHub : MoyaTarget {
     public var method: Moya.Method {
         return .GET
     }
-    public var parameters: [String: AnyObject] {
+    public var parameters: [String: AnyObject]? {
         switch self {
         case .UserRepositories(_):
             return ["sort": "pushed"]
         default:
-            return [:]
+            return nil
         }
     }
 

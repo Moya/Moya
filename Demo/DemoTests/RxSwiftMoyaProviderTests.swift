@@ -9,7 +9,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         var provider: RxMoyaProvider<GitHub>!
 
         beforeEach {
-            provider = RxMoyaProvider(stubBehavior: MoyaProvider.ImmediateStubbingBehaviour)
+            provider = RxMoyaProvider(stubClosure: MoyaProvider.ImmediatelyStub)
         }
 
         it("returns a MoyaResponse object") {
@@ -46,33 +46,6 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             let sampleResponse: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(sampleData, options: []) as! NSDictionary
             expect(receivedResponse).toNot(beNil())
         }
-
-        it("returns identical observables for inflight requests") {
-            let target: GitHub = .Zen
-
-            var response: MoyaResponse!
-
-            let parallelCount = 10
-            let observables = Array(0..<parallelCount).map { _ in provider.request(target) }
-            var completions = Array(0..<parallelCount).map { _ in false }
-            let queue = dispatch_queue_create("testing", DISPATCH_QUEUE_CONCURRENT)
-            dispatch_apply(observables.count, queue) { idx in
-                let i = idx
-                observables[i].subscribeNext { _ -> Void in
-                    if i == 5 { // We only need to check it once.
-                        expect(provider.inflightRequests.count).to(equal(1))
-                    }
-                    completions[i] = true
-                }
-            }
-
-            func allTrue(cs: [Bool]) -> Bool {
-                return cs.reduce(true) { (a,b) -> Bool in a && b }
-            }
-
-            expect(allTrue(completions)).toEventually(beTrue())
-            expect(provider.inflightRequests.count).to(equal(0))
-        }
     }
 }
 
@@ -100,8 +73,8 @@ extension GitHub : MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
-        return [:]
+    var parameters: [String: AnyObject]? {
+        return nil
     }
     var sampleData: NSData {
         switch self {
@@ -140,7 +113,7 @@ private enum HTTPBin: MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
+    var parameters: [String: AnyObject]? {
         switch self {
         default:
             return [:]

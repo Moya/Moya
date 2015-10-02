@@ -1,5 +1,29 @@
 # Next
 
+- Makes `parameters` on `MoyaTarget` an optional `[String: AnyObject]` dictionary.
+- Makes `parameters` and `httpHeaderFields` on `Endpoint` to be optionals.
+- Renamed stubbing identifiers: **Breaking Change**
+  - `Moya.StubbedBehavior` renamed to `Moya.StubBehavior`
+  - `Moya.MoyaStubbedBehavior` renamed to `Moya.StubClosure`
+  - `Moya.NoStubbingBehavior` -> `Moya.NeverStub`
+  - `Moya.ImmediateStubbingBehaviour` -> `Moya.NeverStub`
+  - `Moya.DelayedStubbingBehaviour` -> `Moya.DelayedStub`
+- Default class functions have been moved to extensions to prevent inadvertent subclassing.
+- Renamed other identifiers: **Breaking Change**
+  - `MoyaProvider.MoyaEndpointsClosure` to `MoyaProvider.EndpointClosure`
+  - `MoyaProvider.MoyaEndpointResolution` to `MoyaProvider.RequestClosure`
+  - `MoyaProvider.endpointResolver` to `MoyaProvider.requestClosure`
+  - `MoyaProvider.stubBehavior` to `MoyaProvider.stubClosure`
+  - `MoyaCredentialClosure` to `CredentialClosure`
+  - `MoyaProvider` initializer parameter names
+  - `MoyaCompletion` to `Moya.Completion`
+  - `DefaultEndpointResolution` to `DefaultRequestMapping`
+- Renamed `T` generic types of `MoyaProvider` and `Endpoint` classes to `Target`.
+- Removed errantly named `DefaultEndpointResolution`
+- Changes the closure to map `Endpoint`s to `NSURLRequest`s asynchonous.
+- Removes inflight request tracking for ReactiveCocoa and RxSwift providers. **Breaking Change**
+- Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
+
 # 2.4.1
 
 - Corrects problem with ignoring the specified Alamofire manager
@@ -11,8 +35,6 @@
 # 2.3.0
 
 - Adds data processing functions for use with `RxMoyaProvider`
-
-# 2.2.2
 
 # 2.2.2
 

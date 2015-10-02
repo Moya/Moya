@@ -35,7 +35,6 @@ Some awesome features of Moya:
 
 - Compile-time checking for correct API endpoint accesses.
 - Lets you define a clear usage of different endpoints with associated enum values.
-- Keeps track of inflight requests with ReactiveCocoa and prevents duplicate requests.
 - Treats test stubs as first-class citizens so unit testing is super-easy.
 
 Sample Project
@@ -80,7 +79,7 @@ pod 'Moya/RxSwift'
 Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 The full Moya framework is bundled in each of those frameworks;
-importing more than one framework in a single file will result in 
+importing more than one framework in a single file will result in
 ambiguous lookups at compile time.
 
 ```

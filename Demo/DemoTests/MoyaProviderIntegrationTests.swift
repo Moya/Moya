@@ -28,8 +28,8 @@ extension GitHub : MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
-        return [:]
+    var parameters: [String: AnyObject]? {
+        return nil
     }
     var sampleData: NSData {
         switch self {
@@ -55,7 +55,7 @@ private enum HTTPBin: MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
+    var parameters: [String: AnyObject]? {
         switch self {
         default:
             return [:]
@@ -167,14 +167,16 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a provider with credential closures") {
+                describe("a provider with credential plugin") {
                     it("credential closure returns nil") {
                         var called = false
-                        let provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
-                            
+                        let plugin = CredentialsPlugin<HTTPBin> { (target) -> (NSURLCredential?) in
                             called = true
                             return nil
-                        })
+                        }
+                        
+                        let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
+                        expect(provider.plugins.count).to(equal(1))
                         
                         let target: HTTPBin = .BasicAuth
                         provider.request(target) { (data, statusCode, response, error) in }
@@ -186,12 +188,12 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     it("credential closure returns valid username and password") {
                         var called = false
                         var returnedData: NSData?
-                        let provider  = MoyaProvider<HTTPBin>(credentialClosure: {(target) -> (NSURLCredential?) in
-                            
+                        let plugin = CredentialsPlugin<HTTPBin> { (target) -> (NSURLCredential?) in
                             called = true
                             return NSURLCredential(user: "user", password: "passwd", persistence: .None)
-                        })
+                        }
                         
+                        let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
                         let target: HTTPBin = .BasicAuth
                         provider.request(target) { (data, statusCode, response, error) in
                             returnedData = data
@@ -202,15 +204,16 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
 
-                describe("a provider with network activity closures") {
+                describe("a provider with network activity plugin") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                             if change == .Began {
                                 called = true
                             }
-                        })
-
+                        }
+                        
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in }
 
@@ -219,12 +222,13 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        let provider = MoyaProvider<GitHub>(networkActivityClosure: { (change) -> () in
+                        let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                             if change == .Ended {
                                 called = true
                             }
-                        })
+                        }
 
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
                         provider.request(target) { (data, statusCode, response, error) in }
 
@@ -232,7 +236,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
                 
-                describe("a reactive provider") {
+                describe("a reactive provider with RACSignal") {
                     var provider: ReactiveCocoaMoyaProvider<GitHub>!
                     beforeEach {
                         provider = ReactiveCocoaMoyaProvider<GitHub>()
@@ -263,30 +267,35 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect{message}.toEventually( equal(userMessage) )
                     }
+                }
+            }
+            
+            describe("a reactive provider with SignalProducer") {
+                var provider: ReactiveCocoaMoyaProvider<GitHub>!
+                beforeEach {
+                    provider = ReactiveCocoaMoyaProvider<GitHub>()
+                }
+                
+                it("returns some data for zen request") {
+                    var message: String?
                     
-                    it("returns identical signals for inflight requests") {
-                        let target: GitHub = .Zen
-                        let signal1 = provider.request(target)
-                        let signal2 = provider.request(target)
-                        
-                        expect(provider.inflightRequests.count).to(equal(0))
-                        
-                        var receivedResponse: MoyaResponse!
-                        
-                        signal1.subscribeNext { (response) -> Void in
-                            receivedResponse = response as? MoyaResponse
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        
-                        signal2.subscribeNext { (response) -> Void in
-                            expect(receivedResponse).toNot(beNil())
-                            expect(receivedResponse).to(beIndenticalToResponse( response as! MoyaResponse) )
-                            expect(provider.inflightRequests.count).to(equal(1))
-                        }
-                        
-                        // Allow for network request to complete
-                        expect(provider.inflightRequests.count).toEventually( equal(0) )
+                    let target: GitHub = .Zen
+                    provider.request(target).startWithNext { (response) -> Void in
+                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                     }
+                    
+                    expect{message}.toEventually( equal(zenMessage) )
+                }
+                
+                it("returns some data for user profile request") {
+                    var message: String?
+                    
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    provider.request(target).startWithNext { (response) -> Void in
+                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                    }
+                    
+                    expect{message}.toEventually( equal(userMessage) )
                 }
             }
         }

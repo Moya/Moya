@@ -36,7 +36,7 @@ class EndpointSpec: QuickSpec {
                 let message = "I hate it when villains quote Shakespeare."
                 let newEndpoint = endpoint.endpointByAddingParameters(["message": message])
                 
-                let newEndpointMessageObject: AnyObject? = newEndpoint.parameters["message"]
+                let newEndpointMessageObject: AnyObject? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointMessage).to(equal(message))
@@ -45,14 +45,14 @@ class EndpointSpec: QuickSpec {
                 expect(newEndpoint.URL).to(equal(endpoint.URL))
                 expect(newEndpoint.method).to(equal(endpoint.method))
                 expect(newEndpoint.parameterEncoding).to(equal(endpoint.parameterEncoding))
-                expect(newEndpoint.httpHeaderFields.count).to(equal(endpoint.httpHeaderFields.count))
+                expect(newEndpoint.httpHeaderFields?.count).to(equal(endpoint.httpHeaderFields?.count))
             }
             
             it("returns a new endpoint for endpointByAddingHTTPHeaderFields") {
                 let agent = "Zalbinian"
                 let newEndpoint = endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": agent])
                 
-                let newEndpointAgentObject: AnyObject? = newEndpoint.httpHeaderFields["User-Agent"]
+                let newEndpointAgentObject: AnyObject? = newEndpoint.httpHeaderFields?["User-Agent"]
                 let newEndpointAgent = newEndpointAgentObject as? String
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointAgent).to(equal(agent))
@@ -60,7 +60,7 @@ class EndpointSpec: QuickSpec {
                 // Compare other properties to ensure they've been copied correctly
                 expect(newEndpoint.URL).to(equal(endpoint.URL))
                 expect(newEndpoint.method).to(equal(endpoint.method))
-                expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
+                expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
                 expect(newEndpoint.parameterEncoding).to(equal(endpoint.parameterEncoding))
             }
 
@@ -74,15 +74,15 @@ class EndpointSpec: QuickSpec {
                 // Compare other properties to ensure they've been copied correctly
                 expect(newEndpoint.URL).to(equal(endpoint.URL))
                 expect(newEndpoint.method).to(equal(endpoint.method))
-                expect(newEndpoint.parameters.count).to(equal(endpoint.parameters.count))
-                expect(newEndpoint.httpHeaderFields.count).to(equal(endpoint.httpHeaderFields.count))
+                expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
+                expect(newEndpoint.httpHeaderFields?.count).to(equal(endpoint.httpHeaderFields?.count))
             }
             
             it("returns a correct URL request") {
                 let request = endpoint.urlRequest
                 expect(request.URL!.absoluteString).to(equal("https://api.github.com/zen"))
                 expect(NSString(data: request.HTTPBody!, encoding: 4)).to(equal("{\"Nemesis\":\"Harvey\"}"))
-                let titleObject: AnyObject? = endpoint.httpHeaderFields["Title"]
+                let titleObject: AnyObject? = endpoint.httpHeaderFields?["Title"]
                 let title = titleObject as? String
                 expect(title).to(equal("Dominar"))
             }
@@ -114,8 +114,8 @@ extension GitHub : MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
-        return [:]
+    var parameters: [String: AnyObject]? {
+        return nil
     }
     var sampleData: NSData {
         switch self {
@@ -145,7 +145,7 @@ private enum HTTPBin: MoyaTarget {
     var method: Moya.Method {
         return .GET
     }
-    var parameters: [String: AnyObject] {
+    var parameters: [String: AnyObject]? {
         switch self {
         default:
             return [:]
@@ -159,4 +159,3 @@ private enum HTTPBin: MoyaTarget {
         }
     }
 }
-

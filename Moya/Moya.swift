@@ -1,19 +1,11 @@
 import Foundation
 import Alamofire
 
-/// Block to be executed when a request has completed.
-public typealias MoyaCompletion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
-
 /// General-purpose class to store some enums and class funcs.
 public class Moya {
 
-    /// Network activity change notification type.
-    public enum NetworkActivityChangeType {
-        case Began, Ended
-    }
-
-    /// Network activity change notification closure typealias.
-    public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
+    /// Closure to be executed when a request has completed.
+    public typealias Completion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
 
     /// Represents an HTTP method.
     public enum Method {
@@ -64,8 +56,8 @@ public class Moya {
         }
     }
 
-    public enum StubbedBehavior {
-        case NoStubbing
+    public enum StubBehavior {
+        case Never
         case Immediate
         case Delayed(seconds: NSTimeInterval)
     }
@@ -76,7 +68,7 @@ public protocol MoyaTarget {
     var baseURL: NSURL { get }
     var path: String { get }
     var method: Moya.Method { get }
-    var parameters: [String: AnyObject] { get }
+    var parameters: [String: AnyObject]? { get }
     var sampleData: NSData { get }
 }
 
@@ -87,112 +79,140 @@ public protocol Cancellable {
 
 /// Internal token that can be used to cancel requests
 struct CancellableToken: Cancellable {
-    let cancelAction: () -> ()
+    let cancelAction: () -> Void
 
     func cancel() {
         cancelAction()
     }
 }
 
-/// Request provider class. Requests should be made through this class only.
-public class MoyaProvider<T: MoyaTarget> {
-    /// Closure that defines the endpoints for the provider.
-    public typealias MoyaEndpointsClosure = (T) -> (Endpoint<T>)
-    /// Closure that resolves an Endpoint into an NSURLRequest.
-    public typealias MoyaEndpointResolution = (endpoint: Endpoint<T>) -> (NSURLRequest)
-    public typealias MoyaStubbedBehavior = ((T) -> (Moya.StubbedBehavior))
-    public typealias MoyaCredentialClosure = (T) -> (NSURLCredential?)
+struct CancellableWrapper: Cancellable {
+    var innerCancellable: CancellableToken? = nil
 
-    public let endpointClosure: MoyaEndpointsClosure
-    public let endpointResolver: MoyaEndpointResolution
-    public let credentialClosure: MoyaCredentialClosure?
-    public let stubBehavior: MoyaStubbedBehavior
-    public let networkActivityClosure: Moya.NetworkActivityClosure?
+    private var isCancelled = false
+
+    func cancel() {
+        innerCancellable?.cancel()
+    }
+}
+
+/// Request provider class. Requests should be made through this class only.
+public class MoyaProvider<Target: MoyaTarget> {
+
+    /// Closure that defines the endpoints for the provider.
+    public typealias EndpointClosure = Target -> Endpoint<Target>
+
+    /// Closure that resolves an Endpoint into an NSURLRequest.
+    public typealias RequestClosure = (Endpoint<Target>, NSURLRequest -> Void) -> Void
+
+    /// Closure that decides if/how a request should be stubbed.
+    public typealias StubClosure = Target -> Moya.StubBehavior
+
+    public let endpointClosure: EndpointClosure
+    public let requestClosure: RequestClosure
+    public let stubClosure: StubClosure
     public let manager: Manager
+    
+    /// A list of plugins
+    /// e.g. for logging, network activity indicator or credentials
+    public let plugins: [Plugin<Target>]
 
     /// Initializes a provider.
-    public init(endpointClosure: MoyaEndpointsClosure = MoyaProvider.DefaultEndpointMapping, endpointResolver: MoyaEndpointResolution = MoyaProvider.DefaultEndpointResolution, stubBehavior: MoyaStubbedBehavior = MoyaProvider.NoStubbingBehavior, credentialClosure: MoyaCredentialClosure? = nil, networkActivityClosure: Moya.NetworkActivityClosure? = nil, manager: Manager = Alamofire.Manager.sharedInstance) {
+    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider.NeverStub,
+        manager: Manager = Alamofire.Manager.sharedInstance,
+        plugins: [Plugin<Target>] = []) {
+
         self.endpointClosure = endpointClosure
-        self.endpointResolver = endpointResolver
-        self.credentialClosure = credentialClosure
-        self.stubBehavior = stubBehavior
-        self.networkActivityClosure = networkActivityClosure
+        self.requestClosure = requestClosure
+        self.stubClosure = stubClosure
         self.manager = manager
+        self.plugins = plugins
     }
 
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
-    public func endpoint(token: T) -> Endpoint<T> {
+    public func endpoint(token: Target) -> Endpoint<Target> {
         return endpointClosure(token)
     }
 
-    /// Designated request-making method.
-    public func request(token: T, completion: MoyaCompletion) -> Cancellable {
+    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
+    public func request(token: Target, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(token)
-        let request = endpointResolver(endpoint: endpoint)
-        let credential = credentialClosure?(token)
-        let stubBehavior = self.stubBehavior(token)
+        let stubBehavior = self.stubClosure(token)
+        var cancellableToken = CancellableWrapper()
 
-        switch stubBehavior {
-        case .NoStubbing:
-            return sendRequest(request, credential:credential, completion: completion)
-        default:
-            return stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+        let performNetworking = { (request: NSURLRequest) in
+            if cancellableToken.isCancelled { return }
+
+            switch stubBehavior {
+            case .Never:
+                cancellableToken.innerCancellable = self.sendRequest(token, request: request, completion: completion)
+            default:
+                cancellableToken.innerCancellable = self.stubRequest(token, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            }
         }
-    }
 
-    public class func DefaultEndpointMapping(target: T) -> Endpoint<T> {
+        requestClosure(endpoint, performNetworking)
+
+        return cancellableToken
+    }
+}
+
+/// Mark: Defaults
+
+public extension MoyaProvider {
+
+    // These functions are default mappings to endpoings and requests.
+
+    public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
         return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
-    @available(*, unavailable, renamed="DefaultEndpointResolution", message="Use #DefaultEndpointResolution method instead")
-    public class func DefaultEnpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
-        return DefaultEndpointResolution(endpoint)
+    public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
+        return closure(endpoint.urlRequest)
+    }
+}
+
+/// Mark: Stubbing
+
+public extension MoyaProvider {
+
+    // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
+    // at least add some class functions to allow easy access to common stubbing closures.
+
+    public final class func NeverStub(_: Target) -> Moya.StubBehavior {
+        return .Never
     }
 
-    public class func DefaultEndpointResolution(endpoint: Endpoint<T>) -> NSURLRequest {
-        return endpoint.urlRequest
-    }
-
-    public class func NoStubbingBehavior(_: T) -> Moya.StubbedBehavior {
-        return .NoStubbing
-    }
-
-    public class func ImmediateStubbingBehaviour(_: T) -> Moya.StubbedBehavior {
+    public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
         return .Immediate
     }
 
-    public class func DelayedStubbingBehaviour(seconds: NSTimeInterval) -> MoyaStubbedBehavior {
-        return { (_: T) -> Moya.StubbedBehavior in return .Delayed(seconds: seconds) }
+    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
+        return .Delayed(seconds: seconds)
     }
 }
 
 private extension MoyaProvider {
-    func sendRequest(request: NSURLRequest, credential: NSURLCredential?, completion: MoyaCompletion) -> CancellableToken {
 
-        networkActivityClosure?(change: .Began)
-
-        // We need to keep a reference to the closure without a reference to ourself.
-        let networkActivityCallback = networkActivityClosure
-
+    func sendRequest(token: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
         var request = manager.request(request)
+        let plugins = self.plugins
         
-        if let cred = credential {
-            request = request.authenticate(usingCredential: cred)
+        // Give plugins the chance to alter the outgoing request
+        for p in plugins {
+            request = p.willSendRequest(token, request: request)
         }
         
-        request.response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+        // Perform the actual request
+        request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+            let statusCode = response?.statusCode
 
-                networkActivityCallback?(change: .Ended)
-
-                // Alamofire always sends the data param as an NSData? type, but we'll
-                // add a check just in case something changes in the future.
-                let statusCode = response?.statusCode
-                if let data = data {
-                    completion(data: data, statusCode: statusCode, response: response, error: error)
-                } else {
-                    completion(data: nil, statusCode: statusCode, response: response, error: error)
-                }
+            // Inform all plugins about the response
+            plugins.forEach { $0.didReceiveResponse(token, data: data, statusCode: statusCode, response: response, error: error) }
+            completion(data: data, statusCode: statusCode, response: response, error: error)
         }
 
         return CancellableToken {
@@ -200,26 +220,28 @@ private extension MoyaProvider {
         }
     }
 
-    func stubRequest(request: NSURLRequest, completion: MoyaCompletion, endpoint: Endpoint<T>, stubBehavior: Moya.StubbedBehavior) -> CancellableToken {
+    func stubRequest(token: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         var canceled = false
         let cancellableToken = CancellableToken { canceled = true }
-
-        // Begin network activity closure
-        networkActivityClosure?(change: .Began)
-
+        let plugins = self.plugins
+        
+        plugins.forEach { $0.willSendStubbedRequest(token, request: request) }
+        
         let stub: () -> () = {
-            self.networkActivityClosure?(change: .Ended)
-
             if (canceled) {
-                completion(data: nil, statusCode: nil, response: nil, error: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
+                plugins.forEach { $0.didReceiveStubbedResponse(token, data: nil, statusCode: nil, response: nil, error: error) }
+                completion(data: nil, statusCode: nil, response: nil, error: error)
                 return
             }
 
             switch endpoint.sampleResponse.evaluate() {
             case .Success(let statusCode, let data):
-                completion(data: data(), statusCode: statusCode, response:nil, error: nil)
+                plugins.forEach { $0.didReceiveStubbedResponse(token, data: data(), statusCode: statusCode, response: nil, error: nil) }
+                completion(data: data(), statusCode: statusCode, response: nil, error: nil)
             case .Error(let statusCode, let error, let data):
-                completion(data: data?(), statusCode: statusCode, response:nil, error: error)
+                plugins.forEach { $0.didReceiveStubbedResponse(token, data: data?(), statusCode: statusCode, response: nil, error: error) }
+                completion(data: data?(), statusCode: statusCode, response: nil, error: error)
             case .Closure:
                 break  // the `evaluate()` method will never actually return a .Closure
             }
@@ -234,7 +256,7 @@ private extension MoyaProvider {
             dispatch_after(killTime, dispatch_get_main_queue()) {
                 stub()
             }
-        case .NoStubbing:
+        case .Never:
             fatalError("Method called to stub request when stubbing is disabled.")
         }
 

@@ -1,6 +1,6 @@
 import Quick
-import RxMoya
-import RxSwift
+import ReactiveMoya
+import ReactiveCocoa
 import Nimble
 
 // Necessary since UIImage(named:) doesn't work correctly in the test bundle
@@ -13,19 +13,19 @@ private extension UIImage {
     }
 }
 
-func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<MoyaResponse> {
-    return just(MoyaResponse(statusCode: statusCode, data: data, response: nil))
+func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, NSError> {
+    return SignalProducer(value: MoyaResponse(statusCode: statusCode, data: data, response: nil))
 }
 
-class ObservableMoyaSpec: QuickSpec {
+class SignalProducerMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {
                 let data = NSData()
-                let observable = observableSendingData(data, statusCode: 10)
+                let signal = signalSendingData(data, statusCode: 10)
                 
                 var errored = false
-                observable.filterStatusCodes(0...9).subscribe { (event) -> Void in
+                signal.filterStatusCodes(0...9).start { (event) -> Void in
                     switch event {
                     case .Next(let object):
                         XCTFail("called on non-correct status code: \(object)")
@@ -41,18 +41,18 @@ class ObservableMoyaSpec: QuickSpec {
             
             it("filters out non-successful status codes") {
                 let data = NSData()
-                let observable = observableSendingData(data, statusCode: 404)
+                let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
-                observable.filterSuccessfulStatusCodes().subscribe { (event) -> Void in
-                    switch event {
-                    case .Next(let object):
-                        XCTFail("called on non-success status code: \(object)")
-                    case .Error:
-                        errored = true
-                    default:
-                        break
-                    }
+                signal.filterSuccessfulStatusCodes().start { (event) -> Void in
+                        switch event {
+                        case .Next(let object):
+                            XCTFail("called on non-success status code: \(object)")
+                        case .Error:
+                            errored = true
+                        default:
+                            break
+                        }
                 }
                 
                 expect(errored).to(beTruthy())
@@ -60,10 +60,10 @@ class ObservableMoyaSpec: QuickSpec {
             
             it("passes through correct status codes") {
                 let data = NSData()
-                let observable = observableSendingData(data)
+                let signal = signalSendingData(data)
                 
                 var called = false
-                observable.filterSuccessfulStatusCodes().subscribeNext { (object) -> Void in
+                signal.filterSuccessfulStatusCodes().startWithNext { (object) -> Void in
                     called = true
                 }
                 
@@ -72,10 +72,10 @@ class ObservableMoyaSpec: QuickSpec {
             
             it("filters out non-successful status and redirect codes") {
                 let data = NSData()
-                let observable = observableSendingData(data, statusCode: 404)
+                let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
-                observable.filterSuccessfulStatusAndRedirectCodes().subscribe { (event) -> Void in
+                signal.filterSuccessfulStatusAndRedirectCodes().start { (event) -> Void in
                     switch event {
                     case .Next(let object):
                         XCTFail("called on non-success status code: \(object)")
@@ -91,10 +91,10 @@ class ObservableMoyaSpec: QuickSpec {
             
             it("passes through correct status codes") {
                 let data = NSData()
-                let observable = observableSendingData(data)
+                let signal = signalSendingData(data)
                 
                 var called = false
-                observable.filterSuccessfulStatusAndRedirectCodes().subscribeNext { (object) -> Void in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithNext { (object) -> Void in
                     called = true
                 }
                 
@@ -103,10 +103,10 @@ class ObservableMoyaSpec: QuickSpec {
             
             it("passes through correct redirect codes") {
                 let data = NSData()
-                let observable = observableSendingData(data, statusCode: 304)
+                let signal = signalSendingData(data, statusCode: 304)
                 
                 var called = false
-                observable.filterSuccessfulStatusAndRedirectCodes().subscribeNext { (object) -> Void in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithNext { (object) -> Void in
                     called = true
                 }
                 
@@ -118,10 +118,10 @@ class ObservableMoyaSpec: QuickSpec {
             it("maps data representing an image to an image") {
                 let image = UIImage.testPNGImage(named: "testImage")
                 let data = UIImageJPEGRepresentation(image, 0.75)
-                let observable = observableSendingData(data!)
+                let signal = signalSendingData(data!)
                 
                 var size: CGSize?
-                observable.mapImage().subscribeNext { (image) -> Void in
+                signal.mapImage().startWithNext { (image) -> Void in
                     size = image.size
                 }
                 
@@ -130,15 +130,15 @@ class ObservableMoyaSpec: QuickSpec {
             
             it("ignores invalid data") {
                 let data = NSData()
-                let observable = observableSendingData(data)
+                let signal = signalSendingData(data)
                 
                 var receivedError: NSError?
-                observable.mapImage().subscribe { (event) -> Void in
+                signal.mapImage().start { (event) -> Void in
                     switch event {
                     case .Next:
                         XCTFail("next called for invalid data")
                     case .Error(let error):
-                        receivedError = error as NSError
+                        receivedError = error
                     default:
                         break
                     }
@@ -152,10 +152,10 @@ class ObservableMoyaSpec: QuickSpec {
             it("maps data representing some JSON to that JSON") {
                 let json = ["name": "John Crighton", "occupation": "Astronaut"]
                 let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-                let observable = observableSendingData(data)
+                let signal = signalSendingData(data)
                 
                 var receivedJSON: [String: String]?
-                observable.mapJSON().subscribeNext { (json) -> Void in
+                signal.mapJSON().startWithNext { (json) -> Void in
                     if let json = json as? [String: String] {
                         receivedJSON = json
                     }
@@ -168,15 +168,15 @@ class ObservableMoyaSpec: QuickSpec {
             it("returns a Cocoa error domain for invalid JSON") {
                 let json = "{ \"name\": \"john }"
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
-                let observable = observableSendingData(data!)
+                let signal = signalSendingData(data!)
                 
                 var receivedError: NSError?
-                observable.mapJSON().subscribe { (event) -> Void in
+                signal.mapJSON().start { (event) -> Void in
                     switch event {
                     case .Next:
                         XCTFail("next called for invalid data")
                     case .Error(let error):
-                        receivedError = error as NSError
+                        receivedError = error
                     default:
                         break
                     }
@@ -191,10 +191,10 @@ class ObservableMoyaSpec: QuickSpec {
             it("maps data representing a string to a string") {
                 let string = "You have the rights to the remains of a silent attorney."
                 let data = string.dataUsingEncoding(NSUTF8StringEncoding)
-                let observable = observableSendingData(data!)
+                let signal = signalSendingData(data!)
                 
                 var receivedString: String?
-                observable.mapString().subscribeNext { (string) -> Void in
+                signal.mapString().startWithNext { (string) -> Void in
                     receivedString = string
                     return
                 }
