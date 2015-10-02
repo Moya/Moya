@@ -24,20 +24,12 @@ public class Plugin<Target: MoyaTarget> {
     // 
     // This does not work, because `plugins` is now unable to infer the actual type of the typealias `T`.
     
-    func willSendRequest(token: Target, request: Alamofire.Request) -> Alamofire.Request {
+    func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, token: Target) -> Alamofire.Request {
         // Should be overridden if necessary
         return request
     }
     
-    func didReceiveResponse(token: Target, data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) {
-        // Should be overridden if necessary
-    }
-    
-    func willSendStubbedRequest(token: Target, request: NSURLRequest) {
-        // Should be overridden if necessary
-    }
-    
-    func didReceiveStubbedResponse(token: Target, data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) {
+    func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, token: Target) {
         // Should be overridden if necessary
     }
 

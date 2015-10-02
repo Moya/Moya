@@ -202,14 +202,14 @@ private extension MoyaProvider {
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { request = $0.willSendRequest(token, request: request) }
+        plugins.forEach { request = $0.willSendRequest(request, provider: self, token: token) }
         
         // Perform the actual request
         request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
             let statusCode = response?.statusCode
 
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(token, data: data, statusCode: statusCode, response: response, error: error) }
+            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, token: token) }
             completion(data: data, statusCode: statusCode, response: response, error: error)
         }
 
@@ -221,24 +221,25 @@ private extension MoyaProvider {
     func stubRequest(token: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         var canceled = false
         let cancellableToken = CancellableToken { canceled = true }
+        let request = manager.request(request)
         let plugins = self.plugins
         
-        plugins.forEach { $0.willSendStubbedRequest(token, request: request) }
+        plugins.forEach { $0.willSendRequest(request, provider: self, token: token) }
         
         let stub: () -> () = {
             if (canceled) {
                 let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
-                plugins.forEach { $0.didReceiveStubbedResponse(token, data: nil, statusCode: nil, response: nil, error: error) }
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, token: token) }
                 completion(data: nil, statusCode: nil, response: nil, error: error)
                 return
             }
 
             switch endpoint.sampleResponse.evaluate() {
             case .Success(let statusCode, let data):
-                plugins.forEach { $0.didReceiveStubbedResponse(token, data: data(), statusCode: statusCode, response: nil, error: nil) }
+                plugins.forEach { $0.didReceiveResponse(data(), statusCode: statusCode, response: nil, error: nil, provider: self, token: token) }
                 completion(data: data(), statusCode: statusCode, response: nil, error: nil)
             case .Error(let statusCode, let error, let data):
-                plugins.forEach { $0.didReceiveStubbedResponse(token, data: data?(), statusCode: statusCode, response: nil, error: error) }
+                plugins.forEach { $0.didReceiveResponse(data?(), statusCode: statusCode, response: nil, error: error, provider: self, token: token) }
                 completion(data: data?(), statusCode: statusCode, response: nil, error: error)
             case .Closure:
                 break  // the `evaluate()` method will never actually return a .Closure

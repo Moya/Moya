@@ -13,19 +13,13 @@ public class CredentialsPlugin<Target: MoyaTarget>: Plugin<Target> {
     }
     
     
-    // MARK: PluginType
+    // MARK: Plugin
     
-    public override func willSendRequest(token: Target, request: Alamofire.Request) -> Alamofire.Request {
+    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, token: Target) -> Alamofire.Request {
         if let credentials = credentialsClosure(token) {
             request.authenticate(usingCredential: credentials)
         }
         return request
-    }
-    
-    override func willSendStubbedRequest(token: Target, request: NSURLRequest) {
-        // Just call the closure here to make it possible to test the 
-        // credentials closure when stubbed requests are turned on
-        _ = credentialsClosure(token)
     }
     
 }
