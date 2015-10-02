@@ -160,6 +160,9 @@
 		4B5AACC731938DEA5B8CF05A4EE94927 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDCEE65A53F8E37D2EB6E1C2F57477C /* Upload.swift */; };
 		4C5A4F5C6F21C76162601ECBC0628A68 /* RACIndexSetSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = D979579EB9BE00A716BCFA0F70E505EA /* RACIndexSetSequence.m */; };
 		4C7563E3F2561E17F5E282512279CEE6 /* MainScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978938314F78837962788B66D839871 /* MainScheduler.swift */; };
+		4D69297B1BBE74200047AF37 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D69297A1BBE74200047AF37 /* Plugin.swift */; };
+		4D69297C1BBE74200047AF37 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D69297A1BBE74200047AF37 /* Plugin.swift */; };
+		4D69297D1BBE74200047AF37 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D69297A1BBE74200047AF37 /* Plugin.swift */; };
 		4ED27FAF27938E52C71E0C875918D33E /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7751264C7513434B25B571E5FE167FD9 /* Debug.swift */; };
 		4ED5A9F0A2EEC3BF10BA3E6ADE0D8D9C /* QuickSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = C414D73D3BDC8F94CB4670D2557E1FC2 /* QuickSpec.m */; };
 		4F44A17581DA8B4330CA1F2924A1E56E /* OperationQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0873CB54153AA787FC10F0D40E7CF3 /* OperationQueueScheduler.swift */; };
@@ -729,6 +732,7 @@
 		48B7DD21C6F50EB5725F950F7E1057BB /* RACDynamicSignal.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACDynamicSignal.m; path = "ReactiveCocoa/Objective-C/RACDynamicSignal.m"; sourceTree = "<group>"; };
 		4A5B6892138263482EC5489CD8E1F48D /* ObserveOnSerialDispatchQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObserveOnSerialDispatchQueue.swift; path = RxSwift/Observables/Implementations/ObserveOnSerialDispatchQueue.swift; sourceTree = "<group>"; };
 		4B56FE48DA6EAFBA448C2B78F990FE67 /* QuickConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QuickConfiguration.h; path = Quick/Configuration/QuickConfiguration.h; sourceTree = "<group>"; };
+		4D69297A1BBE74200047AF37 /* Plugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
 		4EA053EAD48523107EB11F03009F2010 /* RACKVOChannel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RACKVOChannel.m; path = "ReactiveCocoa/Objective-C/RACKVOChannel.m"; sourceTree = "<group>"; };
 		4F57C74B6566B696DE48BC8EA2B1FA14 /* Never.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Never.swift; path = RxSwift/Observables/Implementations/Never.swift; sourceTree = "<group>"; };
 		5063CE719471BA3F427075892A0851B5 /* ReactiveMoya-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReactiveMoya-dummy.m"; sourceTree = "<group>"; };
@@ -1603,6 +1607,7 @@
 			children = (
 				C40791A23BE84AE84D9122A38F038FF7 /* Endpoint.swift */,
 				D08F1E492B30DF6D7829B737EFE381FD /* Moya.swift */,
+				4D69297A1BBE74200047AF37 /* Plugin.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -2570,6 +2575,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D69297C1BBE74200047AF37 /* Plugin.swift in Sources */,
 				1636A38CEDCB1E5B003FE49DB018828B /* Endpoint.swift in Sources */,
 				8C38C3BB3CFD1212CA3F64F1940A930C /* Moya+ReactiveCocoa.swift in Sources */,
 				D3EE5901BBC3FE317AFEDF352BFAD5BF /* Moya.swift in Sources */,
@@ -2639,6 +2645,7 @@
 				02CE45128A7EAC5299B6FD9582C1A091 /* MoyaError.swift in Sources */,
 				8A4A2FDAECF996EC9E19E5989C934A4C /* MoyaResponse.swift in Sources */,
 				22806D87264A4B304ED1D00FCBE880A9 /* Observable+Moya.swift in Sources */,
+				4D69297D1BBE74200047AF37 /* Plugin.swift in Sources */,
 				A5E98A2C5D3F61DB05F0F56019058EED /* RxMoya-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2792,6 +2799,7 @@
 			files = (
 				F3078287CAB2A7FC7E6E4B17F21A9635 /* Endpoint.swift in Sources */,
 				E08A084ACE3778841365B973970767F8 /* Moya-dummy.m in Sources */,
+				4D69297B1BBE74200047AF37 /* Plugin.swift in Sources */,
 				82BE4B47F4D0038489B77EA1797FDAAA /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

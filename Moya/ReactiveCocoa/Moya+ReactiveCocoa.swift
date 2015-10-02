@@ -9,11 +9,9 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
     override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
-        networkActivityClosure: Moya.NetworkActivityClosure? = nil,
-        credentialClosure: CredentialClosure? = nil,
-        manager: Manager = Alamofire.Manager.sharedInstance) {
-        
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, networkActivityClosure: networkActivityClosure, credentialClosure: credentialClosure, manager: manager)
+        manager: Manager = Alamofire.Manager.sharedInstance,
+        plugins: [Plugin<Target>] = []) {
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
     }
     
     /// Designated request-making method.
