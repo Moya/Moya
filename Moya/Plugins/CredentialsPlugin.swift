@@ -15,8 +15,8 @@ public class CredentialsPlugin<Target: MoyaTarget>: Plugin<Target> {
     
     // MARK: Plugin
     
-    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, token: Target) -> Alamofire.Request {
-        if let credentials = credentialsClosure(token) {
+    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, target: Target) -> Alamofire.Request {
+        if let credentials = credentialsClosure(target) {
             request.authenticate(usingCredential: credentials)
         }
         return request

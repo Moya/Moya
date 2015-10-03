@@ -118,9 +118,9 @@ public class MoyaProvider<Target: MoyaTarget> {
     }
 
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
-    public func request(token: Target, completion: Moya.Completion) -> Cancellable {
-        let endpoint = self.endpoint(token)
-        let stubBehavior = self.stubClosure(token)
+    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
+        let endpoint = self.endpoint(target)
+        let stubBehavior = self.stubClosure(target)
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in
@@ -128,9 +128,9 @@ public class MoyaProvider<Target: MoyaTarget> {
 
             switch stubBehavior {
             case .Never:
-                cancellableToken.innerCancellable = self.sendRequest(token, request: request, completion: completion)
+                cancellableToken.innerCancellable = self.sendRequest(target, request: request, completion: completion)
             default:
-                cancellableToken.innerCancellable = self.stubRequest(token, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }
 
@@ -178,19 +178,19 @@ public extension MoyaProvider {
 
 private extension MoyaProvider {
 
-    func sendRequest(token: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
+    func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
         var request = manager.request(request)
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { request = $0.willSendRequest(request, provider: self, token: token) }
+        plugins.forEach { request = $0.willSendRequest(request, provider: self, target: target) }
         
         // Perform the actual request
         request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
             let statusCode = response?.statusCode
 
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, token: token) }
+            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, target: target) }
             completion(data: data, statusCode: statusCode, response: response, error: error)
         }
 
@@ -199,28 +199,28 @@ private extension MoyaProvider {
         }
     }
 
-    func stubRequest(token: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         var canceled = false
         let cancellableToken = CancellableToken { canceled = true }
         let request = manager.request(request)
         let plugins = self.plugins
         
-        plugins.forEach { $0.willSendRequest(request, provider: self, token: token) }
+        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
         
         let stub: () -> () = {
             if (canceled) {
                 let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, token: token) }
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
                 completion(data: nil, statusCode: nil, response: nil, error: error)
                 return
             }
 
             switch endpoint.sampleResponseClosure() {
             case .NetworkResponse(let statusCode, let data):
-                plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: nil, error: nil, provider: self, token: token) }
+                plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: nil, error: nil, provider: self, target: target) }
                 completion(data: data, statusCode: statusCode, response: nil, error: nil)
             case .NetworkError(let error):
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, token: token) }
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
                 completion(data: nil, statusCode: nil, response: nil, error: error)
             }
         }

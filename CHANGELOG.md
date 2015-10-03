@@ -30,6 +30,7 @@
   - Also additionally, removed `Closure` case (see below).
 - Changed `Endpoint` to use a `sampleResponseClosure` instead of a `sampleResponse`, making all sample responses lazily executed. **Breaking Change**
 - ReactiveCocoa provider no longer replaces errors that contain status codes (an unlikely situation) with its own errors. It passes all errors directly through.
+- Renames `token` to `target` (it was usually `target` anyway, just made it consistent).
 
 # 2.4.1
 

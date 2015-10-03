@@ -189,6 +189,9 @@
 		5C9B7B10D50C75730C35E4DBCD6718C2 /* UITableViewHeaderFooterView+RACSignalSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 108D0F459849DF09F7B9D426BE71881D /* UITableViewHeaderFooterView+RACSignalSupport.m */; };
 		5D7D5C1DC009E47F0AD0B3DBDCF5015B /* RACUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = D51628CB64572F4A5065A3435640CB22 /* RACUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D88405B1BABC61255B91D3967F3664B /* RACDisposable.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E2AC210FEDE02B39E416479B76A0F05 /* RACDisposable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5E0BA6DC1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0BA6DB1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift */; settings = {ASSET_TAGS = (); }; };
+		5E0BA6DD1BC09F7700DF2A91 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0BA6DB1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift */; settings = {ASSET_TAGS = (); }; };
+		5E0BA6DE1BC09F7800DF2A91 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0BA6DB1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift */; settings = {ASSET_TAGS = (); }; };
 		5EB3133D6F3854E89CB7E425EAC3A946 /* EndWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75983DD08D77A6E7A920F3B7ABCE8010 /* EndWith.swift */; };
 		5EDED09309DA38E561718A04D401B791 /* StartWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4744E5AB3CDDC046300BED46B2A1F142 /* StartWith.swift */; };
 		5FE69727D1C937B93955E6339260B334 /* DSL+Wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC938085160408977FDA0DA8A88FD0 /* DSL+Wait.swift */; };
@@ -777,6 +780,7 @@
 		5CF63396AFFB4D3EE8AE8559F1C0FEC5 /* RACImmediateScheduler.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RACImmediateScheduler.h; path = "ReactiveCocoa/Objective-C/RACImmediateScheduler.h"; sourceTree = "<group>"; };
 		5D1BF1700B404713C81EA42708448F80 /* DisposeBase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisposeBase.swift; path = RxSwift/Disposables/DisposeBase.swift; sourceTree = "<group>"; };
 		5D38B2FF55E91860325C2621DA292ADD /* Variable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = RxSwift/Subjects/Variable.swift; sourceTree = "<group>"; };
+		5E0BA6DB1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		5E90B93F7F0178E64180BBF4C9E24196 /* ObjCMatcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObjCMatcher.swift; path = Nimble/Wrappers/ObjCMatcher.swift; sourceTree = "<group>"; };
 		5EA4F28DD575931B4AEE9BF0A31E9B2C /* RxMoya-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "RxMoya-Private.xcconfig"; sourceTree = "<group>"; };
 		5EE9CDAA66A1AEF359EDAC1E3E493801 /* RACScheduler+Subclass.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "RACScheduler+Subclass.h"; path = "ReactiveCocoa/Objective-C/RACScheduler+Subclass.h"; sourceTree = "<group>"; };
@@ -1615,6 +1619,7 @@
 			children = (
 				4D69297F1BBE84FA0047AF37 /* CredentialsPlugin.swift */,
 				4D6929831BBE85F70047AF37 /* NetworkActivityPlugin.swift */,
+				5E0BA6DB1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift */,
 			);
 			path = Plugins;
 			sourceTree = "<group>";
@@ -2594,6 +2599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D69297C1BBE74200047AF37 /* Plugin.swift in Sources */,
+				5E0BA6DD1BC09F7700DF2A91 /* NetworkLoggerPlugin.swift in Sources */,
 				1636A38CEDCB1E5B003FE49DB018828B /* Endpoint.swift in Sources */,
 				8C38C3BB3CFD1212CA3F64F1940A930C /* Moya+ReactiveCocoa.swift in Sources */,
 				D3EE5901BBC3FE317AFEDF352BFAD5BF /* Moya.swift in Sources */,
@@ -2667,6 +2673,7 @@
 				02CE45128A7EAC5299B6FD9582C1A091 /* MoyaError.swift in Sources */,
 				8A4A2FDAECF996EC9E19E5989C934A4C /* MoyaResponse.swift in Sources */,
 				22806D87264A4B304ED1D00FCBE880A9 /* Observable+Moya.swift in Sources */,
+				5E0BA6DE1BC09F7800DF2A91 /* NetworkLoggerPlugin.swift in Sources */,
 				4D69297D1BBE74200047AF37 /* Plugin.swift in Sources */,
 				A5E98A2C5D3F61DB05F0F56019058EED /* RxMoya-dummy.m in Sources */,
 			);
@@ -2825,6 +2832,7 @@
 				4D69297B1BBE74200047AF37 /* Plugin.swift in Sources */,
 				82BE4B47F4D0038489B77EA1797FDAAA /* Moya.swift in Sources */,
 				4D6929801BBE84FA0047AF37 /* CredentialsPlugin.swift in Sources */,
+				5E0BA6DC1BC09F2A00DF2A91 /* NetworkLoggerPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
