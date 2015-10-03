@@ -77,25 +77,6 @@ public protocol Cancellable {
     func cancel()
 }
 
-/// Internal token that can be used to cancel requests
-struct CancellableToken: Cancellable {
-    let cancelAction: () -> Void
-
-    func cancel() {
-        cancelAction()
-    }
-}
-
-struct CancellableWrapper: Cancellable {
-    var innerCancellable: CancellableToken? = nil
-
-    private var isCancelled = false
-
-    func cancel() {
-        innerCancellable?.cancel()
-    }
-}
-
 /// Request provider class. Requests should be made through this class only.
 public class MoyaProvider<Target: MoyaTarget> {
 
@@ -258,5 +239,24 @@ private extension MoyaProvider {
         }
 
         return cancellableToken
+    }
+}
+
+/// Private token that can be used to cancel requests
+private struct CancellableToken: Cancellable {
+    let cancelAction: () -> Void
+
+    func cancel() {
+        cancelAction()
+    }
+}
+
+private struct CancellableWrapper: Cancellable {
+    var innerCancellable: CancellableToken? = nil
+
+    private var isCancelled = false
+
+    func cancel() {
+        innerCancellable?.cancel()
     }
 }
