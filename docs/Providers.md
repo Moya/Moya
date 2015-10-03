@@ -117,3 +117,8 @@ let manager = Manager(
 
 let provider = MoyaProvider<MyTarget>(manager: manager)
 ```
+
+You may also provide an array of `plugins` to the provider. These receive callbacks
+before a request is sent and after a response is received. There are a few plugins
+included already: one for network activity (`NetworkActivityPlugin`) and another
+for [HTTP Authentication](Authentication.md).

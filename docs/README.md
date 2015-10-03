@@ -9,7 +9,7 @@ It accomplishes this with the following pipline.
 ----------------
 
 <p align="center">
-    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="ReactiveExtensions.md">ReactiveCocoa</a>
+    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveExtensions.md">ReactiveCocoa</a>
 </p>
 
 ----------------
@@ -17,6 +17,9 @@ It accomplishes this with the following pipline.
 You _should not_ have to reference Alamofire directly. It's an _awesome_ 
 library, but the point of Moya is that you don't have to deal with details
 that are that low-level. 
+
+(If you _need_ to use Alamofire, you can pass in a `Manager` instance to the
+`MoyaProvider` initializer.)
 
 If there is something you want to change about the behaviour of Moya, there is 
 probably a way to do it without modifying the library. Moya is designed to be 

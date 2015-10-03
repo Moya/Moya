@@ -142,7 +142,7 @@ provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 Note that the `endpointResolver` is *not* intended to be used for any sort of 
 application-level mapping. This closure is really about modifying properties 
 specific to the `NSURLRequest`, or providing information to the request that 
-cannot be known until that request is created, like an OAuth signature. 
+cannot be known until that request is created, like cookies settings.
 
 This parameter is actually very useful for modifying the request object. 
 `NSURLRequest` has many properties you can customize. Say you want to disable 
