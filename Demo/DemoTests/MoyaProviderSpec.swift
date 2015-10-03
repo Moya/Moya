@@ -217,18 +217,16 @@ class MoyaProviderSpec: QuickSpec {
                 let _ = target.sampleData
                 expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
             }
-            
+
             it("returns stubbed error data when present") {
-                var errorMessage = ""
+                var receivedError: NSError?
                 
                 let target: GitHub = .UserProfile("ashfurrow")
                 provider.request(target) { (object, statusCode, response, error) in
-                    if let object = object {
-                        errorMessage = NSString(data: object, encoding: NSUTF8StringEncoding) as! String
-                    }
+                    receivedError = error as NSError?
                 }
 
-                expect{errorMessage}.toEventually(equal("Houston, we have a problem"), timeout: 1, pollInterval: 0.1)
+                expect(receivedError?.localizedDescription) == "Houston, we have a problem"
             }
         }
 
@@ -297,12 +295,12 @@ private func url(route: MoyaTarget) -> String {
 }
 
 private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.Success(200, {target.sampleData})}), method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.NetworkResponse(200, {target.sampleData})}), method: target.method, parameters: target.parameters)
 }
 
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
-    let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
+    let error = NSError(domain: "com.moya.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .NetworkError(error), method: target.method, parameters: target.parameters)
 }
 
 private enum HTTPBin: MoyaTarget {

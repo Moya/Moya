@@ -67,7 +67,7 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(200, target.sampleData))
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .NetworkResponse(200, target.sampleData))
 }
 ```
 
@@ -88,9 +88,9 @@ whatever you want. Say you want to test errors, too.
 let failureEndpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
     let sampleResponse = { () -> (EndpointSampleResponse) in
         if sendErrors {
-            return .Error(404, NSError())
+            return .NetworkError(NSError())
         } else {
-            return .Success(200, target.sampleData)
+            return .NetworkResponse(200, target.sampleData)
         }
     }()
     return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: sampleResponse)

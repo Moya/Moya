@@ -167,7 +167,7 @@ public extension MoyaProvider {
 
     public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+        return Endpoint(URL: url, sampleResponse: .NetworkResponse(200, {target.sampleData}), method: target.method, parameters: target.parameters)
     }
 
     public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
@@ -235,12 +235,12 @@ private extension MoyaProvider {
             }
 
             switch endpoint.sampleResponse.evaluate() {
-            case .Success(let statusCode, let data):
+            case .NetworkResponse(let statusCode, let data):
                 plugins.forEach { $0.didReceiveResponse(data(), statusCode: statusCode, response: nil, error: nil, provider: self, token: token) }
                 completion(data: data(), statusCode: statusCode, response: nil, error: nil)
-            case .Error(let statusCode, let error, let data):
-                plugins.forEach { $0.didReceiveResponse(data?(), statusCode: statusCode, response: nil, error: error, provider: self, token: token) }
-                completion(data: data?(), statusCode: statusCode, response: nil, error: error)
+            case .NetworkError(let error):
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, token: token) }
+                completion(data: nil, statusCode: nil, response: nil, error: error)
             case .Closure:
                 break  // the `evaluate()` method will never actually return a .Closure
             }

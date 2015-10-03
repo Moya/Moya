@@ -5,13 +5,14 @@ import Alamofire
 public enum EndpointSampleResponse {
     // Swift won't let us put an enum inside a generic class like Endpoint.
 
-    case Success(Int, () -> NSData)
-    case Error(Int?, ErrorType?, (() -> NSData)?)
+    case NetworkResponse(Int, () -> NSData)
+    case NetworkError(ErrorType?)
+    // TODO: We don't need this anymore, let's just evaluate all the sample responses.
     case Closure(() -> EndpointSampleResponse)
 
     func evaluate() -> EndpointSampleResponse {
         switch self {
-        case Success, Error: return self
+        case NetworkResponse, NetworkError: return self
         case Closure(let closure):
             return closure().evaluate()
         }

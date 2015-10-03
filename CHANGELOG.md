@@ -23,6 +23,11 @@
 - Changes the closure to map `Endpoint`s to `NSURLRequest`s asynchonous.
 - Removes inflight request tracking for ReactiveCocoa and RxSwift providers. **Breaking Change**
 - Adds support for ReactiveCocoa 4 by moving `ReactiveCocoaMoyaProvider` to use `SignalProducer` instead of `RACSignal`
+- Renamed `EndpointSampleResponse` cases: **Breaking Change**
+  - `Success` to `NetworkResponse`
+  - `Error` to `NetworkError`
+  - Additionally, `NetworkError` no longer has a status code or data associated with it. This represents an error from the underlying iOS network stack, like an inability to connect. See [#200](https://github.com/Moya/Moya/issues/200) for more details.
+- ReactiveCocoa provider no longer replaces errors that contain status codes (an unlikely situation) with its own errors. It passes all errors directly through. 
 
 # 2.4.1
 

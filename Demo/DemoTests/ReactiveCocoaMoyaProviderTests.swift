@@ -62,18 +62,20 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
 
-            it("returns the HTTP status code as the error code") {
-                var code: Int?
+            fit("returns the correct error message") {
+                var receivedError: NSError!
 
-                provider.request(.Zen).subscribeError { (error) -> Void in
-                    code = error.code
+                waitUntil { done in
+                    provider.request(.Zen).subscribeError { (error) -> Void in
+                        receivedError = error
+                        done()
+                    }
                 }
 
-                expect(code).toNot(beNil())
-                expect(code).to(equal(401))
+                expect(receivedError.domain) == "com.moya.error"
             }
 
-            it("returns errpr for zen request") {
+            it("returns an error") {
                 var errored = false
 
                 let target: GitHub = .Zen
@@ -167,35 +169,6 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 expect(receivedResponse) == sampleResponse
             }
             
-            describe("failing") {
-                var provider: ReactiveCocoaMoyaProvider<GitHub>!
-                beforeEach {
-                    provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
-                }
-                
-                it("returns the HTTP status code as the error code") {
-                    var code: Int?
-                    
-                    provider.request(.Zen).startWithError { (error) -> Void in
-                        code = error.code
-                    }
-                    
-                    expect(code).toNot(beNil())
-                    expect(code).to(equal(401))
-                }
-                
-                it("returns errpr for zen request") {
-                    var errored = false
-                    
-                    let target: GitHub = .Zen
-                    provider.request(target).startWithError { (error) -> Void in
-                        errored = true
-                    }
-                    
-                    expect(errored).to(beTruthy())
-                }
-            }
-            
             describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
                 struct TestCancellable: Cancellable {
                     static var cancelled = false
@@ -285,12 +258,12 @@ private func url(route: MoyaTarget) -> String {
 }
 
 private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.Success(200, {target.sampleData})}), method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.NetworkResponse(200, {target.sampleData})}), method: target.method, parameters: target.parameters)
 }
 
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
-    let errorData = "Houston, we have a problem".dataUsingEncoding(NSUTF8StringEncoding)!
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Error(401, NSError(domain: "com.moya.error", code: 0, userInfo: nil), {errorData}), method: target.method, parameters: target.parameters)
+    let error = NSError(domain: "com.moya.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
+    return Endpoint<GitHub>(URL: url(target), sampleResponse: .NetworkError(error), method: target.method, parameters: target.parameters)
 }
 
 private enum HTTPBin: MoyaTarget {
