@@ -61,11 +61,12 @@ class MoyaProviderSpec: QuickSpec {
                 
         it("credential closure returns nil") {
             var called = false
-            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, credentialClosure: { (target) -> NSURLCredential? in
-                    called = true
-                    return nil
-            })
+            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
+                called = true
+                return nil
+            }
             
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
             provider.request(target) { (data, statusCode, response, error) in }
             
@@ -74,11 +75,12 @@ class MoyaProviderSpec: QuickSpec {
         
         it("credential closure returns valid username and password") {
             var called = false
-            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, credentialClosure: { (target) -> NSURLCredential? in
+            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
                 called = true
                 return NSURLCredential(user: "user", password: "passwd", persistence: .None)
-            })
+            }
             
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
             provider.request(target) { (data, statusCode, response, error) in }
             
@@ -114,12 +116,13 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the beginning of network requests") {
             var called = false
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, networkActivityClosure: { (change) -> () in
+            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                 if change == .Began {
                     called = true
                 }
-            })
-
+            }
+            
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
             provider.request(target) { (data, statusCode, response, error) in }
 
@@ -128,12 +131,13 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the end of network requests") {
             var called = false
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, networkActivityClosure: { (change) -> () in
+            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
                 if change == .Ended {
                     called = true
                 }
-            })
+            }
 
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
             provider.request(target) { (data, statusCode, response, error) in }
             

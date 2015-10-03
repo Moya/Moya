@@ -7,15 +7,6 @@ public class Moya {
     /// Closure to be executed when a request has completed.
     public typealias Completion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
 
-    /// Network activity change notification type.
-    public enum NetworkActivityChangeType {
-        case Began, Ended
-    }
-
-    /// Network activity change notification closure typealias.
-    /// Explicitly outside the MoyaProvider type since it doesn't touch the Target generic.
-    public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
-
     /// Represents an HTTP method.
     public enum Method {
         case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
@@ -117,30 +108,27 @@ public class MoyaProvider<Target: MoyaTarget> {
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = Target -> Moya.StubBehavior
 
-    public typealias CredentialClosure = Target -> NSURLCredential?
-
     public let endpointClosure: EndpointClosure
     public let requestClosure: RequestClosure
     public let stubClosure: StubClosure
-    public let credentialClosure: CredentialClosure?
-
-    public let networkActivityClosure: Moya.NetworkActivityClosure?
     public let manager: Manager
+    
+    /// A list of plugins
+    /// e.g. for logging, network activity indicator or credentials
+    public let plugins: [Plugin<Target>]
 
     /// Initializes a provider.
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
-        networkActivityClosure: Moya.NetworkActivityClosure? = nil,
-        credentialClosure: CredentialClosure? = nil,
-        manager: Manager = Alamofire.Manager.sharedInstance) {
+        manager: Manager = Alamofire.Manager.sharedInstance,
+        plugins: [Plugin<Target>] = []) {
 
         self.endpointClosure = endpointClosure
         self.requestClosure = requestClosure
         self.stubClosure = stubClosure
-        self.networkActivityClosure = networkActivityClosure
-        self.credentialClosure = credentialClosure
         self.manager = manager
+        self.plugins = plugins
     }
 
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -152,9 +140,6 @@ public class MoyaProvider<Target: MoyaTarget> {
     public func request(token: Target, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(token)
         let stubBehavior = self.stubClosure(token)
-
-        let credential = credentialClosure?(token)
-
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in
@@ -162,9 +147,9 @@ public class MoyaProvider<Target: MoyaTarget> {
 
             switch stubBehavior {
             case .Never:
-                cancellableToken.innerCancellable = self.sendRequest(request, credential: credential, completion: completion)
+                cancellableToken.innerCancellable = self.sendRequest(token, request: request, completion: completion)
             default:
-                cancellableToken.innerCancellable = self.stubRequest(request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+                cancellableToken.innerCancellable = self.stubRequest(token, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }
 
@@ -212,30 +197,20 @@ public extension MoyaProvider {
 
 private extension MoyaProvider {
 
-    func sendRequest(request: NSURLRequest, credential: NSURLCredential?, completion: Moya.Completion) -> CancellableToken {
-        networkActivityClosure?(change: .Began)
-
-        // We need to keep a reference to the closure without a reference to ourself.
-        let networkActivityCallback = networkActivityClosure
-
+    func sendRequest(token: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
         var request = manager.request(request)
+        let plugins = self.plugins
         
-        if let cred = credential {
-            request = request.authenticate(usingCredential: cred)
-        }
+        // Give plugins the chance to alter the outgoing request
+        plugins.forEach { request = $0.willSendRequest(request, provider: self, token: token) }
         
-        request.response { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+        // Perform the actual request
+        request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+            let statusCode = response?.statusCode
 
-                networkActivityCallback?(change: .Ended)
-
-                // Alamofire always sends the data param as an NSData? type, but we'll
-                // add a check just in case something changes in the future.
-                let statusCode = response?.statusCode
-                if let data = data {
-                    completion(data: data, statusCode: statusCode, response: response, error: error)
-                } else {
-                    completion(data: nil, statusCode: statusCode, response: response, error: error)
-                }
+            // Inform all plugins about the response
+            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, token: token) }
+            completion(data: data, statusCode: statusCode, response: response, error: error)
         }
 
         return CancellableToken {
@@ -243,26 +218,29 @@ private extension MoyaProvider {
         }
     }
 
-    func stubRequest(request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    func stubRequest(token: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         var canceled = false
         let cancellableToken = CancellableToken { canceled = true }
-
-        // Begin network activity closure
-        networkActivityClosure?(change: .Began)
-
+        let request = manager.request(request)
+        let plugins = self.plugins
+        
+        plugins.forEach { $0.willSendRequest(request, provider: self, token: token) }
+        
         let stub: () -> () = {
-            self.networkActivityClosure?(change: .Ended)
-
             if (canceled) {
-                completion(data: nil, statusCode: nil, response: nil, error: NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, token: token) }
+                completion(data: nil, statusCode: nil, response: nil, error: error)
                 return
             }
 
             switch endpoint.sampleResponse.evaluate() {
             case .Success(let statusCode, let data):
-                completion(data: data(), statusCode: statusCode, response:nil, error: nil)
+                plugins.forEach { $0.didReceiveResponse(data(), statusCode: statusCode, response: nil, error: nil, provider: self, token: token) }
+                completion(data: data(), statusCode: statusCode, response: nil, error: nil)
             case .Error(let statusCode, let error, let data):
-                completion(data: data?(), statusCode: statusCode, response:nil, error: error)
+                plugins.forEach { $0.didReceiveResponse(data?(), statusCode: statusCode, response: nil, error: error, provider: self, token: token) }
+                completion(data: data?(), statusCode: statusCode, response: nil, error: error)
             case .Closure:
                 break  // the `evaluate()` method will never actually return a .Closure
             }
