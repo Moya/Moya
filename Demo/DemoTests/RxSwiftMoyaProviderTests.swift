@@ -88,13 +88,9 @@ private func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
-private let lazyEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .Closure({.NetworkResponse(200, {target.sampleData})}), method: target.method, parameters: target.parameters)
-}
-
 private let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(URL: url(target), sampleResponse: .NetworkError(error), method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkError(error)}, method: target.method, parameters: target.parameters)
 }
 
 private enum HTTPBin: MoyaTarget {
