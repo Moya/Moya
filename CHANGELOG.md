@@ -29,6 +29,8 @@
   - Additionally, `NetworkError` no longer has a status code or data associated with it. This represents an error from the underlying iOS network stack, like an inability to connect. See [#200](https://github.com/Moya/Moya/issues/200) for more details.
   - Also additionally, removed `Closure` case (see below).
 - Changed `Endpoint` to use a `sampleResponseClosure` instead of a `sampleResponse`, making all sample responses lazily executed. **Breaking Change**
+- New plugin architecture **Breaking Change**
+  - This replaces `networkActivityClosure` with a plugin.
 - ReactiveCocoa provider no longer replaces errors that contain status codes (an unlikely situation) with its own errors. It passes all errors directly through.
 - Renames `token` to `target` (it was usually `target` anyway, just made it consistent).
 

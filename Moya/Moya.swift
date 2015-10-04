@@ -179,11 +179,11 @@ public extension MoyaProvider {
 private extension MoyaProvider {
 
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
-        var request = manager.request(request)
+        let request = manager.request(request)
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { request = $0.willSendRequest(request, provider: self, target: target) }
+        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
         
         // Perform the actual request
         request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in

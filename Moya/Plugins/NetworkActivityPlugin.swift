@@ -20,9 +20,8 @@ public class NetworkActivityPlugin<Target: MoyaTarget>: Plugin<Target> {
     // MARK: Plugin
     
     /// Called by the provider as soon as the request is about to start
-    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, target: Target) -> Alamofire.Request {
+    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, target: Target) {
         networkActivityClosure(change: .Began)
-        return request
     }
 
     /// Called by the provider as soon as a response arrives

@@ -13,10 +13,8 @@ public class NetworkLoggerPlugin<Target: MoyaTarget>: Plugin<Target> {
         self.verbose = verbose
     }
 
-    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, target: Target) -> Alamofire.Request {
+    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, target: Target) {
         logNetworkRequest(request.request)
-
-        return request
     }
 
     public override func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, target: Target) {
