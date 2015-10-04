@@ -1,19 +1,19 @@
 import Foundation
-import Alamofire
 
+/// Logs network activity (outgoing requests and incoming responses).
 public class NetworkLoggerPlugin<Target: MoyaTarget>: Plugin<Target> {
     private let loggerId = "Moya_Logger"
     private let dateFormatString = "dd/MM/yyyy HH:mm:ss"
     private let dateFormatter = NSDateFormatter()
 
-    /// If true, also logs response data
+    /// If true, also logs response body data.
     public let verbose: Bool
 
     public init(verbose: Bool = false) {
         self.verbose = verbose
     }
 
-    public override func willSendRequest(request: Alamofire.Request, provider: MoyaProvider<Target>, target: Target) {
+    public override func willSendRequest(request: MoyaRequest, provider: MoyaProvider<Target>, target: Target) {
         logNetworkRequest(request.request)
     }
 

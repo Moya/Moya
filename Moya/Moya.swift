@@ -260,3 +260,6 @@ private struct CancellableWrapper: Cancellable {
         innerCancellable?.cancel()
     }
 }
+
+/// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
+extension Request: MoyaRequest { }
