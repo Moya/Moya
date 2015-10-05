@@ -77,25 +77,6 @@ public protocol Cancellable {
     func cancel()
 }
 
-/// Internal token that can be used to cancel requests
-struct CancellableToken: Cancellable {
-    let cancelAction: () -> Void
-
-    func cancel() {
-        cancelAction()
-    }
-}
-
-struct CancellableWrapper: Cancellable {
-    var innerCancellable: CancellableToken? = nil
-
-    private var isCancelled = false
-
-    func cancel() {
-        innerCancellable?.cancel()
-    }
-}
-
 /// Request provider class. Requests should be made through this class only.
 public class MoyaProvider<Target: MoyaTarget> {
 
@@ -137,9 +118,9 @@ public class MoyaProvider<Target: MoyaTarget> {
     }
 
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
-    public func request(token: Target, completion: Moya.Completion) -> Cancellable {
-        let endpoint = self.endpoint(token)
-        let stubBehavior = self.stubClosure(token)
+    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
+        let endpoint = self.endpoint(target)
+        let stubBehavior = self.stubClosure(target)
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in
@@ -147,9 +128,9 @@ public class MoyaProvider<Target: MoyaTarget> {
 
             switch stubBehavior {
             case .Never:
-                cancellableToken.innerCancellable = self.sendRequest(token, request: request, completion: completion)
+                cancellableToken.innerCancellable = self.sendRequest(target, request: request, completion: completion)
             default:
-                cancellableToken.innerCancellable = self.stubRequest(token, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }
 
@@ -167,7 +148,7 @@ public extension MoyaProvider {
 
     public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+        return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     }
 
     public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
@@ -197,19 +178,19 @@ public extension MoyaProvider {
 
 private extension MoyaProvider {
 
-    func sendRequest(token: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
-        var request = manager.request(request)
+    func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
+        let request = manager.request(request)
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { request = $0.willSendRequest(request, provider: self, token: token) }
+        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
         
         // Perform the actual request
         request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
             let statusCode = response?.statusCode
 
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, token: token) }
+            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, target: target) }
             completion(data: data, statusCode: statusCode, response: response, error: error)
         }
 
@@ -218,31 +199,29 @@ private extension MoyaProvider {
         }
     }
 
-    func stubRequest(token: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         var canceled = false
         let cancellableToken = CancellableToken { canceled = true }
         let request = manager.request(request)
         let plugins = self.plugins
         
-        plugins.forEach { $0.willSendRequest(request, provider: self, token: token) }
+        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
         
         let stub: () -> () = {
             if (canceled) {
                 let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, token: token) }
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
                 completion(data: nil, statusCode: nil, response: nil, error: error)
                 return
             }
 
-            switch endpoint.sampleResponse.evaluate() {
-            case .Success(let statusCode, let data):
-                plugins.forEach { $0.didReceiveResponse(data(), statusCode: statusCode, response: nil, error: nil, provider: self, token: token) }
-                completion(data: data(), statusCode: statusCode, response: nil, error: nil)
-            case .Error(let statusCode, let error, let data):
-                plugins.forEach { $0.didReceiveResponse(data?(), statusCode: statusCode, response: nil, error: error, provider: self, token: token) }
-                completion(data: data?(), statusCode: statusCode, response: nil, error: error)
-            case .Closure:
-                break  // the `evaluate()` method will never actually return a .Closure
+            switch endpoint.sampleResponseClosure() {
+            case .NetworkResponse(let statusCode, let data):
+                plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: nil, error: nil, provider: self, target: target) }
+                completion(data: data, statusCode: statusCode, response: nil, error: nil)
+            case .NetworkError(let error):
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
+                completion(data: nil, statusCode: nil, response: nil, error: error)
             }
         }
 
@@ -262,3 +241,25 @@ private extension MoyaProvider {
         return cancellableToken
     }
 }
+
+/// Private token that can be used to cancel requests
+private struct CancellableToken: Cancellable {
+    let cancelAction: () -> Void
+
+    func cancel() {
+        cancelAction()
+    }
+}
+
+private struct CancellableWrapper: Cancellable {
+    var innerCancellable: CancellableToken? = nil
+
+    private var isCancelled = false
+
+    func cancel() {
+        innerCancellable?.cancel()
+    }
+}
+
+/// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
+extension Request: MoyaRequest { }

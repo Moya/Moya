@@ -3,41 +3,36 @@ import Alamofire
 
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
-    // Swift won't let us put an enum inside a generic class like Endpoint.
 
-    case Success(Int, () -> NSData)
-    case Error(Int?, ErrorType?, (() -> NSData)?)
-    case Closure(() -> EndpointSampleResponse)
+    /// The network returned a response, including status code and data.
+    case NetworkResponse(Int, NSData)
 
-    func evaluate() -> EndpointSampleResponse {
-        switch self {
-        case Success, Error: return self
-        case Closure(let closure):
-            return closure().evaluate()
-        }
-    }
+    /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
+    case NetworkError(ErrorType?)
 }
 
 
 /// Class for reifying a target of the Target enum unto a concrete Endpoint.
 public class Endpoint<Target> {
+    public typealias SampleResponseClosure = () -> EndpointSampleResponse
+
     public let URL: String
     public let method: Moya.Method
-    public let sampleResponse: EndpointSampleResponse
+    public let sampleResponseClosure: SampleResponseClosure
     public let parameters: [String: AnyObject]?
     public let parameterEncoding: Moya.ParameterEncoding
     public let httpHeaderFields: [String: String]?
 
     /// Main initializer for Endpoint.
     public init(URL: String,
-        sampleResponse: EndpointSampleResponse,
+        sampleResponseClosure: SampleResponseClosure,
         method: Moya.Method = Moya.Method.GET,
         parameters: [String: AnyObject]? = nil,
         parameterEncoding: Moya.ParameterEncoding = .URL,
         httpHeaderFields: [String: String]? = nil) {
 
         self.URL = URL
-        self.sampleResponse = sampleResponse
+        self.sampleResponseClosure = sampleResponseClosure
         self.method = method
         self.parameters = parameters
         self.parameterEncoding = parameterEncoding
@@ -51,7 +46,7 @@ public class Endpoint<Target> {
             newParameters[key] = value
         }
 
-        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: newParameters, parameterEncoding: parameterEncoding, httpHeaderFields: httpHeaderFields)
+        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: parameterEncoding, httpHeaderFields: httpHeaderFields)
     }
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
@@ -61,13 +56,13 @@ public class Endpoint<Target> {
             newHTTPHeaderFields[key] = value
         }
 
-        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
+        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
     
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
     public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
         
-        return Endpoint(URL: URL, sampleResponse: sampleResponse, method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
+        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
     }
 }
 

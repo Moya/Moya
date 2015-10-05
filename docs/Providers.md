@@ -38,7 +38,7 @@ concrete `Endpoint` instance. Let's take a look at what one might look like.
 ```swift
 let endpointClosure = { target: MyTarget -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+    return Endpoint(URL: url!, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
@@ -117,3 +117,8 @@ let manager = Manager(
 
 let provider = MoyaProvider<MyTarget>(manager: manager)
 ```
+
+You may also provide an array of `plugins` to the provider. These receive callbacks
+before a request is sent and after a response is received. There are a few plugins
+included already: one for network activity (`NetworkActivityPlugin`), one for logging
+all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).

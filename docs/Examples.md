@@ -67,7 +67,7 @@ public func url(route: MoyaTarget) -> String {
 }
 
 let endpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: .Success(200, target.sampleData))
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)})
 }
 ```
 
@@ -82,18 +82,18 @@ example, though, they're just passed right through.
 Most of the time, this closure is just a straight translation from target,
 method, and parameters, into an `Endpoint` instance. However, since it's a
 closure, it'll be executed at each invocation of the API, so you could do
-whatever you want. Say you want to test errors, too.
+whatever you want. Say you want to test network error conditions like timeouts, too.
 
 ```swift
 let failureEndpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    let sampleResponse = { () -> (EndpointSampleResponse) in
-        if sendErrors {
-            return .Error(404, NSError())
+    let sampleResponseClosure = { () -> (EndpointSampleResponse) in
+        if shouldTimeout {
+            return .NetworkError(NSError())
         } else {
-            return .Success(200, target.sampleData)
+            return .NetworkResponse(200, target.sampleData)
         }
     }()
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponse: sampleResponse)
+    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponseClosure: sampleResponseClosure)
 }
 ```
 

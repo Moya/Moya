@@ -25,7 +25,7 @@ The first might resemble the following:
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    return Endpoint(URL: url!, sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+    return Endpoint(URL: url!, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -61,7 +61,7 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     return endpoint.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
 }
 ```
@@ -74,7 +74,7 @@ target that actually does the authentication. We could construct an
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponse: .Success(200, {target.sampleData}), method: target.method, parameters: target.parameters)
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 
     // Sign all non-authenticating requests
     switch target {
@@ -142,7 +142,7 @@ provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 Note that the `endpointResolver` is *not* intended to be used for any sort of 
 application-level mapping. This closure is really about modifying properties 
 specific to the `NSURLRequest`, or providing information to the request that 
-cannot be known until that request is created, like an OAuth signature. 
+cannot be known until that request is created, like cookies settings.
 
 This parameter is actually very useful for modifying the request object. 
 `NSURLRequest` has many properties you can customize. Say you want to disable 

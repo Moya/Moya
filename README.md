@@ -40,7 +40,7 @@ Some awesome features of Moya:
 Sample Project
 --------------
 
-There's a sample project in the Demo directory. Go nuts!
+There's a sample project in the Demo directory. Have fun!
 
 Project Status
 --------------
@@ -89,7 +89,7 @@ github "Moya/Moya"
 Use
 ---
 
-After some setup, using Moya is really simple. You can access an API like this:
+After [some setup](docs/Examples.md), using Moya is really simple. You can access an API like this:
 
 ```swift
 provider.request(.Zen) { (data, statusCode, response, error) in
@@ -113,7 +113,7 @@ provider.request(.UserProfile("ashfurrow")) { (data, statusCode, response, error
 No more typos in URLs. No more missing parameter values. No more messing with
 parameter encoding.
 
-For more examples, see the [documentation](docs/).
+For examples, see the [documentation](docs/).
 
 ReactiveCocoa Extensions
 ------------------------
