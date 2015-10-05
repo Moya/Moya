@@ -1,9 +1,0 @@
-machine:
-  xcode:
-    version: "6.3.1"
-dependencies:
-  post:
-    - make setup
-test:
-  override:
-    - make ci
