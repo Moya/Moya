@@ -131,12 +131,14 @@ extension ObservableType {
     /**
     Repeats the source observable sequence the specified number of times in case of an error or until it successfully terminates.
     
-    - parameter retryCount: Number of times to repeat the sequence.
+    If you encounter an error and want it to retry once, then you must use `retry(2)`
+
+    - parameter maxAttemptCount: Maximum number of times to repeat the sequence.
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.
     */
-    public func retry(retryCount: Int)
+    public func retry(maxAttemptCount: Int)
         -> Observable<E> {
-        return CatchSequence(sources: Repeat(count: retryCount, repeatedValue: self.asObservable()))
+        return CatchSequence(sources: Repeat(count: maxAttemptCount, repeatedValue: self.asObservable()))
     }
 }
 

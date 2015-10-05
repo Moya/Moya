@@ -1,5 +1,7 @@
 # Next
 
+# 3.0.0
+
 - Makes `parameters` on `MoyaTarget` an optional `[String: AnyObject]` dictionary.
 - Makes `parameters` and `httpHeaderFields` on `Endpoint` to be optionals.
 - Renamed stubbing identifiers: **Breaking Change**

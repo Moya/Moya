@@ -83,18 +83,6 @@ public enum Result<T, Error: ErrorType>: ResultType, CustomStringConvertible, Cu
 			ifFailure: { _ in result() })
 	}
 
-	/// Transform a function from one that uses `throw` to one that returns a `Result`
-//	public static func materialize<T, U>(f: T throws -> U) -> T -> Result<U, ErrorType> {
-//		return { x in
-//			do {
-//				return .Success(try f(x))
-//			} catch {
-//				return .Failure(error)
-//			}
-//		}
-//	}
-
-
 	// MARK: Errors
 
 	/// The domain for errors constructed by Result.
@@ -170,14 +158,13 @@ public func ?? <T, Error> (left: Result<T, Error>, @autoclosure right: () -> Res
 
 // MARK: - Derive result from failable closure
 
-// Disable until http://www.openradar.me/21341337 is fixed.
-//public func materialize<T>(f: () throws -> T) -> Result<T, ErrorType> {
-//	do {
-//		return .Success(try f())
-//	} catch {
-//		return .Failure(error)
-//	}
-//}
+public func materialize<T>(f: () throws -> T) -> Result<T, NSError> {
+	do {
+		return .Success(try f())
+	} catch {
+		return .Failure(error as NSError)
+	}
+}
 
 // MARK: - Cocoa API conveniences
 
