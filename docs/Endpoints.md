@@ -97,13 +97,11 @@ Sample responses are a requirement of the `MoyaTarget` protocol. However, they
 only specify the data returned. The Target-to-Endpoint mapping closure is where
 you can specify more details, which is useful for unit testing. 
 
-Sample responses have one of three values:
+Sample responses have one of two values:
 
-- `Success` with an `Int` status code and a closure that returns `NSData` returned data.
-- `Error`, with an `Int?` optional status code, an `NSError?` optional error, and an optional closure that returns `NSData` returned data.
-- `Closure`, with a closure that returns a sample response.
+- `NetworkResponse`, with an `Int` status code and an `NSData` returned data.
+- `NetworkError`, with an `ErrorType?` optional error type.
 
-The closure is useful for loading different sample data during unit tests. 
  
 Request Mapping
 ---------------
