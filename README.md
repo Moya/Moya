@@ -54,6 +54,7 @@ Currently, we support Xcode 7 and Swift 2.
 Installation
 ------------
 
+### Cocoapods
 Just add `pod 'Moya'` to your Podfile and go!
 
 In any file you'd like to use Moya in, don't forget to
@@ -74,8 +75,7 @@ For RxSwift extensions, use the following Podfile.
 pod 'Moya/RxSwift'
 ```
 
-----------------
-
+### Carthage
 Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 The full Moya framework is bundled in each of those frameworks;
