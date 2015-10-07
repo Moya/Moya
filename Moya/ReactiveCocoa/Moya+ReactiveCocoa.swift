@@ -17,7 +17,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
     /// Designated request-making method.
     public func request(token: Target) -> SignalProducer<MoyaResponse, NSError> {
 
-        /// returns a new producer which starts a new producer which invokes the requests. The created signal of the inner producer is saved for inflight request
+        /// returns a new producer which starts a new producer which invokes the requests. 
         return SignalProducer { [weak self] outerSink, outerDisposable in
             
             let producer: SignalProducer<MoyaResponse, NSError> = SignalProducer { [weak self] requestSink, requestDisposable in

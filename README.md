@@ -119,13 +119,13 @@ Reactive Extensions
 -------------------
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
-`ReactiveCocoa` and `RxSwift`.
+[ReactiveCocoa](docs/ReactiveCocoa.md) and [RxSwift](docs/RxSwift.md).
 
 ## ReactiveCocoa
 
-For `ReactiveCocoa`, it immediately returns a `SignalProducer` (`RACSignal` is also
- available if needed) that you can start or bind or map or whatever you want to do.
- To handle errors, for instance, we could do the following:
+For `ReactiveCocoa`, it immediately returns a `SignalProducer` (`RACSignal`
+is also available if needed) that you can start or bind or map or whatever
+you want to do. To handle errors, for instance, we could do the following:
 
 ```swift
 provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
@@ -143,8 +143,8 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
 ##RxSwift
 
 For `RxSwift`, it immediately returns an `Observable` that you can subscribe to
-or bind or map or whatever you want to do. To handle errors, for instance, we could do
-the following:
+or bind or map or whatever you want to do. To handle errors, for instance, 
+we could do the following:
 
 ```swift
 provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
@@ -159,12 +159,13 @@ provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
 }
 ```
 
+---
+
 In addition to the option of using signals instead of callback blocks, there are
-also a series of signal operators that will attempt to map the data received
-from the network response into either an image, some JSON, or a string, with
-`mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is
-unsuccessful, you'll get an error on the signal. You also get handy methods for
-filtering out certain status codes. This means that you can place your code for
+also a series of signal operators for RxSwift and ReactiveCocoa that will attempt
+to map the data received from the network response into either an image, some JSON,
+or a string, with `mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is unsuccessful, you'll get an error on the signal. You also get handy methods
+for filtering out certain status codes. This means that you can place your code for
 handling API errors like 400's in the same places as code for handling invalid
 responses.
 
@@ -185,7 +186,7 @@ following:
 - Fixing bugs/new features.
 
 If any of that sounds cool to you, send a pull request! After a few
-contributions, we'll add you as admins to the repo so you can merge pull
+contributions, we'll add you as an admin to the repo so you can merge pull
 requests :tada:
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/code-of-conduct).
