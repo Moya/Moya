@@ -7,10 +7,8 @@ calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `Observable`s.
 
 The network request is not started until the signal is subscribed
-to. If a request is made while an identical request is already
-in-progress, the original signal is returned, instead. If the
-subscription to the signal is disposed of before the request
-completes, it is cancelled.
+to. If the subscription to the signal is disposed of before the 
+request completes, the request is is cancelled.
 
 If the request completes normally, two things happen:
 
