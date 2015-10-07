@@ -115,18 +115,47 @@ parameter encoding.
 
 For examples, see the [documentation](docs/).
 
-ReactiveCocoa Extensions
-------------------------
+Reactive Extensions
+-------------------
 
-Even cooler are the ReactiveCocoa extensions. It immediately returns a
-`RACSignal` that you can subscribe to or bind or map or whatever you want to
-do. To handle errors, for instance, we could do the following:
+Even cooler are the reactive extensions. Moya provides reactive extensions for
+`ReactiveCocoa` and `RxSwift`.
+
+## ReactiveCocoa
+
+For `ReactiveCocoa`, it immediately returns a `SignalProducer` (`RACSignal` is also
+ available if needed) that you can start or bind or map or whatever you want to do.
+ To handle errors, for instance, we could do the following:
 
 ```swift
-provider.request(.UserProfile("ashfurrow")).subscribeNext { (object) -> Void in
-    image = UIImage(data: object as? NSData)
-}, error: { (error) -> Void in
-    println(error)
+provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
+    switch event {
+    case .Next(let response):
+        image = UIImage(data: response.data)
+    case .Error(let error):
+        print(error)
+    default:
+      break
+    }
+}
+```
+
+##RxSwift
+
+For `RxSwift`, it immediately returns an `Observable` that you can subscribe to
+or bind or map or whatever you want to do. To handle errors, for instance, we could do
+the following:
+
+```swift
+provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
+    switch event {
+    case .Next(let response):
+        image = UIImage(data: response.data)
+    case .Error(let error):
+        print(error)
+    default:
+        break
+    }
 }
 ```
 
