@@ -1,5 +1,7 @@
 # Next
 
+# 3.0.1
+
 - Changes `mapImage()` RxSwift function to use `UIImage!` instead of `UIImage`.
 
 # 3.0.0
