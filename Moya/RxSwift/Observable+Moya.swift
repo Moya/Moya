@@ -27,8 +27,8 @@ extension ObservableType where E: MoyaResponse {
     }
     
     /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
-    public func mapImage() -> Observable<UIImage> {
-        return flatMap { response -> Observable<UIImage> in
+    public func mapImage() -> Observable<UIImage!> {
+        return flatMap { response -> Observable<UIImage!> in
             guard let image = UIImage(data: response.data) else {
                 throw NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.rawValue, userInfo: ["data": response])
             }

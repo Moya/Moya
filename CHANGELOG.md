@@ -1,5 +1,7 @@
 # Next
 
+- Changes `mapImage()` RxSwift function to use `UIImage!` instead of `UIImage`.
+
 # 3.0.0
 
 - Makes `parameters` on `MoyaTarget` an optional `[String: AnyObject]` dictionary.
