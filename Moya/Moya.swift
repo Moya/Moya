@@ -186,7 +186,7 @@ private extension MoyaProvider {
         plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
         
         // Perform the actual request
-        request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> () in
+        request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let statusCode = response?.statusCode
 
             // Inform all plugins about the response
