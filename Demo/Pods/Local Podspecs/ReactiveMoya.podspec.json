@@ -1,12 +1,12 @@
 {
   "name": "ReactiveMoya",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "platforms": {
     "ios": "8.0"
   },
   "source": {
     "git": "https://github.com/Moya/Moya.git",
-    "tag": "3.0.1"
+    "tag": "4.0.0"
   },
   "source_files": [
     "Moya/*swift",

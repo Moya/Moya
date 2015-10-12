@@ -1,5 +1,7 @@
 # Next
 
+# 4.0.0
+
 - Updates Alamofire dependency to `~> 3.0`
 
 # 3.0.1
