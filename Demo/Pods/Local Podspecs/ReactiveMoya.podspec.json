@@ -15,6 +15,9 @@
     "Moya/ReactiveCocoa/*.swift"
   ],
   "dependencies": {
+    "Alamofire": [
+      "~> 3.0"
+    ],
     "ReactiveCocoa": [
       "~> 4.0-alpha.1"
     ]
