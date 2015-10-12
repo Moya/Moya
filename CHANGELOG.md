@@ -1,5 +1,9 @@
 # Next
 
+# 4.0
+
+- Updates Alamofire dependency to `~> 3.0`
+
 # 3.0.1
 
 - Changes `mapImage()` RxSwift function to use `UIImage!` instead of `UIImage`.
