@@ -6,7 +6,14 @@ import Foundation
 ///     - log network requests
 ///     - hide and show a network avtivity indicator 
 ///     - inject additional information into a request
-public class Plugin<Target: MoyaTarget> {
+public class Plugin<Target: MoyaTarget>: NSObject {
+
+    // Note:
+    //
+    // Need an override init() here to satisfy the Swift compiler and let subclasses external to the Moya framework exist.
+    public override init() {
+        super.init()
+    }
     
     // NOTE:
     //
