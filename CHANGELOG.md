@@ -1,5 +1,8 @@
 # Next
 
+- Plugins now subclasses NSObject for custom subclasses.
+- Plugins' methods are now public, allowing custom subclasses to override.
+
 # 4.0.0
 
 - Updates Alamofire dependency to `~> 3.0`

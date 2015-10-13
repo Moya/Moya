@@ -31,12 +31,12 @@ public class Plugin<Target: MoyaTarget>: NSObject {
     // This does not work, because `plugins` is now unable to infer the actual type of the typealias `T`.
 
     /// Called immediately before a request is sent over the network (or stubbed).
-    func willSendRequest(request: MoyaRequest, provider: MoyaProvider<Target>, target: Target) {
+    public func willSendRequest(request: MoyaRequest, provider: MoyaProvider<Target>, target: Target) {
         // Should be overridden if necessary
     }
 
     // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, target: Target) {
+    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, target: Target) {
         // Should be overridden if necessary
     }
 }
