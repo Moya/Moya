@@ -1,5 +1,7 @@
 # Next
 
+# 4.0.1
+
 - Plugins now subclasses NSObject for custom subclasses.
 - Plugins' methods are now public, allowing custom subclasses to override.
 
