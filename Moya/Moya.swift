@@ -186,17 +186,16 @@ private extension MoyaProvider {
         plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
         
         // Perform the actual request
-        request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+        let alamoRequest = request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let statusCode = response?.statusCode
 
             // Inform all plugins about the response
             plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, target: target) }
             completion(data: data, statusCode: statusCode, response: response, error: error)
         }
+        
 
-        return CancellableToken {
-            request.cancel()
-        }
+        return CancellableToken(request: alamoRequest)
     }
 
     func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
@@ -243,12 +242,33 @@ private extension MoyaProvider {
 }
 
 /// Private token that can be used to cancel requests
-private struct CancellableToken: Cancellable {
+private struct CancellableToken: Cancellable , CustomDebugStringConvertible{
     let cancelAction: () -> Void
+    let request : Request?
 
     func cancel() {
         cancelAction()
     }
+    
+    init(action: () -> Void){
+        self.cancelAction = action
+        self.request = nil
+    }
+    
+    init(request : Request){
+        self.request = request
+        self.cancelAction = {
+             request.cancel()
+        }
+    }
+    
+    var debugDescription: String {
+        guard let request = self.request else {
+            return "Empty Request"
+        }
+        return request.debugDescription
+    }
+    
 }
 
 private struct CancellableWrapper: Cancellable {
