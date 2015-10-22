@@ -8,6 +8,8 @@
 
 # 4.0.2
 
+# 4.0.2
+
 - CancellableTokens can now debug print the requests cURL.
 
 # 4.0.1
