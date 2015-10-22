@@ -1,5 +1,9 @@
 # Next
 
+# 4.0.2
+
+- CancellableTokens can now debug print the requests cURL.
+
 # 4.0.1
 
 - Plugins now subclasses NSObject for custom subclasses.
