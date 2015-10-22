@@ -1,8 +1,8 @@
 PODS:
-  - Alamofire (3.0.0)
-  - Moya (4.0.1):
-    - Moya/Core (= 4.0.1)
-  - Moya/Core (4.0.1):
+  - Alamofire (3.0.1)
+  - Moya (4.0.2):
+    - Moya/Core (= 4.0.2)
+  - Moya/Core (4.0.2):
     - Alamofire (~> 3.0)
   - Nimble (2.0.0-rc.3)
   - OHHTTPStubs (4.2.0):
@@ -30,13 +30,13 @@ PODS:
   - ReactiveCocoa/UI (4.0.2-alpha-1):
     - ReactiveCocoa/Core
     - Result (~> 0.6-beta.1)
-  - ReactiveMoya (4.0.1):
+  - ReactiveMoya (4.0.2):
     - Alamofire (~> 3.0)
     - ReactiveCocoa (~> 4.0-alpha.1)
   - Result (0.6.0-beta.4)
-  - RxMoya (4.0.1):
+  - RxMoya (4.0.2):
     - RxSwift (~> 2.0.0-alpha)
-  - RxSwift (2.0.0-alpha.4)
+  - RxSwift (2.0.0-beta.1)
 
 DEPENDENCIES:
   - Moya (from `../`)
@@ -67,15 +67,15 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Quick/Quick
 
 SPEC CHECKSUMS:
-  Alamofire: b61782387f81bcc538a0284cf2bb5d7995cd0a80
-  Moya: 8cdea400271d924df769fbce25a2eee39e9bbeac
+  Alamofire: 2457e1b2e6c46bb05c3a598c542b7bfd08893775
+  Moya: 9a265fa31e0d3790e98d764ca8d781e997f01b8f
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
   ReactiveCocoa: 652cf90e5de65708e7e2111f77405756da21aabe
-  ReactiveMoya: 1cede26bc8f1bf25fb9aaf97beeecfdc7daf09e2
+  ReactiveMoya: 75a4ff5bd662d1b3da16a0e115da123138eb577a
   Result: f7927152cbaec0c043abb06ba0bc432678818418
-  RxMoya: 8bfdba082d10d4cf085d58fedc2bc968ee27e8f8
-  RxSwift: 76dbcb12e55197533f8ace2af887511d7c9262dc
+  RxMoya: ce4e39b4500e56e23db503a520b25920a5ea4fbe
+  RxSwift: a9b0f4d876eac130cda0ae2f3fba627be3baf3ef
 
-COCOAPODS: 0.39.0
+COCOAPODS: 0.39.0.beta.4

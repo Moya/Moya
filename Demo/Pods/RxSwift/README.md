@@ -5,7 +5,7 @@
 
 Xcode 7 beta 6 (7A192o) / Swift 2.0 required
 
-**This README.md describes alpha version of RxSwift 2.0.**
+**This README.md describes beta version of RxSwift 2.0.**
 
 **You can find RxSwift 1.9 for Swift 1.2 [here](https://github.com/ReactiveX/RxSwift/tree/rxswift-1.0).**
 
@@ -104,11 +104,13 @@ Hang out with us on [rxswift.slack.com](http://slack.rxswift.org) <img src="http
   1. [Benefits](#benefits)
   1. [It's not all or nothing](#its-not-all-or-nothing)
 1. [Getting started](Documentation/GettingStarted.md)
+1. [Creating observable sequences](Documentation/GettingStarted.md#creating-your-own-observable-aka-observable-sequence)
 1. [Examples](Documentation/Examples.md)
 1. [API - RxSwift operators / RxCocoa extensions](Documentation/API.md)
 1. [Build / Install / Run](#build--install--run)
 1. [Math behind](Documentation/MathBehindRx.md)
 1. [Hot and cold observables](Documentation/HotAndColdObservables.md)
+1. [Units](Documentation/Units.md)
 1. [Feature comparison with other frameworks](#feature-comparison-with-other-frameworks)
 1. [Roadmap](https://github.com/ReactiveX/RxSwift/wiki/roadmap)
 1. [Playgrounds](#playgrounds)
@@ -321,7 +323,7 @@ extension UISearchBar {
         return proxyForObject(self) as RxSearchBarDelegateProxy
     }
 
-    public var rx_searchText: Observable<String> {
+    public var rx_text: Observable<String> {
         return defer { [weak self] in
             let text = self?.text ?? ""
 
@@ -341,7 +343,7 @@ This is how that API can be now used
 
 ```swift
 
-searchBar.rx_searchText
+searchBar.rx_text
     .subscribeNext { searchText in
         print("Current search text '\(searchText)'")
     }
@@ -460,9 +462,9 @@ Open Rx.xcworkspace, choose `RxExample` and hit run. This method will build ever
 # Podfile
 use_frameworks!
 
-pod 'RxSwift', '~> 2.0.0-alpha'
-pod 'RxCocoa', '~> 2.0.0-alpha'
-pod 'RxBlocking', '~> 2.0.0-alpha'
+pod 'RxSwift', '~> 2.0.0-beta'
+pod 'RxCocoa', '~> 2.0.0-beta'
+pod 'RxBlocking', '~> 2.0.0-beta'
 ```
 
 type in `Podfile` directory
@@ -476,7 +478,7 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-alpha.4"
+git "git@github.com:ReactiveX/RxSwift.git" "2.0.0-beta.1"
 ```
 
 ```

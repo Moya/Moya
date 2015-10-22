@@ -9,15 +9,15 @@
 import Foundation
 
 /// This class is usually used with `Generator` version of the operators.
-class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
+class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Element: ObservableConvertibleType, S.Generator.Element.E == O.E> : Sink<O>, ObserverType {
     typealias E = O.E
     
     var generators: [S.Generator] = []
-    var disposed: Bool = false
+    var disposed = false
     var subscription = SerialDisposable()
     
     // this is thread safe object
-    var gate: AsyncLock = AsyncLock()
+    var gate = AsyncLock()
     
     override init(observer: O, cancel: Disposable) {
         super.init(observer: observer, cancel: cancel)
@@ -54,11 +54,11 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
     }
     
     func extract(observable: Observable<E>) -> S.Generator? {
-        return abstractMethod()
+        abstractMethod()
     }
     
     func on(event: Event<E>) {
-        return abstractMethod()
+        abstractMethod()
     }
     
     // should be done on gate locked
@@ -80,7 +80,7 @@ class TailRecursiveSink<S: SequenceType, O: ObserverType where S.Generator.Eleme
             let nextCandidate = e.next()?.asObservable()
             generators.removeLast()
             generators.append(e)
-        
+
             if nextCandidate == nil {
                 generators.removeLast()
                 continue;

@@ -11,7 +11,7 @@ import Foundation
 /**
 Represents a push style sequence.
 */
-public protocol ObservableType {
+public protocol ObservableType : ObservableConvertibleType {
     /**
     Type of elements in sequence.
     */
@@ -40,10 +40,18 @@ public protocol ObservableType {
     
     - returns: Subscription for `observer` that can be used to cancel production of sequence elements and free resources.
     */
+    @warn_unused_result(message="http://git.io/rxs.ud")
     func subscribe<O: ObserverType where O.E == E>(observer: O) -> Disposable
    
+}
+
+extension ObservableType {
+    
     /**
-    - returns: Canonical interface for push style sequence
+    Default implementation of converting `ObservableType` to `Observable`.
     */
-    func asObservable() -> Observable<E>
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func asObservable() -> Observable<E> {
+        return create(self.subscribe)
+    }
 }

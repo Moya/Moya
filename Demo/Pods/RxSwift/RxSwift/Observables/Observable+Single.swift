@@ -17,6 +17,7 @@ extension ObservableType where E: Equatable {
     
     - returns: An observable sequence only containing the distinct contiguous elements, based on equality operator, from the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func distinctUntilChanged()
         -> Observable<E> {
         return self.distinctUntilChanged({ $0 }, comparer: { ($0 == $1) })
@@ -30,6 +31,7 @@ extension ObservableType {
     - parameter keySelector: A function to compute the comparison key for each element.
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value, from the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func distinctUntilChanged<K: Equatable>(keySelector: (E) throws -> K)
         -> Observable<E> {
         return self.distinctUntilChanged(keySelector, comparer: { $0 == $1 })
@@ -41,6 +43,7 @@ extension ObservableType {
     - parameter comparer: Equality comparer for computed key values.
     - returns: An observable sequence only containing the distinct contiguous elements, based on `comparer`, from the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func distinctUntilChanged(comparer: (lhs: E, rhs: E) throws -> Bool)
         -> Observable<E> {
         return self.distinctUntilChanged({ $0 }, comparer: comparer)
@@ -53,6 +56,7 @@ extension ObservableType {
     - parameter comparer: Equality comparer for computed key values.
     - returns: An observable sequence only containing the distinct contiguous elements, based on a computed key value and the comparer, from the source sequence.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func distinctUntilChanged<K>(keySelector: (E) throws -> K, comparer: (lhs: K, rhs: K) throws -> Bool)
         -> Observable<E> {
         return DistinctUntilChanged(source: self.asObservable(), selector: keySelector, comparer: comparer)
@@ -69,6 +73,7 @@ extension ObservableType {
     - parameter eventHandler: Action to invoke for each event in the observable sequence.
     - returns: The source sequence with the side-effecting behavior applied.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func doOn(eventHandler: (Event<E>) throws -> Void)
         -> Observable<E> {
         return Do(source: self.asObservable(), eventHandler: eventHandler)
@@ -77,21 +82,22 @@ extension ObservableType {
     /**
     Invokes an action for each event in the observable sequence, and propagates all observer messages through the result sequence.
     
-    - parameter next: Action to invoke for each element in the observable sequence.
-    - parameter error: Action to invoke upon errored termination of the observable sequence.
-    - parameter completed: Action to invoke upon graceful termination of the observable sequence.
+    - parameter onNext: Action to invoke for each element in the observable sequence.
+    - parameter onError: Action to invoke upon errored termination of the observable sequence.
+    - parameter onCompleted: Action to invoke upon graceful termination of the observable sequence.
     - returns: The source sequence with the side-effecting behavior applied.
     */
-    public func doOn(next next: (E throws -> Void)? = nil, error: (ErrorType throws -> Void)? = nil, completed: (() throws -> Void)? = nil)
+    @warn_unused_result(message="http://git.io/rxs.uo")
+    public func doOn(onNext onNext: (E throws -> Void)? = nil, onError: (ErrorType throws -> Void)? = nil, onCompleted: (() throws -> Void)? = nil)
         -> Observable<E> {
         return Do(source: self.asObservable()) { e in
             switch e {
             case .Next(let element):
-                try next?(element)
+                try onNext?(element)
             case .Error(let e):
-                try error?(e)
+                try onError?(e)
             case .Completed:
-                try completed?()
+                try onCompleted?()
             }
         }
     }
@@ -107,6 +113,7 @@ extension ObservableType {
     - parameter elements: Elements to prepend to the specified sequence.
     - returns: The source sequence prepended with the specified values.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func startWith(elements: E ...)
         -> Observable<E> {
         return StartWith(source: self.asObservable(), elements: elements)
@@ -124,6 +131,7 @@ extension ObservableType {
     
     - returns: Observable sequence to repeat until it successfully terminates.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func retry() -> Observable<E> {
         return CatchSequence(sources: InfiniteSequence(repeatedValue: self.asObservable()))
     }
@@ -136,6 +144,7 @@ extension ObservableType {
     - parameter maxAttemptCount: Maximum number of times to repeat the sequence.
     - returns: An observable sequence producing the elements of the given sequence repeatedly until it terminates successfully.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func retry(maxAttemptCount: Int)
         -> Observable<E> {
         return CatchSequence(sources: Repeat(count: maxAttemptCount, repeatedValue: self.asObservable()))
@@ -155,6 +164,7 @@ extension ObservableType {
     - parameter accumulator: An accumulator function to be invoked on each element.
     - returns: An observable sequence containing the accumulated values.
     */
+    @warn_unused_result(message="http://git.io/rxs.uo")
     public func scan<A>(seed: A, accumulator: (A, E) throws -> A)
         -> Observable<A> {
         return Scan(source: self.asObservable(), seed: seed, accumulator: accumulator)

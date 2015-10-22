@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1F8032D59B791EE5407907AD'
+               BlueprintIdentifier = 'BE50F8179488A00A71F0DDCF'
                BlueprintName = 'ReactiveMoya'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'ReactiveMoya.framework'>
