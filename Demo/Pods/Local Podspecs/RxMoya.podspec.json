@@ -1,12 +1,12 @@
 {
   "name": "RxMoya",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "platforms": {
     "ios": "8.0"
   },
   "source": {
     "git": "https://github.com/Moya/Moya.git",
-    "tag": "4.0.2"
+    "tag": "4.0.3"
   },
   "source_files": [
     "Moya/*swift",

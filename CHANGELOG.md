@@ -2,6 +2,8 @@
 
 # 4.0.3
 
+# 4.0.3
+
 - Fixes Carthage integration problem.
 
 # 4.0.2
