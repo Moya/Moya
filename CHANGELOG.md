@@ -1,12 +1,8 @@
 # Next
 
-# 4.0.2
+# 4.0.3
 
-# 4.0.2
-
-# 4.0.2
-
-# 4.0.2
+- Fixes Carthage integration problem.
 
 # 4.0.2
 
