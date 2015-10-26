@@ -4,7 +4,7 @@ OHHTTPStubs
 [![Platform](http://cocoapod-badges.herokuapp.com/p/OHHTTPStubs/badge.png)](http://cocoadocs.org/docsets/OHHTTPStubs)
 [![Version](http://cocoapod-badges.herokuapp.com/v/OHHTTPStubs/badge.png)](http://cocoadocs.org/docsets/OHHTTPStubs)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Build Status](https://travis-ci.org/AliSoftware/OHHTTPStubs.png?branch=master)](https://travis-ci.org/AliSoftware/OHHTTPStubs)
+[![Build Status](https://travis-ci.org/AliSoftware/OHHTTPStubs.svg?branch=master)](https://travis-ci.org/AliSoftware/OHHTTPStubs)
 
 `OHHTTPStubs` is a library designed to stub your network requests very easily. It can help you:
 
@@ -22,6 +22,9 @@ It works with `NSURLConnection`, new iOS7/OSX.9's `NSURLSession`, `AFNetworking`
 `OHHTTPStubs` headers are fully documented using Appledoc-like / Headerdoc-like comments in the header files. You can also [read the **online documentation** here](http://cocoadocs.org/docsets/OHHTTPStubs)
 [![Version](http://cocoapod-badges.herokuapp.com/v/OHHTTPStubs/badge.png)](http://cocoadocs.org/docsets/OHHTTPStubs)
 
+## Swift support
+
+`OHHTTPStubs` is compatible with Swift out of the box: you can use it with the same API as you would use in Objective-C. But you might also want to include the `OHHTTPStubs/Swift` subspec in your `Podfile`, which adds some global function helpers (see `OHHTTPStubsSwift.swift`) to make the use of `OHHTTPStubs` more compact and Swift-like.
 
 ## Basic example
 
@@ -40,14 +43,17 @@ It works with `NSURLConnection`, new iOS7/OSX.9's `NSURLSession`, `AFNetworking`
 
 ### In Swift
 
+This example is using the Swift helpers found in `OHHTTPStubsSwift.swift` provided by the `OHHTTPStubs/Swift` subspec
+ 
 ```swift
-OHHTTPStubs.stubRequestsPassingTest({$0.URL!.host == "mywebservice.com"}) { _ in
+stub(isHost("mywebservice.com")) { _ in
   // Stub it with our "wsresponse.json" stub file (which is in same bundle as self)
-  let fixture = OHPathForFile("wsresponse.json", self.dynamicType)
-  return OHHTTPStubsResponse(fileAtPath: fixture!,
-    statusCode: 200, headers: ["Content-Type":"application/json"])
+  let stubPath = OHPathForFile("wsresponse.json", self.dynamicType)
+  return fixture(stubPath!, headers: ["Content-Type":"application/json"])
 }
 ```
+
+Note: Using `OHHTTPStubsSwift.swift` you could also compose the matcher functions like this: `stub(isScheme("http") && isHost("myhost")) { … }`
 
 ## More examples & Help Topics
     
@@ -108,6 +114,7 @@ But you generally only use stubs during the development phase and want to remove
 This project and library has been created by Olivier Halligon (@aligatr on Twitter) and is under the MIT License.
 
 It has been inspired by [this article from InfiniteLoop.dk](http://www.infinite-loop.dk/blog/2011/09/using-nsurlprotocol-for-injecting-test-data/).
-I would also like to thank to @kcharwood for its contribution, and everyone who contributed to this project on GitHub.
+
+I would also like to thank Kevin Harwood ([@kcharwood](https://github.com/kcharwood)) for migrating the code to `NSInputStream`, Jinlian Wang ([@JinlianWang](https://github.com/JinlianWang)) for adding Mocktail support, and everyone else who contributed to this project on GitHub somehow.
 
 If you want to support the development of this library, feel free to [![Donate](http://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TRTU3UEWEHV92 "Donate"). Thanks to all contributors so far!

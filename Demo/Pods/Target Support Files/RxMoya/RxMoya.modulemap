@@ -1,6 +1,0 @@
-framework module RxMoya {
-  umbrella header "RxMoya-umbrella.h"
-
-  export *
-  module * { export * }
-}

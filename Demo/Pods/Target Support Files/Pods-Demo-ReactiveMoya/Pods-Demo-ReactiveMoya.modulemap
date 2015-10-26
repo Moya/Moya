@@ -1,0 +1,6 @@
+framework module ReactiveMoya {
+  umbrella header "Pods-Demo-ReactiveMoya-umbrella.h"
+
+  export *
+  module * { export * }
+}
