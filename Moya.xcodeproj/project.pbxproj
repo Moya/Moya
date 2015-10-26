@@ -29,7 +29,6 @@
 		091F0D771BDE9B37009D0A49 /* MoyaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D5A1BDE9A37009D0A49 /* MoyaResponse.swift */; };
 		091F0D7A1BDE9B53009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
 		091F0D7C1BDE9B53009D0A49 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D7B1BDE9B53009D0A49 /* ReactiveCocoa.framework */; };
-		091F0D861BDE9D4D009D0A49 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 091F0D851BDE9D4D009D0A49 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		091F0D8B1BDE9D5D009D0A49 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D4D1BDE9A37009D0A49 /* Endpoint.swift */; };
 		091F0D8C1BDE9D5E009D0A49 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D4E1BDE9A37009D0A49 /* Moya.swift */; };
 		091F0D8D1BDE9D5F009D0A49 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D4F1BDE9A37009D0A49 /* Plugin.swift */; };
@@ -42,6 +41,7 @@
 		091F0D971BDE9D7A009D0A49 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D5D1BDE9A37009D0A49 /* Observable+Moya.swift */; };
 		091F0D981BDE9D9A009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
 		09E0B9061BDEDE7D004E7739 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E0B9051BDEDE7D004E7739 /* RxSwift.framework */; };
+		09E0B9071BDEE160004E7739 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 091F0D851BDE9D4D009D0A49 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -228,7 +228,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				091F0D861BDE9D4D009D0A49 /* RxMoya.h in Headers */,
 				091F0D471BDE9A01009D0A49 /* ReactiveMoya.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +236,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09E0B9071BDEE160004E7739 /* RxMoya.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
