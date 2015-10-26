@@ -51,7 +51,7 @@
 
         ],
         "ReactiveCocoa": [
-          "~> 4.0-alpha.1"
+          "= 4.0.0-alpha-3"
         ]
       }
     },

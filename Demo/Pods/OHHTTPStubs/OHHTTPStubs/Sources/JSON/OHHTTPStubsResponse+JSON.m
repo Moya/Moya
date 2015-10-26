@@ -23,7 +23,7 @@
  ***********************************************************************************/
 
 
-#import <OHHTTPStubs/OHHTTPStubsResponse+JSON.h>
+#import "OHHTTPStubsResponse+JSON.h"
 
 @implementation OHHTTPStubsResponse (JSON)
 
