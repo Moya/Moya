@@ -6,9 +6,31 @@ Moya provides an optional `RxMoyaProvider` subclass of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `Observable`s.
 
-The network request is not started until the signal is subscribed
-to. If the subscription to the signal is disposed of before the 
-request completes, the request is is cancelled.
+A `RxMoyaProvider` can be created much like a
+[`MoyaProvider`](Providers.md) and can be used as follows:
+
+```swift
+let GitHubProvider = RxMoyaProvider<GitHub>()
+```
+
+After that simple setup, you're off to the races:
+
+```swift
+provider.request(.Zen).subscribe { (event) -> Void in
+    switch event {
+    case .Next(let response):
+        // do something with the data
+    case .Error(let error):
+        // handle the error
+    default:
+        break
+    }
+}
+```
+
+For `RxMoyaProvider`, the network request is not started
+until the signal is subscribed to. If the subscription to the signal
+is disposed of before the request completes, the request is cancelled.
 
 If the request completes normally, two things happen:
 
