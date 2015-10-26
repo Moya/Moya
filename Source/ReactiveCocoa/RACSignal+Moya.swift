@@ -42,9 +42,9 @@ public extension RACSignal {
     /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
     public func mapImage() -> RACSignal {
         return tryMap({ (object, error) -> AnyObject! in
-            var image: UIImage?
+            var image: Image?
             if let response = object as? MoyaResponse {
-                image = UIImage(data: response.data)
+                image = Image(data: response.data)
             }
             
             if image == nil && error != nil {

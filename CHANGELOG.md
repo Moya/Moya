@@ -1,6 +1,6 @@
 # Next
 
-# 4.0.3
+- OS X support.
 
 # 4.0.3
 

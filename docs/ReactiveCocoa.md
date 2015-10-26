@@ -7,9 +7,31 @@ calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `SignalProducer`s
 (`RACSignal`s are also available for those who need it).
 
-The network request is not started until the signal is subscribed
-to. If the subscription to the signal is disposed of before the 
-request completes, the request is cancelled.
+A `ReactiveCocoaMoyaProvider` can be created much like a
+[`MoyaProvider`](Providers.md) and can be used as follows:
+
+```swift
+let GitHubProvider = ReactiveCocoaMoyaProvider<GitHub>()
+```
+
+After that simple setup, you're off to the races:
+
+```swift
+provider.request(.Zen).start { (event) -> Void in
+    switch event {
+    case .Next(let response):
+        // do something with the data
+    case .Error(let error):
+        // handle the error
+    default:
+        break
+    }
+}
+```
+
+For `ReactiveCocoaMoyaProvider`, the network request is not started
+until the signal is subscribed to. If the subscription to the signal
+is disposed of before the request completes, the request is cancelled.
 
 If the request completes normally, two things happen:
 
