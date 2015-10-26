@@ -69,9 +69,8 @@ let provider = MoyaProvider<MyTarget>(stubClosure: { target: MyTarget -> Moya.St
 	switch target {
 		/* Return something different based on the target. */
 	}
-}
-```
 })
+```
 
 But usually you want the same stubbing behaviour for all your targets. There are
 three class methods on `MoyaProvider` you can use instead.
