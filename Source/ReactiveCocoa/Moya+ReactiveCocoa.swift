@@ -24,7 +24,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
 
                 let cancellableToken = self?.request(token) { data, statusCode, response, error in
                     if let error = error {
-                        requestSink.sendError(error as NSError)
+                        requestSink.sendFailed(error as NSError)
                     } else {
                         if let data = data {
                             requestSink.sendNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))

@@ -41,7 +41,6 @@
 		091F0D961BDE9D79009D0A49 /* Moya+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D5C1BDE9A37009D0A49 /* Moya+RxSwift.swift */; };
 		091F0D971BDE9D7A009D0A49 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091F0D5D1BDE9A37009D0A49 /* Observable+Moya.swift */; };
 		091F0D981BDE9D9A009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
-		091F0D9A1BDE9D9B009D0A49 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D991BDE9D9B009D0A49 /* RxSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,7 +68,6 @@
 		091F0D831BDE9D4D009D0A49 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D851BDE9D4D009D0A49 /* RxMoya.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxMoya.h; sourceTree = "<group>"; };
 		091F0D871BDE9D4D009D0A49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		091F0D991BDE9D9B009D0A49 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				091F0D9A1BDE9D9B009D0A49 /* RxSwift.framework in Frameworks */,
 				091F0D981BDE9D9A009D0A49 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,7 +102,6 @@
 		091F0D2A1BDE998F009D0A49 = {
 			isa = PBXGroup;
 			children = (
-				091F0D991BDE9D9B009D0A49 /* RxSwift.framework */,
 				091F0D4C1BDE9A37009D0A49 /* Source */,
 				091F0D361BDE998F009D0A49 /* Moya */,
 				091F0D451BDE9A01009D0A49 /* ReactiveMoya */,

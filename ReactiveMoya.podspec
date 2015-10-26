@@ -6,5 +6,5 @@ Pod::Spec.new do |s|
 
   s.source_files = ["Source/*swift", "Source/Plugins/*swift", "Source/ReactiveCore/*.swift", "Source/ReactiveCocoa/*.swift"]
   s.dependency 'Alamofire', "~> 3.0"
-  s.dependency "ReactiveCocoa", "~> 4.0-alpha.1"
+  s.dependency "ReactiveCocoa", "4.0-alpha.3"
 end
