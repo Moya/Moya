@@ -39,7 +39,7 @@ public extension RACSignal {
         return filterStatusCodes(200...399)
     }
     
-    /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
+    /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
     public func mapImage() -> RACSignal {
         return tryMap({ (object, error) -> AnyObject! in
             var image: Image?
