@@ -20,3 +20,5 @@ DerivedData
 *.xccheckout
 # AppCode
 .idea/
+
+Carthage/Build
