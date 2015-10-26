@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
 
-  s.source_files = ["Moya/*swift", "Moya/Plugins/*swift", "Moya/ReactiveCore/*.swift", "Moya/ReactiveCocoa/*.swift"]
+  s.source_files = ["Source/*swift", "Source/Plugins/*swift", "Source/ReactiveCore/*.swift", "Source/ReactiveCocoa/*.swift"]
   s.dependency 'Alamofire', "~> 3.0"
   s.dependency "ReactiveCocoa", "~> 4.0-alpha.1"
 end
