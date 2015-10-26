@@ -22,3 +22,4 @@ DerivedData
 .idea/
 
 Carthage/Build
+Demo/Pods
