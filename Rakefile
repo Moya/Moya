@@ -55,5 +55,5 @@ task :release, :version do |task, args|
   sh "git push --follow-tags"
 
   puts "Pushing to CocoaPods trunk."
-  sh "pod trunk push Moya.podspec"
+  sh "pod trunk push Moya.podspec --allow-warnings"
 end

@@ -1,5 +1,7 @@
 # Next
 
+# 4.1.0
+
 - OS X support.
 
 # 4.0.3
