@@ -54,26 +54,21 @@ Currently, we support Xcode 7 and Swift 2.
 Installation
 ------------
 
-### Cocoapods
+### CocoaPods
 Just add `pod 'Moya'` to your Podfile and go!
 
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For ReactiveCocoa extensions, this project has some dependencies. Add the following
-lines to your Podfile:
+For RxSwift or ReactiveCocoa extensions, this project will include 
+them as dependencies. You can do this via CocoaPods subspecs.
 
 ```rb
+pod 'Moya/RxSwift'
 pod 'Moya/ReactiveCocoa'
 ```
 
 Then run `pod install`.
-
-For RxSwift extensions, use the following Podfile.
-
-```rb
-pod 'Moya/RxSwift'
-```
 
 ### Carthage
 Carthage users can point to this repository and use whichever
