@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RxMoya"
-  s.version      = "4.0.3"
+  s.version      = "4.1.0"
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
