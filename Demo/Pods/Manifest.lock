@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (3.1.0)
-  - Moya (4.0.3):
-    - Moya/Core (= 4.0.3)
-  - Moya/Core (4.0.3):
+  - Moya (4.1.0):
+    - Moya/Core (= 4.1.0)
+  - Moya/Core (4.1.0):
     - Alamofire (~> 3.0)
   - Nimble (2.0.0-rc.3)
   - OHHTTPStubs (4.2.0):
@@ -19,22 +19,22 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.2.0)
   - Quick (0.6.0)
-  - ReactiveCocoa (4.0.2-alpha-1):
-    - ReactiveCocoa/UI (= 4.0.2-alpha-1)
+  - ReactiveCocoa (4.0.4-alpha-1):
+    - ReactiveCocoa/UI (= 4.0.4-alpha-1)
     - Result (~> 0.6-beta.1)
-  - ReactiveCocoa/Core (4.0.2-alpha-1):
+  - ReactiveCocoa/Core (4.0.4-alpha-1):
     - ReactiveCocoa/no-arc
     - Result (~> 0.6-beta.1)
-  - ReactiveCocoa/no-arc (4.0.2-alpha-1):
+  - ReactiveCocoa/no-arc (4.0.4-alpha-1):
     - Result (~> 0.6-beta.1)
-  - ReactiveCocoa/UI (4.0.2-alpha-1):
+  - ReactiveCocoa/UI (4.0.4-alpha-1):
     - ReactiveCocoa/Core
     - Result (~> 0.6-beta.1)
-  - ReactiveMoya (4.0.3):
+  - ReactiveMoya (4.1.0):
     - Alamofire (~> 3.0)
     - ReactiveCocoa (~> 4.0-alpha.1)
-  - Result (0.6.0-beta.4)
-  - RxMoya (4.0.3):
+  - Result (0.6.0-beta.5)
+  - RxMoya (4.1.0):
     - RxSwift (~> 2.0.0-alpha)
   - RxSwift (2.0.0-beta.1)
 
@@ -68,14 +68,14 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
-  Moya: 21b8bbcc3f907313b21405b4c7f0c06212e0afad
+  Moya: 83fe7bb268bc4cd5cb7ab00130eed4741b1683c0
   Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
-  ReactiveCocoa: 652cf90e5de65708e7e2111f77405756da21aabe
-  ReactiveMoya: 9bdc527f5712e8cf5f7edeecfe940efc19dbe608
-  Result: f7927152cbaec0c043abb06ba0bc432678818418
-  RxMoya: 9e7d3706b87b1f393e1b9e0b91286f1a85111561
+  ReactiveCocoa: 618a2fc13d4ed80e380aa6fa56547cef43c7341d
+  ReactiveMoya: d23ccc984fa8cb4bebd6ab61499842ab97bcf1da
+  Result: 8ae33a29ed1e147514b9536de523a978d7faba1f
+  RxMoya: 13baab70ef398dcfe63ada69a392ebaef834fa86
   RxSwift: a9b0f4d876eac130cda0ae2f3fba627be3baf3ef
 
 COCOAPODS: 0.39.0

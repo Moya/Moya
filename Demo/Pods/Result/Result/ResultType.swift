@@ -50,6 +50,18 @@ public extension ResultType {
 			ifSuccess: transform,
 			ifFailure: Result<U, Error>.Failure)
 	}
+	
+	/// Returns a new Result by mapping `Failure`'s values using `transform`, or re-wrapping `Success`es’ values.
+	public func mapError<Error2>(@noescape transform: Error -> Error2) -> Result<Value, Error2> {
+		return flatMapError { .Failure(transform($0)) }
+	}
+	
+	/// Returns the result of applying `transform` to `Failure`’s errors, or re-wrapping `Success`es’ values.
+	public func flatMapError<Error2>(@noescape transform: Error -> Result<Value, Error2>) -> Result<Value, Error2> {
+		return analysis(
+			ifSuccess: Result<Value, Error2>.Success,
+			ifFailure: transform)
+	}
 }
 
 // MARK: - Operators

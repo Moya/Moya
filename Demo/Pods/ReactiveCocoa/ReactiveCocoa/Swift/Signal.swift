@@ -119,7 +119,7 @@ public final class Signal<T, E: ErrorType> {
 	/// of the Disposable will have no effect on the Signal itself.
 	public func observe(observer: Observer) -> Disposable? {
 		var token: RemovalToken?
-		atomicObservers.modify { observers in
+		self.atomicObservers.modify { observers in
 			guard var observers = observers else { return nil }
 
 			token = observers.insert(observer)
@@ -128,7 +128,7 @@ public final class Signal<T, E: ErrorType> {
 
 		if let token = token {
 			return ActionDisposable {
-				atomicObservers.modify { observers in
+				self.atomicObservers.modify { observers in
 					guard var observers = observers else { return nil }
 
 					observers.removeValueForToken(token)
