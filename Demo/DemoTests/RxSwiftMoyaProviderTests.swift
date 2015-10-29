@@ -15,7 +15,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         it("returns a MoyaResponse object") {
             var called = false
 
-            provider.request(.Zen).subscribeNext { (object) -> Void in
+            _ = provider.request(.Zen).subscribeNext { (object) -> Void in
                 called = true
             }
 
@@ -26,7 +26,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             var message: String?
 
             let target: GitHub = .Zen
-            provider.request(target).subscribeNext { (response) -> Void in
+            _ = provider.request(target).subscribeNext { (response) -> Void in
                 message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
             }
 
@@ -38,7 +38,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             var receivedResponse: NSDictionary?
 
             let target: GitHub = .UserProfile("ashfurrow")
-            provider.request(target).subscribeNext { (response) -> Void in
+            _ = provider.request(target).subscribeNext { (response) -> Void in
                 receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
             }
 
