@@ -46,7 +46,6 @@
 		5E70E8BF1A1BB32400F00C49 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
 		5E70E8C01A1BB32400F00C49 /* RACSignal+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RACSignal+MoyaSpec.swift"; sourceTree = "<group>"; };
 		5E70E8C11A1BB32400F00C49 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
-		5E70E8DD1A1BB94400F00C49 /* DemoTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DemoTests copy-Info.plist"; path = "/Users/ash/bin/Moya/Demo/DemoTests copy-Info.plist"; sourceTree = "<absolute>"; };
 		5EBA229D1BA4AF18000622AB /* ReactiveCocoaMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveCocoaMoyaProviderTests.swift; sourceTree = "<group>"; };
 		5EBA229F1BA4AF69000622AB /* RxSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
 		5EC197E01A1BB16D00F4DFD4 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,7 +112,6 @@
 				5EC197FA1A1BB16D00F4DFD4 /* DemoTests */,
 				5EC197E11A1BB16D00F4DFD4 /* Products */,
 				4EA28E847926FEF1338D42F3 /* Frameworks */,
-				5E70E8DD1A1BB94400F00C49 /* DemoTests copy-Info.plist */,
 				1AD8E2E095B88C420BB84070 /* Pods */,
 			);
 			sourceTree = "<group>";
