@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
+               BlueprintIdentifier = "0630A32B1BE1C85B00AD4789"
                BuildableName = "RxMoya.framework"
-               BlueprintName = "RxMoya"
+               BlueprintName = "RxMoya OSX"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
+            BlueprintIdentifier = "0630A32B1BE1C85B00AD4789"
             BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya"
+            BlueprintName = "RxMoya OSX"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
+            BlueprintIdentifier = "0630A32B1BE1C85B00AD4789"
             BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya"
+            BlueprintName = "RxMoya OSX"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

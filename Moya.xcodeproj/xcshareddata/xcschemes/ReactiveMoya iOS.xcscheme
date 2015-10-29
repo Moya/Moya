@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0710"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
                BuildableName = "ReactiveMoya.framework"
-               BlueprintName = "ReactiveMoya"
+               BlueprintName = "ReactiveMoya iOS"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,7 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
             BuildableName = "ReactiveMoya.framework"
-            BlueprintName = "ReactiveMoya"
+            BlueprintName = "ReactiveMoya iOS"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,7 +65,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
             BuildableName = "ReactiveMoya.framework"
-            BlueprintName = "ReactiveMoya"
+            BlueprintName = "ReactiveMoya iOS"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
