@@ -4,6 +4,14 @@ PODS:
     - Moya/Core (= 4.1.0)
   - Moya/Core (4.1.0):
     - Alamofire (~> 3.0)
+  - Moya/ReactiveCocoa (4.1.0):
+    - Moya/ReactiveCore
+    - ReactiveCocoa (= 4.0.0-alpha-3)
+  - Moya/ReactiveCore (4.1.0):
+    - Moya/Core
+  - Moya/RxSwift (4.1.0):
+    - Moya/ReactiveCore
+    - RxSwift (~> 2.0.0-alpha)
   - Nimble (2.0.0-rc.3)
   - OHHTTPStubs (4.2.0):
     - OHHTTPStubs/Default (= 4.2.0)
@@ -30,21 +38,16 @@ PODS:
   - ReactiveCocoa/UI (4.0.0-alpha-3):
     - ReactiveCocoa/Core
     - Result (~> 0.6-beta.4)
-  - ReactiveMoya (4.1.0):
-    - Alamofire (~> 3.0)
-    - ReactiveCocoa (= 4.0.0-alpha-3)
   - Result (0.6.0-beta.5)
-  - RxMoya (4.1.0):
-    - RxSwift (~> 2.0.0-alpha)
   - RxSwift (2.0.0-beta.1)
 
 DEPENDENCIES:
   - Moya (from `../`)
+  - Moya/ReactiveCocoa (from `../`)
+  - Moya/RxSwift (from `../`)
   - Nimble (from `https://github.com/Quick/Nimble`)
   - OHHTTPStubs
   - Quick (from `https://github.com/Quick/Quick`)
-  - ReactiveMoya (from `../`)
-  - RxMoya (from `../`)
 
 EXTERNAL SOURCES:
   Moya:
@@ -53,10 +56,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/Quick/Nimble
   Quick:
     :git: https://github.com/Quick/Quick
-  ReactiveMoya:
-    :path: "../"
-  RxMoya:
-    :path: "../"
 
 CHECKOUT OPTIONS:
   Nimble:
@@ -73,9 +72,7 @@ SPEC CHECKSUMS:
   OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
   Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
   ReactiveCocoa: f03dcfd385b0e4ee5b7a323f5e0b146a498e12d3
-  ReactiveMoya: cc186d6da504005923ac191d793836b6fd544e13
   Result: 8ae33a29ed1e147514b9536de523a978d7faba1f
-  RxMoya: 8cf45ae5ea4bc119f08d7628b50eefeecff7df65
   RxSwift: a9b0f4d876eac130cda0ae2f3fba627be3baf3ef
 
 COCOAPODS: 0.39.0

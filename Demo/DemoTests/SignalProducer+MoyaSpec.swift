@@ -1,5 +1,5 @@
 import Quick
-import ReactiveMoya
+import Moya
 import ReactiveCocoa
 import Nimble
 

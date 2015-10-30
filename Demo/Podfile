@@ -7,10 +7,9 @@ use_frameworks!
 target 'Demo' do
 
   # Our libraries
-  pod 'RxMoya', :path => "../"
-  pod 'ReactiveMoya', :path => "../"
   pod 'Moya', :path => "../"
-
+  pod 'Moya/ReactiveCocoa', :path => "../"
+  pod 'Moya/RxSwift', :path => "../"
 end
 
 target 'DemoTests' do
