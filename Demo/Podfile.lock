@@ -12,21 +12,21 @@ PODS:
   - Moya/RxSwift (4.1.0):
     - Moya/ReactiveCore
     - RxSwift (~> 2.0.0-alpha)
-  - Nimble (2.0.0-rc.3)
-  - OHHTTPStubs (4.2.0):
-    - OHHTTPStubs/Default (= 4.2.0)
-  - OHHTTPStubs/Core (4.2.0)
-  - OHHTTPStubs/Default (4.2.0):
+  - Nimble (3.0.0)
+  - OHHTTPStubs (4.4.0):
+    - OHHTTPStubs/Default (= 4.4.0)
+  - OHHTTPStubs/Core (4.4.0)
+  - OHHTTPStubs/Default (4.4.0):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (4.2.0):
+  - OHHTTPStubs/JSON (4.4.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (4.2.0):
+  - OHHTTPStubs/NSURLSession (4.4.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (4.2.0)
-  - Quick (0.6.0)
+  - OHHTTPStubs/OHPathHelpers (4.4.0)
+  - Quick (0.8.0)
   - ReactiveCocoa (4.0.0-alpha-3):
     - ReactiveCocoa/UI (= 4.0.0-alpha-3)
     - Result (~> 0.6-beta.4)
@@ -45,32 +45,20 @@ DEPENDENCIES:
   - Moya (from `../`)
   - Moya/ReactiveCocoa (from `../`)
   - Moya/RxSwift (from `../`)
-  - Nimble (from `https://github.com/Quick/Nimble`)
+  - Nimble
   - OHHTTPStubs
-  - Quick (from `https://github.com/Quick/Quick`)
+  - Quick
 
 EXTERNAL SOURCES:
   Moya:
     :path: "../"
-  Nimble:
-    :git: https://github.com/Quick/Nimble
-  Quick:
-    :git: https://github.com/Quick/Quick
-
-CHECKOUT OPTIONS:
-  Nimble:
-    :commit: a87c41424b2b8bc7821cf9e0352f87f53daf5263
-    :git: https://github.com/Quick/Nimble
-  Quick:
-    :commit: ac5eadd202dd67741628f80fb96e8c57388d954d
-    :git: https://github.com/Quick/Quick
 
 SPEC CHECKSUMS:
   Alamofire: 415bd7f56197722978759078486689f7ef913dce
   Moya: 3b0e0335468cd0eb68034d5d5bfcb704cb8f5cb0
-  Nimble: 2f64d173ad23dc39f10110840a1ed15f29ef75e8
-  OHHTTPStubs: f639130b83fb5f4f022d38f841141b0a6fa77249
-  Quick: aaa961333f0bec39bfefa4b759128e4eb39f0d0e
+  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
+  OHHTTPStubs: 1a95a653b78287a1fdb44eb38364b43257ac3550
+  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   ReactiveCocoa: f03dcfd385b0e4ee5b7a323f5e0b146a498e12d3
   Result: 8ae33a29ed1e147514b9536de523a978d7faba1f
   RxSwift: a9b0f4d876eac130cda0ae2f3fba627be3baf3ef
