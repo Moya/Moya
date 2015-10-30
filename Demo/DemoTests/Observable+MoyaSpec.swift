@@ -1,5 +1,5 @@
 import Quick
-import RxMoya
+import Moya
 import RxSwift
 import Nimble
 
