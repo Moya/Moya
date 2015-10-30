@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0630A2FD1BE1C2FF00AD4789 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630A2FC1BE1C2FF00AD4789 /* Image.swift */; settings = {ASSET_TAGS = (); }; };
-		0630A2FE1BE1C2FF00AD4789 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630A2FC1BE1C2FF00AD4789 /* Image.swift */; settings = {ASSET_TAGS = (); }; };
+		0630A2FD1BE1C2FF00AD4789 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630A2FC1BE1C2FF00AD4789 /* Image.swift */; };
+		0630A2FE1BE1C2FF00AD4789 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0630A2FC1BE1C2FF00AD4789 /* Image.swift */; };
 		0630A3081BE1C60200AD4789 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0630A30C1BE1C60200AD4789 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0630A3101BE1C60200AD4789 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -586,7 +586,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
 				PRODUCT_NAME = Moya;
 				SDKROOT = macosx;
@@ -610,7 +609,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
 				PRODUCT_NAME = Moya;
 				SDKROOT = macosx;
@@ -634,7 +632,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = macosx;
@@ -658,7 +655,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = macosx;
@@ -682,7 +678,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = macosx;
@@ -706,7 +701,6 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = macosx;
@@ -752,6 +746,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -794,6 +789,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
