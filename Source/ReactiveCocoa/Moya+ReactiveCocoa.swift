@@ -18,7 +18,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
         
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
-            let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
+            let cancellableToken = self?.request(token) { data, statusCode, response, error in
                 if let error = error {
                     observer.sendFailed(error as NSError)
                 } else {
