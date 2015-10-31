@@ -142,6 +142,11 @@ public class MoyaProvider<Target: MoyaTarget> {
         
         return cancellableToken
     }
+
+    /// Convenience request-making method that takes no extra endpoint parameters
+    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
+        return request(target, parameters: nil, completion: completion)
+    }
 }
 
 /// Mark: Defaults
