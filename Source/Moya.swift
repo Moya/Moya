@@ -116,16 +116,20 @@ public class MoyaProvider<Target: MoyaTarget> {
     public func endpoint(token: Target) -> Endpoint<Target> {
         return endpointClosure(token)
     }
-
+    
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
-    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
-        let endpoint = self.endpoint(target)
+    public func request(target: Target, parameters: [String:AnyObject]?, completion: Moya.Completion) -> Cancellable {
+        var endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         var cancellableToken = CancellableWrapper()
-
+        
+        if case .Some(let parameters) = parameters {
+            endpoint = endpoint.endpointByAddingParameters(parameters)
+        }
+        
         let performNetworking = { (request: NSURLRequest) in
             if cancellableToken.isCancelled { return }
-
+            
             switch stubBehavior {
             case .Never:
                 cancellableToken.innerCancellable = self.sendRequest(target, request: request, completion: completion)
@@ -133,9 +137,9 @@ public class MoyaProvider<Target: MoyaTarget> {
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }
-
+        
         requestClosure(endpoint, performNetworking)
-
+        
         return cancellableToken
     }
 }
