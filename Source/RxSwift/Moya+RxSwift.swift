@@ -16,26 +16,23 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
     /// Designated request-making method.
     public func request(token: Target) -> Observable<MoyaResponse> {
 
-        return deferred { [weak self] () -> Observable<MoyaResponse> in
-
-            let observable: Observable<MoyaResponse> =  AnonymousObservable { observer in
-                let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
-                    if let error = error {
-                        observer.on(.Error(error as NSError))
-                    } else {
-                        if let data = data {
-                            observer.on(.Next(MoyaResponse(statusCode: statusCode!, data: data, response: response)))
-                        }
-                        observer.on(.Completed)
-                    }                    
-                }
-
-                return AnonymousDisposable {
-                    cancellableToken?.cancel()
+        let observable: Observable<MoyaResponse> =  AnonymousObservable { [weak self] observer in
+            let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
+                if let error = error {
+                    observer.on(.Error(error as NSError))
+                } else {
+                    if let data = data {
+                        observer.on(.Next(MoyaResponse(statusCode: statusCode!, data: data, response: response)))
+                    }
+                    observer.on(.Completed)
                 }
             }
 
-            return observable
+            return AnonymousDisposable {
+                cancellableToken?.cancel()
+            }
         }
+
+        return observable
     }
 }
