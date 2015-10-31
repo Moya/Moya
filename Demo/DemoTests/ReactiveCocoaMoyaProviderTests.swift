@@ -106,7 +106,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
 
-                override func request(token: Target, completion: Moya.Completion) -> Cancellable {
+                override func request(token: Target, parameters: [String:AnyObject]?, completion: Moya.Completion) -> Cancellable {
                     return TestCancellable()
                 }
             }
@@ -188,7 +188,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }
                     
-                    override func request(token: Target, completion: Moya.Completion) -> Cancellable {
+                    override func request(token: Target, parameters: [String:AnyObject]?, completion: Moya.Completion) -> Cancellable {
                         return TestCancellable()
                     }
                 }
@@ -210,6 +210,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     disposable.dispose()
                     
                     expect(TestCancellable.cancelled).to( beTrue() )
+                    
                 }
             }
         }
