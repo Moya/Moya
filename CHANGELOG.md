@@ -1,5 +1,7 @@
 # Next
 
+- Removed extraneous `SignalProducer` from ReactiveCocoa extension – @JRHeaton
+
 # 4.1.0
 
 - OS X support.
