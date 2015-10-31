@@ -1,6 +1,7 @@
 # Next
 
 - Removed extraneous `SignalProducer` from ReactiveCocoa extension – @JRHeaton
+- Removed extraneous `deferred()` from RxSwift extension
 
 # 4.1.0
 

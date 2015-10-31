@@ -38,7 +38,7 @@ PODS:
   - ReactiveCocoa/UI (4.0.0-alpha-3):
     - ReactiveCocoa/Core
     - Result (~> 0.6-beta.4)
-  - Result (0.6.0-beta.5)
+  - Result (0.6.0-beta.6)
   - RxSwift (2.0.0-beta.1)
 
 DEPENDENCIES:
@@ -60,7 +60,7 @@ SPEC CHECKSUMS:
   OHHTTPStubs: 1a95a653b78287a1fdb44eb38364b43257ac3550
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   ReactiveCocoa: f03dcfd385b0e4ee5b7a323f5e0b146a498e12d3
-  Result: 8ae33a29ed1e147514b9536de523a978d7faba1f
+  Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
   RxSwift: a9b0f4d876eac130cda0ae2f3fba627be3baf3ef
 
 COCOAPODS: 0.39.0
