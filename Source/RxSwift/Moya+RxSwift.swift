@@ -16,15 +16,16 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
     /// Designated request-making method.
     public func request(token: Target) -> Observable<MoyaResponse> {
 
-        let observable: Observable<MoyaResponse> =  AnonymousObservable { [weak self] observer in
+        // Creates an observable that starts a request each time it's subscribed to.
+        return AnonymousObservable { [weak self] observer in
             let cancellableToken = self?.request(token) { (data, statusCode, response, error) -> () in
                 if let error = error {
-                    observer.on(.Error(error as NSError))
+                    observer.onError(error as NSError)
                 } else {
                     if let data = data {
-                        observer.on(.Next(MoyaResponse(statusCode: statusCode!, data: data, response: response)))
+                        observer.onNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
                     }
-                    observer.on(.Completed)
+                    observer.onComplete()
                 }
             }
 
@@ -32,7 +33,5 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
                 cancellableToken?.cancel()
             }
         }
-
-        return observable
     }
 }
