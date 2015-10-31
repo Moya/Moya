@@ -5,28 +5,20 @@
 You're a smart developer. You probably use Alamofire to abstract away access to
 NSURLSession and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
-are probably called "APIManager" or "NetworkModel", and probably look something
-like this.
+are probably called "APIManager" or "NetworkModel", and they always end in tears.
 
-![Ad hoc network layer](web/bad.png)
+![Moya Overview](web/diagram.png)
 
-It's leaky, meaning your app touches Alamofire directly and your layer bypasses
-Alamofire to access the network directly sometimes.
+Ad hoc network layers are common in iOS apps. They're bad for a few reasons:
 
-This kind of ad hoc network layer is common in iOS apps. It's bad for a few reasons:
+- Makes it hard to write new apps ("where do I begin?")
+- Makes it hard to maintain existing apps ("oh my god, this mess...")
+- Makes it hard to write unit tests ("how do I do this again?")
 
-- It makes it hard to write new apps ("where do I begin?")
-- It makes it hard to maintain existing apps ("oh my god, this mess...")
-- It makes it hard to write unit tests ("how do I do this again?")
-
-So the basic idea is that we want some network abstraction layer that sufficiently
-encapsulates actually calling Alamofire directly. It should be simple enough that
-common things are easy, but comprehensive enough that complicated things are also
-easy.
-
-![Moya diagram](web/good.png)
-
-Basically:
+So the basic idea of Moya is that we want some network abstraction layer that
+sufficiently encapsulates actually calling Alamofire directly. It should be simple
+enough that common things are easy, but comprehensive enough that complicated things
+are also easy.
 
 > If you use Alamofire to abstract away `NSURLSession`, why not use something
 to abstract away the nitty gritty of URLs, parameters, etc?
