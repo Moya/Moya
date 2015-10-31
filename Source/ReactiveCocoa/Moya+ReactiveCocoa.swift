@@ -16,37 +16,27 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
     
     /// Designated request-making method.
     public func request(token: Target) -> SignalProducer<MoyaResponse, NSError> {
-
-        /// returns a new producer which starts a new producer which invokes the requests. 
-        return SignalProducer { [weak self] outerSink, outerDisposable in
+        
+        // Creates a producer that starts a request each time it's started.
+        return SignalProducer { [weak self] observer, requestDisposable in
             
-            let producer: SignalProducer<MoyaResponse, NSError> = SignalProducer { [weak self] requestSink, requestDisposable in
-
-                let cancellableToken = self?.request(token) { data, statusCode, response, error in
-                    if let error = error {
-                        requestSink.sendFailed(error as NSError)
-                    } else {
-                        if let data = data {
-                            requestSink.sendNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
-                        }
-                        requestSink.sendCompleted()
+            let cancellableToken = self?.request(token) { data, statusCode, response, error in
+                if let error = error {
+                    observer.sendFailed(error as NSError)
+                } else {
+                    if let data = data {
+                        observer.sendNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
                     }
-                }
-
-                requestDisposable.addDisposable {
-                    // Cancel the request
-                    cancellableToken?.cancel()
+                    observer.sendCompleted()
                 }
             }
-
-            /// starts the inner signal producer and store the created signal.
-            producer.startWithSignal { signal, innerDisposable in
-                /// connect all events of the signal to the observer of this signal producer
-                signal.observe(outerSink)
-                outerDisposable.addDisposable(innerDisposable)
+            
+            requestDisposable.addDisposable {
+                // Cancel the request
+                cancellableToken?.cancel()
             }
         }
-    }
+}
     
     public func request(token: Target) -> RACSignal {
         return toRACSignal(request(token))
