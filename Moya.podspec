@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   are in [the README](https://github.com/Moya/Moya).
   EOS
   s.homepage     = "https://github.com/Moya/Moya"
-  s.license      = { :type => "MIT", :file => "LICENSE" }
+  s.license      = { :type => "MIT", :file => "License.md" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
   s.ios.deployment_target = '8.0'
