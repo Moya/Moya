@@ -1,5 +1,7 @@
 # Next
 
+- Updates to latest ReactiveCocoa alpha.
+
 # 4.2.0
 
 - Removed extraneous `SignalProducer` from ReactiveCocoa extension – @JRHeaton
