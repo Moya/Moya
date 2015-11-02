@@ -29,17 +29,15 @@ task :release, :version do |task, args|
   version = args[:version]
   abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+/).length == 0
 
-  puts "Updating podspecs."
-  ['Moya', 'RxMoya', 'ReactiveMoya'].each do |podspec|
-    filename = "#{podspec}.podspec"
-    contents = File.read(filename)
-    contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+"/, "s.version      = \"#{version}\"")
-    File.open(filename, 'w') { |file| file.puts contents }
-  end
+  puts "Updating podspec."
+  filename = "Moya.podspec"
+  contents = File.read(filename)
+  contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+"/, "s.version      = \"#{version}\"")
+  File.open(filename, 'w') { |file| file.puts contents }
 
   puts "Updating Demo project."
   Dir.chdir('Demo') do
-    sh "pod update Moya ReactiveMoya RxMoya"
+    sh "pod update Moya"
   end
 
   puts "Updating changelog."
