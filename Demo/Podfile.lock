@@ -1,15 +1,15 @@
 PODS:
   - Alamofire (3.1.1)
-  - Moya (4.2.0):
-    - Moya/Core (= 4.2.0)
-  - Moya/Core (4.2.0):
+  - Moya (4.3.0):
+    - Moya/Core (= 4.3.0)
+  - Moya/Core (4.3.0):
     - Alamofire (~> 3.0)
-  - Moya/ReactiveCocoa (4.2.0):
+  - Moya/ReactiveCocoa (4.3.0):
     - Moya/ReactiveCore
-    - ReactiveCocoa (= 4.0.0-alpha-3)
-  - Moya/ReactiveCore (4.2.0):
+    - ReactiveCocoa (= 4.0.1-alpha-3)
+  - Moya/ReactiveCore (4.3.0):
     - Moya/Core
-  - Moya/RxSwift (4.2.0):
+  - Moya/RxSwift (4.3.0):
     - Moya/ReactiveCore
     - RxSwift (~> 2.0.0-beta)
   - Nimble (3.0.0)
@@ -27,17 +27,17 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.4.0)
   - Quick (0.8.0)
-  - ReactiveCocoa (4.0.0-alpha-3):
-    - ReactiveCocoa/UI (= 4.0.0-alpha-3)
-    - Result (~> 0.6-beta.4)
-  - ReactiveCocoa/Core (4.0.0-alpha-3):
+  - ReactiveCocoa (4.0.1-alpha-3):
+    - ReactiveCocoa/UI (= 4.0.1-alpha-3)
+    - Result (~> 0.6.0-beta.6)
+  - ReactiveCocoa/Core (4.0.1-alpha-3):
     - ReactiveCocoa/no-arc
-    - Result (~> 0.6-beta.4)
-  - ReactiveCocoa/no-arc (4.0.0-alpha-3):
-    - Result (~> 0.6-beta.4)
-  - ReactiveCocoa/UI (4.0.0-alpha-3):
+    - Result (~> 0.6.0-beta.6)
+  - ReactiveCocoa/no-arc (4.0.1-alpha-3):
+    - Result (~> 0.6.0-beta.6)
+  - ReactiveCocoa/UI (4.0.1-alpha-3):
     - ReactiveCocoa/Core
-    - Result (~> 0.6-beta.4)
+    - Result (~> 0.6.0-beta.6)
   - Result (0.6.0-beta.6)
   - RxSwift (2.0.0-beta.2)
 
@@ -55,11 +55,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 9b0a7188b961a03914a99304488bd226b0e46c0e
-  Moya: e3953015d530fde8279e0a3462bf5e4d4824414b
+  Moya: a9df61f3e3f8a8c2ad287834d2c6f84a105cf32f
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
   OHHTTPStubs: 1a95a653b78287a1fdb44eb38364b43257ac3550
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
-  ReactiveCocoa: f03dcfd385b0e4ee5b7a323f5e0b146a498e12d3
+  ReactiveCocoa: e5ee5747ccc98136ce399bc431a47d3bf43f87c5
   Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
   RxSwift: 795720c22352cf1f62669ef3695b5df7e195103b
 
