@@ -1,5 +1,9 @@
 # Next
 
+# 4.3.1
+
+- Updates to latest ReactiveCocoa alpha. Again.
+
 # 4.3.0
 
 - Updates to latest ReactiveCocoa alpha.
