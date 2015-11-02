@@ -17,7 +17,7 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
     public func request(token: Target) -> Observable<MoyaResponse> {
 
         // Creates an observable that starts a request each time it's subscribed to.
-        return AnonymousObservable { [weak self] observer in
+        return create { [weak self] observer in
             let cancellableToken = self?.request(token) { data, statusCode, response, error in
                 if let error = error {
                     observer.onError(error as NSError)
@@ -25,7 +25,7 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
                     if let data = data {
                         observer.onNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
                     }
-                    observer.onComplete()
+                    observer.onCompleted()
                 }
             }
 
