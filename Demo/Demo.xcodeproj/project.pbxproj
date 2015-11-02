@@ -42,7 +42,7 @@
 		43454F6E15028A8B8A3971EA /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		438A6BC90BFF7F590EFB5EBA /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4B4E762F3CF042EA78D91549 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E2F7EE41BE53759009C5CE0 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
+		5E2F7EE41BE53759009C5CE0 /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Changelog.md; path = ../Changelog.md; sourceTree = "<group>"; };
 		5E70E8BD1A1BB32400F00C49 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
 		5E70E8BE1A1BB32400F00C49 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
 		5E70E8BF1A1BB32400F00C49 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		5EC197D71A1BB16D00F4DFD4 = {
 			isa = PBXGroup;
 			children = (
-				5E2F7EE41BE53759009C5CE0 /* CHANGELOG.md */,
+				5E2F7EE41BE53759009C5CE0 /* Changelog.md */,
 				5EC197E21A1BB16D00F4DFD4 /* Demo */,
 				5EC197FA1A1BB16D00F4DFD4 /* DemoTests */,
 				5EC197E11A1BB16D00F4DFD4 /* Products */,
