@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0630A3171BE1C84500AD4789"
-               BuildableName = "Moya.framework"
-               BlueprintName = "Moya OSX"
+               BlueprintIdentifier = "554B0FC11BE7ED7C00F3D266"
+               BuildableName = "ReactiveMoya.framework"
+               BlueprintName = "ReactiveMoya tvOS"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0630A3171BE1C84500AD4789"
-            BuildableName = "Moya.framework"
-            BlueprintName = "Moya OSX"
+            BlueprintIdentifier = "554B0FC11BE7ED7C00F3D266"
+            BuildableName = "ReactiveMoya.framework"
+            BlueprintName = "ReactiveMoya tvOS"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0630A3171BE1C84500AD4789"
-            BuildableName = "Moya.framework"
-            BlueprintName = "Moya OSX"
+            BlueprintIdentifier = "554B0FC11BE7ED7C00F3D266"
+            BuildableName = "ReactiveMoya.framework"
+            BlueprintName = "ReactiveMoya tvOS"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
