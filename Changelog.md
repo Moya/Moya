@@ -1,5 +1,7 @@
 # Next
 
+# 4.4.0
+
 - Adds tvOS and watchOS support
 - Fixes carthage OS X target not having source files
 - Makes base OS X target 10.9 instead of 10.10
