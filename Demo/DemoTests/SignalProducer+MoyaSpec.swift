@@ -183,7 +183,10 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-//                expect(receivedError?.domain).to(equal("\(NSCocoaErrorDomain)"))
+                
+                let expectedError = MoyaError.JSONMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                
+                expect(receivedError?.sameErrorType(expectedError)).to(beTrue())
             }
         }
         
