@@ -1,5 +1,7 @@
 # Next
 
+-  **Breaking Change** Introduce `MoyaError` type for use with ReactiveCocoa extension - [@tomburns](http://github.com/tomburns)
+
 # 4.4.0
 
 - Adds tvOS and watchOS support
