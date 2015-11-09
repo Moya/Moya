@@ -22,8 +22,8 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
                 if let error = error {
                     observer.onError(error as NSError)
                 } else {
-                    if let data = data {
-                        observer.onNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
+                    if let data = data, let statusCode = statusCode {
+                        observer.onNext(MoyaResponse(statusCode: statusCode, data: data, response: response))
                     }
                     observer.onCompleted()
                 }

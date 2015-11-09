@@ -13,7 +13,7 @@ private extension UIImage {
     }
 }
 
-func signalSendingData(data: NSData, statusCode: Int = 200) -> RACSignal {
+private func signalSendingData(data: NSData, statusCode: Int = 200) -> RACSignal {
     return RACSignal.createSignal { (subscriber) -> RACDisposable! in
         subscriber.sendNext(MoyaResponse(statusCode: statusCode, data: data, response: nil))
         subscriber.sendCompleted()
@@ -28,13 +28,13 @@ class RACSignalMoyaSpec: QuickSpec {
             it("filters out unrequested status codes") {
                 let data = NSData()
                 let signal = signalSendingData(data, statusCode: 10)
-
+                
                 var errored = false
-                signal.filterStatusCodes(0...9).subscribeNext { (object) -> Void in
+                signal.filterStatusCodes(0...9).subscribeNext({ (object) -> Void in
                     XCTFail("called on non-correct status code: \(object)")
-                }, error: { (error) -> Void in
-                    errored = true
-                }
+                    }, error: { (error) -> Void in
+                        errored = true
+                })
                 
                 expect(errored).to(beTruthy())
             }
@@ -46,8 +46,8 @@ class RACSignalMoyaSpec: QuickSpec {
                 var errored = false
                 signal.filterSuccessfulStatusCodes().subscribeNext({ (object) -> Void in
                     XCTFail("called on non-success status code: \(object)")
-                }, error: { (error) -> Void in
-                    errored = true
+                    }, error: { (error) -> Void in
+                        errored = true
                 })
                 
                 expect(errored).to(beTruthy())
@@ -72,8 +72,8 @@ class RACSignalMoyaSpec: QuickSpec {
                 var errored = false
                 signal.filterSuccessfulStatusAndRedirectCodes().subscribeNext({ (object) -> Void in
                     XCTFail("called on non-success status code: \(object)")
-                }, error: { (error) -> Void in
-                    errored = true
+                    }, error: { (error) -> Void in
+                        errored = true
                 })
                 
                 expect(errored).to(beTruthy())
@@ -106,9 +106,9 @@ class RACSignalMoyaSpec: QuickSpec {
         
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = UIImage.testPNGImage(named: "testImage")
+                let image = Image.testPNGImage(named: "testImage")
                 let data = UIImageJPEGRepresentation(image, 0.75)
-                let signal = signalSendingData(data)
+                let signal = signalSendingData(data!)
                 
                 var size: CGSize?
                 signal.mapImage().subscribeNext { (image) -> Void in
@@ -122,22 +122,22 @@ class RACSignalMoyaSpec: QuickSpec {
                 let data = NSData()
                 let signal = signalSendingData(data)
                 
-                var receivedError: ErrorType?
-                signal.mapImage().subscribeNext({ (image) -> Void in
+                var receivedError: NSError?
+                signal.mapImage().subscribeNext({ (object) -> Void in
                     XCTFail("next called for invalid data")
-                }, error: { (error) -> Void in
-                    receivedError = error
+                    }, error: { (error) -> Void in
+                        receivedError = error
                 })
                 
                 expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.rawValue))
             }
         }
-
+        
         describe("JSON mapping") {
             it("maps data representing some JSON to that JSON") {
                 let json = ["name": "John Crighton", "occupation": "Astronaut"]
-                let data = NSJSONSerialization.dataWithJSONObject(json, options: nil, error: nil)
-                let signal = signalSendingData(data!)
+                let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+                let signal = signalSendingData(data)
                 
                 var receivedJSON: [String: String]?
                 signal.mapJSON().subscribeNext { (json) -> Void in
@@ -155,11 +155,11 @@ class RACSignalMoyaSpec: QuickSpec {
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
                 let signal = signalSendingData(data!)
                 
-                var receivedError: ErrorType?
-                signal.mapJSON().subscribeNext({ (image) -> Void in
+                var receivedError: NSError?
+                signal.mapJSON().subscribeNext({ (object) -> Void in
                     XCTFail("next called for invalid data")
-                }, error: { (error) -> Void in
-                    receivedError = error
+                    }, error: { (error) -> Void in
+                        receivedError = error
                 })
                 
                 expect(receivedError).toNot(beNil())

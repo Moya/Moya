@@ -22,8 +22,8 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
                 if let error = error {
                     observer.sendFailed(error as NSError)
                 } else {
-                    if let data = data {
-                        observer.sendNext(MoyaResponse(statusCode: statusCode!, data: data, response: response))
+                    if let data = data, let statusCode = statusCode {
+                        observer.sendNext(MoyaResponse(statusCode: statusCode, data: data, response: response))
                     }
                     observer.sendCompleted()
                 }
