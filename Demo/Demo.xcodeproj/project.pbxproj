@@ -10,6 +10,7 @@
 		0649AB6B1BAE131A00DB0C77 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0649AB6A1BAE131A00DB0C77 /* Observable+MoyaSpec.swift */; };
 		068831491BB10585007CFFEA /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068831481BB10585007CFFEA /* SignalProducer+MoyaSpec.swift */; };
 		0AD0D23685BE790467295DAA /* Pods_DemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F163C0263C98856D2EFD9C4E /* Pods_DemoTests.framework */; };
+		55D06A941BF14EDD00314079 /* RACSignal+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8C01A1BB32400F00C49 /* RACSignal+MoyaSpec.swift */; };
 		5E70E8C31A1BB32400F00C49 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BD1A1BB32400F00C49 /* EndpointSpec.swift */; };
 		5E70E8C51A1BB32400F00C49 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BF1A1BB32400F00C49 /* MoyaProviderSpec.swift */; };
 		5E70E8C71A1BB32400F00C49 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E70E8C11A1BB32400F00C49 /* testImage.png */; };
@@ -22,7 +23,7 @@
 		5EC197F21A1BB16D00F4DFD4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC197F01A1BB16D00F4DFD4 /* LaunchScreen.xib */; };
 		5EC198081A1BB24600F4DFD4 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC198071A1BB24600F4DFD4 /* GitHubAPI.swift */; };
 		5EE0145E1AE81206001FAE57 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BE1A1BB32400F00C49 /* MoyaProviderIntegrationTests.swift */; };
-		5EEE04801BE3284A00BAF594 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEE047F1BE3284A00BAF594 /* TestHelpers.swift */; settings = {ASSET_TAGS = (); }; };
+		5EEE04801BE3284A00BAF594 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EEE047F1BE3284A00BAF594 /* TestHelpers.swift */; };
 		B65BD92F2FF29D3F7988B4BD /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B4E762F3CF042EA78D91549 /* Pods_Demo.framework */; };
 /* End PBXBuildFile section */
 
@@ -396,6 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D06A941BF14EDD00314079 /* RACSignal+MoyaSpec.swift in Sources */,
 				068831491BB10585007CFFEA /* SignalProducer+MoyaSpec.swift in Sources */,
 				5EE0145E1AE81206001FAE57 /* MoyaProviderIntegrationTests.swift in Sources */,
 				5EBA229E1BA4AF18000622AB /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
