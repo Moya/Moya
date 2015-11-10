@@ -1,5 +1,7 @@
 # Next
 
+- Adds mapping methods to `MoyaResponse`
+
 # 4.4.0
 
 - Adds tvOS and watchOS support
