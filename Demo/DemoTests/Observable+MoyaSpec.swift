@@ -13,7 +13,7 @@ private extension UIImage {
     }
 }
 
-func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<MoyaResponse> {
+private func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<MoyaResponse> {
     return just(MoyaResponse(statusCode: statusCode, data: data, response: nil))
 }
 

@@ -13,7 +13,8 @@ private extension UIImage {
     }
 }
 
-func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, MoyaError> {
+
+private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, MoyaError> {
     return SignalProducer(value: MoyaResponse(statusCode: statusCode, data: data, response: nil))
 }
 

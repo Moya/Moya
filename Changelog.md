@@ -2,6 +2,10 @@
 
 -  **Breaking Change** Introduce `MoyaError` type for use with ReactiveCocoa extension - [@tomburns](http://github.com/tomburns)
 
+# 4.5.0
+
+- Adds mapping methods to `MoyaResponse`
+
 # 4.4.0
 
 - Adds tvOS and watchOS support

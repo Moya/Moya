@@ -11,6 +11,7 @@
 		068831491BB10585007CFFEA /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 068831481BB10585007CFFEA /* SignalProducer+MoyaSpec.swift */; };
 		0AD0D23685BE790467295DAA /* Pods_DemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F163C0263C98856D2EFD9C4E /* Pods_DemoTests.framework */; };
 		1FC6B8631BF05D8F004CE7F0 /* MoyaError+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B8621BF05D8F004CE7F0 /* MoyaError+MoyaSpec.swift */; };
+		55D06A941BF14EDD00314079 /* RACSignal+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8C01A1BB32400F00C49 /* RACSignal+MoyaSpec.swift */; };
 		5E70E8C31A1BB32400F00C49 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BD1A1BB32400F00C49 /* EndpointSpec.swift */; };
 		5E70E8C51A1BB32400F00C49 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70E8BF1A1BB32400F00C49 /* MoyaProviderSpec.swift */; };
 		5E70E8C71A1BB32400F00C49 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E70E8C11A1BB32400F00C49 /* testImage.png */; };
@@ -399,6 +400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D06A941BF14EDD00314079 /* RACSignal+MoyaSpec.swift in Sources */,
 				068831491BB10585007CFFEA /* SignalProducer+MoyaSpec.swift in Sources */,
 				5EE0145E1AE81206001FAE57 /* MoyaProviderIntegrationTests.swift in Sources */,
 				5EBA229E1BA4AF18000622AB /* ReactiveCocoaMoyaProviderTests.swift in Sources */,

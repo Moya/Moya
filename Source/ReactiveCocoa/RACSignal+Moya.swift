@@ -6,25 +6,14 @@ public extension RACSignal {
     
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filterStatusCodes(range: ClosedInterval<Int>) -> RACSignal {
-        return tryMap({ (object, error) -> AnyObject! in
-            if let response = object as? MoyaResponse {
-                if range.contains(response.statusCode) {
-                    return object
-                } else {
-                    if error != nil {
-                        error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StatusCode.rawValue, userInfo: ["data": object])
-                    }
-                    
-                    return nil
-                }
+        return tryMap { object, error in
+            do {
+                return try cast(object).filterStatusCodes(range)
+            } catch (let mapError) {
+                error.memory = mapError as NSError
+                return nil
             }
-            
-            if error != nil {
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.Data.rawValue, userInfo: ["data": object])
-            }
-            
-            return nil
-        })
+        }
     }
 
     public func filterStatusCode(code: Int) -> RACSignal {
@@ -41,60 +30,45 @@ public extension RACSignal {
     
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
     public func mapImage() -> RACSignal {
-        return tryMap({ (object, error) -> AnyObject! in
-            var image: Image?
-            if let response = object as? MoyaResponse {
-                image = Image(data: response.data)
+        return tryMap { object, error in
+            do {
+                return try cast(object).mapImage()
+            } catch (let mapError) {
+                error.memory = mapError as NSError
+                return nil
             }
-            
-            if image == nil && error != nil {
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.rawValue, userInfo: ["data": object])
-            }
-            
-            return image
-        })
+        }
     }
     
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
     public func mapJSON() -> RACSignal {
-        return tryMap({ (object, error) -> AnyObject! in
-            var json: AnyObject?
-            if let response = object as? MoyaResponse {
-                json = try? NSJSONSerialization.JSONObjectWithData(response.data, options: .AllowFragments)
+        return tryMap { object, error in
+            do {
+                return try cast(object).mapJSON()
+            } catch (let mapError) {
+                error.memory = mapError as NSError
+                return nil
             }
-            
-            if json == nil && error != nil && error.memory == nil {
-                var userInfo: [NSObject : AnyObject]?
-                if object != nil {
-                    userInfo = ["data": object]
-                }
-                
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.JSONMapping.rawValue, userInfo: userInfo)
-            }
-            
-            return json
-        })
+        }
     }
     
     /// Maps data received from the signal into a String. If the conversion fails, the signal errors.
     public func mapString() -> RACSignal {
-        return tryMap({ (object, error) -> AnyObject! in
-            var string: String?
-            
-            if let response = object as? MoyaResponse {
-                string = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+        return tryMap { object, error in
+            do {
+                return try cast(object).mapString()
+            } catch (let mapError) {
+                error.memory = mapError as NSError
+                return nil
             }
-            
-            if string == nil {
-                var userInfo: [NSObject : AnyObject]?
-                if object != nil {
-                    userInfo = ["data": object]
-                }
-                
-                error.memory = NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StringMapping.rawValue, userInfo: userInfo)
-            }
-            
-            return string
-        })
+        }
     }
+}
+
+/// Trys to cast object to the expected MoyaResponse
+private func cast(object: AnyObject) throws -> MoyaResponse {
+    guard let response = object as? MoyaResponse else {
+        throw NSError(domain: RACSignalErrorDomain, code: RACSignalErrorNoMatchingCase, userInfo: ["cast_error" : "tried to cast \(object) to MoyaResponse"])
+    }
+    return response
 }
