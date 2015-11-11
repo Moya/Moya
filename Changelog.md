@@ -1,5 +1,7 @@
 # Next
 
+# 4.5.0
+
 - Adds mapping methods to `MoyaResponse`
 
 # 4.4.0
