@@ -25,7 +25,7 @@ public extension MoyaResponse {
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filterStatusCodes(range: ClosedInterval<Int>) throws -> MoyaResponse {
         guard range.contains(self.statusCode) else {
-            throw NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StatusCode.rawValue, userInfo: ["data": self])
+            throw MoyaError.StatusCode(self)
         }
         return self
     }

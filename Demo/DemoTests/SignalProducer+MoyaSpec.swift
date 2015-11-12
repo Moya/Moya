@@ -13,7 +13,8 @@ private extension UIImage {
     }
 }
 
-private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, NSError> {
+
+private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, MoyaError> {
     return SignalProducer(value: MoyaResponse(statusCode: statusCode, data: data, response: nil))
 }
 
@@ -132,7 +133,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = NSData()
                 let signal = signalSendingData(data)
                 
-                var receivedError: NSError?
+                var receivedError: MoyaError?
                 signal.mapImage().start { (event) -> Void in
                     switch event {
                     case .Next:
@@ -144,7 +145,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                     }
                 }
                 
-                expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.rawValue))
+                expect(receivedError).toNot(beNil())
             }
         }
         
@@ -170,7 +171,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
                 let signal = signalSendingData(data!)
                 
-                var receivedError: NSError?
+                var receivedError: MoyaError?
                 signal.mapJSON().start { (event) -> Void in
                     switch event {
                     case .Next:
@@ -183,7 +184,10 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                expect(receivedError?.domain).to(equal("\(NSCocoaErrorDomain)"))
+                
+                let expectedError = MoyaError.JSONMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                
+                expect(receivedError?.sameErrorType(expectedError)).to(beTrue())
             }
         }
         
