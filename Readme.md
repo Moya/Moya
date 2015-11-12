@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Moya/Moya.svg?branch=master)](https://travis-ci.org/Moya/Moya)
+[![Build Status](https://travis-ci.org/Moya/Moya.svg?branch=master)](https://travis-ci.org/Moya/Moya) [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 
 ![Moya Logo](web/moya_logo_github.png)
 
