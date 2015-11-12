@@ -112,8 +112,19 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 expect(called).to(beTruthy())
             }
+            it("knows how to filter individual status codes") {
+                let data = NSData()
+                let signal = signalSendingData(data, statusCode: 666)
+
+                var called = false
+                signal.filterStatusCode(666).startWithNext { (object) -> Void in
+                    called = true
+                }
+
+                expect(called).to(beTruthy())
+            }
         }
-        
+
         describe("image maping") {
             it("maps data representing an image to an image") {
                 let image = UIImage.testPNGImage(named: "testImage")
