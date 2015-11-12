@@ -138,6 +138,30 @@ public class MoyaProvider<Target: MoyaTarget> {
 
         return cancellableToken
     }
+
+    /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
+    /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
+    internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+        var canceled = false
+        let cancellableToken = CancellableToken { canceled = true }
+        notifyPluginsOfImpendingStub(request, target: target)
+        let plugins = self.plugins
+        let stub: () -> () = createStubFunction(&canceled, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+        switch stubBehavior {
+        case .Immediate:
+            stub()
+        case .Delayed(let delay):
+            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
+            let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+            dispatch_after(killTime, dispatch_get_main_queue()) {
+                stub()
+            }
+        case .Never:
+            fatalError("Method called to stub request when stubbing is disabled.")
+        }
+
+        return cancellableToken
+    }
 }
 
 /// Mark: Defaults
@@ -176,7 +200,7 @@ public extension MoyaProvider {
     }
 }
 
-private extension MoyaProvider {
+internal extension MoyaProvider {
 
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
         let request = manager.request(request)
@@ -198,15 +222,9 @@ private extension MoyaProvider {
         return CancellableToken(request: alamoRequest)
     }
 
-    func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
-        var canceled = false
-        let cancellableToken = CancellableToken { canceled = true }
-        let request = manager.request(request)
-        let plugins = self.plugins
-        
-        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
-        
-        let stub: () -> () = {
+    /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
+    internal final func createStubFunction(inout canceled: Bool, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin<Target>]) -> (() -> ()) {
+        return {
             if (canceled) {
                 let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
                 plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
@@ -223,26 +241,17 @@ private extension MoyaProvider {
                 completion(data: nil, statusCode: nil, response: nil, error: error)
             }
         }
+    }
 
-        switch stubBehavior {
-        case .Immediate:
-            stub()
-        case .Delayed(let delay):
-            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
-            let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
-            dispatch_after(killTime, dispatch_get_main_queue()) {
-                stub()
-            }
-        case .Never:
-            fatalError("Method called to stub request when stubbing is disabled.")
-        }
-
-        return cancellableToken
+    /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
+    internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
+        let request = manager.request(request)
+        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
     }
 }
 
-/// Private token that can be used to cancel requests
-private struct CancellableToken: Cancellable , CustomDebugStringConvertible{
+/// Internal token that can be used to cancel requests
+internal struct CancellableToken: Cancellable , CustomDebugStringConvertible{
     let cancelAction: () -> Void
     let request : Request?
 
