@@ -9,8 +9,10 @@ extension SignalProducerType where Value == MoyaResponse, Error == MoyaError {
         return producer.flatMap(.Latest) { response -> SignalProducer<Value, Error> in
             do {
                 return SignalProducer(value: try response.filterStatusCodes(range))
+            } catch let error as MoyaError {
+                return SignalProducer(error: error)
             } catch {
-                return SignalProducer(error: .StatusCode(response.statusCode,response))
+                return SignalProducer(error: .StatusCode(response))
             }
         }
     }

@@ -14,7 +14,7 @@ public enum MoyaError: ErrorType {
     case ImageMapping(MoyaResponse)
     case JSONMapping(MoyaResponse)
     case StringMapping(MoyaResponse)
-    case StatusCode(Int,MoyaResponse)
+    case StatusCode(MoyaResponse)
     case Data(MoyaResponse)
     case Underlying(ErrorType)
 }
