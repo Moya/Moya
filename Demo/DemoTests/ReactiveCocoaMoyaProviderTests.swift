@@ -97,7 +97,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
-                override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                     requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                     stubClosure: StubClosure = MoyaProvider.NeverStub,
                     manager: Manager = Alamofire.Manager.sharedInstance,
@@ -179,7 +179,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
-                    override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                    init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                         stubClosure: StubClosure = MoyaProvider.NeverStub,
                         manager: Manager = Alamofire.Manager.sharedInstance,
