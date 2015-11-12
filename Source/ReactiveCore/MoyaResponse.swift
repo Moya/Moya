@@ -24,7 +24,7 @@ public extension MoyaResponse {
     
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filterStatusCodes(range: ClosedInterval<Int>) throws -> MoyaResponse {
-        guard range.contains(self.statusCode) else {
+        guard range.contains(statusCode) else {
             throw MoyaError.StatusCode(self)
         }
         return self
@@ -44,21 +44,25 @@ public extension MoyaResponse {
     
     /// Maps data received from the signal into a UIImage.
     func mapImage() throws -> Image {
-        guard let image = Image(data: self.data) else {
-            throw NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.rawValue, userInfo: ["data": self])
+        guard let image = Image(data: data) else {
+            throw MoyaError.ImageMapping(self)
         }
         return image
     }
     
     /// Maps data received from the signal into a JSON object.
     func mapJSON() throws -> AnyObject {
-        return try NSJSONSerialization.JSONObjectWithData(self.data, options: .AllowFragments)
+        do {
+            return try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+        } catch {
+            throw MoyaError.Underlying(error)
+        }
     }
     
     /// Maps data received from the signal into a String.
     func mapString() throws -> String {
-        guard let string = NSString(data: self.data, encoding: NSUTF8StringEncoding) else {
-            throw NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StringMapping.rawValue, userInfo: ["data": self])
+        guard let string = NSString(data: data, encoding: NSUTF8StringEncoding) else {
+            throw MoyaError.StringMapping(self)
         }
         return string as String
     }

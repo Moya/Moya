@@ -12,7 +12,7 @@ extension SignalProducerType where Value == MoyaResponse, Error == MoyaError {
             } catch let error as MoyaError {
                 return SignalProducer(error: error)
             } catch {
-                return SignalProducer(error: .StatusCode(response))
+                return SignalProducer(error: .Underlying(error))
             }
         }
     }
@@ -34,8 +34,10 @@ extension SignalProducerType where Value == MoyaResponse, Error == MoyaError {
         return producer.flatMap(.Latest) { response -> SignalProducer<Image, Error> in
             do {
                 return SignalProducer(value: try response.mapImage())
+            } catch let error as MoyaError {
+                return SignalProducer(error: error)
             } catch {
-                return SignalProducer(error: .ImageMapping(response))
+                return SignalProducer(error: .Underlying(error))
             }
         }
     }
@@ -45,8 +47,10 @@ extension SignalProducerType where Value == MoyaResponse, Error == MoyaError {
         return producer.flatMap(.Latest) { response -> SignalProducer<AnyObject, Error> in
             do {
                 return SignalProducer(value: try response.mapJSON())
+            } catch let error as MoyaError {
+                return SignalProducer(error: error)
             } catch {
-                return SignalProducer(error: .JSONMapping(response))
+                return SignalProducer(error: .Underlying(error))
             }
         }
     }
@@ -56,8 +60,10 @@ extension SignalProducerType where Value == MoyaResponse, Error == MoyaError {
         return producer.flatMap(.Latest) { response -> SignalProducer<String, Error> in
             do {
                 return SignalProducer(value: try response.mapString())
+            } catch let error as MoyaError {
+                return SignalProducer(error: error)
             } catch {
-                return SignalProducer(error: .StringMapping(response))
+                return SignalProducer(error: .Underlying(error))
             }
         }
     }

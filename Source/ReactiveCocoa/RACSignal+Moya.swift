@@ -9,17 +9,20 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).filterStatusCodes(range)
-            } catch (let mapError) {
-                error.memory = mapError as NSError
+            } catch let moyaError as MoyaError {
+                error.memory = moyaError.nsError
+                return nil
+            } catch let cocoaError {
+                error.memory = cocoaError as NSError
                 return nil
             }
         }
     }
-
+    
     public func filterStatusCode(code: Int) -> RACSignal {
         return filterStatusCodes(code...code)
     }
-
+    
     public func filterSuccessfulStatusCodes() -> RACSignal {
         return filterStatusCodes(200...299)
     }
@@ -33,8 +36,11 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapImage()
-            } catch (let mapError) {
-                error.memory = mapError as NSError
+            } catch let moyaError as MoyaError {
+                error.memory = moyaError.nsError
+                return nil
+            } catch let cocoaError {
+                error.memory = cocoaError as NSError
                 return nil
             }
         }
@@ -45,8 +51,11 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapJSON()
-            } catch (let mapError) {
-                error.memory = mapError as NSError
+            } catch let moyaError as MoyaError {
+                error.memory = moyaError.nsError
+                return nil
+            } catch let cocoaError {
+                error.memory = cocoaError as NSError
                 return nil
             }
         }
@@ -57,8 +66,11 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapString()
-            } catch (let mapError) {
-                error.memory = mapError as NSError
+            } catch let moyaError as MoyaError {
+                error.memory = moyaError.nsError
+                return nil
+            } catch let cocoaError {
+                error.memory = cocoaError as NSError
                 return nil
             }
         }

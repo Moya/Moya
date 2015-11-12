@@ -1,6 +1,6 @@
 # Next
 
--  **Breaking Change** Introduce `MoyaError` type for use with ReactiveCocoa extension - [@tomburns](http://github.com/tomburns)
+-  **Breaking Change** Introduce `MoyaError` type for use with reactive extensions - [@tomburns](http://github.com/tomburns)
 
 # 4.5.0
 

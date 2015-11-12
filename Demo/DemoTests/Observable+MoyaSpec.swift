@@ -132,19 +132,21 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = NSData()
                 let observable = observableSendingData(data)
                 
-                var receivedError: NSError?
+                var receivedError: MoyaError?
                 _ = observable.mapImage().subscribe { (event) -> Void in
                     switch event {
                     case .Next:
                         XCTFail("next called for invalid data")
                     case .Error(let error):
-                        receivedError = error as NSError
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
                 }
                 
-                expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.rawValue))
+                expect(receivedError).toNot(beNil())
+                let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                expect(receivedError) == expectedError
             }
         }
         
@@ -170,20 +172,25 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
                 let observable = observableSendingData(data!)
                 
-                var receivedError: NSError?
+                var receivedError: MoyaError?
                 _ = observable.mapJSON().subscribe { (event) -> Void in
                     switch event {
                     case .Next:
                         XCTFail("next called for invalid data")
                     case .Error(let error):
-                        receivedError = error as NSError
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
                 }
                 
                 expect(receivedError).toNot(beNil())
-                expect(receivedError?.domain).to(equal("\(NSCocoaErrorDomain)"))
+                switch receivedError {
+                case .Some(.Underlying(let error as NSError)):
+                    expect(error.domain).to(equal("\(NSCocoaErrorDomain)"))
+                default:
+                    fail("expected NSError with \(NSCocoaErrorDomain) domain")
+                }
             }
         }
         

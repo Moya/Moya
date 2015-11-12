@@ -1,5 +1,15 @@
 import Foundation
 
+public enum MoyaError: ErrorType {
+    case ImageMapping(MoyaResponse)
+    case JSONMapping(MoyaResponse)
+    case StringMapping(MoyaResponse)
+    case StatusCode(MoyaResponse)
+    case Data(MoyaResponse)
+    case Underlying(ErrorType)
+}
+
+// If RACSignal support gets removed we can also remove everything under here
 public let MoyaErrorDomain = "Moya"
 
 public enum MoyaErrorCode: Int {
@@ -10,11 +20,23 @@ public enum MoyaErrorCode: Int {
     case Data
 }
 
-public enum MoyaError: ErrorType {
-    case ImageMapping(MoyaResponse)
-    case JSONMapping(MoyaResponse)
-    case StringMapping(MoyaResponse)
-    case StatusCode(MoyaResponse)
-    case Data(MoyaResponse)
-    case Underlying(ErrorType)
+internal extension MoyaError {
+    
+    // Used to convert MoyaError to NSError for RACSignal
+    var nsError: NSError {
+        switch self {
+        case .ImageMapping(let response):
+            return NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.ImageMapping.rawValue, userInfo: ["data" : response])
+        case .JSONMapping(let response):
+            return NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.JSONMapping.rawValue, userInfo: ["data" : response])
+        case .StringMapping(let response):
+            return NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StringMapping.rawValue, userInfo: ["data" : response])
+        case .StatusCode(let response):
+            return NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.StatusCode.rawValue, userInfo: ["data" : response])
+        case .Data(let response):
+            return NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.Data.rawValue, userInfo: ["data" : response])
+        case .Underlying(let error):
+            return error as NSError
+        }
+    }
 }

@@ -63,23 +63,24 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             it("returns the correct error message") {
-                var receivedError: NSError!
+                var receivedError: MoyaError?
 
                 waitUntil { done in
-                    provider.request(.Zen).subscribeError { (error) -> Void in
+                    provider.request(.Zen).startWithFailed { (error) -> Void in
                         receivedError = error
                         done()
                     }
                 }
 
-                expect(receivedError.domain) == "Moya.MoyaError"
+                let expectedError = MoyaError.Underlying(NSError(domain: "", code: 0, userInfo: nil))
+                expect(receivedError) == expectedError
             }
 
             it("returns an error") {
                 var errored = false
 
                 let target: GitHub = .Zen
-                provider.request(target).subscribeError { (error) -> Void in
+                provider.request(target).startWithFailed { (error) -> Void in
                     errored = true
                 }
 
@@ -121,7 +122,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             it("cancels network request when subscription is cancelled") {
                 let target: GitHub = .Zen
 
-                let disposable = provider.request(target).subscribeCompleted { () -> Void in
+                let disposable = provider.request(target).startWithCompleted { () -> Void in
                     // Should never be executed
                     fail()
                 }

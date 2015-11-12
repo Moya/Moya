@@ -13,7 +13,6 @@ private extension UIImage {
     }
 }
 
-
 private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, MoyaError> {
     return SignalProducer(value: MoyaResponse(statusCode: statusCode, data: data, response: nil))
 }
@@ -146,6 +145,8 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
+                let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                expect(receivedError) == expectedError
             }
         }
         
@@ -184,10 +185,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                
-                let expectedError = MoyaError.JSONMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
-                
-                expect(receivedError?.sameErrorType(expectedError)).to(beTrue())
+                switch receivedError {
+                case .Some(.Underlying(let error as NSError)):
+                    expect(error.domain).to(equal("\(NSCocoaErrorDomain)"))
+                default:
+                    fail("expected NSError with \(NSCocoaErrorDomain) domain")
+                }
             }
         }
         
