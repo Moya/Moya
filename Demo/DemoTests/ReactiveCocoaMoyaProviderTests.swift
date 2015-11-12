@@ -72,7 +72,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(receivedError.domain) == "com.moya.error"
+                expect(receivedError.domain) == "Moya.MoyaError"
             }
 
             it("returns an error") {
