@@ -142,11 +142,10 @@ public class MoyaProvider<Target: MoyaTarget> {
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
-        var canceled = false
-        let cancellableToken = CancellableToken { canceled = true }
+        let cancellableToken = CancellableToken()
         notifyPluginsOfImpendingStub(request, target: target)
         let plugins = self.plugins
-        let stub: () -> () = createStubFunction(&canceled, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+        let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
         switch stubBehavior {
         case .Immediate:
             stub()
@@ -223,9 +222,9 @@ internal extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    internal final func createStubFunction(inout canceled: Bool, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin<Target>]) -> (() -> ()) {
+    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin<Target>]) -> (() -> ()) {
         return {
-            if (canceled) {
+            if (token.canceled) {
                 let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
                 plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
                 completion(data: nil, statusCode: nil, response: nil, error: error)
@@ -251,16 +250,23 @@ internal extension MoyaProvider {
 }
 
 /// Internal token that can be used to cancel requests
-internal struct CancellableToken: Cancellable , CustomDebugStringConvertible{
+internal final class CancellableToken: Cancellable , CustomDebugStringConvertible{
     let cancelAction: () -> Void
     let request : Request?
+    private(set) var canceled: Bool = false
+
+    private var lock: OSSpinLock = OS_SPINLOCK_INIT
 
     func cancel() {
+        guard !canceled else { return }
+        OSSpinLockLock(&lock)
+        canceled = true
         cancelAction()
+        OSSpinLockUnlock(&lock)
     }
-    
-    init(action: () -> Void){
-        self.cancelAction = action
+
+    init(action: (() -> ())? = nil){
+        self.cancelAction = action != nil ? action! : ({ }) // Compiler complains about nil-coalescence here.
         self.request = nil
     }
     

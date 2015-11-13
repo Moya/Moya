@@ -43,21 +43,22 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
             return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
         notifyPluginsOfImpendingStub(request, target: target)
-        var canceled = false
-        let stub = createStubFunction(&canceled, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+        var dis: Disposable? = .None
+        let token = CancellableToken {
+            dis?.dispose()
+        }
+        let stub = createStubFunction(token, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+
         switch stubBehavior {
         case .Immediate:
-            stubScheduler.schedule(stub)
+            dis = stubScheduler.schedule(stub)
         case .Delayed(let seconds):
             let date = NSDate(timeIntervalSinceNow: seconds)
-            stubScheduler.scheduleAfter(date, action: stub)
+            dis = stubScheduler.scheduleAfter(date, action: stub)
         case .Never:
             fatalError("Attempted to stub request when behavior requested was never stub!")
         }
-        // Todo: refactor cancellation behavior out of `createStubFunction` so that we can use disposables.
-        return CancellableToken {
-            canceled = true
-        }
+        return token
     }
 
     public func request(token: Target) -> RACSignal {
