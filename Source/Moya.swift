@@ -258,11 +258,11 @@ internal final class CancellableToken: Cancellable , CustomDebugStringConvertibl
     private var lock: OSSpinLock = OS_SPINLOCK_INIT
 
     func cancel() {
-        guard !canceled else { return }
         OSSpinLockLock(&lock)
+        defer { OSSpinLockUnlock(&lock) }
+        guard !canceled else { return }
         canceled = true
         cancelAction()
-        OSSpinLockUnlock(&lock)
     }
 
     init(action: (() -> ())? = nil){
