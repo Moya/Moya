@@ -97,7 +97,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
-                override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                     requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                     stubClosure: StubClosure = MoyaProvider.NeverStub,
                     manager: Manager = Alamofire.Manager.sharedInstance,
@@ -179,7 +179,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
-                    override init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                    init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                         stubClosure: StubClosure = MoyaProvider.NeverStub,
                         manager: Manager = Alamofire.Manager.sharedInstance,
@@ -211,6 +211,28 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     
                     expect(TestCancellable.cancelled).to( beTrue() )
                 }
+            }
+        }
+        describe("provider with a TestScheduler") {
+            var testScheduler: TestScheduler! = nil
+            var response: MoyaResponse? = nil
+            beforeEach {
+                testScheduler = TestScheduler()
+                provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, stubScheduler: testScheduler)
+                provider.request(.Zen).startWithNext { next in
+                    response = next
+                }
+            }
+            afterEach {
+                response = nil
+            }
+
+            it("sends the stub when the test scheduler is advanced") {
+                testScheduler.run()
+                expect(response).toNot(beNil())
+            }
+            it("does not send the stub when the test scheduler is not advanced") {
+                expect(response).to(beNil())
             }
         }
     }
