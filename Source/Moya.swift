@@ -142,7 +142,7 @@ public class MoyaProvider<Target: MoyaTarget> {
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
-        let cancellableToken = CancellableToken()
+        let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(request, target: target)
         let plugins = self.plugins
         let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
@@ -251,7 +251,7 @@ internal extension MoyaProvider {
 
 /// Internal token that can be used to cancel requests
 internal final class CancellableToken: Cancellable , CustomDebugStringConvertible{
-    let cancelAction: (() -> ())?
+    let cancelAction: () -> Void
     let request : Request?
     private(set) var canceled: Bool = false
 
@@ -262,10 +262,10 @@ internal final class CancellableToken: Cancellable , CustomDebugStringConvertibl
         defer { OSSpinLockUnlock(&lock) }
         guard !canceled else { return }
         canceled = true
-        cancelAction?()
+        cancelAction()
     }
 
-    init(action: (() -> ())? = nil){
+    init(action: () -> Void){
         self.cancelAction = action
         self.request = nil
     }
