@@ -178,7 +178,7 @@ class ObservableMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
-                expect(receivedError) == expectedError
+                expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
         
@@ -258,7 +258,7 @@ class ObservableMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 let expectedError = MoyaError.StringMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
-                expect(receivedError) == expectedError
+                expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
     }

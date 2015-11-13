@@ -45,14 +45,14 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 var errored = false
                 signal.filterSuccessfulStatusCodes().start { (event) -> Void in
-                        switch event {
-                        case .Next(let object):
-                            fail("called on non-success status code: \(object)")
-                        case .Failed:
-                            errored = true
-                        default:
-                            break
-                        }
+                    switch event {
+                    case .Next(let object):
+                        fail("called on non-success status code: \(object)")
+                    case .Failed:
+                        errored = true
+                    default:
+                        break
+                    }
                 }
                 
                 expect(errored).to(beTruthy())
@@ -116,12 +116,12 @@ class SignalProducerMoyaSpec: QuickSpec {
             it("knows how to filter individual status codes") {
                 let data = NSData()
                 let signal = signalSendingData(data, statusCode: 42)
-
+                
                 var called = false
                 signal.filterStatusCode(42).startWithNext { (object) -> Void in
                     called = true
                 }
-
+                
                 expect(called).to(beTruthy())
             }
             
@@ -140,11 +140,11 @@ class SignalProducerMoyaSpec: QuickSpec {
                         break
                     }
                 }
-
+                
                 expect(errored).to(beTruthy())
             }
         }
-
+        
         describe("image maping") {
             it("maps data representing an image to an image") {
                 let image = UIImage.testPNGImage(named: "testImage")
@@ -177,7 +177,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
-                expect(receivedError) == expectedError
+                expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
         
@@ -245,19 +245,19 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 var receivedError: MoyaError?
                 signal.mapString().start { (event) -> Void in
-                        switch event {
-                        case .Next:
-                            fail("next called for invalid data")
-                        case .Failed(let error):
-                            receivedError = error
-                        default:
-                            break
-                        }
+                    switch event {
+                    case .Next:
+                        fail("next called for invalid data")
+                    case .Failed(let error):
+                        receivedError = error
+                    default:
+                        break
+                    }
                 }
                 
                 expect(receivedError).toNot(beNil())
                 let expectedError = MoyaError.StringMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
-                expect(receivedError) == expectedError
+                expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
     }
