@@ -251,7 +251,7 @@ internal extension MoyaProvider {
 
 /// Internal token that can be used to cancel requests
 internal final class CancellableToken: Cancellable , CustomDebugStringConvertible{
-    let cancelAction: () -> Void
+    let cancelAction: (() -> ())?
     let request : Request?
     private(set) var canceled: Bool = false
 
@@ -262,11 +262,11 @@ internal final class CancellableToken: Cancellable , CustomDebugStringConvertibl
         defer { OSSpinLockUnlock(&lock) }
         guard !canceled else { return }
         canceled = true
-        cancelAction()
+        cancelAction?()
     }
 
     init(action: (() -> ())? = nil){
-        self.cancelAction = action != nil ? action! : ({ }) // Compiler complains about nil-coalescence here.
+        self.cancelAction = action
         self.request = nil
     }
     
