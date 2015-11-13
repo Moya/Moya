@@ -1419,7 +1419,6 @@
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MOYA_VERSION = 4.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
 				PRODUCT_NAME = RxMoya;
 				SKIP_INSTALL = YES;
@@ -1442,7 +1441,6 @@
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MOYA_VERSION = 4.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
 				PRODUCT_NAME = RxMoya;
 				SKIP_INSTALL = YES;
@@ -1804,6 +1802,7 @@
 				554B0FC01BE7ED4D00F3D266 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		554B0FC61BE7ED7C00F3D266 /* Build configuration list for PBXNativeTarget "ReactiveMoya tvOS" */ = {
 			isa = XCConfigurationList;
@@ -1830,6 +1829,7 @@
 				554B101E1BE7F11700F3D266 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		554B10241BE7F13600F3D266 /* Build configuration list for PBXNativeTarget "ReactiveMoya watchOS" */ = {
 			isa = XCConfigurationList;
