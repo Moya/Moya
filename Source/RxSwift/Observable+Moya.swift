@@ -12,15 +12,21 @@ extension ObservableType where E == MoyaResponse {
     }
     
     public func filterStatusCode(code: Int) -> Observable<E> {
-        return filterStatusCodes(code...code)
+        return flatMap { response -> Observable<E> in
+            return just(try response.filterStatusCode(code))
+        }
     }
     
     public func filterSuccessfulStatusCodes() -> Observable<E> {
-        return filterStatusCodes(200...299)
+        return flatMap { response -> Observable<E> in
+            return just(try response.filterSuccessfulStatusCodes())
+        }
     }
     
     public func filterSuccessfulStatusAndRedirectCodes() -> Observable<E> {
-        return filterStatusCodes(200...399)
+        return flatMap { response -> Observable<E> in
+            return just(try response.filterSuccessfulStatusAndRedirectCodes())
+        }
     }
     
     /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.

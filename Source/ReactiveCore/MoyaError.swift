@@ -20,7 +20,7 @@ public enum MoyaErrorCode: Int {
     case Data
 }
 
-internal extension MoyaError {
+public extension MoyaError {
     
     // Used to convert MoyaError to NSError for RACSignal
     var nsError: NSError {

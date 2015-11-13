@@ -9,26 +9,44 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).filterStatusCodes(range)
-            } catch let moyaError as MoyaError {
-                error.memory = moyaError.nsError
-                return nil
-            } catch let cocoaError {
-                error.memory = cocoaError as NSError
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
                 return nil
             }
         }
     }
     
     public func filterStatusCode(code: Int) -> RACSignal {
-        return filterStatusCodes(code...code)
+        return tryMap { object, error in
+            do {
+                return try cast(object).filterStatusCode(code)
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
+                return nil
+            }
+        }
     }
     
     public func filterSuccessfulStatusCodes() -> RACSignal {
-        return filterStatusCodes(200...299)
+        return tryMap { object, error in
+            do {
+                return try cast(object).filterSuccessfulStatusCodes()
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
+                return nil
+            }
+        }
     }
     
     public func filterSuccessfulStatusAndRedirectCodes() -> RACSignal {
-        return filterStatusCodes(200...399)
+        return tryMap { object, error in
+            do {
+                return try cast(object).filterSuccessfulStatusAndRedirectCodes()
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
+                return nil
+            }
+        }
     }
     
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
@@ -36,11 +54,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapImage()
-            } catch let moyaError as MoyaError {
-                error.memory = moyaError.nsError
-                return nil
-            } catch let cocoaError {
-                error.memory = cocoaError as NSError
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
                 return nil
             }
         }
@@ -51,11 +66,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapJSON()
-            } catch let moyaError as MoyaError {
-                error.memory = moyaError.nsError
-                return nil
-            } catch let cocoaError {
-                error.memory = cocoaError as NSError
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
                 return nil
             }
         }
@@ -66,11 +78,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapString()
-            } catch let moyaError as MoyaError {
-                error.memory = moyaError.nsError
-                return nil
-            } catch let cocoaError {
-                error.memory = cocoaError as NSError
+            } catch let moyaError {
+                error.memory = (moyaError as! MoyaError).nsError
                 return nil
             }
         }
@@ -79,8 +88,5 @@ public extension RACSignal {
 
 /// Trys to cast object to the expected MoyaResponse
 private func cast(object: AnyObject) throws -> MoyaResponse {
-    guard let response = object as? MoyaResponse else {
-        throw NSError(domain: RACSignalErrorDomain, code: RACSignalErrorNoMatchingCase, userInfo: ["cast_error" : "tried to cast \(object) to MoyaResponse"])
-    }
-    return response
+    return object as! MoyaResponse
 }

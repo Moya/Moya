@@ -61,29 +61,33 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             beforeEach {
                 provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
-
+            
             it("returns the correct error message") {
                 var receivedError: MoyaError?
-
+                
                 waitUntil { done in
                     provider.request(.Zen).startWithFailed { (error) -> Void in
                         receivedError = error
                         done()
                     }
                 }
-
-                let expectedError = MoyaError.Underlying(NSError(domain: "", code: 0, userInfo: nil))
-                expect(receivedError) == expectedError
+                
+                switch receivedError {
+                case .Some(.Underlying(let error as NSError)):
+                    expect(error.localizedDescription) == "Houston, we have a problem"
+                default:
+                    fail("expected an Underlying error that Houston has a problem")
+                }
             }
-
+            
             it("returns an error") {
                 var errored = false
-
+                
                 let target: GitHub = .Zen
                 provider.request(target).startWithFailed { (error) -> Void in
                     errored = true
                 }
-
+                
                 expect(errored).to(beTruthy())
             }
         }

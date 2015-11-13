@@ -28,7 +28,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 signal.filterStatusCodes(0...9).start { (event) -> Void in
                     switch event {
                     case .Next(let object):
-                        XCTFail("called on non-correct status code: \(object)")
+                        fail("called on non-correct status code: \(object)")
                     case .Failed:
                         errored = true
                     default:
@@ -47,7 +47,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 signal.filterSuccessfulStatusCodes().start { (event) -> Void in
                         switch event {
                         case .Next(let object):
-                            XCTFail("called on non-success status code: \(object)")
+                            fail("called on non-success status code: \(object)")
                         case .Failed:
                             errored = true
                         default:
@@ -78,7 +78,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 signal.filterSuccessfulStatusAndRedirectCodes().start { (event) -> Void in
                     switch event {
                     case .Next(let object):
-                        XCTFail("called on non-success status code: \(object)")
+                        fail("called on non-success status code: \(object)")
                     case .Failed:
                         errored = true
                     default:
@@ -112,16 +112,36 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 expect(called).to(beTruthy())
             }
+            
             it("knows how to filter individual status codes") {
                 let data = NSData()
-                let signal = signalSendingData(data, statusCode: 666)
+                let signal = signalSendingData(data, statusCode: 42)
 
                 var called = false
-                signal.filterStatusCode(666).startWithNext { (object) -> Void in
+                signal.filterStatusCode(42).startWithNext { (object) -> Void in
                     called = true
                 }
 
                 expect(called).to(beTruthy())
+            }
+            
+            it("filters out different individual status code") {
+                let data = NSData()
+                let signal = signalSendingData(data, statusCode: 43)
+                
+                var errored = false
+                signal.filterStatusCode(42).start { (event) -> Void in
+                    switch event {
+                    case .Next(let object):
+                        fail("called on non-success status code: \(object)")
+                    case .Failed:
+                        errored = true
+                    default:
+                        break
+                    }
+                }
+
+                expect(errored).to(beTruthy())
             }
         }
 
@@ -147,7 +167,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 signal.mapImage().start { (event) -> Void in
                     switch event {
                     case .Next:
-                        XCTFail("next called for invalid data")
+                        fail("next called for invalid data")
                     case .Failed(let error):
                         receivedError = error
                     default:
@@ -187,7 +207,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 signal.mapJSON().start { (event) -> Void in
                     switch event {
                     case .Next:
-                        XCTFail("next called for invalid data")
+                        fail("next called for invalid data")
                     case .Failed(let error):
                         receivedError = error
                     default:
@@ -214,10 +234,30 @@ class SignalProducerMoyaSpec: QuickSpec {
                 var receivedString: String?
                 signal.mapString().startWithNext { (string) -> Void in
                     receivedString = string
-                    return
                 }
                 
                 expect(receivedString).to(equal(string))
+            }
+            
+            it("ignores invalid data") {
+                let data = NSData(bytes: [0x11FFFF] as [UInt32], length: 1) //Byte exceeding UTF8
+                let signal = signalSendingData(data)
+                
+                var receivedError: MoyaError?
+                signal.mapString().start { (event) -> Void in
+                        switch event {
+                        case .Next:
+                            fail("next called for invalid data")
+                        case .Failed(let error):
+                            receivedError = error
+                        default:
+                            break
+                        }
+                }
+                
+                expect(receivedError).toNot(beNil())
+                let expectedError = MoyaError.StringMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                expect(receivedError) == expectedError
             }
         }
     }
