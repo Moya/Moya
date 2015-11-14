@@ -20,7 +20,7 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
         return create { [weak self] observer in
             let cancellableToken = self?.request(token) { data, statusCode, response, error in
                 if let error = error {
-                    observer.onError(error as NSError)
+                    observer.onError(MoyaError.Underlying(error))
                 } else {
                     if let data = data, let statusCode = statusCode {
                         observer.onNext(MoyaResponse(statusCode: statusCode, data: data, response: response))

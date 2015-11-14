@@ -1,50 +1,59 @@
+import Nimble
 import Moya
 
-extension MoyaError {
-    public func sameErrorType(otherError: MoyaError) -> Bool {
-        switch self {
-        case .ImageMapping:
-            switch otherError {
+public func beOfSameErrorType(expectedValue: MoyaError) -> MatcherFunc<MoyaError> {
+    return MatcherFunc { actualExpression, failureMessage in
+        do {
+            guard let actualValue = try actualExpression.evaluate() else {
+                return false
+            }
+            
+            switch actualValue {
             case .ImageMapping:
-                return true
-            default:
-                return false
-            }
-        case .JSONMapping:
-            switch otherError {
+                switch expectedValue {
+                case .ImageMapping:
+                    return true
+                default:
+                    return false
+                }
             case .JSONMapping:
-                return true
-            default:
-                return false
-            }
-        case .StringMapping:
-            switch otherError {
+                switch expectedValue {
+                case .JSONMapping:
+                    return true
+                default:
+                    return false
+                }
             case .StringMapping:
-                return true
-            default:
-                return false
-            }
-        case .StatusCode:
-            switch otherError {
+                switch expectedValue {
+                case .StringMapping:
+                    return true
+                default:
+                    return false
+                }
             case .StatusCode:
-                return true
-            default:
-                return false
-            }
-        case .Data:
-            switch otherError {
+                switch expectedValue {
+                case .StatusCode:
+                    return true
+                default:
+                    return false
+                }
             case .Data:
-                return true
-            default:
-                return false
-            }
-        case .Underlying:
-            switch otherError {
+                switch expectedValue {
+                case .Data:
+                    return true
+                default:
+                    return false
+                }
             case .Underlying:
-                return true
-            default:
-                return false
+                switch expectedValue {
+                case .Underlying:
+                    return true
+                default:
+                    return false
+                }
             }
+        } catch {
+            return false;
         }
     }
 }

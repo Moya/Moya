@@ -28,7 +28,7 @@ class ObservableMoyaSpec: QuickSpec {
                 _ = observable.filterStatusCodes(0...9).subscribe { (event) -> Void in
                     switch event {
                     case .Next(let object):
-                        XCTFail("called on non-correct status code: \(object)")
+                        fail("called on non-correct status code: \(object)")
                     case .Error:
                         errored = true
                     default:
@@ -47,7 +47,7 @@ class ObservableMoyaSpec: QuickSpec {
                 _ = observable.filterSuccessfulStatusCodes().subscribe { (event) -> Void in
                     switch event {
                     case .Next(let object):
-                        XCTFail("called on non-success status code: \(object)")
+                        fail("called on non-success status code: \(object)")
                     case .Error:
                         errored = true
                     default:
@@ -78,7 +78,7 @@ class ObservableMoyaSpec: QuickSpec {
                 _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe { (event) -> Void in
                     switch event {
                     case .Next(let object):
-                        XCTFail("called on non-success status code: \(object)")
+                        fail("called on non-success status code: \(object)")
                     case .Error:
                         errored = true
                     default:
@@ -112,6 +112,38 @@ class ObservableMoyaSpec: QuickSpec {
                 
                 expect(called).to(beTruthy())
             }
+            
+            
+            it("knows how to filter individual status code") {
+                let data = NSData()
+                let observable = observableSendingData(data, statusCode: 42)
+                
+                var called = false
+                _ = observable.filterStatusCode(42).subscribeNext { (object) -> Void in
+                    called = true
+                }
+                
+                expect(called).to(beTruthy())
+            }
+            
+            it("filters out different individual status code") {
+                let data = NSData()
+                let observable = observableSendingData(data, statusCode: 43)
+                
+                var errored = false
+                _ = observable.filterStatusCode(42).subscribe { (event) -> Void in
+                    switch event {
+                    case .Next(let object):
+                        fail("called on non-success status code: \(object)")
+                    case .Error:
+                        errored = true
+                    default:
+                        break
+                    }
+                }
+                
+                expect(errored).to(beTruthy())
+            }
         }
         
         describe("image maping") {
@@ -132,19 +164,21 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = NSData()
                 let observable = observableSendingData(data)
                 
-                var receivedError: NSError?
+                var receivedError: MoyaError?
                 _ = observable.mapImage().subscribe { (event) -> Void in
                     switch event {
                     case .Next:
-                        XCTFail("next called for invalid data")
+                        fail("next called for invalid data")
                     case .Error(let error):
-                        receivedError = error as NSError
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
                 }
                 
-                expect(receivedError?.code).to(equal(MoyaErrorCode.ImageMapping.rawValue))
+                expect(receivedError).toNot(beNil())
+                let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
         
@@ -170,20 +204,25 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
                 let observable = observableSendingData(data!)
                 
-                var receivedError: NSError?
+                var receivedError: MoyaError?
                 _ = observable.mapJSON().subscribe { (event) -> Void in
                     switch event {
                     case .Next:
-                        XCTFail("next called for invalid data")
+                        fail("next called for invalid data")
                     case .Error(let error):
-                        receivedError = error as NSError
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
                 }
                 
                 expect(receivedError).toNot(beNil())
-                expect(receivedError?.domain).to(equal("\(NSCocoaErrorDomain)"))
+                switch receivedError {
+                case .Some(.Underlying(let error as NSError)):
+                    expect(error.domain).to(equal("\(NSCocoaErrorDomain)"))
+                default:
+                    fail("expected NSError with \(NSCocoaErrorDomain) domain")
+                }
             }
         }
         
@@ -196,10 +235,30 @@ class ObservableMoyaSpec: QuickSpec {
                 var receivedString: String?
                 _ = observable.mapString().subscribeNext { (string) -> Void in
                     receivedString = string
-                    return
                 }
                 
                 expect(receivedString).to(equal(string))
+            }
+            
+            it("ignores invalid data") {
+                let data = NSData(bytes: [0x11FFFF] as [UInt32], length: 1) //Byte exceeding UTF8
+                let observable = observableSendingData(data)
+                
+                var receivedError: MoyaError?
+                _ = observable.mapString().subscribe { (event) -> Void in
+                    switch event {
+                    case .Next:
+                        fail("next called for invalid data")
+                    case .Error(let error):
+                        receivedError = error as? MoyaError
+                    default:
+                        break
+                    }
+                }
+                
+                expect(receivedError).toNot(beNil())
+                let expectedError = MoyaError.StringMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
     }

@@ -61,28 +61,33 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             beforeEach {
                 provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
-
+            
             it("returns the correct error message") {
-                var receivedError: NSError!
-
+                var receivedError: MoyaError?
+                
                 waitUntil { done in
-                    provider.request(.Zen).subscribeError { (error) -> Void in
+                    provider.request(.Zen).startWithFailed { (error) -> Void in
                         receivedError = error
                         done()
                     }
                 }
-
-                expect(receivedError.domain) == "Moya.MoyaError"
+                
+                switch receivedError {
+                case .Some(.Underlying(let error as NSError)):
+                    expect(error.localizedDescription) == "Houston, we have a problem"
+                default:
+                    fail("expected an Underlying error that Houston has a problem")
+                }
             }
-
+            
             it("returns an error") {
                 var errored = false
-
+                
                 let target: GitHub = .Zen
-                provider.request(target).subscribeError { (error) -> Void in
+                provider.request(target).startWithFailed { (error) -> Void in
                     errored = true
                 }
-
+                
                 expect(errored).to(beTruthy())
             }
         }
@@ -121,7 +126,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             it("cancels network request when subscription is cancelled") {
                 let target: GitHub = .Zen
 
-                let disposable = provider.request(target).subscribeCompleted { () -> Void in
+                let disposable = provider.request(target).startWithCompleted { () -> Void in
                     // Should never be executed
                     fail()
                 }
