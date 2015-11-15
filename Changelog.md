@@ -2,6 +2,7 @@
 
 - **Breaking Change** `ReactiveCocoaMoyaProvider` can now be supplied with an optional `stubScheduler` – @swizzlr (sponsored by [Network Locum](https://networklocum.com))
 - **Breaking Change** Introduce `MoyaError` type for use with reactive extensions - [@tomburns](http://github.com/tomburns)
+- **Breaking Change** Deprecate ReactiveCocoa 2 support
 
 # 4.5.0
 
