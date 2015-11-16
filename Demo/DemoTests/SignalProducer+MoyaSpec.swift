@@ -13,11 +13,11 @@ private extension UIImage {
     }
 }
 
-private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<MoyaResponse, MoyaError> {
-    return SignalProducer(value: MoyaResponse(statusCode: statusCode, data: data, response: nil))
+private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<Response, MoyaError> {
+    return SignalProducer(value: Response(statusCode: statusCode, data: data, response: nil))
 }
 
-class SignalProducerMoyaSpec: QuickSpec {
+final class SignalProducerMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {
@@ -176,7 +176,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = MoyaError.ImageMapping(Response(statusCode: 200, data: NSData(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
@@ -256,7 +256,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = MoyaError.StringMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = MoyaError.StringMapping(Response(statusCode: 200, data: NSData(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }

@@ -3,7 +3,7 @@ import Nimble
 import Alamofire
 import Moya
 
-class MoyaProviderSpec: QuickSpec {
+final class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
         beforeEach {
@@ -14,8 +14,8 @@ class MoyaProviderSpec: QuickSpec {
             var message: String?
             
             let target: GitHub = .Zen
-            provider.request(target) { (data, statusCode, response, error) in
-                if let data = data {
+            provider.request(target) { (response, error) in
+                if let data = response?.data {
                     message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                 }
             }
@@ -28,8 +28,8 @@ class MoyaProviderSpec: QuickSpec {
             var message: String?
             
             let target: GitHub = .UserProfile("ashfurrow")
-            provider.request(target) { (data, statusCode, response, error) in
-                if let data = data {
+            provider.request(target) { (response, error) in
+                if let data = response?.data {
                     message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
                 }
             }
@@ -49,7 +49,7 @@ class MoyaProviderSpec: QuickSpec {
         it("returns a cancellable object when a request is made") {
             let target: GitHub = .UserProfile("ashfurrow")
             
-            let cancellable: Cancellable = provider.request(target) { (_, _, _, _) in }
+            let cancellable: Cancellable = provider.request(target) { (_, _) in }
             
             expect(cancellable).toNot(beNil())
 
@@ -61,28 +61,28 @@ class MoyaProviderSpec: QuickSpec {
                 
         it("credential closure returns nil") {
             var called = false
-            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
+            let plugin = CredentialsPlugin { (target) -> NSURLCredential? in
                 called = true
                 return nil
             }
             
             let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
-            provider.request(target) { (data, statusCode, response, error) in }
+            provider.request(target) { (response, error) in }
             
             expect(called) == true
         }
         
         it("credential closure returns valid username and password") {
             var called = false
-            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
+            let plugin = CredentialsPlugin { (target) -> NSURLCredential? in
                 called = true
                 return NSURLCredential(user: "user", password: "passwd", persistence: .None)
             }
             
             let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
-            provider.request(target) { (data, statusCode, response, error) in }
+            provider.request(target) { (response, error) in }
             
             expect(called) == true
         }
@@ -105,7 +105,7 @@ class MoyaProviderSpec: QuickSpec {
             let provider = MoyaProvider<GitHub>(manager: manager)
             let target: GitHub = .Zen
             waitUntil(timeout: 3) { done in
-                provider.request(target) { (data, statusCode, response, error) in
+                provider.request(target) { (response, error) in
                     done()
                 }
                 return
@@ -116,7 +116,7 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the beginning of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
+            let plugin = NetworkActivityPlugin { (change) -> () in
                 if change == .Began {
                     called = true
                 }
@@ -124,14 +124,14 @@ class MoyaProviderSpec: QuickSpec {
             
             let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
-            provider.request(target) { (data, statusCode, response, error) in }
+            provider.request(target) { (response, error) in }
 
             expect(called) == true
         }
 
         it("notifies at the end of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
+            let plugin = NetworkActivityPlugin { (change) -> () in
                 if change == .Ended {
                     called = true
                 }
@@ -139,7 +139,7 @@ class MoyaProviderSpec: QuickSpec {
 
             let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
-            provider.request(target) { (data, statusCode, response, error) in }
+            provider.request(target) { (response, error) in }
             
             expect(called) == true
         }
@@ -151,7 +151,7 @@ class MoyaProviderSpec: QuickSpec {
             var endDate: NSDate?
             let target: GitHub = .Zen
             waitUntil(timeout: 3) { done in
-                provider.request(target) { (data, statusCode, response, error) in
+                provider.request(target) { (response, error) in
                     endDate = NSDate()
                     done()
                 }
@@ -178,7 +178,7 @@ class MoyaProviderSpec: QuickSpec {
             
             it("executes the endpoint resolver") {
                 let target: GitHub = .Zen
-                provider.request(target, completion: { (data, statusCode, response, error) in })
+                provider.request(target, completion: { (response, error) in })
 
                 expect(executed).to(beTruthy())
             }
@@ -194,7 +194,7 @@ class MoyaProviderSpec: QuickSpec {
                 var errored = false
                 
                 let target: GitHub = .Zen
-                provider.request(target) { (object, statusCode, response, error) in
+                provider.request(target) { (response, error) in
                     if error != nil {
                         errored = true
                     }
@@ -208,7 +208,7 @@ class MoyaProviderSpec: QuickSpec {
                 var errored = false
                 
                 let target: GitHub = .UserProfile("ashfurrow")
-                provider.request(target) { (object, statusCode, response, error) in
+                provider.request(target) { (response, error) in
                     if error != nil {
                         errored = true
                     }
@@ -222,7 +222,7 @@ class MoyaProviderSpec: QuickSpec {
                 var receivedError: NSError?
                 
                 let target: GitHub = .UserProfile("ashfurrow")
-                provider.request(target) { (object, statusCode, response, error) in
+                provider.request(target) { (response, error) in
                     receivedError = error as NSError?
                 }
 

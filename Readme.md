@@ -79,7 +79,7 @@ Use
 After [some setup](docs/Examples.md), using Moya is really simple. You can access an API like this:
 
 ```swift
-provider.request(.Zen) { (data, statusCode, response, error) in
+provider.request(.Zen) { (response, error) in
     if let data = data {
         // do something with the data
     }
@@ -90,7 +90,7 @@ That's a basic example. Many API requests need parameters. Moya encodes these
 into the enum you use to access the endpoint, like this:
 
 ```swift
-provider.request(.UserProfile("ashfurrow")) { (data, statusCode, response, error) in
+provider.request(.UserProfile("ashfurrow")) { (response, error) in
     if let data = data {
         // do something with the data
     }

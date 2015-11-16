@@ -12,7 +12,7 @@ enum GitHub {
     case UserProfile(String)
 }
 
-extension GitHub : MoyaTarget {
+extension GitHub : MoyaTargetType {
     var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
@@ -38,16 +38,16 @@ extension GitHub : MoyaTarget {
     }
 }
 
-func url(route: MoyaTarget) -> String {
+func url(route: MoyaTargetType) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkError(error)}, method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: .NetworkError(error), method: target.method, parameters: target.parameters)
 }
 
-enum HTTPBin: MoyaTarget {
+enum HTTPBin: MoyaTargetType {
     case BasicAuth
 
     var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }

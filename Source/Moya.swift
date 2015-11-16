@@ -1,70 +1,45 @@
 import Foundation
 import Alamofire
 
-/// General-purpose class to store some enums and class funcs.
-public class Moya {
+/// Closure to be executed when a request has completed.
+public typealias Completion = (response: Response?, error: ErrorType?) -> ()
 
-    /// Closure to be executed when a request has completed.
-    public typealias Completion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
-
-    /// Represents an HTTP method.
-    public enum Method {
-        case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
-
-        func method() -> Alamofire.Method {
-            switch self {
-            case .GET:
-                return .GET
-            case .POST:
-                return .POST
-            case .PUT:
-                return .PUT
-            case .DELETE:
-                return .DELETE
-            case .HEAD:
-                return .HEAD
-            case .OPTIONS:
-                return .OPTIONS
-            case PATCH:
-                return .PATCH
-            case TRACE:
-                return .TRACE
-            case .CONNECT:
-                return .CONNECT
-            }
-        }
-    }
-
-    /// Choice of parameter encoding.
-    public enum ParameterEncoding {
-        case URL
-        case JSON
-        case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
-        case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
-
-        func parameterEncoding() -> Alamofire.ParameterEncoding {
-            switch self {
-            case .URL:
-                return .URL
-            case .JSON:
-                return .JSON
-            case .PropertyList(let format, let options):
-                return .PropertyList(format, options)
-            case .Custom(let closure):
-                return .Custom(closure)
-            }
-        }
-    }
-
-    public enum StubBehavior {
-        case Never
-        case Immediate
-        case Delayed(seconds: NSTimeInterval)
+/// Represents an HTTP method.
+public enum Method: String {
+    case GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE", OPTIONS = "OPTIONS", HEAD = "HEAD", PATCH = "PATCH", TRACE = "TRACE", CONNECT = "CONNECT"
+    public var method: Alamofire.Method {
+        return Alamofire.Method(rawValue: rawValue)!
     }
 }
 
+/// Choice of parameter encoding.
+public enum ParameterEncoding {
+    case URL
+    case JSON
+    case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
+    case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
+
+    public func parameterEncoding() -> Alamofire.ParameterEncoding {
+        switch self {
+        case .URL:
+            return .URL
+        case .JSON:
+            return .JSON
+        case .PropertyList(let format, let options):
+            return .PropertyList(format, options)
+        case .Custom(let closure):
+            return .Custom(closure)
+        }
+    }
+}
+
+public enum StubBehavior {
+    case Never
+    case Immediate
+    case Delayed(seconds: NSTimeInterval)
+}
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
-public protocol MoyaTarget {
+public protocol MoyaTargetType {
     var baseURL: NSURL { get }
     var path: String { get }
     var method: Moya.Method { get }
@@ -78,7 +53,7 @@ public protocol Cancellable {
 }
 
 /// Request provider class. Requests should be made through this class only.
-public class MoyaProvider<Target: MoyaTarget> {
+public class MoyaProvider<Target: MoyaTargetType> {
 
     /// Closure that defines the endpoints for the provider.
     public typealias EndpointClosure = Target -> Endpoint<Target>
@@ -96,14 +71,14 @@ public class MoyaProvider<Target: MoyaTarget> {
     
     /// A list of plugins
     /// e.g. for logging, network activity indicator or credentials
-    public let plugins: [Plugin<Target>]
+    public let plugins: [Plugin]
 
     /// Initializes a provider.
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = Alamofire.Manager.sharedInstance,
-        plugins: [Plugin<Target>] = []) {
+        plugins: [Plugin] = []) {
 
         self.endpointClosure = endpointClosure
         self.requestClosure = requestClosure
@@ -171,7 +146,8 @@ public extension MoyaProvider {
 
     public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+        let response = Response(statusCode: 200, data: target.sampleData)
+        return Endpoint(URL: url, sampleResponseClosure: .NetworkResponse(response), method: target.method, parameters: target.parameters)
     }
 
     public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
@@ -206,15 +182,21 @@ internal extension MoyaProvider {
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
+        plugins.forEach { $0.willSendRequest(request, target: target) }
         
         // Perform the actual request
         let alamoRequest = request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let statusCode = response?.statusCode
-
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, provider: self, target: target) }
-            completion(data: data, statusCode: statusCode, response: response, error: error)
+            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, target: target) }
+            // Handle completion
+            switch (data, response) {
+            case let (.Some(d), .Some(r)):
+                let response = Response(statusCode: r.statusCode, data: d, response: r)
+                completion(response: response, error: error)
+            default:
+                completion(response: nil, error: error)
+            }
         }
         
 
@@ -222,22 +204,22 @@ internal extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin<Target>]) -> (() -> ()) {
+    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin]) -> (() -> ()) {
         return {
             if (token.canceled) {
                 let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
-                completion(data: nil, statusCode: nil, response: nil, error: error)
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, target: target) }
+                completion(response: nil, error: error)
                 return
             }
 
             switch endpoint.sampleResponseClosure() {
-            case .NetworkResponse(let statusCode, let data):
-                plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: nil, error: nil, provider: self, target: target) }
-                completion(data: data, statusCode: statusCode, response: nil, error: nil)
+            case .NetworkResponse(let response):
+                plugins.forEach { $0.didReceiveResponse(response.data, statusCode: response.statusCode, response: nil, error: nil, target: target) }
+                completion(response: response, error: nil)
             case .NetworkError(let error):
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, provider: self, target: target) }
-                completion(data: nil, statusCode: nil, response: nil, error: error)
+                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, target: target) }
+                completion(response: nil, error: error)
             }
         }
     }
@@ -245,7 +227,7 @@ internal extension MoyaProvider {
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
         let request = manager.request(request)
-        plugins.forEach { $0.willSendRequest(request, provider: self, target: target) }
+        plugins.forEach { $0.willSendRequest(request, target: target) }
     }
 }
 
@@ -297,4 +279,4 @@ private struct CancellableWrapper: Cancellable {
 }
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
-extension Request: MoyaRequest { }
+extension Alamofire.Request: Request { }
