@@ -39,7 +39,7 @@ public enum StubBehavior {
     case Delayed(seconds: NSTimeInterval)
 }
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
-public protocol TargetType {
+public protocol MoyaTargetType {
     var baseURL: NSURL { get }
     var path: String { get }
     var method: Moya.Method { get }
@@ -53,7 +53,7 @@ public protocol Cancellable {
 }
 
 /// Request provider class. Requests should be made through this class only.
-public class NetworkResourceProvider<Target: TargetType> {
+public class MoyaProvider<Target: MoyaTargetType> {
 
     /// Closure that defines the endpoints for the provider.
     public typealias EndpointClosure = Target -> Endpoint<Target>
@@ -74,9 +74,9 @@ public class NetworkResourceProvider<Target: TargetType> {
     public let plugins: [Plugin]
 
     /// Initializes a provider.
-    public init(endpointClosure: EndpointClosure = NetworkResourceProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = NetworkResourceProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = NetworkResourceProvider.NeverStub,
+    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = Alamofire.Manager.sharedInstance,
         plugins: [Plugin] = []) {
 
@@ -140,7 +140,7 @@ public class NetworkResourceProvider<Target: TargetType> {
 
 /// Mark: Defaults
 
-public extension NetworkResourceProvider {
+public extension MoyaProvider {
 
     // These functions are default mappings to endpoings and requests.
 
@@ -157,7 +157,7 @@ public extension NetworkResourceProvider {
 
 /// Mark: Stubbing
 
-public extension NetworkResourceProvider {
+public extension MoyaProvider {
 
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
     // at least add some class functions to allow easy access to common stubbing closures.
@@ -175,7 +175,7 @@ public extension NetworkResourceProvider {
     }
 }
 
-internal extension NetworkResourceProvider {
+internal extension MoyaProvider {
 
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
         let request = manager.request(request)

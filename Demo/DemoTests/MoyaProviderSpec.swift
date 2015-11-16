@@ -3,11 +3,11 @@ import Nimble
 import Alamofire
 import Moya
 
-final class NetworkResourceProviderSpec: QuickSpec {
+final class MoyaProviderSpec: QuickSpec {
     override func spec() {
-        var provider: NetworkResourceProvider<GitHub>!
+        var provider: MoyaProvider<GitHub>!
         beforeEach {
-            provider = NetworkResourceProvider<GitHub>(stubClosure: NetworkResourceProvider.ImmediatelyStub)
+            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
         }
         
         it("returns stubbed data for zen request") {
@@ -66,7 +66,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
                 return nil
             }
             
-            let provider = NetworkResourceProvider<HTTPBin>(stubClosure: NetworkResourceProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
             provider.request(target) { (response, error) in }
             
@@ -80,7 +80,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
                 return NSURLCredential(user: "user", password: "passwd", persistence: .None)
             }
             
-            let provider = NetworkResourceProvider<HTTPBin>(stubClosure: NetworkResourceProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: HTTPBin = .BasicAuth
             provider.request(target) { (response, error) in }
             
@@ -89,7 +89,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
 
         it("accepts a custom Alamofire.Manager") {
             let manager = Manager()
-            let provider = NetworkResourceProvider<GitHub>(manager: manager)
+            let provider = MoyaProvider<GitHub>(manager: manager)
 
             expect(provider.manager).to(beIdenticalTo(manager))
         }
@@ -102,7 +102,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
                 let disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
                 return (disposition, nil)
             }
-            let provider = NetworkResourceProvider<GitHub>(manager: manager)
+            let provider = MoyaProvider<GitHub>(manager: manager)
             let target: GitHub = .Zen
             waitUntil(timeout: 3) { done in
                 provider.request(target) { (response, error) in
@@ -122,7 +122,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
                 }
             }
             
-            let provider = NetworkResourceProvider<GitHub>(stubClosure: NetworkResourceProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
             provider.request(target) { (response, error) in }
 
@@ -137,7 +137,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
                 }
             }
 
-            let provider = NetworkResourceProvider<GitHub>(stubClosure: NetworkResourceProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
             let target: GitHub = .Zen
             provider.request(target) { (response, error) in }
             
@@ -145,7 +145,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
         }
 
         it("delays execution when appropriate") {
-            let provider = NetworkResourceProvider<GitHub>(stubClosure: NetworkResourceProvider.DelayedStub(2))
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(2))
 
             let startDate = NSDate()
             var endDate: NSDate?
@@ -164,7 +164,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
         }
 
         describe("a provider with a custom endpoint resolver") {
-            var provider: NetworkResourceProvider<GitHub>!
+            var provider: MoyaProvider<GitHub>!
             var executed = false
             
             beforeEach {
@@ -173,7 +173,7 @@ final class NetworkResourceProviderSpec: QuickSpec {
                     executed = true
                     done(endpoint.urlRequest)
                 }
-                provider = NetworkResourceProvider<GitHub>(requestClosure: endpointResolution, stubClosure: NetworkResourceProvider.ImmediatelyStub)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("executes the endpoint resolver") {
@@ -185,9 +185,9 @@ final class NetworkResourceProviderSpec: QuickSpec {
         }
 
         describe("with stubbed errors") {
-            var provider: NetworkResourceProvider<GitHub>!
+            var provider: MoyaProvider<GitHub>!
             beforeEach {
-                provider = NetworkResourceProvider(endpointClosure: failureEndpointClosure, stubClosure: NetworkResourceProvider.ImmediatelyStub)
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("returns stubbed data for zen request") {

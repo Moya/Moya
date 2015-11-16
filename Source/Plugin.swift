@@ -8,10 +8,10 @@ import Foundation
 ///     - inject additional information into a request
 public protocol Plugin {
     /// Called immediately before a request is sent over the network (or stubbed).
-    func willSendRequest(request: Request, target: TargetType)
+    func willSendRequest(request: Request, target: MoyaTargetType)
 
-    // Called after a response has been received, but before the NetworkResourceProvider has invoked its completion handler.
-    func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: TargetType)
+    // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
+    func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTargetType)
 }
 
 /// Request type used by willSendRequest plugin function.

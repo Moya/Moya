@@ -4,15 +4,15 @@ import Moya
 import RxSwift
 import Alamofire
 
-final class RxSwiftNetworkResourceProviderSpec: QuickSpec {
+final class RxSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
         
         describe("provider with Observable") {
             
-            var provider: RxNetworkResourceProvider<GitHub>!
+            var provider: RxMoyaProvider<GitHub>!
             
             beforeEach {
-                provider = RxNetworkResourceProvider(stubClosure: NetworkResourceProvider.ImmediatelyStub)
+                provider = RxMoyaProvider(stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("returns a Response object") {
@@ -50,9 +50,9 @@ final class RxSwiftNetworkResourceProviderSpec: QuickSpec {
         }
         
         describe("failing") {
-            var provider: RxNetworkResourceProvider<GitHub>!
+            var provider: RxMoyaProvider<GitHub>!
             beforeEach {
-                provider = RxNetworkResourceProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: NetworkResourceProvider.ImmediatelyStub)
+                provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
             it("returns the correct error message") {

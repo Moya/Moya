@@ -12,8 +12,8 @@ public enum EndpointSampleResponse {
 }
 
 
-/// Class for reifying a target of the TargetType enum unto a concrete Endpoint.
-public struct Endpoint<TargetType> {
+/// Class for reifying a target of the MoyaTargetType enum unto a concrete Endpoint.
+public struct Endpoint<MoyaTargetType> {
     public let URL: String
     public let method: Moya.Method
     public let sampleResponseClosure: () -> EndpointSampleResponse
@@ -38,7 +38,7 @@ public struct Endpoint<TargetType> {
     }
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added parameters.
-    public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<TargetType> {
+    public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<MoyaTargetType> {
         var newParameters = self.parameters ?? [String: AnyObject]()
         for (key, value) in parameters {
             newParameters[key] = value
@@ -48,7 +48,7 @@ public struct Endpoint<TargetType> {
     }
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
-    public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<TargetType> {
+    public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<MoyaTargetType> {
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
         for (key, value) in httpHeaderFields {
             newHTTPHeaderFields[key] = value
@@ -57,7 +57,7 @@ public struct Endpoint<TargetType> {
     }
     
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
-    public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<TargetType> {
+    public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<MoyaTargetType> {
         
         return Endpoint(URL: URL, sampleResponseClosure: self.sampleResponseClosure(), method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
     }

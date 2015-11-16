@@ -13,11 +13,11 @@ public final class NetworkLoggerPlugin: Plugin {
         self.verbose = verbose
     }
 
-    public func willSendRequest(request: Request, target: TargetType) {
+    public func willSendRequest(request: Request, target: MoyaTargetType) {
         logNetworkRequest(request.request)
     }
 
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: TargetType) {
+    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTargetType) {
         logNetworkResponse(response, data: data, target: target)
     }
 
@@ -58,7 +58,7 @@ private extension NetworkLoggerPlugin {
         print(output)
     }
 
-    func logNetworkResponse(response: NSURLResponse?, data: NSData?, target: TargetType) {
+    func logNetworkResponse(response: NSURLResponse?, data: NSData?, target: MoyaTargetType) {
         guard let response = response else {
             print("Received empty network response for \(target).")
             return

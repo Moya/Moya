@@ -15,7 +15,7 @@ func beIndenticalToResponse(expectedValue: Response) -> MatcherFunc<Response> {
     }
 }
 
-final class NetworkResourceProviderIntegrationTests: QuickSpec {
+final class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
         let userMessage = NSString(data: GitHub.UserProfile("ashfurrow").sampleData, encoding: NSUTF8StringEncoding)
         let zenMessage = NSString(data: GitHub.Zen.sampleData, encoding: NSUTF8StringEncoding)
@@ -42,9 +42,9 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
         describe("valid endpoints") {
             describe("with live data") {
                 describe("a provider") {
-                    var provider: NetworkResourceProvider<GitHub>!
+                    var provider: MoyaProvider<GitHub>!
                     beforeEach {
-                        provider = NetworkResourceProvider<GitHub>()
+                        provider = MoyaProvider<GitHub>()
                         return
                     }
                     
@@ -95,7 +95,7 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
                             return nil
                         }
                         
-                        let provider  = NetworkResourceProvider<HTTPBin>(plugins: [plugin])
+                        let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
                         expect(provider.plugins.count).to(equal(1))
                         
                         let target: HTTPBin = .BasicAuth
@@ -113,7 +113,7 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
                             return NSURLCredential(user: "user", password: "passwd", persistence: .None)
                         }
                         
-                        let provider  = NetworkResourceProvider<HTTPBin>(plugins: [plugin])
+                        let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
                         let target: HTTPBin = .BasicAuth
                         provider.request(target) { (response, error) in
                             returnedData = response?.data
@@ -133,7 +133,7 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
                             }
                         }
                         
-                        let provider = NetworkResourceProvider<GitHub>(plugins: [plugin])
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
                         provider.request(target) { (response, error) in }
 
@@ -148,7 +148,7 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
                             }
                         }
 
-                        let provider = NetworkResourceProvider<GitHub>(plugins: [plugin])
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
                         provider.request(target) { (response, error) in }
 
@@ -157,9 +157,9 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
                 }
                 
                 describe("a reactive provider with RACSignal") {
-                    var provider: ReactiveCocoaNetworkResourceProvider<GitHub>!
+                    var provider: ReactiveCocoaMoyaProvider<GitHub>!
                     beforeEach {
-                        provider = ReactiveCocoaNetworkResourceProvider<GitHub>()
+                        provider = ReactiveCocoaMoyaProvider<GitHub>()
                     }
                     
                     it("returns some data for zen request") {
@@ -191,9 +191,9 @@ final class NetworkResourceProviderIntegrationTests: QuickSpec {
             }
             
             describe("a reactive provider with SignalProducer") {
-                var provider: ReactiveCocoaNetworkResourceProvider<GitHub>!
+                var provider: ReactiveCocoaMoyaProvider<GitHub>!
                 beforeEach {
-                    provider = ReactiveCocoaNetworkResourceProvider<GitHub>()
+                    provider = ReactiveCocoaMoyaProvider<GitHub>()
                 }
                 
                 it("returns some data for zen request") {

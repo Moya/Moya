@@ -9,9 +9,10 @@ public enum MoyaError: ErrorType {
     case Underlying(ErrorType)
 }
 
-// If RACSignal support gets removed we can also remove everything under here
+@available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
 public let MoyaErrorDomain = "Moya"
 
+@available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
 public enum MoyaErrorCode: Int {
     case ImageMapping = 0
     case JSONMapping
@@ -20,6 +21,7 @@ public enum MoyaErrorCode: Int {
     case Data
 }
 
+@available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
 public extension MoyaError {
     
     // Used to convert MoyaError to NSError for RACSignal

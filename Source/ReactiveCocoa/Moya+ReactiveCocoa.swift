@@ -2,13 +2,13 @@ import Foundation
 import ReactiveCocoa
 import Alamofire
 
-/// Subclass of NetworkResourceProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
-public class ReactiveCocoaNetworkResourceProvider<Target where Target: TargetType>: NetworkResourceProvider<Target> {
+/// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
+public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTargetType>: MoyaProvider<Target> {
     private let stubScheduler: DateSchedulerType?
     /// Initializes a reactive provider.
-    public init(endpointClosure: EndpointClosure = NetworkResourceProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = NetworkResourceProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = NetworkResourceProvider.NeverStub,
+    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = Alamofire.Manager.sharedInstance,
         plugins: [Plugin] = [], stubScheduler: DateSchedulerType? = nil) {
             self.stubScheduler = stubScheduler
@@ -59,6 +59,7 @@ public class ReactiveCocoaNetworkResourceProvider<Target where Target: TargetTyp
         return token
     }
 
+    @available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
     public func request(token: Target) -> RACSignal {
         return toRACSignal(request(token))
     }
