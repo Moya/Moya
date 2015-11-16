@@ -19,7 +19,7 @@ public enum ParameterEncoding {
     case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
     case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
 
-    func parameterEncoding() -> Alamofire.ParameterEncoding {
+    public func parameterEncoding() -> Alamofire.ParameterEncoding {
         switch self {
         case .URL:
             return .URL
