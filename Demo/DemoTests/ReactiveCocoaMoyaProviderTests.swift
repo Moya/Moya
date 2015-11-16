@@ -13,11 +13,11 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         
         describe("provider with RACSignal") {
             
-            it("returns a MoyaResponse object") {
+            it("returns a Response object") {
                 var called = false
                 
                 provider.request(.Zen).subscribeNext { (object) -> Void in
-                    if let _ = object as? MoyaResponse {
+                    if let _ = object as? Moya.Response {
                         called = true
                     }
                 }
@@ -30,7 +30,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 
                 let target: GitHub = .Zen
                 provider.request(target).subscribeNext { (object) -> Void in
-                    if let response = object as? MoyaResponse {
+                    if let response = object as? Moya.Response {
                         message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                     }
                 }
@@ -44,7 +44,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 
                 let target: GitHub = .UserProfile("ashfurrow")
                 provider.request(target).subscribeNext { (object) -> Void in
-                    if let response = object as? MoyaResponse {
+                    if let response = object as? Moya.Response {
                         receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
                     }
                 }
@@ -138,7 +138,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
 
         describe("provider with SignalProducer") {
 
-            it("returns a MoyaResponse object") {
+            it("returns a Response object") {
                 var called = false
                 
                 provider.request(.Zen).startWithNext { (object) -> Void in
@@ -220,7 +220,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         }
         describe("provider with a TestScheduler") {
             var testScheduler: TestScheduler! = nil
-            var response: MoyaResponse? = nil
+            var response: Moya.Response? = nil
             beforeEach {
                 testScheduler = TestScheduler()
                 provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, stubScheduler: testScheduler)

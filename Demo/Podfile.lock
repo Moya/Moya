@@ -39,7 +39,7 @@ PODS:
     - ReactiveCocoa/Core
     - Result (~> 0.6.0-beta.6)
   - Result (0.6.0-beta.6)
-  - RxSwift (2.0.0-beta.2)
+  - RxSwift (2.0.0-beta.3)
 
 DEPENDENCIES:
   - Moya (from `../`)
@@ -51,7 +51,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
@@ -61,6 +61,6 @@ SPEC CHECKSUMS:
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   ReactiveCocoa: b311b498bc119bbdb36f98013bdf890eebad7658
   Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
-  RxSwift: 795720c22352cf1f62669ef3695b5df7e195103b
+  RxSwift: 19fbe885b404d1d36d42ac8535134739a9b42952
 
 COCOAPODS: 0.39.0

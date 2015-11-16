@@ -7,10 +7,10 @@ class MoyaErrorTests: QuickSpec {
         
         describe("should convert to NSError") {
         
-            var response: MoyaResponse!
+            var response: Response!
             
             beforeEach {
-                response = MoyaResponse(statusCode: 200, data: NSData(), response: nil)
+                response = Response(statusCode: 200, data: NSData(), response: nil)
             }
             
             it("should convert ImageMapping error to NSError") {
@@ -19,7 +19,7 @@ class MoyaErrorTests: QuickSpec {
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.ImageMapping.rawValue
-                expect(error.userInfo as? [String : MoyaResponse]) == ["data" : response]
+                expect(error.userInfo as? [String : Response]) == ["data" : response]
             }
             
             it("should convert JSONMapping error to NSError") {
@@ -28,7 +28,7 @@ class MoyaErrorTests: QuickSpec {
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.JSONMapping.rawValue
-                expect(error.userInfo as? [String : MoyaResponse]) == ["data" : response]
+                expect(error.userInfo as? [String : Response]) == ["data" : response]
             }
             
             it("should convert StringMapping error to NSError") {
@@ -37,7 +37,7 @@ class MoyaErrorTests: QuickSpec {
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.StringMapping.rawValue
-                expect(error.userInfo as? [String : MoyaResponse]) == ["data" : response]
+                expect(error.userInfo as? [String : Response]) == ["data" : response]
             }
             
             it("should convert StatusCode error to NSError") {
@@ -46,7 +46,7 @@ class MoyaErrorTests: QuickSpec {
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.StatusCode.rawValue
-                expect(error.userInfo as? [String : MoyaResponse]) == ["data" : response]
+                expect(error.userInfo as? [String : Response]) == ["data" : response]
             }
             
             it("should convert Data error to NSError") {
@@ -55,7 +55,7 @@ class MoyaErrorTests: QuickSpec {
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.Data.rawValue
-                expect(error.userInfo as? [String : MoyaResponse]) == ["data" : response]
+                expect(error.userInfo as? [String : Response]) == ["data" : response]
             }
             
             it("should convert Underlying error to NSError") {

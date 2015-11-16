@@ -15,7 +15,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider(stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
-            it("returns a MoyaResponse object") {
+            it("returns a Response object") {
                 var called = false
                 
                 _ = provider.request(.Zen).subscribeNext { (object) -> Void in

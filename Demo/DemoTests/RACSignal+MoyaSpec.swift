@@ -15,7 +15,7 @@ private extension UIImage {
 
 private func signalSendingData(data: NSData, statusCode: Int = 200) -> RACSignal {
     return RACSignal.createSignal { (subscriber) -> RACDisposable! in
-        subscriber.sendNext(MoyaResponse(statusCode: statusCode, data: data, response: nil))
+        subscriber.sendNext(Response(statusCode: statusCode, data: data, response: nil))
         subscriber.sendCompleted()
         
         return nil

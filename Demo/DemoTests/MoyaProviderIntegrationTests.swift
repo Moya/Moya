@@ -4,7 +4,7 @@ import Moya
 import Nimble
 import OHHTTPStubs
 
-func beIndenticalToResponse(expectedValue: MoyaResponse) -> MatcherFunc<MoyaResponse> {
+func beIndenticalToResponse(expectedValue: Response) -> MatcherFunc<Response> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
             let instance = try actualExpression.evaluate()
@@ -167,7 +167,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let target: GitHub = .Zen
                         provider.request(target).subscribeNext { (response) -> Void in
-                            if let response = response as? MoyaResponse {
+                            if let response = response as? Response {
                                 message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
@@ -180,7 +180,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target).subscribeNext { (response) -> Void in
-                            if let response = response as? MoyaResponse {
+                            if let response = response as? Response {
                                 message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
