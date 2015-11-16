@@ -61,7 +61,7 @@ class MoyaProviderSpec: QuickSpec {
                 
         it("credential closure returns nil") {
             var called = false
-            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
+            let plugin = CredentialsPlugin { (target) -> NSURLCredential? in
                 called = true
                 return nil
             }
@@ -75,7 +75,7 @@ class MoyaProviderSpec: QuickSpec {
         
         it("credential closure returns valid username and password") {
             var called = false
-            let plugin = CredentialsPlugin<HTTPBin> { (target) -> NSURLCredential? in
+            let plugin = CredentialsPlugin { (target) -> NSURLCredential? in
                 called = true
                 return NSURLCredential(user: "user", password: "passwd", persistence: .None)
             }
@@ -116,7 +116,7 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the beginning of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
+            let plugin = NetworkActivityPlugin { (change) -> () in
                 if change == .Began {
                     called = true
                 }
@@ -131,7 +131,7 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the end of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin<GitHub> { (change) -> () in
+            let plugin = NetworkActivityPlugin { (change) -> () in
                 if change == .Ended {
                     called = true
                 }
