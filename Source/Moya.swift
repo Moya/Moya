@@ -1,66 +1,62 @@
 import Foundation
 import Alamofire
 
-/// General-purpose class to store some enums and class funcs.
-public class Moya {
+/// Closure to be executed when a request has completed.
+public typealias Completion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
 
-    /// Closure to be executed when a request has completed.
-    public typealias Completion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
+/// Represents an HTTP method.
+public enum Method {
+    case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
 
-    /// Represents an HTTP method.
-    public enum Method {
-        case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
-
-        func method() -> Alamofire.Method {
-            switch self {
-            case .GET:
-                return .GET
-            case .POST:
-                return .POST
-            case .PUT:
-                return .PUT
-            case .DELETE:
-                return .DELETE
-            case .HEAD:
-                return .HEAD
-            case .OPTIONS:
-                return .OPTIONS
-            case PATCH:
-                return .PATCH
-            case TRACE:
-                return .TRACE
-            case .CONNECT:
-                return .CONNECT
-            }
+    func method() -> Alamofire.Method {
+        switch self {
+        case .GET:
+            return .GET
+        case .POST:
+            return .POST
+        case .PUT:
+            return .PUT
+        case .DELETE:
+            return .DELETE
+        case .HEAD:
+            return .HEAD
+        case .OPTIONS:
+            return .OPTIONS
+        case PATCH:
+            return .PATCH
+        case TRACE:
+            return .TRACE
+        case .CONNECT:
+            return .CONNECT
         }
     }
+}
 
-    /// Choice of parameter encoding.
-    public enum ParameterEncoding {
-        case URL
-        case JSON
-        case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
-        case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
+/// Choice of parameter encoding.
+public enum ParameterEncoding {
+    case URL
+    case JSON
+    case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
+    case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
 
-        func parameterEncoding() -> Alamofire.ParameterEncoding {
-            switch self {
-            case .URL:
-                return .URL
-            case .JSON:
-                return .JSON
-            case .PropertyList(let format, let options):
-                return .PropertyList(format, options)
-            case .Custom(let closure):
-                return .Custom(closure)
-            }
+    func parameterEncoding() -> Alamofire.ParameterEncoding {
+        switch self {
+        case .URL:
+            return .URL
+        case .JSON:
+            return .JSON
+        case .PropertyList(let format, let options):
+            return .PropertyList(format, options)
+        case .Custom(let closure):
+            return .Custom(closure)
         }
     }
+}
 
-    public enum StubBehavior {
-        case Never
-        case Immediate
-        case Delayed(seconds: NSTimeInterval)
-    }
+public enum StubBehavior {
+    case Never
+    case Immediate
+    case Delayed(seconds: NSTimeInterval)
 }
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
