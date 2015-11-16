@@ -87,8 +87,8 @@ public extension RACSignal {
     }
 }
 
-/// Trys to cast object to the expected MoyaResponse
+/// Trys to cast object to the expected Response
 @available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
-private func cast(object: AnyObject) throws -> MoyaResponse {
-    return object as! MoyaResponse
+private func cast(object: AnyObject) throws -> Response {
+    return object as! Response
 }

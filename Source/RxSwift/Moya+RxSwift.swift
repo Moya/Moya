@@ -14,7 +14,7 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
     }
 
     /// Designated request-making method.
-    public func request(token: Target) -> Observable<MoyaResponse> {
+    public func request(token: Target) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
         return create { [weak self] observer in
@@ -23,7 +23,7 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
                     observer.onError(MoyaError.Underlying(error))
                 } else {
                     if let data = data, let statusCode = statusCode {
-                        observer.onNext(MoyaResponse(statusCode: statusCode, data: data, response: response))
+                        observer.onNext(Response(statusCode: statusCode, data: data, response: response))
                     }
                     observer.onCompleted()
                 }
