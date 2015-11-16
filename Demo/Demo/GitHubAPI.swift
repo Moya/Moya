@@ -3,7 +3,7 @@ import Moya
 
 // MARK: - Provider setup
 
-let GitHubProvider = MoyaProvider<GitHub>()
+let GitHubProvider = NetworkResourceProvider<GitHub>()
 
 
 // MARK: - Provider support
@@ -20,7 +20,7 @@ public enum GitHub {
     case UserRepositories(String)
 }
 
-extension GitHub : MoyaTarget {
+extension GitHub : TargetType {
     public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     public var path: String {
         switch self {
@@ -56,6 +56,6 @@ extension GitHub : MoyaTarget {
     }
 }
 
-public func url(route: MoyaTarget) -> String {
+public func url(route: TargetType) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }

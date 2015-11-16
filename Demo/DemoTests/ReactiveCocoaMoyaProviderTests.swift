@@ -4,20 +4,19 @@ import ReactiveCocoa
 import Moya
 import Alamofire
 
-class ReactiveCocoaMoyaProviderSpec: QuickSpec {
+final class ReactiveCocoaNetworkResourceProviderSpec: QuickSpec {
     override func spec() {
-        var provider: ReactiveCocoaMoyaProvider<GitHub>!
+        var provider: ReactiveCocoaNetworkResourceProvider<GitHub>!
         beforeEach {
-            provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
+            provider = ReactiveCocoaNetworkResourceProvider<GitHub>(stubClosure: NetworkResourceProvider.ImmediatelyStub)
         }
         
         describe("provider with RACSignal") {
             
-            it("returns a MoyaResponse object") {
+            it("returns a Response object") {
                 var called = false
-                
                 provider.request(.Zen).subscribeNext { (object) -> Void in
-                    if let _ = object as? MoyaResponse {
+                    if let _ = object as? Moya.Response {
                         called = true
                     }
                 }
@@ -30,7 +29,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 
                 let target: GitHub = .Zen
                 provider.request(target).subscribeNext { (object) -> Void in
-                    if let response = object as? MoyaResponse {
+                    if let response = object as? Moya.Response {
                         message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                     }
                 }
@@ -44,7 +43,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 
                 let target: GitHub = .UserProfile("ashfurrow")
                 provider.request(target).subscribeNext { (object) -> Void in
-                    if let response = object as? MoyaResponse {
+                    if let response = object as? Moya.Response {
                         receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
                     }
                 }
@@ -57,9 +56,9 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         }
 
         describe("failing") {
-            var provider: ReactiveCocoaMoyaProvider<GitHub>!
+            var provider: ReactiveCocoaNetworkResourceProvider<GitHub>!
             beforeEach {
-                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
+                provider = ReactiveCocoaNetworkResourceProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: NetworkResourceProvider.ImmediatelyStub)
             }
             
             it("returns the correct error message") {
@@ -101,12 +100,12 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
             }
 
-            class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
-                init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-                    requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-                    stubClosure: StubClosure = MoyaProvider.NeverStub,
+            class TestProvider<Target: TargetType>: ReactiveCocoaNetworkResourceProvider<Target> {
+                init(endpointClosure: EndpointClosure = NetworkResourceProvider.DefaultEndpointMapping,
+                    requestClosure: RequestClosure = NetworkResourceProvider.DefaultRequestMapping,
+                    stubClosure: StubClosure = NetworkResourceProvider.NeverStub,
                     manager: Manager = Alamofire.Manager.sharedInstance,
-                    plugins: [Plugin<Target>] = []) {
+                    plugins: [Plugin] = []) {
 
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
@@ -116,11 +115,11 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
             }
 
-            var provider: ReactiveCocoaMoyaProvider<GitHub>!
+            var provider: ReactiveCocoaNetworkResourceProvider<GitHub>!
             beforeEach {
                 TestCancellable.cancelled = false
 
-                provider = TestProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(1))
+                provider = TestProvider<GitHub>(stubClosure: NetworkResourceProvider.DelayedStub(1))
             }
 
             it("cancels network request when subscription is cancelled") {
@@ -138,7 +137,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
 
         describe("provider with SignalProducer") {
 
-            it("returns a MoyaResponse object") {
+            it("returns a Response object") {
                 var called = false
                 
                 provider.request(.Zen).startWithNext { (object) -> Void in
@@ -183,12 +182,12 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     }
                 }
                 
-                class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
-                    init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-                        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-                        stubClosure: StubClosure = MoyaProvider.NeverStub,
+                class TestProvider<Target: TargetType>: ReactiveCocoaNetworkResourceProvider<Target> {
+                    init(endpointClosure: EndpointClosure = NetworkResourceProvider.DefaultEndpointMapping,
+                        requestClosure: RequestClosure = NetworkResourceProvider.DefaultRequestMapping,
+                        stubClosure: StubClosure = NetworkResourceProvider.NeverStub,
                         manager: Manager = Alamofire.Manager.sharedInstance,
-                        plugins: [Plugin<Target>] = []) {
+                        plugins: [Plugin] = []) {
 
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }
@@ -198,11 +197,11 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     }
                 }
                 
-                var provider: ReactiveCocoaMoyaProvider<GitHub>!
+                var provider: ReactiveCocoaNetworkResourceProvider<GitHub>!
                 beforeEach {
                     TestCancellable.cancelled = false
                     
-                    provider = TestProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(1))
+                    provider = TestProvider<GitHub>(stubClosure: NetworkResourceProvider.DelayedStub(1))
                 }
                 
                 it("cancels network request when subscription is cancelled") {
@@ -220,10 +219,10 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         }
         describe("provider with a TestScheduler") {
             var testScheduler: TestScheduler! = nil
-            var response: MoyaResponse? = nil
+            var response: Moya.Response? = nil
             beforeEach {
                 testScheduler = TestScheduler()
-                provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, stubScheduler: testScheduler)
+                provider = ReactiveCocoaNetworkResourceProvider<GitHub>(stubClosure: NetworkResourceProvider.ImmediatelyStub, stubScheduler: testScheduler)
                 provider.request(.Zen).startWithNext { next in
                     response = next
                 }

@@ -13,11 +13,11 @@ private extension UIImage {
     }
 }
 
-private func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<MoyaResponse> {
-    return just(MoyaResponse(statusCode: statusCode, data: data, response: nil))
+private func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<Response> {
+    return just(Response(statusCode: statusCode, data: data, response: nil))
 }
 
-class ObservableMoyaSpec: QuickSpec {
+final class ObservableMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {
@@ -177,7 +177,7 @@ class ObservableMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = MoyaError.ImageMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = MoyaError.ImageMapping(Response(statusCode: 200, data: NSData(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
@@ -257,7 +257,7 @@ class ObservableMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = MoyaError.StringMapping(MoyaResponse(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = MoyaError.StringMapping(Response(statusCode: 200, data: NSData(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }

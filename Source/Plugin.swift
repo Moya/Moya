@@ -6,43 +6,16 @@ import Foundation
 ///     - log network requests
 ///     - hide and show a network avtivity indicator 
 ///     - inject additional information into a request
-public class Plugin<Target: MoyaTarget>: NSObject {
-
-    // Note:
-    //
-    // Need an override init() here to satisfy the Swift compiler and let subclasses external to the Moya framework exist.
-    public override init() {
-        super.init()
-    }
-    
-    // NOTE:
-    //
-    // We cannot implement `Plugin` as a generic protocol here, because `MoyaProvider` needs
-    // to keep references to an array of plugins and a generic protocol cannot be used as an array constraint.
-    //
-    // i.e.
-    // protocol Plugin {
-    //      typealias T: MoyaTarget
-    //      ...
-    // }
-    //
-    // let plugins = [Plugin]()
-    // 
-    // This does not work, because `plugins` is now unable to infer the actual type of the typealias `T`.
-
+public protocol Plugin {
     /// Called immediately before a request is sent over the network (or stubbed).
-    public func willSendRequest(request: MoyaRequest, provider: MoyaProvider<Target>, target: Target) {
-        // Should be overridden if necessary
-    }
+    func willSendRequest(request: Request, target: TargetType)
 
-    // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, target: Target) {
-        // Should be overridden if necessary
-    }
+    // Called after a response has been received, but before the NetworkResourceProvider has invoked its completion handler.
+    func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: TargetType)
 }
 
 /// Request type used by willSendRequest plugin function.
-public protocol MoyaRequest {
+public protocol Request: CustomDebugStringConvertible {
 
     // Note:
     //
@@ -57,4 +30,7 @@ public protocol MoyaRequest {
 
     /// Authnenticates the request with a NSURLCredential instance.
     func authenticate(usingCredential credential: NSURLCredential) -> Self
+
+    /// Cancellation
+    func cancel()
 }

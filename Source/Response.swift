@@ -1,44 +1,50 @@
 import Foundation
 
-public class MoyaResponse: NSObject, CustomDebugStringConvertible {
+public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
     public let data: NSData
     public let response: NSURLResponse?
     
-    public init(statusCode: Int, data: NSData, response: NSURLResponse?) {
+    public init(statusCode: Int, data: NSData, response: NSURLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
         self.response = response
     }
     
-    override public var description: String {
+    public var description: String {
         return "Status Code: \(statusCode), Data Length: \(data.length)"
     }
     
-    override public var debugDescription: String {
+    public var debugDescription: String {
         return description
     }
 }
 
-public extension MoyaResponse {
+public func ==(lhs: Response, rhs: Response) -> Bool {
+    return lhs.statusCode == rhs.statusCode
+        && lhs.data == rhs.data
+        && lhs.response == rhs.response
+}
+
+public extension Response {
     
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filterStatusCodes(range: ClosedInterval<Int>) throws -> MoyaResponse {
+    public func filterStatusCodes(range: ClosedInterval<Int>) throws -> Response {
         guard range.contains(statusCode) else {
             throw MoyaError.StatusCode(self)
         }
         return self
     }
     
-    public func filterStatusCode(code: Int) throws -> MoyaResponse {
+    public func filterStatusCode(code: Int) throws -> Response {
         return try filterStatusCodes(code...code)
     }
     
-    public func filterSuccessfulStatusCodes() throws -> MoyaResponse {
+    public func filterSuccessfulStatusCodes() throws -> Response {
         return try filterStatusCodes(200...299)
     }
     
-    public func filterSuccessfulStatusAndRedirectCodes() throws -> MoyaResponse {
+    public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
         return try filterStatusCodes(200...399)
     }
     

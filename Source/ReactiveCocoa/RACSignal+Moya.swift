@@ -86,7 +86,7 @@ public extension RACSignal {
     }
 }
 
-/// Trys to cast object to the expected MoyaResponse
-private func cast(object: AnyObject) throws -> MoyaResponse {
-    return object as! MoyaResponse
+/// Trys to cast object to the expected Response
+private func cast(object: AnyObject) throws -> Response {
+    return object as! Response
 }

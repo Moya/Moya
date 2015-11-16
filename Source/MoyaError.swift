@@ -1,11 +1,11 @@
 import Foundation
 
 public enum MoyaError: ErrorType {
-    case ImageMapping(MoyaResponse)
-    case JSONMapping(MoyaResponse)
-    case StringMapping(MoyaResponse)
-    case StatusCode(MoyaResponse)
-    case Data(MoyaResponse)
+    case ImageMapping(Response)
+    case JSONMapping(Response)
+    case StringMapping(Response)
+    case StatusCode(Response)
+    case Data(Response)
     case Underlying(ErrorType)
 }
 

@@ -20,7 +20,7 @@ public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool
     }
 }
 
-class EndpointSpec: QuickSpec {
+final class EndpointSpec: QuickSpec {
     override func spec() {
         describe("an endpoint") {
             var endpoint: Endpoint<GitHub>!
@@ -29,7 +29,8 @@ class EndpointSpec: QuickSpec {
                 let target: GitHub = .Zen
                 let parameters = ["Nemesis": "Harvey"]
                 let headerFields = ["Title": "Dominar"]
-                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
+                let response = Response(statusCode: 200, data: target.sampleData, response: nil)
+                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: .NetworkResponse(response), method: Moya.Method.GET, parameters: parameters, parameterEncoding: .JSON, httpHeaderFields: headerFields)
             }
             
             it("returns a new endpoint for endpointByAddingParameters") {
