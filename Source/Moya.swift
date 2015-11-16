@@ -5,30 +5,10 @@ import Alamofire
 public typealias Completion = (response: Response?, error: ErrorType?) -> ()
 
 /// Represents an HTTP method.
-public enum Method {
-    case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
-
-    func method() -> Alamofire.Method {
-        switch self {
-        case .GET:
-            return .GET
-        case .POST:
-            return .POST
-        case .PUT:
-            return .PUT
-        case .DELETE:
-            return .DELETE
-        case .HEAD:
-            return .HEAD
-        case .OPTIONS:
-            return .OPTIONS
-        case PATCH:
-            return .PATCH
-        case TRACE:
-            return .TRACE
-        case .CONNECT:
-            return .CONNECT
-        }
+public enum Method: String {
+    case GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE", OPTIONS = "OPTIONS", HEAD = "HEAD", PATCH = "PATCH", TRACE = "TRACE", CONNECT = "CONNECT"
+    public var method: Alamofire.Method {
+        return Alamofire.Method(rawValue: rawValue)!
     }
 }
 

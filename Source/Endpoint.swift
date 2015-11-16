@@ -67,7 +67,7 @@ public struct Endpoint<TargetType> {
 extension Endpoint {
     public var urlRequest: NSURLRequest {
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
-        request.HTTPMethod = method.method().rawValue
+        request.HTTPMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
         return parameterEncoding.parameterEncoding().encode(request, parameters: parameters).0
