@@ -176,7 +176,7 @@ If any of that sounds cool to you, send a pull request! After a few
 contributions, we'll add you as an admin to the repo so you can merge pull
 requests and help steer the ship :ship:
 
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/code-of-conduct).
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code of Conduct.md).
 
 License
 -------
