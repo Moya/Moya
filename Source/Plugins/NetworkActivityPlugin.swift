@@ -23,7 +23,7 @@ public class NetworkActivityPlugin<Target: MoyaTarget>: Plugin<Target> {
     }
 
     /// Called by the provider as soon as a response arrives
-    public override func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, target: Target) {
+    public override func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, provider: MoyaProvider<Target>, target: Target) {
         networkActivityClosure(change: .Ended)
     }
 }

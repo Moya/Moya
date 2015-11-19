@@ -18,14 +18,14 @@ public class RxMoyaProvider<Target where Target: MoyaTarget>: MoyaProvider<Targe
 
         // Creates an observable that starts a request each time it's subscribed to.
         return create { [weak self] observer in
-            let cancellableToken = self?.request(token) { data, statusCode, response, error in
-                if let error = error {
-                    observer.onError(MoyaError.Underlying(error))
-                } else {
-                    if let data = data, let statusCode = statusCode {
-                        observer.onNext(Response(statusCode: statusCode, data: data, response: response))
-                    }
+            let cancellableToken = self?.request(token) { result in
+                switch result {
+                case let .Success(response):
+                    observer.onNext(response)
                     observer.onCompleted()
+                    break
+                case let .Failure(error):
+                    observer.onError(error)
                 }
             }
 

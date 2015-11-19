@@ -1,7 +1,7 @@
 import Nimble
 import Moya
 
-public func beOfSameErrorType(expectedValue: MoyaError) -> MatcherFunc<MoyaError> {
+public func beOfSameErrorType(expectedValue: Error) -> MatcherFunc<Error> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
             guard let actualValue = try actualExpression.evaluate() else {

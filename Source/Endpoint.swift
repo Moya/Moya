@@ -8,7 +8,7 @@ public enum EndpointSampleResponse {
     case NetworkResponse(Int, NSData)
 
     /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
-    case NetworkError(ErrorType?)
+    case NetworkError(ErrorType)
 }
 
 

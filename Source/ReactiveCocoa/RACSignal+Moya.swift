@@ -10,8 +10,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).filterStatusCodes(range)
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
@@ -21,8 +21,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).filterStatusCode(code)
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
@@ -32,8 +32,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).filterSuccessfulStatusCodes()
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
@@ -43,8 +43,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).filterSuccessfulStatusAndRedirectCodes()
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
@@ -55,8 +55,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapImage()
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
@@ -67,8 +67,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapJSON()
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
@@ -79,8 +79,8 @@ public extension RACSignal {
         return tryMap { object, error in
             do {
                 return try cast(object).mapString()
-            } catch let moyaError {
-                error.memory = (moyaError as! MoyaError).nsError
+            } catch let Error {
+                error.memory = (Error as! Moya.Error).nsError
                 return nil
             }
         }
