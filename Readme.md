@@ -52,7 +52,7 @@ Just add `pod 'Moya'` to your Podfile and go!
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For RxSwift or ReactiveCocoa extensions, this project will include 
+For RxSwift or ReactiveCocoa extensions, this project will include
 them as dependencies. You can do this via CocoaPods subspecs.
 
 ```rb
@@ -119,7 +119,7 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
     switch event {
     case .Next(let response):
         image = UIImage(data: response.data)
-    case .Error(let error):
+    case .Failed(let error):
         print(error)
     default:
       break
@@ -130,7 +130,7 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
 ##RxSwift
 
 For `RxSwift`, it immediately returns an `Observable` that you can subscribe to
-or bind or map or whatever you want to do. To handle errors, for instance, 
+or bind or map or whatever you want to do. To handle errors, for instance,
 we could do the following:
 
 ```swift
