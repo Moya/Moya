@@ -36,7 +36,7 @@ public class Plugin<Target: MoyaTarget>: NSObject {
     }
 
     // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, provider: MoyaProvider<Target>, target: Target) {
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, provider: MoyaProvider<Target>, target: Target) {
         // Should be overridden if necessary
     }
 }

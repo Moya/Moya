@@ -2,7 +2,7 @@ import Quick
 import Nimble
 import Moya
 
-class MoyaErrorTests: QuickSpec {
+class ErrorTests: QuickSpec {
     override func spec() {
         
         describe("should convert to NSError") {
@@ -15,7 +15,7 @@ class MoyaErrorTests: QuickSpec {
             
             it("should convert ImageMapping error to NSError") {
                 
-                let error = MoyaError.ImageMapping(response).nsError
+                let error = Error.ImageMapping(response).nsError
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.ImageMapping.rawValue
@@ -24,7 +24,7 @@ class MoyaErrorTests: QuickSpec {
             
             it("should convert JSONMapping error to NSError") {
                 
-                let error = MoyaError.JSONMapping(response).nsError
+                let error = Error.JSONMapping(response).nsError
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.JSONMapping.rawValue
@@ -33,7 +33,7 @@ class MoyaErrorTests: QuickSpec {
             
             it("should convert StringMapping error to NSError") {
                 
-                let error = MoyaError.StringMapping(response).nsError
+                let error = Error.StringMapping(response).nsError
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.StringMapping.rawValue
@@ -42,7 +42,7 @@ class MoyaErrorTests: QuickSpec {
             
             it("should convert StatusCode error to NSError") {
                 
-                let error = MoyaError.StatusCode(response).nsError
+                let error = Error.StatusCode(response).nsError
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.StatusCode.rawValue
@@ -51,7 +51,7 @@ class MoyaErrorTests: QuickSpec {
             
             it("should convert Data error to NSError") {
                 
-                let error = MoyaError.Data(response).nsError
+                let error = Error.Data(response).nsError
                 
                 expect(error.domain) == MoyaErrorDomain
                 expect(error.code) == MoyaErrorCode.Data.rawValue
@@ -61,7 +61,7 @@ class MoyaErrorTests: QuickSpec {
             it("should convert Underlying error to NSError") {
                 
                 let nsError = NSError(domain: "Domain", code: 200, userInfo: ["data" : "some data"])
-                let error = MoyaError.Underlying(nsError).nsError
+                let error = Error.Underlying(nsError).nsError
                 
                 expect(error.domain) == "Domain"
                 expect(error.code) == 200

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum MoyaError: ErrorType {
+public enum Error: ErrorType {
     case ImageMapping(Response)
     case JSONMapping(Response)
     case StringMapping(Response)
@@ -22,7 +22,7 @@ public enum MoyaErrorCode: Int {
 }
 
 @available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
-public extension MoyaError {
+public extension Error {
     
     // Used to convert MoyaError to NSError for RACSignal
     var nsError: NSError {
