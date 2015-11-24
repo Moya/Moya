@@ -27,8 +27,8 @@ extension GitHub : MoyaTarget {
     public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
 ```
 
-OK, cool. So now we need to have a `method` for our enum values. In our case, we
-are always using the GET HTTP method, so this is pretty easy:
+This protocol specifies the locations of 
+your API endpoints, relative to its base URL (more on that below). 
 
 ```swift
     public var path: String {
@@ -43,11 +43,11 @@ are always using the GET HTTP method, so this is pretty easy:
     }
 ```
 
-This protocol specifies the locations of 
-your API endpoints, relative to its base URL (more on that below). 
-
 Note: we're cheating here and using a `URLEscapedString` extension on String. 
 A sample implementation is given at the end of this document. 
+
+OK, cool. So now we need to have a `method` for our enum values. In our case, we
+are always using the GET HTTP method, so this is pretty easy:
 
 ```swift
     public var method: Moya.Method {

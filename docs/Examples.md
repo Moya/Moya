@@ -66,8 +66,8 @@ public func url(route: MoyaTarget) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
-let endpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)})
+let endpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
+    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -85,15 +85,15 @@ closure, it'll be executed at each invocation of the API, so you could do
 whatever you want. Say you want to test network error conditions like timeouts, too.
 
 ```swift
-let failureEndpointClosure = { (target: GitHub, method: Moya.Method, parameters: [String: AnyObject]) -> Endpoint<GitHub> in
+let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let sampleResponseClosure = { () -> (EndpointSampleResponse) in
         if shouldTimeout {
             return .NetworkError(NSError())
         } else {
             return .NetworkResponse(200, target.sampleData)
         }
-    }()
-    return Endpoint<GitHub>(URL: url(target), method: method, parameters: parameters, sampleResponseClosure: sampleResponseClosure)
+    }
+    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
 }
 ```
 
