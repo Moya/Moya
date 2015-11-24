@@ -89,14 +89,7 @@ let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubB
 let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediatelyStub)
 ```
 
-Next, there's the `networkActivityClosure` parameter. This is a closure
-that you can provide to be notified whenever a network request begins or
-ends. This is useful for working with the [network activitiy indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
-Note that signature of this closure is `(change: NetworkActivityChangeType) -> ()`, 
-so you will only be notified when a request has `.Began` or `.Ended` – 
-you aren't provided any other details about the request itself. 
-
-Finally, there's the `manager` parameter. By default you'll get `Alamofire.Manager.sharedinstance`.
+Next, there's the `manager` parameter. By default you'll get `Alamofire.Manager.sharedinstance`.
 If you'd like to customize the manager, for example, to add SSL pinning, create one and pass it in,
 all requests will route through the custom configured manager.
 
@@ -117,7 +110,14 @@ let manager = Manager(
 let provider = MoyaProvider<MyTarget>(manager: manager)
 ```
 
-You may also provide an array of `plugins` to the provider. These receive callbacks
+Finally, you may also provide an array of `plugins` to the provider. These receive callbacks
 before a request is sent and after a response is received. There are a few plugins
 included already: one for network activity (`NetworkActivityPlugin`), one for logging
 all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).
+
+For instance, if you want to add a `NetworkActivityPlugin`, it requires a `networkActivityClosure` parameter. 
+This is a closure that you can provide to be notified whenever a network request begins or
+ends. This is useful for working with the [network activitiy indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
+Note that signature of this closure is `(change: NetworkActivityChangeType) -> ()`,
+so you will only be notified when a request has `.Began` or `.Ended` –
+you aren't provided any other details about the request itself.
