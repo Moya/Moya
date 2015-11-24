@@ -564,10 +564,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0630A3261BE1C85000AD4789 /* Build configuration list for PBXNativeTarget "ReactiveMoya OSX" */;
 			buildPhases = (
+				06B4CAF61C03EA5A00780EA3 /* Pre Rename Module */,
 				0630A3211BE1C85000AD4789 /* Sources */,
 				0630A3221BE1C85000AD4789 /* Frameworks */,
 				0630A3231BE1C85000AD4789 /* Headers */,
 				0630A3251BE1C85000AD4789 /* Resources */,
+				06B4CAF71C03EA7200780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -582,10 +584,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0630A3311BE1C85B00AD4789 /* Build configuration list for PBXNativeTarget "RxMoya OSX" */;
 			buildPhases = (
+				06B4CAFE1C03EBF400780EA3 /* Pre Rename Module */,
 				0630A32C1BE1C85B00AD4789 /* Sources */,
 				0630A32D1BE1C85B00AD4789 /* Frameworks */,
 				0630A32E1BE1C85B00AD4789 /* Headers */,
 				0630A3301BE1C85B00AD4789 /* Resources */,
+				06B4CAFF1C03EC0500780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -618,10 +622,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 091F0D4B1BDE9A01009D0A49 /* Build configuration list for PBXNativeTarget "ReactiveMoya iOS" */;
 			buildPhases = (
+				06B4CAF41C03E9B800780EA3 /* Pre Rename Module */,
 				091F0D3F1BDE9A01009D0A49 /* Sources */,
 				091F0D401BDE9A01009D0A49 /* Frameworks */,
 				091F0D411BDE9A01009D0A49 /* Headers */,
 				091F0D421BDE9A01009D0A49 /* Resources */,
+				06B4CAF51C03E9DF00780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -636,10 +642,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 091F0D881BDE9D4D009D0A49 /* Build configuration list for PBXNativeTarget "RxMoya iOS" */;
 			buildPhases = (
+				06B4CAFC1C03EB8900780EA3 /* Pre Rename Module */,
 				091F0D7E1BDE9D4D009D0A49 /* Sources */,
 				091F0D7F1BDE9D4D009D0A49 /* Frameworks */,
 				091F0D801BDE9D4D009D0A49 /* Headers */,
 				091F0D811BDE9D4D009D0A49 /* Resources */,
+				06B4CAFD1C03EBB700780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -672,10 +680,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554B0FC61BE7ED7C00F3D266 /* Build configuration list for PBXNativeTarget "ReactiveMoya tvOS" */;
 			buildPhases = (
+				06B4CAF81C03EA8100780EA3 /* Pre Rename Module */,
 				554B0FC21BE7ED7C00F3D266 /* Sources */,
 				554B0FC31BE7ED7C00F3D266 /* Frameworks */,
 				554B0FC41BE7ED7C00F3D266 /* Headers */,
 				554B0FC51BE7ED7C00F3D266 /* Resources */,
+				06B4CAF91C03EA9E00780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -690,10 +700,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554B0FD01BE7ED8700F3D266 /* Build configuration list for PBXNativeTarget "RxMoya tvOS" */;
 			buildPhases = (
+				06B4CB011C03EC2600780EA3 /* Pre Rename Module */,
 				554B0FCC1BE7ED8700F3D266 /* Sources */,
 				554B0FCD1BE7ED8700F3D266 /* Frameworks */,
 				554B0FCE1BE7ED8700F3D266 /* Headers */,
 				554B0FCF1BE7ED8700F3D266 /* Resources */,
+				06B4CB021C03EC3A00780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -726,10 +738,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554B10241BE7F13600F3D266 /* Build configuration list for PBXNativeTarget "ReactiveMoya watchOS" */;
 			buildPhases = (
+				06B4CAFA1C03EAC600780EA3 /* Pre Rename Module */,
 				554B10201BE7F13600F3D266 /* Sources */,
 				554B10211BE7F13600F3D266 /* Frameworks */,
 				554B10221BE7F13600F3D266 /* Headers */,
 				554B10231BE7F13600F3D266 /* Resources */,
+				06B4CAFB1C03EAE100780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -744,10 +758,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554B102D1BE7F14300F3D266 /* Build configuration list for PBXNativeTarget "RxMoya watchOS" */;
 			buildPhases = (
+				06B4CB031C03EC4E00780EA3 /* Pre Rename Module */,
 				554B10291BE7F14300F3D266 /* Sources */,
 				554B102A1BE7F14300F3D266 /* Frameworks */,
 				554B102B1BE7F14300F3D266 /* Headers */,
 				554B102C1BE7F14300F3D266 /* Resources */,
+				06B4CB041C03EC6400780EA3 /* Post Rename Module */,
 			);
 			buildRules = (
 			);
@@ -901,6 +917,233 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06B4CAF41C03E9B800780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./ReactiveMoya\\./g'\n";
+		};
+		06B4CAF51C03E9DF00780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/ReactiveMoya\\./Moya\\./g'\n";
+		};
+		06B4CAF61C03EA5A00780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./ReactiveMoya\\./g'\n";
+		};
+		06B4CAF71C03EA7200780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/ReactiveMoya\\./Moya\\./g'\n";
+		};
+		06B4CAF81C03EA8100780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./ReactiveMoya\\./g'\n";
+		};
+		06B4CAF91C03EA9E00780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/ReactiveMoya\\./Moya\\./g'\n";
+		};
+		06B4CAFA1C03EAC600780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./ReactiveMoya\\./g'\n";
+		};
+		06B4CAFB1C03EAE100780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/ReactiveMoya\\./Moya\\./g'\n";
+		};
+		06B4CAFC1C03EB8900780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./RxMoya\\./g'\n";
+		};
+		06B4CAFD1C03EBB700780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/RxMoya\\./Moya\\./g'\n";
+		};
+		06B4CAFE1C03EBF400780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./RxMoya\\./g'\n";
+		};
+		06B4CAFF1C03EC0500780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/RxMoya\\./Moya\\./g'\n";
+		};
+		06B4CB011C03EC2600780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./RxMoya\\./g'\n";
+		};
+		06B4CB021C03EC3A00780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/RxMoya\\./Moya\\./g'\n";
+		};
+		06B4CB031C03EC4E00780EA3 /* Pre Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/Moya\\./RxMoya\\./g'\n";
+		};
+		06B4CB041C03EC6400780EA3 /* Post Rename Module */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Post Rename Module";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/Source\nfind . -name \"*.swift\" -print0 | xargs -0 sed -i '' -e 's/RxMoya\\./Moya\\./g'\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0630A3131BE1C84500AD4789 /* Sources */ = {
