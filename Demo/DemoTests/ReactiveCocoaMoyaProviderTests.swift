@@ -63,7 +63,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
             
             it("returns the correct error message") {
-                var receivedError: MoyaError?
+                var receivedError: Moya.Error?
                 
                 waitUntil { done in
                     provider.request(.Zen).startWithFailed { (error) -> Void in

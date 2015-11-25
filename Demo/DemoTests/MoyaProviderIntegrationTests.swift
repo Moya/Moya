@@ -52,9 +52,9 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .Zen
-                        provider.request(target) { (data, statusCode, response, error) in
-                            if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
+                        provider.request(target) { result in
+                            if case let .Success(response) = result {
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -65,9 +65,9 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
                         
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target) { (data, statusCode, response, error) in
-                            if let data = data {
-                                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
+                        provider.request(target) { result in
+                            if case let .Success(response) = result {
+                                message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
                         
@@ -78,8 +78,10 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var receivedError: ErrorType?
 
                         let target: GitHub = .UserProfile("ashfurrow")
-                        let token = provider.request(target) { (data, statusCode, response, error) in
-                            receivedError = error
+                        let token = provider.request(target) { result in
+                            if case let .Failure(error) = result {
+                                receivedError = error
+                            }
                         }
                         token.cancel()
 
@@ -99,7 +101,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(provider.plugins.count).to(equal(1))
                         
                         let target: HTTPBin = .BasicAuth
-                        provider.request(target) { (data, statusCode, response, error) in }
+                        provider.request(target) { _ in  }
                         
                         expect(called).toEventually( beTrue() )
                         
@@ -115,8 +117,10 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let provider  = MoyaProvider<HTTPBin>(plugins: [plugin])
                         let target: HTTPBin = .BasicAuth
-                        provider.request(target) { (data, statusCode, response, error) in
-                            returnedData = data
+                        provider.request(target) { result in
+                            if case let .Success(response) = result {
+                                returnedData = response.data
+                            }
                         }
                         
                         expect(called).toEventually( beTrue() )
@@ -135,7 +139,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
-                        provider.request(target) { (data, statusCode, response, error) in }
+                        provider.request(target) { _ in  }
 
                         expect(called).toEventually( beTrue() )
                     }
@@ -150,7 +154,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         let target: GitHub = .Zen
-                        provider.request(target) { (data, statusCode, response, error) in }
+                        provider.request(target) { _ in  }
 
                         expect(called).toEventually( beTrue() )
                     }

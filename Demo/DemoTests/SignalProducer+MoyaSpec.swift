@@ -13,7 +13,7 @@ private extension UIImage {
     }
 }
 
-private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<Response, MoyaError> {
+private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<Response, Error> {
     return SignalProducer(value: Response(statusCode: statusCode, data: data, response: nil))
 }
 
@@ -163,7 +163,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = NSData()
                 let signal = signalSendingData(data)
                 
-                var receivedError: MoyaError?
+                var receivedError: Error?
                 signal.mapImage().start { (event) -> Void in
                     switch event {
                     case .Next:
@@ -176,7 +176,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = MoyaError.ImageMapping(Response(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = Error.ImageMapping(Response(statusCode: 200, data: NSData(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
@@ -203,7 +203,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = json.dataUsingEncoding(NSUTF8StringEncoding)
                 let signal = signalSendingData(data!)
                 
-                var receivedError: MoyaError?
+                var receivedError: Error?
                 signal.mapJSON().start { (event) -> Void in
                     switch event {
                     case .Next:
@@ -243,7 +243,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = NSData(bytes: [0x11FFFF] as [UInt32], length: 1) //Byte exceeding UTF8
                 let signal = signalSendingData(data)
                 
-                var receivedError: MoyaError?
+                var receivedError: Error?
                 signal.mapString().start { (event) -> Void in
                     switch event {
                     case .Next:
@@ -256,7 +256,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = MoyaError.StringMapping(Response(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = Error.StringMapping(Response(statusCode: 200, data: NSData(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }

@@ -17,8 +17,12 @@ public final class NetworkLoggerPlugin: Plugin {
         logNetworkRequest(request.request)
     }
 
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTarget) {
-        logNetworkResponse(response, data: data, target: target)
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget) {        
+        if case .Success(let response) = result {
+            logNetworkResponse(response.response, data: response.data, target: target)
+        } else {
+            logNetworkResponse(nil, data: nil, target: target)
+        }
     }
 
 }

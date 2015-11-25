@@ -2,13 +2,13 @@ import Foundation
 import Alamofire
 
 /// Closure to be executed when a request has completed.
-public typealias Completion = (data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?) -> ()
+public typealias Completion = (result: Moya.Result<Moya.Response, Moya.Error>) -> ()
 
 /// Represents an HTTP method.
 public enum Method: String {
-    case GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE", OPTIONS = "OPTIONS", HEAD = "HEAD", PATCH = "PATCH", TRACE = "TRACE", CONNECT = "CONNECT"
+    case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
     public var method: Alamofire.Method {
-        return Alamofire.Method(rawValue: rawValue)!
+        return Alamofire.Method(rawValue: rawValue) ?? .GET
     }
 }
 
@@ -186,13 +186,11 @@ internal extension MoyaProvider {
         
         // Perform the actual request
         let alamoRequest = request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
-            let statusCode = response?.statusCode
-
+            let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: response, error: error, target: target) }
-            completion(data: data, statusCode: statusCode, response: response, error: error)
+            plugins.forEach { $0.didReceiveResponse(result, target: target) }
+            completion(result: result)
         }
-        
 
         return CancellableToken(request: alamoRequest)
     }
@@ -201,19 +199,21 @@ internal extension MoyaProvider {
     internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin]) -> (() -> ()) {
         return {
             if (token.canceled) {
-                let error = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error,target: target) }
-                completion(data: nil, statusCode: nil, response: nil, error: error)
+                let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                plugins.forEach { $0.didReceiveResponse(Moya.Result(failure: error), target: target) }
+                completion(result: Result(failure: error))
                 return
             }
 
             switch endpoint.sampleResponseClosure() {
             case .NetworkResponse(let statusCode, let data):
-                plugins.forEach { $0.didReceiveResponse(data, statusCode: statusCode, response: nil, error: nil, target: target) }
-                completion(data: data, statusCode: statusCode, response: nil, error: nil)
+                let response = Moya.Response(statusCode: statusCode, data: data, response: nil)
+                plugins.forEach { $0.didReceiveResponse(Moya.Result(success: response), target: target) }
+                completion(result: Moya.Result(success: response))
             case .NetworkError(let error):
-                plugins.forEach { $0.didReceiveResponse(nil, statusCode: nil, response: nil, error: error, target: target) }
-                completion(data: nil, statusCode: nil, response: nil, error: error)
+                let error = Moya.Error.Underlying(error)
+                plugins.forEach { $0.didReceiveResponse(Moya.Result(failure: error), target: target) }
+                completion(result: Moya.Result(failure: error))
             }
         }
     }
@@ -222,6 +222,20 @@ internal extension MoyaProvider {
     internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
         let request = manager.request(request)
         plugins.forEach { $0.willSendRequest(request, target: target) }
+    }
+}
+
+private func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> Moya.Result<Moya.Response, Moya.Error> {
+    switch (response, data, error) {
+    case let (.Some(response), .Some(data), .None):
+        let response = Moya.Response(statusCode: response.statusCode, data: data, response: response)
+        return Moya.Result(success: response)
+    case let (.None, .None, .Some(error)):
+        let error = Moya.Error.Underlying(error)
+        return Moya.Result(failure: error)
+    default:
+        let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
+        return Moya.Result(failure: error)
     }
 }
 

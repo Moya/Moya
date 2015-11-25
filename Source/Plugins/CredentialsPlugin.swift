@@ -17,7 +17,8 @@ public final class CredentialsPlugin: Plugin {
             request.authenticate(usingCredential: credentials)
         }
     }
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTarget) {
-        return
+    
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget) {
+
     }
 }

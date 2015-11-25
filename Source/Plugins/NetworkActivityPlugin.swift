@@ -21,9 +21,10 @@ public final class NetworkActivityPlugin: Plugin {
     public func willSendRequest(request: MoyaRequest, target: MoyaTarget) {
         networkActivityClosure(change: .Began)
     }
-
+    
     /// Called by the provider as soon as a response arrives
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTarget) {
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget) {
         networkActivityClosure(change: .Ended)
     }
 }
+
