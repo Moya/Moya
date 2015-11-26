@@ -7,10 +7,6 @@ public typealias Completion = (result: Moya.Result<Moya.Response, Moya.Error>) -
 /// Represents an HTTP method.
 public enum Method: String {
     case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
-    
-    internal var toAlamofire: Alamofire.Method {
-        return Alamofire.Method(rawValue: rawValue) ?? .GET
-    }
 }
 
 /// Choice of parameter encoding.
