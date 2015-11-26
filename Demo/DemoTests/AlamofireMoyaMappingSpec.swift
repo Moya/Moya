@@ -5,18 +5,7 @@ import Alamofire
 
 final class AlamofireMoyaMappingSpec: QuickSpec {
     override func spec() {
-        it("returns the correct alamofire method type") {
-            expect(Moya.Method.GET.toAlamofire) == Alamofire.Method.GET
-            expect(Moya.Method.POST.toAlamofire) == Alamofire.Method.POST
-            expect(Moya.Method.PUT.toAlamofire) == Alamofire.Method.PUT
-            expect(Moya.Method.DELETE.toAlamofire) == Alamofire.Method.DELETE
-            expect(Moya.Method.OPTIONS.toAlamofire) == Alamofire.Method.OPTIONS
-            expect(Moya.Method.HEAD.toAlamofire) == Alamofire.Method.HEAD
-            expect(Moya.Method.PATCH.toAlamofire) == Alamofire.Method.PATCH
-            expect(Moya.Method.TRACE.toAlamofire) == Alamofire.Method.TRACE
-            expect(Moya.Method.CONNECT.toAlamofire) == Alamofire.Method.CONNECT
-        }
-        
+
         describe("translates parameter encoding to alamofire parameter encoding") {
             
             it("converts to alamofire URL encoding") {
