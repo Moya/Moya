@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		061E377F1C06D098004BAAC1 /* NetworkLogginPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061E377E1C06D098004BAAC1 /* NetworkLogginPluginSpec.swift */; };
 		0649AB6B1BAE131A00DB0C77 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0649AB6A1BAE131A00DB0C77 /* Observable+MoyaSpec.swift */; };
 		064DD2561BFE605A00836577 /* Error+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DD2541BFE605A00836577 /* Error+MoyaSpec.swift */; };
 		064DD2571BFE605A00836577 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 064DD2551BFE605A00836577 /* ErrorTests.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		061E377E1C06D098004BAAC1 /* NetworkLogginPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogginPluginSpec.swift; sourceTree = "<group>"; };
 		0649AB6A1BAE131A00DB0C77 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
 		064DD2541BFE605A00836577 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+MoyaSpec.swift"; sourceTree = "<group>"; };
 		064DD2551BFE605A00836577 /* ErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				5EEE047F1BE3284A00BAF594 /* TestHelpers.swift */,
 				5E70E8C11A1BB32400F00C49 /* testImage.png */,
 				5EC197FB1A1BB16D00F4DFD4 /* Supporting Files */,
+				061E377E1C06D098004BAAC1 /* NetworkLogginPluginSpec.swift */,
 			);
 			path = DemoTests;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				5E70E8C31A1BB32400F00C49 /* EndpointSpec.swift in Sources */,
 				0649AB6B1BAE131A00DB0C77 /* Observable+MoyaSpec.swift in Sources */,
 				5EEE04801BE3284A00BAF594 /* TestHelpers.swift in Sources */,
+				061E377F1C06D098004BAAC1 /* NetworkLogginPluginSpec.swift in Sources */,
 				BF18F5691BFA1BA7004176AC /* AlamofireMoyaMappingSpec.swift in Sources */,
 				064DD2561BFE605A00836577 /* Error+MoyaSpec.swift in Sources */,
 			);
