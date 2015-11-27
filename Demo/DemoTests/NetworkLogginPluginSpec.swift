@@ -72,7 +72,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
     }
 }
 
-private class TestStreamRequest: MoyaRequest {
+private class TestStreamRequest: RequestType {
     var request: NSURLRequest? {
         let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
         r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
@@ -90,7 +90,7 @@ private class TestStreamRequest: MoyaRequest {
     }
 }
 
-private class TestBodyRequest: MoyaRequest {
+private class TestBodyRequest: RequestType {
     var request: NSURLRequest? {
         let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
         r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
@@ -108,7 +108,7 @@ private class TestBodyRequest: MoyaRequest {
     }
 }
 
-private class TestNilRequest: MoyaRequest {
+private class TestNilRequest: RequestType {
     var request: NSURLRequest? {
         return nil
     }

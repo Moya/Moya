@@ -13,7 +13,7 @@ enum GitHub {
 ```
 
 This enum is used to make sure that you provide implementation details for each
-target (at compile time). The enum *must* conform to the `MoyaTarget` protocol. 
+target (at compile time). The enum *must* conform to the `TargetType` protocol.
 Let's take a look at what that might look like.
 
 ```swift
@@ -23,7 +23,7 @@ private extension String {
     }
 }
 
-extension GitHub : MoyaTarget {
+extension GitHub: TargetType {
     var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
     var path: String {
         switch self {
@@ -55,14 +55,14 @@ extension GitHub : MoyaTarget {
 
 You can see that the `MoyaPath` protocol translates each value of the enum into
 a relative URL, which can use values embedded in the enum. Super cool.
-The `MoyaTarget` specifies both a base URL for the API and the sample data for
+The `TargetType` specifies both a base URL for the API and the sample data for
 each enum value. The sample data are `NSData` instances, and could represent
 JSON, images, text, whatever you're expecting from that endpoint.
 
 Next, we'll set up the endpoints for use with our API.
 
 ```swift
-public func url(route: MoyaTarget) -> String {
+public func url(route: TargetType) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 

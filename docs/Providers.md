@@ -116,7 +116,7 @@ included already: one for network activity (`NetworkActivityPlugin`), one for lo
 all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).
 
 ```
-public final class NetworkActivityPlugin: Plugin {
+public final class NetworkActivityPlugin: PluginType {
     
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
     let networkActivityClosure: NetworkActivityClosure
@@ -128,12 +128,12 @@ public final class NetworkActivityPlugin: Plugin {
     // MARK: Plugin
 
     /// Called by the provider as soon as the request is about to start
-    public func willSendRequest(request: MoyaRequest, target: MoyaTarget) {
+    public func willSendRequest(request: RequestType, target: TargetType) {
         networkActivityClosure(change: .Began)
     }
 
     /// Called by the provider as soon as a response arrives
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTarget) {
+    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: TargetType) {
         networkActivityClosure(change: .Ended)
     }
 }
