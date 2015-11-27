@@ -1,6 +1,6 @@
 # Next
 
-- Removes conversion from `Moa.Method` to `Alamofire.Method` since it was unused 
+- Removes conversion from `Moya.Method` to `Alamofire.Method` since it was unused 
 - Changes `NetworkLoggingPlugin`'s initializer to also take a function that has the same signature as `print` to simplify testing
 - **Breaking Change** renames `ParameterEncoding`'s `parameterEncoding` method to `toAlamofire` and makes it internal only
 - **Breaking Change** `Plugin<Target>` is now a protocol and as such no longer sends a typed `MoyaProvider`. - @swizzlr
