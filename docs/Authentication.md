@@ -12,7 +12,7 @@ itself. If you need to use HTTP auth, you can provide a `CredentialsPlugin`
 when initializeing your provider. 
 
 ```swift
-let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin<HTTPBin> { _ -> NSURLCredential? in
+let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> NSURLCredential? in
     return NSURLCredential(user: "user", password: "passwd", persistence: .None)
   }
 ])
@@ -22,7 +22,7 @@ This specific examples shows a use of HTTP that authenticates _every_ request,
 which is usually not necessary. This might be a better idea:
 
 ```swift
-let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin<HTTPBin> { target -> NSURLCredential? in
+let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> NSURLCredential? in
     switch target {
       case .TargetThatNeedsAuthentication:
         return NSURLCredential(user: "user", password: "passwd", persistence: .None)
