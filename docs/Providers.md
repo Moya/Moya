@@ -115,6 +115,30 @@ before a request is sent and after a response is received. There are a few plugi
 included already: one for network activity (`NetworkActivityPlugin`), one for logging
 all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).
 
+```
+public final class NetworkActivityPlugin: Plugin {
+    
+    public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
+    let networkActivityClosure: NetworkActivityClosure
+    
+    public init(networkActivityClosure: NetworkActivityClosure) {
+        self.networkActivityClosure = networkActivityClosure
+    }
+
+    // MARK: Plugin
+
+    /// Called by the provider as soon as the request is about to start
+    public func willSendRequest(request: MoyaRequest, target: MoyaTarget) {
+        networkActivityClosure(change: .Began)
+    }
+
+    /// Called by the provider as soon as a response arrives
+    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: MoyaTarget) {
+        networkActivityClosure(change: .Ended)
+    }
+}
+```
+
 For instance, if you want to add a `NetworkActivityPlugin`, it requires a `networkActivityClosure` parameter. 
 This is a closure that you can provide to be notified whenever a network request begins or
 ends. This is useful for working with the [network activitiy indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
