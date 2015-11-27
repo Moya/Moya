@@ -1,31 +1,33 @@
 import Foundation
 
 /// Logs network activity (outgoing requests and incoming responses).
-public class NetworkLoggerPlugin<Target: MoyaTarget>: Plugin<Target> {
+public final class NetworkLoggerPlugin: Plugin {
     private let loggerId = "Moya_Logger"
     private let dateFormatString = "dd/MM/yyyy HH:mm:ss"
     private let dateFormatter = NSDateFormatter()
-
+    private let separator = ", "
+    private let terminator = "\n"
+    private let output: (items: Any..., separator: String, terminator: String) -> Void
+    
     /// If true, also logs response body data.
     public let verbose: Bool
 
-    public init(verbose: Bool = false) {
+    public init(verbose: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print) {
         self.verbose = verbose
+        self.output = output
     }
 
-    public override func willSendRequest(request: MoyaRequest, provider: MoyaProvider<Target>, target: Target) {
-        logNetworkRequest(request.request)
+    public func willSendRequest(request: MoyaRequest, target: MoyaTarget) {
+        output(items: logNetworkRequest(request.request), separator: separator, terminator: terminator)
     }
 
-    public override func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, provider: MoyaProvider<Target>, target: Target) {
-        
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget) {        
         if case .Success(let response) = result {
-            logNetworkResponse(response.response, data: response.data, target: target)
+            output(items: logNetworkResponse(response.response, data: response.data, target: target), separator: separator, terminator: terminator)
         } else {
-            logNetworkResponse(nil, data: nil, target: target)
+            output(items: logNetworkResponse(nil, data: nil, target: target), separator: separator, terminator: terminator)
         }
     }
-
 }
 
 private extension NetworkLoggerPlugin {
@@ -36,49 +38,50 @@ private extension NetworkLoggerPlugin {
         return dateFormatter.stringFromDate(NSDate())
     }
 
-    func logNetworkRequest(request: NSURLRequest?) {
+    private func format(loggerId: String, date: String, identifier: String, message: String) -> String {
+        return "\(loggerId): [\(date)] \(identifier): \(message)"
+    }
+    
+    func logNetworkRequest(request: NSURLRequest?) -> [String] {
 
-        var output = ""
+        var output = [String]()
 
-        output += String(format: "%@: [%@] Request:  %@", loggerId, date, request?.description ?? "(invalid request)")
+        output += [format(loggerId, date: date, identifier: "Request", message: request?.description ?? "(invalid request)")]
 
         if let headers = request?.allHTTPHeaderFields {
-            output += String(format: "%@ [%@] Request Headers:  %@", loggerId, date, headers)
+            output += [format(loggerId, date: date, identifier: "Request Headers", message: headers.description)]
         }
 
         if let bodyStream = request?.HTTPBodyStream {
-            output += String(format: "%@: [%@] Request Body Stream:  %@", loggerId, date, bodyStream.description)
+            output += [format(loggerId, date: date, identifier: "Request Body Stream", message: bodyStream.description)]
         }
 
         if let httpMethod = request?.HTTPMethod {
-            output += String(format: "%@: [%@] HTTP Request Method:  %@", loggerId, date, httpMethod)
+            output += [format(loggerId, date: date, identifier: "HTTP Request Method", message: httpMethod)]
         }
 
         if let body = request?.HTTPBody where verbose == true {
-            if let stringOutput = NSString(data: body, encoding: NSUTF8StringEncoding) {
-                output += String(format: "%@: [%@] Request Body:  %@", loggerId, date, stringOutput)
+            if let stringOutput = NSString(data: body, encoding: NSUTF8StringEncoding) as? String {
+                output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
             }
         }
 
-        print(output)
+        return output
     }
 
-    func logNetworkResponse(response: NSURLResponse?, data: NSData?, target: Target) {
+    func logNetworkResponse(response: NSURLResponse?, data: NSData?, target: MoyaTarget) -> [String] {
         guard let response = response else {
-            print("Received empty network response for \(target).")
-            return
+           return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
         }
 
-        var output = ""
+        var output = [String]()
 
-        output += String(format: "%@: [%@] Response:  %@", loggerId, date, response.description)
+        output += [format(loggerId, date: date, identifier: "Response", message: response.description)]
 
-        if let data = data,
-            let stringData = NSString(data: data, encoding: NSUTF8StringEncoding) as? String
-            where verbose == true {
-            output += stringData
+        if let data = data, let stringData = NSString(data: data, encoding: NSUTF8StringEncoding) as? String where verbose == true {
+            output += [stringData]
         }
 
-        print(output)
+        return output
     }
 }

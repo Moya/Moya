@@ -10,7 +10,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: MoyaTarget>: MoyaPro
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = Alamofire.Manager.sharedInstance,
-        plugins: [Plugin<Target>] = [], stubScheduler: DateSchedulerType? = nil) {
+        plugins: [Plugin] = [], stubScheduler: DateSchedulerType? = nil) {
             self.stubScheduler = stubScheduler
             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
     }
