@@ -166,10 +166,9 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var log = ""
                         let plugin = NetworkLoggerPlugin(verbose: true, output: { printing in
                             //mapping the Any... from items to a string that can be compared
-                            log += printing.items.reduce("") { $0 + ($1 as! [String]).reduce("") { acc, elem in
-                                return acc + elem.stringByReplacingOccurrencesOfString("\n", withString: "").stringByReplacingOccurrencesOfString("    ", withString: "") + " "
-                                }
-                            }
+                            let stringArray: [String] = printing.items.reduce([String]()) { $0 + ($1 as! [String]) }
+                            let string: String = stringArray.reduce("") { $0 + $1 + " " }
+                            log += string
                         })
                         
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
@@ -180,7 +179,8 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(log).toEventually(contain("Request Headers: [:]"))
                         expect(log).toEventually(contain("HTTP Request Method: GET"))
                         expect(log).toEventually(contain("Response:"))
-                        expect(log).toEventually(contain("{ URL: https://api.github.com/zen } { status code: 200, headers {\"Content-Length\" = 43;} }"))
+                        expect(log).toEventually(contain("{ URL: https://api.github.com/zen } { status code: 200, headers"))
+                        expect(log).toEventually(contain("\"Content-Length\" = 43;"))
                     }
                 }
                 

@@ -2,66 +2,15 @@ import Quick
 import Nimble
 import Moya
 
-class TestStreamRequest: MoyaRequest {
-    var request: NSURLRequest? {
-        let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
-        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
-        r.HTTPBodyStream = NSInputStream(data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!)
-        
-        return r
-    }
-    
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
-        return self
-    }
-    
-    func authenticate(usingCredential credential: NSURLCredential) -> Self {
-        return self
-    }
-}
-
-class TestBodyRequest: MoyaRequest {
-    var request: NSURLRequest? {
-        let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
-        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
-        r.HTTPBody = "cool body".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        return r
-    }
-    
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
-        return self
-    }
-    
-    func authenticate(usingCredential credential: NSURLCredential) -> Self {
-        return self
-    }
-}
-
-class TestNilRequest: MoyaRequest {
-    var request: NSURLRequest? {
-        return nil
-    }
-    
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
-        return self
-    }
-    
-    func authenticate(usingCredential credential: NSURLCredential) -> Self {
-        return self
-    }
-}
-
-class NetworkLogginPluginSpec: QuickSpec {
+final class NetworkLogginPluginSpec: QuickSpec {
     override func spec() {
         
         var log = ""
         let plugin = NetworkLoggerPlugin(verbose: true, output: { printing in
             //mapping the Any... from items to a string that can be compared
-            log += printing.items.reduce("") { $0 + ($1 as! [String]).reduce("") { acc, elem in
-                return acc + elem.stringByReplacingOccurrencesOfString("\n", withString: "").stringByReplacingOccurrencesOfString("    ", withString: "") + " "
-                }
-            }
+            let stringArray: [String] = printing.items.reduce([String]()) { $0 + ($1 as! [String]) }
+            let string: String = stringArray.reduce("") { $0 + $1 + " " }
+            log += string
         })
         
         beforeEach {
@@ -120,5 +69,55 @@ class NetworkLogginPluginSpec: QuickSpec {
             
             expect(log).toEventually(contain("Response: Received empty network response for Zen."))
         }
+    }
+}
+
+private class TestStreamRequest: MoyaRequest {
+    var request: NSURLRequest? {
+        let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
+        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
+        r.HTTPBodyStream = NSInputStream(data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!)
+        
+        return r
+    }
+    
+    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+        return self
+    }
+    
+    func authenticate(usingCredential credential: NSURLCredential) -> Self {
+        return self
+    }
+}
+
+private class TestBodyRequest: MoyaRequest {
+    var request: NSURLRequest? {
+        let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
+        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
+        r.HTTPBody = "cool body".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        return r
+    }
+    
+    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+        return self
+    }
+    
+    func authenticate(usingCredential credential: NSURLCredential) -> Self {
+        return self
+    }
+}
+
+private class TestNilRequest: MoyaRequest {
+    var request: NSURLRequest? {
+        return nil
+    }
+    
+    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+        return self
+    }
+    
+    func authenticate(usingCredential credential: NSURLCredential) -> Self {
+        return self
     }
 }
