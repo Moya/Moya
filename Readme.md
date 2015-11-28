@@ -2,7 +2,7 @@
 
 ![Moya Logo](web/moya_logo_github.png)
 
-You're a smart developer. You probably use Alamofire to abstract away access to
+You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
 NSURLSession and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
 are probably called "APIManager" or "NetworkModel", and they always end in tears.
