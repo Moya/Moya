@@ -93,7 +93,7 @@ of replace – it. The `endpointByAddingParameters` and `endpointByAddingHTTPHea
 functions allow you to rely on the existing Moya code and add your own custom
 values. 
 
-Sample responses are a requirement of the `MoyaTarget` protocol. However, they
+Sample responses are a requirement of the `TargetType` protocol. However, they
 only specify the data returned. The Target-to-Endpoint mapping closure is where
 you can specify more details, which is useful for unit testing. 
 

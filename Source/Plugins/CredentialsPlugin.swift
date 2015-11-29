@@ -1,9 +1,9 @@
 import Foundation
 
 /// Provides each request with optional NSURLCredentials.
-public final class CredentialsPlugin: Plugin {
+public final class CredentialsPlugin: PluginType {
 
-    public typealias CredentialClosure = MoyaTarget -> NSURLCredential?
+    public typealias CredentialClosure = TargetType -> NSURLCredential?
     let credentialsClosure: CredentialClosure
 
     public init(credentialsClosure: CredentialClosure) {
@@ -12,13 +12,13 @@ public final class CredentialsPlugin: Plugin {
 
     // MARK: Plugin
     
-    public func willSendRequest(request: MoyaRequest, target: MoyaTarget) {
+    public func willSendRequest(request: RequestType, target: TargetType) {
         if let credentials = credentialsClosure(target) {
             request.authenticate(usingCredential: credentials)
         }
     }
     
-    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget) {
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
 
     }
 }

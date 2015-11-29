@@ -101,12 +101,12 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
             }
 
-            class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
+            class TestProvider<Target: TargetType>: ReactiveCocoaMoyaProvider<Target> {
                 init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                     requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                     stubClosure: StubClosure = MoyaProvider.NeverStub,
                     manager: Manager = Alamofire.Manager.sharedInstance,
-                    plugins: [Plugin] = []) {
+                    plugins: [PluginType] = []) {
 
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
@@ -183,12 +183,12 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     }
                 }
                 
-                class TestProvider<Target: MoyaTarget>: ReactiveCocoaMoyaProvider<Target> {
+                class TestProvider<Target: TargetType>: ReactiveCocoaMoyaProvider<Target> {
                     init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
                         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
                         stubClosure: StubClosure = MoyaProvider.NeverStub,
                         manager: Manager = Alamofire.Manager.sharedInstance,
-                        plugins: [Plugin] = []) {
+                        plugins: [PluginType] = []) {
 
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }

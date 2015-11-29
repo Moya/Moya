@@ -1,7 +1,7 @@
 import Foundation
 
 /// Logs network activity (outgoing requests and incoming responses).
-public final class NetworkLoggerPlugin: Plugin {
+public final class NetworkLoggerPlugin: PluginType {
     private let loggerId = "Moya_Logger"
     private let dateFormatString = "dd/MM/yyyy HH:mm:ss"
     private let dateFormatter = NSDateFormatter()
@@ -17,11 +17,11 @@ public final class NetworkLoggerPlugin: Plugin {
         self.output = output
     }
 
-    public func willSendRequest(request: MoyaRequest, target: MoyaTarget) {
+    public func willSendRequest(request: RequestType, target: TargetType) {
         output(items: logNetworkRequest(request.request), separator: separator, terminator: terminator)
     }
 
-    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget) {        
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         if case .Success(let response) = result {
             output(items: logNetworkResponse(response.response, data: response.data, target: target), separator: separator, terminator: terminator)
         } else {
@@ -69,7 +69,7 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-    func logNetworkResponse(response: NSURLResponse?, data: NSData?, target: MoyaTarget) -> [String] {
+    func logNetworkResponse(response: NSURLResponse?, data: NSData?, target: TargetType) -> [String] {
         guard let response = response else {
            return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
         }

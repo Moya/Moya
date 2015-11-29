@@ -6,16 +6,16 @@ import Foundation
 ///     - log network requests
 ///     - hide and show a network avtivity indicator 
 ///     - inject additional information into a request
-public protocol Plugin {
+public protocol PluginType {
     /// Called immediately before a request is sent over the network (or stubbed).
-    func willSendRequest(request: MoyaRequest, target: MoyaTarget)
+    func willSendRequest(request: RequestType, target: TargetType)
 
     // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: MoyaTarget)
+    func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType)
 }
 
 /// Request type used by willSendRequest plugin function.
-public protocol MoyaRequest {
+public protocol RequestType {
 
     // Note:
     //

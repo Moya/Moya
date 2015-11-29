@@ -37,7 +37,7 @@ public enum StubBehavior {
 }
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
-public protocol MoyaTarget {
+public protocol TargetType {
     var baseURL: NSURL { get }
     var path: String { get }
     var method: Moya.Method { get }
@@ -51,7 +51,7 @@ public protocol Cancellable {
 }
 
 /// Request provider class. Requests should be made through this class only.
-public class MoyaProvider<Target: MoyaTarget> {
+public class MoyaProvider<Target: TargetType> {
     
     /// Closure that defines the endpoints for the provider.
     public typealias EndpointClosure = Target -> Endpoint<Target>
@@ -69,14 +69,14 @@ public class MoyaProvider<Target: MoyaTarget> {
     
     /// A list of plugins
     /// e.g. for logging, network activity indicator or credentials
-    public let plugins: [Plugin]
+    public let plugins: [PluginType]
     
     /// Initializes a provider.
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = Alamofire.Manager.sharedInstance,
-        plugins: [Plugin] = []) {
+        plugins: [PluginType] = []) {
             
             self.endpointClosure = endpointClosure
             self.requestClosure = requestClosure
@@ -193,7 +193,7 @@ internal extension MoyaProvider {
     }
     
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [Plugin]) -> (() -> ()) {
+    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
         return {
             if (token.canceled) {
                 let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
@@ -284,4 +284,4 @@ private struct CancellableWrapper: Cancellable {
 }
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
-extension Request: MoyaRequest { }
+extension Request: RequestType { }
