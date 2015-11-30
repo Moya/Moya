@@ -1,5 +1,7 @@
 # Next
 
+# 5.0.0
+
 - **Breaking Change** rename `MoyaTarget` protocol to `TargetType`
 - **Breaking Change** rename `MoyaRequest` protocol to `RequestType`
 - **Breaking Change** rename `Plugin` protocol to `PluginType`
