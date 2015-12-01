@@ -3,13 +3,25 @@ import Moya
 import RxSwift
 import Nimble
 
-// Necessary since UIImage(named:) doesn't work correctly in the test bundle
-private extension UIImage {
-    class func testPNGImage(named name: String) -> UIImage {
+#if os(iOS) || os(watchOS) || os(tvOS)
+    private func ImageJPEGRepresentation(image: ImageType, _ compression: CGFloat) -> NSData? {
+        return UIImageJPEGRepresentation(image, compression)
+    }
+#elseif os(OSX)
+    private func ImageJPEGRepresentation(image: ImageType, _ compression: CGFloat) -> NSData? {
+        var imageRect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
+        let imageRep = NSBitmapImageRep(CGImage: image.CGImageForProposedRect(&imageRect, context: nil, hints: nil)!)
+        return imageRep.representationUsingType(.NSJPEGFileType, properties:[:])
+    }
+#endif
+
+// Necessary since Image(named:) doesn't work correctly in the test bundle
+private extension ImageType {
+    class func testPNGImage(named name: String) -> ImageType {
         class TestClass { }
         let bundle = NSBundle(forClass: TestClass().dynamicType)
         let path = bundle.pathForResource(name, ofType: "png")
-        return UIImage(contentsOfFile: path!)!
+        return Image(contentsOfFile: path!)!
     }
 }
 
@@ -148,8 +160,8 @@ class ObservableMoyaSpec: QuickSpec {
         
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = UIImage.testPNGImage(named: "testImage")
-                let data = UIImageJPEGRepresentation(image, 0.75)
+                let image = Image.testPNGImage(named: "testImage")
+                let data = ImageJPEGRepresentation(image, 0.75)
                 let observable = observableSendingData(data!)
                 
                 var size: CGSize?
