@@ -1,5 +1,7 @@
 # Next
 
+- Update to ReactiveCocoa v4.0-alpha.4
+
 # 5.0.0
 
 - **Breaking Change** rename `MoyaTarget` protocol to `TargetType`
