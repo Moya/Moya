@@ -175,13 +175,15 @@ public extension MoyaProvider {
 internal extension MoyaProvider {
     
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
-        let request = manager.request(request)
         let plugins = self.plugins
-        
+
         // Give plugins the chance to alter the outgoing request
         plugins.forEach { $0.willSendRequest(request, target: target) }
-        
-        // Perform the actual request
+
+        // Perform actual request
+        let request = manager.request(request)
+
+        // Add completion block to obtain response
         let alamoRequest = request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
@@ -217,8 +219,8 @@ internal extension MoyaProvider {
     
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
-        let request = manager.request(request)
         plugins.forEach { $0.willSendRequest(request, target: target) }
+        _ = manager.request(request)
     }
 }
 
@@ -285,3 +287,18 @@ private struct CancellableWrapper: Cancellable {
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType { }
+
+/// Make `NSURLRequest` conform to `RequestType` so that it can be sent with `PluginType` method `willSendRequest(_:target:)`.
+extension NSURLRequest: RequestType {
+    public var request: NSURLRequest? {
+      return self
+    }
+
+    public func authenticate(usingCredential credential: NSURLCredential) -> Self {
+      return self
+    }
+
+    public func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+      return self
+    }
+}
