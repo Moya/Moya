@@ -12,12 +12,16 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(username: String) {
-        GitHubProvider.request(.UserRepositories(username), completion: { (data, status, resonse, error) -> () in
-            var success = error == nil
-            if let data = data {
+        GitHubProvider.request(.UserRepositories(username), completion: { result in
+
+            var success = true
+            var message = "Unable to fetch from GitHub"
+            
+            switch result {
+            case let .Success(response):
                 do {
-                    let json: AnyObject? = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
-                    if let json = json as? NSArray {
+                    let json: NSArray? = try response.mapJSON() as? NSArray
+                    if let json = json {
                         // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
                         self.repos = json
                     } else {
@@ -26,20 +30,16 @@ class ViewController: UITableViewController {
                 } catch {
                     success = false
                 }
-
                 self.tableView.reloadData()
-            } else {
+            case let .Failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                message = error.description
                 success = false
             }
-
+            
             if !success {
-                let message: String
-                if let error = error as? NSError {
-                    message = error.description
-                } else {
-                    message = "Unable to fetch from GitHub"
-                }
-                
                 let alertController = UIAlertController(title: "GitHub Fetch", message: message, preferredStyle: .Alert)
                 let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
                     alertController.dismissViewControllerAnimated(true, completion: nil)
@@ -51,10 +51,10 @@ class ViewController: UITableViewController {
     }
 
     func downloadZen() {
-        GitHubProvider.request(.Zen, completion: { (data, status, response, error) -> () in
+        GitHubProvider.request(.Zen, completion: { result in
             var message = "Couldn't access API"
-            if let data = data {
-                message = NSString(data: data, encoding: NSUTF8StringEncoding) as? String ?? message
+            if case let .Success(response) = result {
+                message = (try? response.mapString()) ?? message
             }
 
             let alertController = UIAlertController(title: "Zen", message: message, preferredStyle: .Alert)

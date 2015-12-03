@@ -2,7 +2,7 @@
 
 ![Moya Logo](web/moya_logo_github.png)
 
-You're a smart developer. You probably use Alamofire to abstract away access to
+You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
 NSURLSession and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
 are probably called "APIManager" or "NetworkModel", and they always end in tears.
@@ -52,7 +52,7 @@ Just add `pod 'Moya'` to your Podfile and go!
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For RxSwift or ReactiveCocoa extensions, this project will include 
+For RxSwift or ReactiveCocoa extensions, this project will include
 them as dependencies. You can do this via CocoaPods subspecs.
 
 ```rb
@@ -119,7 +119,7 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
     switch event {
     case .Next(let response):
         image = UIImage(data: response.data)
-    case .Error(let error):
+    case .Failed(let error):
         print(error)
     default:
       break
@@ -130,7 +130,7 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
 ##RxSwift
 
 For `RxSwift`, it immediately returns an `Observable` that you can subscribe to
-or bind or map or whatever you want to do. To handle errors, for instance, 
+or bind or map or whatever you want to do. To handle errors, for instance,
 we could do the following:
 
 ```swift
@@ -176,7 +176,7 @@ If any of that sounds cool to you, send a pull request! After a few
 contributions, we'll add you as an admin to the repo so you can merge pull
 requests and help steer the ship :ship:
 
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/code-of-conduct).
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code of Conduct.md).
 
 License
 -------

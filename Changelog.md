@@ -1,6 +1,20 @@
 # Next
 
--  **Breaking Change** Introduce `MoyaError` type for use with ReactiveCocoa extension - [@tomburns](http://github.com/tomburns)
+# 5.0.0
+
+- **Breaking Change** rename `MoyaTarget` protocol to `TargetType`
+- **Breaking Change** rename `MoyaRequest` protocol to `RequestType`
+- **Breaking Change** rename `Plugin` protocol to `PluginType`
+- Removes conversion from `Moya.Method` to `Alamofire.Method` since it was unused 
+- Changes `NetworkLoggingPlugin`'s initializer to also take a function that has the same signature as `print` to simplify testing
+- **Breaking Change** renames `ParameterEncoding`'s `parameterEncoding` method to `toAlamofire` and makes it internal only
+- **Breaking Change** `Plugin<Target>` is now a protocol and as such no longer sends a typed `MoyaProvider`. - @swizzlr
+- **Breaking Change** The types that were subtypes of `Moya` are now defined at the top level; you should find no compatibility issues since they are still invoked by `Moya.X` – @swizzlr
+- **Breaking Change** `Completion` closure now returns a `Result` instead of multiple optional parameters.
+- **Breaking Change** `MoyaResponse` is now `Response`, and also `final`. It will be changed to a `struct` in a future release. - @swizzlr
+- **Breaking Change** `ReactiveCocoaMoyaProvider` can now be supplied with an optional `stubScheduler` – @swizzlr (sponsored by [Network Locum](https://networklocum.com))
+- **Breaking Change** Introduce `Error` type for use with reactive extensions - [@tomburns](http://github.com/tomburns)
+- **Breaking Change** Deprecate ReactiveCocoa 2 support
 
 # 4.5.0
 

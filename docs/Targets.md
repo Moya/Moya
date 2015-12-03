@@ -2,7 +2,7 @@ Targets
 =======
 
 Using Moya starts with defining a target – typically some `enum` that conforms 
-to the `MoyaTarget` protocol. Then, the rest of your app deals *only* with 
+to the `TargetType` protocol. Then, the rest of your app deals *only* with 
 those targets. Targets are some action that you want to take on the API, 
 like "`FavouriteTweet(tweetID: String)`". 
 
@@ -16,19 +16,19 @@ public enum GitHub {
 }
 ```
 
-Targets must conform to `MoyaTarget`. The `MoyaTarget` protocol requires a 
+Targets must conform to `TargetType`. The `TargetType` protocol requires a 
 `baseURL` property to be defined on the enum. Note that this should *not* depend 
 on the value of `self`, but should just return a single value (if you're using 
 more than one API base URL, separate them out into separate enums and Moya 
 providers). Here's the beginning of our extension:
 
 ```swift
-extension GitHub : MoyaTarget {
+extension GitHub: TargetType {
     public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
 ```
 
-OK, cool. So now we need to have a `method` for our enum values. In our case, we
-are always using the GET HTTP method, so this is pretty easy:
+This protocol specifies the locations of 
+your API endpoints, relative to its base URL (more on that below). 
 
 ```swift
     public var path: String {
@@ -43,11 +43,11 @@ are always using the GET HTTP method, so this is pretty easy:
     }
 ```
 
-This protocol specifies the locations of 
-your API endpoints, relative to its base URL (more on that below). 
-
 Note: we're cheating here and using a `URLEscapedString` extension on String. 
 A sample implementation is given at the end of this document. 
+
+OK, cool. So now we need to have a `method` for our enum values. In our case, we
+are always using the GET HTTP method, so this is pretty easy:
 
 ```swift
     public var method: Moya.Method {
@@ -59,7 +59,7 @@ Nice. If some of your endpoints require POST or another method, then you can swi
 on `self` to return the appropriate value. This kind of switching technique is what 
 we saw when calculating our `path` property.
 
-Our `MoyaTarget` is shaping up, but we're not done yet. We also need a `parameters`
+Our `TargetType` is shaping up, but we're not done yet. We also need a `parameters`
 computed property that returns parameters defined by the enum case. Here's an example:
 
 ```swift
@@ -77,7 +77,7 @@ Unlike our `path` property earlier, we don't actually care about the associated 
 of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
 
 Finally, notice the `sampleData` property on the enum. This is a requirement of 
-the `MoyaTarget` protocol. Any target you want to hit must provide some non-nil
+the `TargetType` protocol. Any target you want to hit must provide some non-nil
 `NSData` that represents a sample response. This can be used later for tests or
 for providing offline support for developers. This *should* depend on `self`. 
 

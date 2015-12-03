@@ -2,7 +2,7 @@ def xcodebuild_in_demo_dir(tasks, xcprety_args: '')
   workspace = 'Demo.xcworkspace'
   scheme = 'Demo'
   configuration = 'Debug'
-  device_host = "platform='iOS Simulator',OS='9.0',name='iPhone 6'"
+  device_host = "platform='iOS Simulator',OS='9.1',name='iPhone 6s'"
 
   Dir.chdir('Demo') do
     sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk iphonesimulator -destination #{device_host} #{tasks} | xcpretty -c #{xcprety_args}"

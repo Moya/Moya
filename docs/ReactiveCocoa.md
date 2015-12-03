@@ -21,7 +21,7 @@ provider.request(.Zen).start { (event) -> Void in
     switch event {
     case .Next(let response):
         // do something with the data
-    case .Error(let error):
+    case .Failed(let error):
         // handle the error
     default:
         break

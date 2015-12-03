@@ -8,7 +8,7 @@ public enum EndpointSampleResponse {
     case NetworkResponse(Int, NSData)
 
     /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
-    case NetworkError(ErrorType?)
+    case NetworkError(ErrorType)
 }
 
 
@@ -70,9 +70,21 @@ public class Endpoint<Target> {
 extension Endpoint {
     public var urlRequest: NSURLRequest {
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
-        request.HTTPMethod = method.method().rawValue
+        request.HTTPMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
-        return parameterEncoding.parameterEncoding().encode(request, parameters: parameters).0
+        return parameterEncoding.toAlamofire.encode(request, parameters: parameters).0
+    }
+}
+
+/// Required for making Endpoint conform to Equatable.
+public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+    return lhs.urlRequest.isEqual(rhs.urlRequest)
+}
+
+/// Required for using Endpoint as a key type in a Dictionary.
+extension Endpoint: Equatable, Hashable {
+    public var hashValue: Int {
+        return urlRequest.hash
     }
 }
