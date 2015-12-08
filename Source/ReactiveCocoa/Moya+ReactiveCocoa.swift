@@ -63,6 +63,6 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
 
     @available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
     public func request(token: Target) -> RACSignal {
-        return toRACSignal(request(token))
+        return request(token).toRACSignal()
     }
 }
