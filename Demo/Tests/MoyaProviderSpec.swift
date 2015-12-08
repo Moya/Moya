@@ -111,7 +111,7 @@ class MoyaProviderSpec: QuickSpec {
                 return
             }
             
-            expect(called) == true
+            expect(called).toEventually(equal(true))
         }
         
         it("notifies at the beginning of network requests") {
@@ -158,9 +158,7 @@ class MoyaProviderSpec: QuickSpec {
                 return
             }
             
-            expect {
-                return endDate?.timeIntervalSinceDate(startDate)
-                }.to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
+            expect(endDate?.timeIntervalSinceDate(startDate)).to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
         }
         
         describe("a provider with a custom endpoint resolver") {

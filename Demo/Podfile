@@ -1,23 +1,42 @@
-platform :ios, '8.0'
-
 source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-target 'Demo' do
-
-  # Our libraries
+# Our Libraries
+def libraries
   pod 'Moya', :path => "../"
   pod 'Moya/ReactiveCocoa', :path => "../"
   pod 'Moya/RxSwift', :path => "../"
 end
 
-target 'DemoTests' do
-
+# Test Libraries
+def test_pods
   pod 'Quick'
   pod 'Nimble'
   pod 'OHHTTPStubs'
+end
 
+target 'Demo' do
+  platform :ios, '8.0'
+  libraries
+end
+
+target 'MoyaTests-iOS' do
+    platform :ios, '8.0'
+    libraries
+    test_pods
+end
+
+target 'MoyaTests-tvOS' do
+    platform :tvos, '9.0'
+    libraries
+    test_pods
+end
+
+target 'MoyaTests-Mac' do
+    platform :osx, '10.9'
+    libraries
+    test_pods
 end
 
 # Hack to fix testability until cocoapods gets an update
