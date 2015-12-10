@@ -1,4 +1,3 @@
-import UIKit
 import Quick
 import Moya
 import Nimble

@@ -1,5 +1,13 @@
 # Next
 
+# 5.2.0
+
+- Updated to RxSwift 2.0.0-beta.4
+
+# 5.1.0
+
+- Update to ReactiveCocoa v4.0-alpha.4
+
 # 5.0.0
 
 - **Breaking Change** rename `MoyaTarget` protocol to `TargetType`

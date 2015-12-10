@@ -1,15 +1,15 @@
 PODS:
   - Alamofire (3.1.3)
-  - Moya (5.0.0):
-    - Moya/Core (= 5.0.0)
-  - Moya/Core (5.0.0):
+  - Moya (5.2.0):
+    - Moya/Core (= 5.2.0)
+  - Moya/Core (5.2.0):
     - Alamofire (~> 3.0)
-  - Moya/ReactiveCocoa (5.0.0):
+  - Moya/ReactiveCocoa (5.2.0):
     - Moya/Core
-    - ReactiveCocoa (= 4.0.3-alpha-3)
-  - Moya/RxSwift (5.0.0):
+    - ReactiveCocoa (= 4.0.4-alpha-4)
+  - Moya/RxSwift (5.2.0):
     - Moya/Core
-    - RxSwift (~> 2.0.0-beta)
+    - RxSwift (= 2.0.0-beta.4)
   - Nimble (3.0.0)
   - OHHTTPStubs (4.6.0):
     - OHHTTPStubs/Default (= 4.6.0)
@@ -25,19 +25,19 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.6.0)
   - Quick (0.8.0)
-  - ReactiveCocoa (4.0.3-alpha-3):
-    - ReactiveCocoa/UI (= 4.0.3-alpha-3)
-    - Result (~> 0.6.0-beta.6)
-  - ReactiveCocoa/Core (4.0.3-alpha-3):
+  - ReactiveCocoa (4.0.4-alpha-4):
+    - ReactiveCocoa/UI (= 4.0.4-alpha-4)
+    - Result (~> 1.0)
+  - ReactiveCocoa/Core (4.0.4-alpha-4):
     - ReactiveCocoa/no-arc
-    - Result (~> 0.6.0-beta.6)
-  - ReactiveCocoa/no-arc (4.0.3-alpha-3):
-    - Result (~> 0.6.0-beta.6)
-  - ReactiveCocoa/UI (4.0.3-alpha-3):
+    - Result (~> 1.0)
+  - ReactiveCocoa/no-arc (4.0.4-alpha-4):
+    - Result (~> 1.0)
+  - ReactiveCocoa/UI (4.0.4-alpha-4):
     - ReactiveCocoa/Core
-    - Result (~> 0.6.0-beta.6)
-  - Result (0.6.0-beta.6)
-  - RxSwift (2.0.0-beta.3)
+    - Result (~> 1.0)
+  - Result (1.0.0)
+  - RxSwift (2.0.0-beta.4)
 
 DEPENDENCIES:
   - Moya (from `../`)
@@ -49,16 +49,16 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 9f93b56389e48def9220dd57d1f44b1927229a5a
-  Moya: 1267d2e7adcc8a3c90b9864854d491ab32f87b3e
+  Moya: bb1c6a9ebbc4420240bf464aafa4a4ef8136834c
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
   OHHTTPStubs: cb1aefbbeb4de4e741644455d4b945538e5248a2
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
-  ReactiveCocoa: b311b498bc119bbdb36f98013bdf890eebad7658
-  Result: dc390d0b58f9ec43fcd536f1ebdd130803cc6cbc
-  RxSwift: 19fbe885b404d1d36d42ac8535134739a9b42952
+  ReactiveCocoa: e459ea92099447802df20c4735e31e8139b06094
+  Result: feaaff535eb59c414c6c7f95e6145ab991b1b07f
+  RxSwift: 191c6b06da783a8671433cf35a54d2ad2fd2d9de
 
 COCOAPODS: 0.39.0
