@@ -24,17 +24,17 @@ end
 
 def sdks
   return {
-    ios: 'iphonesimulator9.1',
-    osx: 'macosx10.11',
-    tvos: 'appletvsimulator9.0'
+    ios: 'iphonesimulator',
+    osx: 'macosx',
+    tvos: 'appletvsimulator'
   }
 end
 
 def devices
   return {
-    ios: "OS='9.1',name='iPhone 6s'",
+    ios: "name='iPhone 6s'",
     osx: "arch='x86_64'",
-    tvos: "OS='9.0',name='Apple TV 1080p'"
+    tvos: "name='Apple TV 1080p'"
   }
 end
 
