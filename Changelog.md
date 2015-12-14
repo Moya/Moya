@@ -1,5 +1,7 @@
 # Next
 
+- Moves to antitypical Result type
+
 # 5.2.0
 
 - Updated to RxSwift 2.0.0-beta.4
@@ -13,7 +15,7 @@
 - **Breaking Change** rename `MoyaTarget` protocol to `TargetType`
 - **Breaking Change** rename `MoyaRequest` protocol to `RequestType`
 - **Breaking Change** rename `Plugin` protocol to `PluginType`
-- Removes conversion from `Moya.Method` to `Alamofire.Method` since it was unused 
+- Removes conversion from `Moya.Method` to `Alamofire.Method` since it was unused
 - Changes `NetworkLoggingPlugin`'s initializer to also take a function that has the same signature as `print` to simplify testing
 - **Breaking Change** renames `ParameterEncoding`'s `parameterEncoding` method to `toAlamofire` and makes it internal only
 - **Breaking Change** `Plugin<Target>` is now a protocol and as such no longer sends a typed `MoyaProvider`. - @swizzlr
