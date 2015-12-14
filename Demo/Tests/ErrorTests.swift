@@ -1,5 +1,6 @@
 import Quick
 import Nimble
+@testable
 import Moya
 
 class ErrorTests: QuickSpec {
@@ -66,6 +67,26 @@ class ErrorTests: QuickSpec {
                 expect(error.domain) == "Domain"
                 expect(error.code) == 200
                 expect(error.userInfo as? [String : String]) == ["data" : "some data"]
+            }
+        }
+        describe("Alamofire responses should return the errors where appropriate") {
+            it("should return the underlying error in spite of having a response and data") {
+                let underlyingError = NSError(domain: "", code: 0, userInfo: nil)
+                let response = NSHTTPURLResponse()
+                let data = NSData()
+                let result = convertResponseToResult(response, data: data, error: underlyingError)
+                switch result {
+                case let .Failure(error):
+                    switch error {
+                    case let .Underlying(e):
+                        expect(e as NSError) == underlyingError
+                    default:
+                        XCTFail("expected to get underlying error")
+                    }
+
+                case .Success:
+                    XCTFail("expected to be failing result")
+                }
             }
         }
     }
