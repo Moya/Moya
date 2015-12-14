@@ -1,6 +1,5 @@
 import Foundation
 import RxSwift
-import Alamofire
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
@@ -8,7 +7,7 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
     override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = Alamofire.Manager.sharedInstance,
+        manager: Manager = Manager.sharedInstance,
         plugins: [PluginType] = []) {
             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
     }

@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import Moya
+import Result
 
 final class NetworkLogginPluginSpec: QuickSpec {
     override func spec() {

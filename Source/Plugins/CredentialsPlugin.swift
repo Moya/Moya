@@ -1,4 +1,5 @@
 import Foundation
+import Result
 
 /// Provides each request with optional NSURLCredentials.
 public final class CredentialsPlugin: PluginType {
