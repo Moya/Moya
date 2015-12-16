@@ -201,13 +201,13 @@ internal extension MoyaProvider {
     }
 }
 
-private func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?, error: NSError?) ->
+internal func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?, error: NSError?) ->
     Result<Moya.Response, Moya.Error> {
     switch (response, data, error) {
     case let (.Some(response), .Some(data), .None):
         let response = Moya.Response(statusCode: response.statusCode, data: data, response: response)
         return .Success(response)
-    case let (.None, .None, .Some(error)):
+    case let (_, _, .Some(error)):
         let error = Moya.Error.Underlying(error)
         return .Failure(error)
     default:

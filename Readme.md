@@ -157,6 +157,15 @@ for filtering out certain status codes. This means that you can place your code 
 handling API errors like 400's in the same places as code for handling invalid
 responses.
 
+Community Extensions
+--------------------
+
+Moya has a great community around it and some people have created some very helpful extensions.
+
+- [Moya-ObjectMapper](https://github.com/ivanbruel/Moya-ObjectMapper) - ObjectMapper bindings for Moya for easier JSON serialization
+
+We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
+
 Contributing
 ------------
 
