@@ -1,4 +1,6 @@
 # Next
+     
+- Update to ReactiveCocoa v4.0.0-RC.1
 
 # 5.2.0
 
@@ -6,7 +8,7 @@
 
 # 5.1.0
 
-- Update to ReactiveCocoa v4.0-alpha.4
+- Update to ReactiveCocoa v4.0.0-alpha.4
 
 # 5.0.0
 
