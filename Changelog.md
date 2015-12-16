@@ -1,6 +1,7 @@
 # Next
      
 - Update to ReactiveCocoa v4.0.0-RC.1
+- Fixes cases where underlying network errors were not properly propagated.
 
 # 5.2.0
 
