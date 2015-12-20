@@ -21,53 +21,49 @@ final class NetworkLogginPluginSpec: QuickSpec {
             
             plugin.willSendRequest(TestBodyRequest(), target: GitHub.Zen)
             
-            expect(log).toEventually(contain("Request:"))
-            expect(log).toEventually(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).toEventually(contain("Request Headers: [\"Content-Type\": \"application/json\"]"))
-            expect(log).toEventually(contain("HTTP Request Method: GET"))
-            expect(log).toEventually(contain("Request Body: cool body"))
+            expect(log).to( contain("Request:") )
+            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
+            expect(log).to( contain("HTTP Request Method: GET") )
+            expect(log).to( contain("Request Body: cool body") )
         }
         
         it("outputs all request fields with stream") {
             
             plugin.willSendRequest(TestStreamRequest(), target: GitHub.Zen)
-            
-            expect(log).toEventually(contain("Request:"))
-            expect(log).toEventually(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).toEventually(contain("Request Headers: [\"Content-Type\": \"application/json\"]"))
-            expect(log).toEventually(contain("HTTP Request Method: GET"))
-            expect(log).toEventually(contain("Request Body Stream:"))
+
+            expect(log).to( contain("Request:") )
+            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
+            expect(log).to( contain("HTTP Request Method: GET") )
+            expect(log).to( contain("Request Body Stream:") )
         }
         
         it("will output invalid request when reguest is nil") {
             
             plugin.willSendRequest(TestNilRequest(), target: GitHub.Zen)
             
-            expect(log).toEventually(contain("Request: (invalid request)"))
+            expect(log).to( contain("Request: (invalid request)") )
         }
         
         it("outputs the reponse data") {
-            
             let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: NSURLResponse(URL: NSURL(string: url(GitHub.Zen))!, MIMEType: nil, expectedContentLength: 0, textEncodingName: nil))
-            
             let result: Result<Moya.Response, Moya.Error> = .Success(response)
             
             plugin.didReceiveResponse(result, target: GitHub.Zen)
             
-            expect(log).toEventually(contain("Response:"))
-            
-            expect(log).toEventually(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).toEventually(contain("cool body"))
+            expect(log).to( contain("Response:") )
+            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("cool body") )
         }
         
         it("outputs an empty reponse message") {
-            
             let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: nil)
             let result: Result<Moya.Response, Moya.Error> = .Failure(Moya.Error.Data(response))
             
             plugin.didReceiveResponse(result, target: GitHub.Zen)
             
-            expect(log).toEventually(contain("Response: Received empty network response for Zen."))
+            expect(log).to( contain("Response: Received empty network response for Zen.") )
         }
     }
 }

@@ -170,30 +170,36 @@ class MoyaProviderSpec: QuickSpec {
             
             it("returns stubbed data for zen request") {
                 var errored = false
-                
                 let target: GitHub = .Zen
-                provider.request(target) { result in
-                    if case .Failure = result {
-                        errored = true
+
+                waitUntil { done in
+                    provider.request(target) { result in
+                        if case .Failure = result {
+                            errored = true
+                        }
+                        done()
                     }
                 }
                 
                 let _ = target.sampleData
-                expect(errored).toEventually(beTruthy())
+                expect(errored) == true
             }
             
             it("returns stubbed data for user profile request") {
                 var errored = false
-                
+
                 let target: GitHub = .UserProfile("ashfurrow")
-                provider.request(target) { result in
-                    if case .Failure = result {
-                        errored = true
+                waitUntil { done in
+                    provider.request(target) { result in
+                        if case .Failure = result {
+                            errored = true
+                        }
+                        done()
                     }
                 }
                 
                 let _ = target.sampleData
-                expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                expect{errored} == true
             }
             
             it("returns stubbed error data when present") {
