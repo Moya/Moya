@@ -2,8 +2,9 @@ import Quick
 import Moya
 import Nimble
 import OHHTTPStubs
+import Alamofire
 
-func beIndenticalToResponse(expectedValue: Response) -> MatcherFunc<Response> {
+func beIndenticalToResponse(expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
             let instance = try actualExpression.evaluate()
@@ -85,6 +86,17 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         token.cancel()
                         
                         expect(receivedError).toEventuallyNot( beNil() )
+                    }
+
+                    it("uses a custom Alamofire.Manager request generation") {
+                        let manager = StubManager()
+                        let provider = MoyaProvider<GitHub>(manager: manager)
+
+                        waitUntil { done in
+                            provider.request(GitHub.Zen) { _ in done() }
+                        }
+
+                        expect(manager.called) == true
                     }
                 }
                 
@@ -194,7 +206,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let target: GitHub = .Zen
                         provider.request(target).subscribeNext { (response) -> Void in
-                            if let response = response as? Response {
+                            if let response = response as? Moya.Response {
                                 message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
@@ -207,7 +219,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let target: GitHub = .UserProfile("ashfurrow")
                         provider.request(target).subscribeNext { (response) -> Void in
-                            if let response = response as? Response {
+                            if let response = response as? Moya.Response {
                                 message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             }
                         }
@@ -246,5 +258,14 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 }
             }
         }
+    }
+}
+
+class StubManager: Manager {
+    var called = false
+
+    override func request(URLRequest: URLRequestConvertible) -> Request {
+        called = true
+        return super.request(URLRequest)
     }
 }
