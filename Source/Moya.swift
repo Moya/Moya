@@ -173,7 +173,9 @@ internal extension MoyaProvider {
             plugins.forEach { $0.didReceiveResponse(result, target: target) }
             completion(result: result)
         }
-        
+
+        alamoRequest.resume()
+
         return CancellableToken(request: alamoRequest)
     }
     
