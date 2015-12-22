@@ -54,7 +54,7 @@ public class MoyaProvider<Target: TargetType> {
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = Manager.sharedInstance,
+        manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
         plugins: [PluginType] = []) {
             
             self.endpointClosure = endpointClosure
@@ -128,6 +128,12 @@ public extension MoyaProvider {
     
     public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
         return closure(endpoint.urlRequest)
+    }
+
+    public final class func DefaultAlamofireManager() -> Manager {
+        let manager = Alamofire.Manager.sharedInstance
+        manager.startRequestsImmediately = false
+        return manager
     }
 }
 
