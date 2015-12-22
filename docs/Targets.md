@@ -92,7 +92,6 @@ for providing offline support for developers. This *should* depend on `self`.
             return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
         }
     }
-}
 ```
 
 After this setup, creating our [Provider](Providers.md) is as easy as the following:
