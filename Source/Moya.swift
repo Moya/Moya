@@ -154,14 +154,14 @@ public extension MoyaProvider {
 internal extension MoyaProvider {
     
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
-        let request = manager.request(request)
+        let alamoRequest = manager.request(request)
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { $0.willSendRequest(request, target: target) }
+        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
         
         // Perform the actual request
-        let alamoRequest = request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+        alamoRequest.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceiveResponse(result, target: target) }
@@ -196,8 +196,8 @@ internal extension MoyaProvider {
     
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
-        let request = manager.request(request)
-        plugins.forEach { $0.willSendRequest(request, target: target) }
+        let alamoRequest = manager.request(request)
+        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
     }
 }
 
