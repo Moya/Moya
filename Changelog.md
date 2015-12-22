@@ -4,6 +4,7 @@
 
 - Updates to RXSwift 2.0.0
 - Moves to use Antitypical/Result
+- Fixes issue that stubbed responses still call the network.
 
 # 5.2.1
      
