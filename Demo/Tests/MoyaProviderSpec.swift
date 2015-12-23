@@ -94,26 +94,6 @@ class MoyaProviderSpec: QuickSpec {
             expect(provider.manager).to(beIdenticalTo(manager))
         }
         
-        it("uses a custom Alamofire.Manager for session challenges") {
-            var called = false
-            let manager = Manager()
-            manager.delegate.sessionDidReceiveChallenge = { (session, challenge) in
-                called = true
-                let disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
-                return (disposition, nil)
-            }
-            let provider = MoyaProvider<GitHub>(manager: manager)
-            let target: GitHub = .Zen
-            waitUntil(timeout: 3) { done in
-                provider.request(target) { _ in
-                    done()
-                }
-                return
-            }
-            
-            expect(called).toEventually(equal(true))
-        }
-        
         it("notifies at the beginning of network requests") {
             var called = false
             let plugin = NetworkActivityPlugin { (change) -> () in
@@ -190,30 +170,36 @@ class MoyaProviderSpec: QuickSpec {
             
             it("returns stubbed data for zen request") {
                 var errored = false
-                
                 let target: GitHub = .Zen
-                provider.request(target) { result in
-                    if case .Failure = result {
-                        errored = true
+
+                waitUntil { done in
+                    provider.request(target) { result in
+                        if case .Failure = result {
+                            errored = true
+                        }
+                        done()
                     }
                 }
                 
                 let _ = target.sampleData
-                expect(errored).toEventually(beTruthy())
+                expect(errored) == true
             }
             
             it("returns stubbed data for user profile request") {
                 var errored = false
-                
+
                 let target: GitHub = .UserProfile("ashfurrow")
-                provider.request(target) { result in
-                    if case .Failure = result {
-                        errored = true
+                waitUntil { done in
+                    provider.request(target) { result in
+                        if case .Failure = result {
+                            errored = true
+                        }
+                        done()
                     }
                 }
                 
                 let _ = target.sampleData
-                expect{errored}.toEventually(beTruthy(), timeout: 1, pollInterval: 0.1)
+                expect(errored) == true
             }
             
             it("returns stubbed error data when present") {
