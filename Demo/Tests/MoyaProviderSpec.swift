@@ -199,7 +199,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 let _ = target.sampleData
-                expect{errored} == true
+                expect(errored) == true
             }
             
             it("returns stubbed error data when present") {

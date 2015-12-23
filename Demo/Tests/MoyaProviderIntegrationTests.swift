@@ -110,7 +110,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider with credential plugin") {
                     it("credential closure returns nil") {
                         var called = false
-                        let plugin = CredentialsPlugin { target -> NSURLCredential? in
+                        let plugin = CredentialsPlugin { _ in
                             called = true
                             return nil
                         }
@@ -128,7 +128,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     it("credential closure returns valid username and password") {
                         var called = false
                         var returnedData: NSData?
-                        let plugin = CredentialsPlugin { target -> NSURLCredential? in
+                        let plugin = CredentialsPlugin { _ in
                             called = true
                             return NSURLCredential(user: "user", password: "passwd", persistence: .None)
                         }
@@ -225,7 +225,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var message: String?
 
                         waitUntil { done in
-                            provider.request(GitHub.Zen).subscribeNext { (response) in
+                            provider.request(GitHub.Zen).subscribeNext { response in
                                 if let response = response as? Moya.Response {
                                     message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                                 }
@@ -242,7 +242,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         waitUntil { done in
                             let target: GitHub = .UserProfile("ashfurrow")
-                            provider.request(target).subscribeNext { (response) in
+                            provider.request(target).subscribeNext { response in
                                 if let response = response as? Moya.Response {
                                     message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                                 }
@@ -266,7 +266,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     var message: String?
 
                     waitUntil { done in
-                        provider.request(.Zen).startWithNext { (response) in
+                        provider.request(.Zen).startWithNext { response in
                             message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             done()
                         }
@@ -280,7 +280,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     waitUntil { done in
                         let target: GitHub = .UserProfile("ashfurrow")
-                        provider.request(target).startWithNext { (response) in
+                        provider.request(target).startWithNext { response in
                             message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                             done()
                         }
