@@ -5,6 +5,7 @@ podfile: Demo/Podfile
 env:
   global:
     - LANG=en_US.UTF-8
+    - COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=true
 
 cache:
   - bundler
