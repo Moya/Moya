@@ -1,4 +1,5 @@
 import Foundation
+import Result
 
 /// A Moya Plugin receives callbacks to perform side effects wherever a request is sent or received.
 ///

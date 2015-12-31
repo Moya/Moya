@@ -1,4 +1,5 @@
 import Foundation
+import Result
 
 /// Logs network activity (outgoing requests and incoming responses).
 public final class NetworkLoggerPlugin: PluginType {

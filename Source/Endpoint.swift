@@ -1,5 +1,4 @@
 import Foundation
-import Alamofire
 
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
