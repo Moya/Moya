@@ -16,7 +16,7 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
     public func request(token: Target) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
-        return create { [weak self] observer in
+        return Observable.create { [weak self] observer in
             let cancellableToken = self?.request(token) { result in
                 switch result {
                 case let .Success(response):

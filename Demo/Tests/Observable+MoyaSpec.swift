@@ -26,7 +26,7 @@ private extension ImageType {
 }
 
 private func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<Response> {
-    return just(Response(statusCode: statusCode, data: data, response: nil))
+    return Observable.just(Response(statusCode: statusCode, data: data, response: nil))
 }
 
 class ObservableMoyaSpec: QuickSpec {
