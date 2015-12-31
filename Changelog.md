@@ -1,5 +1,8 @@
 # Next
 
+- Updates to RXSwift 2.0.0-rc.0
+- Moves to use Antitypical/Result
+
 # 5.2.1
      
 - Update to ReactiveCocoa v4.0.0-RC.1
