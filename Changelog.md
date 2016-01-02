@@ -1,6 +1,6 @@
 # Next
 
-- Updates to RXSwift 2.0.0-rc.0
+- Updates to RXSwift 2.0.0
 - Moves to use Antitypical/Result
 
 # 5.2.1
