@@ -89,8 +89,20 @@ let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubB
 let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediatelyStub)
 ```
 
-Next, there's the `manager` parameter. By default you'll get `Alamofire.Manager.sharedinstance`.
-If you'd like to customize the manager, for example, to add SSL pinning, create one and pass it in,
+Next, there's the `manager` parameter. By default you'll get a custom `Alamofire.Manager` instance with basic configurations.
+```swift
+    public final class func DefaultAlamofireManager() -> Manager {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
+
+        let manager = Alamofire.Manager(configuration: configuration)
+        manager.startRequestsImmediately = false
+        return manager
+    }
+```
+There is only one particular thing: since construct an `Alamofire.Request` in AF will fire the request immediately by default, even when "stubbing" the requests for unit testing. Therefore in Moya, `startRequestsImmediately` is set to `false` by default.
+
+If you'd like to customize your own manager, for example, to add SSL pinning, create one and pass it in,
 all requests will route through the custom configured manager.
 
 ```swift
