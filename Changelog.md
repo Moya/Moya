@@ -1,5 +1,7 @@
 # Next
 
+- **Breaking Change** pass a built-in `DefaultAlamofireManager` as parameter's default value instead of passing the singleton `Alamofire.Manager.sharedinstance` when initialize a `provider`
+
 # 5.3.0
 
 - Updates to RXSwift 2.0.0
