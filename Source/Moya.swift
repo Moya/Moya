@@ -131,7 +131,10 @@ public extension MoyaProvider {
     }
 
     public final class func DefaultAlamofireManager() -> Manager {
-        let manager = Alamofire.Manager.sharedInstance
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
+
+        let manager = Manager(configuration: configuration)
         manager.startRequestsImmediately = false
         return manager
     }
