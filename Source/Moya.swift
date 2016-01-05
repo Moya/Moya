@@ -54,7 +54,7 @@ public class MoyaProvider<Target: TargetType> {
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = Manager.sharedInstance,
+        manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
         plugins: [PluginType] = []) {
             
             self.endpointClosure = endpointClosure
@@ -119,7 +119,7 @@ public class MoyaProvider<Target: TargetType> {
 
 public extension MoyaProvider {
     
-    // These functions are default mappings to endpoings and requests.
+    // These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
     
     public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
@@ -128,6 +128,15 @@ public extension MoyaProvider {
     
     public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
         return closure(endpoint.urlRequest)
+    }
+
+    public final class func DefaultAlamofireManager() -> Manager {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
+
+        let manager = Manager(configuration: configuration)
+        manager.startRequestsImmediately = false
+        return manager
     }
 }
 
@@ -154,20 +163,22 @@ public extension MoyaProvider {
 internal extension MoyaProvider {
     
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
-        let request = manager.request(request)
+        let alamoRequest = manager.request(request)
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { $0.willSendRequest(request, target: target) }
+        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
         
         // Perform the actual request
-        let alamoRequest = request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+        alamoRequest.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceiveResponse(result, target: target) }
             completion(result: result)
         }
-        
+
+        alamoRequest.resume()
+
         return CancellableToken(request: alamoRequest)
     }
     
@@ -196,8 +207,8 @@ internal extension MoyaProvider {
     
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
-        let request = manager.request(request)
-        plugins.forEach { $0.willSendRequest(request, target: target) }
+        let alamoRequest = manager.request(request)
+        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
     }
 }
 

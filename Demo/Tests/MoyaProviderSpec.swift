@@ -55,10 +55,11 @@ class MoyaProviderSpec: QuickSpec {
             
         }
         
-        it("uses the Alamofire.Manager.sharedInstance by default") {
-            expect(provider.manager).to(beIdenticalTo(Alamofire.Manager.sharedInstance))
+        it("uses a custom manager by default, startRequestsImmediately should be false") {
+            expect(provider.manager).toNot(beNil())
+            expect(provider.manager.startRequestsImmediately) == false
         }
-        
+
         it("credential closure returns nil") {
             var called = false
             let plugin = CredentialsPlugin { (target) -> NSURLCredential? in
