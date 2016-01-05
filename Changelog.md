@@ -1,5 +1,7 @@
 # Next
 
+# 6.0.0
+
 - **Breaking Change** pass a built-in `DefaultAlamofireManager` as parameter's default value instead of passing the singleton `Alamofire.Manager.sharedinstance` when initialize a `provider`
 - Fixes issue that stubbed responses still call the network.
 
