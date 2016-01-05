@@ -1,12 +1,12 @@
 # Next
 
 - **Breaking Change** pass a built-in `DefaultAlamofireManager` as parameter's default value instead of passing the singleton `Alamofire.Manager.sharedinstance` when initialize a `provider`
+- Fixes issue that stubbed responses still call the network.
 
 # 5.3.0
 
 - Updates to RXSwift 2.0.0
 - Moves to use Antitypical/Result
-- Fixes issue that stubbed responses still call the network.
 
 # 5.2.1
      
