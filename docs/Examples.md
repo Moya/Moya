@@ -24,7 +24,7 @@ private extension String {
 }
 
 extension GitHub: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com") }
+    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
     var path: String {
         switch self {
         case .Zen:
