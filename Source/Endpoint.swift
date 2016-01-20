@@ -12,7 +12,7 @@ public enum EndpointSampleResponse {
 
 
 /// Class for reifying a target of the Target enum unto a concrete Endpoint.
-public class Endpoint<Target> {
+public class Endpoint {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     public let URL: String
@@ -39,7 +39,7 @@ public class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added parameters.
-    public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<Target> {
+    public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint {
         var newParameters = self.parameters ?? [String: AnyObject]()
         for (key, value) in parameters {
             newParameters[key] = value
@@ -49,7 +49,7 @@ public class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
-    public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<Target> {
+    public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint {
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
         for (key, value) in httpHeaderFields {
             newHTTPHeaderFields[key] = value
@@ -59,7 +59,7 @@ public class Endpoint<Target> {
     }
     
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
-    public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
+    public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint {
         
         return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
     }
@@ -77,7 +77,7 @@ extension Endpoint {
 }
 
 /// Required for making Endpoint conform to Equatable.
-public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+public func ==(lhs: Endpoint, rhs: Endpoint) -> Bool {
     return lhs.urlRequest.isEqual(rhs.urlRequest)
 }
 

@@ -37,12 +37,12 @@ public protocol Cancellable {
 
 // These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
 
-public func DefaultEndpointMapping<Target: TargetType>(target: Target) -> Endpoint<Target> {
+public func DefaultEndpointMapping<Target: TargetType>(target: Target) -> Endpoint {
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
     return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 
-public func DefaultRequestMapping<Target: TargetType>(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
+public func DefaultRequestMapping(endpoint: Endpoint, closure: NSURLRequest -> Void) {
     return closure(endpoint.urlRequest)
 }
 

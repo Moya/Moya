@@ -4,10 +4,10 @@ import Foundation
 public class MoyaProvider<Target: TargetType> {
 
     /// Closure that defines the endpoints for the provider.
-    public typealias EndpointClosure = Target -> Endpoint<Target>
+    public typealias EndpointClosure = Target -> Endpoint
 
     /// Closure that resolves an Endpoint into an NSURLRequest.
-    public typealias RequestClosure = (Endpoint<Target>, NSURLRequest -> Void) -> Void
+    public typealias RequestClosure = (Endpoint, NSURLRequest -> Void) -> Void
 
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = Target -> Moya.StubBehavior
@@ -36,7 +36,7 @@ public class MoyaProvider<Target: TargetType> {
     }
 
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
-    public func endpoint(token: Target) -> Endpoint<Target> {
+    public func endpoint(token: Target) -> Endpoint {
         return endpointClosure(token)
     }
 
@@ -64,7 +64,7 @@ public class MoyaProvider<Target: TargetType> {
 
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
-    internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(request, target: target)
         let plugins = self.plugins
@@ -109,7 +109,7 @@ internal extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
+    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint, plugins: [PluginType]) -> (() -> ()) {
         return {
             if (token.canceled) {
                 let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
