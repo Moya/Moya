@@ -24,6 +24,10 @@ public protocol TargetType {
     var sampleData: NSData { get }
 }
 
+public extension TargetType {
+    var sampleData: NSData { return "".dataUsingEncoding(NSUTF8StringEncoding)! }
+}
+
 /// Protocol to define the opaque type returned from a request
 public protocol Cancellable {
     func cancel()
