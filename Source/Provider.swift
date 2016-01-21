@@ -50,14 +50,9 @@ public class MoyaProvider<Target: TargetType> {
         self.plugins = plugins
     }
 
-    /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
-    public func endpoint(token: Target) -> Endpoint {
-        return endpointClosure(token)
-    }
-
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(target: Target, completion: Moya.Completion) -> Cancellable {
-        let endpoint = self.endpoint(target)
+        let endpoint = self.endpointClosure(target)
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in
@@ -102,14 +97,9 @@ public class MoyaCommonProvider {
         self.plugins = plugins
     }
 
-    /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
-    public func endpoint(token: TargetType) -> Endpoint {
-        return endpointClosure(token)
-    }
-
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(target: TargetType, completion: Moya.Completion) -> Cancellable {
-        let endpoint = self.endpoint(target)
+        let endpoint = self.endpointClosure(target)
         var cancellableToken = CancellableWrapper()
 
         let performNetworking = { (request: NSURLRequest) in

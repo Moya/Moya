@@ -38,14 +38,6 @@ class MoyaProviderSpec: QuickSpec {
             expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
         }
         
-        it("returns equivalent Endpoint instances for the same target") {
-            let target: GitHub = .Zen
-            
-            let endpoint1 = provider.endpoint(target)
-            let endpoint2 = provider.endpoint(target)
-            expect(endpoint1.urlRequest).to(equal(endpoint2.urlRequest))
-        }
-        
         it("returns a cancellable object when a request is made") {
             let target: GitHub = .UserProfile("ashfurrow")
             
