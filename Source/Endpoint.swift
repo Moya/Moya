@@ -57,17 +57,27 @@ public class Endpoint {
 
         return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
-    
+
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
     public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint {
-        
+
         return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
     }
 }
 
 /// Extension for converting an Endpoint into an NSURLRequest.
 extension Endpoint {
+    // TODO: Compatibility, this should better be a method, not a property
     public var urlRequest: NSURLRequest {
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
+        request.HTTPMethod = method.rawValue
+        request.allHTTPHeaderFields = httpHeaderFields
+
+        return parameterEncoding.toAlamofire.encode(request, parameters: parameters).0
+    }
+
+    // let's return a mutable request, that could be modify before it's be performed
+    func toNSMutableURLRequest() -> NSMutableURLRequest {
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
         request.HTTPMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
@@ -84,6 +94,6 @@ public func ==(lhs: Endpoint, rhs: Endpoint) -> Bool {
 /// Required for using Endpoint as a key type in a Dictionary.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
-        return urlRequest.hash
+        return self.toNSMutableURLRequest().hash
     }
 }
