@@ -21,6 +21,7 @@ public protocol TargetType {
     var path: String { get }
     var method: Moya.Method { get }
     var parameters: [String: AnyObject]? { get }
+    var parameterEncoding: ParameterEncoding { get }
     var sampleData: NSData { get }
 
     func toEndpoint() -> Endpoint
@@ -29,11 +30,12 @@ public protocol TargetType {
 public extension TargetType {
     func toEndpoint() -> Endpoint {
         let url = self.baseURL.URLByAppendingPathComponent(self.path).absoluteString
-        return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, self.sampleData)}, method: self.method, parameters: self.parameters)
+        return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, self.sampleData)}, method: self.method, parameters: self.parameters, parameterEncoding: parameterEncoding)
     }
 }
 
 public extension TargetType {
+    var parameterEncoding: ParameterEncoding { return .URL }
     var sampleData: NSData { return "".dataUsingEncoding(NSUTF8StringEncoding)! }
 }
 
