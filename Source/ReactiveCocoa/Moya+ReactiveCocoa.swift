@@ -5,9 +5,9 @@ import ReactiveCocoa
 public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
     private let stubScheduler: DateSchedulerType?
     /// Initializes a reactive provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
+    public init(endpointClosure: EndpointClosure = DefaultEndpointMapping,
+        requestClosure: RequestClosure = DefaultRequestMapping,
+        stubClosure: StubClosure = NeverStub,
         manager: Manager = Manager.sharedInstance,
         plugins: [PluginType] = [], stubScheduler: DateSchedulerType? = nil) {
             self.stubScheduler = stubScheduler

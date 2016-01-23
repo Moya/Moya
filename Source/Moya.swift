@@ -55,10 +55,10 @@ public class MoyaProvider<Target: TargetType> {
     public let plugins: [PluginType]
     
     /// Initializes a provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
+    public init(endpointClosure: EndpointClosure = DefaultEndpointMapping,
+        requestClosure: RequestClosure = DefaultRequestMapping,
+        stubClosure: StubClosure = NeverStub,
+        manager: Manager = DefaultAlamofireManager(),
         plugins: [PluginType] = []) {
             
             self.endpointClosure = endpointClosure
@@ -121,47 +121,41 @@ public class MoyaProvider<Target: TargetType> {
 
 /// Mark: Defaults
 
-public extension MoyaProvider {
-    
-    // These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
-    
-    public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
-        let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-        return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
-    }
-    
-    public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
-        return closure(endpoint.urlRequest)
-    }
+// These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
 
-    public final class func DefaultAlamofireManager() -> Manager {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
+public func DefaultEndpointMapping<Target: TargetType>(target: Target) -> Endpoint<Target> {
+    let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+    return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+}
 
-        let manager = Manager(configuration: configuration)
-        manager.startRequestsImmediately = false
-        return manager
-    }
+public func DefaultRequestMapping<Target: TargetType>(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
+    return closure(endpoint.urlRequest)
+}
+
+public func DefaultAlamofireManager() -> Manager {
+    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
+
+    let manager = Manager(configuration: configuration)
+    manager.startRequestsImmediately = false
+    return manager
 }
 
 /// Mark: Stubbing
 
-public extension MoyaProvider {
-    
-    // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
-    // at least add some class functions to allow easy access to common stubbing closures.
-    
-    public final class func NeverStub(_: Target) -> Moya.StubBehavior {
-        return .Never
-    }
-    
-    public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
-        return .Immediate
-    }
-    
-    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
-        return .Delayed(seconds: seconds)
-    }
+// Swift won't let us put the StubBehavior enum inside the provider class, so we'll
+// at least add some class functions to allow easy access to common stubbing closures.
+
+public func NeverStub<Target: TargetType>(_: Target) -> Moya.StubBehavior {
+    return .Never
+}
+
+public func ImmediatelyStub<Target: TargetType>(_: Target) -> Moya.StubBehavior {
+    return .Immediate
+}
+
+public func DelayedStub<Target: TargetType>(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
+    return .Delayed(seconds: seconds)
 }
 
 internal extension MoyaProvider {
