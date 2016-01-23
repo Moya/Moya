@@ -12,7 +12,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             var provider: RxMoyaProvider<GitHub>!
             
             beforeEach {
-                provider = RxMoyaProvider(stubClosure: Moya.ImmediatelyStub)
+                provider = RxMoyaProvider(stubBehavior: .Immediate)
             }
             
             it("returns a Response object") {
@@ -52,7 +52,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         describe("failing") {
             var provider: RxMoyaProvider<GitHub>!
             beforeEach {
-                provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: Moya.ImmediatelyStub)
+                provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubBehavior: .Immediate)
             }
             
             it("returns the correct error message") {
