@@ -23,15 +23,6 @@ public protocol TargetType {
     var parameters: [String: AnyObject]? { get }
     var parameterEncoding: ParameterEncoding { get }
     var sampleData: NSData { get }
-
-    func toEndpoint() -> Endpoint
-}
-
-public extension TargetType {
-    func toEndpoint() -> Endpoint {
-        let url = self.baseURL.URLByAppendingPathComponent(self.path).absoluteString
-        return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, self.sampleData)}, method: self.method, parameters: self.parameters, parameterEncoding: parameterEncoding)
-    }
 }
 
 public extension TargetType {
@@ -60,11 +51,11 @@ public protocol Cancellable {
 // These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
 
 public func DefaultCommonEndpointMapping(target: TargetType) -> Endpoint {
-    return target.toEndpoint()
+    return ConvertToEndpoint(target)
 }
 
 public func DefaultEndpointMapping<Target: TargetType>(target: Target) -> Endpoint {
-    return target.toEndpoint()
+    return ConvertToEndpoint(target)
 }
 
 public func DefaultRequestMapping(endpoint: Endpoint, closure: NSURLRequest -> Void) {
@@ -93,4 +84,9 @@ internal func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData
         let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
         return .Failure(error)
     }
+}
+
+public func ConvertToEndpoint(target: TargetType) -> Endpoint {
+    let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+    return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters, parameterEncoding: target.parameterEncoding)
 }

@@ -35,8 +35,8 @@ class EndpointSpec: QuickSpec {
             it("Equivalent Endpoint instances for the same target") {
                 let target: GitHub = .Zen
 
-                let endpoint1 = target.toEndpoint()
-                let endpoint2 = target.toEndpoint()
+                let endpoint1 = Moya.ConvertToEndpoint(target)
+                let endpoint2 = Moya.ConvertToEndpoint(target)
                 expect(endpoint1.urlRequest).to(equal(endpoint2.urlRequest))
             }
 
