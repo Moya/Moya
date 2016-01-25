@@ -1,5 +1,7 @@
 # Next
 
+# 6.0.1
+
 - Updates to ReactiveCocoa 4 RC 2.
 
 # 6.0.0
