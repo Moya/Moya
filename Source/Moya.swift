@@ -25,9 +25,9 @@ public protocol TargetType {
     var sampleData: NSData { get }
 }
 
+/// TODO: Compatibility for existing test cases
 public extension TargetType {
     var parameterEncoding: ParameterEncoding { return .URL }
-    var sampleData: NSData { return "".dataUsingEncoding(NSUTF8StringEncoding)! }
 }
 
 public protocol MoyaProviderBackendType {
