@@ -1,5 +1,7 @@
 # Next
 
+- The built-in `DefaultAlamofireManager` as parameter's default value instead of the singleton `Alamofire.Manager.sharedinstance` is now used when instantiating `ReactiveCocoaMoyaProvider` and `RxMoyaProvider` as well.
+
 # 6.0.1
 
 - Updates to ReactiveCocoa 4 RC 2.
