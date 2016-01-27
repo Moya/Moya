@@ -1,5 +1,7 @@
 # Next
 
+- Compatibility with RxSwift 2.1.x.
+
 # 6.1.0
 
 - The built-in `DefaultAlamofireManager` as parameter's default value instead of the singleton `Alamofire.Manager.sharedinstance` is now used when instantiating `ReactiveCocoaMoyaProvider` and `RxMoyaProvider` as well.
