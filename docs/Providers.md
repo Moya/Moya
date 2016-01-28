@@ -13,16 +13,15 @@ let GitHubProvider = MoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.Zen) { (data, statusCode, response, error) in
-    if let data = data {
-        // do something with the data
-    }
+provider.request(.Zen) { result in
+    // `result` is either .Success(response) or .Failure(error)
 }
 ```
 
 That's it! The `request()` method returns a `Cancellable`, which has
 only one public function, `cancel()`, which you can use to cancel the
-request. 
+request.  See [Examples](Examples.md) for more information about the `Result`
+type.
 
 Remember, *where* you put your target and the provider, are completely up 
 to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
