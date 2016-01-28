@@ -205,4 +205,13 @@ struct Network {
         }
     }
 }
+
+// usage:
+Network.request(.Zen, success: { zen in
+    showMessage(zen)
+}, error: { err in
+    showError(err)
+}, failure: { _ in
+    // oh well, no network apparently
+})
 ```
