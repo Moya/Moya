@@ -1,5 +1,7 @@
 # Next
 
+# 6.1.2
+
 - Compatibility with RxSwift 2.x.
 
 # 6.1.1
