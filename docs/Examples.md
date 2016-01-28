@@ -34,6 +34,8 @@ extension GitHub: TargetType {
         }
     }
     var method: Moya.Method {
+        // all requests in this example will use GET.  Usually you would switch
+        // on the enum, like we did in `var path: String`
         return .GET
     }
     var parameters: [String: AnyObject]? {
@@ -73,11 +75,11 @@ let endpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 
 The block you provide will be invoked every time an API call is to be made. Its
 responsibility is to return an `Endpoint` instance configured for use by Moya.
-The `parameters` parameter is passed into this block to allow you to configure
-the `Endpoint` instance – these parameters are *not* automatically passed onto
-the network request, so add them to the `Endpoint` if they should be. They could
-be some data internal to the app that help configure the `Endpoint`. In this
-example, though, they're just passed right through.
+`parameters` is passed into this block to allow you to configure the `Endpoint`
+instance – these parameters are *not* automatically passed onto the network
+request, so add them to the `Endpoint` if they should be. They could be some
+data internal to the app that help configure the `Endpoint`. In this example,
+though, they're just passed right through.
 
 Most of the time, this closure is just a straight translation from target,
 method, and parameters, into an `Endpoint` instance. However, since it's a
@@ -114,12 +116,93 @@ let provider = MoyaProvider(endpointClosure: endpointClosure)
 Neato. Now how do we make a request?
 
 ```swift
-provider.request(.Zen, completion: { (data, statusCode, response, error) in
-    if let data = data {
-        // do something with the data
-    }
+provider.request(.Zen, completion: { result in
+    // do something with `result`
 })
 ```
 
-The `request` method is given a `GitHub` value and, optionally, an HTTP method
-and parameters for the endpoint closure.
+The `request` method is given a `GitHub` value (`.Zen`), which contains *all the
+information necessary* to create the `Endpoint` – or to return a stubbed
+response during testing.
+
+The `Endpoint` instance is used to create a `NSURLRequest` (the heavy lifting is
+done via Alamofire), and the request is sent (again - Alamofire).  Once
+Alamofire gets a response (or fails to get a response), Moya will wrap the
+success or failure in a `Result` enum.  `result` is either
+`.Success(Moya.Response)` or `.Failure(Moya.Error)`.
+
+You will need to unpack the data and status code from `Moya.Response`.
+
+```swift
+provider.request(.Zen) { result in
+    switch result {
+    case let .Success(moyaResponse):
+        let data = moyaResponse.data // NSData, your JSON response is probably in here!
+        let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
+
+        // do something in your app
+    case let .Failure(error):
+        // TODO: handle the error ==  best. comment. ever.
+    }
+}
+```
+
+Take special note: a `.Failure` means that the server either didn't *receive the
+request* (e.g. reachability/connectivity error) or it didn't send a response
+(e.g. the request timed out).  If you get a `.Failure`, you probably want to
+re-send the request after a time delay or when an internet connection is
+established.
+
+Once you have a `.Success(response)` you might want to filter on status codes or
+convert the response data to JSON. `Moya.Response` can help!
+
+###### see more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
+
+```swift
+do {
+    try moyaResponse.filterSuccessfulStatusCodes()
+    let data = try moyaResponse.mapJSON()
+}
+catch {
+    // show an error to your user
+}
+```
+
+Moving towards a real-world example, you might want to wrap the **request ->
+result** cycle in your own network adapter, to make it a little easier to
+convert successful responses, show error messages and re-attempt after network
+failures.
+
+```swift
+struct Network {
+    static let provider = MoyaProvider(endpointClosure: endpointClosure)
+
+    static func request(
+        target: Github,
+        success successCallback: (JSON) -> Void,
+        error errorCallback: (statusCode: Int) -> Void,
+        failure failureCallback: (Moya.Error) -> Void
+    ) {
+        provider.request(target) { result in
+            switch result {
+            case let .Success(response):
+                do {
+                    try response.filterSuccessfulStatusCodes()
+                    let json = try JSON(response.mapJSON())
+                    successCallback(json)
+                }
+                catch error {
+                    errorCallback(error)
+                }
+            case let .Failure(error):
+                if target.shouldRetry {
+                    retryWhenReachable(target, successCallback, errorCallback, failureCallback)
+                }
+                else {
+                    failureCallback(error)
+                }
+            }
+        }
+    }
+}
+```
