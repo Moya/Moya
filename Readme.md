@@ -82,9 +82,9 @@ After [some setup](docs/Examples.md), using Moya is really simple. You can acces
 ```swift
 provider.request(.Zen) { result in
     switch result {
-    case let .Success(moyaResult):
-        let data = moyaResult.data
-        let statusCode = moyaResult.statusCode
+    case let .Success(moyaResponse):
+        let data = moyaResponse.data
+        let statusCode = moyaResponse.statusCode
         // do something with the response data or statusCode
     case .Failure(error):
         // this means there was a network failure - either the request
