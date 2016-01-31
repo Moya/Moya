@@ -9,12 +9,12 @@ public final class NetworkLoggerPlugin: PluginType {
     private let separator = ", "
     private let terminator = "\n"
     private let output: (items: Any..., separator: String, terminator: String) -> Void
-    private let responseDataFormatter: (NSData) -> (NSData)
+    private let responseDataFormatter: ((NSData) -> (NSData))?
     
     /// If true, also logs response body data.
     public let verbose: Bool
 
-    public init(verbose: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print, responseDataFormatter: (NSData) -> (NSData) = { $0 }) {
+    public init(verbose: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print, responseDataFormatter: ((NSData) -> (NSData))? = nil) {
         self.verbose = verbose
         self.output = output
         self.responseDataFormatter = responseDataFormatter
@@ -90,7 +90,7 @@ private extension NetworkLoggerPlugin {
         output += [format(loggerId, date: date, identifier: "Response", message: response.description)]
 
         if let data = data where verbose == true {
-            if let stringData = String(data: responseDataFormatter(data), encoding: NSUTF8StringEncoding) {
+            if let stringData = String(data: responseDataFormatter?(data) ?? data , encoding: NSUTF8StringEncoding) {
                 output += [stringData]
             }
         }
