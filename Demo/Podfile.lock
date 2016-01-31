@@ -11,7 +11,7 @@ PODS:
   - Moya/RxSwift (6.1.2):
     - Moya/Core
     - RxSwift (~> 2.0)
-  - Nimble (3.0.0)
+  - Nimble (3.1.0)
   - OHHTTPStubs (4.7.0):
     - OHHTTPStubs/Default (= 4.7.0)
   - OHHTTPStubs/Core (4.7.0)
@@ -25,7 +25,7 @@ PODS:
   - OHHTTPStubs/NSURLSession (4.7.0):
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.7.0)
-  - Quick (0.8.0)
+  - Quick (0.9.0)
   - ReactiveCocoa (4.0.0-RC.2):
     - ReactiveCocoa/UI (= 4.0.0-RC.2)
     - Result (~> 1.0)
@@ -50,14 +50,14 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
   Moya: 7f99c85a1bc968eb38b67880c9527fe3e04aa49c
-  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
+  Nimble: 79d40f4d69d47314229bbabacaa02b8838c779b9
   OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
-  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
+  Quick: 332eb1da73125a2106dd637424c803f2ae97e4a9
   ReactiveCocoa: 0d875167414bfe743bc5bf544ae5b05fddaf757d
   Result: caef80340451e1f07492fa1e89117f83613bce24
   RxSwift: 110fb07f81c17c2c3b3254d168363057b1880d18

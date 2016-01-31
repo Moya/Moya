@@ -9,9 +9,18 @@ final class NetworkLogginPluginSpec: QuickSpec {
         var log = ""
         let plugin = NetworkLoggerPlugin(verbose: true, output: { printing in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.items.reduce([String]()) { $0 + ($1 as! [String]) }
+            let stringArray: [String] = printing.items.map { $0 as? String }.flatMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
+        })
+        
+        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { printing in
+            //mapping the Any... from items to a string that can be compared
+            let stringArray: [String] = printing.items.map { $0 as? String }.flatMap { $0 }
+            let string: String = stringArray.reduce("") { $0 + $1 + " " }
+            log += string
+            }, responseDataFormatter: { _ in
+                return "formatted body".dataUsingEncoding(NSUTF8StringEncoding)!
         })
         
         beforeEach {
@@ -47,7 +56,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
             expect(log).to( contain("Request: (invalid request)") )
         }
         
-        it("outputs the reponse data") {
+        it("outputs the response data") {
             let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: NSURLResponse(URL: NSURL(string: url(GitHub.Zen))!, MIMEType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, Moya.Error> = .Success(response)
             
@@ -56,6 +65,17 @@ final class NetworkLogginPluginSpec: QuickSpec {
             expect(log).to( contain("Response:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
             expect(log).to( contain("cool body") )
+        }
+        
+        it("outputs the formatted response data") {
+            let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: NSURLResponse(URL: NSURL(string: url(GitHub.Zen))!, MIMEType: nil, expectedContentLength: 0, textEncodingName: nil))
+            let result: Result<Moya.Response, Moya.Error> = .Success(response)
+            
+            pluginWithResponseDataFormatter.didReceiveResponse(result, target: GitHub.Zen)
+            
+            expect(log).to( contain("Response:") )
+            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("formatted body") )
         }
         
         it("outputs an empty reponse message") {
