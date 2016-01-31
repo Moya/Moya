@@ -1,5 +1,7 @@
 # Next
 
+- Added formatter parameter to plugin for pretty-printing response data. See #392.
+
 # 6.1.2
 
 - Compatibility with RxSwift 2.x.
