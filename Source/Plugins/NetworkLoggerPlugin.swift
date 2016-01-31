@@ -9,13 +9,15 @@ public final class NetworkLoggerPlugin: PluginType {
     private let separator = ", "
     private let terminator = "\n"
     private let output: (items: Any..., separator: String, terminator: String) -> Void
+    private let responseDataFormatter: (NSData) -> (NSData)
     
     /// If true, also logs response body data.
     public let verbose: Bool
 
-    public init(verbose: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print) {
+    public init(verbose: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print, responseDataFormatter: (NSData) -> (NSData) = { $0 }) {
         self.verbose = verbose
         self.output = output
+        self.responseDataFormatter = responseDataFormatter
     }
 
     public func willSendRequest(request: RequestType, target: TargetType) {
