@@ -1,5 +1,7 @@
 # Next
 
+# 6.1.3
+
 - Updated to ReactiveCocoa 4.0 final.
 - Added formatter parameter to plugin for pretty-printing response data. See #392.
 
