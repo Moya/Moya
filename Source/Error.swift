@@ -9,6 +9,20 @@ public enum Error: ErrorType {
     case Underlying(ErrorType)
 }
 
+public extension Moya.Error {
+    /// Depending on error type, returns a Response object.
+    var response: Moya.Response? {
+        switch self {
+        case .ImageMapping(let response): return response
+        case .JSONMapping(let response): return response
+        case .StringMapping(let response): return response
+        case .StatusCode(let response): return response
+        case .Data(let response): return response
+        case .Underlying: return nil
+        }
+    }
+}
+
 @available(*, deprecated, message="This will be removed when ReactiveCocoa 4 becomes final. Please visit https://github.com/Moya/Moya/issues/298 for more information.")
 public let MoyaErrorDomain = "Moya"
 
