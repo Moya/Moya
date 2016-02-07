@@ -12,7 +12,7 @@ cache:
   - cocoapods
 
 script:
-  - rake test
+  - fastlane ci
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

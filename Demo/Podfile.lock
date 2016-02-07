@@ -37,7 +37,7 @@ PODS:
   - ReactiveCocoa/UI (4.0.0):
     - ReactiveCocoa/Core
     - Result (~> 1.0.1)
-  - Result (1.0.1)
+  - Result (1.0.2)
   - RxSwift (2.1.0)
 
 DEPENDENCIES:
@@ -50,7 +50,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
   Quick: 332eb1da73125a2106dd637424c803f2ae97e4a9
   ReactiveCocoa: 69be555be30674b07a86b60a91b855063841acc0
-  Result: caef80340451e1f07492fa1e89117f83613bce24
+  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
   RxSwift: 110fb07f81c17c2c3b3254d168363057b1880d18
 
 COCOAPODS: 0.39.0

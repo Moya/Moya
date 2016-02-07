@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites tests='115' failures='0'>
+  <testsuite name='MoyaTests_tvOS.AlamofireMoyaMappingSpec' tests='4' failures='0'>
+    <testcase classname='MoyaTests_tvOS.AlamofireMoyaMappingSpec' name='translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_URL_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_11' time='0.112'/>
+    <testcase classname='MoyaTests_tvOS.AlamofireMoyaMappingSpec' name='translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_JSON_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_21' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.AlamofireMoyaMappingSpec' name='translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_PropertyList_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_31' time='0.038'/>
+    <testcase classname='MoyaTests_tvOS.AlamofireMoyaMappingSpec' name='translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_Custom_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_42' time='0.002'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.EndpointSpec' tests='4' failures='0'>
+    <testcase classname='MoyaTests_tvOS.EndpointSpec' name='an_endpoint__returns_a_new_endpoint_for_endpointByAddingParameters_UsersashbinMoyaDemoTestsEndpointSpecswift_35' time='0.017'/>
+    <testcase classname='MoyaTests_tvOS.EndpointSpec' name='an_endpoint__returns_a_new_endpoint_for_endpointByAddingHTTPHeaderFields_UsersashbinMoyaDemoTestsEndpointSpecswift_51' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.EndpointSpec' name='an_endpoint__returns_a_new_endpoint_for_endpointByAddingParameterEncoding_UsersashbinMoyaDemoTestsEndpointSpecswift_67' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.EndpointSpec' name='an_endpoint__returns_a_correct_URL_request_UsersashbinMoyaDemoTestsEndpointSpecswift_81' time='0.049'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.ErrorTests' tests='13' failures='0'>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='should_convert_to_NSError__should_convert_ImageMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_17' time='0.004'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='should_convert_to_NSError__should_convert_JSONMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_26' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='should_convert_to_NSError__should_convert_StringMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_35' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='should_convert_to_NSError__should_convert_StatusCode_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_44' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='should_convert_to_NSError__should_convert_Data_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_53' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='should_convert_to_NSError__should_convert_Underlying_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_62' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='response_computed_variable__should_handle_ImageMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_75' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='response_computed_variable__should_handle_JSONMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_81' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='response_computed_variable__should_handle_StringMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_87' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='response_computed_variable__should_handle_StatusCode_error_UsersashbinMoyaDemoTestsErrorTestsswift_93' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='response_computed_variable__should_handle_Data_error_UsersashbinMoyaDemoTestsErrorTestsswift_99' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='response_computed_variable__should_not_handle_Underlying_error__UsersashbinMoyaDemoTestsErrorTestsswift_105' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ErrorTests' name='Alamofire_responses_should_return_the_errors_where_appropriate__should_return_the_underlying_error_in_spite_of_having_a_response_and_data_UsersashbinMoyaDemoTestsErrorTestsswift_114' time='0.001'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.MoyaProviderIntegrationTests' tests='13' failures='0'>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider__returns_real_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_50' time='0.814'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider__returns_real_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_65' time='0.547'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider__returns_an_error_when_cancelled_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_81' time='0.004'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider__uses_a_custom_Alamofire_Manager_request_generation_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_98' time='0.540'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider_with_credential_plugin__credential_closure_returns_nil_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_111' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider_with_credential_plugin__credential_closure_returns_valid_username_and_password_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_128' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider_with_network_activity_plugin__notifies_at_the_beginning_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_154' time='0.545'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider_with_network_activity_plugin__notifies_at_the_end_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_170' time='0.538'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_provider_with_network_logger_plugin__logs_the_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_201' time='0.551'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_reactive_provider_with_RACSignal__returns_some_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_224' time='0.561'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__with_live_data__a_reactive_provider_with_RACSignal__returns_some_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_240' time='0.539'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__a_reactive_provider_with_SignalProducer__returns_some_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_265' time='0.550'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderIntegrationTests' name='valid_endpoints__a_reactive_provider_with_SignalProducer__returns_some_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_278' time='0.542'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.MoyaProviderSpec' tests='15' failures='0'>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_13' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='returns_stubbed_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_27' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='returns_equivalent_Endpoint_instances_for_the_same_target_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_41' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='returns_a_cancellable_object_when_a_request_is_made_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_49' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='uses_a_custom_manager_by_default__startRequestsImmediately_should_be_false_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_58' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='credential_closure_returns_nil_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_63' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='credential_closure_returns_valid_username_and_password_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_77' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='accepts_a_custom_Alamofire_Manager_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_91' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='notifies_at_the_beginning_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_98' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='notifies_at_the_end_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_113' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='delays_execution_when_appropriate_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_128' time='2.004'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='a_provider_with_a_custom_endpoint_resolver__executes_the_endpoint_resolver_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_158' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='with_stubbed_errors__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_172' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='with_stubbed_errors__returns_stubbed_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_189' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.MoyaProviderSpec' name='with_stubbed_errors__returns_stubbed_error_data_when_present_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_206' time='0.002'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.NetworkLogginPluginSpec' tests='6' failures='0'>
+    <testcase classname='MoyaTests_tvOS.NetworkLogginPluginSpec' name='outputs_all_request_fields_with_body_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_30' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.NetworkLogginPluginSpec' name='outputs_all_request_fields_with_stream_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_41' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.NetworkLogginPluginSpec' name='will_output_invalid_request_when_reguest_is_nil_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_52' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.NetworkLogginPluginSpec' name='outputs_the_response_data_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_59' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.NetworkLogginPluginSpec' name='outputs_the_formatted_response_data_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_70' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.NetworkLogginPluginSpec' name='outputs_an_empty_reponse_message_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_81' time='0.002'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.ObservableMoyaSpec' tests='14' failures='0'>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_35' time='0.009'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_54' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_73' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_85' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_104' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_116' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__knows_how_to_filter_individual_status_code_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_129' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_141' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_162' time='0.028'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_175' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_198' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_214' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_242' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ObservableMoyaSpec' name='string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_255' time='0.001'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.RACSignalMoyaSpec' tests='15' failures='0'>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_40' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_54' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_68' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_80' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_94' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_106' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_118' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__knows_how_to_filter_individual_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_130' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_142' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_158' time='0.014'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_171' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_189' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_205' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_223' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RACSignalMoyaSpec' name='string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_237' time='0.002'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' tests='12' failures='0'>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_RACSignal__returns_a_Response_object_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_16' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_RACSignal__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_28' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_RACSignal__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_42' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='failing__returns_the_correct_error_message_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_65' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='failing__returns_an_error_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_83' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='a_subsclassed_reactive_provider_that_tracks_cancellation_with_delayed_stubs__cancels_network_request_when_subscription_is_cancelled_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_126' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_SignalProducer__returns_a_Response_object_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_141' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_SignalProducer__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_151' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_SignalProducer__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_163' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_SignalProducer__a_subsclassed_reactive_provider_that_tracks_cancellation_with_delayed_stubs__cancels_network_request_when_subscription_is_cancelled_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_208' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_a_TestScheduler__sends_the_stub_when_the_test_scheduler_is_advanced_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_235' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec' name='provider_with_a_TestScheduler__does_not_send_the_stub_when_the_test_scheduler_is_not_advanced_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_239' time='0.002'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.RxSwiftMoyaProviderSpec' tests='5' failures='0'>
+    <testcase classname='MoyaTests_tvOS.RxSwiftMoyaProviderSpec' name='provider_with_Observable__returns_a_Response_object_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_18' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.RxSwiftMoyaProviderSpec' name='provider_with_Observable__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_28' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.RxSwiftMoyaProviderSpec' name='provider_with_Observable__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_40' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.RxSwiftMoyaProviderSpec' name='failing__returns_the_correct_error_message_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_58' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.RxSwiftMoyaProviderSpec' name='failing__returns_an_error_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_76' time='0.001'/>
+  </testsuite>
+  <testsuite name='MoyaTests_tvOS.SignalProducerMoyaSpec' tests='14' failures='0'>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_35' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_54' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_73' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_85' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_104' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_116' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__knows_how_to_filter_individual_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_128' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_140' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_161' time='0.013'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_174' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_197' time='0.002'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_213' time='0.001'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_241' time='0.003'/>
+    <testcase classname='MoyaTests_tvOS.SignalProducerMoyaSpec' name='string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_254' time='0.001'/>
+  </testsuite>
+</testsuites>

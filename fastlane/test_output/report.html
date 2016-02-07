@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test Results | xcpretty</title>
+    <style type="text/css">
+      body { font-family:Avenir Next, Helvetica Neue, sans-serif; color: #4A4A4A; background-color: #F0F3FB; margin:0;}
+      h1 { font-weight: normal; font-size: 24px; margin: 10px 0 0 0;}
+      h3 { font-weight: normal; margin: 2px; font-size: 1.1em;}
+      header { position: fixed;width: 100%;background: rgba(249, 254, 255, 0.9);margin: 0;padding: 10px;}
+      header:before, header:after { content:""; display:table;}
+      header:after { clear:both;}
+      a:link { color: #A1D761;}
+      footer { clear: both;position: relative;z-index: 10;height: 40px;margin-top: -10px; margin-left:30px; font-size:12px;}
+      table { width:100%; border-collapse: collapse;}
+      tr td:first-child { width:7%}
+      .left { float: left; margin-left:30px;}
+      .right { float: right; margin-right: 40px; margin-top: 0; margin-bottom:0;}
+      .test-suite { margin: 0 0 30px 0;}
+      .test-suite > .heading { font-family:Menlo, Monaco, monospace; font-weight: bold; border-color: #A1D761; background-color: #B8E986; border-width: 1px;}
+      .test-suite.failing > .heading { border-color: #C84F5E; background-color: #E58591;}
+      .test-suite > .heading > .title { margin-top: 4px; margin-left: 10px;}
+      .tests { overflow: scroll;margin: 0 30px 0 60px;}
+      .test, .test-suite > .heading { height: 30px; overflow: hidden; margin: 0 30px;}
+      .test, .test-suite > .heading { border-width: 1px; border-collapse: collapse; border-style: solid; }
+      .test { margin-left: 30px; border-top:none;}
+      .test.failing { border-color: #C84F5E; background-color: #F4DDE0;}
+      .test.passing { border-color: #A1D761;}
+      .test.failing { background-color: #E7A1AA;}
+      .test.passing { background-color: #CAF59F;}
+      .test.failing.odd { background-color: #EEC7CC;}
+      .test.passing.odd { background-color: #E5FBCF;}
+      .details { background-color: #F4DDE0; border: 1px solid #C84F5E;}
+      .test .test-detail:last-child { padding-bottom: 8px;}
+      .test .title { float: left; font-size: 0.9em; margin-top: 8px; font-family: Menlo, Monaco, monospace;}
+      .test .time { float: left;margin: 4px 10px 0 20px;}
+      .test-detail { font-family:Menlo, Monaco, monospace; font-size: 0.9em; margin: 5px 0 5px 0px;}
+      .screenshots { height: auto; overflow: hidden; padding: 4px 4px 0 4px; background-color: #B8E986; border: #A1D761; border-width: 0 1px; border-style: solid; }
+      .screenshots.failing { border-color: #C84F5E; background-color: #E58591; }
+      .screenshot { max-height: 60px; float: left; transition: max-height 0.2s; margin: 0 4px 4px 0 }
+      .screenshot.selected { max-height: 568px; }
+      #test-suites { display: inline-block; width: 100%;margin-top:100px;}
+      #segment-bar { margin-top: 10px;margin-left: 14px;float:right;}
+      #segment-bar a:first-child { border-radius: 9px 0 0 9px; border-right: none;}
+      #segment-bar a:last-child { border-radius: 0 9px 9px 0; border-left: none;}
+      #segment-bar > a { color: #565656; border: 2px solid  #7B7B7B; width: 80px; font-weight: bold; display:inline-block;text-align:center; font-weight: normal;}
+      #segment-bar > a.selected { background-color: #979797; color: #F0F3FB;}
+      #counters { float: left;margin: 10px;text-align: right;}
+      #counters h2 { font-size: 16px; font-family: Avenir, sans-serif; font-weight: lighter; display:inline;}
+      #counters .number { font-size: 20px;}
+      #fail-count { color: #D0021B; margin-left:10px;}
+      @media (max-width: 640px) {
+        h1, #counters, #segment-bar { margin: 5px auto; text-align:center;}
+        header, #segment-bar { width: 100%; position: relative; background:none;}
+        .left, .right { float:none; margin:0;}
+        #test-suites { margin-top: 0;}
+        #counters { float:none;}
+      }
+    </style>
+    <script type="text/javascript">
+      var hide = function(element) { element.style.display = 'none';}
+      var show = function(element) { element.style.display = '';}
+      var isHidden = function(element) { return element.style.display == 'none';}
+      var isSelected = function(element) { return element.classList.contains("selected");}
+      var deselect = function(element) { return element.classList.remove("selected");}
+      var select = function(element) { return element.classList.add("selected");}
+      var toggle = function(element) { isHidden(element) ? show(element) : hide(element);};
+      var toggleTests = function(heading) { toggle(heading.parentNode.children[1]);};
+      var toggleDetails = function(detailClass) {
+        var details = document.querySelectorAll('.' + detailClass);
+        for (var i = details.length - 1; i >= 0; i--) { toggle(details[i]);};
+      };
+      var hideAll = function(collection) {
+        for (var i = collection.length - 1; i >= 0; i--) { hide(collection[i]); };
+      }
+      var showAll = function(collection) {
+        for (var i = collection.length - 1; i >= 0; i--) { show(collection[i]); };
+      }
+      var selectSegment = function(segment) {
+        if (isSelected(segment)) return;
+        var segments = document.querySelectorAll('#segment-bar > a');
+        for (var i = segments.length - 1; i >= 0; i--) { deselect(segments[i]);};
+        select(segment);
+        if (segment.id == "all-segment") {
+          showAll(document.querySelectorAll('.test-suite'));
+          showAll(document.querySelectorAll('.test'));
+        } else if (segment.id == "failing-segment") {
+          hideAll(document.querySelectorAll('.test.passing'));
+          showAll(document.querySelectorAll('.test.failing'));
+          hideAll(document.querySelectorAll('.test-suite.passing'));
+          showAll(document.querySelectorAll('.test-suite.failing'));
+        } else if (segment.id == "passing-segment") {
+          hideAll(document.querySelectorAll('.test.failing'));
+          showAll(document.querySelectorAll('.test.passing'));
+          hideAll(document.querySelectorAll('.test-suite.failing'));
+          showAll(document.querySelectorAll('.test-suite.passing'));
+        }
+      }
+      var toggleScreenshot = function(suiteName, index) {
+        var screenshot = document.getElementById("screenshot-" + suiteName + "-" + index);
+        isSelected(screenshot) ? deselect(screenshot) : select(screenshot);
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <section class="left">
+        <h1>Test Results</h1>
+      </section>
+      <section class="right">
+        <section id="counters">
+          <h2 id="test-count"><span class="number">115</span> tests</h2>
+          
+        </section>
+        <section id="segment-bar">
+          <a id="all-segment" onclick="selectSegment(this);" class="selected">All</a><a id="failing-segment" onclick="selectSegment(this);">Failing</a><a id="passing-segment" onclick="selectSegment(this);">Passing</a>
+        </section>
+      </section>
+    </header>
+    <section id="test-suites">
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.AlamofireMoyaMappingSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.AlamofireMoyaMappingSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_URL_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_11');">
+                <td>
+                  
+                    <h3 class="time">0.112s</h3>
+                  
+                </td>
+                <td><h3 class="title">translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_URL_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_11</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_JSON_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_21');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_JSON_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_21</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_PropertyList_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_31');">
+                <td>
+                  
+                    <h3 class="time">0.038s</h3>
+                  
+                </td>
+                <td><h3 class="title">translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_PropertyList_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_31</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_Custom_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_42');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">translates_parameter_encoding_to_alamofire_parameter_encoding__converts_to_alamofire_Custom_encoding_UsersashbinMoyaDemoTestsAlamofireMoyaMappingSpecswift_42</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.EndpointSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.EndpointSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('an_endpoint__returns_a_new_endpoint_for_endpointByAddingParameters_UsersashbinMoyaDemoTestsEndpointSpecswift_35');">
+                <td>
+                  
+                    <h3 class="time">0.017s</h3>
+                  
+                </td>
+                <td><h3 class="title">an_endpoint__returns_a_new_endpoint_for_endpointByAddingParameters_UsersashbinMoyaDemoTestsEndpointSpecswift_35</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('an_endpoint__returns_a_new_endpoint_for_endpointByAddingHTTPHeaderFields_UsersashbinMoyaDemoTestsEndpointSpecswift_51');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">an_endpoint__returns_a_new_endpoint_for_endpointByAddingHTTPHeaderFields_UsersashbinMoyaDemoTestsEndpointSpecswift_51</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('an_endpoint__returns_a_new_endpoint_for_endpointByAddingParameterEncoding_UsersashbinMoyaDemoTestsEndpointSpecswift_67');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">an_endpoint__returns_a_new_endpoint_for_endpointByAddingParameterEncoding_UsersashbinMoyaDemoTestsEndpointSpecswift_67</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('an_endpoint__returns_a_correct_URL_request_UsersashbinMoyaDemoTestsEndpointSpecswift_81');">
+                <td>
+                  
+                    <h3 class="time">0.049s</h3>
+                  
+                </td>
+                <td><h3 class="title">an_endpoint__returns_a_correct_URL_request_UsersashbinMoyaDemoTestsEndpointSpecswift_81</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.ErrorTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.ErrorTests</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('should_convert_to_NSError__should_convert_ImageMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_17');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">should_convert_to_NSError__should_convert_ImageMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_17</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('should_convert_to_NSError__should_convert_JSONMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_26');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">should_convert_to_NSError__should_convert_JSONMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_26</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('should_convert_to_NSError__should_convert_StringMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_35');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">should_convert_to_NSError__should_convert_StringMapping_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_35</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('should_convert_to_NSError__should_convert_StatusCode_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_44');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">should_convert_to_NSError__should_convert_StatusCode_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_44</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('should_convert_to_NSError__should_convert_Data_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_53');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">should_convert_to_NSError__should_convert_Data_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_53</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('should_convert_to_NSError__should_convert_Underlying_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_62');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">should_convert_to_NSError__should_convert_Underlying_error_to_NSError_UsersashbinMoyaDemoTestsErrorTestsswift_62</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('response_computed_variable__should_handle_ImageMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_75');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">response_computed_variable__should_handle_ImageMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_75</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('response_computed_variable__should_handle_JSONMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_81');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">response_computed_variable__should_handle_JSONMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_81</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('response_computed_variable__should_handle_StringMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_87');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">response_computed_variable__should_handle_StringMapping_error_UsersashbinMoyaDemoTestsErrorTestsswift_87</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('response_computed_variable__should_handle_StatusCode_error_UsersashbinMoyaDemoTestsErrorTestsswift_93');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">response_computed_variable__should_handle_StatusCode_error_UsersashbinMoyaDemoTestsErrorTestsswift_93</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('response_computed_variable__should_handle_Data_error_UsersashbinMoyaDemoTestsErrorTestsswift_99');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">response_computed_variable__should_handle_Data_error_UsersashbinMoyaDemoTestsErrorTestsswift_99</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('response_computed_variable__should_not_handle_Underlying_error__UsersashbinMoyaDemoTestsErrorTestsswift_105');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">response_computed_variable__should_not_handle_Underlying_error__UsersashbinMoyaDemoTestsErrorTestsswift_105</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('Alamofire_responses_should_return_the_errors_where_appropriate__should_return_the_underlying_error_in_spite_of_having_a_response_and_data_UsersashbinMoyaDemoTestsErrorTestsswift_114');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">Alamofire_responses_should_return_the_errors_where_appropriate__should_return_the_underlying_error_in_spite_of_having_a_response_and_data_UsersashbinMoyaDemoTestsErrorTestsswift_114</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.MoyaProviderIntegrationTests">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.MoyaProviderIntegrationTests</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider__returns_real_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_50');">
+                <td>
+                  
+                    <h3 class="time">0.814s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider__returns_real_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_50</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider__returns_real_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_65');">
+                <td>
+                  
+                    <h3 class="time">0.547s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider__returns_real_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_65</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider__returns_an_error_when_cancelled_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_81');">
+                <td>
+                  
+                    <h3 class="time">0.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider__returns_an_error_when_cancelled_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_81</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider__uses_a_custom_Alamofire_Manager_request_generation_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_98');">
+                <td>
+                  
+                    <h3 class="time">0.540s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider__uses_a_custom_Alamofire_Manager_request_generation_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_98</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider_with_credential_plugin__credential_closure_returns_nil_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_111');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider_with_credential_plugin__credential_closure_returns_nil_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_111</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider_with_credential_plugin__credential_closure_returns_valid_username_and_password_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_128');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider_with_credential_plugin__credential_closure_returns_valid_username_and_password_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_128</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider_with_network_activity_plugin__notifies_at_the_beginning_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_154');">
+                <td>
+                  
+                    <h3 class="time">0.545s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider_with_network_activity_plugin__notifies_at_the_beginning_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_154</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider_with_network_activity_plugin__notifies_at_the_end_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_170');">
+                <td>
+                  
+                    <h3 class="time">0.538s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider_with_network_activity_plugin__notifies_at_the_end_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_170</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__with_live_data__a_provider_with_network_logger_plugin__logs_the_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_201');">
+                <td>
+                  
+                    <h3 class="time">0.551s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_provider_with_network_logger_plugin__logs_the_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_201</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('valid_endpoints__with_live_data__a_reactive_provider_with_RACSignal__returns_some_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_224');">
+                <td>
+                  
+                    <h3 class="time">0.561s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_reactive_provider_with_RACSignal__returns_some_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_224</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__with_live_data__a_reactive_provider_with_RACSignal__returns_some_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_240');">
+                <td>
+                  
+                    <h3 class="time">0.539s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__with_live_data__a_reactive_provider_with_RACSignal__returns_some_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_240</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('valid_endpoints__a_reactive_provider_with_SignalProducer__returns_some_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_265');">
+                <td>
+                  
+                    <h3 class="time">0.550s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__a_reactive_provider_with_SignalProducer__returns_some_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_265</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('valid_endpoints__a_reactive_provider_with_SignalProducer__returns_some_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_278');">
+                <td>
+                  
+                    <h3 class="time">0.542s</h3>
+                  
+                </td>
+                <td><h3 class="title">valid_endpoints__a_reactive_provider_with_SignalProducer__returns_some_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderIntegrationTestsswift_278</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.MoyaProviderSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.MoyaProviderSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_13');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_13</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('returns_stubbed_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_27');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">returns_stubbed_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_27</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('returns_equivalent_Endpoint_instances_for_the_same_target_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_41');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">returns_equivalent_Endpoint_instances_for_the_same_target_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_41</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('returns_a_cancellable_object_when_a_request_is_made_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_49');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">returns_a_cancellable_object_when_a_request_is_made_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_49</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('uses_a_custom_manager_by_default__startRequestsImmediately_should_be_false_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_58');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">uses_a_custom_manager_by_default__startRequestsImmediately_should_be_false_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_58</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('credential_closure_returns_nil_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_63');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">credential_closure_returns_nil_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_63</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('credential_closure_returns_valid_username_and_password_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_77');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">credential_closure_returns_valid_username_and_password_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_77</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('accepts_a_custom_Alamofire_Manager_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_91');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">accepts_a_custom_Alamofire_Manager_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_91</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('notifies_at_the_beginning_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_98');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">notifies_at_the_beginning_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_98</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('notifies_at_the_end_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_113');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">notifies_at_the_end_of_network_requests_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_113</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('delays_execution_when_appropriate_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_128');">
+                <td>
+                  
+                    <h3 class="time">2.004s</h3>
+                  
+                </td>
+                <td><h3 class="title">delays_execution_when_appropriate_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_128</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('a_provider_with_a_custom_endpoint_resolver__executes_the_endpoint_resolver_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_158');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">a_provider_with_a_custom_endpoint_resolver__executes_the_endpoint_resolver_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_158</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('with_stubbed_errors__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_172');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">with_stubbed_errors__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_172</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('with_stubbed_errors__returns_stubbed_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_189');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">with_stubbed_errors__returns_stubbed_data_for_user_profile_request_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_189</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('with_stubbed_errors__returns_stubbed_error_data_when_present_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_206');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">with_stubbed_errors__returns_stubbed_error_data_when_present_UsersashbinMoyaDemoTestsMoyaProviderSpecswift_206</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.NetworkLogginPluginSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.NetworkLogginPluginSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('outputs_all_request_fields_with_body_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_30');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">outputs_all_request_fields_with_body_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_30</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('outputs_all_request_fields_with_stream_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_41');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">outputs_all_request_fields_with_stream_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_41</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('will_output_invalid_request_when_reguest_is_nil_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_52');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">will_output_invalid_request_when_reguest_is_nil_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_52</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('outputs_the_response_data_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_59');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">outputs_the_response_data_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_59</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('outputs_the_formatted_response_data_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_70');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">outputs_the_formatted_response_data_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_70</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('outputs_an_empty_reponse_message_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_81');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">outputs_an_empty_reponse_message_UsersashbinMoyaDemoTestsNetworkLogginPluginSpecswift_81</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.ObservableMoyaSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.ObservableMoyaSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_35');">
+                <td>
+                  
+                    <h3 class="time">0.009s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_35</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_54');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_54</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_73');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_73</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_85');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_85</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_104');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_104</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_116');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_116</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__knows_how_to_filter_individual_status_code_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_129');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__knows_how_to_filter_individual_status_code_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_129</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_141');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_141</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_162');">
+                <td>
+                  
+                    <h3 class="time">0.028s</h3>
+                  
+                </td>
+                <td><h3 class="title">image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_162</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_175');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_175</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_198');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_198</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_214');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_214</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_242');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_242</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_255');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsObservableMoyaSpecswift_255</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.RACSignalMoyaSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.RACSignalMoyaSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_40');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_40</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_54');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_54</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_68');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_68</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_80');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_80</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_94');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_94</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_106');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_106</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_118');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_118</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__knows_how_to_filter_individual_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_130');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__knows_how_to_filter_individual_status_codes_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_130</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_142');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_142</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_158');">
+                <td>
+                  
+                    <h3 class="time">0.014s</h3>
+                  
+                </td>
+                <td><h3 class="title">image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_158</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_171');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_171</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_189');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_189</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_205');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_205</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_223');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_223</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_237');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsRACSignalMoyaSpecswift_237</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.ReactiveCocoaMoyaProviderSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_RACSignal__returns_a_Response_object_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_16');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_RACSignal__returns_a_Response_object_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_16</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('provider_with_RACSignal__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_28');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_RACSignal__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_28</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_RACSignal__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_42');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_RACSignal__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_42</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('failing__returns_the_correct_error_message_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_65');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">failing__returns_the_correct_error_message_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_65</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('failing__returns_an_error_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_83');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">failing__returns_an_error_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_83</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('a_subsclassed_reactive_provider_that_tracks_cancellation_with_delayed_stubs__cancels_network_request_when_subscription_is_cancelled_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_126');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">a_subsclassed_reactive_provider_that_tracks_cancellation_with_delayed_stubs__cancels_network_request_when_subscription_is_cancelled_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_126</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_SignalProducer__returns_a_Response_object_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_141');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_SignalProducer__returns_a_Response_object_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_141</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('provider_with_SignalProducer__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_151');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_SignalProducer__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_151</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_SignalProducer__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_163');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_SignalProducer__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_163</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('provider_with_SignalProducer__a_subsclassed_reactive_provider_that_tracks_cancellation_with_delayed_stubs__cancels_network_request_when_subscription_is_cancelled_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_208');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_SignalProducer__a_subsclassed_reactive_provider_that_tracks_cancellation_with_delayed_stubs__cancels_network_request_when_subscription_is_cancelled_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_208</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_a_TestScheduler__sends_the_stub_when_the_test_scheduler_is_advanced_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_235');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_a_TestScheduler__sends_the_stub_when_the_test_scheduler_is_advanced_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_235</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('provider_with_a_TestScheduler__does_not_send_the_stub_when_the_test_scheduler_is_not_advanced_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_239');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_a_TestScheduler__does_not_send_the_stub_when_the_test_scheduler_is_not_advanced_UsersashbinMoyaDemoTestsReactiveCocoaMoyaProviderTestsswift_239</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.RxSwiftMoyaProviderSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.RxSwiftMoyaProviderSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_Observable__returns_a_Response_object_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_18');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_Observable__returns_a_Response_object_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_18</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('provider_with_Observable__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_28');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_Observable__returns_stubbed_data_for_zen_request_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_28</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('provider_with_Observable__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_40');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">provider_with_Observable__returns_correct_data_for_user_profile_request_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_40</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('failing__returns_the_correct_error_message_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_58');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">failing__returns_the_correct_error_message_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_58</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('failing__returns_an_error_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_76');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">failing__returns_an_error_UsersashbinMoyaDemoTestsRxSwiftMoyaProviderTestsswift_76</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+        
+        <section class="test-suite passing" id="MoyaTests_tvOS.SignalProducerMoyaSpec">
+          <section class="heading" onclick="toggleTests(this);">
+            <h3 class="title">MoyaTests_tvOS.SignalProducerMoyaSpec</h3>
+          </section>
+          <section class="tests">
+            
+            <table>
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_35');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_unrequested_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_35</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_54');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_non_successful_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_54</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_73');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_73</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_85');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_non_successful_status_and_redirect_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_85</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_104');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_104</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_116');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__passes_through_correct_redirect_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_116</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('status_codes_filtering__knows_how_to_filter_individual_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_128');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__knows_how_to_filter_individual_status_codes_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_128</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_140');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">status_codes_filtering__filters_out_different_individual_status_code_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_140</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_161');">
+                <td>
+                  
+                    <h3 class="time">0.013s</h3>
+                  
+                </td>
+                <td><h3 class="title">image_maping__maps_data_representing_an_image_to_an_image_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_161</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_174');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">image_maping__ignores_invalid_data_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_174</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_197');">
+                <td>
+                  
+                    <h3 class="time">0.002s</h3>
+                  
+                </td>
+                <td><h3 class="title">JSON_mapping__maps_data_representing_some_JSON_to_that_JSON_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_197</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_213');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">JSON_mapping__returns_a_Cocoa_error_domain_for_invalid_JSON_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_213</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing "  onclick="toggleDetails('string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_241');">
+                <td>
+                  
+                    <h3 class="time">0.003s</h3>
+                  
+                </td>
+                <td><h3 class="title">string_mapping__maps_data_representing_a_string_to_a_string_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_241</h3></td>
+              </tr>
+              
+            
+              
+              <tr class="test passing odd"  onclick="toggleDetails('string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_254');">
+                <td>
+                  
+                    <h3 class="time">0.001s</h3>
+                  
+                </td>
+                <td><h3 class="title">string_mapping__ignores_invalid_data_UsersashbinMoyaDemoTestsSignalProducerMoyaSpecswift_254</h3></td>
+              </tr>
+              
+            
+            </table>
+          </section>
+        </section>
+      
+    </section>
+    <footer>Report generated with <a href="https://github.com/supermarin/xcpretty">xcpretty</a></footer>
+  </body>
+</html>
