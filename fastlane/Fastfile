@@ -7,12 +7,6 @@ lane :test do
   scan scheme: 'MoyaTests-tvOS', destination: 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.0'
 end
 
-desc 'Runs tests for use on Travis'
-lane :ci do
-  test
-  sh 'killall Simulator'
-end
-
 lane :reease do |options|
   version = args[:version]
   abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+/).length == 0

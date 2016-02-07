@@ -13,7 +13,8 @@ cache:
     - Demo/Pods
 
 script:
-  - fastlane ci
+  - fastlane test
+  - killall Simulator
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
