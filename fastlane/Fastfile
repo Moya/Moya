@@ -47,7 +47,7 @@ lane :reease do |options|
     api_token: ENV['GITHUB_TOKEN'],
     name: version,
     tag_name: version,
-    description: message
+    description: message,
     commitish: version,
   )
 
