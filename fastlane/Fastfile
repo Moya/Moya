@@ -2,7 +2,7 @@ fastlane_version '1.0.2'
 
 desc 'Run all iOS tests on iOS, OS X, and tvOS'
 lane :test do
-  scan scheme: 'Demo', destination: 'name=iPhone 6s,OS=9.1', sdk: 'iphonesimulator'
+  scan scheme: 'Demo', destination: 'name=iPhone 6s,OS=9.0', sdk: 'iphonesimulator'
   scan scheme: 'MoyaTests-Mac'
   scan scheme: 'MoyaTests-tvOS', destination: 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.0'
 end

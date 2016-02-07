@@ -8,8 +8,9 @@ env:
     - COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=true
 
 cache:
-  - bundler
-  - cocoapods
+  directories:
+    - vendor/bundle
+    - Demo/Pods
 
 script:
   - fastlane ci
