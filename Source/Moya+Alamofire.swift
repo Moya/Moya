@@ -15,7 +15,7 @@ public enum ParameterEncoding {
         switch self {
         case .URL:
             return .URL
-        case .URLe:
+        case .URLEncodedInURL:
           return .URLEncodedInURL
         case .JSON:
             return .JSON
