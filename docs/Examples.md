@@ -18,8 +18,8 @@ Let's take a look at what that might look like.
 
 ```swift
 private extension String {
-    var URLEscapedString: String? {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())
+    var URLEscapedString: String {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
     }
 }
 
@@ -30,7 +30,7 @@ extension GitHub: TargetType {
         case .Zen:
             return "/zen"
         case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString!)"
+            return "/users/\(name.URLEscapedString)"
         }
     }
     var method: Moya.Method {
