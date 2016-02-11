@@ -30,7 +30,7 @@ extension GitHub: TargetType {
         case .Zen:
             return "/zen"
         case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString)"
+            return "/users/\(name.URLEscapedString!)"
         }
     }
     var method: Moya.Method {
