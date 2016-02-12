@@ -1,6 +1,7 @@
 # Next
 
 - Adds `response` computed property to `Error` type, which yields a Response object if available.
+- Adds convenience `endpointByAdding` method.
 
 # 6.1.3
 
@@ -34,7 +35,7 @@
 - Moves to use Antitypical/Result
 
 # 5.2.1
-     
+
 - Update to ReactiveCocoa v4.0.0-RC.1
 - Fixes cases where underlying network errors were not properly propagated.
 
