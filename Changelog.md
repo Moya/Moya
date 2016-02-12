@@ -1,6 +1,7 @@
 # Next
 
 - Adds `response` computed property to `Error` type, which yields a Response object if available.
+- Added URLEncodedInURL to ParameterEncoding.
 - Adds convenience `endpointByAdding` method.
 
 # 6.1.3
@@ -38,7 +39,6 @@
 
 - Update to ReactiveCocoa v4.0.0-RC.1
 - Fixes cases where underlying network errors were not properly propagated.
-
 - Moves to antitypical Result type
 
 # 5.2.0
@@ -211,7 +211,7 @@
 
 # 1.0.0
 
--  **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
+- **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
 - **Breaking change** Adds `method` to `MoyaTarget` protocol and removes `method` parameter from `request()` functions. Targets now specify GET, POST, etc on a per-target level, instead of per-request.
 - **Breaking change** Adds `parameters` to `MoyaTarget` protocol and removes ability to pass parameters into `request()` functions. Targets now specify the parameters directly on a per-target level, instead of per-request.
 - Adds a sane default implementation of the `MoyaProvider` initializer's `endpointsClosure` parameter.

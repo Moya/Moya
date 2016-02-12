@@ -17,7 +17,17 @@ final class AlamofireMoyaMappingSpec: QuickSpec {
                     fail("Expected url encoding, got \(alamofireEncoding)")
                 }
             }
-            
+          
+            it("converts to alamofire URLEncodedInURL encoding") {
+                let alamofireEncoding = Moya.ParameterEncoding.URLEncodedInURL.toAlamofire
+              
+                if case .URLEncodedInURL = alamofireEncoding {
+                    expect(true).to(beTrue())
+                } else {
+                  fail("Expected url encoded in url encoding, got \(alamofireEncoding)")
+                }
+            }
+          
             it("converts to alamofire JSON encoding") {
                 let alamofireEncoding = Moya.ParameterEncoding.JSON.toAlamofire
                 

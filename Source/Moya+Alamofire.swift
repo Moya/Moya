@@ -6,6 +6,7 @@ public typealias Manager = Alamofire.Manager
 /// Choice of parameter encoding.
 public enum ParameterEncoding {
     case URL
+    case URLEncodedInURL
     case JSON
     case PropertyList(NSPropertyListFormat, NSPropertyListWriteOptions)
     case Custom((URLRequestConvertible, [String: AnyObject]?) -> (NSMutableURLRequest, NSError?))
@@ -14,6 +15,8 @@ public enum ParameterEncoding {
         switch self {
         case .URL:
             return .URL
+        case .URLEncodedInURL:
+          return .URLEncodedInURL
         case .JSON:
             return .JSON
         case .PropertyList(let format, let options):
