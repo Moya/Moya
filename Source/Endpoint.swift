@@ -40,28 +40,34 @@ public class Endpoint<Target> {
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added parameters.
     public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<Target> {
-        var newParameters = self.parameters ?? [String: AnyObject]()
-        for (key, value) in parameters {
-            newParameters[key] = value
-        }
-
-        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: parameterEncoding, httpHeaderFields: httpHeaderFields)
+        return endpointByAdding(parameters: parameters)
     }
 
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
     public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<Target> {
-        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-        for (key, value) in httpHeaderFields {
-            newHTTPHeaderFields[key] = value
-        }
-
-        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: parameterEncoding, httpHeaderFields: newHTTPHeaderFields)
+        return endpointByAdding(httpHeaderFields: httpHeaderFields)
     }
     
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
     public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
+        return endpointByAdding(parameterEncoding: newParameterEncoding)
+    }
+    
+    /// Convenience method for creating a new Endpoint, with changes only to the properties we specify as parameters
+    public func endpointByAdding(parameters parameters: [String: AnyObject]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
+        var newParameters = self.parameters ?? [String: AnyObject]()
+        parameters?.forEach { (key, value) in
+            newParameters[key] = value
+        }
         
-        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: parameters, parameterEncoding: newParameterEncoding, httpHeaderFields: httpHeaderFields)
+        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
+        httpHeaderFields?.forEach { (key, value) in
+            newHTTPHeaderFields[key] = value
+        }
+        
+        let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
+        
+        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 }
 

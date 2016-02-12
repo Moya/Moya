@@ -35,9 +35,9 @@ class EndpointSpec: QuickSpec {
             it("returns a new endpoint for endpointByAddingParameters") {
                 let message = "I hate it when villains quote Shakespeare."
                 let newEndpoint = endpoint.endpointByAddingParameters(["message": message])
-                
                 let newEndpointMessageObject: AnyObject? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
+                
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointMessage).to(equal(message))
                 
@@ -51,9 +51,8 @@ class EndpointSpec: QuickSpec {
             it("returns a new endpoint for endpointByAddingHTTPHeaderFields") {
                 let agent = "Zalbinian"
                 let newEndpoint = endpoint.endpointByAddingHTTPHeaderFields(["User-Agent": agent])
+                let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
                 
-                let newEndpointAgentObject: AnyObject? = newEndpoint.httpHeaderFields?["User-Agent"]
-                let newEndpointAgent = newEndpointAgentObject as? String
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointAgent).to(equal(agent))
                 
@@ -76,6 +75,25 @@ class EndpointSpec: QuickSpec {
                 expect(newEndpoint.method).to(equal(endpoint.method))
                 expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
                 expect(newEndpoint.httpHeaderFields?.count).to(equal(endpoint.httpHeaderFields?.count))
+            }
+            
+            it ("returns a new endpoint for endpointByAdding with all parameters") {
+                let parameterEncoding = Moya.ParameterEncoding.URL
+                let agent = "Zalbinian"
+                let message = "I hate it when villains quote Shakespeare."
+                let newEndpoint = endpoint.endpointByAdding(
+                    parameters: ["message": message],
+                    httpHeaderFields: ["User-Agent": agent],
+                    parameterEncoding: parameterEncoding
+                )
+                
+                let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
+                let newEndpointMessage = newEndpoint.parameters?["message"] as? String
+                
+                // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
+                expect(newEndpointMessage).to(equal(message))
+                expect(newEndpointAgent).to(equal(agent))
+                expect(newEndpoint.parameterEncoding).to(equal(parameterEncoding))
             }
             
             it("returns a correct URL request") {
