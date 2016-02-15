@@ -9,7 +9,7 @@ final class AlamofireMoyaMappingSpec: QuickSpec {
         describe("translates parameter encoding to alamofire parameter encoding") {
             
             it("converts to alamofire URL encoding") {
-                let alamofireEncoding = Moya.ParameterEncoding.URL.toAlamofire
+                let alamofireEncoding = Moya.ParameterEncoding.URL
                 
                 if case .URL = alamofireEncoding {
                     expect(true).to(beTrue())
@@ -19,7 +19,7 @@ final class AlamofireMoyaMappingSpec: QuickSpec {
             }
           
             it("converts to alamofire URLEncodedInURL encoding") {
-                let alamofireEncoding = Moya.ParameterEncoding.URLEncodedInURL.toAlamofire
+                let alamofireEncoding = Moya.ParameterEncoding.URLEncodedInURL
               
                 if case .URLEncodedInURL = alamofireEncoding {
                     expect(true).to(beTrue())
@@ -29,7 +29,7 @@ final class AlamofireMoyaMappingSpec: QuickSpec {
             }
           
             it("converts to alamofire JSON encoding") {
-                let alamofireEncoding = Moya.ParameterEncoding.JSON.toAlamofire
+                let alamofireEncoding = Moya.ParameterEncoding.JSON
                 
                 if case .JSON = alamofireEncoding {
                     expect(true).to(beTrue())
@@ -39,7 +39,7 @@ final class AlamofireMoyaMappingSpec: QuickSpec {
             }
             
             it("converts to alamofire PropertyList encoding") {
-                let alamofireEncoding = Moya.ParameterEncoding.PropertyList(NSPropertyListFormat.BinaryFormat_v1_0, 0).toAlamofire
+                let alamofireEncoding = Moya.ParameterEncoding.PropertyList(NSPropertyListFormat.BinaryFormat_v1_0, 0)
 
                 if case let .PropertyList(format, writeOptions) = alamofireEncoding {
                     expect(format) == NSPropertyListFormat.BinaryFormat_v1_0
@@ -56,7 +56,7 @@ final class AlamofireMoyaMappingSpec: QuickSpec {
                     called = true
                     return (NSMutableURLRequest(), nil)
                 }
-                let alamofireEncoding = Moya.ParameterEncoding.Custom(closure).toAlamofire
+                let alamofireEncoding = Moya.ParameterEncoding.Custom(closure)
                 
                 if case let .Custom(closure) = alamofireEncoding {
                     let req = NSURLRequest()
