@@ -85,7 +85,7 @@ targets, either of the following would work.
 
 ```swift
 let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubBehavior in return .Immediate })
-let provider = MoyaProvider<MyTarget>(stubBehavior: MoyaProvider.ImmediatelyStub)
+let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
 ```
 
 Next, there's the `manager` parameter. By default you'll get a custom `Alamofire.Manager` instance with basic configurations.
