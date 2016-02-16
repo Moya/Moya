@@ -3,7 +3,7 @@
 - Adds `response` computed property to `Error` type, which yields a Response object if available.
 - Added URLEncodedInURL to ParameterEncoding.
 - Adds convenience `endpointByAdding` method.
-- **Breaking Change** Remove our own implementation of `ParameterEncoding` and make it a `public typealias` of `Alamofire.ParameterEncoding`.
+- Remove our own implementation of `ParameterEncoding` and make it a `public typealias` of `Alamofire.ParameterEncoding`.
 
 # 6.1.3
 
