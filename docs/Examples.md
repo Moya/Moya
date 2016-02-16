@@ -55,7 +55,7 @@ extension GitHub: TargetType {
 
 (The `String` extension is just for convenience – you don't have to use it.)
 
-You can see that the `MoyaPath` protocol translates each value of the enum into
+You can see that the `TargetType` protocol translates each value of the enum into
 a relative URL, which can use values embedded in the enum. Super cool.
 The `TargetType` specifies both a base URL for the API and the sample data for
 each enum value. The sample data are `NSData` instances, and could represent
