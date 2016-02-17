@@ -78,7 +78,7 @@ extension Endpoint {
         request.HTTPMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
-        return parameterEncoding.toAlamofire.encode(request, parameters: parameters).0
+        return parameterEncoding.encode(request, parameters: parameters).0
     }
 }
 

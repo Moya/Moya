@@ -6,18 +6,7 @@ extension Moya.ParameterEncoding: Equatable {
 }
 
 public func ==(lhs: Moya.ParameterEncoding, rhs: Moya.ParameterEncoding) -> Bool {
-    switch (lhs, rhs) {
-    case (.URL, .URL):
-        return true
-    case (.JSON, .JSON):
-        return true
-    case (.PropertyList(_), .PropertyList(_)):
-        return true
-    case (.Custom(_), .Custom(_)):
-        return true
-    default:
-        return false
-    }
+    return String(stringInterpolationSegment: lhs) == String(stringInterpolationSegment: rhs)
 }
 
 class EndpointSpec: QuickSpec {
