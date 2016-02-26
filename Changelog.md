@@ -1,5 +1,7 @@
 # Next
 
+# 6.2.0
+
 - Adds `response` computed property to `Error` type, which yields a Response object if available.
 - Added URLEncodedInURL to ParameterEncoding.
 - Adds convenience `endpointByAdding` method.
