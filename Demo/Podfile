@@ -17,12 +17,12 @@ def test_pods
 end
 
 target 'Demo' do
-  platform :ios, '8.0'
+  platform :ios, '9.0'
   libraries
 end
 
 target 'MoyaTests-iOS' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
     libraries
     test_pods
 end

@@ -1,0 +1,48 @@
+fastlane_version '1.0.2'
+
+desc 'Run all iOS tests on iOS, OS X, and tvOS'
+lane :test do
+  scan scheme: 'Demo', destination: 'name=iPhone 6s,OS=9.0', sdk: 'iphonesimulator'
+  scan scheme: 'MoyaTests-Mac'
+  scan scheme: 'MoyaTests-tvOS', destination: 'platform=tvOS Simulator,name=Apple TV 1080p,OS=9.0'
+end
+
+lane :release do |options|
+  version = args[:version]
+  abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+/).length == 0
+
+  puts "Updating podspec."
+  filename = "../Moya.podspec"
+  contents = File.read(filename)
+  contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+"/, "s.version      = \"#{version}\"")
+  File.open(filename, 'w') { |file| file.puts contents }
+
+  ENV['COCOAPODS_DISABLE_DETERMINISTIC_UUIDS'] = 'true'
+  cocoapods podfile_folder: 'Demo'
+
+  puts "Updating changelog."
+  changelog_filename = "../CHANGELOG.md"
+  changelog = File.read(changelog_filename)
+  changelog.gsub!(/# Next/, "# Next\n\n# #{version}")
+  File.open(changelog_filename, 'w') { |file| file.puts changelog }
+
+  puts "Comitting, tagging, and pushing."
+  message = "Releasing version #{version}."
+  sh "git commit -am '#{message}'"
+  sh "git tag #{version} -m '#{message}'"
+  sh "git push --follow-tags"
+
+  puts "Pushing to CocoaPods trunk."
+  sh "pod trunk push Moya.podspec --allow-warnings"
+
+  # GitHub Release for Carthage
+  github_release = set_github_release(
+    repository_name: "Moya/Moya",
+    api_token: ENV['GITHUB_TOKEN'],
+    name: version,
+    tag_name: version,
+    description: message,
+    commitish: version,
+  )
+
+end

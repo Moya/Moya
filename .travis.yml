@@ -8,11 +8,13 @@ env:
     - COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=true
 
 cache:
-  - bundler
-  - cocoapods
+  directories:
+    - vendor/bundle
+    - Demo/Pods
 
 script:
-  - rake test
+  - fastlane test
+  - killall Simulator
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
