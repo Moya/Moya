@@ -1,7 +1,5 @@
 # Next
 
-# 6.1.1
-
 - Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil
 
 # 6.2.0
