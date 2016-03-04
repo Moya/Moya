@@ -55,19 +55,32 @@ public class Endpoint<Target> {
     
     /// Convenience method for creating a new Endpoint, with changes only to the properties we specify as parameters
     public func endpointByAdding(parameters parameters: [String: AnyObject]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
-        var newParameters = self.parameters ?? [String: AnyObject]()
-        parameters?.forEach { (key, value) in
-            newParameters[key] = value
-        }
-        
-        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-        httpHeaderFields?.forEach { (key, value) in
-            newHTTPHeaderFields[key] = value
-        }
-        
+        let newParameters = addParameters(parameters)
+        let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
-        
         return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
+    }
+    
+    private func addParameters(parameters: [String: AnyObject]?) -> [String: AnyObject]? {
+        var newParameters = self.parameters
+        if let unwrappedParameters = parameters where unwrappedParameters.count > 0 {
+            newParameters = self.parameters ?? [String: AnyObject]()
+            unwrappedParameters.forEach { (key, value) in
+                newParameters?[key] = value
+            }
+        }
+        return newParameters
+    }
+    
+    private func addHTTPHeaderFields(headers: [String: String]?) -> [String: String]? {
+        var newHTTPHeaderFields = self.httpHeaderFields
+        if let unwrappedHeaders = headers where unwrappedHeaders.count > 0 {
+            newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
+            headers?.forEach { (key, value) in
+                newHTTPHeaderFields?[key] = value
+            }
+        }
+        return newHTTPHeaderFields
     }
 }
 
