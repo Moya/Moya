@@ -62,23 +62,25 @@ public class Endpoint<Target> {
     }
     
     private func addParameters(parameters: [String: AnyObject]?) -> [String: AnyObject]? {
-        var newParameters = self.parameters
-        if let unwrappedParameters = parameters where unwrappedParameters.count > 0 {
-            newParameters = self.parameters ?? [String: AnyObject]()
-            unwrappedParameters.forEach { (key, value) in
-                newParameters?[key] = value
-            }
+        guard let unwrappedParameters = parameters where unwrappedParameters.count > 0 else {
+            return self.parameters
+        }
+        
+        var newParameters = self.parameters ?? [String: AnyObject]()
+        unwrappedParameters.forEach { (key, value) in
+            newParameters[key] = value
         }
         return newParameters
     }
     
     private func addHTTPHeaderFields(headers: [String: String]?) -> [String: String]? {
-        var newHTTPHeaderFields = self.httpHeaderFields
-        if let unwrappedHeaders = headers where unwrappedHeaders.count > 0 {
-            newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-            headers?.forEach { (key, value) in
-                newHTTPHeaderFields?[key] = value
-            }
+        guard let unwrappedHeaders = headers where unwrappedHeaders.count > 0 else {
+            return self.httpHeaderFields
+        }
+        
+        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
+        headers?.forEach { (key, value) in
+            newHTTPHeaderFields[key] = value
         }
         return newHTTPHeaderFields
     }
