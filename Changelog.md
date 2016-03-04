@@ -1,5 +1,9 @@
 # Next
 
+# 6.1.1
+
+- Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil
+
 # 6.2.0
 
 - Adds `response` computed property to `Error` type, which yields a Response object if available.
