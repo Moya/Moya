@@ -79,7 +79,7 @@ public class Endpoint<Target> {
         }
         
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-        headers?.forEach { (key, value) in
+        unwrappedHeaders.forEach { (key, value) in
             newHTTPHeaderFields[key] = value
         }
         return newHTTPHeaderFields
