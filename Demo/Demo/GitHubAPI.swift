@@ -3,7 +3,7 @@ import Moya
 
 // MARK: - Provider setup
 
-private func JSONResponseDataFormatter(data: NSData) -> NSData {
+public func JSONResponseDataFormatter(data: NSData) -> NSData {
     do {
         let dataAsJSON = try NSJSONSerialization.JSONObjectWithData(data, options: [])
         let prettyData =  try NSJSONSerialization.dataWithJSONObject(dataAsJSON, options: .PrettyPrinted)

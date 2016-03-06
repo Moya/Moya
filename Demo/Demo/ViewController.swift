@@ -6,11 +6,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        Possible execution
-//        GitHubProvider2.request(.Zen(ZenResource()), completion: { result in
-//            
-//        })
-        
+        downloadZenUsingStructsAPI()
         downloadRepositories("ashfurrow")
     }
 
@@ -62,6 +58,22 @@ class ViewController: UITableViewController {
                 message = (try? response.mapString()) ?? message
             }
 
+            let alertController = UIAlertController(title: "Zen", message: message, preferredStyle: .Alert)
+            let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                alertController.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alertController.addAction(ok)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        })
+    }
+    
+    func downloadZenUsingStructsAPI() {
+        GitHubStructProvider.request(.Zen(ZenResource()), completion: { result in
+            var message = "Couldn't access API"
+            if case let .Success(response) = result {
+                message = (try? response.mapString()) ?? message
+            }
+            
             let alertController = UIAlertController(title: "Zen", message: message, preferredStyle: .Alert)
             let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
                 alertController.dismissViewControllerAnimated(true, completion: nil)
