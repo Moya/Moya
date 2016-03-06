@@ -7,6 +7,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         downloadRepositories("ashfurrow")
+        downloadUserProfile("sunshinejr")
     }
 
     // MARK: - API Stuff
@@ -80,6 +81,12 @@ class ViewController: UITableViewController {
             alertController.addAction(ok)
             self.presentViewController(alertController, animated: true, completion: nil)
         })
+    }
+    
+    func downloadUserProfile(name: String) {
+        GitHubStructProvider.request(.UserProfile(UserProfileResource(name: name))) { result in
+            
+        }
     }
 
     // MARK: - User Interaction
