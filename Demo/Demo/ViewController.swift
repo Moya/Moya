@@ -6,7 +6,6 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        downloadZenUsingStructsAPI()
         downloadRepositories("ashfurrow")
     }
 
@@ -104,7 +103,7 @@ class ViewController: UITableViewController {
     }
 
     @IBAction func zenWasPressed(sender: UIBarButtonItem) {
-        downloadZen()
+        downloadZenUsingStructsAPI()
     }
 
     // MARK: - Table View
