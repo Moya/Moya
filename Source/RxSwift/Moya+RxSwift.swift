@@ -4,9 +4,9 @@ import RxSwift
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
     /// Initializes a reactive provider.
-    override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
+    override public init(endpointClosure: EndpointClosure = MoyaProvider<Target>.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider<Target>.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider<Target>.NeverStub,
         manager: Manager = RxMoyaProvider<Target>.DefaultAlamofireManager(),
         plugins: [PluginType] = []) {
             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)

@@ -5,7 +5,12 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+//        Possible execution
+//        GitHubProvider2.request(.Zen(ZenResource()), completion: { result in
+//            
+//        })
+        
         downloadRepositories("ashfurrow")
     }
 

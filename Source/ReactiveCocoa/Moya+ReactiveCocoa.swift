@@ -2,12 +2,12 @@ import Foundation
 import ReactiveCocoa
 
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
-public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
+public class ReactiveCocoaMoyaProvider<Target where Target: ServiceType>: MoyaProvider<Target> {
     private let stubScheduler: DateSchedulerType?
     /// Initializes a reactive provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
+    public init(endpointClosure: EndpointClosure = MoyaProvider<Target>.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaProvider<Target>.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaProvider<Target>.NeverStub,
         manager: Manager = ReactiveCocoaMoyaProvider<Target>.DefaultAlamofireManager(),
         plugins: [PluginType] = [], stubScheduler: DateSchedulerType? = nil) {
             self.stubScheduler = stubScheduler
@@ -37,7 +37,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
         }
     }
 
-    override func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    override func stubRequest(target: TargetType, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<TargetType>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         guard let stubScheduler = self.stubScheduler else {
             return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
