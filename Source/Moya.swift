@@ -73,10 +73,10 @@ public class MoyaProvider<Target: ServiceType> {
     public let plugins: [PluginType]
     
     /// Initializes a provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider<Target>.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider<Target>.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider<Target>.NeverStub,
-        manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
+    public init(endpointClosure: EndpointClosure = MoyaDefaults.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaDefaults.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaDefaults.NeverStub,
+        manager: Manager = MoyaDefaults.DefaultAlamofireManager(),
         plugins: [PluginType] = []) {
             
             self.endpointClosure = endpointClosure
@@ -143,7 +143,7 @@ public class MoyaProvider<Target: ServiceType> {
 
 /// Mark: Defaults
 
-public extension MoyaProvider {
+public class MoyaDefaults {
     
     // These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
     
@@ -169,7 +169,7 @@ public extension MoyaProvider {
 
 /// Mark: Stubbing
 
-public extension MoyaProvider {
+public extension MoyaDefaults {
     
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
     // at least add some class functions to allow easy access to common stubbing closures.

@@ -8,7 +8,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: ReactiveCocoaMoyaProvider<GitHub>!
         beforeEach {
-            provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
+            provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaDefaults.ImmediatelyStub)
         }
         
         describe("provider with RACSignal") {
@@ -59,7 +59,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         describe("failing") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
-                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
+                provider = ReactiveCocoaMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaDefaults.ImmediatelyStub)
             }
             
             it("returns the correct error message") {
@@ -102,9 +102,9 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<Target: TargetType>: ReactiveCocoaMoyaProvider<Target> {
-                init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-                    requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-                    stubClosure: StubClosure = MoyaProvider.NeverStub,
+                init(endpointClosure: EndpointClosure = MoyaDefaults.DefaultEndpointMapping,
+                    requestClosure: RequestClosure = MoyaDefaults.DefaultRequestMapping,
+                    stubClosure: StubClosure = MoyaDefaults.NeverStub,
                     manager: Manager = Alamofire.Manager.sharedInstance,
                     plugins: [PluginType] = []) {
 
@@ -120,7 +120,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             beforeEach {
                 TestCancellable.cancelled = false
 
-                provider = TestProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(1))
+                provider = TestProvider<GitHub>(stubClosure: MoyaDefaults.DelayedStub(1))
             }
 
             it("cancels network request when subscription is cancelled") {
@@ -184,9 +184,9 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 class TestProvider<Target: TargetType>: ReactiveCocoaMoyaProvider<Target> {
-                    init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-                        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-                        stubClosure: StubClosure = MoyaProvider.NeverStub,
+                    init(endpointClosure: EndpointClosure = MoyaDefaults.DefaultEndpointMapping,
+                        requestClosure: RequestClosure = MoyaDefaults.DefaultRequestMapping,
+                        stubClosure: StubClosure = MoyaDefaults.NeverStub,
                         manager: Manager = Alamofire.Manager.sharedInstance,
                         plugins: [PluginType] = []) {
 
@@ -202,7 +202,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 beforeEach {
                     TestCancellable.cancelled = false
                     
-                    provider = TestProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(1))
+                    provider = TestProvider<GitHub>(stubClosure: MoyaDefaults.DelayedStub(1))
                 }
                 
                 it("cancels network request when subscription is cancelled") {
@@ -223,7 +223,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             var response: Moya.Response? = nil
             beforeEach {
                 testScheduler = TestScheduler()
-                provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, stubScheduler: testScheduler)
+                provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaDefaults.ImmediatelyStub, stubScheduler: testScheduler)
                 provider.request(.Zen).startWithNext { next in
                     response = next
                 }

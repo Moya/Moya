@@ -5,10 +5,10 @@ import ReactiveCocoa
 public class ReactiveCocoaMoyaProvider<Target where Target: ServiceType>: MoyaProvider<Target> {
     private let stubScheduler: DateSchedulerType?
     /// Initializes a reactive provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider<Target>.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider<Target>.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider<Target>.NeverStub,
-        manager: Manager = ReactiveCocoaMoyaProvider<Target>.DefaultAlamofireManager(),
+    public init(endpointClosure: EndpointClosure = MoyaDefaults.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaDefaults.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaDefaults.NeverStub,
+        manager: Manager = MoyaDefaults.DefaultAlamofireManager(),
         plugins: [PluginType] = [], stubScheduler: DateSchedulerType? = nil) {
             self.stubScheduler = stubScheduler
             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
