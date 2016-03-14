@@ -3,7 +3,7 @@ import Moya
 
 // MARK: - Provider setup
 
-private func JSONResponseDataFormatter(data: NSData) -> NSData {
+public func JSONResponseDataFormatter(data: NSData) -> NSData {
     do {
         let dataAsJSON = try NSJSONSerialization.JSONObjectWithData(data, options: [])
         let prettyData =  try NSJSONSerialization.dataWithJSONObject(dataAsJSON, options: .PrettyPrinted)
@@ -18,7 +18,7 @@ let GitHubProvider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose:
 
 // MARK: - Provider support
 
-private extension String {
+public extension String {
     var URLEscapedString: String {
         return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
     }

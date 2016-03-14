@@ -5,8 +5,9 @@ class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         downloadRepositories("ashfurrow")
+        downloadUserProfile("sunshinejr")
     }
 
     // MARK: - API Stuff
@@ -65,6 +66,28 @@ class ViewController: UITableViewController {
             self.presentViewController(alertController, animated: true, completion: nil)
         })
     }
+    
+    func downloadZenUsingStructsAPI() {
+        GitHubStructProvider.request(.Zen(ZenResource()), completion: { result in
+            var message = "Couldn't access API"
+            if case let .Success(response) = result {
+                message = (try? response.mapString()) ?? message
+            }
+            
+            let alertController = UIAlertController(title: "Zen", message: message, preferredStyle: .Alert)
+            let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
+                alertController.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alertController.addAction(ok)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        })
+    }
+    
+    func downloadUserProfile(name: String) {
+        GitHubStructProvider.request(.UserProfile(UserProfileResource(name: name))) { result in
+            
+        }
+    }
 
     // MARK: - User Interaction
 
@@ -87,7 +110,7 @@ class ViewController: UITableViewController {
     }
 
     @IBAction func zenWasPressed(sender: UIBarButtonItem) {
-        downloadZen()
+        downloadZenUsingStructsAPI()
     }
 
     // MARK: - Table View
