@@ -5,10 +5,10 @@ import ReactiveCocoa
 public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
     private let stubScheduler: DateSchedulerType?
     /// Initializes a reactive provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = ReactiveCocoaMoyaProvider<Target>.DefaultAlamofireManager(),
+    public init(endpointClosure: EndpointClosure = MoyaDefaults.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaDefaults.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaDefaults.NeverStub,
+        manager: Manager = MoyaDefaults.DefaultAlamofireManager(),
         plugins: [PluginType] = [], stubScheduler: DateSchedulerType? = nil) {
             self.stubScheduler = stubScheduler
             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
@@ -37,7 +37,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
         }
     }
 
-    override func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    override func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<TargetType>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         guard let stubScheduler = self.stubScheduler else {
             return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }

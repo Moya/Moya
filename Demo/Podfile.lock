@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (3.2.0)
+  - Alamofire (3.2.1)
   - Moya (6.2.0):
     - Moya/Core (= 6.2.0)
   - Moya/Core (6.2.0):
@@ -53,7 +53,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
+  Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
   Moya: a5e57a405584177027daab240f4d47baa0722562
   Nimble: 79d40f4d69d47314229bbabacaa02b8838c779b9
   OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
