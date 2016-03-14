@@ -1,6 +1,7 @@
 # Next
 
-- Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil
+- **Breaking Change** move Defaults (`DefaultAlamofireManager`, `DefaultRequestMapping`, `DefaultEndpointMapping`) and Stubbing (`NeverStub`, `ImmediatelyStub`, `DelayedStub`) from `MoyaProvider` to the new class `MoyaDefaults`.
+- Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil.
 
 # 6.2.0
 
