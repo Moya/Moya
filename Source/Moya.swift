@@ -33,10 +33,10 @@ public protocol Cancellable {
 public class MoyaProvider<Target: TargetType> {
     
     /// Closure that defines the endpoints for the provider.
-    public typealias EndpointClosure = Target -> Endpoint<Target>
+    public typealias EndpointClosure = TargetType -> Endpoint<TargetType>
     
     /// Closure that resolves an Endpoint into an NSURLRequest.
-    public typealias RequestClosure = (Endpoint<Target>, NSURLRequest -> Void) -> Void
+    public typealias RequestClosure = (Endpoint<TargetType>, NSURLRequest -> Void) -> Void
     
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = Target -> Moya.StubBehavior
@@ -51,10 +51,10 @@ public class MoyaProvider<Target: TargetType> {
     public let plugins: [PluginType]
     
     /// Initializes a provider.
-    public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
+    public init(endpointClosure: EndpointClosure = MoyaDefaults.DefaultEndpointMapping,
+        requestClosure: RequestClosure = MoyaDefaults.DefaultRequestMapping,
+        stubClosure: StubClosure = MoyaDefaults.NeverStub,
+        manager: Manager = MoyaDefaults.DefaultAlamofireManager(),
         plugins: [PluginType] = []) {
             
             self.endpointClosure = endpointClosure
@@ -65,7 +65,7 @@ public class MoyaProvider<Target: TargetType> {
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
-    public func endpoint(token: Target) -> Endpoint<Target> {
+    public func endpoint(token: TargetType) -> Endpoint<TargetType> {
         return endpointClosure(token)
     }
     
@@ -93,7 +93,7 @@ public class MoyaProvider<Target: TargetType> {
     
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
-    internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<TargetType>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(request, target: target)
         let plugins = self.plugins
@@ -117,16 +117,16 @@ public class MoyaProvider<Target: TargetType> {
 
 /// Mark: Defaults
 
-public extension MoyaProvider {
+public class MoyaDefaults {
     
     // These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
     
-    public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
+    public final class func DefaultEndpointMapping(target: TargetType) -> Endpoint<TargetType> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
         return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     }
     
-    public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
+    public final class func DefaultRequestMapping(endpoint: Endpoint<TargetType>, closure: NSURLRequest -> Void) {
         return closure(endpoint.urlRequest)
     }
 
@@ -138,24 +138,25 @@ public extension MoyaProvider {
         manager.startRequestsImmediately = false
         return manager
     }
+    
 }
 
 /// Mark: Stubbing
 
-public extension MoyaProvider {
+public extension MoyaDefaults {
     
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
     // at least add some class functions to allow easy access to common stubbing closures.
     
-    public final class func NeverStub(_: Target) -> Moya.StubBehavior {
+    public final class func NeverStub(_: TargetType) -> Moya.StubBehavior {
         return .Never
     }
     
-    public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
+    public final class func ImmediatelyStub(_: TargetType) -> Moya.StubBehavior {
         return .Immediate
     }
     
-    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
+    public final class func DelayedStub(seconds: NSTimeInterval)(_: TargetType) -> Moya.StubBehavior {
         return .Delayed(seconds: seconds)
     }
 }
@@ -183,7 +184,7 @@ internal extension MoyaProvider {
     }
     
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
+    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<TargetType>, plugins: [PluginType]) -> (() -> ()) {
         return {
             if (token.canceled) {
                 let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
