@@ -32,35 +32,30 @@ public enum StructTarget<T: TargetType>: TargetType {
     }
 
     public var path: String {
-        switch self {
-        case .Struct(let t): return t.path
-        }
+        return target.path
     }
 
     public var baseURL: NSURL {
-        switch self {
-        case .Struct(let t): return t.baseURL
-        }
+        return target.baseURL
     }
 
     public var method: Moya.Method {
-        switch self {
-        case .Struct(let t): return t.method
-        }
+        return target.method
     }
 
     public var parameters: [String: AnyObject]? {
-        switch self {
-        case .Struct(let t): return t.parameters
-        }
+        return target.parameters
     }
 
     public var sampleData: NSData {
-        switch self {
-        case .Struct(let t): return t.sampleData
-        }
+        return target.sampleData
     }
 
+    public var target: T {
+        switch self {
+        case .Struct(let t): return t
+        }
+    }
 }
 
 /// Protocol to define the opaque type returned from a request
