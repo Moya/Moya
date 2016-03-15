@@ -24,6 +24,45 @@ public protocol TargetType {
     var sampleData: NSData { get }
 }
 
+public enum StructTarget<T: TargetType>: TargetType {
+    case Struct(T)
+
+    public init(_ target: T) {
+        self = StructTarget.Struct(target)
+    }
+
+    public var path: String {
+        switch self {
+        case .Struct(let t): return t.path
+        }
+    }
+
+    public var baseURL: NSURL {
+        switch self {
+        case .Struct(let t): return t.baseURL
+        }
+    }
+
+    public var method: Moya.Method {
+        switch self {
+        case .Struct(let t): return t.method
+        }
+    }
+
+    public var parameters: [String: AnyObject]? {
+        switch self {
+        case .Struct(let t): return t.parameters
+        }
+    }
+
+    public var sampleData: NSData {
+        switch self {
+        case .Struct(let t): return t.sampleData
+        }
+    }
+
+}
+
 /// Protocol to define the opaque type returned from a request
 public protocol Cancellable {
     func cancel()
