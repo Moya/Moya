@@ -24,10 +24,10 @@ public protocol TargetType {
     var sampleData: NSData { get }
 }
 
-public enum StructTarget<T: TargetType>: TargetType {
-    case Struct(T)
+public enum StructTarget: TargetType {
+    case Struct(TargetType)
 
-    public init(_ target: T) {
+    public init(_ target: TargetType) {
         self = StructTarget.Struct(target)
     }
 
@@ -51,7 +51,7 @@ public enum StructTarget<T: TargetType>: TargetType {
         return target.sampleData
     }
 
-    public var target: T {
+    public var target: TargetType {
         switch self {
         case .Struct(let t): return t
         }
