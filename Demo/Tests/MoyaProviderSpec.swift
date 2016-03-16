@@ -234,11 +234,11 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct URL") {
                 var requestedURL: String?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget<StructAPI>>, done: NSURLRequest -> Void) in
+                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
                     requestedURL = endpoint.URL
                     done(endpoint.urlRequest)
                 }
-                let provider = MoyaProvider<StructTarget<StructAPI>>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
                 waitUntil { done in
                     provider.request(StructTarget(StructAPI())) { _ in
@@ -251,11 +251,11 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct parameters") {
                 var requestParameters: [String: AnyObject]?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget<StructAPI>>, done: NSURLRequest -> Void) in
+                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
                     requestParameters = endpoint.parameters
                     done(endpoint.urlRequest)
                 }
-                let provider = MoyaProvider<StructTarget<StructAPI>>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
                 waitUntil { done in
                     provider.request(StructTarget(StructAPI())) { _ in
@@ -268,11 +268,11 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct method") {
                 var requestMethod: Moya.Method?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget<StructAPI>>, done: NSURLRequest -> Void) in
+                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
                     requestMethod = endpoint.method
                     done(endpoint.urlRequest)
                 }
-                let provider = MoyaProvider<StructTarget<StructAPI>>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
                 waitUntil { done in
                     provider.request(StructTarget(StructAPI())) { _ in
@@ -285,7 +285,7 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct sample data") {
                 var dataString: NSString?
-                let provider = MoyaProvider<StructTarget<StructAPI>>(stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
 
                 waitUntil { done in
                     provider.request(StructTarget(StructAPI())) { result in
