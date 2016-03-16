@@ -1,6 +1,7 @@
 # Next
 
-- Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil
+- Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil.
+- Adds StructTarget for using Moya with structs.
 
 # 6.2.0
 
