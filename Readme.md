@@ -74,7 +74,7 @@ ambiguous lookups at compile time.
 github "Moya/Moya"
 ```
 
-Use
+Usage
 ---
 
 After [some setup](docs/Examples.md), using Moya is really simple. You can access an API like this:

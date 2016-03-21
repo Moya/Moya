@@ -3,72 +3,100 @@ Examples
 
 So how do you use this library? Well, it's pretty easy. Just follow this
 template. First, set up an `enum` with all of your API targets. Note that you
-can include information as part of your enum. Let's look at a simple example.
+can include information as part of your enum. Let's look at a common example. First we create a new file named `MyService.swift`:
 
 ```swift
-enum GitHub {
+enum MyService {
     case Zen
-    case UserProfile(String)
+    case ShowUser(id: Int)
+    case UpdateUser(id: Int, firstName: String, lastName: String)
 }
 ```
 
 This enum is used to make sure that you provide implementation details for each
-target (at compile time). The enum *must* conform to the `TargetType` protocol.
-Let's take a look at what that might look like.
+target (at compile time). You can see that parameters needed for requests can be defined as per the enum cases parameters. The enum *must* additionally conform to the `TargetType` protocol. Let's get this done via an extension in the same file:
 
 ```swift
-private extension String {
-    var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
-    }
-}
-
-extension GitHub: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+// MARK: - TargetType Protocol Implementation
+extension MyService: TargetType {
+    var baseURL: NSURL { return NSURL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
         case .Zen:
             return "/zen"
-        case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString)"
+        case .ShowUser(let id):
+            return "/users/\(id)"
+        case .UpdateUser(let id, _, _):
+            return "/users/\(id)"
         }
     }
     var method: Moya.Method {
-        // all requests in this example will use GET.  Usually you would switch
-        // on the enum, like we did in `var path: String`
-        return .GET
+        switch self {
+        case .Zen, .ShowUser(_):
+            return .GET
+        case .UpdateUser(_, _, _):
+            return .PATCH
+        }
     }
     var parameters: [String: AnyObject]? {
-        return nil
+        switch self {
+        case .Zen, .ShowUser(_):
+            return nil
+        case .UpdateUser(_, let firstName, let lastName):
+            return ["first_name": firstName, "last_name": lastName]
+        }
     }
     var sampleData: NSData {
         switch self {
         case .Zen:
-            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+        case .ShowUser(let id):
+            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".UTF8EncodedData
+        case .UpdateUser(let id, let firstName, let lastName):
+            return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
         }
     }
 }
 
+// MARK: - Helpers
+private extension String {
+    var URLEscapedString: String {
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    }
+    var UTF8EncodedData: NSData {
+        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+    }
+}
 ```
 
 (The `String` extension is just for convenience – you don't have to use it.)
 
-You can see that the `TargetType` protocol translates each value of the enum into
-a relative URL, which can use values embedded in the enum. Super cool.
+You can see that the `TargetType` protocol makes sure that each value of the enum translates into a full request. Each full request is split up into the `baseURL`, the `path` specifying the subpath of the request, the `method` which defines the HTTP method and optionally `parameters` to be added to the request.
+
+Note that at this point you have added enough information for a basic API networking layer to work. By default Moya will combine all the given parts into a full request:
+
+```swift
+let provider = MoyaProvider<MyProvider>()
+provider.request(.UpdateUser(id: 100, firstName: "James", lastName: "Potter")) { result in
+    // do something with the result (read on for more details)
+}
+
+// The full request will result to the following (by default):
+// PATCH https://api.myservice.com/users/100?first_name=James&last_name=Potter
+```
+
 The `TargetType` specifies both a base URL for the API and the sample data for
 each enum value. The sample data are `NSData` instances, and could represent
 JSON, images, text, whatever you're expecting from that endpoint.
 
-Next, we'll set up the endpoints for use with our API.
+You can also set up custom endpoints to alter the default behavior to your needs. For example:
 
 ```swift
 public func url(route: TargetType) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
-let endpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
+let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
     return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
@@ -87,7 +115,7 @@ closure, it'll be executed at each invocation of the API, so you could do
 whatever you want. Say you want to test network error conditions like timeouts, too.
 
 ```swift
-let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
+let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
     let sampleResponseClosure = { () -> (EndpointSampleResponse) in
         if shouldTimeout {
             return .NetworkError(NSError())
@@ -95,7 +123,7 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
             return .NetworkResponse(200, target.sampleData)
         }
     }
-    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(URL: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -107,7 +135,7 @@ Great, now we're all set. Just need to create our provider.
 
 ```swift
 // Tuck this away somewhere where it'll be visible to anyone who wants to use it
-var provider: MoyaProvider<GitHub>!
+var provider: MoyaProvider<MyService>!
 
 // Create this instance at app launch
 let provider = MoyaProvider(endpointClosure: endpointClosure)
@@ -116,12 +144,12 @@ let provider = MoyaProvider(endpointClosure: endpointClosure)
 Neato. Now how do we make a request?
 
 ```swift
-provider.request(.Zen, completion: { result in
+provider.request(.Zen) { result in
     // do something with `result`
-})
+}
 ```
 
-The `request` method is given a `GitHub` value (`.Zen`), which contains *all the
+The `request` method is given a `MyService` value (`.Zen`), which contains *all the
 information necessary* to create the `Endpoint` – or to return a stubbed
 response during testing.
 
@@ -178,7 +206,7 @@ struct Network {
     static let provider = MoyaProvider(endpointClosure: endpointClosure)
 
     static func request(
-        target: Github,
+        target: MyService,
         success successCallback: (JSON) -> Void,
         error errorCallback: (statusCode: Int) -> Void,
         failure failureCallback: (Moya.Error) -> Void
