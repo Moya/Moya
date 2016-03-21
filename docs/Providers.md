@@ -23,7 +23,7 @@ only one public function, `cancel()`, which you can use to cancel the
 request.  See [Examples](Examples.md) for more information about the `Result`
 type.
 
-Remember, *where* you put your target and the provider, are completely up
+Remember, *where* you put your target and the provider, are completely up 
 to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
 for an example.
 
@@ -46,27 +46,27 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
 
-Notice that we don't have to specify the generic type in the `MoyaProvider`
+Notice that we don't have to specify the generic type in the `MoyaProvider` 
 initializer anymore, since Swift will infer it from the type of our
 `endpointClosure`. Neat!
 
-This `endpointClosure` is about as simple as you can get. It's actually the
-default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`.
-Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you
+This `endpointClosure` is about as simple as you can get. It's actually the 
+default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`. 
+Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you 
 might want to customize this.
 
 ### requestClosure:
 
 The next optional initializer parameter is `requestClosure`, which resolves
-an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md)
-documentation for how and why you'd do this.
+an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md) 
+documentation for how and why you'd do this. 
 
 ### stubClosure:
 
 The next option is to provide a `stubClosure`. This returns one of either `.Never` (the
 default), `.Immediate` or `.Delayed(seconds)`, where you can delay the stubbed
 request by a certain number of seconds. For example, `.Delayed(0.2)` would delay
-every stubbed request. This can be good for simulating network delays in unit tests.
+every stubbed request. This can be good for simulating network delays in unit tests. 
 
 What's nice is that if you need to stub some requests differently than others,
 you can use your own closure.
@@ -88,7 +88,7 @@ MoyaProvider.ImmediatelyStub
 MoyaProvider.DelayedStub(seconds)
 ```
 
-So, in the above example, if you wanted immediate stubbing behaviour for all
+So, in the above example, if you wanted immediate stubbing behaviour for all 
 targets, either of the following would work.
 
 ```swift
@@ -144,7 +144,7 @@ For example you can enable the logger plugin by simply passing `[NetworkLoggerPl
 
 ```
 public final class NetworkActivityPlugin: PluginType {
-
+    
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
     let networkActivityClosure: NetworkActivityClosure
 
