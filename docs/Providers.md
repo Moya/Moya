@@ -7,7 +7,7 @@ After setting up your [Endpoint](Endpoints.md), you're basically all set for
 basic usage:
 
 ```swift
-let GitHubProvider = MoyaProvider<GitHub>()
+let provider = MoyaProvider<MyService>()
 ```
 
 After that simple setup, you're off to the races:
@@ -27,7 +27,7 @@ Remember, *where* you put your target and the provider, are completely up
 to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
 for an example.
 
-Advanced Use
+Advanced Usage
 ------------
 
 To explain all configuration options you have with a `MoyaProvider` we will cover each parameter one by one in the following sections.
