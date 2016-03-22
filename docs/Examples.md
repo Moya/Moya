@@ -32,15 +32,15 @@ extension MyService: TargetType {
     }
     var method: Moya.Method {
         switch self {
-        case .Zen, .ShowUser(_):
+        case .Zen, .ShowUser:
             return .GET
-        case .UpdateUser(_, _, _):
+        case .UpdateUser:
             return .PATCH
         }
     }
     var parameters: [String: AnyObject]? {
         switch self {
-        case .Zen, .ShowUser(_):
+        case .Zen, .ShowUser:
             return nil
         case .UpdateUser(_, let firstName, let lastName):
             return ["first_name": firstName, "last_name": lastName]
