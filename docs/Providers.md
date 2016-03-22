@@ -1,13 +1,13 @@
 Providers
 =========
 
-When using Moya, you make all API requests through a `MoyaProvider` instance, 
-passing in a value of your enum that specifies which endpoint you want to call. 
+When using Moya, you make all API requests through a `MoyaProvider` instance,
+passing in a value of your enum that specifies which endpoint you want to call.
 After setting up your [Endpoint](Endpoints.md), you're basically all set for
 basic usage:
 
 ```swift
-let GitHubProvider = MoyaProvider<GitHub>()
+let provider = MoyaProvider<MyService>()
 ```
 
 After that simple setup, you're off to the races:
@@ -25,14 +25,18 @@ type.
 
 Remember, *where* you put your target and the provider, are completely up 
 to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
-for an example. 
+for an example.
 
-Advanced Use
+Advanced Usage
 ------------
 
-The first (optional) parameter for the `MoyaProvider` initializer is an 
-endpoints closure, which is responsible for mapping a value of your enum to a 
-concrete `Endpoint` instance. Let's take a look at what one might look like. 
+To explain all configuration options you have with a `MoyaProvider` we will cover each parameter one by one in the following sections.
+
+### endpointClosure:
+
+The first (optional) parameter for the `MoyaProvider` initializer is an
+endpoints closure, which is responsible for mapping a value of your enum to a
+concrete `Endpoint` instance. Let's take a look at what one might look like.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
@@ -51,17 +55,21 @@ default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`.
 Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you 
 might want to customize this.
 
+### requestClosure:
+
 The next optional initializer parameter is `requestClosure`, which resolves
 an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md) 
 documentation for how and why you'd do this. 
 
-The next option is to provide a `stubClosure`. This returns one of either `.Never` (the 
-default), `.Immediate` or `.Delayed(seconds)`, where you can delay the stubbed 
+### stubClosure:
+
+The next option is to provide a `stubClosure`. This returns one of either `.Never` (the
+default), `.Immediate` or `.Delayed(seconds)`, where you can delay the stubbed
 request by a certain number of seconds. For example, `.Delayed(0.2)` would delay
 every stubbed request. This can be good for simulating network delays in unit tests. 
 
 What's nice is that if you need to stub some requests differently than others,
-you can use your own closure. 
+you can use your own closure.
 
 ```swift
 let provider = MoyaProvider<MyTarget>(stubClosure: { target: MyTarget -> Moya.StubBehavior in
@@ -87,6 +95,8 @@ targets, either of the following would work.
 let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubBehavior in return .Immediate })
 let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
 ```
+
+### manager:
 
 Next, there's the `manager` parameter. By default you'll get a custom `Alamofire.Manager` instance with basic configurations.
 
@@ -123,17 +133,21 @@ let manager = Manager(
 let provider = MoyaProvider<MyTarget>(manager: manager)
 ```
 
+### plugins:
+
 Finally, you may also provide an array of `plugins` to the provider. These receive callbacks
 before a request is sent and after a response is received. There are a few plugins
 included already: one for network activity (`NetworkActivityPlugin`), one for logging
 all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).
+
+For example you can enable the logger plugin by simply passing `[NetworkLoggerPlugin()]` alongside the `plugins` parameter of your `Endpoint`. Note that a plugin can also be configurable, for example the already included `NetworkActivityPlugin` requires a `networkActivityClosure` parameter. The configurable plugin implementation looks like this:
 
 ```
 public final class NetworkActivityPlugin: PluginType {
     
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
     let networkActivityClosure: NetworkActivityClosure
-    
+
     public init(networkActivityClosure: NetworkActivityClosure) {
         self.networkActivityClosure = networkActivityClosure
     }
@@ -152,8 +166,7 @@ public final class NetworkActivityPlugin: PluginType {
 }
 ```
 
-For instance, if you want to add a `NetworkActivityPlugin`, it requires a `networkActivityClosure` parameter. 
-This is a closure that you can provide to be notified whenever a network request begins or
+The `networkActivityClosure` is a closure that you can provide to be notified whenever a network request begins or
 ends. This is useful for working with the [network activitiy indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
 Note that signature of this closure is `(change: NetworkActivityChangeType) -> ()`,
 so you will only be notified when a request has `.Began` or `.Ended` –
