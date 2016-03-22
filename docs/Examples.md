@@ -9,7 +9,7 @@ can include information as part of your enum. Let's look at a common example. Fi
 enum MyService {
     case Zen
     case ShowUser(id: Int)
-    case UpdateUser(id: Int, firstName: String, lastName: String)
+    case CreateUser(firstName: String, lastName: String)
 }
 ```
 
@@ -26,23 +26,23 @@ extension MyService: TargetType {
             return "/zen"
         case .ShowUser(let id):
             return "/users/\(id)"
-        case .UpdateUser(let id, _, _):
-            return "/users/\(id)"
+        case .CreateUser(_, _):
+            return "/users"
         }
     }
     var method: Moya.Method {
         switch self {
         case .Zen, .ShowUser:
             return .GET
-        case .UpdateUser:
-            return .PATCH
+        case .CreateUser:
+            return .POST
         }
     }
     var parameters: [String: AnyObject]? {
         switch self {
         case .Zen, .ShowUser:
             return nil
-        case .UpdateUser(_, let firstName, let lastName):
+        case .CreateUser(let firstName, let lastName):
             return ["first_name": firstName, "last_name": lastName]
         }
     }
@@ -52,8 +52,8 @@ extension MyService: TargetType {
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
         case .ShowUser(let id):
             return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".UTF8EncodedData
-        case .UpdateUser(let id, let firstName, let lastName):
-            return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
+        case .CreateUser(let firstName, let lastName):
+            return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
         }
     }
 }
@@ -77,12 +77,12 @@ Note that at this point you have added enough information for a basic API networ
 
 ```swift
 let provider = MoyaProvider<MyProvider>()
-provider.request(.UpdateUser(id: 100, firstName: "James", lastName: "Potter")) { result in
+provider.request(.CreateUser(firstName: "James", lastName: "Potter")) { result in
     // do something with the result (read on for more details)
 }
 
 // The full request will result to the following (by default):
-// PATCH https://api.myservice.com/users/100?first_name=James&last_name=Potter
+// POST https://api.myservice.com/users?first_name=James&last_name=Potter
 ```
 
 The `TargetType` specifies both a base URL for the API and the sample data for
@@ -97,7 +97,7 @@ public func url(route: TargetType) -> String {
 }
 
 let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
-    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
