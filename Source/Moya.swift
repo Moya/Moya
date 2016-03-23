@@ -137,6 +137,10 @@ public class MoyaProvider<Target: TargetType> {
                 endpoint.urlRequest,
                 multipartFormData: multipartFormData,
                 encodingCompletion: { result in
+                    /// Ensure that the request is cancelled if the token is cancelled
+                    /// after encoding.
+                    if cancellableToken.isCancelled { return }
+                    
                     switch result {
                     case .Success(let encodedRequest, _, _):
                         switch stubBehavior {
@@ -146,8 +150,7 @@ public class MoyaProvider<Target: TargetType> {
                             cancellableToken.innerCancellable = self.stubRequest(target, request: encodedRequest.request!, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
                         }
                     case .Failure(let error):
-                        print("An error occurred while encoding multipart request:", error)
-                        
+                        completion(result: .Failure(Moya.Error.Underlying(error)))
                     }
                 }
             )
@@ -222,7 +225,7 @@ public extension MoyaProvider {
         return .Immediate
     }
     
-    public final class func DelayedStub(seconds: NSTimeInterval, _: Target) -> Moya.StubBehavior {
+    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
         return .Delayed(seconds: seconds)
     }
 }
