@@ -3,6 +3,9 @@ import Alamofire
 
 public typealias Manager = Alamofire.Manager
 
+public typealias MultipartFormData = Alamofire.MultipartFormData
+public typealias Request = Alamofire.Request
+
 /// Choice of parameter encoding.
 public typealias ParameterEncoding = Alamofire.ParameterEncoding
 
