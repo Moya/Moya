@@ -49,17 +49,25 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 
 enum HTTPBin: TargetType {
     case BasicAuth
+    case MultipartPOST
 
     var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .BasicAuth:
             return "/basic-auth/user/passwd"
+        case .MultipartPOST:
+            return "/post"
         }
     }
 
     var method: Moya.Method {
-        return .GET
+        switch self {
+        case .MultipartPOST:
+            return .POST
+        default:
+            return .GET
+        }
     }
     var parameters: [String: AnyObject]? {
         switch self {
@@ -72,6 +80,8 @@ enum HTTPBin: TargetType {
         switch self {
         case .BasicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .MultipartPOST:
+            return "{\n  \"args\": {}, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {\n    \"part_0\": \"This is a multipart request!\"\n  }, \n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\": \"gzip;q=1.0, compress;q=0.5\", \n    \"Accept-Language\": \"en;q=1.0\", \n    \"Content-Length\": \"159\", \n    \"Content-Type\": \"multipart/form-data; boundary=alamofire.boundary.667efb17024e0c98\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"Unknown/Unknown (Unknown; OS Version 10.11.4 (Build 15E65))\"\n  }, \n  \"json\": null, \n  \"url\": \"http://httpbin.org/post\"\n}\n".dataUsingEncoding(NSUTF8StringEncoding)!
         }
     }
 }
