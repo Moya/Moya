@@ -125,6 +125,39 @@ public class MoyaProvider<Target: TargetType> {
         return cancellableToken
     }
     
+    public func multipartRequest(target: Target, multipartFormData: MultipartFormData -> (), completion: Moya.Completion) -> Cancellable {
+        let endpoint = self.endpoint(target)
+        let stubBehavior = self.stubClosure(target)
+        var cancellableToken = CancellableWrapper()
+        
+        let performNetworking = { (request: NSURLRequest) in
+            if cancellableToken.isCancelled { return }
+            
+            self.manager.upload(
+                endpoint.urlRequest,
+                multipartFormData: multipartFormData,
+                encodingCompletion: { result in
+                    switch result {
+                    case .Success(let encodedRequest, _, _):
+                        switch stubBehavior {
+                        case .Never:
+                            cancellableToken.innerCancellable = self.sendAlamofireRequest(target, request: encodedRequest, completion: completion)
+                        default:
+                            cancellableToken.innerCancellable = self.stubRequest(target, request: encodedRequest.request!, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+                        }
+                    case .Failure(let error):
+                        print("An error occurred while encoding multipart request:", error)
+                        
+                    }
+                }
+            )
+        }
+        
+        requestClosure(endpoint, performNetworking)
+        
+        return cancellableToken
+    }
+    
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
@@ -189,7 +222,7 @@ public extension MoyaProvider {
         return .Immediate
     }
     
-    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
+    public final class func DelayedStub(seconds: NSTimeInterval, _: Target) -> Moya.StubBehavior {
         return .Delayed(seconds: seconds)
     }
 }
@@ -197,23 +230,26 @@ public extension MoyaProvider {
 internal extension MoyaProvider {
     
     func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
-        let alamoRequest = manager.request(request)
+        return sendAlamofireRequest(target, request: manager.request(request), completion: completion)
+    }
+    
+    func sendAlamofireRequest(target: Target, request: Request, completion: Moya.Completion) -> CancellableToken {
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+        plugins.forEach { $0.willSendRequest(request, target: target) }
         
         // Perform the actual request
-        alamoRequest.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+        request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceiveResponse(result, target: target) }
             completion(result: result)
         }
-
-        alamoRequest.resume()
-
-        return CancellableToken(request: alamoRequest)
+        
+        request.resume()
+        
+        return CancellableToken(request: request)
     }
     
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
