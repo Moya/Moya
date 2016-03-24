@@ -55,6 +55,8 @@
 		5EC197EF1A1BB16D00F4DFD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EC197EE1A1BB16D00F4DFD4 /* Images.xcassets */; };
 		5EC197F21A1BB16D00F4DFD4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5EC197F01A1BB16D00F4DFD4 /* LaunchScreen.xib */; };
 		5EC198081A1BB24600F4DFD4 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC198071A1BB24600F4DFD4 /* GitHubAPI.swift */; };
+		7CC30DBE1CA30E10002C8282 /* HTTPBinAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC30DBD1CA30E10002C8282 /* HTTPBinAPI.swift */; };
+		7CC30DC01CA3101D002C8282 /* Providers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC30DBF1CA3101D002C8282 /* Providers.swift */; };
 		EEFDA00B2FC44BE035958929 /* Pods_MoyaTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCD314EAFE25D3A0CE7997D8 /* Pods_MoyaTests_tvOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +107,8 @@
 		635CFFB539B0C7F414CAD726 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		67955DC208F39BB3C376A9D8 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		744D31F96178825D53E5EE12 /* Pods-MoyaTests-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests-tvOS/Pods-MoyaTests-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		7CC30DBD1CA30E10002C8282 /* HTTPBinAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPBinAPI.swift; sourceTree = "<group>"; };
+		7CC30DBF1CA3101D002C8282 /* Providers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Providers.swift; sourceTree = "<group>"; };
 		8F36EB1D83A38DB0979D7971 /* Pods-MoyaTests-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests-iOS/Pods-MoyaTests-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9CCE52E05430949E8D8B4BCE /* Pods-MoyaTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests-iOS/Pods-MoyaTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		A6CA4F38C4DAC8231675BB5D /* Pods-MoyaTests-Mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests-Mac.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests-Mac/Pods-MoyaTests-Mac.debug.xcconfig"; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 		5EC197E21A1BB16D00F4DFD4 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				7CC30DBF1CA3101D002C8282 /* Providers.swift */,
+				7CC30DBD1CA30E10002C8282 /* HTTPBinAPI.swift */,
 				5EC198071A1BB24600F4DFD4 /* GitHubAPI.swift */,
 				5EC197E51A1BB16D00F4DFD4 /* AppDelegate.swift */,
 				5EC197E71A1BB16D00F4DFD4 /* ViewController.swift */,
@@ -650,7 +656,9 @@
 			files = (
 				5EC197E81A1BB16D00F4DFD4 /* ViewController.swift in Sources */,
 				5EC197E61A1BB16D00F4DFD4 /* AppDelegate.swift in Sources */,
+				7CC30DBE1CA30E10002C8282 /* HTTPBinAPI.swift in Sources */,
 				5EC198081A1BB24600F4DFD4 /* GitHubAPI.swift in Sources */,
+				7CC30DC01CA3101D002C8282 /* Providers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

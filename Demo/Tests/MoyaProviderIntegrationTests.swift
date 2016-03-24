@@ -20,6 +20,10 @@ class MoyaProviderIntegrationTests: QuickSpec {
         let userMessage = NSString(data: GitHub.UserProfile("ashfurrow").sampleData, encoding: NSUTF8StringEncoding)
         let zenMessage = NSString(data: GitHub.Zen.sampleData, encoding: NSUTF8StringEncoding)
         
+        /// !!!: This isn't exactly right, due to the dynamic response from httpbin. 
+        ///      It includes the "origin" IP address, as well as a "User-Agent" header.
+        let multipartMessage = NSString(data: HTTPBin.MultipartPOST.sampleData, encoding: NSUTF8StringEncoding)
+        
         beforeEach {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
                 return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil).responseTime(0.5)
@@ -42,16 +46,19 @@ class MoyaProviderIntegrationTests: QuickSpec {
         describe("valid endpoints") {
             describe("with live data") {
                 describe("a provider") {
-                    var provider: MoyaProvider<GitHub>!
+                    var githubProvider: MoyaProvider<GitHub>!
+                    var httpBinProvider: MoyaProvider<HTTPBin>!
+                    
                     beforeEach {
-                        provider = MoyaProvider<GitHub>()
+                        githubProvider = MoyaProvider<GitHub>()
+                        httpBinProvider = MoyaProvider<HTTPBin>()
                     }
                     
                     it("returns real data for zen request") {
                         var message: String?
 
                         waitUntil { done in
-                            provider.request(.Zen) { result in
+                            githubProvider.request(.Zen) { result in
                                 if case let .Success(response) = result {
                                     message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                                 }
@@ -67,7 +74,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         waitUntil { done in
                             let target: GitHub = .UserProfile("ashfurrow")
-                            provider.request(target) { result in
+                            githubProvider.request(target) { result in
                                 if case let .Success(response) = result {
                                     message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
                                 }
@@ -78,12 +85,36 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(message) == userMessage
                     }
                     
+                    it("returns real data for multipart request") {
+                        var message: String?
+                        
+                        waitUntil { done in
+                            let data = "This is a multipart request!".dataUsingEncoding(NSUTF8StringEncoding)!
+                            let target: HTTPBin = HTTPBin.MultipartPOST
+                            httpBinProvider.multipartRequest(
+                                target,
+                                multipartFormData: { formData in
+                                    formData.appendBodyPart(data: data, name: "part_0")
+                                },
+                                completion: { result in
+                                    if case let .Success(response) = result {
+                                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                                    }
+                                    
+                                    done()
+                                }
+                            )
+                        }
+                        
+                        expect(message) != nil
+                    }
+                    
                     it("returns an error when cancelled") {
                         var receivedError: ErrorType?
 
                         waitUntil { done in
                             let target: GitHub = .UserProfile("ashfurrow")
-                            let token = provider.request(target) { result in
+                            let token = githubProvider.request(target) { result in
                                 if case let .Failure(error) = result {
                                     receivedError = error
                                     done()
