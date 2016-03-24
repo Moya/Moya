@@ -188,9 +188,9 @@ public extension MoyaProvider {
     public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
         return .Immediate
     }
-    
-    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
-        return .Delayed(seconds: seconds)
+
+    public final class func DelayedStub(seconds: NSTimeInterval) -> (Target) -> Moya.StubBehavior {
+        return { _ in return .Delayed(seconds: seconds) }
     }
 }
 
