@@ -15,6 +15,27 @@ public enum StubBehavior {
     case Delayed(seconds: NSTimeInterval)
 }
 
+public enum TargetRequestType {
+    case Request
+    case Upload
+}
+
+public enum UploadType {
+    case File(NSURL)
+    case Data(NSData)
+    case Stream(NSInputStream)
+    case Multipart(MultipartFormData -> ())
+}
+
+public protocol MultipartBodyPart {
+    var name: String { get }
+
+    // Additional stream parameters
+    var length: UInt64 { get }
+    var fileName: String { get }
+    var mimeType: String { get }
+}
+
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
 public protocol TargetType {
     var baseURL: NSURL { get }
@@ -22,6 +43,19 @@ public protocol TargetType {
     var method: Moya.Method { get }
     var parameters: [String: AnyObject]? { get }
     var sampleData: NSData { get }
+    
+    var requestType: TargetRequestType { get }
+    var uploadType: UploadType? { get }
+}
+
+extension TargetType {
+    public var requestType: TargetRequestType {
+        return .Request
+    }
+    
+    public var uploadType: UploadType? {
+        return nil
+    }
 }
 
 public enum StructTarget: TargetType {
@@ -107,9 +141,18 @@ public class MoyaProvider<Target: TargetType> {
     public func request(target: Target, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
+        
+        let (cancellableToken, performNetworking) = target.requestType == .Request ? self.performRequest(endpoint, target: target, stubBehavior: stubBehavior, completion: completion) : self.performUpload(endpoint, target: target, stubBehavior: stubBehavior, completion: completion)
+        
+        requestClosure(endpoint, performNetworking)
+        
+        return cancellableToken
+    }
+    
+    private func performRequest(endpoint: Endpoint<Target>, target: Target, stubBehavior: StubBehavior, completion: Moya.Completion) -> (token: Cancellable, networkingRequest: NSURLRequest -> ()) {
         var cancellableToken = CancellableWrapper()
         
-        let performNetworking = { (request: NSURLRequest) in
+        return (cancellableToken, { (request: NSURLRequest) in
             if cancellableToken.isCancelled { return }
             
             switch stubBehavior {
@@ -118,47 +161,63 @@ public class MoyaProvider<Target: TargetType> {
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
-        }
-        
-        requestClosure(endpoint, performNetworking)
-        
-        return cancellableToken
+        })
     }
     
-    public func multipartRequest(target: Target, multipartFormData: MultipartFormData -> (), completion: Moya.Completion) -> Cancellable {
-        let endpoint = self.endpoint(target)
-        let stubBehavior = self.stubClosure(target)
+    private func performUpload(endpoint: Endpoint<Target>, target: Target, stubBehavior: StubBehavior, completion: Moya.Completion) -> (token: Cancellable, networkingRequest: NSURLRequest -> ()) {
         var cancellableToken = CancellableWrapper()
         
-        let performNetworking = { (request: NSURLRequest) in
+        return (cancellableToken, { (request: NSURLRequest) in
             if cancellableToken.isCancelled { return }
             
-            self.manager.upload(
-                endpoint.urlRequest,
-                multipartFormData: multipartFormData,
-                encodingCompletion: { result in
-                    /// Ensure that the request is cancelled if the token is cancelled
-                    /// after encoding.
-                    if cancellableToken.isCancelled { return }
-                    
-                    switch result {
-                    case .Success(let encodedRequest, _, _):
-                        switch stubBehavior {
-                        case .Never:
-                            cancellableToken.innerCancellable = self.sendAlamofireRequest(target, request: encodedRequest, completion: completion)
-                        default:
-                            cancellableToken.innerCancellable = self.stubRequest(target, request: encodedRequest.request!, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
-                        }
-                    case .Failure(let error):
-                        completion(result: .Failure(Moya.Error.Underlying(error)))
-                    }
+            guard let uploadType = target.uploadType
+            else {
+                cancellableToken.cancel()
+                return
+            }
+            
+            let stubOrSendRequest = { (request: Request) in
+                switch stubBehavior {
+                case .Never:
+                    cancellableToken.innerCancellable = self.sendAlamofireRequest(target, request: request, completion: completion)
+                default:
+                    cancellableToken.innerCancellable = self.stubRequest(target, request: request.request!, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
                 }
-            )
-        }
-        
-        requestClosure(endpoint, performNetworking)
-        
-        return cancellableToken
+            }
+            
+            var alamofireRequest: Request?
+            switch uploadType {
+            case .File(let fileURL):
+                alamofireRequest = self.manager.upload(request, file: fileURL)
+            case .Data(let data):
+                alamofireRequest = self.manager.upload(request, data: data)
+            case .Stream(let inputStream):
+                alamofireRequest = self.manager.upload(request, stream: inputStream)
+            default:
+                break
+            }
+            
+            if let alamofireRequest = alamofireRequest {
+                stubOrSendRequest(alamofireRequest)
+            } else if case let .Multipart(multipartFormData) = uploadType {
+                self.manager.upload(
+                    request,
+                    multipartFormData: multipartFormData,
+                    encodingCompletion: { result in
+                        /// Ensure that the request is cancelled if the token is cancelled
+                        /// after encoding.
+                        if cancellableToken.isCancelled { return }
+                        
+                        switch result {
+                        case .Success(let encodedRequest, _, _):
+                            stubOrSendRequest(encodedRequest)
+                        case .Failure(let error):
+                            completion(result: .Failure(Moya.Error.Underlying(error)))
+                        }
+                    }
+                )
+            }
+        })
     }
     
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.

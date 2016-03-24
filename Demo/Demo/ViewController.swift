@@ -68,24 +68,16 @@ class ViewController: UITableViewController {
     
     func uploadMultipart() {
         let data = "This is my multipart part!".dataUsingEncoding(NSUTF8StringEncoding)!
-        let target = HTTPBin.MultipartPOST
+        let target = HTTPBin.MultipartPOST(data)
         
-        HTTPBinProvider.multipartRequest(
-            target,
-            multipartFormData: { formData in
-                for i in 0..<10 {
-                    formData.appendBodyPart(data: data, name: "part_\(i)")
-                }
-            },
-            completion: { result in
-                let alertController = UIAlertController(title: "Multipart", message: "Successfully uploaded parts!", preferredStyle: .Alert)
-                let ok = UIAlertAction(title: "OK", style: .Default, handler: { _ in
-                    alertController.dismissViewControllerAnimated(true, completion: nil)
-                })
-                alertController.addAction(ok)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-        )
+        HTTPBinProvider.request(target) { result in
+            let alertController = UIAlertController(title: "Multipart", message: "Successfully uploaded parts!", preferredStyle: .Alert)
+            let ok = UIAlertAction(title: "OK", style: .Default, handler: { _ in
+                alertController.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alertController.addAction(ok)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
 
     // MARK: - User Interaction

@@ -5,7 +5,10 @@ import Moya
 // MARK: - Provider Support
 
 public enum HTTPBin {
-    case MultipartPOST
+    case MultipartPOST(NSData)
+    case UploadFile(NSURL)
+    case UploadData(NSData)
+    case UploadStream(NSInputStream)
 }
 
 extension HTTPBin: TargetType {
@@ -18,6 +21,23 @@ extension HTTPBin: TargetType {
     }
     public var parameters: [String: AnyObject]? {
         return nil
+    }
+    public var requestType: TargetRequestType {
+        return .Upload
+    }
+    public var uploadType: UploadType? {
+        switch self {
+        case .MultipartPOST(let data):
+            return UploadType.Multipart({ formData in
+                formData.appendBodyPart(data: data, name: "part_0_data")
+            })
+        case .UploadFile(let fileURL):
+            return UploadType.File(fileURL)
+        case .UploadData(let data):
+            return UploadType.Data(data)
+        case .UploadStream(let inputStream):
+            return UploadType.Stream(inputStream)
+        }
     }
     
     public var sampleData: NSData {
