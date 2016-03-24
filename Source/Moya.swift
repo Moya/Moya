@@ -190,7 +190,9 @@ public extension MoyaProvider {
     }
 
     public final class func DelayedStub(seconds: NSTimeInterval) -> (Target) -> Moya.StubBehavior {
-        return { _ in return .Delayed(seconds: seconds) }
+        return { _ in
+            return .Delayed(seconds: seconds)
+        }
     }
 }
 
