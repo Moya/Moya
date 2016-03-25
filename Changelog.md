@@ -1,5 +1,7 @@
 # Next
 
+# 6.3.1
+
 - Updates for Swift 2.2 / Xcode 7.3 compatibility.
 
 # 6.3.0
