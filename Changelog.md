@@ -1,5 +1,7 @@
 # Next
 
+- Updates for Swift 2.2 / Xcode 7.3 compatibility.
+
 # 6.3.0
 
 - Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil.
