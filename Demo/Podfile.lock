@@ -1,17 +1,17 @@
 PODS:
   - Alamofire (3.3.0)
-  - Moya (6.3.1):
-    - Moya/Core (= 6.3.1)
-  - Moya/Core (6.3.1):
+  - Moya (6.3.2):
+    - Moya/Core (= 6.3.2)
+  - Moya/Core (6.3.2):
     - Alamofire (~> 3.0)
-    - Result (~> 1.0)
-  - Moya/ReactiveCocoa (6.3.1):
+    - Result (~> 2.0)
+  - Moya/ReactiveCocoa (6.3.2):
     - Moya/Core
-    - ReactiveCocoa (~> 4.0)
-  - Moya/RxSwift (6.3.1):
+    - ReactiveCocoa (~> 4.1)
+  - Moya/RxSwift (6.3.2):
     - Moya/Core
     - RxSwift (~> 2.0)
-  - Nimble (3.1.0)
+  - Nimble (3.2.0)
   - OHHTTPStubs (4.7.0):
     - OHHTTPStubs/Default (= 4.7.0)
   - OHHTTPStubs/Core (4.7.0)
@@ -25,19 +25,19 @@ PODS:
   - OHHTTPStubs/NSURLSession (4.7.0):
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.7.0)
-  - Quick (0.9.0)
-  - ReactiveCocoa (4.0.1):
-    - ReactiveCocoa/UI (= 4.0.1)
-    - Result (~> 1.0.2)
-  - ReactiveCocoa/Core (4.0.1):
+  - Quick (0.9.1)
+  - ReactiveCocoa (4.1.0):
+    - ReactiveCocoa/UI (= 4.1.0)
+    - Result (~> 2.0)
+  - ReactiveCocoa/Core (4.1.0):
     - ReactiveCocoa/no-arc
-    - Result (~> 1.0.2)
-  - ReactiveCocoa/no-arc (4.0.1):
-    - Result (~> 1.0.2)
-  - ReactiveCocoa/UI (4.0.1):
+    - Result (~> 2.0)
+  - ReactiveCocoa/no-arc (4.1.0):
+    - Result (~> 2.0)
+  - ReactiveCocoa/UI (4.1.0):
     - ReactiveCocoa/Core
-    - Result (~> 1.0.2)
-  - Result (1.0.2)
+    - Result (~> 2.0)
+  - Result (2.0.0)
   - RxSwift (2.3.1)
 
 DEPENDENCIES:
@@ -54,12 +54,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
-  Moya: 852e26948a3771355ddf0f0109ac779b6fc30f28
-  Nimble: 79d40f4d69d47314229bbabacaa02b8838c779b9
+  Moya: 246fa159788f31a22e80c56f153a697adf61ca54
+  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
   OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
-  Quick: 332eb1da73125a2106dd637424c803f2ae97e4a9
-  ReactiveCocoa: f7011630aee4deeb16352fcb1b50d6bde9db4f90
-  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
+  Quick: a5221fc21788b6aeda934805e68b061839bc3165
+  ReactiveCocoa: d70004d7a366a7b8e87e60ce2347182c77701949
+  Result: 9e75e1111c774c6ac594e14907b15057053a7959
   RxSwift: 829b2843e9eddc77a02cb3f5117f0d55f8f646f1
 
 COCOAPODS: 0.39.0
