@@ -96,7 +96,6 @@ task :release, :version do |task, args|
   puts "Pushing to CocoaPods trunk."
   sh "pod trunk push Moya.podspec --allow-warnings"
 
-  puts "Pushing as a GitHub Release."
-  sh "git config release.tag-regex=\d+\.\d+\.\d+$"
-  sh "git release"
+  puts "You need to manually create a GitHub release now (for Carthage), opening Safari..."
+  sh "open 'https://github.com/Moya/Moya/releases/new?tag=#{version}'"
 end
