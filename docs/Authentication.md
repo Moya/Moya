@@ -38,7 +38,7 @@ OAuth
 
 OAuth is quite a bit trickier. It involes a multistep process that is often 
 different between different APIs. You _really_ don't want to do OAuth yourself –
-there are other libraries to do it for you. [Heimdall.swift](https://github.com/rheinfabrik/Heimdall.swift),
+there are other libraries to do it for you. [Heimdallr.swift](https://github.com/rheinfabrik/Heimdallr.swift),
 for example. The trick is just getting Moya and whatever you're using to talk
 to one another. 
 
