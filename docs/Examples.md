@@ -76,7 +76,7 @@ You can see that the `TargetType` protocol makes sure that each value of the enu
 Note that at this point you have added enough information for a basic API networking layer to work. By default Moya will combine all the given parts into a full request:
 
 ```swift
-let provider = MoyaProvider<MyProvider>()
+let provider = MoyaProvider<MyService>()
 provider.request(.CreateUser(firstName: "James", lastName: "Potter")) { result in
     // do something with the result (read on for more details)
 }
