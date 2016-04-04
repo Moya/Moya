@@ -103,8 +103,8 @@ public class MoyaProvider<Target: TargetType> {
         return endpointClosure(token)
     }
     
-    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
-    public func request(target: Target, queue:dispatch_queue_t? = nil, completion: Moya.Completion) -> Cancellable {
+    /// Designated request-making method with queue option. Returns a Cancellable token to cancel the request later.
+    public func requestWithQueue(target: Target, queue:dispatch_queue_t? = nil, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         var cancellableToken = CancellableWrapper()
@@ -115,6 +115,28 @@ public class MoyaProvider<Target: TargetType> {
             switch stubBehavior {
             case .Never:
                 cancellableToken.innerCancellable = self.sendRequest(target, request: request, queue: queue, completion: completion)
+            default:
+                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            }
+        }
+        
+        requestClosure(endpoint, performNetworking)
+        
+        return cancellableToken
+    }
+    
+    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
+    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
+        let endpoint = self.endpoint(target)
+        let stubBehavior = self.stubClosure(target)
+        var cancellableToken = CancellableWrapper()
+        
+        let performNetworking = { (request: NSURLRequest) in
+            if cancellableToken.isCancelled { return }
+            
+            switch stubBehavior {
+            case .Never:
+                cancellableToken.innerCancellable = self.sendRequest(target, request: request, queue: nil, completion: completion)
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
             }

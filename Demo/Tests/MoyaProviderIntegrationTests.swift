@@ -112,7 +112,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let target: GitHub = .Zen
                         
                         waitUntil { done in
-                            provider.request(target, queue:queue) { _ in
+                            provider.requestWithQueue(target, queue:queue) { _ in
                                 isMainThread = NSThread.isMainThread()
                                 done()
                             }
@@ -126,7 +126,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let target: GitHub = .Zen
                         
                         waitUntil { done in 
-                            provider.request(target) { _ in
+                            provider.requestWithQueue(target) { _ in
                                 isMainThread = NSThread.isMainThread()
                                 done()
                             }
