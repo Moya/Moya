@@ -3,6 +3,7 @@
 - Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
 - Updates to ReactiveCocoa 4.1
 - Updates to Result 2.0
+- Added `queue` parameter to `request` and `sendRequest`. This open up option to use other queue instead of main queue for response callback.
 
 # 6.3.1
 
