@@ -60,3 +60,9 @@ let provider = MoyaProvider(requestClosure: requestClosure)
 ```
 
 (Note that Swift is able to infer the `YourAPI` generic – neat!)
+
+Handle session refresh in your Provider subclass
+------------------------------------------------
+
+You can take a look at example of session refreshing before each request in [Examples/SubclassingProvider](Examples/SubclassingProvider.md).
+It is based on [Artsy's networking implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/Networking.swift).
