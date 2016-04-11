@@ -27,6 +27,8 @@ Remember, *where* you put your target and the provider, are completely up
 to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
 for an example.
 
+But don't forget to keep a reference for it in property. If it gets deallocated you'll see `-999 "cancelled"` error on response.
+
 Advanced Usage
 ------------
 
