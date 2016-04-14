@@ -8,7 +8,7 @@ Used RxSwift.
 ```swift
 class OnlineProvider: RxMoyaProvider<MyService> {
     
-	// First of all, we need to override designated initializer
+    // First of all, we need to override designated initializer
     override init(endpointClosure: MoyaProvider<MyService>.EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: MoyaProvider<MyService>.RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: MoyaProvider<MyService>.StubClosure = MoyaProvider.NeverStub,
@@ -18,7 +18,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
     }
     
-    /// Request to fetch and store new XApp token if the current token is missing or expired.
+    // Request to fetch and store new XApp token if the current token is missing or expired.
     func XAppTokenRequest() -> Observable<String?> {
         
         var appToken = UserInfo.sharedInstance.accessToken
@@ -28,12 +28,12 @@ class OnlineProvider: RxMoyaProvider<MyService> {
             return Observable.just(appToken.token)
         }
         
-		// Do not attempt to refresh a session if we don't have valid credentials
+        // Do not attempt to refresh a session if we don't have valid credentials
         guard let userId = UserInfo.sharedInstance.userId, refreshToken = UserInfo.sharedInstance.accessToken.refreshToken else {
             return Observable.just(nil)
         }
         
-		// Create actual refresh request
+        // Create actual refresh request
         let newTokenRequest = super.request(MyService.RefreshSession(userId: userId, resfreshToken: refreshToken))
             .filterSuccessfulStatusCodes()
             .mapJSON()
@@ -56,7 +56,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
                 guard let error = e as? Moya.Error else { throw e }
                 guard case .StatusCode(let response) = error else { throw e }
                 
-				// If we have 401 error - delete all credentials and handle logout
+                // If we have 401 error - delete all credentials and handle logout
                 if response.statusCode == 401 {
                     UserInfo.sharedInstance.invalidate()
                     Router.sharedInstance.popToLoginScreen()
@@ -67,7 +67,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
         return newTokenRequest
     }
     
-	// Override request to inject XAppTokenRequest if needed
+    // Override request to inject XAppTokenRequest if needed
     override func request(token: MyService) -> Observable<Moya.Response> {
         let actualRequest = super.request(token)
         
