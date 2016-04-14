@@ -1,10 +1,10 @@
-Send data as JSON array
-=======================
+Use Array instead of Dictionary as JSON root container
+======================================================
 
-Moya is using dictionary as a root container for JSON data. And you shoud
-be using this too. But sometimes you will need to send JSON array as a
-root element instead. Here is solution by using `.Custom` parameter
-encoding (see discussion in [#467](https://github.com/Moya/Moya/issues/467)):
+Moya is using dictionary as a root container for JSON data. But 
+sometimes you will need to send JSON array as a root element instead.
+Here is solution by using `.Custom` parameter encoding (see discussion
+in [#467](https://github.com/Moya/Moya/issues/467)):
 
 Define JsonArrayEncoding closure:
 

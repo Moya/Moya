@@ -10,11 +10,11 @@ extension Observable {
         return self.doOn { event in
             switch event {
             case .Error(let e):
-				// Unwrap underlying error
+                // Unwrap underlying error
                 guard let error = e as? Moya.Error else { throw e }
                 guard case .StatusCode(let response) = error else { throw e }
                 
-				// Check statusCode and handle desired errors
+                // Check statusCode and handle desired errors
                 if response.statusCode == 401 {
                     SVProgressHUD.showErrorWithStatus("Please log in again")
                     
