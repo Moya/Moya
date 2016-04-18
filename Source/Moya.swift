@@ -4,6 +4,9 @@ import Result
 /// Closure to be executed when a request has completed.
 public typealias Completion = (result: Result<Moya.Response, Moya.Error>) -> ()
 
+/// Closure for providing upload/download progress
+public typealias Progress = (bytesSent: Int64, totalBytesSent: Int64, totalBytesExpected: Int64) -> ()
+
 /// Represents an HTTP method.
 public enum Method: String {
     case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
@@ -25,15 +28,6 @@ public enum UploadType {
     case Data(NSData)
     case Stream(NSInputStream)
     case Multipart(MultipartFormData -> ())
-}
-
-public protocol MultipartBodyPart {
-    var name: String { get }
-
-    // Additional stream parameters
-    var length: UInt64 { get }
-    var fileName: String { get }
-    var mimeType: String { get }
 }
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
@@ -138,11 +132,11 @@ public class MoyaProvider<Target: TargetType> {
     }
     
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
-    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
+    public func request(target: Target, progress: Moya.Progress? = nil, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         
-        let (cancellableToken, performNetworking) = target.requestType == .Request ? self.performRequest(endpoint, target: target, stubBehavior: stubBehavior, completion: completion) : self.performUpload(endpoint, target: target, stubBehavior: stubBehavior, completion: completion)
+        let (cancellableToken, performNetworking) = target.requestType == .Request ? self.performRequest(endpoint, target: target, stubBehavior: stubBehavior, completion: completion) : self.performUpload(endpoint, target: target, stubBehavior: stubBehavior, progress: progress, completion: completion)
         
         requestClosure(endpoint, performNetworking)
         
@@ -164,7 +158,7 @@ public class MoyaProvider<Target: TargetType> {
         })
     }
     
-    private func performUpload(endpoint: Endpoint<Target>, target: Target, stubBehavior: StubBehavior, completion: Moya.Completion) -> (token: Cancellable, networkingRequest: NSURLRequest -> ()) {
+    private func performUpload(endpoint: Endpoint<Target>, target: Target, stubBehavior: StubBehavior, progress: Moya.Progress? = nil, completion: Moya.Completion) -> (token: Cancellable, networkingRequest: NSURLRequest -> ()) {
         var cancellableToken = CancellableWrapper()
         
         return (cancellableToken, { (request: NSURLRequest) in
@@ -176,10 +170,10 @@ public class MoyaProvider<Target: TargetType> {
                 return
             }
             
-            let stubOrSendRequest = { (request: Request) in
+            let sendOrStubRequest = { (request: Request) in
                 switch stubBehavior {
                 case .Never:
-                    cancellableToken.innerCancellable = self.sendAlamofireRequest(target, request: request, completion: completion)
+                    cancellableToken.innerCancellable = self.sendAlamofireRequest(target, request: request, progress: progress, completion: completion)
                 default:
                     cancellableToken.innerCancellable = self.stubRequest(target, request: request.request!, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
                 }
@@ -198,7 +192,7 @@ public class MoyaProvider<Target: TargetType> {
             }
             
             if let alamofireRequest = alamofireRequest {
-                stubOrSendRequest(alamofireRequest)
+                sendOrStubRequest(alamofireRequest)
             } else if case let .Multipart(multipartFormData) = uploadType {
                 self.manager.upload(
                     request,
@@ -210,7 +204,7 @@ public class MoyaProvider<Target: TargetType> {
                         
                         switch result {
                         case .Success(let encodedRequest, _, _):
-                            stubOrSendRequest(encodedRequest)
+                            sendOrStubRequest(encodedRequest)
                         case .Failure(let error):
                             completion(result: .Failure(Moya.Error.Underlying(error)))
                         }
@@ -291,15 +285,18 @@ public extension MoyaProvider {
 
 internal extension MoyaProvider {
     
-    func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
+    func sendRequest(target: Target, request: NSURLRequest, progress: Moya.Progress? = nil, completion: Moya.Completion) -> CancellableToken {
         return sendAlamofireRequest(target, request: manager.request(request), completion: completion)
     }
     
-    func sendAlamofireRequest(target: Target, request: Request, completion: Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest(target: Target, request: Request, progress: Moya.Progress? = nil, completion: Moya.Completion) -> CancellableToken {
         let plugins = self.plugins
         
         // Give plugins the chance to alter the outgoing request
         plugins.forEach { $0.willSendRequest(request, target: target) }
+        
+        // Add the progress block
+        request.progress(progress)
         
         // Perform the actual request
         request.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in

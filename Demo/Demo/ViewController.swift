@@ -69,8 +69,12 @@ class ViewController: UITableViewController {
     func uploadMultipart() {
         let data = "This is my multipart part!".dataUsingEncoding(NSUTF8StringEncoding)!
         let target = HTTPBin.MultipartPOST(data)
+        let progress: (Int64, Int64, Int64) -> () = { bytesSent, totalBytesSent, expectedBytesToSend in
+            let percentageComplete = (totalBytesSent / expectedBytesToSend) * 100
+            print("Multipart: \(percentageComplete)%")
+        }
         
-        HTTPBinProvider.request(target) { result in
+        HTTPBinProvider.request(target, progress: progress) { result in
             let alertController = UIAlertController(title: "Multipart", message: "Successfully uploaded parts!", preferredStyle: .Alert)
             let ok = UIAlertAction(title: "OK", style: .Default, handler: { _ in
                 alertController.dismissViewControllerAnimated(true, completion: nil)

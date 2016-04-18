@@ -49,7 +49,7 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 
 enum HTTPBin: TargetType {
     case BasicAuth
-    case MultipartPOST
+    case MultipartPOST(NSData)
 
     var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
     var path: String {
@@ -75,13 +75,33 @@ enum HTTPBin: TargetType {
             return [:]
         }
     }
+    
+    var requestType: TargetRequestType {
+        switch self {
+        case .MultipartPOST(_):
+            return .Upload
+        default:
+            return .Request
+        }
+    }
+    
+    var uploadType: UploadType? {
+        switch self {
+        case .MultipartPOST(let data):
+            return .Multipart({ formData in
+                formData.appendBodyPart(data: data, name: "part_0_data")
+            })
+        default:
+            return nil
+        }
+    }
 
     var sampleData: NSData {
         switch self {
         case .BasicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
         case .MultipartPOST:
-            return "{\n  \"args\": {}, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {\n    \"part_0\": \"This is a multipart request!\"\n  }, \n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\": \"gzip;q=1.0, compress;q=0.5\", \n    \"Accept-Language\": \"en;q=1.0\", \n    \"Content-Length\": \"159\", \n    \"Content-Type\": \"multipart/form-data; boundary=alamofire.boundary.667efb17024e0c98\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\": \"Unknown/Unknown (Unknown; OS Version 10.11.4 (Build 15E65))\"\n  }, \n  \"json\": null, \n  \"url\": \"http://httpbin.org/post\"\n}\n".dataUsingEncoding(NSUTF8StringEncoding)!
+            return "{\n  \"args\": {}, \n  \"data\": \"\", \n  \"files\": {}, \n  \"form\": {\n    \"part_0_data\": \"This is a multipart request!\"\n  }, \n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\": \"gzip;q=1.0, compress;q=0.5\", \n    \"Accept-Language\": \"en;q=1.0\", \n    \"Content-Length\": \"164\", \n    \"Content-Type\": \"multipart/form-data; boundary=alamofire.boundary.c5630ddd0240ec4d\", \n    \"Host\": \"httpbin.org\"\n  }, \n  \"json\": null, \n  \"url\": \"http://httpbin.org/post\"\n}\n".dataUsingEncoding(NSUTF8StringEncoding)!
         }
     }
 }
