@@ -15,11 +15,10 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
     }
     
     /// Designated request-making method.
-    public func request(token: Target) -> SignalProducer<Response, Error> {
-        
+    public func request(token: Target, progress: Progress? = nil) -> SignalProducer<Response, Error> {
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
-            let cancellableToken = self?.request(token) { result in
+            let cancellableToken = self?.request(token, progress: progress) { result in
                 switch result {
                 case let .Success(response):
                     observer.sendNext(response)

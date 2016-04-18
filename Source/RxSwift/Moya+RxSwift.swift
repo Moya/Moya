@@ -13,11 +13,11 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
     }
 
     /// Designated request-making method.
-    public func request(token: Target) -> Observable<Response> {
+    public func request(token: Target, progress: Progress? = nil) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { [weak self] observer in
-            let cancellableToken = self?.request(token) { result in
+            let cancellableToken = self?.request(token, progress: progress) { result in
                 switch result {
                 case let .Success(response):
                     observer.onNext(response)
