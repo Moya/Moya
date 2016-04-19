@@ -22,11 +22,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
         
         beforeEach {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil).responseTime(0.5)
+                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil)
             }
             
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil).responseTime(0.5)
+                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             }
             
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/basic-auth/user/passwd"}) { _ in
