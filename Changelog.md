@@ -1,5 +1,7 @@
 # Next
 
+# 6.4.0
+
 - Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
 - Updates to ReactiveCocoa 4.1
 - Updates to Result 2.0
