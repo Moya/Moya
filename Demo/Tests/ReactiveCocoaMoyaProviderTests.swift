@@ -240,5 +240,39 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 expect(response).to(beNil())
             }
         }
+        
+        describe("a reactive provider") {
+            var provider: ReactiveCocoaMoyaProvider<GitHub>!
+            beforeEach {
+                provider = ReactiveCocoaMoyaProvider<GitHub>(trackInflights: true)
+            }
+
+            it("returns identical signalproducers for inflight requests") {
+                let target: GitHub = .Zen
+                let signalProducer1:SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
+                let signalProducer2:SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
+
+                expect(provider.inflightRequests.keys.count).to(equal(0))
+
+                var receivedResponse: Moya.Response!
+
+                signalProducer1.startWithNext { (response) -> Void in
+                    receivedResponse = response
+                    expect(provider.inflightRequests.count).to(equal(1))
+                }
+
+                signalProducer2.startWithNext { (response) -> Void in
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedResponse).to(beIndenticalToResponse(response))
+                    expect(provider.inflightRequests.count).to(equal(1))
+                }
+
+
+                // Allow for network request to complete
+                expect(provider.inflightRequests.count).toEventually( equal(0))
+                
+            }
+        }
+
     }
 }

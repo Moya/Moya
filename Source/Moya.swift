@@ -52,7 +52,7 @@ public class MoyaProvider<Target: TargetType> {
     
     public let trackInflights:Bool
     
-    private var inflightRequests = Dictionary<Endpoint<Target>, [Moya.Completion]>()
+    public private(set) var inflightRequests = Dictionary<Endpoint<Target>, [Moya.Completion]>()
     
     /// Initializes a provider.
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
@@ -81,19 +81,20 @@ public class MoyaProvider<Target: TargetType> {
         let stubBehavior = self.stubClosure(target)
         var cancellableToken = CancellableWrapper()
         
-        
-        objc_sync_enter(self)
-        var inflightCompletionBlocks = self.inflightRequests[endpoint]
-        inflightCompletionBlocks?.append(completion)
-        self.inflightRequests[endpoint] = inflightCompletionBlocks
-        objc_sync_exit(self)
-        
-        if inflightCompletionBlocks != nil {
-            return cancellableToken
-        } else {
+        if trackInflights {
             objc_sync_enter(self)
-            self.inflightRequests[endpoint] = [completion]
+            var inflightCompletionBlocks = self.inflightRequests[endpoint]
+            inflightCompletionBlocks?.append(completion)
+            self.inflightRequests[endpoint] = inflightCompletionBlocks
             objc_sync_exit(self)
+            
+            if inflightCompletionBlocks != nil {
+                return cancellableToken
+            } else {
+                objc_sync_enter(self)
+                self.inflightRequests[endpoint] = [completion]
+                objc_sync_exit(self)
+            }
         }
 
         
@@ -103,19 +104,28 @@ public class MoyaProvider<Target: TargetType> {
             switch stubBehavior {
             case .Never:
                 cancellableToken.innerCancellable = self.sendRequest(target, request: request, completion: { result in
-                    self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
                     
-                    objc_sync_enter(self)
-                    self.inflightRequests.removeValueForKey(endpoint)
-                    objc_sync_exit(self)
+                    if self.trackInflights {
+                        self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
+                        
+                        objc_sync_enter(self)
+                        self.inflightRequests.removeValueForKey(endpoint)
+                        objc_sync_exit(self)
+                    } else {
+                        completion(result: result)
+                    }
                 })
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
-                    self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
-                    
-                    objc_sync_enter(self)
-                    self.inflightRequests.removeValueForKey(endpoint)
-                    objc_sync_exit(self)
+                    if self.trackInflights {
+                        self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
+                        
+                        objc_sync_enter(self)
+                        self.inflightRequests.removeValueForKey(endpoint)
+                        objc_sync_exit(self)
+                    } else {
+                        completion(result: result)
+                    }
                 }, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }

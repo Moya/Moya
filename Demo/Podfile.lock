@@ -11,7 +11,7 @@ PODS:
   - Moya/RxSwift (6.1.0):
     - Moya/Core
     - RxSwift (= 2.0.0)
-  - Nimble (3.0.0)
+  - Nimble (4.0.1)
   - OHHTTPStubs (4.7.0):
     - OHHTTPStubs/Default (= 4.7.0)
   - OHHTTPStubs/Core (4.7.0)
@@ -44,7 +44,7 @@ DEPENDENCIES:
   - Moya (from `../`)
   - Moya/ReactiveCocoa (from `../`)
   - Moya/RxSwift (from `../`)
-  - Nimble
+  - Nimble (= 4.0.1)
   - OHHTTPStubs
   - Quick
 
@@ -55,7 +55,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   Moya: 6573e757d75b2405999e3e21f3924ef8dd7a8315
-  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
+  Nimble: 0f3c8b8b084cda391209c3c5efbb48bedeeb920a
   OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   ReactiveCocoa: 0d875167414bfe743bc5bf544ae5b05fddaf757d

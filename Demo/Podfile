@@ -12,7 +12,7 @@ end
 # Test Libraries
 def test_pods
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble', '4.0.1'
   pod 'OHHTTPStubs'
 end
 
