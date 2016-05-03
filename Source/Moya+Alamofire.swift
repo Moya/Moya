@@ -10,14 +10,14 @@ public typealias ParameterEncoding = Alamofire.ParameterEncoding
 extension Request: RequestType { }
 
 /// Internal token that can be used to cancel requests
-internal final class CancellableToken: Cancellable , CustomDebugStringConvertible {
+public final class CancellableToken: Cancellable , CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request : Request?
     private(set) var canceled: Bool = false
     
     private var lock: OSSpinLock = OS_SPINLOCK_INIT
     
-    func cancel() {
+    public func cancel() {
         OSSpinLockLock(&lock)
         defer { OSSpinLockUnlock(&lock) }
         guard !canceled else { return }
@@ -37,7 +37,7 @@ internal final class CancellableToken: Cancellable , CustomDebugStringConvertibl
         }
     }
     
-    var debugDescription: String {
+    public var debugDescription: String {
         guard let request = self.request else {
             return "Empty Request"
         }
