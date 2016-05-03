@@ -50,18 +50,24 @@ public class MoyaProvider<Target: TargetType> {
     /// e.g. for logging, network activity indicator or credentials
     public let plugins: [PluginType]
     
+    public let trackInflights:Bool
+    
+    private var inflightRequests = Dictionary<Endpoint<Target>, [Moya.Completion]>()
+    
     /// Initializes a provider.
     public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
-        plugins: [PluginType] = []) {
+        plugins: [PluginType] = [],
+        trackInflights:Bool = false) {
             
             self.endpointClosure = endpointClosure
             self.requestClosure = requestClosure
             self.stubClosure = stubClosure
             self.manager = manager
             self.plugins = plugins
+            self.trackInflights = trackInflights
     }
     
     /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
@@ -75,14 +81,42 @@ public class MoyaProvider<Target: TargetType> {
         let stubBehavior = self.stubClosure(target)
         var cancellableToken = CancellableWrapper()
         
+        
+        objc_sync_enter(self)
+        var inflightCompletionBlocks = self.inflightRequests[endpoint]
+        inflightCompletionBlocks?.append(completion)
+        self.inflightRequests[endpoint] = inflightCompletionBlocks
+        objc_sync_exit(self)
+        
+        if inflightCompletionBlocks != nil {
+            return cancellableToken
+        } else {
+            objc_sync_enter(self)
+            self.inflightRequests[endpoint] = [completion]
+            objc_sync_exit(self)
+        }
+
+        
         let performNetworking = { (request: NSURLRequest) in
             if cancellableToken.isCancelled { return }
             
             switch stubBehavior {
             case .Never:
-                cancellableToken.innerCancellable = self.sendRequest(target, request: request, completion: completion)
+                cancellableToken.innerCancellable = self.sendRequest(target, request: request, completion: { result in
+                    self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
+                    
+                    objc_sync_enter(self)
+                    self.inflightRequests.removeValueForKey(endpoint)
+                    objc_sync_exit(self)
+                })
             default:
-                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
+                    self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
+                    
+                    objc_sync_enter(self)
+                    self.inflightRequests.removeValueForKey(endpoint)
+                    objc_sync_exit(self)
+                }, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }
         

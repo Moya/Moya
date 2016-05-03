@@ -9,9 +9,10 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = ReactiveCocoaMoyaProvider<Target>.DefaultAlamofireManager(),
-        plugins: [PluginType] = [], stubScheduler: DateSchedulerType? = nil) {
+        plugins: [PluginType] = [], stubScheduler: DateSchedulerType? = nil,
+        trackInflights:Bool = false) {
             self.stubScheduler = stubScheduler
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
     
     /// Designated request-making method.

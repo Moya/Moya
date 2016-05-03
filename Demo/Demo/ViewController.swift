@@ -88,6 +88,8 @@ class ViewController: UITableViewController {
 
     @IBAction func zenWasPressed(sender: UIBarButtonItem) {
         downloadZen()
+        downloadZen()
+        downloadZen()
     }
 
     // MARK: - Table View
