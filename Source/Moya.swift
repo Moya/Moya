@@ -24,6 +24,40 @@ public protocol TargetType {
     var sampleData: NSData { get }
 }
 
+public enum StructTarget: TargetType {
+    case Struct(TargetType)
+
+    public init(_ target: TargetType) {
+        self = StructTarget.Struct(target)
+    }
+
+    public var path: String {
+        return target.path
+    }
+
+    public var baseURL: NSURL {
+        return target.baseURL
+    }
+
+    public var method: Moya.Method {
+        return target.method
+    }
+
+    public var parameters: [String: AnyObject]? {
+        return target.parameters
+    }
+
+    public var sampleData: NSData {
+        return target.sampleData
+    }
+
+    public var target: TargetType {
+        switch self {
+        case .Struct(let t): return t
+        }
+    }
+}
+
 /// Protocol to define the opaque type returned from a request
 public protocol Cancellable {
     func cancel()
@@ -198,9 +232,9 @@ public extension MoyaProvider {
     public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
         return .Immediate
     }
-    
-    public final class func DelayedStub(seconds: NSTimeInterval)(_: Target) -> Moya.StubBehavior {
-        return .Delayed(seconds: seconds)
+
+    public final class func DelayedStub(seconds: NSTimeInterval) -> (Target) -> Moya.StubBehavior {
+        return { _ in return .Delayed(seconds: seconds) }
     }
 }
 
@@ -256,7 +290,7 @@ internal extension MoyaProvider {
     }
 }
 
-internal func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?, error: NSError?) ->
+public func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?, error: NSError?) ->
     Result<Moya.Response, Moya.Error> {
     switch (response, data, error) {
     case let (.Some(response), .Some(data), .None):

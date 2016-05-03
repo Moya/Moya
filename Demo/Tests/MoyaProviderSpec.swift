@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import Alamofire
 import Moya
+import Foundation
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -219,6 +220,83 @@ class MoyaProviderSpec: QuickSpec {
                 default:
                     fail("expected an Underlying error that Houston has a problem")
                 }
+            }
+        }
+
+        describe("struct targets") {
+            struct StructAPI: TargetType {
+                var baseURL = NSURL(string: "http://example.com")!
+                var path = "/endpoint"
+                var method = Moya.Method.GET
+                var parameters: [String: AnyObject]? = ["key": "value"]
+                var sampleData = ("sample data" as NSString).dataUsingEncoding(NSUTF8StringEncoding)!
+            }
+
+            it("uses correct URL") {
+                var requestedURL: String?
+                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                    requestedURL = endpoint.URL
+                    done(endpoint.urlRequest)
+                }
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                waitUntil { done in
+                    provider.request(StructTarget(StructAPI())) { _ in
+                        done()
+                    }
+                }
+
+                expect(requestedURL) == "http://example.com/endpoint"
+            }
+
+            it("uses correct parameters") {
+                var requestParameters: [String: AnyObject]?
+                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                    requestParameters = endpoint.parameters
+                    done(endpoint.urlRequest)
+                }
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                waitUntil { done in
+                    provider.request(StructTarget(StructAPI())) { _ in
+                        done()
+                    }
+                }
+
+                expect(requestParameters?.count) == 1
+            }
+
+            it("uses correct method") {
+                var requestMethod: Moya.Method?
+                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                    requestMethod = endpoint.method
+                    done(endpoint.urlRequest)
+                }
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                waitUntil { done in
+                    provider.request(StructTarget(StructAPI())) { _ in
+                        done()
+                    }
+                }
+
+                expect(requestMethod) == .GET
+            }
+
+            it("uses correct sample data") {
+                var dataString: NSString?
+                let provider = MoyaProvider<StructTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
+
+                waitUntil { done in
+                    provider.request(StructTarget(StructAPI())) { result in
+                        if case let .Success(response) = result {
+                            dataString = NSString(data: response.data, encoding: NSUTF8StringEncoding)
+                        }
+                        done()
+                    }
+                }
+
+                expect(dataString) == "sample data"
             }
         }
     }

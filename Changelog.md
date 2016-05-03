@@ -1,5 +1,40 @@
 # Next
 
+# 6.4.0
+
+- Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
+- Updates to ReactiveCocoa 4.1
+- Updates to Result 2.0
+
+# 6.3.1
+
+- Updates for Swift 2.2 / Xcode 7.3 compatibility.
+
+# 6.3.0
+
+- Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil.
+- Adds StructTarget for using Moya with structs.
+
+# 6.2.0
+
+- Adds `response` computed property to `Error` type, which yields a Response object if available.
+- Added URLEncodedInURL to ParameterEncoding.
+- Adds convenience `endpointByAdding` method.
+- Remove our own implementation of `ParameterEncoding` and make it a `public typealias` of `Alamofire.ParameterEncoding`.
+
+# 6.1.3
+
+- Updated to ReactiveCocoa 4.0 final.
+- Added formatter parameter to plugin for pretty-printing response data. See #392.
+
+# 6.1.2
+
+- Compatibility with RxSwift 2.x.
+
+# 6.1.1
+
+- Compatibility with RxSwift 2.1.x.
+
 # 6.1.0
 
 - The built-in `DefaultAlamofireManager` as parameter's default value instead of the singleton `Alamofire.Manager.sharedinstance` is now used when instantiating `ReactiveCocoaMoyaProvider` and `RxMoyaProvider` as well.
@@ -19,10 +54,9 @@
 - Moves to use Antitypical/Result
 
 # 5.2.1
-     
+
 - Update to ReactiveCocoa v4.0.0-RC.1
 - Fixes cases where underlying network errors were not properly propagated.
-
 - Moves to antitypical Result type
 
 # 5.2.0
@@ -195,7 +229,7 @@
 
 # 1.0.0
 
--  **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
+- **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
 - **Breaking change** Adds `method` to `MoyaTarget` protocol and removes `method` parameter from `request()` functions. Targets now specify GET, POST, etc on a per-target level, instead of per-request.
 - **Breaking change** Adds `parameters` to `MoyaTarget` protocol and removes ability to pass parameters into `request()` functions. Targets now specify the parameters directly on a per-target level, instead of per-request.
 - Adds a sane default implementation of the `MoyaProvider` initializer's `endpointsClosure` parameter.

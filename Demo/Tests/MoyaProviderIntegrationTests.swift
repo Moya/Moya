@@ -22,11 +22,11 @@ class MoyaProviderIntegrationTests: QuickSpec {
         
         beforeEach {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil).responseTime(0.5)
+                return OHHTTPStubsResponse(data: GitHub.Zen.sampleData, statusCode: 200, headers: nil)
             }
             
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/users/ashfurrow"}) { _ in
-                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil).responseTime(0.5)
+                return OHHTTPStubsResponse(data: GitHub.UserProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             }
             
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/basic-auth/user/passwd"}) { _ in
@@ -192,7 +192,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                         plugin = NetworkLoggerPlugin(verbose: true, output: { printing in
                             //mapping the Any... from items to a string that can be compared
-                            let stringArray: [String] = printing.items.reduce([String]()) { $0 + ($1 as! [String]) }
+                            let stringArray: [String] = printing.items.map { $0 as? String }.flatMap { $0 }
                             let string: String = stringArray.reduce("") { $0 + $1 + " " }
                             log += string
                         })

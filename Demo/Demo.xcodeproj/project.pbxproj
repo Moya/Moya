@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		067D49761C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49671C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift */; };
-		067D49771C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49671C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift */; };
-		067D49781C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49671C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift */; };
 		067D49791C0D3886005BBA79 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49681C0D3886005BBA79 /* EndpointSpec.swift */; };
 		067D497A1C0D3886005BBA79 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49681C0D3886005BBA79 /* EndpointSpec.swift */; };
 		067D497B1C0D3886005BBA79 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49681C0D3886005BBA79 /* EndpointSpec.swift */; };
@@ -74,7 +71,6 @@
 /* Begin PBXFileReference section */
 		063D07E11C0D361400C7061E /* MoyaTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		063D07ED1C0D362200C7061E /* MoyaTests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		067D49671C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireMoyaMappingSpec.swift; sourceTree = "<group>"; };
 		067D49681C0D3886005BBA79 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
 		067D49691C0D3886005BBA79 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+MoyaSpec.swift"; sourceTree = "<group>"; };
 		067D496A1C0D3886005BBA79 /* ErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
@@ -157,7 +153,6 @@
 		067D49661C0D3886005BBA79 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				067D49671C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift */,
 				067D49681C0D3886005BBA79 /* EndpointSpec.swift */,
 				067D49691C0D3886005BBA79 /* Error+MoyaSpec.swift */,
 				067D496A1C0D3886005BBA79 /* ErrorTests.swift */,
@@ -621,7 +616,6 @@
 				067D498C1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift in Sources */,
 				067D49861C0D3886005BBA79 /* MoyaProviderIntegrationTests.swift in Sources */,
 				067D49801C0D3886005BBA79 /* ErrorTests.swift in Sources */,
-				067D49771C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift in Sources */,
 				067D49891C0D3886005BBA79 /* MoyaProviderSpec.swift in Sources */,
 				067D499E1C0D3886005BBA79 /* TestHelpers.swift in Sources */,
 				067D498F1C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */,
@@ -641,7 +635,6 @@
 				067D498D1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift in Sources */,
 				067D49871C0D3886005BBA79 /* MoyaProviderIntegrationTests.swift in Sources */,
 				067D49811C0D3886005BBA79 /* ErrorTests.swift in Sources */,
-				067D49781C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift in Sources */,
 				067D498A1C0D3886005BBA79 /* MoyaProviderSpec.swift in Sources */,
 				067D499F1C0D3886005BBA79 /* TestHelpers.swift in Sources */,
 				067D49901C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */,
@@ -671,7 +664,6 @@
 				067D498B1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift in Sources */,
 				067D49851C0D3886005BBA79 /* MoyaProviderIntegrationTests.swift in Sources */,
 				067D497F1C0D3886005BBA79 /* ErrorTests.swift in Sources */,
-				067D49761C0D3886005BBA79 /* AlamofireMoyaMappingSpec.swift in Sources */,
 				067D49881C0D3886005BBA79 /* MoyaProviderSpec.swift in Sources */,
 				067D499D1C0D3886005BBA79 /* TestHelpers.swift in Sources */,
 				067D498E1C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */,

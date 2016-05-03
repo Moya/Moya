@@ -97,6 +97,10 @@ task :release, :version do |task, args|
   sh "pod trunk push Moya.podspec --allow-warnings"
 
   puts "Pushing as a GitHub Release."
-  sh "git config release.tag-regex=\d+\.\d+\.\d+$"
-  sh "git release"
+  require 'octokit'
+  Octokit::Client.new(netrc: true).
+    create_release('Moya/Moya',
+                   version,
+                   name: version,
+                   body: changelog.split(/^# /)[2].strip)
 end

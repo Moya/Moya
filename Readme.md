@@ -74,15 +74,23 @@ ambiguous lookups at compile time.
 github "Moya/Moya"
 ```
 
-Use
+Usage
 ---
 
-After [some setup](docs/Examples.md), using Moya is really simple. You can access an API like this:
+After [some setup](docs/Examples), using Moya is really simple. You can access an API like this:
 
 ```swift
-provider.request(.Zen) { (data, statusCode, response, error) in
-    if let data = data {
-        // do something with the data
+provider.request(.Zen) { result in
+    switch result {
+    case let .Success(moyaResponse):
+        let data = moyaResponse.data
+        let statusCode = moyaResponse.statusCode
+        // do something with the response data or statusCode
+    case .Failure(error):
+        // this means there was a network failure - either the request
+        // wasn't sent (connectivity), or no response was received (server
+        // timed out).  If the server responds with a 4xx or 5xx error, that
+        // will be sent as a ".Success"-ful response.
     }
 }
 ```
@@ -91,10 +99,8 @@ That's a basic example. Many API requests need parameters. Moya encodes these
 into the enum you use to access the endpoint, like this:
 
 ```swift
-provider.request(.UserProfile("ashfurrow")) { (data, statusCode, response, error) in
-    if let data = data {
-        // do something with the data
-    }
+provider.request(.UserProfile("ashfurrow")) { result in
+    // do something with the result
 }
 ```
 
@@ -163,6 +169,10 @@ Community Extensions
 Moya has a great community around it and some people have created some very helpful extensions.
 
 - [Moya-ObjectMapper](https://github.com/ivanbruel/Moya-ObjectMapper) - ObjectMapper bindings for Moya for easier JSON serialization
+- [Moya-SwiftyJSONMapper](https://github.com/AvdLee/Moya-SwiftyJSONMapper) - SwiftyJSON bindings for Moya for easier JSON serialization
+- [Moya-Argo](https://github.com/wattson12/Moya-Argo) - Argo bindings for Moya for easier JSON serialization
+- [Moya-ModelMapper](https://github.com/sunshinejr/Moya-ModelMapper) - ModelMapper bindings for Moya for easier JSON serialization
+- [Moya-Gloss](https://github.com/spxrogers/Moya-Gloss) - Gloss bindings for Moya for easier JSON serialization
 
 We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
 

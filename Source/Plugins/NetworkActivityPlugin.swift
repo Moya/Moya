@@ -6,7 +6,7 @@ public enum NetworkActivityChangeType {
     case Began, Ended
 }
 
-/// Provides each request with optional NSURLCredentials.
+/// Notify a request's network activity changes (request begins or ends).
 public final class NetworkActivityPlugin: PluginType {
     
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
@@ -23,7 +23,7 @@ public final class NetworkActivityPlugin: PluginType {
         networkActivityClosure(change: .Began)
     }
     
-    /// Called by the provider as soon as a response arrives
+    /// Called by the provider as soon as a response arrives, even the request is cancelled.
     public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         networkActivityClosure(change: .Ended)
     }
