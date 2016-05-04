@@ -6,7 +6,7 @@ public enum Error: ErrorType {
     case StringMapping(Response)
     case StatusCode(Response)
     case Data(Response)
-    case Underlying(ErrorType)
+    case Underlying(NSError)
 }
 
 public extension Moya.Error {
@@ -52,7 +52,7 @@ public extension Error {
         case .Data(let response):
             return NSError(domain: MoyaErrorDomain, code: MoyaErrorCode.Data.rawValue, userInfo: ["data" : response])
         case .Underlying(let error):
-            return error as NSError
+            return error
         }
     }
 }

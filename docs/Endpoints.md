@@ -100,7 +100,7 @@ you can specify more details, which is useful for unit testing.
 Sample responses have one of two values:
 
 - `NetworkResponse`, with an `Int` status code and an `NSData` returned data.
-- `NetworkError`, with an `ErrorType?` optional error type.
+- `NetworkError`, with an `NSError?` optional error type.
 
  
 Request Mapping
