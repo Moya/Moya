@@ -1,6 +1,6 @@
 # Next
 
-- Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`.
+- Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`. *Breaking change*
 
 # 6.4.0
 
