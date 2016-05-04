@@ -17,3 +17,7 @@ Examples
 
 * [Wrapping the **request -> result** cycle into own adapter](WrappingInAdapter.md)
 * [Subclassing Provider and refreshing session automatically](SubclassingProvider.md)
+
+####Error handling
+
+* [Handling different error types](ErrorTypes.md)

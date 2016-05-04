@@ -1,5 +1,7 @@
 # Next
 
+- Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`.
+
 # 6.4.0
 
 - Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
