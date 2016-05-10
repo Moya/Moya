@@ -305,12 +305,12 @@ public func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?,
     }
 }
 
-public struct CancellableWrapper: Cancellable {
-    public var innerCancellable: CancellableToken? = nil
+internal struct CancellableWrapper: Cancellable {
+    internal var innerCancellable: CancellableToken? = nil
     
     private var isCancelled = false
     
-    public func cancel() {
+    internal func cancel() {
         innerCancellable?.cancel()
     }
 }

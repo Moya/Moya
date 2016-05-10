@@ -1,8 +1,8 @@
 import Quick
 import Nimble
 import Alamofire
-import Moya
 import Foundation
+@testable import Moya
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
