@@ -25,7 +25,7 @@ The first might resemble the following:
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    return Endpoint(URL: url!, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
