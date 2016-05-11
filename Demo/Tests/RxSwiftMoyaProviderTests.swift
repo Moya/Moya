@@ -84,5 +84,38 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 expect(errored).to(beTruthy())
             }
         }
+        
+        describe("a reactive provider") {
+            var provider: RxMoyaProvider<GitHub>!
+            beforeEach {
+                provider = RxMoyaProvider<GitHub>(trackInflights: true)
+            }
+            
+            it("returns identical response for inflight requests") {
+                let target: GitHub = .Zen
+                let signalProducer1:Observable<Moya.Response> = provider.request(target)
+                let signalProducer2:Observable<Moya.Response> = provider.request(target)
+                
+                expect(provider.inflightRequests.keys.count).to(equal(0))
+                
+                var receivedResponse: Moya.Response!
+                
+                _ = signalProducer1.subscribeNext { (response) -> Void in
+                    receivedResponse = response
+                    expect(provider.inflightRequests.count).to(equal(1))
+                }
+                
+                _ = signalProducer2.subscribeNext { (response) -> Void in
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedResponse).to(beIndenticalToResponse(response))
+                    expect(provider.inflightRequests.count).to(equal(1))
+                }
+                
+                
+                // Allow for network request to complete
+                expect(provider.inflightRequests.count).toEventually( equal(0))
+                
+            }
+        }
     }
 }

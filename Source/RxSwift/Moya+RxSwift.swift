@@ -8,8 +8,9 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: StubClosure = MoyaProvider.NeverStub,
         manager: Manager = RxMoyaProvider<Target>.DefaultAlamofireManager(),
-        plugins: [PluginType] = []) {
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
+        plugins: [PluginType] = [],
+        trackInflights:Bool = false) {
+            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
