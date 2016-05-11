@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import Result
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
@@ -37,23 +38,31 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
 
 public extension RxMoyaProvider where Target:MultipartTargetType {
     public func request(token: Target) -> (progress:Observable<Progress>, response:Observable<Response>) {
-        let rx_response = PublishSubject<Response>()
-        let rx_progress = PublishSubject<Progress>()
-        
+        let progressSubject = PublishSubject<Progress>()
         let progressBlock = {(progress:Progress) -> Void in
-            rx_progress.onNext(progress)
+            progressSubject.onNext(progress)
             if progress.completed {
-                rx_progress.onCompleted()
+                progressSubject.onCompleted()
             }
         }
         
-        let responseBlock = {(response:Response) -> Void in
-            rx_response.onNext(response)
-            rx_response.onCompleted()
+        let response:Observable<Response> = Observable.create { [weak self] observer in
+            let cancellableToken = self?.request(token, progress:progressBlock){ result in
+                switch result {
+                case let .Success(response):
+                    observer.onNext(response)
+                    observer.onCompleted()
+                    break
+                case let .Failure(error):
+                    observer.onError(error)
+                }
+            }
+            
+            return AnonymousDisposable {
+                cancellableToken?.cancel()
+            }
         }
         
-        self.request(token, progress:progressBlock, completion:responseBlock)
-        
-        return (progress:rx_progress, response: rx_response)
+        return (progress:progressSubject, response: response)
     }
 }
