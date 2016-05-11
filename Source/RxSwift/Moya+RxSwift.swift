@@ -34,3 +34,26 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
         }
     }
 }
+
+public extension RxMoyaProvider where Target:MultipartTargetType {
+    public func request(token: Target) -> (progress:Observable<Progress>, response:Observable<Response>) {
+        let rx_response = PublishSubject<Response>()
+        let rx_progress = PublishSubject<Progress>()
+        
+        let progressBlock = {(progress:Progress) -> Void in
+            rx_progress.onNext(progress)
+            if progress.completed {
+                rx_progress.onCompleted()
+            }
+        }
+        
+        let responseBlock = {(response:Response) -> Void in
+            rx_response.onNext(response)
+            rx_response.onCompleted()
+        }
+        
+        self.request(token, progress:progressBlock, completion:responseBlock)
+        
+        return (progress:rx_progress, response: rx_response)
+    }
+}

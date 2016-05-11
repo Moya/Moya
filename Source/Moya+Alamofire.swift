@@ -6,6 +6,10 @@ public typealias Manager = Alamofire.Manager
 /// Choice of parameter encoding.
 public typealias ParameterEncoding = Alamofire.ParameterEncoding
 
+public typealias RequestMultipartFormData = Alamofire.MultipartFormData
+
+public typealias MultipartFormDataEncodingResult = Alamofire.Manager.MultipartFormDataEncodingResult
+
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType { }
 

@@ -4,6 +4,21 @@ import Result
 /// Closure to be executed when a request has completed.
 public typealias Completion = (result: Result<Moya.Response, Moya.Error>) -> ()
 
+public typealias ProgressBlock = (progress:Progress) -> Void
+
+public struct Progress {
+    var totalBytes:Int64
+    var bytesExpected:Int64
+    
+    var progress:Double {
+        return bytesExpected > 0 ? Double(totalBytes) / Double(bytesExpected) : 1.0
+    }
+    
+    var completed:Bool {
+        return totalBytes >= bytesExpected
+    }
+}
+
 /// Represents an HTTP method.
 public enum Method: String {
     case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
@@ -13,6 +28,30 @@ public enum StubBehavior {
     case Never
     case Immediate
     case Delayed(seconds: NSTimeInterval)
+}
+
+public struct MultipartFormData {
+    public enum FormDataProvider {
+        case Data(NSData)
+        case File(NSURL)
+        case Stream(NSInputStream, UInt64)
+    }
+    
+    init(provider:FormDataProvider, name:String, fileName:String = "", mimeType:String = "") {
+        self.provider = provider
+        self.name = name
+        self.fileName = fileName
+        self.mimeType = mimeType
+    }
+    
+    let provider:FormDataProvider
+    let name:String
+    let fileName:String
+    let mimeType:String
+}
+
+public protocol MultipartTargetType: TargetType {
+    var multipartBody: [MultipartFormData] { get }
 }
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
@@ -149,6 +188,31 @@ public class MoyaProvider<Target: TargetType> {
     }
 }
 
+public extension MoyaProvider where Target:MultipartTargetType {
+    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
+    public func request(target: Target, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> Cancellable {
+        let multipart = target as MultipartTargetType
+        let endpoint = self.endpoint(target)
+        let stubBehavior = self.stubClosure(target)
+        var cancellableToken = CancellableWrapper()
+        
+        let performNetworking = { (request: NSURLRequest) in
+            if cancellableToken.isCancelled { return }
+            
+            switch stubBehavior {
+            case .Never:
+                cancellableToken = self.sendUpload(target, request:request, multipartBody:multipart.multipartBody, progress:progress, completion:completion)
+            default:
+                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            }
+        }
+        
+        requestClosure(endpoint, performNetworking)
+        
+        return cancellableToken
+    }
+}
+
 /// Mark: Defaults
 
 public extension MoyaProvider {
@@ -196,7 +260,35 @@ public extension MoyaProvider {
 
 internal extension MoyaProvider {
     
-    func sendRequest(target: Target, request: NSURLRequest, completion: Moya.Completion) -> CancellableToken {
+    private func sendUpload(target: Target, request:NSURLRequest, multipartBody:[MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
+        var cancellable = CancellableWrapper()
+        
+        let multipartFormData = { (form:RequestMultipartFormData) -> Void in
+            for bodyPart in multipartBody {
+                switch bodyPart.provider {
+                case .Data(let data):
+                    form.appendBodyPart(data: data, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
+                case .File(let url):
+                    form.appendBodyPart(fileURL: url, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
+                case .Stream(let stream, let length):
+                    form.appendBodyPart(stream: stream, length: length, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
+                }
+            }
+        }
+        
+        manager.upload(request, multipartFormData: multipartFormData) {[weak self] (result:MultipartFormDataEncodingResult) in
+            switch result {
+            case .Success(let request, _, _):
+                cancellable.innerCancellable = self?.sendRequest(target, request:request.request!, progress:progress, completion:completion)
+            case .Failure(let error):
+                completion(result: .Failure(Moya.Error.Underlying(error)))
+            }
+        }
+        
+        return cancellable
+    }
+    
+    func sendRequest(target: Target, request: NSURLRequest, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableToken {
         let alamoRequest = manager.request(request)
         let plugins = self.plugins
         
@@ -204,7 +296,11 @@ internal extension MoyaProvider {
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
         
         // Perform the actual request
-        alamoRequest.response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+        alamoRequest
+            .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
+                progress?(progress:Progress(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+            }
+            .response { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceiveResponse(result, target: target) }
