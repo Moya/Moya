@@ -279,6 +279,13 @@ internal extension MoyaProvider {
                     form.appendBodyPart(stream: stream, length: length, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
                 }
             }
+            
+            // Add target parameters into form body
+            guard let parameters = target.parameters else { return }
+            for (key, value) in parameters {
+                // I don't know an easy way to transform any value to NSData ¯\_(ツ)_/¯
+                form.appendBodyPart(data: "\(value)".dataUsingEncoding(NSUTF8StringEncoding)!, name: key)
+            }
         }
         
         manager.upload(request, multipartFormData: multipartFormData) {(result:MultipartFormDataEncodingResult) in
@@ -382,5 +389,11 @@ private struct CancellableWrapper: Cancellable {
     
     func cancel() {
         innerCancellable?.cancel()
+    }
+}
+
+func encode<T>(inout value: T) -> NSData {
+    return withUnsafePointer(&value) { p in
+        NSData(bytes: p, length: sizeofValue(value))
     }
 }
