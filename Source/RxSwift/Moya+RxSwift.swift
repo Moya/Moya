@@ -38,6 +38,7 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
 
 public extension RxMoyaProvider where Target:MultipartTargetType {
     public func request(token: Target) -> (progress:Observable<Progress>, response:Observable<Response>) {
+        // Progress should never rise and error
         let progressSubject = PublishSubject<Progress>()
         let progressBlock = {(progress:Progress) -> Void in
             progressSubject.onNext(progress)
@@ -52,9 +53,11 @@ public extension RxMoyaProvider where Target:MultipartTargetType {
                 case let .Success(response):
                     observer.onNext(response)
                     observer.onCompleted()
+                    progressSubject.onCompleted()
                     break
                 case let .Failure(error):
                     observer.onError(error)
+                    progressSubject.onCompleted()
                 }
             }
             
