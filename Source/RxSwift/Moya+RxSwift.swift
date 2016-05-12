@@ -1,5 +1,6 @@
 import Foundation
 import RxSwift
+import Result
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
@@ -33,5 +34,39 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
                 cancellableToken?.cancel()
             }
         }
+    }
+}
+
+public extension RxMoyaProvider where Target:MultipartTargetType {
+    public func request(token: Target) -> (progress:Observable<Progress>, response:Observable<Response>) {
+        // Progress should never rise and error
+        let progressSubject = PublishSubject<Progress>()
+        let progressBlock = {(progress:Progress) -> Void in
+            progressSubject.onNext(progress)
+            if progress.completed {
+                progressSubject.onCompleted()
+            }
+        }
+        
+        let response:Observable<Response> = Observable.create { [weak self] observer in
+            let cancellableToken = self?.request(token, progress:progressBlock){ result in
+                switch result {
+                case let .Success(response):
+                    observer.onNext(response)
+                    observer.onCompleted()
+                    progressSubject.onCompleted()
+                    break
+                case let .Failure(error):
+                    observer.onError(error)
+                    progressSubject.onCompleted()
+                }
+            }
+            
+            return AnonymousDisposable {
+                cancellableToken?.cancel()
+            }
+        }
+        
+        return (progress:progressSubject, response: response)
     }
 }
