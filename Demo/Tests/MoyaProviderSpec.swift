@@ -175,7 +175,7 @@ class MoyaProviderSpec: QuickSpec {
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
             
-            it("executes the endpoint resolver") {
+            it("returns failure for any given request") {
                 let target: GitHub = .Zen
                 var receivedError: Moya.Error?
                 provider.request(target) { response in
