@@ -164,6 +164,30 @@ class MoyaProviderSpec: QuickSpec {
             }
         }
         
+        describe("a provider with error in request closure") {
+            var provider: MoyaProvider<GitHub>!
+            
+            beforeEach {
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                    let underyingError = NSError(domain: "", code: 123, userInfo: nil)
+                    done(.Failure(.Underlying(underyingError)))
+                }
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+            }
+            
+            it("executes the endpoint resolver") {
+                let target: GitHub = .Zen
+                var receivedError: Moya.Error?
+                provider.request(target) { response in
+                    if case .Failure(let error) = response {
+                        receivedError = error
+                    }
+                }
+                
+                expect(receivedError).toEventuallyNot(beNil())
+            }
+        }
+        
         describe("with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {

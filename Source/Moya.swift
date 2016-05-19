@@ -70,7 +70,7 @@ public class MoyaProvider<Target: TargetType> {
     public typealias EndpointClosure = Target -> Endpoint<Target>
     
     /// Closure that decides if and what request should be performed
-    public typealias RequestResultClosure = Result<NSURLRequest, NSError> -> Void
+    public typealias RequestResultClosure = Result<NSURLRequest, Moya.Error> -> Void
     
     /// Closure that resolves an Endpoint into an RequestResult.
     public typealias RequestClosure = (Endpoint<Target>, RequestResultClosure) -> Void
@@ -135,9 +135,18 @@ public class MoyaProvider<Target: TargetType> {
         }
         
         
-        let performNetworking = { (requestResult: Result<NSURLRequest, NSError>) in
-            guard case .Success(let request) = requestResult
-                where !cancellableToken.isCancelled else { return }
+        let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
+            if cancellableToken.isCancelled { return }
+            
+            var request: NSURLRequest!
+            
+            switch requestResult {
+            case .Success(let urlRequest):
+                request = urlRequest
+            case .Failure(let error):
+                completion(result: .Failure(error))
+                return
+            }
             
             switch stubBehavior {
             case .Never:
