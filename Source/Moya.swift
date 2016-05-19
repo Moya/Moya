@@ -26,31 +26,31 @@ public protocol TargetType {
 
 public enum StructTarget: TargetType {
     case Struct(TargetType)
-
+    
     public init(_ target: TargetType) {
         self = StructTarget.Struct(target)
     }
-
+    
     public var path: String {
         return target.path
     }
-
+    
     public var baseURL: NSURL {
         return target.baseURL
     }
-
+    
     public var method: Moya.Method {
         return target.method
     }
-
+    
     public var parameters: [String: AnyObject]? {
         return target.parameters
     }
-
+    
     public var sampleData: NSData {
         return target.sampleData
     }
-
+    
     public var target: TargetType {
         switch self {
         case .Struct(let t): return t
@@ -69,8 +69,11 @@ public class MoyaProvider<Target: TargetType> {
     /// Closure that defines the endpoints for the provider.
     public typealias EndpointClosure = Target -> Endpoint<Target>
     
-    /// Closure that resolves an Endpoint into an NSURLRequest.
-    public typealias RequestClosure = (Endpoint<Target>, NSURLRequest -> Void) -> Void
+    /// Closure that decides if and what request should be performed
+    public typealias RequestResultClosure = Result<NSURLRequest, NSError> -> Void
+    
+    /// Closure that resolves an Endpoint into an RequestResult.
+    public typealias RequestClosure = (Endpoint<Target>, RequestResultClosure) -> Void
     
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = Target -> Moya.StubBehavior
@@ -95,7 +98,7 @@ public class MoyaProvider<Target: TargetType> {
         manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
         plugins: [PluginType] = [],
         trackInflights:Bool = false) {
-            
+
             self.endpointClosure = endpointClosure
             self.requestClosure = requestClosure
             self.stubClosure = stubClosure
@@ -130,10 +133,11 @@ public class MoyaProvider<Target: TargetType> {
                 objc_sync_exit(self)
             }
         }
-
         
-        let performNetworking = { (request: NSURLRequest) in
-            if cancellableToken.isCancelled { return }
+        
+        let performNetworking = { (requestResult: Result<NSURLRequest, NSError>) in
+            guard case .Success(let request) = requestResult
+                where !cancellableToken.isCancelled else { return }
             
             switch stubBehavior {
             case .Never:
@@ -204,14 +208,14 @@ public extension MoyaProvider {
         return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     }
     
-    public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: NSURLRequest -> Void) {
-        return closure(endpoint.urlRequest)
+    public final class func DefaultRequestMapping(endpoint: Endpoint<Target>, closure: RequestResultClosure) {
+        return closure(.Success(endpoint.urlRequest))
     }
-
+    
     public final class func DefaultAlamofireManager() -> Manager {
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         configuration.HTTPAdditionalHeaders = Manager.defaultHTTPHeaders
-
+        
         let manager = Manager(configuration: configuration)
         manager.startRequestsImmediately = false
         return manager
@@ -232,7 +236,7 @@ public extension MoyaProvider {
     public final class func ImmediatelyStub(_: Target) -> Moya.StubBehavior {
         return .Immediate
     }
-
+    
     public final class func DelayedStub(seconds: NSTimeInterval) -> (Target) -> Moya.StubBehavior {
         return { _ in return .Delayed(seconds: seconds) }
     }
@@ -254,9 +258,9 @@ internal extension MoyaProvider {
             plugins.forEach { $0.didReceiveResponse(result, target: target) }
             completion(result: result)
         }
-
+        
         alamoRequest.resume()
-
+        
         return CancellableToken(request: alamoRequest)
     }
     
