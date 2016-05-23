@@ -149,9 +149,9 @@ class MoyaProviderSpec: QuickSpec {
             
             beforeEach {
                 executed = false
-                let endpointResolution = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     executed = true
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
@@ -161,6 +161,30 @@ class MoyaProviderSpec: QuickSpec {
                 provider.request(target) { _ in  }
                 
                 expect(executed).to(beTruthy())
+            }
+        }
+        
+        describe("a provider with error in request closure") {
+            var provider: MoyaProvider<GitHub>!
+            
+            beforeEach {
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                    let underyingError = NSError(domain: "", code: 123, userInfo: nil)
+                    done(.Failure(.Underlying(underyingError)))
+                }
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+            }
+            
+            it("returns failure for any given request") {
+                let target: GitHub = .Zen
+                var receivedError: Moya.Error?
+                provider.request(target) { response in
+                    if case .Failure(let error) = response {
+                        receivedError = error
+                    }
+                }
+                
+                expect(receivedError).toEventuallyNot(beNil())
             }
         }
         
@@ -234,9 +258,9 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct URL") {
                 var requestedURL: String?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestedURL = endpoint.URL
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -251,9 +275,9 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct parameters") {
                 var requestParameters: [String: AnyObject]?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestParameters = endpoint.parameters
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -268,9 +292,9 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct method") {
                 var requestMethod: Moya.Method?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestMethod = endpoint.method
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 

@@ -2,6 +2,7 @@
 
 - Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`. *Breaking change*
 - Implements inflights tracking by adding `trackInflights = true` to your provider. *Breaking change*
+- Changes `MoyaProvider.RequestClosure` to have `Result<NSURLRequest, Moya.Error> -> Void` instead of `NSURLRequest -> Void` as a `done` closure parameter. *Breaking change*
 
 # 6.4.0
 
