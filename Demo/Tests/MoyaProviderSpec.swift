@@ -239,7 +239,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 switch receivedError {
-                case .Some(.Underlying(let error as NSError)):
+                case .Some(.Underlying(let error)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
