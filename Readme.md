@@ -120,7 +120,7 @@ Even cooler are the reactive extensions. Moya provides reactive extensions for
 
 ## ReactiveCocoa
 
-After `ReactiveCocoa` [docs/ReactiveCocoa.md](setup), `.request(:)` method
+After `ReactiveCocoa` [setup](docs/ReactiveCocoa.md), `request(:)` method
 immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
 that you can start or bind or map or whateveryou want to do. To handle errors,
 for instance, we could do the following:
@@ -141,7 +141,7 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
 
 ## RxSwift
 
-After `RxSwift` [docs/RxSwift.md](setup), `.request(:)` method immediately
+After `RxSwift` [setup](docs/RxSwift.md), `request(:)` method immediately
 returns an `Observable` that you can subscribe to or bind or map or whatever you
 want to do. To handle errors, for instance, we could do the following:
 
