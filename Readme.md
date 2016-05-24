@@ -77,9 +77,10 @@ github "Moya/Moya"
 Usage
 ---
 
-After [some setup](docs/Examples), using Moya is really simple. You can access an API like this:
+After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can access an API like this:
 
 ```swift
+provider = MoyaProvider<GitHub>()
 provider.request(.Zen) { result in
     switch result {
     case let .Success(moyaResponse):
