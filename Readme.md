@@ -100,6 +100,7 @@ That's a basic example. Many API requests need parameters. Moya encodes these
 into the enum you use to access the endpoint, like this:
 
 ```swift
+provider = MoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")) { result in
     // do something with the result
 }
@@ -108,17 +109,17 @@ provider.request(.UserProfile("ashfurrow")) { result in
 No more typos in URLs. No more missing parameter values. No more messing with
 parameter encoding.
 
-For examples, see the [documentation](docs/).
+For more examples, see the [documentation](docs/Examples).
 
 Reactive Extensions
 -------------------
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
-[ReactiveCocoa](docs/ReactiveCocoa.md) and [RxSwift](docs/RxSwift.md).
+[ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) and [RxSwift](https://github.com/ReactiveX/RxSwift).
 
 ## ReactiveCocoa
 
-For `ReactiveCocoa`, it immediately returns a `SignalProducer` (`RACSignal`
+After `ReactiveCocoa` [docs/ReactiveCocoa.md](setup), `.request(:)` method immediately returns a `SignalProducer` (`RACSignal`
 is also available if needed) that you can start or bind or map or whatever
 you want to do. To handle errors, for instance, we could do the following:
 
