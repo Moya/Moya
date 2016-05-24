@@ -10,7 +10,7 @@ A `RxMoyaProvider` can be created much like a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
-let GitHubProvider = RxMoyaProvider<GitHub>()
+let provider = RxMoyaProvider<GitHub>()
 ```
 
 After that simple setup, you're off to the races:
