@@ -115,15 +115,18 @@ Reactive Extensions
 -------------------
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
-[ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) and [RxSwift](https://github.com/ReactiveX/RxSwift).
+[ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) and
+[RxSwift](https://github.com/ReactiveX/RxSwift).
 
 ## ReactiveCocoa
 
-After `ReactiveCocoa` [docs/ReactiveCocoa.md](setup), `.request(:)` method immediately returns a `SignalProducer` (`RACSignal`
-is also available if needed) that you can start or bind or map or whatever
-you want to do. To handle errors, for instance, we could do the following:
+After `ReactiveCocoa` [docs/ReactiveCocoa.md](setup), `.request(:)` method
+immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
+that you can start or bind or map or whateveryou want to do. To handle errors,
+for instance, we could do the following:
 
 ```swift
+provider = ReactiveCocoaMoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
     switch event {
     case .Next(let response):
@@ -136,13 +139,14 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
 }
 ```
 
-##RxSwift
+## RxSwift
 
-For `RxSwift`, it immediately returns an `Observable` that you can subscribe to
-or bind or map or whatever you want to do. To handle errors, for instance,
-we could do the following:
+After `RxSwift` [docs/RxSwift.md](setup), `.request(:)` method immediately
+returns an `Observable` that you can subscribe to or bind or map or whatever you
+want to do. To handle errors, for instance, we could do the following:
 
 ```swift
+provider = RxMoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
     switch event {
     case .Next(let response):
