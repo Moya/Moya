@@ -1,4 +1,5 @@
 # Next
+- Added `queue` parameter to `request` and `sendRequest`. This open up option to use other queue instead of main queue for response callback.
 
 - **Breaking Change** Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`.
 - **Breaking Change** Implements inflights tracking by adding `trackInflights = true` to your provider.
