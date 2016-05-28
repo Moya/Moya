@@ -4,6 +4,10 @@
 - **Breaking Change** Implements inflights tracking by adding `trackInflights = true` to your provider.
 - **Breaking Change** Changes `MoyaProvider.RequestClosure` to have `Result<NSURLRequest, Moya.Error> -> Void` instead of `NSURLRequest -> Void` as a `done` closure parameter.
 
+# 6.5.0
+
+- Added `queue` parameter to `request` and `sendRequest`. This open up option to use other queue instead of main queue for response callback.
+
 # 6.4.0
 
 - Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
