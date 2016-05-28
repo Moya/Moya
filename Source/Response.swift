@@ -61,7 +61,7 @@ public extension Response {
         do {
             return try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         } catch {
-            throw Error.Underlying(error)
+            throw Error.Underlying(error as NSError)
         }
     }
 

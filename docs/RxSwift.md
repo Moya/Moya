@@ -10,7 +10,7 @@ A `RxMoyaProvider` can be created much like a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
-let GitHubProvider = RxMoyaProvider<GitHub>()
+let provider = RxMoyaProvider<GitHub>()
 ```
 
 After that simple setup, you're off to the races:
@@ -34,14 +34,14 @@ is disposed of before the request completes, the request is cancelled.
 
 If the request completes normally, two things happen:
 
-1. The observable sends a value, a `MoyaResponse` instance.
+1. The observable sends a value, a `Moya.Response` instance.
 2. The observable completes.
 
 If the request produces an error (typically a NSURLSession error),
 then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
-The `MoyaResponse` class contains a `statusCode`, some `data`,
+The `Moya.Response` class contains a `statusCode`, some `data`,
 and a(n optional) `NSURLResponse`. You can use these values however
 you like in `subscribeNext` or `map` calls.
 

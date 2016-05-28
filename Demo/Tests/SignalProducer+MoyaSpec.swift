@@ -229,7 +229,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 switch receivedError {
-                case .Some(.Underlying(let error as NSError)):
+                case .Some(.Underlying(let error)):
                     expect(error.domain).to(equal("\(NSCocoaErrorDomain)"))
                 default:
                     fail("expected NSError with \(NSCocoaErrorDomain) domain")

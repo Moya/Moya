@@ -77,9 +77,10 @@ github "Moya/Moya"
 Usage
 ---
 
-After [some setup](docs/Examples.md), using Moya is really simple. You can access an API like this:
+After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can access an API like this:
 
 ```swift
+provider = MoyaProvider<GitHub>()
 provider.request(.Zen) { result in
     switch result {
     case let .Success(moyaResponse):
@@ -99,6 +100,7 @@ That's a basic example. Many API requests need parameters. Moya encodes these
 into the enum you use to access the endpoint, like this:
 
 ```swift
+provider = MoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")) { result in
     // do something with the result
 }
@@ -107,21 +109,24 @@ provider.request(.UserProfile("ashfurrow")) { result in
 No more typos in URLs. No more missing parameter values. No more messing with
 parameter encoding.
 
-For examples, see the [documentation](docs/).
+For more examples, see the [documentation](docs/Examples).
 
 Reactive Extensions
 -------------------
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
-[ReactiveCocoa](docs/ReactiveCocoa.md) and [RxSwift](docs/RxSwift.md).
+[ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) and
+[RxSwift](https://github.com/ReactiveX/RxSwift).
 
 ## ReactiveCocoa
 
-For `ReactiveCocoa`, it immediately returns a `SignalProducer` (`RACSignal`
-is also available if needed) that you can start or bind or map or whatever
-you want to do. To handle errors, for instance, we could do the following:
+After `ReactiveCocoa` [setup](docs/ReactiveCocoa.md), `request(:)` method
+immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
+that you can start or bind or map or whateveryou want to do. To handle errors,
+for instance, we could do the following:
 
 ```swift
+provider = ReactiveCocoaMoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
     switch event {
     case .Next(let response):
@@ -134,13 +139,14 @@ provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
 }
 ```
 
-##RxSwift
+## RxSwift
 
-For `RxSwift`, it immediately returns an `Observable` that you can subscribe to
-or bind or map or whatever you want to do. To handle errors, for instance,
-we could do the following:
+After `RxSwift` [setup](docs/RxSwift.md), `request(:)` method immediately
+returns an `Observable` that you can subscribe to or bind or map or whatever you
+want to do. To handle errors, for instance, we could do the following:
 
 ```swift
+provider = RxMoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
     switch event {
     case .Next(let response):
@@ -171,7 +177,8 @@ Moya has a great community around it and some people have created some very help
 - [Moya-ObjectMapper](https://github.com/ivanbruel/Moya-ObjectMapper) - ObjectMapper bindings for Moya for easier JSON serialization
 - [Moya-SwiftyJSONMapper](https://github.com/AvdLee/Moya-SwiftyJSONMapper) - SwiftyJSON bindings for Moya for easier JSON serialization
 - [Moya-Argo](https://github.com/wattson12/Moya-Argo) - Argo bindings for Moya for easier JSON serialization
-- [Moya-ModelMapper](https://github.com/sunshinejr/Moya-ModelMapper) - ModelMapper bindings for Moya for easier JSON serialization 
+- [Moya-ModelMapper](https://github.com/sunshinejr/Moya-ModelMapper) - ModelMapper bindings for Moya for easier JSON serialization
+- [Moya-Gloss](https://github.com/spxrogers/Moya-Gloss) - Gloss bindings for Moya for easier JSON serialization
 
 We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
 

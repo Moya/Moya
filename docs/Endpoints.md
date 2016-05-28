@@ -25,7 +25,7 @@ The first might resemble the following:
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    return Endpoint(URL: url!, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -100,7 +100,7 @@ you can specify more details, which is useful for unit testing.
 Sample responses have one of two values:
 
 - `NetworkResponse`, with an `Int` status code and an `NSData` returned data.
-- `NetworkError`, with an `ErrorType?` optional error type.
+- `NetworkError`, with an `NSError?` optional error type.
 
  
 Request Mapping

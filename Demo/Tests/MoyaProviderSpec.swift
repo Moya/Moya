@@ -1,8 +1,8 @@
 import Quick
 import Nimble
 import Alamofire
-import Moya
 import Foundation
+@testable import Moya
 
 class MoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -149,9 +149,9 @@ class MoyaProviderSpec: QuickSpec {
             
             beforeEach {
                 executed = false
-                let endpointResolution = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     executed = true
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
@@ -161,6 +161,30 @@ class MoyaProviderSpec: QuickSpec {
                 provider.request(target) { _ in  }
                 
                 expect(executed).to(beTruthy())
+            }
+        }
+        
+        describe("a provider with error in request closure") {
+            var provider: MoyaProvider<GitHub>!
+            
+            beforeEach {
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                    let underyingError = NSError(domain: "", code: 123, userInfo: nil)
+                    done(.Failure(.Underlying(underyingError)))
+                }
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+            }
+            
+            it("returns failure for any given request") {
+                let target: GitHub = .Zen
+                var receivedError: Moya.Error?
+                provider.request(target) { response in
+                    if case .Failure(let error) = response {
+                        receivedError = error
+                    }
+                }
+                
+                expect(receivedError).toEventuallyNot(beNil())
             }
         }
         
@@ -215,7 +239,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 switch receivedError {
-                case .Some(.Underlying(let error as NSError)):
+                case .Some(.Underlying(let error)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -234,9 +258,9 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct URL") {
                 var requestedURL: String?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestedURL = endpoint.URL
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -251,9 +275,9 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct parameters") {
                 var requestParameters: [String: AnyObject]?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestParameters = endpoint.parameters
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -268,9 +292,9 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct method") {
                 var requestMethod: Moya.Method?
-                let endpointResolution = { (endpoint: Endpoint<StructTarget>, done: NSURLRequest -> Void) in
+                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestMethod = endpoint.method
-                    done(endpoint.urlRequest)
+                    done(.Success(endpoint.urlRequest))
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -297,6 +321,40 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(dataString) == "sample data"
+            }
+        }
+        
+        describe("a inflights provider") {
+            var provider: MoyaProvider<GitHub>!
+            beforeEach {
+                provider = MoyaProvider<GitHub>(trackInflights: true)
+            }
+            
+            it("returns identical response for inflight requests") {
+                let target: GitHub = .Zen
+                var receivedResponse: Moya.Response!
+                
+                expect(provider.inflightRequests.keys.count).to(equal(0))
+                
+                provider.request(target) { result in
+                    if case let .Success(response) = result {
+                        receivedResponse = response
+                    }
+                    expect(provider.inflightRequests.count).to(equal(1))
+                }
+                let request2:CancellableWrapper = provider.request(target) { result in
+                    expect(receivedResponse).toNot(beNil())
+                    if case let .Success(response) = result {
+                        expect(receivedResponse).to(beIndenticalToResponse(response))
+                    }
+                    expect(provider.inflightRequests.count).to(equal(1))
+                } as! CancellableWrapper
+
+                expect(request2.innerCancellable).toEventually( beNil())
+                
+                // Allow for network request to complete
+                expect(provider.inflightRequests.count).toEventually( equal(0))
+                
             }
         }
     }
