@@ -15,7 +15,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
             log += string
         })
 
-        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURLRepresentation: true, output: { printing in
+        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { printing in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.items.map { $0 as? String }.flatMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }

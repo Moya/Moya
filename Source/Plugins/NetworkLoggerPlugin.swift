@@ -66,7 +66,7 @@ private extension NetworkLoggerPlugin {
     
     func logNetworkRequest(request: NSURLRequest?, session: NSURLSession) -> [String] {
 
-        guard !cURLRepresentation else {
+        guard !cURL else {
             return NetworkLoggerPlugin.curlRepresentation(request, session: session)
         }
 
