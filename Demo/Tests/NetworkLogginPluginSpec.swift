@@ -7,7 +7,6 @@ final class NetworkLogginPluginSpec: QuickSpec {
     override func spec() {
 
         var log = ""
-        let session = NSURLSession.sharedSession()
         let plugin = NetworkLoggerPlugin(verbose: true, output: { printing in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.items.map { $0 as? String }.flatMap { $0 }
@@ -37,7 +36,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
         it("outputs all request fields with body") {
 
-            plugin.willSendRequest(TestBodyRequest(), session: session, target: GitHub.Zen)
+            plugin.willSendRequest(TestBodyRequest(), target: GitHub.Zen)
 
             expect(log).to( contain("Request:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
@@ -48,7 +47,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
         it("outputs all request fields with stream") {
 
-            plugin.willSendRequest(TestStreamRequest(), session: session, target: GitHub.Zen)
+            plugin.willSendRequest(TestStreamRequest(), target: GitHub.Zen)
 
             expect(log).to( contain("Request:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
@@ -59,7 +58,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
         it("will output invalid request when reguest is nil") {
 
-            plugin.willSendRequest(TestNilRequest(), session: session, target: GitHub.Zen)
+            plugin.willSendRequest(TestNilRequest(), target: GitHub.Zen)
 
             expect(log).to( contain("Request: (invalid request)") )
         }
@@ -68,7 +67,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
             let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: NSURLResponse(URL: NSURL(string: url(GitHub.Zen))!, MIMEType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, Moya.Error> = .Success(response)
 
-            plugin.didReceiveResponse(result, session: session, target: GitHub.Zen)
+            plugin.didReceiveResponse(result, target: GitHub.Zen)
 
             expect(log).to( contain("Response:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
@@ -79,7 +78,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
             let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: NSURLResponse(URL: NSURL(string: url(GitHub.Zen))!, MIMEType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, Moya.Error> = .Success(response)
 
-            pluginWithResponseDataFormatter.didReceiveResponse(result, session: session, target: GitHub.Zen)
+            pluginWithResponseDataFormatter.didReceiveResponse(result, target: GitHub.Zen)
 
             expect(log).to( contain("Response:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
@@ -90,14 +89,14 @@ final class NetworkLogginPluginSpec: QuickSpec {
             let response = Response(statusCode: 200, data: "cool body".dataUsingEncoding(NSUTF8StringEncoding)!, response: nil)
             let result: Result<Moya.Response, Moya.Error> = .Failure(Moya.Error.Data(response))
 
-            plugin.didReceiveResponse(result, session: session, target: GitHub.Zen)
+            plugin.didReceiveResponse(result, target: GitHub.Zen)
 
             expect(log).to( contain("Response: Received empty network response for Zen.") )
         }
 
         it("outputs cURL representation of request") {
 
-            pluginWithCurl.willSendRequest(TestBodyRequest(), session: session, target: GitHub.Zen)
+            pluginWithCurl.willSendRequest(TestCurlBodyRequest(), target: GitHub.Zen)
             print(log)
 
             expect(log).to( contain("$ curl -i") )
@@ -142,6 +141,28 @@ private class TestBodyRequest: RequestType {
 
     func authenticate(usingCredential credential: NSURLCredential) -> Self {
         return self
+    }
+}
+
+private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
+    var request: NSURLRequest? {
+        let r = NSMutableURLRequest(URL: NSURL(string: url(GitHub.Zen))!)
+        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
+        r.HTTPBody = "cool body".dataUsingEncoding(NSUTF8StringEncoding)
+
+        return r
+    }
+
+    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+        return self
+    }
+
+    func authenticate(usingCredential credential: NSURLCredential) -> Self {
+        return self
+    }
+
+    var debugDescription: String {
+        return ["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"","\"https://api.github.com/zen\""].joinWithSeparator(" \\\n\t")
     }
 }
 

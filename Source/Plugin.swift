@@ -9,10 +9,10 @@ import Result
 ///     - inject additional information into a request
 public protocol PluginType {
     /// Called immediately before a request is sent over the network (or stubbed).
-    func willSendRequest(request: RequestType, session: NSURLSession, target: TargetType)
+    func willSendRequest(request: RequestType, target: TargetType)
 
     // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, session: NSURLSession, target: TargetType)
+    func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType)
 }
 
 /// Request type used by willSendRequest plugin function.

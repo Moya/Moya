@@ -23,23 +23,19 @@ public final class NetworkLoggerPlugin: PluginType {
         self.responseDataFormatter = responseDataFormatter
     }
 
-    public func willSendRequest(request: RequestType, session: NSURLSession, target: TargetType) {
-        outputRequestItems(logNetworkRequest(request.request, session: session))
+    public func willSendRequest(request: RequestType, target: TargetType) {
+        if let request = request as? CustomDebugStringConvertible where cURL {
+            output(items: request.debugDescription, separator: separator, terminator: terminator)
+            return
+        }
+        outputItems(logNetworkRequest(request.request))
     }
 
-    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, session: NSURLSession, target: TargetType) {
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         if case .Success(let response) = result {
             outputItems(logNetworkResponse(response.response, data: response.data, target: target))
         } else {
             outputItems(logNetworkResponse(nil, data: nil, target: target))
-        }
-    }
-
-    private func outputRequestItems(items: [String]) {
-        if cURL {
-            output(items: items.joinWithSeparator(" \\\n\t"), separator: separator, terminator: terminator)
-        } else {
-            outputItems(items)
         }
     }
 
@@ -64,11 +60,7 @@ private extension NetworkLoggerPlugin {
         return "\(loggerId): [\(date)] \(identifier): \(message)"
     }
     
-    func logNetworkRequest(request: NSURLRequest?, session: NSURLSession) -> [String] {
-
-        guard !cURL else {
-            return NetworkLoggerPlugin.curlRepresentation(request, session: session)
-        }
+    func logNetworkRequest(request: NSURLRequest?) -> [String] {
 
         var output = [String]()
 
@@ -114,81 +106,3 @@ private extension NetworkLoggerPlugin {
     }
 }
 
-// MARK: cURL
-extension NetworkLoggerPlugin {
-
-  private class func curlRepresentation(request: NSURLRequest?, session: NSURLSession?) -> [String] {
-    var components = ["$ curl -i"]
-
-    guard let
-      request = request,
-      URL = request.URL,
-      host = URL.host,
-      session = session
-      else {
-        return ["$ curl command could not be created"]
-    }
-
-    if let HTTPMethod = request.HTTPMethod where HTTPMethod != "GET" {
-      components.append("-X \(HTTPMethod)")
-    }
-
-    if let credentialStorage = session.configuration.URLCredentialStorage {
-      let protectionSpace = NSURLProtectionSpace(
-        host: host,
-        port: URL.port?.integerValue ?? 0,
-        protocol: URL.scheme,
-        realm: host,
-        authenticationMethod: NSURLAuthenticationMethodHTTPBasic
-      )
-
-      if let credentials = credentialStorage.credentialsForProtectionSpace(protectionSpace)?.values {
-        for credential in credentials {
-          components.append("-u \(credential.user!):\(credential.password!)")
-        }
-      }
-    }
-
-    if session.configuration.HTTPShouldSetCookies {
-      if let
-        cookieStorage = session.configuration.HTTPCookieStorage,
-        cookies = cookieStorage.cookiesForURL(URL) where !cookies.isEmpty
-      {
-        let string = cookies.reduce("") { $0 + "\($1.name)=\($1.value ?? String());" }
-        components.append("-b \"\(string.substringToIndex(string.endIndex.predecessor()))\"")
-      }
-    }
-
-    var headers: [NSObject: AnyObject] = [:]
-
-    if let additionalHeaders = session.configuration.HTTPAdditionalHeaders {
-      for (field, value) in additionalHeaders where field != "Cookie" {
-        headers[field] = value
-      }
-    }
-
-    if let headerFields = request.allHTTPHeaderFields {
-      for (field, value) in headerFields where field != "Cookie" {
-        headers[field] = value
-      }
-    }
-
-    for (field, value) in headers {
-      components.append("-H \"\(field): \(value)\"")
-    }
-
-    if let
-      HTTPBodyData = request.HTTPBody,
-      HTTPBody = String(data: HTTPBodyData, encoding: NSUTF8StringEncoding)
-    {
-      var escapedBody = HTTPBody.stringByReplacingOccurrencesOfString("\\\"", withString: "\\\\\"")
-      escapedBody = escapedBody.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
-
-      components.append("-d \"\(escapedBody)\"")
-    }
-
-    components.append("\"\(URL.absoluteString)\"")
-
-    return components
-  }
-}

@@ -19,12 +19,12 @@ public final class NetworkActivityPlugin: PluginType {
     // MARK: Plugin
 
     /// Called by the provider as soon as the request is about to start
-    public func willSendRequest(request: RequestType, session: NSURLSession, target: TargetType) {
+    public func willSendRequest(request: RequestType, target: TargetType) {
         networkActivityClosure(change: .Began)
     }
     
     /// Called by the provider as soon as a response arrives, even the request is cancelled.
-    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, session: NSURLSession, target: TargetType) {
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         networkActivityClosure(change: .Ended)
     }
 }
