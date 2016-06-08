@@ -23,7 +23,7 @@ public final class NetworkLoggerPlugin: PluginType {
     }
 
     public func willSendRequest(request: RequestType, session: NSURLSession, target: TargetType) {
-        outputItems(logNetworkRequest(request.request, session: session))
+        outputItems(logNetworkRequest(request.request, session: session), cURLRepresentation: true)
     }
 
     public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, session: NSURLSession, target: TargetType) {
@@ -34,8 +34,8 @@ public final class NetworkLoggerPlugin: PluginType {
         }
     }
     
-    private func outputItems(items: [String]) {
-        if verbose {
+    private func outputItems(items: [String], cURLRepresentation: Bool = false) {
+        if verbose || cURLRepresentation {
             items.forEach { output(items: $0, separator: separator, terminator: terminator) }
         } else {
             output(items: items, separator: separator, terminator: terminator)
