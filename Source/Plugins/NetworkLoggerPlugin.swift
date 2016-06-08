@@ -8,22 +8,23 @@ public final class NetworkLoggerPlugin: PluginType {
     private let dateFormatter = NSDateFormatter()
     private let separator = ", "
     private let terminator = "\n"
+    private let cURLTerminator = "\\\n"
     private let output: (items: Any..., separator: String, terminator: String) -> Void
     private let responseDataFormatter: ((NSData) -> (NSData))?
     
     /// If true, also logs response body data.
     public let verbose: Bool
-    public let cURLRepresentation: Bool
+    public let cURL: Bool
 
-    public init(verbose: Bool = false, cURLRepresentation: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print, responseDataFormatter: ((NSData) -> (NSData))? = nil) {
-        self.cURLRepresentation = cURLRepresentation
+    public init(verbose: Bool = false, cURL: Bool = false, output: (items: Any..., separator: String, terminator: String) -> Void = print, responseDataFormatter: ((NSData) -> (NSData))? = nil) {
+        self.cURL = cURL
         self.verbose = verbose
         self.output = output
         self.responseDataFormatter = responseDataFormatter
     }
 
     public func willSendRequest(request: RequestType, session: NSURLSession, target: TargetType) {
-        outputItems(logNetworkRequest(request.request, session: session), cURLRepresentation: true)
+        outputRequestItems(logNetworkRequest(request.request, session: session))
     }
 
     public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, session: NSURLSession, target: TargetType) {
@@ -33,9 +34,17 @@ public final class NetworkLoggerPlugin: PluginType {
             outputItems(logNetworkResponse(nil, data: nil, target: target))
         }
     }
-    
-    private func outputItems(items: [String], cURLRepresentation: Bool = false) {
-        if verbose || cURLRepresentation {
+
+    private func outputRequestItems(items: [String]) {
+        if cURL {
+            items.joinWithSeparator(" \\\n\t")
+        } else {
+            outputItems(items)
+        }
+    }
+
+    private func outputItems(items: [String]) {
+        if verbose {
             items.forEach { output(items: $0, separator: separator, terminator: terminator) }
         } else {
             output(items: items, separator: separator, terminator: terminator)
