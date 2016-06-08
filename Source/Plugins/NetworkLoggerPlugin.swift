@@ -37,7 +37,7 @@ public final class NetworkLoggerPlugin: PluginType {
 
     private func outputRequestItems(items: [String]) {
         if cURL {
-            items.joinWithSeparator(" \\\n\t")
+            output(items: items.joinWithSeparator(" \\\n\t"), separator: separator, terminator: terminator)
         } else {
             outputItems(items)
         }
