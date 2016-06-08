@@ -261,15 +261,16 @@ internal extension MoyaProvider {
     func sendRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, completion: Moya.Completion) -> CancellableToken {
         let alamoRequest = manager.request(request)
         let plugins = self.plugins
-        
+        let session = manager.session
+
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+      plugins.forEach { $0.willSendRequest(alamoRequest, session: manager.session, target: target) }
         
         // Perform the actual request
         alamoRequest.response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
             let result = convertResponseToResult(response, data: data, error: error)
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(result, target: target) }
+            plugins.forEach { $0.didReceiveResponse(result, session: session,target: target) }
             completion(result: result)
         }
         
@@ -280,10 +281,11 @@ internal extension MoyaProvider {
     
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
     internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
+      let session = manager.session
         return {
             if (token.canceled) {
                 let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-                plugins.forEach { $0.didReceiveResponse(.Failure(error), target: target) }
+                plugins.forEach { $0.didReceiveResponse(.Failure(error), session: session, target: target) }
                 completion(result: .Failure(error))
                 return
             }
@@ -291,11 +293,11 @@ internal extension MoyaProvider {
             switch endpoint.sampleResponseClosure() {
             case .NetworkResponse(let statusCode, let data):
                 let response = Moya.Response(statusCode: statusCode, data: data, response: nil)
-                plugins.forEach { $0.didReceiveResponse(.Success(response), target: target) }
+                plugins.forEach { $0.didReceiveResponse(.Success(response), session: session, target: target) }
                 completion(result: .Success(response))
             case .NetworkError(let error):
                 let error = Moya.Error.Underlying(error)
-                plugins.forEach { $0.didReceiveResponse(.Failure(error), target: target) }
+                plugins.forEach { $0.didReceiveResponse(.Failure(error), session: session, target: target) }
                 completion(result: .Failure(error))
             }
         }
@@ -304,7 +306,7 @@ internal extension MoyaProvider {
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
         let alamoRequest = manager.request(request)
-        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+        plugins.forEach { $0.willSendRequest(alamoRequest, session: manager.session, target: target) }
     }
 }
 
