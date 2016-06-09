@@ -261,9 +261,9 @@ internal extension MoyaProvider {
     func sendRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, completion: Moya.Completion) -> CancellableToken {
         let alamoRequest = manager.request(request)
         let plugins = self.plugins
-        
+
         // Give plugins the chance to alter the outgoing request
-        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+      plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
         
         // Perform the actual request
         alamoRequest.response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in

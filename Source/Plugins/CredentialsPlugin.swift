@@ -12,14 +12,14 @@ public final class CredentialsPlugin: PluginType {
     }
 
     // MARK: Plugin
-    
+
     public func willSendRequest(request: RequestType, target: TargetType) {
         if let credentials = credentialsClosure(target) {
             request.authenticate(usingCredential: credentials)
         }
     }
-    
-    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
 
+    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
+        
     }
 }

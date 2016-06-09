@@ -5,7 +5,7 @@ import Result
 ///
 /// for example, a plugin may be used to
 ///     - log network requests
-///     - hide and show a network avtivity indicator 
+///     - hide and show a network avtivity indicator
 ///     - inject additional information into a request
 public protocol PluginType {
     /// Called immediately before a request is sent over the network (or stubbed).
@@ -20,7 +20,7 @@ public protocol RequestType {
 
     // Note:
     //
-    // We use this protocol instead of the Alamofire request to avoid leaking that abstraction. 
+    // We use this protocol instead of the Alamofire request to avoid leaking that abstraction.
     // A plugin should not know about Alamofire at all.
 
     /// Retrieve an NSURLRequest represetation.
