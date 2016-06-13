@@ -22,4 +22,6 @@ DerivedData
 .idea/
 
 Carthage/Build
+Carthage/Checkouts
+Cartfile.resolved
 Demo/Pods
