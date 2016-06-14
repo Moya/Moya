@@ -61,7 +61,8 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     return endpoint.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
 }
 ```
@@ -74,7 +75,8 @@ target that actually does the authentication. We could construct an
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 
     // Sign all non-authenticating requests
     switch target {
