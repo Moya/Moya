@@ -45,6 +45,7 @@
 		067D49A11C0D3886005BBA79 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 067D49751C0D3886005BBA79 /* testImage.png */; };
 		067D49A21C0D3886005BBA79 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 067D49751C0D3886005BBA79 /* testImage.png */; };
 		50B1EBA1C44658E11B73A670 /* Pods_MoyaTests_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23E2C2384BB324F464199633 /* Pods_MoyaTests_tvOS.framework */; };
+		5E1B4EA21D146CDB007F9C4B /* Community.md in Sources */ = {isa = PBXBuildFile; fileRef = 5E1B4EA11D146CDB007F9C4B /* Community.md */; };
 		5EC197E61A1BB16D00F4DFD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC197E51A1BB16D00F4DFD4 /* AppDelegate.swift */; };
 		5EC197E81A1BB16D00F4DFD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC197E71A1BB16D00F4DFD4 /* ViewController.swift */; };
 		5EC197ED1A1BB16D00F4DFD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EC197EB1A1BB16D00F4DFD4 /* Main.storyboard */; };
@@ -87,10 +88,10 @@
 		27E5F0287D32C71B4EE34229 /* Pods-MoyaTests-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoyaTests-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-MoyaTests-iOS/Pods-MoyaTests-iOS.release.xcconfig"; sourceTree = "<group>"; };
 		2A8DC8111FB71E677393A238 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		35B6A4A9827E42A94C22DCA0 /* Pods_MoyaTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoyaTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E0646551BE7995A00E900DC /* Contributing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Contributing.md; path = ../Contributing.md; sourceTree = "<group>"; };
 		5E0646561BE7999C00E900DC /* Moya.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = Moya.podspec; path = ../Moya.podspec; sourceTree = "<group>"; };
 		5E0646571BE799C500E900DC /* License.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = License.md; path = ../License.md; sourceTree = "<group>"; };
 		5E0646581BE79A4300E900DC /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = Readme.md; path = ../Readme.md; sourceTree = "<group>"; };
+		5E1B4EA11D146CDB007F9C4B /* Community.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Community.md; path = ../Community.md; sourceTree = "<group>"; };
 		5E2F7EE41BE53759009C5CE0 /* Changelog.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Changelog.md; path = ../Changelog.md; sourceTree = "<group>"; };
 		5EC197E01A1BB16D00F4DFD4 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC197E41A1BB16D00F4DFD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -205,8 +206,8 @@
 			isa = PBXGroup;
 			children = (
 				5E2F7EE41BE53759009C5CE0 /* Changelog.md */,
-				5E0646551BE7995A00E900DC /* Contributing.md */,
 				5E0646571BE799C500E900DC /* License.md */,
+				5E1B4EA11D146CDB007F9C4B /* Community.md */,
 				5E0646581BE79A4300E900DC /* Readme.md */,
 				5E0646561BE7999C00E900DC /* Moya.podspec */,
 				5EC197E21A1BB16D00F4DFD4 /* Demo */,
@@ -641,6 +642,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E1B4EA21D146CDB007F9C4B /* Community.md in Sources */,
 				5EC197E81A1BB16D00F4DFD4 /* ViewController.swift in Sources */,
 				5EC197E61A1BB16D00F4DFD4 /* AppDelegate.swift in Sources */,
 				5EC198081A1BB24600F4DFD4 /* GitHubAPI.swift in Sources */,
