@@ -5,7 +5,7 @@ As an example of building a custom plugin, let's say we wanted to inform the use
 
 First we create a class which will conform to `PluginType`, and accept a reference to a view controller (required to present a `UIAlertController`):
 
-```
+```swift
 final class RequestAlertPlugin: PluginType {
     
     private let viewController: UIViewController
@@ -26,7 +26,7 @@ final class RequestAlertPlugin: PluginType {
 
 Then we add some functionality to the function called when a request will be sent:
 
-```
+```swift
 func willSendRequest(request: RequestType, target: TargetType) {
         
         //make sure we have a URL string to display
@@ -43,7 +43,7 @@ func willSendRequest(request: RequestType, target: TargetType) {
 
 Finally, let's implement `didReceiveResponse` to show an alert if the result was a failure
 
-```
+```swift
 func didReceiveResponse(result: Result<Response, Error>, target: TargetType) {
         
         //only continue if result is a failure
@@ -56,7 +56,7 @@ func didReceiveResponse(result: Result<Response, Error>, target: TargetType) {
         //and present using the view controller we created at initialisation
         viewController.presentViewController(alertViewController, animated: true, completion: nil)
     }
-```
+```swift
 
 And that's it, you now have very well informed, if slightly annoyed users.
  
