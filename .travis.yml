@@ -9,7 +9,9 @@ cache:
   - bundler
   - cocoapods
 
-install: rake pod_install
+install:
+  - bundle install
+  - cd Demo ; bundle exec pod install
 
 script: rake test
 
