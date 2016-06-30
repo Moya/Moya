@@ -15,11 +15,11 @@ public final class CancellableToken: Cancellable , CustomDebugStringConvertible 
     let request : Request?
     private(set) var canceled: Bool = false
     
-    private var lock: OSSpinLock = OS_SPINLOCK_INIT
+    private var lock: dispatch_semaphore_t = dispatch_semaphore_create(1)
     
     public func cancel() {
-        OSSpinLockLock(&lock)
-        defer { OSSpinLockUnlock(&lock) }
+        dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER)
+        defer { dispatch_semaphore_signal(lock) }
         guard !canceled else { return }
         canceled = true
         cancelAction()
