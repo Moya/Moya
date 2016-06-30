@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'xcpretty'
 
-gem 'cocoapods', '0.39.0'
-gem 'cocoapods-deintegrate'
+gem 'cocoapods'
 gem 'rake'
 gem 'octokit', '~> 4.3'

@@ -77,23 +77,6 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         expect(message) == userMessage
                     }
-                    
-                    it("returns an error when cancelled") {
-                        var receivedError: ErrorType?
-
-                        waitUntil { done in
-                            let target: GitHub = .UserProfile("ashfurrow")
-                            let token = provider.request(target) { result in
-                                if case let .Failure(error) = result {
-                                    receivedError = error
-                                    done()
-                                }
-                            }
-                            token.cancel()
-                        }
-                        
-                        expect(receivedError).toNot( beNil() )
-                    }
 
                     it("uses a custom Alamofire.Manager request generation") {
                         let manager = StubManager()
