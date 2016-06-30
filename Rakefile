@@ -108,5 +108,5 @@ end
 desc 'Runs pod install on the Demo project, used for testing too.'
 task :pod_install do
   sh "brew install xcproj" unless `which xcproj`.strip.length > 0
-  sh "cd Demo ; COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=true bundle exec pod install"
+  sh "cd Demo ; bundle exec pod install"
 end

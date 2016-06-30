@@ -4,16 +4,14 @@ language: objective-c
 env:
   global:
     - LANG=en_US.UTF-8
-    - COCOAPODS_DISABLE_DETERMINISTIC_UUIDS=true
 
 cache:
   - bundler
   - cocoapods
 
-install: pushd Demo ; bundle exec pod install
+install: rake pod_install
 
-script:
-  - rake test
+script: rake test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
