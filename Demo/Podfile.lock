@@ -26,18 +26,9 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (4.7.0)
   - Quick (0.9.2)
-  - ReactiveCocoa (4.1.0):
-    - ReactiveCocoa/UI (= 4.1.0)
+  - ReactiveCocoa (4.2.1):
     - Result (~> 2.0)
-  - ReactiveCocoa/Core (4.1.0):
-    - ReactiveCocoa/no-arc
-    - Result (~> 2.0)
-  - ReactiveCocoa/no-arc (4.1.0):
-    - Result (~> 2.0)
-  - ReactiveCocoa/UI (4.1.0):
-    - ReactiveCocoa/Core
-    - Result (~> 2.0)
-  - Result (2.0.0)
+  - Result (2.1.1)
   - RxSwift (2.5.0)
 
 DEPENDENCIES:
@@ -58,10 +49,8 @@ SPEC CHECKSUMS:
   Nimble: 72bcc3e2f02242e6bfaaf8d9412ca7bfe3d8b417
   OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
   Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
-  ReactiveCocoa: d70004d7a366a7b8e87e60ce2347182c77701949
-  Result: 9e75e1111c774c6ac594e14907b15057053a7959
+  ReactiveCocoa: 5a42745f11ea236f405bb9ce5e97c5e3b23562dd
+  Result: 822c879f145943320cc80a9a8372378e3d699fe4
   RxSwift: 402b41a50e922a0368fc14cb3bc9f4427920e8ae
 
-PODFILE CHECKSUM: a3ce498a78552b79ee027ef1ae7d306c71cf33ad
-
-COCOAPODS: 1.0.1
+COCOAPODS: 0.39.0
