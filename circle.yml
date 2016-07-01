@@ -6,6 +6,7 @@ machine:
 
 dependencies:
   override:
+    - brew install swiftlint
     - bundle install
     - cd Demo ; bundle exec pod install
 

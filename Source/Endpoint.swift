@@ -47,12 +47,12 @@ public class Endpoint<Target> {
     public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<Target> {
         return endpointByAdding(httpHeaderFields: httpHeaderFields)
     }
-    
+
     /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
     public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
         return endpointByAdding(parameterEncoding: newParameterEncoding)
     }
-    
+
     /// Convenience method for creating a new Endpoint, with changes only to the properties we specify as parameters
     public func endpointByAdding(parameters parameters: [String: AnyObject]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
         let newParameters = addParameters(parameters)
@@ -60,24 +60,24 @@ public class Endpoint<Target> {
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
         return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
-    
+
     private func addParameters(parameters: [String: AnyObject]?) -> [String: AnyObject]? {
-        guard let unwrappedParameters = parameters where unwrappedParameters.count > 0 else {
+        guard let unwrappedParameters = parameters where unwrappedParameters.isEmpty == false else {
             return self.parameters
         }
-        
+
         var newParameters = self.parameters ?? [String: AnyObject]()
         unwrappedParameters.forEach { (key, value) in
             newParameters[key] = value
         }
         return newParameters
     }
-    
+
     private func addHTTPHeaderFields(headers: [String: String]?) -> [String: String]? {
-        guard let unwrappedHeaders = headers where unwrappedHeaders.count > 0 else {
+        guard let unwrappedHeaders = headers where unwrappedHeaders.isEmpty == false else {
             return self.httpHeaderFields
         }
-        
+
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
         unwrappedHeaders.forEach { (key, value) in
             newHTTPHeaderFields[key] = value
@@ -89,7 +89,7 @@ public class Endpoint<Target> {
 /// Extension for converting an Endpoint into an NSURLRequest.
 extension Endpoint {
     public var urlRequest: NSURLRequest {
-        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!)
+        let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!) // swiftlint:disable:this force_unwrapping
         request.HTTPMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
@@ -98,7 +98,7 @@ extension Endpoint {
 }
 
 /// Required for making Endpoint conform to Equatable.
-public func ==<T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
     return lhs.urlRequest.isEqual(rhs.urlRequest)
 }
 
