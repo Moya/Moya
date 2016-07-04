@@ -48,4 +48,4 @@ Both [Ash Furrow](https://github.com/ashfurrow) and [Orta Therox](https://github
 
 #### Where can I get more info about this document?
 
-The original source of this document can is at [https://github.com/moya/contributors](https://github.com/moya/contributors).
+The original source of this document can be found at [https://github.com/moya/contributors](https://github.com/moya/contributors).
