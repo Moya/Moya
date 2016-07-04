@@ -87,7 +87,7 @@ provider.request(.Zen) { result in
         let data = moyaResponse.data
         let statusCode = moyaResponse.statusCode
         // do something with the response data or statusCode
-    case .Failure(error):
+    case let .Failure(error):
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
         // timed out).  If the server responds with a 4xx or 5xx error, that
