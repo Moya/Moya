@@ -21,3 +21,7 @@ Examples
 ####Error handling
 
 * [Handling different error types](ErrorTypes.md)
+
+####Plugins
+
+* [Creating a custom plugin](CustomPlugin.md)

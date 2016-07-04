@@ -5,6 +5,8 @@
 - **Breaking Change** Implements inflights tracking by adding `trackInflights = true` to your provider.
 - **Breaking Change** Changes `MoyaProvider.RequestClosure` to have `Result<NSURLRequest, Moya.Error> -> Void` instead of `NSURLRequest -> Void` as a `done` closure parameter.
 - New cURL-based logging plugin.
+- Moves from OSSpinLock to `dispatch_semaphor` to avoid deadlocks.
+- Integrates Danger into the repo.
 
 # 6.5.0
 

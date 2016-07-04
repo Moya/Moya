@@ -125,28 +125,52 @@ class MoyaProviderSpec: QuickSpec {
             
             expect(called) == true
         }
-        
-        it("delays execution when appropriate") {
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(2))
-            
-            let startDate = NSDate()
-            var endDate: NSDate?
-            let target: GitHub = .Zen
-            waitUntil(timeout: 3) { done in
-                provider.request(target) { _ in
-                    endDate = NSDate()
-                    done()
-                }
-                return
+
+        describe("a provider with delayed stubs") {
+            var provider: MoyaProvider<GitHub>!
+            let delay: NSTimeInterval = 0.5
+
+            beforeEach {
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(delay))
             }
-            
-            expect(endDate?.timeIntervalSinceDate(startDate)).to( beGreaterThanOrEqualTo(NSTimeInterval(2)) )
+
+            it("delays execution") {
+                let startDate = NSDate()
+                var endDate: NSDate?
+                let target: GitHub = .Zen
+                waitUntil { done in
+                    provider.request(target) { _ in
+                        endDate = NSDate()
+                        done()
+                    }
+                    return
+                }
+
+                expect(endDate?.timeIntervalSinceDate(startDate)) >= delay
+            }
+
+            it("returns an error when request is cancelled") {
+                var receivedError: ErrorType?
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                    token.cancel()
+                }
+                
+                expect(receivedError).toNot( beNil() )
+            }
         }
-        
+
         describe("a provider with a custom endpoint resolver") {
             var provider: MoyaProvider<GitHub>!
             var executed = false
-            
+
             beforeEach {
                 executed = false
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
@@ -324,7 +348,7 @@ class MoyaProviderSpec: QuickSpec {
             }
         }
         
-        describe("a inflights provider") {
+        describe("an inflight-tracking provider") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
                 provider = MoyaProvider<GitHub>(trackInflights: true)

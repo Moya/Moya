@@ -10,7 +10,7 @@ def targets
   return [
     :ios,
     :osx,
-    :tvos
+    # :tvos # Note: we're omiting this until Circle supports testing on tvOS simulators.
   ]
 end
 
@@ -26,7 +26,7 @@ def sdks
   return {
     ios: 'iphonesimulator',
     osx: 'macosx',
-    tvos: 'appletvsimulator'
+    tvos: 'appletvsimulator9.2'
   }
 end
 
