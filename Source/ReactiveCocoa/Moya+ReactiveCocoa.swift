@@ -61,3 +61,38 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
         return token
     }
 }
+
+public extension ReactiveCocoaMoyaProvider {
+    public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, Error> {
+        let progressBlock = { (observer: Signal<ProgressResponse, Error>.Observer) -> (ProgressResponse) -> Void in
+            return { (progress:ProgressResponse) in
+                observer.sendNext(progress)
+            }
+        }
+        
+        let response: SignalProducer<ProgressResponse, Error> = SignalProducer { [weak self] observer, disposable in
+            let cancellableToken = self?.request(token, progress: progressBlock(observer)) { result in
+                switch result {
+                case let .Success(response):
+                    observer.sendNext(ProgressResponse(response: response))
+                    observer.sendCompleted()
+                case let .Failure(error):
+                    observer.sendFailed(error)
+                }
+            }
+            
+            let cleanUp = ActionDisposable {
+                cancellableToken?.cancel()
+            }
+            disposable.addDisposable(cleanUp)
+        }
+        
+        // Accumulate all progress and combine them when the result comes
+        return response.scan(ProgressResponse()) { (last, progress) in
+            let totalBytes = progress.totalBytes > 0 ? progress.totalBytes : last.totalBytes
+            let bytesExpected = progress.bytesExpected > 0 ? progress.bytesExpected : last.bytesExpected
+            let response = progress.response ?? last.response
+            return ProgressResponse(totalBytes: totalBytes, bytesExpected: bytesExpected, response: response)
+        }
+    }
+}
