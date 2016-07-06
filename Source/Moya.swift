@@ -417,6 +417,8 @@ internal extension MoyaProvider {
                         completion(result: result)
                 }
                 
+                if cancellable.isCancelled { return }
+                
                 alamoRequest.resume()
                 
                 cancellable.innerCancellable = CancellableToken(request: alamoRequest)
