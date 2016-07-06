@@ -300,7 +300,7 @@ public class MoyaProvider<Target: TargetType> {
     
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(target: Target, completion: Moya.Completion) -> Cancellable {
-        return self.requestNormal(target, queue:nil, completion:completion)
+        return self.request(target, queue:nil, completion:completion)
     }
 
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
