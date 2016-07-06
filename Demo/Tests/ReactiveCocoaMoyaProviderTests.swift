@@ -10,51 +10,6 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         beforeEach {
             provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
         }
-        
-        describe("provider with RACSignal") {
-            
-            it("returns a Response object") {
-                var called = false
-                
-                provider.request(.Zen).subscribeNext { (object) -> Void in
-                    if let _ = object as? Moya.Response {
-                        called = true
-                    }
-                }
-                
-                expect(called).to(beTruthy())
-            }
-            
-            it("returns stubbed data for zen request") {
-                var message: String?
-                
-                let target: GitHub = .Zen
-                provider.request(target).subscribeNext { (object) -> Void in
-                    if let response = object as? Moya.Response {
-                        message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
-                    }
-                }
-                
-                _ = target.sampleData as NSData
-                expect(message).toNot(beNil())
-            }
-            
-            it("returns correct data for user profile request") {
-                var receivedResponse: NSDictionary?
-                
-                let target: GitHub = .UserProfile("ashfurrow")
-                provider.request(target).subscribeNext { (object) -> Void in
-                    if let response = object as? Moya.Response {
-                        receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
-                    }
-                }
-                
-                let sampleData = target.sampleData as NSData
-                let sampleResponse = try! NSJSONSerialization.JSONObjectWithData(sampleData, options: []) as! NSDictionary
-                
-                expect(receivedResponse) == sampleResponse
-            }
-        }
 
         describe("failing") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!

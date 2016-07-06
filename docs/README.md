@@ -9,7 +9,7 @@ It accomplishes this with the following pipeline.
 ----------------
 
 <p align="center">
-    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveCocoa.md">ReactiveCocoa</a> &bull; <a href="RxSwift.md">RxSwift</a>
+    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveCocoa.md">ReactiveCocoa</a> &bull; <a href="RxSwift.md">RxSwift</a> &bull; <a href="Plugins.md">Plugins</a>
 </p>
 
 ----------------
