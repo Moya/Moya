@@ -71,7 +71,8 @@ public protocol TargetType {
 
 extension TargetType {
     internal var isMultipartUpload: Bool {
-        return (method == .POST || method == .PUT) && (multipartBody?.count ?? 0) > 0
+        guard let mBody = multipartBody else { return false }
+        return (method == .POST || method == .PUT) && !mBody.isEmpty
     }
 }
 
