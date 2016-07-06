@@ -45,7 +45,7 @@ public extension RxMoyaProvider {
         }
         
         let response:Observable<ProgressResponse> = Observable.create { [weak self] observer in
-            let cancellableToken = self?.request(token, progress:progressBlock(observer)){ result in
+            let cancellableToken = self?.request(token, queue:nil, progress:progressBlock(observer)){ result in
                 switch result {
                 case let .Success(response):
                     observer.onNext(ProgressResponse(response:response))

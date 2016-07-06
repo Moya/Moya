@@ -71,7 +71,7 @@ public extension ReactiveCocoaMoyaProvider {
         }
         
         let response: SignalProducer<ProgressResponse, Error> = SignalProducer { [weak self] observer, disposable in
-            let cancellableToken = self?.request(token, progress: progressBlock(observer)) { result in
+            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .Success(response):
                     observer.sendNext(ProgressResponse(response: response))
