@@ -22,12 +22,19 @@ extension GitHub: TargetType {
             return "/users/\(name.URLEscapedString)"
         }
     }
+    
     var method: Moya.Method {
         return .GET
     }
+    
     var parameters: [String: AnyObject]? {
         return nil
     }
+    
+    var multipartBody:[MultipartFormData]? {
+        return nil
+    }
+    
     var sampleData: NSData {
         switch self {
         case .Zen:
@@ -61,13 +68,18 @@ enum HTTPBin: TargetType {
     var method: Moya.Method {
         return .GET
     }
+    
     var parameters: [String: AnyObject]? {
         switch self {
         default:
             return [:]
         }
     }
-
+    
+    var multipartBody:[MultipartFormData]? {
+        return nil
+    }
+    
     var sampleData: NSData {
         switch self {
         case .BasicAuth:
