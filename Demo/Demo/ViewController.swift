@@ -1,11 +1,16 @@
 import UIKit
 
 class ViewController: UITableViewController {
+    var progressView = UIView()
     var repos = NSArray()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        progressView.frame = CGRect(origin: .zero, size: CGSize(width: 0, height: 2))
+        progressView.backgroundColor = .blueColor()
+        self.navigationController?.navigationBar.addSubview(progressView)
+        
         downloadRepositories("ashfurrow")
     }
 
@@ -64,6 +69,42 @@ class ViewController: UITableViewController {
             alertController.addAction(ok)
             self.presentViewController(alertController, animated: true, completion: nil)
         })
+    }
+    
+    @IBAction func giphyWasPressed(sender: UIBarButtonItem) {
+        uploadGiphy()
+    }
+    
+    func uploadGiphy() {
+        let data = animatedBirdData()
+        GiphyProvider.request(.Upload(gif: data),
+            queue: dispatch_get_main_queue(),
+            progress: { response in
+                UIView.animateWithDuration(0.3) {
+                    self.progressView.frame.size.width = self.view.frame.size.width * CGFloat(response.progress)
+                }
+            },
+            completion: { result in
+                let color: UIColor
+                switch result {
+                case .Success:
+                    color = .greenColor()
+                case .Failure:
+                    color = .redColor()
+                }
+                
+                UIView.animateWithDuration(0.3) {
+                    self.progressView.backgroundColor = color
+                    self.progressView.frame.size.width = self.view.frame.size.width
+                }
+                UIView.animateWithDuration(0.3, delay: 1, options: [], animations: {
+                    self.progressView.alpha = 0
+                }, completion: { _ in
+                    self.progressView.backgroundColor = .blueColor()
+                    self.progressView.frame.size.width = 0
+                    self.progressView.alpha = 1
+                })
+            })
     }
 
     // MARK: - User Interaction
