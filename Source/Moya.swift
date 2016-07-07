@@ -409,7 +409,16 @@ internal extension MoyaProvider {
                 // Perform the actual request
                 alamoRequest
                     .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
-                        progress?(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+                        let sendProgress: () -> () = {
+                            progress?(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+                        }
+                        
+                        if let queue = queue {
+                            dispatch_async(queue, sendProgress)
+                        }
+                        else {
+                            sendProgress()
+                        }
                     }
                     .response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
                         let result = convertResponseToResult(response, data: data, error: error)
