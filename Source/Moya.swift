@@ -5,7 +5,7 @@ import Result
 public typealias Completion = (result: Result<Moya.Response, Moya.Error>) -> ()
 
 /// Closure to be executed when a request has completed.
-public typealias ProgressBlock = (progress:ProgressResponse) -> Void
+public typealias ProgressBlock = (progress: ProgressResponse) -> Void
 
 public struct ProgressResponse {
     public let totalBytes: Int64
@@ -268,7 +268,7 @@ public class MoyaProvider<Target: TargetType> {
             
             switch stubBehavior {
             case .Never:
-                cancellableToken = self.sendUpload(target, request: request, queue: queue, multipartBody: multipartBody, progress:progress, completion: { result in
+                cancellableToken = self.sendUpload(target, request: request, queue: queue, multipartBody: multipartBody, progress: progress, completion: { result in
                     if self.trackInflights {
                         self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
                         
@@ -301,7 +301,7 @@ public class MoyaProvider<Target: TargetType> {
     
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(target: Target, completion: Moya.Completion) -> Cancellable {
-        return self.request(target, queue:nil, completion:completion)
+        return self.request(target, queue: nil, completion: completion)
     }
 
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
@@ -375,11 +375,11 @@ public extension MoyaProvider {
 
 internal extension MoyaProvider {
     
-    private func sendUpload(target: Target, request:NSURLRequest, queue: dispatch_queue_t?, multipartBody:[MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
+    private func sendUpload(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, multipartBody:[MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
         var cancellable = CancellableWrapper()
         let plugins = self.plugins
         
-        let multipartFormData = { (form:RequestMultipartFormData) -> Void in
+        let multipartFormData = { (form: RequestMultipartFormData) -> Void in
             for bodyPart in multipartBody {
                 switch bodyPart.provider {
                 case .Data(let data):
@@ -400,7 +400,7 @@ internal extension MoyaProvider {
             }
         }
         
-        manager.upload(request, multipartFormData: multipartFormData) {(result:MultipartFormDataEncodingResult) in
+        manager.upload(request, multipartFormData: multipartFormData) {(result: MultipartFormDataEncodingResult) in
             switch result {
             case .Success(let alamoRequest, _, _):
                 // Give plugins the chance to alter the outgoing request
@@ -409,7 +409,7 @@ internal extension MoyaProvider {
                 // Perform the actual request
                 alamoRequest
                     .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
-                        progress?(progress:ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+                        progress?(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
                     }
                     .response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
                         let result = convertResponseToResult(response, data: data, error: error)

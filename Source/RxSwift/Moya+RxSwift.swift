@@ -38,17 +38,17 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
 
 public extension RxMoyaProvider {
     public func requestWithProgress(token: Target) -> Observable<ProgressResponse> {
-        let progressBlock = { (observer:AnyObserver) -> (ProgressResponse) -> Void in
-            return { (progress:ProgressResponse) in
+        let progressBlock = { (observer: AnyObserver) -> (ProgressResponse) -> Void in
+            return { (progress: ProgressResponse) in
                 observer.onNext(progress)
             }
         }
         
-        let response:Observable<ProgressResponse> = Observable.create { [weak self] observer in
-            let cancellableToken = self?.request(token, queue:nil, progress:progressBlock(observer)){ result in
+        let response: Observable<ProgressResponse> = Observable.create { [weak self] observer in
+            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)){ result in
                 switch result {
                 case let .Success(response):
-                    observer.onNext(ProgressResponse(response:response))
+                    observer.onNext(ProgressResponse(response: response))
                     observer.onCompleted()
                     break
                 case let .Failure(error):
