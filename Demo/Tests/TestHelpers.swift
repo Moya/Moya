@@ -31,7 +31,7 @@ extension GitHub: TargetType {
         return nil
     }
     
-    var multipartBody:[MultipartFormData]? {
+    var multipartBody: [MultipartFormData]? {
         return nil
     }
     
@@ -76,7 +76,7 @@ enum HTTPBin: TargetType {
         }
     }
     
-    var multipartBody:[MultipartFormData]? {
+    var multipartBody: [MultipartFormData]? {
         return nil
     }
     
