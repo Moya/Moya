@@ -19,15 +19,15 @@ extension Request: RequestType { }
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
-    private(set) var canceled: Bool = false
+    private(set) public var cancelled: Bool = false
 
     private var lock: dispatch_semaphore_t = dispatch_semaphore_create(1)
 
     public func cancel() {
         dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER)
         defer { dispatch_semaphore_signal(lock) }
-        guard !canceled else { return }
-        canceled = true
+        guard !cancelled else { return }
+        cancelled = true
         cancelAction()
     }
 
