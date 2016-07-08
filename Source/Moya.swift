@@ -394,9 +394,10 @@ internal extension MoyaProvider {
             
             if let parameters = target.parameters {
                 parameters
-                    .flatMap{ (key, value) in ParameterEncoding.URL.queryComponents(key, value) }
+                    .flatMap{ (key, value) in multipartQueryComponents(key, value) }
                     .forEach{ (key, value) in
-                        form.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: key)
+                        let data = value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+                        form.appendBodyPart(data: data!, name: key)
                 }
             }
         }
@@ -522,4 +523,25 @@ internal class SimpleCancellable: Cancellable {
     func cancel() {
         cancelled = true
     }
+}
+
+/**
+ Encode parameters for multipart/form-data
+ */
+private func multipartQueryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
+    var components: [(String, String)] = []
+    
+    if let dictionary = value as? [String: AnyObject] {
+        for (nestedKey, value) in dictionary {
+            components += multipartQueryComponents("\(key)[\(nestedKey)]", value)
+        }
+    } else if let array = value as? [AnyObject] {
+        for value in array {
+            components += multipartQueryComponents("\(key)[]", value)
+        }
+    } else {
+        components.append((key, "\(value)"))
+    }
+    
+    return components
 }
