@@ -165,6 +165,129 @@ class MoyaProviderSpec: QuickSpec {
                 
                 expect(receivedError).toNot( beNil() )
             }
+
+            it("returns success when request is not cancelled") {
+                var receivedError: ErrorType?
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                }
+
+                expect(receivedError).to( beNil() )
+            }
+        }
+
+        describe("a provider with a delayed endpoint resolver") {
+            let beforeRequest: NSTimeInterval = 0.05
+            let requestTime: NSTimeInterval = 0.1
+            let beforeResponse: NSTimeInterval = 0.15
+            let responseTime: NSTimeInterval = 0.2
+            let afterResponse: NSTimeInterval = 0.3
+            var provider: MoyaProvider<GitHub>!
+
+            func delay(delay: NSTimeInterval, block: () -> ()) {
+                let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
+                let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+                dispatch_after(killTime, dispatch_get_main_queue(), block)
+            }
+
+            beforeEach {
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                    delay(requestTime) {
+                        done(.Success(endpoint.urlRequest))
+                    }
+                }
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.DelayedStub(responseTime))
+            }
+
+            it("returns success eventually") {
+                var receivedError: ErrorType?
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    provider.request(target) { result in
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                }
+
+                expect(receivedError).to( beNil() )
+            }
+
+            it("never calls completion if cancelled immediately") {
+                var receivedError: ErrorType?
+                var calledCompletion = false
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        calledCompletion = true
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                    token.cancel()
+                    delay(afterResponse) {
+                        done()
+                    }
+                }
+
+                expect(receivedError).to( beNil() )
+                expect(calledCompletion).to( beFalse() )
+            }
+
+            it("never calls completion if cancelled before request is created") {
+                var receivedError: ErrorType?
+                var calledCompletion = false
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        calledCompletion = true
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                    delay(beforeRequest) {
+                        token.cancel()
+                    }
+                    delay(afterResponse) {
+                        done()
+                    }
+                }
+
+                expect(receivedError).to( beNil() )
+                expect(calledCompletion).to( beFalse() )
+            }
+
+            it("receives an error if request is cancelled before response comes back") {
+                var receivedError: ErrorType?
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                    delay(beforeResponse) {
+                        token.cancel()
+                    }
+                }
+
+                expect(receivedError).toNot( beNil() )
+            }
         }
 
         describe("a provider with a custom endpoint resolver") {
@@ -366,7 +489,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     expect(provider.inflightRequests.count).to(equal(1))
                 }
-                let request2:CancellableWrapper = provider.request(target) { result in
+                let request2: CancellableWrapper = provider.request(target) { result in
                     expect(receivedResponse).toNot(beNil())
                     if case let .Success(response) = result {
                         expect(receivedResponse).to(beIndenticalToResponse(response))
@@ -374,8 +497,6 @@ class MoyaProviderSpec: QuickSpec {
                     expect(provider.inflightRequests.count).to(equal(1))
                 } as! CancellableWrapper
 
-                expect(request2.innerCancellable).toEventually( beNil())
-                
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually( equal(0))
                 
