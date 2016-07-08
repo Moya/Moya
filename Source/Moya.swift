@@ -60,6 +60,7 @@ public enum StructTarget: TargetType {
 
 /// Protocol to define the opaque type returned from a request
 public protocol Cancellable {
+    var canceled: Bool { get }
     func cancel()
 }
 
@@ -136,7 +137,7 @@ public class MoyaProvider<Target: TargetType> {
 
 
         let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
-            if cancellableToken.isCancelled { return }
+            if cancellableToken.canceled { return }
 
             var request: NSURLRequest!
 
@@ -323,12 +324,19 @@ public func convertResponseToResult(response: NSHTTPURLResponse?, data: NSData?,
     }
 }
 
-internal struct CancellableWrapper: Cancellable {
-    internal var innerCancellable: CancellableToken? = nil
+internal class CancellableWrapper: Cancellable {
+    internal var innerCancellable: Cancellable = SimpleCancellable()
 
-    private var isCancelled = false
+    var canceled: Bool { return innerCancellable.canceled ?? false }
 
     internal func cancel() {
-        innerCancellable?.cancel()
+        innerCancellable.cancel()
+    }
+}
+
+internal class SimpleCancellable: Cancellable {
+    var canceled = false
+    func cancel() {
+        canceled = true
     }
 }

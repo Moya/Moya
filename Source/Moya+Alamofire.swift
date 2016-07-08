@@ -13,7 +13,7 @@ extension Request: RequestType { }
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
-    private(set) var canceled: Bool = false
+    private(set) public var canceled: Bool = false
 
     private var lock: dispatch_semaphore_t = dispatch_semaphore_create(1)
 
