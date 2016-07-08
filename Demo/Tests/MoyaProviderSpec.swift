@@ -165,6 +165,22 @@ class MoyaProviderSpec: QuickSpec {
                 
                 expect(receivedError).toNot( beNil() )
             }
+
+            it("returns success when request is not cancelled") {
+                var receivedError: ErrorType?
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        if case let .Failure(error) = result {
+                            receivedError = error
+                        }
+                        done()
+                    }
+                }
+
+                expect(receivedError).to( beNil() )
+            }
         }
 
         describe("a provider with a custom endpoint resolver") {
