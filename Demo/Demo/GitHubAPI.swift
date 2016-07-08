@@ -53,7 +53,9 @@ extension GitHub: TargetType {
             return nil
         }
     }
-
+    public var multipartBody: [MultipartFormData]? {
+        return nil
+    }
     public var sampleData: NSData {
         switch self {
         case .Zen:

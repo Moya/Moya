@@ -400,6 +400,7 @@ class MoyaProviderSpec: QuickSpec {
                 var path = "/endpoint"
                 var method = Moya.Method.GET
                 var parameters: [String: AnyObject]? = ["key": "value"]
+                var multipartBody: [Moya.MultipartFormData]? = []
                 var sampleData = ("sample data" as NSString).dataUsingEncoding(NSUTF8StringEncoding)!
             }
 

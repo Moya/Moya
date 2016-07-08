@@ -35,3 +35,38 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
         }
     }
 }
+
+public extension RxMoyaProvider {
+    public func requestWithProgress(token: Target) -> Observable<ProgressResponse> {
+        let progressBlock = { (observer: AnyObserver) -> (ProgressResponse) -> Void in
+            return { (progress: ProgressResponse) in
+                observer.onNext(progress)
+            }
+        }
+        
+        let response: Observable<ProgressResponse> = Observable.create { [weak self] observer in
+            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)){ result in
+                switch result {
+                case let .Success(response):
+                    observer.onNext(ProgressResponse(response: response))
+                    observer.onCompleted()
+                    break
+                case let .Failure(error):
+                    observer.onError(error)
+                }
+            }
+            
+            return AnonymousDisposable {
+                cancellableToken?.cancel()
+            }
+        }
+        
+        // Accumulate all progress and combine them when the result comes
+        return response.scan(ProgressResponse()) { (last, progress) in
+            let totalBytes = progress.totalBytes > 0 ? progress.totalBytes : last.totalBytes
+            let bytesExpected = progress.bytesExpected > 0 ? progress.bytesExpected : last.bytesExpected
+            let response = progress.response ?? last.response
+            return ProgressResponse(totalBytes: totalBytes, bytesExpected: bytesExpected, response: response)
+        }
+    }
+}
