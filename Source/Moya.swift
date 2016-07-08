@@ -255,7 +255,7 @@ public class MoyaProvider<Target: TargetType> {
         var cancellableToken = CancellableWrapper()
         
         let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
-            if cancellableToken.isCancelled { return }
+            if cancellableToken.cancelled { return }
             
             var request: NSURLRequest!
             
@@ -428,7 +428,7 @@ internal extension MoyaProvider {
                         completion(result: result)
                 }
                 
-                if cancellable.isCancelled { return }
+                if cancellable.cancelled { return }
                 
                 alamoRequest.resume()
                 
