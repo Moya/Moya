@@ -382,7 +382,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     expect(provider.inflightRequests.count).to(equal(1))
                 }
-                let request2:CancellableWrapper = provider.request(target) { result in
+                let request2: CancellableWrapper = provider.request(target) { result in
                     expect(receivedResponse).toNot(beNil())
                     if case let .Success(response) = result {
                         expect(receivedResponse).to(beIndenticalToResponse(response))
@@ -390,8 +390,6 @@ class MoyaProviderSpec: QuickSpec {
                     expect(provider.inflightRequests.count).to(equal(1))
                 } as! CancellableWrapper
 
-                expect(request2.innerCancellable).toEventually( beNil())
-                
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually( equal(0))
                 
