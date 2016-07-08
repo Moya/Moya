@@ -50,6 +50,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
             struct TestCancellable: Cancellable {
                 static var cancelled = false
+                var cancelled: Bool { return TestCancellable.cancelled }
 
                 func cancel() {
                     TestCancellable.cancelled = true
@@ -132,6 +133,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
                 struct TestCancellable: Cancellable {
                     static var cancelled = false
+                    var cancelled: Bool { return TestCancellable.cancelled }
                     
                     func cancel() {
                         TestCancellable.cancelled = true

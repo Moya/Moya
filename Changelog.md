@@ -8,6 +8,7 @@
 - New cURL-based logging plugin.
 - Moves from OSSpinLock to `dispatch_semaphor` to avoid deadlocks.
 - Integrates Danger into the repo.
+- Fixes a xcodeproj referencing bug introduced by the new cURL-based logging plugin.
 
 # 6.5.0
 
