@@ -9,6 +9,7 @@
 - Moves from OSSpinLock to `dispatch_semaphor` to avoid deadlocks.
 - Integrates Danger into the repo.
 - Fixes a xcodeproj referencing bug introduced by the new cURL-based logging plugin.
+- Calls completion even when cancellable token is cancelled
 
 # 6.5.0
 
