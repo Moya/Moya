@@ -503,5 +503,36 @@ class MoyaProviderSpec: QuickSpec {
                 
             }
         }
+        
+        describe("the cancellable token") {
+            var provider: MoyaProvider<GitHub>!
+            beforeEach{
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(0.5))
+            }
+            
+            it("invokes completion and returns .Failure if cancelled immediately") {
+                var error: Moya.Error?
+                waitUntil { done in
+                    let cancellable = provider.request(GitHub.Zen, completion: { (result) in
+                        if case let .Failure(err) = result {
+                            error = err
+                        }
+                        done()
+                    })
+                    cancellable.cancel()
+                }
+                
+                expect(error).toNot(beNil())
+                
+                let underlyingIsCancelled: Bool
+                if let error = error, case .Underlying(let err) = error {
+                    underlyingIsCancelled = (err as NSError).code == NSURLErrorCancelled
+                } else {
+                    underlyingIsCancelled = false
+                }
+                
+                expect(underlyingIsCancelled).to(beTrue())
+            }
+        }
     }
 }
