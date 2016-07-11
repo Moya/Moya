@@ -200,7 +200,11 @@ public class MoyaProvider<Target: TargetType> {
         }
 
         let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
-            if cancellableToken.cancelled { return }
+            if cancellableToken.cancelled {
+                let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                completion(result: .Failure(error))
+                return
+            }
 
             var request: NSURLRequest!
 
@@ -255,7 +259,11 @@ public class MoyaProvider<Target: TargetType> {
         var cancellableToken = CancellableWrapper()
         
         let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
-            if cancellableToken.cancelled { return }
+            if cancellableToken.cancelled {
+                let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+                completion(result: .Failure(error))
+                return
+            }
             
             var request: NSURLRequest!
             

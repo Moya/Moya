@@ -222,7 +222,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).to( beNil() )
             }
 
-            it("never calls completion if cancelled immediately") {
+            it("calls completion if cancelled immediately") {
                 var receivedError: ErrorType?
                 var calledCompletion = false
 
@@ -233,7 +233,6 @@ class MoyaProviderSpec: QuickSpec {
                         if case let .Failure(error) = result {
                             receivedError = error
                         }
-                        done()
                     }
                     token.cancel()
                     delay(afterResponse) {
@@ -241,11 +240,11 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(receivedError).to( beNil() )
-                expect(calledCompletion).to( beFalse() )
+                expect(receivedError).toNot( beNil() )
+                expect(calledCompletion).to( beTrue() )
             }
 
-            it("never calls completion if cancelled before request is created") {
+            it("calls completion if cancelled before request is created") {
                 var receivedError: ErrorType?
                 var calledCompletion = false
 
@@ -256,7 +255,6 @@ class MoyaProviderSpec: QuickSpec {
                         if case let .Failure(error) = result {
                             receivedError = error
                         }
-                        done()
                     }
                     delay(beforeRequest) {
                         token.cancel()
@@ -266,8 +264,8 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(receivedError).to( beNil() )
-                expect(calledCompletion).to( beFalse() )
+                expect(receivedError).toNot( beNil() )
+                expect(calledCompletion).to( beTrue() )
             }
 
             it("receives an error if request is cancelled before response comes back") {
@@ -501,6 +499,37 @@ class MoyaProviderSpec: QuickSpec {
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually( equal(0))
                 
+            }
+        }
+        
+        describe("the cancellable token") {
+            var provider: MoyaProvider<GitHub>!
+            beforeEach{
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(0.5))
+            }
+            
+            it("invokes completion and returns .Failure if cancelled immediately") {
+                var error: Moya.Error?
+                waitUntil { done in
+                    let cancellable = provider.request(GitHub.Zen, completion: { (result) in
+                        if case let .Failure(err) = result {
+                            error = err
+                        }
+                        done()
+                    })
+                    cancellable.cancel()
+                }
+                
+                expect(error).toNot(beNil())
+                
+                let underlyingIsCancelled: Bool
+                if let error = error, case .Underlying(let err) = error {
+                    underlyingIsCancelled = (err as NSError).code == NSURLErrorCancelled
+                } else {
+                    underlyingIsCancelled = false
+                }
+                
+                expect(underlyingIsCancelled).to(beTrue())
             }
         }
     }
