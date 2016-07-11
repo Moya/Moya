@@ -233,7 +233,6 @@ class MoyaProviderSpec: QuickSpec {
                         if case let .Failure(error) = result {
                             receivedError = error
                         }
-                        done()
                     }
                     token.cancel()
                     delay(afterResponse) {
@@ -256,7 +255,6 @@ class MoyaProviderSpec: QuickSpec {
                         if case let .Failure(error) = result {
                             receivedError = error
                         }
-                        done()
                     }
                     delay(beforeRequest) {
                         token.cancel()
