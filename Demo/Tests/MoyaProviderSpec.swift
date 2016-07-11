@@ -222,7 +222,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).to( beNil() )
             }
 
-            it("never calls completion if cancelled immediately") {
+            it("calls completion if cancelled immediately") {
                 var receivedError: ErrorType?
                 var calledCompletion = false
 
@@ -241,11 +241,11 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(receivedError).to( beNil() )
-                expect(calledCompletion).to( beFalse() )
+                expect(receivedError).toNot( beNil() )
+                expect(calledCompletion).to( beTrue() )
             }
 
-            it("never calls completion if cancelled before request is created") {
+            it("calls completion if cancelled before request is created") {
                 var receivedError: ErrorType?
                 var calledCompletion = false
 
@@ -266,8 +266,8 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(receivedError).to( beNil() )
-                expect(calledCompletion).to( beFalse() )
+                expect(receivedError).toNot( beNil() )
+                expect(calledCompletion).to( beTrue() )
             }
 
             it("receives an error if request is cancelled before response comes back") {
