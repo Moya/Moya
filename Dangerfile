@@ -12,7 +12,7 @@ warn("Big PR") if lines_of_code > 500
 fail("fit left in tests") if `grep -r "fit Demo/Tests/ `.length > 1
 
 # Changelog entries are 
-fail("No Changelog entries made") if !modified_files.include?("Changelog.md") && !declared_trivial
+warn("No Changelog entries made") if !modified_files.include?("Changelog.md") && !declared_trivial
 
 # Run SwiftLint
 swiftlint.lint_files
