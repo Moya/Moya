@@ -128,10 +128,12 @@ class MoyaProviderSpec: QuickSpec {
 
         describe("a provider with delayed stubs") {
             var provider: MoyaProvider<GitHub>!
+            var plugin: TestingPlugin!
             let delay: NSTimeInterval = 0.5
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(delay))
+                plugin = TestingPlugin()
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(delay), plugins: [plugin])
             }
 
             it("delays execution") {
@@ -163,6 +165,25 @@ class MoyaProviderSpec: QuickSpec {
                     token.cancel()
                 }
                 
+                expect(receivedError).toNot( beNil() )
+            }
+
+            it("notifies plugins when request is cancelled") {
+                var receivedError: ErrorType?
+
+                waitUntil { done in
+                    let target: GitHub = .UserProfile("ashfurrow")
+                    let token = provider.request(target) { _ in
+                        done()
+                    }
+                    token.cancel()
+                }
+
+                if let result = plugin.result,
+                    case let .Failure(error) = result
+                {
+                    receivedError = error
+                }
                 expect(receivedError).toNot( beNil() )
             }
 
@@ -488,7 +509,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     expect(provider.inflightRequests.count).to(equal(1))
                 }
-                let request2: CancellableWrapper = provider.request(target) { result in
+                provider.request(target) { result in
                     expect(receivedResponse).toNot(beNil())
                     if case let .Success(response) = result {
                         expect(receivedResponse).to(beIndenticalToResponse(response))
