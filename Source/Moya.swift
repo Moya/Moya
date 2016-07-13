@@ -336,9 +336,8 @@ public extension MoyaProvider {
 internal extension MoyaProvider {
     
     private func sendUpload(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, multipartBody:[MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
-        var cancellable = CancellableWrapper()
-        let plugins = self.plugins
-        
+        let cancellable = CancellableWrapper()
+
         let multipartFormData = { (form: RequestMultipartFormData) -> Void in
             for bodyPart in multipartBody {
                 switch bodyPart.provider {
@@ -361,41 +360,14 @@ internal extension MoyaProvider {
             }
         }
         
-        manager.upload(request, multipartFormData: multipartFormData) {(result: MultipartFormDataEncodingResult) in
+        manager.upload(request, multipartFormData: multipartFormData) { (result: MultipartFormDataEncodingResult) in
             switch result {
             case .Success(let alamoRequest, _, _):
-                // Give plugins the chance to alter the outgoing request
-                plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
-                
-                // Perform the actual request
-                alamoRequest
-                    .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
-                        let sendProgress: () -> () = {
-                            progress?(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
-                        }
-                        
-                        if let queue = queue {
-                            dispatch_async(queue, sendProgress)
-                        }
-                        else {
-                            sendProgress()
-                        }
-                    }
-                    .response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
-                        let result = convertResponseToResult(response, data: data, error: error)
-                        // Inform all plugins about the response
-                        plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                        completion(result: result)
-                }
-
                 if cancellable.cancelled {
                     self.cancelCompletion(completion, target: target)
                     return
                 }
-
-                alamoRequest.resume()
-                
-                cancellable.innerCancellable = CancellableToken(request: alamoRequest)
+                cancellable.innerCancellable = self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
             case .Failure(let error):
                 completion(result: .Failure(Moya.Error.Underlying(error as NSError)))
             }
@@ -404,22 +376,42 @@ internal extension MoyaProvider {
         return cancellable
     }
 
-    
-    func sendRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, completion: Moya.Completion) -> CancellableToken {
+    private func sendRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> CancellableToken {
         let alamoRequest = manager.request(request)
-        let plugins = self.plugins
+        return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
+    }
 
+    private func sendAlamofireRequest(alamoRequest: Request, target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> CancellableToken {
         // Give plugins the chance to alter the outgoing request
-      plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
-
+        let plugins = self.plugins
+        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+        
         // Perform the actual request
-        alamoRequest.response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
-            let result = convertResponseToResult(response, data: data, error: error)
-            // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(result, target: target) }
-            completion(result: result)
+        if let progress = progress {
+            alamoRequest
+                .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
+                    let sendProgress: () -> () = {
+                        progress(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+                    }
+
+                    if let queue = queue {
+                        dispatch_async(queue, sendProgress)
+                    }
+                    else {
+                        sendProgress()
+                    }
+                }
         }
 
+        alamoRequest
+            .response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+                let result = convertResponseToResult(response, data: data, error: error)
+                // Inform all plugins about the response
+                plugins.forEach { $0.didReceiveResponse(result, target: target) }
+                completion(result: result)
+        }
+        
+        
         alamoRequest.resume()
 
         return CancellableToken(request: alamoRequest)
