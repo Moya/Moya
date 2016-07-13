@@ -1,5 +1,7 @@
 # Next
 
+# 7.0.0
+
 - **Breaking Change** Drops support for `RACSignal`.
 - **Breaking Change** Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`.
 - **Breaking Change** Implements inflights tracking by adding `trackInflights = true` to your provider.
