@@ -176,17 +176,13 @@ public class MoyaProvider<Target: TargetType> {
 
     /// Designated request-making method with queue option. Returns a Cancellable token to cancel the request later.
     public func request(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> Cancellable {
-        if target.isMultipartUpload {
-            return requestMultipart(target, queue: queue, progress: progress, completion: completion)
-        } else {
-            return requestNormal(target, queue: queue, completion: completion)
-        }
+        return requestNormal(target, queue: queue, progress: progress, completion: completion)
     }
-    
-    internal func requestNormal(target: Target, queue: dispatch_queue_t?, completion: Moya.Completion) -> Cancellable {
+
+    internal func requestNormal(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
-        var cancellableToken = CancellableWrapper()
+        let cancellableToken = CancellableWrapper()
 
         if trackInflights {
             objc_sync_enter(self)
@@ -222,7 +218,7 @@ public class MoyaProvider<Target: TargetType> {
 
             switch stubBehavior {
             case .Never:
-                cancellableToken.innerCancellable = self.sendRequest(target, request: request, queue: queue, completion: { result in
+                let networkCompletion: Moya.Completion = { result in
                     if self.trackInflights {
                         self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
 
@@ -232,7 +228,16 @@ public class MoyaProvider<Target: TargetType> {
                     } else {
                         completion(result: result)
                     }
-                })
+                }
+                if target.isMultipartUpload {
+                    guard let multipartBody = target.multipartBody where multipartBody.count > 0 else {
+                        fatalError("\(target) is not a multipart upload target.")
+                    }
+                    cancellableToken.innerCancellable = self.sendUpload(target, request: request, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
+                }
+                else {
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: request, queue: queue, progress: progress, completion: networkCompletion)
+                }
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
                     if self.trackInflights {
@@ -252,65 +257,6 @@ public class MoyaProvider<Target: TargetType> {
 
         return cancellableToken
     }
-    
-    internal func requestMultipart(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> Cancellable {
-        guard let multipartBody = target.multipartBody where multipartBody.count > 0 else {
-            fatalError("\(target) is not a multipart upload target.")
-        }
-        
-        let endpoint = self.endpoint(target)
-        let stubBehavior = self.stubClosure(target)
-        var cancellableToken = CancellableWrapper()
-        
-        let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
-            if cancellableToken.cancelled {
-                self.cancelCompletion(completion, target: target)
-                return
-            }
-            
-            var request: NSURLRequest!
-            
-            switch requestResult {
-            case .Success(let urlRequest):
-                request = urlRequest
-            case .Failure(let error):
-                completion(result: .Failure(error))
-                return
-            }
-            
-            switch stubBehavior {
-            case .Never:
-                cancellableToken = self.sendUpload(target, request: request, queue: queue, multipartBody: multipartBody, progress: progress, completion: { result in
-                    if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
-                        
-                        objc_sync_enter(self)
-                        self.inflightRequests.removeValueForKey(endpoint)
-                        objc_sync_exit(self)
-                    } else {
-                        completion(result: result)
-                    }
-                })
-            default:
-                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
-                    if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach({ $0(result: result) })
-                        
-                        objc_sync_enter(self)
-                        self.inflightRequests.removeValueForKey(endpoint)
-                        objc_sync_exit(self)
-                    } else {
-                        completion(result: result)
-                    }
-                }, endpoint: endpoint, stubBehavior: stubBehavior)
-            }
-        }
-        
-        requestClosure(endpoint, performNetworking)
-        
-        return cancellableToken
-    }
-
 
     internal func cancelCompletion(completion: Moya.Completion, target: Target) {
         let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
