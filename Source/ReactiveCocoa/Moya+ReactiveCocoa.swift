@@ -69,7 +69,7 @@ public extension ReactiveCocoaMoyaProvider {
                 observer.sendNext(progress)
             }
         }
-        
+
         let response: SignalProducer<ProgressResponse, Error> = SignalProducer { [weak self] observer, disposable in
             let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
@@ -80,13 +80,13 @@ public extension ReactiveCocoaMoyaProvider {
                     observer.sendFailed(error)
                 }
             }
-            
+
             let cleanUp = ActionDisposable {
                 cancellableToken?.cancel()
             }
             disposable.addDisposable(cleanUp)
         }
-        
+
         // Accumulate all progress and combine them when the result comes
         return response.scan(ProgressResponse()) { (last, progress) in
             let totalBytes = progress.totalBytes > 0 ? progress.totalBytes : last.totalBytes

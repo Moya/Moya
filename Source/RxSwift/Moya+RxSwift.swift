@@ -43,9 +43,9 @@ public extension RxMoyaProvider {
                 observer.onNext(progress)
             }
         }
-        
+
         let response: Observable<ProgressResponse> = Observable.create { [weak self] observer in
-            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)){ result in
+            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .Success(response):
                     observer.onNext(ProgressResponse(response: response))
@@ -55,12 +55,12 @@ public extension RxMoyaProvider {
                     observer.onError(error)
                 }
             }
-            
+
             return AnonymousDisposable {
                 cancellableToken?.cancel()
             }
         }
-        
+
         // Accumulate all progress and combine them when the result comes
         return response.scan(ProgressResponse()) { (last, progress) in
             let totalBytes = progress.totalBytes > 0 ? progress.totalBytes : last.totalBytes
