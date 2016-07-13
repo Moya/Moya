@@ -169,6 +169,11 @@ public class MoyaProvider<Target: TargetType> {
         return endpointClosure(token)
     }
 
+    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
+    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
+        return self.request(target, queue: nil, completion: completion)
+    }
+
     /// Designated request-making method with queue option. Returns a Cancellable token to cancel the request later.
     public func request(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> Cancellable {
         if target.isMultipartUpload {
@@ -306,10 +311,6 @@ public class MoyaProvider<Target: TargetType> {
         return cancellableToken
     }
 
-    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
-    public func request(target: Target, completion: Moya.Completion) -> Cancellable {
-        return self.request(target, queue: nil, completion: completion)
-    }
 
     internal func cancelCompletion(completion: Moya.Completion, target: Target) {
         let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
