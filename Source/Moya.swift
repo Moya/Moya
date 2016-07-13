@@ -201,8 +201,7 @@ public class MoyaProvider<Target: TargetType> {
 
         let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
             if cancellableToken.cancelled {
-                let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-                completion(result: .Failure(error))
+                self.cancelCompletion(completion, target: target)
                 return
             }
 
@@ -260,8 +259,7 @@ public class MoyaProvider<Target: TargetType> {
         
         let performNetworking = { (requestResult: Result<NSURLRequest, Moya.Error>) in
             if cancellableToken.cancelled {
-                let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-                completion(result: .Failure(error))
+                self.cancelCompletion(completion, target: target)
                 return
             }
             
@@ -307,10 +305,16 @@ public class MoyaProvider<Target: TargetType> {
         
         return cancellableToken
     }
-    
+
     /// Designated request-making method. Returns a Cancellable token to cancel the request later.
     public func request(target: Target, completion: Moya.Completion) -> Cancellable {
         return self.request(target, queue: nil, completion: completion)
+    }
+
+    internal func cancelCompletion(completion: Moya.Completion, target: Target) {
+        let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+        plugins.forEach { $0.didReceiveResponse(.Failure(error), target: target) }
+        completion(result: .Failure(error))
     }
 
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
@@ -436,9 +440,12 @@ internal extension MoyaProvider {
                         plugins.forEach { $0.didReceiveResponse(result, target: target) }
                         completion(result: result)
                 }
-                
-                if cancellable.cancelled { return }
-                
+
+                if cancellable.cancelled {
+                    self.cancelCompletion(completion, target: target)
+                    return
+                }
+
                 alamoRequest.resume()
                 
                 cancellable.innerCancellable = CancellableToken(request: alamoRequest)
@@ -475,9 +482,7 @@ internal extension MoyaProvider {
     internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
         return {
             if token.cancelled {
-                let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-                plugins.forEach { $0.didReceiveResponse(.Failure(error), target: target) }
-                completion(result: .Failure(error))
+                self.cancelCompletion(completion, target: target)
                 return
             }
 
