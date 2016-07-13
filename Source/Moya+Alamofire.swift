@@ -2,6 +2,7 @@ import Foundation
 import Alamofire
 
 public typealias Manager = Alamofire.Manager
+internal typealias Request = Alamofire.Request
 
 /// Choice of parameter encoding.
 public typealias ParameterEncoding = Alamofire.ParameterEncoding
@@ -16,14 +17,14 @@ public typealias MultipartFormDataEncodingResult = Alamofire.Manager.MultipartFo
 extension Request: RequestType { }
 
 /// Internal token that can be used to cancel requests
-public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
+internal final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
-    private(set) public var cancelled: Bool = false
+    private(set) var cancelled: Bool = false
 
     private var lock: dispatch_semaphore_t = dispatch_semaphore_create(1)
 
-    public func cancel() {
+    func cancel() {
         dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER)
         defer { dispatch_semaphore_signal(lock) }
         guard !cancelled else { return }
@@ -43,7 +44,7 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
         }
     }
 
-    public var debugDescription: String {
+    var debugDescription: String {
         guard let request = self.request else {
             return "Empty Request"
         }
