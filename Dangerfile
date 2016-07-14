@@ -1,6 +1,7 @@
 # Sometimes it's a README fix, or something like that - which isn't relevant for
 # including in a project's CHANGELOG for example
-declared_trivial = pr_title.include? "#trivial"
+not_declared_trivial = !(pr_title.include? "#trivial")
+has_app_changes = !git.modified_files.grep(/Source/).empty?
 
 # Make it more obvious that a PR is a work in progress and shouldn't be merged yet
 warn("PR is classed as Work in Progress") if pr_title.include? "[WIP]"
@@ -11,8 +12,11 @@ warn("Big PR") if lines_of_code > 500
 # Don't let testing shortcuts get into master by accident
 fail("fit left in tests") if `grep -r "fit Demo/Tests/ `.length > 1
 
-# Changelog entries are 
-warn("No Changelog entries made") if !modified_files.include?("Changelog.md") && !declared_trivial
+# Changelog entries are required for changes to library files.
+no_changelog_entry = !modified_files.include?("Changelog.md")
+if has_app_changes && no_changelog_entry && not_declared_trivial
+  fail("Any changes to library code need a summary in the Changelog.")
+end
 
 # Run SwiftLint
 swiftlint.lint_files
