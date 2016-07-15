@@ -3,7 +3,6 @@ import Moya
 
 let GiphyProvider = MoyaProvider<Giphy>()
 
-
 public enum Giphy {
     case Upload(gif: NSData)
 }

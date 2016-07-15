@@ -9,70 +9,54 @@ class ViewController: UITableViewController {
         
         progressView.frame = CGRect(origin: .zero, size: CGSize(width: 0, height: 2))
         progressView.backgroundColor = .blueColor()
-        self.navigationController?.navigationBar.addSubview(progressView)
+        navigationController?.navigationBar.addSubview(progressView)
         
         downloadRepositories("ashfurrow")
     }
 
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let ok = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(ok)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     // MARK: - API Stuff
 
     func downloadRepositories(username: String) {
-        GitHubProvider.request(.UserRepositories(username), completion: { result in
-
-            var success = true
-            var message = "Unable to fetch from GitHub"
-            
+        GitHubProvider.request(.UserRepositories(username)) { result in
             switch result {
             case let .Success(response):
                 do {
-                    let json: NSArray? = try response.mapJSON() as? NSArray
-                    if let json = json {
+                    if let json = try response.mapJSON() as? NSArray {
                         // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
                         self.repos = json
                     } else {
-                        success = false
+                        self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
                     }
                 } catch {
-                    success = false
+                    self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
                 }
                 self.tableView.reloadData()
             case let .Failure(error):
                 guard let error = error as? CustomStringConvertible else {
                     break
                 }
-                message = error.description
-                success = false
+                self.showAlert("GitHub Fetch", message: error.description)
             }
-            
-            if !success {
-                let alertController = UIAlertController(title: "GitHub Fetch", message: message, preferredStyle: .Alert)
-                let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                    alertController.dismissViewControllerAnimated(true, completion: nil)
-                })
-                alertController.addAction(ok)
-                self.presentViewController(alertController, animated: true, completion: nil)
-            }
-        })
+        }
     }
 
     func downloadZen() {
-        GitHubProvider.request(.Zen, completion: { result in
+        GitHubProvider.request(.Zen) { result in
             var message = "Couldn't access API"
             if case let .Success(response) = result {
-                message = (try? response.mapString()) ?? message
+                let jsonString = try? response.mapString()
+                message = jsonString ?? message
             }
-
-            let alertController = UIAlertController(title: "Zen", message: message, preferredStyle: .Alert)
-            let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-                alertController.dismissViewControllerAnimated(true, completion: nil)
-            })
-            alertController.addAction(ok)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        })
-    }
     
-    @IBAction func giphyWasPressed(sender: UIBarButtonItem) {
-        uploadGiphy()
+            self.showAlert("Zen", message: message)
+        }
     }
     
     func uploadGiphy() {
@@ -91,37 +75,40 @@ class ViewController: UITableViewController {
                     color = .greenColor()
                 case .Failure:
                     color = .redColor()
-                }
+            }
                 
-                UIView.animateWithDuration(0.3) {
-                    self.progressView.backgroundColor = color
-                    self.progressView.frame.size.width = self.view.frame.size.width
-                }
-                UIView.animateWithDuration(0.3, delay: 1, options: [], animations: {
-                    self.progressView.alpha = 0
-                }, completion: { _ in
-                    self.progressView.backgroundColor = .blueColor()
-                    self.progressView.frame.size.width = 0
-                    self.progressView.alpha = 1
-                })
+            UIView.animateWithDuration(0.3) {
+                self.progressView.backgroundColor = color
+                self.progressView.frame.size.width = self.view.frame.size.width
+            }
+
+            UIView.animateWithDuration(0.3, delay: 1, options: [], animations: {
+                self.progressView.alpha = 0
+            }, completion: { _ in
+                self.progressView.backgroundColor = .blueColor()
+                self.progressView.frame.size.width = 0
+                self.progressView.alpha = 1
             })
+        })
     }
 
     // MARK: - User Interaction
 
+    @IBAction func giphyWasPressed(sender: UIBarButtonItem) {
+        uploadGiphy()
+    }
+    
     @IBAction func searchWasPressed(sender: UIBarButtonItem) {
         var usernameTextField: UITextField?
 
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .Alert)
-        let ok = UIAlertAction(title: "OK", style: .Default, handler: { (action) -> Void in
-            if let usernameTextField = usernameTextField {
-                self.downloadRepositories(usernameTextField.text!)
+        let ok = UIAlertAction(title: "OK", style: .Default) { action in
+            if let username = usernameTextField?.text {
+                self.downloadRepositories(username)
             }
-        })
-        _ = UIAlertAction(title: "Cancel", style: .Cancel) { (action) -> Void in
         }
         promptController.addAction(ok)
-        promptController.addTextFieldWithConfigurationHandler { (textField) -> Void in
+        promptController.addTextFieldWithConfigurationHandler { textField in
             usernameTextField = textField
         }
         presentViewController(promptController, animated: true, completion: nil)
@@ -139,10 +126,8 @@ class ViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-
-        let object = repos[indexPath.row] as! NSDictionary
-        (cell.textLabel as UILabel!).text = object["name"] as? String
+        let repo = repos[indexPath.row] as? NSDictionary
+        cell.textLabel?.text = repo?["name"] as? String
         return cell
     }
 }
-
