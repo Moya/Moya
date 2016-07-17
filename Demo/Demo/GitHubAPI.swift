@@ -52,8 +52,8 @@ extension GitHub: TargetType {
             return nil
         }
     }
-    public var multipartBody: [MultipartFormData]? {
-        return nil
+    public var task: Task {
+        return .Request
     }
     public var sampleData: NSData {
         switch self {

@@ -1,4 +1,5 @@
 import UIKit
+import Moya
 
 class ViewController: UITableViewController {
     var progressView = UIView()
@@ -63,33 +64,50 @@ class ViewController: UITableViewController {
         let data = animatedBirdData()
         GiphyProvider.request(.Upload(gif: data),
             queue: dispatch_get_main_queue(),
-            progress: { response in
-                UIView.animateWithDuration(0.3) {
-                    self.progressView.frame.size.width = self.view.frame.size.width * CGFloat(response.progress)
-                }
-            },
-            completion: { result in
-                let color: UIColor
-                switch result {
-                case .Success:
-                    color = .greenColor()
-                case .Failure:
-                    color = .redColor()
-            }
-                
-            UIView.animateWithDuration(0.3) {
-                self.progressView.backgroundColor = color
-                self.progressView.frame.size.width = self.view.frame.size.width
-            }
-
-            UIView.animateWithDuration(0.3, delay: 1, options: [], animations: {
+            progress: progressClosure,
+            completion: progressCompletionClosure)
+    }
+    
+    func downloadMoyaLogo() {
+        GitHubUserContentProvider.request(.DownloadMoyaWebContent("moya_logo_github.png"),
+        queue: dispatch_get_main_queue(),
+        progress: progressClosure,
+        completion: progressCompletionClosure)
+    }
+    
+    // MARK: - Progress Helpers
+    
+    lazy var progressClosure: ProgressBlock = { response in
+        UIView.animateWithDuration(0.3) {
+            self.progressView.frame.size.width = self.view.frame.size.width * CGFloat(response.progress)
+        }
+    }
+    
+    lazy var progressCompletionClosure: Completion = { result in
+        let color: UIColor
+        switch result {
+        case .Success:
+            color = .greenColor()
+        case .Failure:
+            color = .redColor()
+        }
+        
+        UIView.animateWithDuration(0.3) {
+            self.progressView.backgroundColor = color
+            self.progressView.frame.size.width = self.view.frame.size.width
+        }
+        
+        UIView.animateWithDuration(0.3, delay: 1, options: [],
+            animations: {
                 self.progressView.alpha = 0
-            }, completion: { _ in
+            },
+            completion: { _ in
                 self.progressView.backgroundColor = .blueColor()
                 self.progressView.frame.size.width = 0
                 self.progressView.alpha = 1
-            })
-        })
+            }
+        )
+        
     }
 
     // MARK: - User Interaction
@@ -118,6 +136,10 @@ class ViewController: UITableViewController {
         downloadZen()
     }
 
+    @IBAction func downloadWasPressed(sender: UIBarButtonItem) {
+        downloadMoyaLogo()
+    }
+    
     // MARK: - Table View
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
