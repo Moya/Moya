@@ -1,5 +1,10 @@
 # Next
 
+
+- **Breaking Change** Removes "multipartBody" from TargetType protocol and adds a "task" instead
+- **Breaking Change** Successful Responses that have no data with them are now being converted to .Success Results
+- Adds Download and Upload Task type support to Moya
+
 # 7.0.0
 
 - **Breaking Change** Drops support for `RACSignal`.
