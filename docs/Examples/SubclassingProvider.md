@@ -34,7 +34,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
         }
         
         // Create actual refresh request
-        let newTokenRequest = super.request(MyService.RefreshSession(userId: userId, resfreshToken: refreshToken))
+        let newTokenRequest = super.request(MyService.RefreshSession(userId: userId, refreshToken: refreshToken))
             .filterSuccessfulStatusCodes()
             .mapJSON()
             .map { element -> (token: String?, refreshToken: String?, expiryTime: Double?) in
