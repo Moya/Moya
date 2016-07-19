@@ -27,10 +27,10 @@ extension Giphy: TargetType {
             return ["api_key": "dc6zaTOxFJmzC", "username": "Moya"]
         }
     }
-    public var multipartBody: [MultipartFormData]? {
+    public var task: Task {
         switch self {
         case let .Upload(data):
-            return [MultipartFormData(provider: .Data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")]
+            return .Upload(.Multipart([MultipartFormData(provider: .Data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")]))
         }
     }
     public var sampleData: NSData {

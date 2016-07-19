@@ -51,6 +51,7 @@
 		1DC29BB31D3694B10041B1DC /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB01D36949C0041B1DC /* TestPlugin.swift */; };
 		1DC29BB41D3694B20041B1DC /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB01D36949C0041B1DC /* TestPlugin.swift */; };
 		36CED1FF03F2BD97EFDFCC07 /* Pods_MoyaTests_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A2ED7FAC502C9DEFF05137 /* Pods_MoyaTests_Mac.framework */; };
+		3A6F19A81D3B88530087A1D5 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6F19A71D3B88530087A1D5 /* GitHubUserContentAPI.swift */; };
 		5EC197E61A1BB16D00F4DFD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC197E51A1BB16D00F4DFD4 /* AppDelegate.swift */; };
 		5EC197E81A1BB16D00F4DFD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC197E71A1BB16D00F4DFD4 /* ViewController.swift */; };
 		5EC197ED1A1BB16D00F4DFD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EC197EB1A1BB16D00F4DFD4 /* Main.storyboard */; };
@@ -97,6 +98,7 @@
 		1D2B50BE1D2ED44400F6CE90 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyAPI.swift; sourceTree = "<group>"; };
 		1DC29BB01D36949C0041B1DC /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		286AAA5F0654F6F6A0CFF235 /* Pods_MoyaTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoyaTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A6F19A71D3B88530087A1D5 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubUserContentAPI.swift; sourceTree = "<group>"; };
 		4BF06D5D3DD24C44F9301FB5 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		5E0646561BE7999C00E900DC /* Moya.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = Moya.podspec; path = ../Moya.podspec; sourceTree = "<group>"; };
 		5E0646571BE799C500E900DC /* License.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = License.md; path = ../License.md; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				5EC198071A1BB24600F4DFD4 /* GitHubAPI.swift */,
 				1D2B50BE1D2ED44400F6CE90 /* GiphyAPI.swift */,
+				3A6F19A71D3B88530087A1D5 /* GitHubUserContentAPI.swift */,
 				5EC197E51A1BB16D00F4DFD4 /* AppDelegate.swift */,
 				5EC197E71A1BB16D00F4DFD4 /* ViewController.swift */,
 				5EC197EB1A1BB16D00F4DFD4 /* Main.storyboard */,
@@ -660,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E1B4EA21D146CDB007F9C4B /* Community.md in Sources */,
+				3A6F19A81D3B88530087A1D5 /* GitHubUserContentAPI.swift in Sources */,
 				5EC197E81A1BB16D00F4DFD4 /* ViewController.swift in Sources */,
 				5EC197E61A1BB16D00F4DFD4 /* AppDelegate.swift in Sources */,
 				5EC198081A1BB24600F4DFD4 /* GitHubAPI.swift in Sources */,

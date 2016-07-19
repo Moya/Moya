@@ -31,8 +31,8 @@ extension GitHub: TargetType {
         return nil
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task: Task {
+        return .Request
     }
     
     var sampleData: NSData {
@@ -76,8 +76,8 @@ enum HTTPBin: TargetType {
         }
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task: Task {
+        return .Request
     }
     
     var sampleData: NSData {

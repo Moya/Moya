@@ -12,6 +12,7 @@ public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 
 /// Multipart form data encoding result.
 public typealias MultipartFormDataEncodingResult = Alamofire.Manager.MultipartFormDataEncodingResult
+public typealias DownloadDestination = Alamofire.Request.DownloadFileDestination
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType { }
