@@ -3,7 +3,11 @@ import Result
 
 /// Internal extension to keep the inner-workings outside the main Moya.swift file.
 internal extension MoyaProvider {
-    internal func requestNormal(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> Cancellable {
+    // Yup, we're disabling these. The function is complicated, but breaking it apart requires a large effort.
+    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable function_body_length
+    /// Performs normal requests.
+    func requestNormal(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
@@ -85,39 +89,17 @@ internal extension MoyaProvider {
 
         return cancellableToken
     }
+    // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable function_body_length
 
-    internal func cancelCompletion(completion: Moya.Completion, target: Target) {
+    func cancelCompletion(completion: Moya.Completion, target: Target) {
         let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
         plugins.forEach { $0.didReceiveResponse(.Failure(error), target: target) }
         completion(result: .Failure(error))
     }
 
-    /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
-    /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
-    internal func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
-        let cancellableToken = CancellableToken { }
-        notifyPluginsOfImpendingStub(request, target: target)
-        let plugins = self.plugins
-        let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
-        switch stubBehavior {
-        case .Immediate:
-            stub()
-        case .Delayed(let delay):
-            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
-            let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
-            dispatch_after(killTime, dispatch_get_main_queue()) {
-                stub()
-            }
-        case .Never:
-            fatalError("Method called to stub request when stubbing is disabled.")
-        }
-        
-        return cancellableToken
-    }
-
-
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    internal final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
+    final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
         return {
             if token.cancelled {
                 self.cancelCompletion(completion, target: target)
@@ -138,13 +120,13 @@ internal extension MoyaProvider {
     }
 
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
-    internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
+    final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
         let alamoRequest = manager.request(request)
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
     }
 }
 
-private extension Moya {
+private extension MoyaProvider {
     private func sendUploadMultipart(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
         let cancellable = CancellableWrapper()
 
@@ -231,9 +213,9 @@ private extension Moya {
                 completion(result: result)
         }
 
-        
+
         alamoRequest.resume()
-        
+
         return CancellableToken(request: alamoRequest)
     }
 }

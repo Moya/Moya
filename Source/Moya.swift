@@ -85,6 +85,29 @@ public class MoyaProvider<Target: TargetType> {
     public func request(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> Cancellable {
         return requestNormal(target, queue: queue, progress: progress, completion: completion)
     }
+
+    /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
+    /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
+    func stubRequest(target: Target, request: NSURLRequest, completion: Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+        let cancellableToken = CancellableToken { }
+        notifyPluginsOfImpendingStub(request, target: target)
+        let plugins = self.plugins
+        let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+        switch stubBehavior {
+        case .Immediate:
+            stub()
+        case .Delayed(let delay):
+            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
+            let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
+            dispatch_after(killTime, dispatch_get_main_queue()) {
+                stub()
+            }
+        case .Never:
+            fatalError("Method called to stub request when stubbing is disabled.")
+        }
+
+        return cancellableToken
+    }
 }
 
 /// Mark: Stubbing

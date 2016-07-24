@@ -1,3 +1,4 @@
+import Foundation
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
 public protocol TargetType {
