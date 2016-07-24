@@ -75,6 +75,14 @@
 		465D2C571D457B710059D1B6 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
 		465D2C581D457B890059D1B6 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5DC1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift */; };
 		465D2C591D457B8B0059D1B6 /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5DC1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift */; };
+		465D2C5A1D457C400059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
+		465D2C5B1D457C410059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
+		465D2C5C1D457C460059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3181BE1C84500AD4789 /* Moya.framework */; };
+		465D2C5D1D457C470059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3181BE1C84500AD4789 /* Moya.framework */; };
+		465D2C5E1D457C4C0059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FB91BE7ED4D00F3D266 /* Moya.framework */; };
+		465D2C5F1D457C4C0059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FB91BE7ED4D00F3D266 /* Moya.framework */; };
+		465D2C601D457C540059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10171BE7F11700F3D266 /* Moya.framework */; };
+		465D2C611D457C550059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10171BE7F11700F3D266 /* Moya.framework */; };
 		554B100F1BE7EEA500F3D266 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10101BE7EEAD00F3D266 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10111BE7EEB000F3D266 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -192,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C5C1D457C460059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5C21C1F6F5500A11B82 /* Result.framework in Frameworks */,
 				0630A35F1BE1C96B00AD4789 /* Alamofire.framework in Frameworks */,
 			);
@@ -201,6 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C5D1D457C470059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5C31C1F6F5E00A11B82 /* Result.framework in Frameworks */,
 				0630A3641BE1C97E00AD4789 /* RxSwift.framework in Frameworks */,
 				0630A3621BE1C97E00AD4789 /* Alamofire.framework in Frameworks */,
@@ -224,6 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C5B1D457C410059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5BE1C1F6F3700A11B82 /* Result.framework in Frameworks */,
 				091F0D7A1BDE9B53009D0A49 /* Alamofire.framework in Frameworks */,
 			);
@@ -233,6 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C5A1D457C400059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5BF1C1F6F4000A11B82 /* Result.framework in Frameworks */,
 				0670D32A1BE1CB010062593A /* RxSwift.framework in Frameworks */,
 				091F0D981BDE9D9A009D0A49 /* Alamofire.framework in Frameworks */,
@@ -252,6 +264,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C5E1D457C4C0059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5C61C1F6F7400A11B82 /* Result.framework in Frameworks */,
 				554B10331BE7F23B00F3D266 /* Alamofire.framework in Frameworks */,
 			);
@@ -261,6 +274,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C5F1D457C4C0059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5C71C1F6F8000A11B82 /* Result.framework in Frameworks */,
 				554B10381BE7F26100F3D266 /* RxSwift.framework in Frameworks */,
 				554B10361BE7F26100F3D266 /* Alamofire.framework in Frameworks */,
@@ -280,6 +294,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C611D457C550059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5CA1C1F6F9C00A11B82 /* Result.framework in Frameworks */,
 				554B103B1BE7F28D00F3D266 /* Alamofire.framework in Frameworks */,
 			);
@@ -289,6 +304,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				465D2C601D457C540059D1B6 /* Moya.framework in Frameworks */,
 				55B5D5CB1C1F6FA500A11B82 /* Result.framework in Frameworks */,
 				554B10401BE7F29900F3D266 /* RxSwift.framework in Frameworks */,
 				554B103E1BE7F29900F3D266 /* Alamofire.framework in Frameworks */,
