@@ -18,5 +18,12 @@ if has_app_changes && no_changelog_entry && not_declared_trivial
   fail("Any changes to library code need a summary in the Changelog.")
 end
 
+added_swift_library_files = git.modified_files.grep(/Source.*\.swift/).empty?
+deleted_swift_library_files = git.deleted_files.grep(/Source.*\.swift/).empty?
+modified_carthage_xcode_project = !(git.deleted_files.grep(/Moya\.xcodeproj/).empty?)
+if (added_swift_library_files || deleted_swift_library_files) && modified_carthage_xcode_project
+  fail("Added or removed library files require the Carthage Xcode project to be updated.")
+end
+
 # Run SwiftLint
 swiftlint.lint_files
