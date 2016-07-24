@@ -4,13 +4,13 @@ Here're the rasterized versions of the image assets used by Moya.
 
 ## Colours
 
-|   | Hex | Colour |
-|---|-----|--------|
-| <svg width="20" height="20"> <rect width="20" height="20" style="fill:#FEC937;" /></svg> | #FEC937 | Yellow |
-| <svg width="20" height="20"> <rect width="20" height="20" style="fill:#2C90FB;" /></svg> | #2C90FB | Blue |
-| <svg width="20" height="20"> <rect width="20" height="20" style="fill:#B8FD33;" /></svg> | #B8FD33 | Green |
-| <svg width="20" height="20"> <rect width="20" height="20" style="fill:#FC1892;" /></svg> | #FC1892 | Pink |
-| <svg width="20" height="20"> <rect width="20" height="20" style="fill:#B826FB;" /></svg> | #B826FB | Purple |
+|                                                               | Hex     | Colour |
+|---------------------------------------------------------------|---------|--------|
+| <img src="colour_swatches/yellow.png" width="20" height="20"> | #FEC937 | Yellow |
+| <img src="colour_swatches/blue.png" width="20" height="20">   | #2C90FB | Blue   |
+| <img src="colour_swatches/green.png" width="20" height="20">  | #B8FD33 | Green  |
+| <img src="colour_swatches/pink.png" width="20" height="20">   | #FC1892 | Pink   |
+| <img src="colour_swatches/purple.png" width="20" height="20"> | #B826FB | Purple |
 
 ## Logo
 
