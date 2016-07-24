@@ -2,7 +2,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 <p align="center">
-  <img src="web/logo_github.png" />
+  <img height="160" src="web/logo_github.png" />
 </p>
 
 You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
