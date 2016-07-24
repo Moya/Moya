@@ -386,13 +386,13 @@ internal extension MoyaProvider {
 
         return cancellable
     }
-    
-    private func sendUploadFile(target: Target,request: NSURLRequest,queue: dispatch_queue_t?,file: NSURL,progress: ProgressBlock? = nil,completion: Completion)-> CancellableToken {
+
+    private func sendUploadFile(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, file: NSURL, progress: ProgressBlock? = nil, completion: Completion) -> CancellableToken {
         let alamoRequest = manager.upload(request, file: file)
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
-    
-    private func sendDownloadRequest(target: Target,request: NSURLRequest,queue: dispatch_queue_t?,destination: DownloadDestination,progress: ProgressBlock? = nil,completion: Completion)-> CancellableToken{
+
+    private func sendDownloadRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, destination: DownloadDestination, progress: ProgressBlock? = nil, completion: Completion) -> CancellableToken {
         let alamoRequest = manager.download(request, destination: destination)
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
@@ -417,8 +417,7 @@ internal extension MoyaProvider {
 
                     if let queue = queue {
                         dispatch_async(queue, sendProgress)
-                    }
-                    else {
+                    } else {
                         sendProgress()
                     }
                 }
