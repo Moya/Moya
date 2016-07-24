@@ -69,7 +69,7 @@ class ViewController: UITableViewController {
     }
     
     func downloadMoyaLogo() {
-        GitHubUserContentProvider.request(.DownloadMoyaWebContent("moya_logo_github.png"),
+        GitHubUserContentProvider.request(.DownloadMoyaWebContent("logo_github.png"),
         queue: dispatch_get_main_queue(),
         progress: progressClosure,
         completion: progressCompletionClosure)
