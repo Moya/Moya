@@ -187,6 +187,54 @@
 		55B5D5D61C1F6FC500A11B82 /* Moya+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5D5CC1C1F6FBE00A11B82 /* Moya+Alamofire.swift */; };
 		55B5D5D71C1F6FC500A11B82 /* Moya+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5D5CC1C1F6FBE00A11B82 /* Moya+Alamofire.swift */; };
 		55B5D5D81C1F6FC600A11B82 /* Moya+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5D5CC1C1F6FBE00A11B82 /* Moya+Alamofire.swift */; };
+		5E5FA8C81D4462FB00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8C91D4462FB00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8CA1D4462FB00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8CB1D4462FB00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8CC1D4462FC00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8CD1D4462FC00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8CE1D4462FC00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8CF1D4462FC00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8D01D4462FC00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8D11D4462FC00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8D21D4462FC00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8D31D4462FC00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8D41D4462FC00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8D51D4462FC00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8D61D4462FC00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8D71D4462FC00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8D81D4462FD00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8D91D4462FD00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8DA1D4462FD00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8DB1D4462FD00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8DC1D4462FD00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8DD1D4462FD00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8DE1D4462FD00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8DF1D4462FD00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8E01D4462FD00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8E11D4462FD00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8E21D4462FD00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8E31D4462FD00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8E41D4462FE00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8E51D4462FE00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8E61D4462FE00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8E71D4462FE00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8E81D4462FE00ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8E91D4462FE00ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8EA1D4462FE00ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8EB1D4462FE00ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8EC1D44630000ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8ED1D44630000ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8EE1D44630000ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8EF1D44630000ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8F01D44630000ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8F11D44630000ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8F21D44630000ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8F31D44630000ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		5E5FA8F41D44630100ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
+		5E5FA8F51D44630100ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
+		5E5FA8F61D44630100ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
+		5E5FA8F71D44630100ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +284,10 @@
 		55B5D5C41C1F6F6900A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/tvOS/Result.framework; sourceTree = "<group>"; };
 		55B5D5C81C1F6F8F00A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/watchOS/Result.framework; sourceTree = "<group>"; };
 		55B5D5CC1C1F6FBE00A11B82 /* Moya+Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Moya+Alamofire.swift"; sourceTree = "<group>"; };
+		5E5FA8C41D4462F300ED49AF /* Cancellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
+		5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Defaults.swift"; sourceTree = "<group>"; };
+		5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Internal.swift"; sourceTree = "<group>"; };
+		5E5FA8C71D4462F300ED49AF /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +431,10 @@
 				0676A5D81BFE80D3001C7F55 /* Plugin.swift */,
 				0676A5E11BFE80D3001C7F55 /* Response.swift */,
 				55B5D5CC1C1F6FBE00A11B82 /* Moya+Alamofire.swift */,
+				5E5FA8C41D4462F300ED49AF /* Cancellable.swift */,
+				5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */,
+				5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */,
+				5E5FA8C71D4462F300ED49AF /* Target.swift */,
 				0676A5D91BFE80D3001C7F55 /* Plugins */,
 				0676A5DD1BFE80D3001C7F55 /* ReactiveCocoa */,
 				0676A5E31BFE80D3001C7F55 /* RxSwift */,
@@ -1180,11 +1236,15 @@
 			files = (
 				55B5D5D01C1F6FC200A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A5F51BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8D71D4462FC00ED49AF /* Target.swift in Sources */,
 				0676A6011BFE80D3001C7F55 /* Image.swift in Sources */,
+				5E5FA8D51D4462FC00ED49AF /* Moya+Defaults.swift in Sources */,
 				0676A6311BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A66D1BFE80D3001C7F55 /* Response.swift in Sources */,
 				0676A5E91BFE80D3001C7F55 /* Endpoint.swift in Sources */,
 				0676A6251BFE80D3001C7F55 /* CredentialsPlugin.swift in Sources */,
+				5E5FA8D41D4462FC00ED49AF /* Cancellable.swift in Sources */,
+				5E5FA8D61D4462FC00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A63D1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A6191BFE80D3001C7F55 /* Plugin.swift in Sources */,
 				0676A60D1BFE80D3001C7F55 /* Moya.swift in Sources */,
@@ -1196,6 +1256,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5F61BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8D91D4462FD00ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8D81D4462FD00ED49AF /* Cancellable.swift in Sources */,
 				0676A6021BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6321BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A66E1BFE80D3001C7F55 /* Response.swift in Sources */,
@@ -1205,7 +1267,9 @@
 				0676A63E1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A6621BFE80D3001C7F55 /* SignalProducer+Moya.swift in Sources */,
 				55B5D5D11C1F6FC200A11B82 /* Moya+Alamofire.swift in Sources */,
+				5E5FA8DA1D4462FD00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A61A1BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8DB1D4462FD00ED49AF /* Target.swift in Sources */,
 				0676A60E1BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1215,6 +1279,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5F71BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8DD1D4462FD00ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8DC1D4462FD00ED49AF /* Cancellable.swift in Sources */,
 				0676A6871BFE80D3001C7F55 /* Moya+RxSwift.swift in Sources */,
 				0676A6031BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6331BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
@@ -1224,7 +1290,9 @@
 				0676A63F1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				55B5D5D21C1F6FC300A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A6931BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				5E5FA8DE1D4462FD00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A61B1BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8DF1D4462FD00ED49AF /* Target.swift in Sources */,
 				0676A60F1BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1235,11 +1303,15 @@
 			files = (
 				55B5D5CD1C1F6FBE00A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A5F21BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8CB1D4462FB00ED49AF /* Target.swift in Sources */,
 				0676A5FE1BFE80D3001C7F55 /* Image.swift in Sources */,
+				5E5FA8C91D4462FB00ED49AF /* Moya+Defaults.swift in Sources */,
 				0676A62E1BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A66A1BFE80D3001C7F55 /* Response.swift in Sources */,
 				0676A5E61BFE80D3001C7F55 /* Endpoint.swift in Sources */,
 				0676A6221BFE80D3001C7F55 /* CredentialsPlugin.swift in Sources */,
+				5E5FA8C81D4462FB00ED49AF /* Cancellable.swift in Sources */,
+				5E5FA8CA1D4462FB00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A63A1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A6161BFE80D3001C7F55 /* Plugin.swift in Sources */,
 				0676A60A1BFE80D3001C7F55 /* Moya.swift in Sources */,
@@ -1251,6 +1323,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5F31BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8CD1D4462FC00ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8CC1D4462FC00ED49AF /* Cancellable.swift in Sources */,
 				0676A5FF1BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A62F1BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A66B1BFE80D3001C7F55 /* Response.swift in Sources */,
@@ -1260,7 +1334,9 @@
 				0676A63B1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A65F1BFE80D3001C7F55 /* SignalProducer+Moya.swift in Sources */,
 				55B5D5CE1C1F6FC100A11B82 /* Moya+Alamofire.swift in Sources */,
+				5E5FA8CE1D4462FC00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A6171BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8CF1D4462FC00ED49AF /* Target.swift in Sources */,
 				0676A60B1BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1270,6 +1346,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5F41BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8D11D4462FC00ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8D01D4462FC00ED49AF /* Cancellable.swift in Sources */,
 				0676A6841BFE80D3001C7F55 /* Moya+RxSwift.swift in Sources */,
 				0676A6001BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6301BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
@@ -1279,7 +1357,9 @@
 				0676A63C1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				55B5D5CF1C1F6FC100A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A6901BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				5E5FA8D21D4462FC00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A6181BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8D31D4462FC00ED49AF /* Target.swift in Sources */,
 				0676A60C1BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1290,11 +1370,15 @@
 			files = (
 				55B5D5D31C1F6FC300A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A5F81BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8E31D4462FD00ED49AF /* Target.swift in Sources */,
 				0676A6041BFE80D3001C7F55 /* Image.swift in Sources */,
+				5E5FA8E11D4462FD00ED49AF /* Moya+Defaults.swift in Sources */,
 				0676A6341BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A6701BFE80D3001C7F55 /* Response.swift in Sources */,
 				0676A5EC1BFE80D3001C7F55 /* Endpoint.swift in Sources */,
 				0676A6281BFE80D3001C7F55 /* CredentialsPlugin.swift in Sources */,
+				5E5FA8E01D4462FD00ED49AF /* Cancellable.swift in Sources */,
+				5E5FA8E21D4462FD00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A6401BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A61C1BFE80D3001C7F55 /* Plugin.swift in Sources */,
 				0676A6101BFE80D3001C7F55 /* Moya.swift in Sources */,
@@ -1306,6 +1390,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5F91BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8E51D4462FE00ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8E41D4462FE00ED49AF /* Cancellable.swift in Sources */,
 				0676A6051BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6351BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A6711BFE80D3001C7F55 /* Response.swift in Sources */,
@@ -1315,7 +1401,9 @@
 				0676A6411BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A6651BFE80D3001C7F55 /* SignalProducer+Moya.swift in Sources */,
 				55B5D5D41C1F6FC400A11B82 /* Moya+Alamofire.swift in Sources */,
+				5E5FA8E61D4462FE00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A61D1BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8E71D4462FE00ED49AF /* Target.swift in Sources */,
 				0676A6111BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1325,6 +1413,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5FA1BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8E91D4462FE00ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8E81D4462FE00ED49AF /* Cancellable.swift in Sources */,
 				0676A68A1BFE80D3001C7F55 /* Moya+RxSwift.swift in Sources */,
 				0676A6061BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6361BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
@@ -1334,7 +1424,9 @@
 				0676A6421BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				55B5D5D51C1F6FC400A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A6961BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				5E5FA8EA1D4462FE00ED49AF /* Moya+Internal.swift in Sources */,
 				0676A61E1BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8EB1D4462FE00ED49AF /* Target.swift in Sources */,
 				0676A6121BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1345,11 +1437,15 @@
 			files = (
 				55B5D5D61C1F6FC500A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A5FB1BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8F71D44630100ED49AF /* Target.swift in Sources */,
 				0676A6071BFE80D3001C7F55 /* Image.swift in Sources */,
+				5E5FA8F51D44630100ED49AF /* Moya+Defaults.swift in Sources */,
 				0676A6371BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A6731BFE80D3001C7F55 /* Response.swift in Sources */,
 				0676A5EF1BFE80D3001C7F55 /* Endpoint.swift in Sources */,
 				0676A62B1BFE80D3001C7F55 /* CredentialsPlugin.swift in Sources */,
+				5E5FA8F41D44630100ED49AF /* Cancellable.swift in Sources */,
+				5E5FA8F61D44630100ED49AF /* Moya+Internal.swift in Sources */,
 				0676A6431BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A61F1BFE80D3001C7F55 /* Plugin.swift in Sources */,
 				0676A6131BFE80D3001C7F55 /* Moya.swift in Sources */,
@@ -1361,6 +1457,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5FC1BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8F11D44630000ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8F01D44630000ED49AF /* Cancellable.swift in Sources */,
 				0676A6081BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6381BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
 				0676A6741BFE80D3001C7F55 /* Response.swift in Sources */,
@@ -1370,7 +1468,9 @@
 				0676A6441BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				0676A6681BFE80D3001C7F55 /* SignalProducer+Moya.swift in Sources */,
 				55B5D5D71C1F6FC500A11B82 /* Moya+Alamofire.swift in Sources */,
+				5E5FA8F21D44630000ED49AF /* Moya+Internal.swift in Sources */,
 				0676A6201BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8F31D44630000ED49AF /* Target.swift in Sources */,
 				0676A6141BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1380,6 +1480,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A5FD1BFE80D3001C7F55 /* Error.swift in Sources */,
+				5E5FA8ED1D44630000ED49AF /* Moya+Defaults.swift in Sources */,
+				5E5FA8EC1D44630000ED49AF /* Cancellable.swift in Sources */,
 				0676A68D1BFE80D3001C7F55 /* Moya+RxSwift.swift in Sources */,
 				0676A6091BFE80D3001C7F55 /* Image.swift in Sources */,
 				0676A6391BFE80D3001C7F55 /* NetworkActivityPlugin.swift in Sources */,
@@ -1389,7 +1491,9 @@
 				0676A6451BFE80D3001C7F55 /* NetworkLoggerPlugin.swift in Sources */,
 				55B5D5D81C1F6FC600A11B82 /* Moya+Alamofire.swift in Sources */,
 				0676A6991BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				5E5FA8EE1D44630000ED49AF /* Moya+Internal.swift in Sources */,
 				0676A6211BFE80D3001C7F55 /* Plugin.swift in Sources */,
+				5E5FA8EF1D44630000ED49AF /* Target.swift in Sources */,
 				0676A6151BFE80D3001C7F55 /* Moya.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
