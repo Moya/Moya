@@ -59,7 +59,12 @@ extension ObservableType where E == ProgressResponse {
      - returns: response associated with ProgressResponse object
      */
     public func filterCompleted() -> Observable<Response> {
-        return self.filter { $0.completed }.map { $0.response! }
+        return filter { progress -> Bool in
+                return progress.completed
+            }
+            .flatMap { progress in
+                return progress.response
+            }
     }
 
     /**

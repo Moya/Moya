@@ -5,6 +5,7 @@
 - **Breaking Change** Successful Response instances that have no data with them are now being converted to `.Success` `Result`s.
 - Adds Download and Upload Task type support to Moya.
 - Corrects SwiftLint warnings.
+- Separates `Moya.swift` into multiple files.
 
 # 7.0.0
 
