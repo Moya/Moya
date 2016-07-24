@@ -206,6 +206,10 @@ contributions, we'll add you as an admin to the repo so you can merge pull
 requests and help steer the ship :ship:
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code of Conduct.md).
+ 
+### Adding new source files
+ 
+If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget. 
 
 License
 -------
