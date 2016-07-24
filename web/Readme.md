@@ -14,8 +14,8 @@ Here're the rasterized versions of the image assets used by Moya.
 
 ## Logo
 
-![Logo](moya_logo_github.png)
-![Logo](moya_logo_square.png)
+![Logo](logo_github.png)
+![Logo](logo_square.png)
 
 ## Documentation Images
 
