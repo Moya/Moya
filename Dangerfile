@@ -20,7 +20,7 @@ end
 
 # Added (or removed) library files need to be added (or removed) from the
 # Carthage Xcode project to avoid breaking things for our Carthage users.
-added_swift_library_files = git.modified_files.grep(/Source.*\.swift/).empty?
+added_swift_library_files = git.added_files.grep(/Source.*\.swift/).empty?
 deleted_swift_library_files = git.deleted_files.grep(/Source.*\.swift/).empty?
 modified_carthage_xcode_project = !(git.deleted_files.grep(/Moya\.xcodeproj/).empty?)
 if (added_swift_library_files || deleted_swift_library_files) && modified_carthage_xcode_project
