@@ -27,5 +27,11 @@ if (added_swift_library_files || deleted_swift_library_files) && modified_cartha
   fail("Added or removed library files require the Carthage Xcode project to be updated.")
 end
 
+missing_doc_changes = git.modified_files.grep(/docs/).empty?
+doc_changes_recommended = insertions > 15
+if has_app_changes && missing_doc_changes && doc_changes_recommended
+  warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
+end
+
 # Run SwiftLint
 swiftlint.lint_files
