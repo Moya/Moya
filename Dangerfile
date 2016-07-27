@@ -20,11 +20,17 @@ end
 
 # Added (or removed) library files need to be added (or removed) from the
 # Carthage Xcode project to avoid breaking things for our Carthage users.
-added_swift_library_files = git.modified_files.grep(/Source.*\.swift/).empty?
+added_swift_library_files = git.added_files.grep(/Source.*\.swift/).empty?
 deleted_swift_library_files = git.deleted_files.grep(/Source.*\.swift/).empty?
 modified_carthage_xcode_project = !(git.deleted_files.grep(/Moya\.xcodeproj/).empty?)
 if (added_swift_library_files || deleted_swift_library_files) && modified_carthage_xcode_project
   fail("Added or removed library files require the Carthage Xcode project to be updated.")
+end
+
+missing_doc_changes = git.modified_files.grep(/docs/).empty?
+doc_changes_recommended = insertions > 15
+if has_app_changes && missing_doc_changes && doc_changes_recommended
+  warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
 
 # Run SwiftLint
