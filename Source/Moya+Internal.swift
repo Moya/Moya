@@ -63,7 +63,7 @@ internal extension MoyaProvider {
                 case .Upload(.File(let file)):
                     cancellableToken.innerCancellable = self.sendUploadFile(target, request: request, queue: queue, file: file, progress: progress, completion: networkCompletion)
                 case .Upload(.Multipart(let multipartBody)):
-                    guard !multipartBody.isEmpty && (target.method == .POST || target.method == .PUT) else {
+                    guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
                     cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: request, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)

@@ -5,6 +5,8 @@
 - Adds Download and Upload Task type support to Moya.
 - Corrects SwiftLint warnings.
 - Separates `Moya.swift` into multiple files.
+- Added `supportsMultipart` to the `Method` type, which helps determine whether to use `multipart/form-data` encoding.
+- Added `PATCH` and `CONNECT` to the `Method` cases which support multipart encoding.
 
 # 7.0.0
 
