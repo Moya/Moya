@@ -37,9 +37,9 @@ extension SignalProducerType where Value == Response, Error == Moya.Error {
     }
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
-    public func mapJSON() -> SignalProducer<AnyObject, Error> {
+    public func mapJSON(failsOnEmptyData failsOnEmptyData: Bool = true) -> SignalProducer<AnyObject, Error> {
         return producer.flatMap(.Latest) { response -> SignalProducer<AnyObject, Error> in
-            return unwrapThrowable { try response.mapJSON() }
+            return unwrapThrowable { try response.mapJSON(failsOnEmptyData: failsOnEmptyData) }
         }
     }
 
