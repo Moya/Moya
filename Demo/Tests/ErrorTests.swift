@@ -52,6 +52,32 @@ class ErrorTests: QuickSpec {
             }
         }
 
+        describe("mapping a result with empty data") {
+            let response = Response(statusCode: 200, data: NSData())
+
+            it("fails on mapJSON with default parameter") {
+                var succeeded = false
+                do {
+                    let _ = try response.mapJSON()
+                } catch {
+                    succeeded = true
+                }
+
+                expect(succeeded).to(beTruthy())
+            }
+
+            it("returns default non-nil value on mapJSON with overridden parameter") {
+                var succeeded = true
+                do {
+                    let _ = try response.mapJSON(failsOnEmptyData: false)
+                } catch {
+                    succeeded = false
+                }
+
+                expect(succeeded).to(beTruthy())
+            }
+        }
+
         describe("Alamofire responses should return the errors where appropriate") {
             it("should return the underlying error in spite of having a response and data") {
                 let underlyingError = NSError(domain: "", code: 0, userInfo: nil)
