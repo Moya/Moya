@@ -50,6 +50,18 @@ public enum StructTarget: TargetType {
 /// Represents an HTTP method.
 public enum Method: String {
     case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
+
+    public var supportsMultipart: Bool {
+        switch self {
+        case .POST,
+             .PUT,
+             .PATCH,
+             .CONNECT:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 public enum StubBehavior {
