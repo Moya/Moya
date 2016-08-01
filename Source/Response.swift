@@ -57,10 +57,13 @@ public extension Response {
     }
 
     /// Maps data received from the signal into a JSON object.
-    func mapJSON() throws -> AnyObject {
+    func mapJSON(failsOnEmptyData failsOnEmptyData: Bool = true) throws -> AnyObject {
         do {
             return try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
         } catch {
+            if data.length < 1 && !failsOnEmptyData {
+                return NSNull()
+            }
             throw Error.Underlying(error as NSError)
         }
     }

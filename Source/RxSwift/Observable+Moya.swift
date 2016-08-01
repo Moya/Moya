@@ -37,9 +37,9 @@ extension ObservableType where E == Response {
     }
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
-    public func mapJSON() -> Observable<AnyObject> {
+    public func mapJSON(failsOnEmptyData failsOnEmptyData: Bool = true) -> Observable<AnyObject> {
         return flatMap { response -> Observable<AnyObject> in
-            return Observable.just(try response.mapJSON())
+            return Observable.just(try response.mapJSON(failsOnEmptyData: failsOnEmptyData))
         }
     }
 
