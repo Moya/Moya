@@ -5,6 +5,7 @@
 - Adds Download and Upload Task type support to Moya.
 - Corrects SwiftLint warnings.
 - Separates `Moya.swift` into multiple files.
+- Updated `mapJSON` API to include an optional named parameter `failsOnEmptyData:` that when overriden returns an empty `NSNull()` result instead of throwing an error when the response data is empty.
 
 # 7.0.0
 

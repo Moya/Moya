@@ -56,14 +56,14 @@ class ErrorTests: QuickSpec {
             let response = Response(statusCode: 200, data: NSData())
 
             it("fails on mapJSON with default parameter") {
-                var succeeded = false
+                var mapJSONFailed = false
                 do {
                     let _ = try response.mapJSON()
                 } catch {
-                    succeeded = true
+                    mapJSONFailed = true
                 }
 
-                expect(succeeded).to(beTruthy())
+                expect(mapJSONFailed).to(beTruthy())
             }
 
             it("returns default non-nil value on mapJSON with overridden parameter") {
