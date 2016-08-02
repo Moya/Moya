@@ -56,6 +56,10 @@ extension MyService: TargetType {
             return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
         }
     }
+    var multipartBody: [MultipartFormData]? {
+        // Optional
+        return nil
+    }
 }
 
 // MARK: - Helpers
