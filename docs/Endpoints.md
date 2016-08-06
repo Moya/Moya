@@ -65,6 +65,7 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     return endpoint.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
 }
+let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
 
 This also means that you can provide additional parameters to some or all of 
@@ -86,6 +87,7 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
         return endpoint.endpointByAddingHTTPHeaderFields(["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
     }
 }
+let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
 
 Awesome. 
@@ -136,7 +138,7 @@ let requestClosure = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) 
 
     done(request)
 }
-provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
+let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 ```
 
 This `requestClosure` is useful for modifying properties specific to the `NSURLRequest` or providing information to the request that cannot be known until that request is created, like cookies settings. Note that the `endpointClosure` mentioned above is not intended for this purpose or any request-specific application-level mapping.
