@@ -47,7 +47,7 @@ Finally, let's implement `didReceiveResponse` to show an alert if the result was
 func didReceiveResponse(result: Result<Response, Error>, target: TargetType) {
         
         //only continue if result is a failure
-        guard case Result.Failure(let error) = result else { return }
+        guard case Result.Failure(_) = result else { return }
         
         //create alert view controller with a single action and messing displaying status code
         let alertViewController = UIAlertController(title: "Error", message: "Request failed with status code: \(error.response?.statusCode ?? 0)", preferredStyle: .Alert)
@@ -56,7 +56,7 @@ func didReceiveResponse(result: Result<Response, Error>, target: TargetType) {
         //and present using the view controller we created at initialisation
         viewController.presentViewController(alertViewController, animated: true, completion: nil)
     }
-```swift
+```
 
 And that's it, you now have very well informed, if slightly annoyed users.
  
