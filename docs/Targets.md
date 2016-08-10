@@ -31,16 +31,16 @@ This protocol specifies the locations of
 your API endpoints, relative to its base URL (more on that below). 
 
 ```swift
-    public var path: String {
-        switch self {
-        case .Zen:
-            return "/zen"
-        case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString)"
-        case .UserRepositories(let name):
-            return "/users/\(name.URLEscapedString)/repos"
-        }
+public var path: String {
+    switch self {
+    case .Zen:
+        return "/zen"
+    case .UserProfile(let name):
+        return "/users/\(name.URLEscapedString)"
+    case .UserRepositories(let name):
+        return "/users/\(name.URLEscapedString)/repos"
     }
+}
 ```
 
 Note: we're cheating here and using a `URLEscapedString` extension on String. 
@@ -50,9 +50,9 @@ OK, cool. So now we need to have a `method` for our enum values. In our case, we
 are always using the GET HTTP method, so this is pretty easy:
 
 ```swift
-    public var method: Moya.Method {
-        return .GET
-    }
+public var method: Moya.Method {
+    return .GET
+}
 ```
 
 Nice. If some of your endpoints require POST or another method, then you can switch
@@ -63,14 +63,14 @@ Our `TargetType` is shaping up, but we're not done yet. We also need a `paramete
 computed property that returns parameters defined by the enum case. Here's an example:
 
 ```swift
-    public var parameters: [String: AnyObject]? {
-        switch self {
-        case .UserRepositories(_):
-            return ["sort": "pushed"]
-        default:
-            return nil
-        }
+public var parameters: [String: AnyObject]? {
+    switch self {
+    case .UserRepositories(_):
+        return ["sort": "pushed"]
+    default:
+        return nil
     }
+}
 ```
 
 Unlike our `path` property earlier, we don't actually care about the associated values
@@ -82,16 +82,16 @@ the `TargetType` protocol. Any target you want to hit must provide some non-nil
 for providing offline support for developers. This *should* depend on `self`. 
 
 ```swift
-    public var sampleData: NSData {
-        switch self {
-        case .Zen:
-            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserRepositories(let name):
-            return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
-        }
+public var sampleData: NSData {
+    switch self {
+    case .Zen:
+        return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
+    case .UserProfile(let name):
+        return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+    case .UserRepositories(let name):
+        return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
     }
+}
 ```
 
 After this setup, creating our [Provider](Providers.md) is as easy as the following:
