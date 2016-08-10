@@ -15,7 +15,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
         manager: Manager = Alamofire.Manager.sharedInstance,
         plugins: [PluginType] = []) {
             
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
     }
     
     // Request to fetch and store new XApp token if the current token is missing or expired.

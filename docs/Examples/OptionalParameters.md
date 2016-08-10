@@ -11,15 +11,15 @@ public enum MyService {
 extension MyService: TargetType {
 //...
 	public var parameters: [String: AnyObject]? {
-	        switch self {
-	        case .Users(let limit):
-	            var params: [String : AnyObject] = [:]
-				params["limit"] = limit
-	            return params
-	        default:
-	            return nil
-	        }
-	    }
+	    switch self {
+	    case .Users(let limit):
+	        var params: [String : AnyObject] = [:]
+	        params["limit"] = limit
+	        return params
+        default:
+            return nil
+        }
+    }
 //...
 }
 ```
