@@ -28,34 +28,34 @@ Then we add some functionality to the function called when a request will be sen
 
 ```swift
 func willSendRequest(request: RequestType, target: TargetType) {
-        
-        //make sure we have a URL string to display
-        guard let requestURLString = request.request?.URL?.absoluteString else { return }
-        
-        //create alert view controller with a single action
-        let alertViewController = UIAlertController(title: "Sending Request", message: requestURLString, preferredStyle: .Alert)
-        alertViewController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        
-        //and present using the view controller we created at initialisation
-        viewController.presentViewController(alertViewController, animated: true, completion: nil)
-    }
+    
+    //make sure we have a URL string to display
+    guard let requestURLString = request.request?.URL?.absoluteString else { return }
+    
+    //create alert view controller with a single action
+    let alertViewController = UIAlertController(title: "Sending Request", message: requestURLString, preferredStyle: .Alert)
+    alertViewController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+    
+    //and present using the view controller we created at initialisation
+    viewController.presentViewController(alertViewController, animated: true, completion: nil)
+}
 ```
 
 Finally, let's implement `didReceiveResponse` to show an alert if the result was a failure
 
 ```swift
 func didReceiveResponse(result: Result<Response, Error>, target: TargetType) {
-        
-        //only continue if result is a failure
-        guard case Result.Failure(_) = result else { return }
-        
-        //create alert view controller with a single action and messing displaying status code
-        let alertViewController = UIAlertController(title: "Error", message: "Request failed with status code: \(error.response?.statusCode ?? 0)", preferredStyle: .Alert)
-        alertViewController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        
-        //and present using the view controller we created at initialisation
-        viewController.presentViewController(alertViewController, animated: true, completion: nil)
-    }
+    
+    //only continue if result is a failure
+    guard case Result.Failure(_) = result else { return }
+    
+    //create alert view controller with a single action and messing displaying status code
+    let alertViewController = UIAlertController(title: "Error", message: "Request failed with status code: \(error.response?.statusCode ?? 0)", preferredStyle: .Alert)
+    alertViewController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+    
+    //and present using the view controller we created at initialisation
+    viewController.presentViewController(alertViewController, animated: true, completion: nil)
+}
 ```
 
 And that's it, you now have very well informed, if slightly annoyed users.
