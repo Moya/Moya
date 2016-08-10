@@ -132,6 +132,8 @@ Instead of modifying the request, you could simply log it, instead.
 
 ```swift
 let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
+    // Using the `as!` forced type cast operator is safe here,
+    // as `mutableCopy()` will always return the correct type.
     let request = endpoint.urlRequest.mutableCopy() as! NSMutableURLRequest
 
     // Modify the request however you like.
