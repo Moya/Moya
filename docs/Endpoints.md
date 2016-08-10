@@ -125,18 +125,20 @@ that hits the network. It has a default value of `MoyaProvider.DefaultRequestMap
 which simply uses the `urlRequest` property of the `Endpoint` instance. 
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
-its argument of `NSURLRequest -> Void` with a request that represents the Endpoint.
+its argument of `RequestResultClosure` (shorthand for `Result<NSURLRequest, Moya.Error> -> Void`) with a request that represents the Endpoint.
 It's here that you'd do your OAuth signing or whatever. Since you may invoke the 
 closure asynchronously, you can use whatever authentication library you like ([example](https://github.com/rheinfabrik/Heimdallr.swift)). 
 Instead of modifying the request, you could simply log it, instead.
 
 ```swift
-let requestClosure = { (endpoint: Endpoint<GitHub>, done: NSURLRequest -> Void) in
-    let request = endpoint.urlRequest
+let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
+    // Using the `as!` forced type cast operator is safe here,
+    // as `mutableCopy()` will always return the correct type.
+    let request = endpoint.urlRequest.mutableCopy() as! NSMutableURLRequest
 
     // Modify the request however you like.
 
-    done(request)
+    done(.Success(request))
 }
 let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 ```
@@ -148,10 +150,10 @@ This parameter is actually very useful for modifying the request object.
 all cookies on requests:
 
 ```swift
-{ (endpoint: Endpoint<ArtsyAPI>) -> (NSURLRequest) in
-    let request: NSMutableURLRequest = endpoint.urlRequest.mutableCopy() as NSMutableURLRequest
+{ (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
+    let request: NSMutableURLRequest = endpoint.urlRequest.mutableCopy() as! NSMutableURLRequest
     request.HTTPShouldHandleCookies = false
-    return request
+    done(.Success(request))
 }
 ```
 
