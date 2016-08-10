@@ -144,7 +144,7 @@ all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authenticati
 
 For example you can enable the logger plugin by simply passing `[NetworkLoggerPlugin()]` alongside the `plugins` parameter of your `Endpoint`. Note that a plugin can also be configurable, for example the already included `NetworkActivityPlugin` requires a `networkActivityClosure` parameter. The configurable plugin implementation looks like this:
 
-```
+```swift
 public final class NetworkActivityPlugin: PluginType {
     
     public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
