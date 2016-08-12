@@ -1,5 +1,7 @@
 # Next
 
+- **Breaking Change** `fileName` and `mimeType` are now optional properties on a MultipartFormData object.
+- Correct Alamofire `appendBodyPart` method id called in MultipartFormData.
 - **Breaking Change** Removes `multipartBody` from TargetType protocol and adds a `task` instead.
 - **Breaking Change** Successful Response instances that have no data with them are now being converted to `.Success` `Result`s.
 - Adds Download and Upload Task type support to Moya.
