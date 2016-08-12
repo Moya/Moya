@@ -92,7 +92,7 @@ public struct MultipartFormData {
         case Stream(NSInputStream, UInt64)
     }
 
-    public init(provider: FormDataProvider, name: String, fileName: String = "", mimeType: String = "") {
+    public init(provider: FormDataProvider, name: String, fileName: String? = nil, mimeType: String? = nil) {
         self.provider = provider
         self.name = name
         self.fileName = fileName
@@ -101,6 +101,6 @@ public struct MultipartFormData {
 
     public let provider: FormDataProvider
     public let name: String
-    public let fileName: String
-    public let mimeType: String
+    public let fileName: String?
+    public let mimeType: String?
 }
