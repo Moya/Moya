@@ -134,11 +134,11 @@ private extension MoyaProvider {
             for bodyPart in multipartBody {
                 switch bodyPart.provider {
                 case .Data(let data):
-                    form.appendBodyPart(data: data, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
+                    self.append(data: data, bodyPart: bodyPart, to: form)
                 case .File(let url):
-                    form.appendBodyPart(fileURL: url, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
+                    self.append(fileURL: url, bodyPart: bodyPart, to: form)
                 case .Stream(let stream, let length):
-                    form.appendBodyPart(stream: stream, length: length, name: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
+                    self.append(stream: stream, length: length, bodyPart: bodyPart, to: form)
                 }
             }
 
@@ -217,6 +217,32 @@ private extension MoyaProvider {
         alamoRequest.resume()
 
         return CancellableToken(request: alamoRequest)
+    }
+}
+
+// MARK: - RequestMultipartFormData appending
+
+private extension MoyaProvider {
+    private func append(data data: NSData, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
+        if let mimeType = bodyPart.mimeType {
+            if let fileName = bodyPart.fileName {
+                form.appendBodyPart(data: data, name: bodyPart.name, fileName: fileName, mimeType: mimeType)
+            } else {
+                form.appendBodyPart(data: data, name: bodyPart.name, mimeType: mimeType)
+            }
+        } else {
+            form.appendBodyPart(data: data, name: bodyPart.name)
+        }
+    }
+    private func append(fileURL url: NSURL, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
+        if let fileName = bodyPart.fileName, mimeType = bodyPart.mimeType {
+            form.appendBodyPart(fileURL: url, name: bodyPart.name, fileName: fileName, mimeType: mimeType)
+        } else {
+            form.appendBodyPart(fileURL: url, name: bodyPart.name)
+        }
+    }
+    private func append(stream stream: NSInputStream, length: UInt64, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
+        form.appendBodyPart(stream: stream, length: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
     }
 }
 
