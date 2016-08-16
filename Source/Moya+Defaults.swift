@@ -1,6 +1,6 @@
 import Alamofire
 
-/// These functions are default mappings to MoyaProvider's properties: endpoints, requests, manager, etc.
+/// These functions are default mappings to `MoyaProvider`'s properties: endpoints, requests, manager, etc.
 public extension MoyaProvider {
     public final class func DefaultEndpointMapping(target: Target) -> Endpoint<Target> {
         let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString

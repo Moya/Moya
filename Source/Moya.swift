@@ -4,7 +4,7 @@ import Result
 /// Closure to be executed when a request has completed.
 public typealias Completion = (result: Result<Moya.Response, Moya.Error>) -> ()
 
-/// Closure to be executed when a request has completed.
+/// Closure to be executed when progress changes.
 public typealias ProgressBlock = (progress: ProgressResponse) -> Void
 
 public struct ProgressResponse {
@@ -36,7 +36,7 @@ public class MoyaProvider<Target: TargetType> {
     /// Closure that decides if and what request should be performed
     public typealias RequestResultClosure = Result<NSURLRequest, Moya.Error> -> Void
 
-    /// Closure that resolves an Endpoint into an RequestResult.
+    /// Closure that resolves an `Endpoint` into a `RequestResult`.
     public typealias RequestClosure = (Endpoint<Target>, RequestResultClosure) -> Void
 
     /// Closure that decides if/how a request should be stubbed.
@@ -71,17 +71,17 @@ public class MoyaProvider<Target: TargetType> {
             self.trackInflights = trackInflights
     }
 
-    /// Returns an Endpoint based on the token, method, and parameters by invoking the endpointsClosure.
+    /// Returns an `Endpoint` based on the token, method, and parameters by invoking the `endpointClosure`.
     public func endpoint(token: Target) -> Endpoint<Target> {
         return endpointClosure(token)
     }
 
-    /// Designated request-making method. Returns a Cancellable token to cancel the request later.
+    /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     public func request(target: Target, completion: Moya.Completion) -> Cancellable {
         return self.request(target, queue: nil, completion: completion)
     }
 
-    /// Designated request-making method with queue option. Returns a Cancellable token to cancel the request later.
+    /// Designated request-making method with queue option. Returns a `Cancellable` token to cancel the request later.
     public func request(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> Cancellable {
         return requestNormal(target, queue: queue, progress: progress, completion: completion)
     }

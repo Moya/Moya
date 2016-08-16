@@ -246,9 +246,7 @@ private extension MoyaProvider {
     }
 }
 
-/**
- Encode parameters for multipart/form-data
- */
+/// Encode parameters for multipart/form-data
 private func multipartQueryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
     var components: [(String, String)] = []
 

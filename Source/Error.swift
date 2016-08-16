@@ -10,7 +10,7 @@ public enum Error: ErrorType {
 }
 
 public extension Moya.Error {
-    /// Depending on error type, returns a Response object.
+    /// Depending on error type, returns a `Response` object.
     var response: Moya.Response? {
         switch self {
         case .ImageMapping(let response): return response
