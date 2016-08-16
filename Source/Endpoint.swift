@@ -11,7 +11,7 @@ public enum EndpointSampleResponse {
 }
 
 
-/// Class for reifying a target of the Target enum unto a concrete Endpoint.
+/// Class for reifying a target of the `Target` enum unto a concrete `Endpoint`.
 public class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
@@ -22,7 +22,7 @@ public class Endpoint<Target> {
     public let parameterEncoding: Moya.ParameterEncoding
     public let httpHeaderFields: [String: String]?
 
-    /// Main initializer for Endpoint.
+    /// Main initializer for `Endpoint`.
     public init(URL: String,
         sampleResponseClosure: SampleResponseClosure,
         method: Moya.Method = Moya.Method.GET,
@@ -38,22 +38,22 @@ public class Endpoint<Target> {
         self.httpHeaderFields = httpHeaderFields
     }
 
-    /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added parameters.
+    /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added parameters.
     public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<Target> {
         return endpointByAdding(parameters: parameters)
     }
 
-    /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with added HTTP header fields.
+    /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
     public func endpointByAddingHTTPHeaderFields(httpHeaderFields: [String: String]) -> Endpoint<Target> {
         return endpointByAdding(httpHeaderFields: httpHeaderFields)
     }
 
-    /// Convenience method for creating a new Endpoint with the same properties as the receiver, but with another parameter encoding.
+    /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with another parameter encoding.
     public func endpointByAddingParameterEncoding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
         return endpointByAdding(parameterEncoding: newParameterEncoding)
     }
 
-    /// Convenience method for creating a new Endpoint, with changes only to the properties we specify as parameters
+    /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
     public func endpointByAdding(parameters parameters: [String: AnyObject]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
         let newParameters = addParameters(parameters)
         let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
@@ -86,7 +86,7 @@ public class Endpoint<Target> {
     }
 }
 
-/// Extension for converting an Endpoint into an NSURLRequest.
+/// Extension for converting an `Endpoint` into an `NSURLRequest`.
 extension Endpoint {
     public var urlRequest: NSURLRequest {
         let request: NSMutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL)!) // swiftlint:disable:this force_unwrapping
@@ -97,12 +97,12 @@ extension Endpoint {
     }
 }
 
-/// Required for making Endpoint conform to Equatable.
+/// Required for making `Endpoint` conform to `Equatable`.
 public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
     return lhs.urlRequest.isEqual(rhs.urlRequest)
 }
 
-/// Required for using Endpoint as a key type in a Dictionary.
+/// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
         return urlRequest.hash
