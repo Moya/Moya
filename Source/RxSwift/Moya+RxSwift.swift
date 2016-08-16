@@ -23,7 +23,6 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
                 case let .Success(response):
                     observer.onNext(response)
                     observer.onCompleted()
-                    break
                 case let .Failure(error):
                     observer.onError(error)
                 }
@@ -50,7 +49,6 @@ public extension RxMoyaProvider {
                 case let .Success(response):
                     observer.onNext(ProgressResponse(response: response))
                     observer.onCompleted()
-                    break
                 case let .Failure(error):
                     observer.onError(error)
                 }
