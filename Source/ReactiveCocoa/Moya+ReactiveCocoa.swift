@@ -25,7 +25,6 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
                 case let .Success(response):
                     observer.sendNext(response)
                     observer.sendCompleted()
-                    break
                 case let .Failure(error):
                     observer.sendFailed(error)
                 }
