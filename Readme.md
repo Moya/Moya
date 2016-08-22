@@ -129,7 +129,7 @@ for instance, we could do the following:
 
 ```swift
 provider = ReactiveCocoaMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
+provider.request(.UserProfile("ashfurrow")).start { event in
     switch event {
     case .Next(let response):
         image = UIImage(data: response.data)
@@ -149,7 +149,7 @@ want to do. To handle errors, for instance, we could do the following:
 
 ```swift
 provider = RxMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
+provider.request(.UserProfile("ashfurrow")).subscribe { event in
     switch event {
     case .Next(let response):
         image = UIImage(data: response.data)
