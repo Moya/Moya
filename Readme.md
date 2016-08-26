@@ -35,7 +35,7 @@ Some awesome features of Moya:
 Sample Project
 --------------
 
-There's a sample project in the Demo directory. Have fun!
+There's a sample project in the Demo directory. To use it, run `pod install` to download the required libraries. Have fun!
 
 Project Status
 --------------
