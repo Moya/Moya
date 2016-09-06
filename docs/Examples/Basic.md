@@ -28,11 +28,13 @@ extension MyService: TargetType {
             return "/users/\(id)"
         case .CreateUser(_, _):
             return "/users"
+        case .ShowAccounts:
+        	  return "/accounts"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .Zen, .ShowUser:
+        case .Zen, .ShowUser, .ShowAccounts:
             return .GET
         case .CreateUser:
             return .POST
@@ -40,7 +42,7 @@ extension MyService: TargetType {
     }
     var parameters: [String: AnyObject]? {
         switch self {
-        case .Zen, .ShowUser:
+        case .Zen, .ShowUser, .ShowAccounts:
             return nil
         case .CreateUser(let firstName, let lastName):
             return ["first_name": firstName, "last_name": lastName]
@@ -54,6 +56,13 @@ extension MyService: TargetType {
             return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".UTF8EncodedData
         case .CreateUser(let firstName, let lastName):
             return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
+        case .ShowAccounts:
+            // Provided you have a file named accounts.json in your bundle.
+            guard let path = NSBundle.mainBundle().pathForResource("accounts", ofType: "json"),
+                      data = NSData(contentsOfFile: path) else {
+                return NSData()
+            }
+            return data
         }
     }
     var multipartBody: [MultipartFormData]? {
