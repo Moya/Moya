@@ -19,14 +19,14 @@ The authentication plugin allows a user to assign an optional `NSURLCredential` 
 The plugin can be found at [`Source/Plugins/CredentialsPlugin.swift`](../Source/Plugins/CredentialsPlugin.swift)
 
 ####Network Activity Indicator
-One very common task with iOS networking is to show a network activitiy indicator during network requests, and remove it when all requests have finished. The provided plugin adds callbacks which are called when a requests starts and finishes, which can be used to keep track of the number of requests in progress, and show / hide the network activity indicator accordingly. 
+One very common task with iOS networking is to show a network activity indicator during network requests, and remove it when all requests have finished. The provided plugin adds callbacks which are called when a requests starts and finishes, which can be used to keep track of the number of requests in progress, and show / hide the network activity indicator accordingly.
 
 The plugin can be found at [`Source/Plugins/NetworkActivityPlugin.swift`](../Source/Plugins/NetworkActivityPlugin.swift)
 
 ####Logging
 During development it can be very useful to log network activity to the console. This can be anything from the URL of a request as sent and received, to logging full headers, method, request body on each request and response. 
 
-The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initialising the plugin, you can choose options for verbosity, wether to log curl commands, and provide functions for outputing data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `NSUTF8StringEncoding` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Demo/Demo/GitHubAPI.swift`](../Demo/Demo/GitHubAPI.swift) for an example that does exactly that)
+The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initialising the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputing data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `NSUTF8StringEncoding` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Demo/Demo/GitHubAPI.swift`](../Demo/Demo/GitHubAPI.swift) for an example that does exactly that)
 
 The plugin can be found at [`Source/Plugins/NetworkLoggerPlugin.swift`](../Source/Plugins/NetworkLoggerPlugin.swift)
 

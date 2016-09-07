@@ -9,7 +9,7 @@ Basic HTTP Auth
 
 HTTP auth is a username/password challenge built into the HTTP protocol
 itself. If you need to use HTTP auth, you can provide a `CredentialsPlugin`
-when initializeing your provider. 
+when initializing your provider.
 
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> NSURLCredential? in
@@ -36,7 +36,7 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> NSU
 OAuth
 -----
 
-OAuth is quite a bit trickier. It involes a multistep process that is often 
+OAuth is quite a bit trickier. It involves a multi step process that is often
 different between different APIs. You _really_ don't want to do OAuth yourself –
 there are other libraries to do it for you. [Heimdallr.swift](https://github.com/rheinfabrik/Heimdallr.swift),
 for example. The trick is just getting Moya and whatever you're using to talk

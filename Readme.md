@@ -124,7 +124,7 @@ Even cooler are the reactive extensions. Moya provides reactive extensions for
 
 After `ReactiveCocoa` [setup](docs/ReactiveCocoa.md), `request(:)` method
 immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
-that you can start or bind or map or whateveryou want to do. To handle errors,
+that you can start or bind or map or whatever you want to do. To handle errors,
 for instance, we could do the following:
 
 ```swift

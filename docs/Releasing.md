@@ -3,7 +3,7 @@ Releasing
 
 (Note: This document is a reference for people with push access to Moya and to [CocoaPods](https://cocoapods.org/pods/Moya).)
 
-Releasing a new version of Moya has been automated as much as possible. There are a few prereuisite steps:
+Releasing a new version of Moya has been automated as much as possible. There are a few prerequisite steps:
 
 1. [Generate a GitHub personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/)
 1. Run the following command: `echo "machine api.github.com login you@yourgithublogin.com password THE_BRAND_NEW_TOKEN" > ~/.netrc`. This lets the automated release script access the GitHub API authorized as you.
