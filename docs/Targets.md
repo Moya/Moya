@@ -76,7 +76,7 @@ public var parameters: [String: AnyObject]? {
 Unlike our `path` property earlier, we don't actually care about the associated values
 of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
 
-Finally, notice the `sampleData` property on the enum. This is a requirement of 
+Notice the `sampleData` property on the enum. This is a requirement of 
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
 `NSData` that represents a sample response. This can be used later for tests or
 for providing offline support for developers. This *should* depend on `self`. 
@@ -91,6 +91,17 @@ public var sampleData: NSData {
     case .UserRepositories(let name):
         return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
     }
+}
+```
+
+Finally, our `TargetType` has a `multipartBody` property that can be either 
+`nil` or an array of `MultipartFormData`. This allows you to add data, 
+files and streams to the request body.
+
+```swift
+public var multipartBody: [MultipartFormData]? {
+	// Optional
+	return nil
 }
 ```
 
