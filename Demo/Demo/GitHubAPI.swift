@@ -5,7 +5,7 @@ import Moya
 
 private func JSONResponseDataFormatter(_ data: Data) -> Data {
     do {
-        let dataAsJSON = try JSONSerialization.jsonObject(with: data, options: [])
+        let dataAsJSON = try JSONSerialization.jsonObject(with: data)
         let prettyData =  try JSONSerialization.data(withJSONObject: dataAsJSON, options: .prettyPrinted)
         return prettyData
     } catch {
@@ -36,9 +36,9 @@ extension GitHub: TargetType {
         case .zen:
             return "/zen"
         case .userProfile(let name):
-            return "/users/\(name.URLEscapedString)"
+            return "/users/\(name.urlEscapedString)"
         case .userRepositories(let name):
-            return "/users/\(name.URLEscapedString)/repos"
+            return "/users/\(name.urlEscapedString)/repos"
         }
     }
     public var method: Moya.Method {
@@ -68,5 +68,5 @@ extension GitHub: TargetType {
 }
 
 public func url(_ route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
