@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Error: Error {
+public enum Error: Swift.Error {
     case imageMapping(Response)
     case jsonMapping(Response)
     case stringMapping(Response)

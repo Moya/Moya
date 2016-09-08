@@ -1,4 +1,5 @@
 import Foundation
+import Alamofire
 
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
@@ -24,10 +25,10 @@ open class Endpoint<Target> {
 
     /// Main initializer for `Endpoint`.
     public init(URL: String,
-        sampleResponseClosure: SampleResponseClosure,
+        sampleResponseClosure: @escaping SampleResponseClosure,
         method: Moya.Method = Moya.Method.GET,
         parameters: [String: AnyObject]? = nil,
-        parameterEncoding: Moya.ParameterEncoding = .URL,
+        parameterEncoding: Moya.ParameterEncoding = URLEncoding(),
         httpHeaderFields: [String: String]? = nil) {
 
         self.URL = URL
@@ -89,11 +90,11 @@ open class Endpoint<Target> {
 /// Extension for converting an `Endpoint` into an `NSURLRequest`.
 extension Endpoint {
     public var urlRequest: URLRequest {
-        let request: NSMutableURLRequest = NSMutableURLRequest(url: Foundation.URL(string: URL)!) // swiftlint:disable:this force_unwrapping
+        var request: URLRequest = URLRequest(url: Foundation.URL(string: URL)!) // swiftlint:disable:this force_unwrapping
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
-        return parameterEncoding.encode(request, parameters: parameters).0
+        return try! parameterEncoding.encode(request, with: parameters)
     }
 }
 

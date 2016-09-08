@@ -57,7 +57,7 @@ public extension Response {
     }
 
     /// Maps data received from the signal into a JSON object.
-    func mapJSON(failsOnEmptyData: Bool = true) throws -> AnyObject {
+    func mapJSON(failsOnEmptyData: Bool = true) throws -> Any {
         do {
             return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         } catch {

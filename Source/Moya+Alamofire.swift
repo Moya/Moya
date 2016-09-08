@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-public typealias Manager = Alamofire.Manager
+public typealias Manager = Alamofire.SessionManager
 internal typealias Request = Alamofire.Request
 
 /// Choice of parameter encoding.
@@ -11,8 +11,8 @@ public typealias ParameterEncoding = Alamofire.ParameterEncoding
 public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 
 /// Multipart form data encoding result.
-public typealias MultipartFormDataEncodingResult = Alamofire.Manager.MultipartFormDataEncodingResult
-public typealias DownloadDestination = Alamofire.Request.DownloadFileDestination
+public typealias MultipartFormDataEncodingResult = Manager.MultipartFormDataEncodingResult
+public typealias DownloadDestination = Alamofire.DownloadRequest.DownloadFileDestination
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType { }

@@ -5,7 +5,7 @@ import RxSwift
 extension ObservableType where E == Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filterStatusCodes(_ range: ClosedInterval<Int>) -> Observable<E> {
+    public func filterStatusCodes(_ range: ClosedRange<Int>) -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filterStatusCodes(range))
         }
@@ -31,14 +31,14 @@ extension ObservableType where E == Response {
 
     /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
     public func mapImage() -> Observable<Image?> {
-        return flatMap { response -> Observable<Image!> in
+        return flatMap { response -> Observable<Image?> in
             return Observable.just(try response.mapImage())
         }
     }
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
-    public func mapJSON(failsOnEmptyData: Bool = true) -> Observable<AnyObject> {
-        return flatMap { response -> Observable<AnyObject> in
+    public func mapJSON(failsOnEmptyData: Bool = true) -> Observable<Any> {
+        return flatMap { response -> Observable<Any> in
             return Observable.just(try response.mapJSON(failsOnEmptyData: failsOnEmptyData))
         }
     }
@@ -64,8 +64,8 @@ extension ObservableType where E == ProgressResponse {
             .flatMap { progress -> Observable<Response> in
                 // Just a formatlity to satisfy the compiler (completed progresses have responses).
                 switch progress.response {
-                case .Some(let response): return .just(response)
-                case .None: return .empty()
+                case .some(let response): return .just(response)
+                case .none: return .empty()
                 }
             }
     }
