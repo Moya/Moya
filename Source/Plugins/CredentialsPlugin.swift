@@ -15,7 +15,7 @@ public final class CredentialsPlugin: PluginType {
 
     public func willSendRequest(_ request: RequestType, target: TargetType) {
         if let credentials = credentialsClosure(target) {
-            request.authenticate(usingCredential: credentials)
+            _ = request.authenticate(usingCredential: credentials)
         }
     }
 

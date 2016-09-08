@@ -26,7 +26,7 @@ internal final class CancellableToken: Cancellable, CustomDebugStringConvertible
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
 
     func cancel() {
-        lock.wait(timeout: DispatchTime.distantFuture)
+        _ = lock.wait(timeout: DispatchTime.distantFuture)
         defer { lock.signal() }
         guard !cancelled else { return }
         cancelled = true
