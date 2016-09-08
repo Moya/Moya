@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "License.md" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.9'
+  s.ios.deployment_target = '9.0'
+  s.osx.deployment_target = '10.11'
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target = '9.0'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
@@ -22,8 +22,8 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Source/*.swift", "Source/Plugins/*swift"
-    ss.dependency "Alamofire", "~> 3.0"
-    ss.dependency "Result", "~> 2.0"
+    ss.dependency "Alamofire", "~> 4.0"
+    ss.dependency "Result", "~> 3.0"
     ss.framework  = "Foundation"
   end
 
