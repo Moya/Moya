@@ -2,7 +2,7 @@ import Moya
 import Foundation
 
 extension String {
-    var URLEscapedString: String {
+    var urlEscapedString: String {
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
     }
 }
@@ -19,7 +19,7 @@ extension GitHub: TargetType {
         case .zen:
             return "/zen"
         case .userProfile(let name):
-            return "/users/\(name.URLEscapedString)"
+            return "/users/\(name.urlEscapedString)"
         }
     }
     

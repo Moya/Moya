@@ -18,8 +18,8 @@ let GitHubProvider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose:
 // MARK: - Provider support
 
 private extension String {
-    var URLEscapedString: String {
-        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
+    var urlEscapedString: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
