@@ -106,6 +106,6 @@ public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
-        return (urlRequest as URLRequest).hash
+        return (urlRequest as NSURLRequest).hash
     }
 }
