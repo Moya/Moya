@@ -2,7 +2,7 @@ import Foundation
 import RxSwift
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
-public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
+open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     /// Initializes a reactive provider.
     override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
@@ -14,7 +14,7 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
     }
 
     /// Designated request-making method.
-    public func request(token: Target) -> Observable<Response> {
+    open func request(_ token: Target) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { [weak self] observer in
@@ -36,7 +36,7 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
 }
 
 public extension RxMoyaProvider {
-    public func requestWithProgress(token: Target) -> Observable<ProgressResponse> {
+    public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
         let progressBlock = { (observer: AnyObserver) -> (ProgressResponse) -> Void in
             return { (progress: ProgressResponse) in
                 observer.onNext(progress)

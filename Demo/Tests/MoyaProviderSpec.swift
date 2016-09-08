@@ -212,7 +212,7 @@ class MoyaProviderSpec: QuickSpec {
             let afterResponse: NSTimeInterval = 0.3
             var provider: MoyaProvider<GitHub>!
 
-            func delay(delay: NSTimeInterval, block: () -> ()) {
+            func delay(_ delay: NSTimeInterval, block: () -> ()) {
                 let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
                 let killTime = dispatch_time(DISPATCH_TIME_NOW, killTimeOffset)
                 dispatch_after(killTime, dispatch_get_main_queue(), block)

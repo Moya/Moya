@@ -117,7 +117,7 @@ private class TestStreamRequest: RequestType {
         return r
     }
 
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+    func authenticate(user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
         return self
     }
 
@@ -135,7 +135,7 @@ private class TestBodyRequest: RequestType {
         return r
     }
 
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+    func authenticate(user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
         return self
     }
 
@@ -153,7 +153,7 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
         return r
     }
 
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+    func authenticate(user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
         return self
     }
 
@@ -162,7 +162,7 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
     }
 
     var debugDescription: String {
-        return ["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"","\"https://api.github.com/zen\""].joinWithSeparator(" \\\n\t")
+        return ["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"","\"https://api.github.com/zen\""].joined(separator: " \\\n\t")
     }
 }
 
@@ -171,7 +171,7 @@ private class TestNilRequest: RequestType {
         return nil
     }
 
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
+    func authenticate(user: String, password: String, persistence: NSURLCredentialPersistence) -> Self {
         return self
     }
 

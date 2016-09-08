@@ -5,8 +5,13 @@ use_frameworks!
 # Our Libraries
 def libraries
   pod 'Moya', :path => "../"
-  pod 'Moya/ReactiveCocoa', :path => "../"
+#  pod 'Moya/ReactiveCocoa', :path => "../"
   pod 'Moya/RxSwift', :path => "../"
+  pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', :branch => 'swift3'
+  pod 'RxSwift', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'develop'
+  pod 'RxCocoa', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'develop'
+  pod 'Result', :git => 'https://github.com/antitypical/Result', :branch => 'master'
+#  pod 'ReactiveCocoa', :git => 'https://github.com/mhuusko5/Podspecs.git', :branch => 'swift3.0'
 end
 
 # Test Libraries
@@ -17,12 +22,12 @@ def test_pods
 end
 
 target 'Demo' do
-  platform :ios, '8.0'
+  platform :ios, '9.0'
   libraries
 end
 
 target 'MoyaTests-iOS' do
-    platform :ios, '8.0'
+    platform :ios, '9.0'
     libraries
     test_pods
 end
@@ -34,7 +39,7 @@ target 'MoyaTests-tvOS' do
 end
 
 target 'MoyaTests-Mac' do
-    platform :osx, '10.9'
+    platform :osx, '10.11'
     libraries
     test_pods
 end

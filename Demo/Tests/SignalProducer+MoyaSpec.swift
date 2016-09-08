@@ -4,7 +4,7 @@ import ReactiveCocoa
 import Nimble
 
 #if os(iOS) || os(watchOS) || os(tvOS)
-    private func ImageJPEGRepresentation(image: Image, _ compression: CGFloat) -> NSData? {
+    private func ImageJPEGRepresentation(_ image: Image, _ compression: CGFloat) -> NSData? {
         return UIImageJPEGRepresentation(image, compression)
     }
 #elseif os(OSX)
@@ -19,13 +19,13 @@ import Nimble
 private extension ImageType {
     class func testPNGImage(named name: String) -> ImageType {
         class TestClass { }
-        let bundle = NSBundle(forClass: TestClass().dynamicType)
+        let bundle = NSBundle(forClass: type(of: TestClass()))
         let path = bundle.pathForResource(name, ofType: "png")
         return Image(contentsOfFile: path!)!
     }
 }
 
-private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<Response, Error> {
+private func signalSendingData(_ data: NSData, statusCode: Int = 200) -> SignalProducer<Response, Error> {
     return SignalProducer(value: Response(statusCode: statusCode, data: data, response: nil))
 }
 

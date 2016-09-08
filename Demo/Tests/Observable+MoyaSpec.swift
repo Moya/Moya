@@ -4,7 +4,7 @@ import RxSwift
 import Nimble
 
 #if os(iOS) || os(watchOS) || os(tvOS)
-    private func ImageJPEGRepresentation(image: ImageType, _ compression: CGFloat) -> NSData? {
+    private func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> NSData? {
         return UIImageJPEGRepresentation(image, compression)
     }
 #elseif os(OSX)
@@ -19,13 +19,13 @@ import Nimble
 private extension ImageType {
     class func testPNGImage(named name: String) -> ImageType {
         class TestClass { }
-        let bundle = NSBundle(forClass: TestClass().dynamicType)
+        let bundle = NSBundle(forClass: type(of: TestClass()))
         let path = bundle.pathForResource(name, ofType: "png")
         return Image(contentsOfFile: path!)!
     }
 }
 
-private func observableSendingData(data: NSData, statusCode: Int = 200) -> Observable<Response> {
+private func observableSendingData(_ data: NSData, statusCode: Int = 200) -> Observable<Response> {
     return Observable.just(Response(statusCode: statusCode, data: data, response: nil))
 }
 

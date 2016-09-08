@@ -7,7 +7,7 @@ internal extension MoyaProvider {
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
     /// Performs normal requests.
-    func requestNormal(target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> Cancellable {
+    func requestNormal(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
@@ -92,14 +92,14 @@ internal extension MoyaProvider {
     // swiftlint:enable cyclomatic_complexity
     // swiftlint:enable function_body_length
 
-    func cancelCompletion(completion: Moya.Completion, target: Target) {
-        let error = Moya.Error.Underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+    func cancelCompletion(_ completion: Moya.Completion, target: Target) {
+        let error = Moya.Error.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
         plugins.forEach { $0.didReceiveResponse(.Failure(error), target: target) }
         completion(result: .Failure(error))
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
+    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
         return {
             if token.cancelled {
                 self.cancelCompletion(completion, target: target)
@@ -120,14 +120,14 @@ internal extension MoyaProvider {
     }
 
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
-    final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) {
+    final func notifyPluginsOfImpendingStub(_ request: URLRequest, target: Target) {
         let alamoRequest = manager.request(request)
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
     }
 }
 
 private extension MoyaProvider {
-    private func sendUploadMultipart(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
+    func sendUploadMultipart(_ target: Target, request: URLRequest, queue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: Moya.Completion) -> CancellableWrapper {
         let cancellable = CancellableWrapper()
 
         let multipartFormData = { (form: RequestMultipartFormData) -> Void in
@@ -169,22 +169,22 @@ private extension MoyaProvider {
         return cancellable
     }
 
-    private func sendUploadFile(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, file: NSURL, progress: ProgressBlock? = nil, completion: Completion) -> CancellableToken {
+    func sendUploadFile(_ target: Target, request: URLRequest, queue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: Completion) -> CancellableToken {
         let alamoRequest = manager.upload(request, file: file)
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    private func sendDownloadRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, destination: DownloadDestination, progress: ProgressBlock? = nil, completion: Completion) -> CancellableToken {
+    func sendDownloadRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, destination: DownloadDestination, progress: ProgressBlock? = nil, completion: Completion) -> CancellableToken {
         let alamoRequest = manager.download(request, destination: destination)
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    private func sendRequest(target: Target, request: NSURLRequest, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> CancellableToken {
+    func sendRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> CancellableToken {
         let alamoRequest = manager.request(request)
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    private func sendAlamofireRequest(alamoRequest: Request, target: Target, queue: dispatch_queue_t?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest(_ alamoRequest: Request, target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: Moya.Completion) -> CancellableToken {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
@@ -206,7 +206,7 @@ private extension MoyaProvider {
         }
 
         alamoRequest
-            .response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+            .response(queue: queue) { (_, response: HTTPURLResponse?, data: Data?, error: NSError?) -> () in
                 let result = convertResponseToResult(response, data: data, error: error)
                 // Inform all plugins about the response
                 plugins.forEach { $0.didReceiveResponse(result, target: target) }
@@ -223,7 +223,7 @@ private extension MoyaProvider {
 // MARK: - RequestMultipartFormData appending
 
 private extension MoyaProvider {
-    private func append(data data: NSData, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
+    func append(data: Data, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
         if let mimeType = bodyPart.mimeType {
             if let fileName = bodyPart.fileName {
                 form.appendBodyPart(data: data, name: bodyPart.name, fileName: fileName, mimeType: mimeType)
@@ -234,20 +234,20 @@ private extension MoyaProvider {
             form.appendBodyPart(data: data, name: bodyPart.name)
         }
     }
-    private func append(fileURL url: NSURL, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
-        if let fileName = bodyPart.fileName, mimeType = bodyPart.mimeType {
+    func append(fileURL url: URL, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
+        if let fileName = bodyPart.fileName, let mimeType = bodyPart.mimeType {
             form.appendBodyPart(fileURL: url, name: bodyPart.name, fileName: fileName, mimeType: mimeType)
         } else {
             form.appendBodyPart(fileURL: url, name: bodyPart.name)
         }
     }
-    private func append(stream stream: NSInputStream, length: UInt64, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
+    func append(stream: InputStream, length: UInt64, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
         form.appendBodyPart(stream: stream, length: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
     }
 }
 
 /// Encode parameters for multipart/form-data
-private func multipartQueryComponents(key: String, _ value: AnyObject) -> [(String, String)] {
+private func multipartQueryComponents(_ key: String, _ value: AnyObject) -> [(String, String)] {
     var components: [(String, String)] = []
 
     if let dictionary = value as? [String: AnyObject] {

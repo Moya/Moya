@@ -4,7 +4,7 @@ import Nimble
 import OHHTTPStubs
 import Alamofire
 
-func beIndenticalToResponse(expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
+func beIndenticalToResponse(_ expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
             let instance = try actualExpression.evaluate()
@@ -17,8 +17,8 @@ func beIndenticalToResponse(expectedValue: Moya.Response) -> MatcherFunc<Moya.Re
 
 class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
-        let userMessage = NSString(data: GitHub.UserProfile("ashfurrow").sampleData, encoding: NSUTF8StringEncoding)
-        let zenMessage = NSString(data: GitHub.Zen.sampleData, encoding: NSUTF8StringEncoding)
+        let userMessage = NSString(data: GitHub.userProfile("ashfurrow").sampleData, encoding: String.Encoding.utf8)
+        let zenMessage = NSString(data: GitHub.zen.sampleData, encoding: String.Encoding.utf8)
         
         beforeEach {
             OHHTTPStubs.stubRequestsPassingTest({$0.URL!.path == "/zen"}) { _ in
@@ -268,7 +268,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 class StubManager: Manager {
     var called = false
 
-    override func request(URLRequest: URLRequestConvertible) -> Request {
+    override func request(_ URLRequest: URLRequestConvertible) -> Request {
         called = true
         return super.request(URLRequest)
     }

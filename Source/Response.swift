@@ -2,17 +2,17 @@ import Foundation
 
 public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
-    public let data: NSData
-    public let response: NSURLResponse?
+    public let data: Data
+    public let response: URLResponse?
 
-    public init(statusCode: Int, data: NSData, response: NSURLResponse? = nil) {
+    public init(statusCode: Int, data: Data, response: URLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
         self.response = response
     }
 
     public var description: String {
-        return "Status Code: \(statusCode), Data Length: \(data.length)"
+        return "Status Code: \(statusCode), Data Length: \(data.count)"
     }
 
     public var debugDescription: String {
@@ -29,14 +29,14 @@ public func == (lhs: Response, rhs: Response) -> Bool {
 public extension Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filterStatusCodes(range: ClosedInterval<Int>) throws -> Response {
+    public func filterStatusCodes(_ range: ClosedRange<Int>) throws -> Response {
         guard range.contains(statusCode) else {
-            throw Error.StatusCode(self)
+            throw Error.statusCode(self)
         }
         return self
     }
 
-    public func filterStatusCode(code: Int) throws -> Response {
+    public func filterStatusCode(_ code: Int) throws -> Response {
         return try filterStatusCodes(code...code)
     }
 
@@ -51,27 +51,27 @@ public extension Response {
     /// Maps data received from the signal into a UIImage.
     func mapImage() throws -> Image {
         guard let image = Image(data: data) else {
-            throw Error.ImageMapping(self)
+            throw Error.imageMapping(self)
         }
         return image
     }
 
     /// Maps data received from the signal into a JSON object.
-    func mapJSON(failsOnEmptyData failsOnEmptyData: Bool = true) throws -> AnyObject {
+    func mapJSON(failsOnEmptyData: Bool = true) throws -> AnyObject {
         do {
-            return try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         } catch {
-            if data.length < 1 && !failsOnEmptyData {
+            if data.count < 1 && !failsOnEmptyData {
                 return NSNull()
             }
-            throw Error.Underlying(error as NSError)
+            throw Error.underlying(error as NSError)
         }
     }
 
     /// Maps data received from the signal into a String.
     func mapString() throws -> String {
-        guard let string = NSString(data: data, encoding: NSUTF8StringEncoding) else {
-            throw Error.StringMapping(self)
+        guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+            throw Error.stringMapping(self)
         }
         return string as String
     }

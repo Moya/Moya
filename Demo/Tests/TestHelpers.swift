@@ -3,22 +3,22 @@ import Foundation
 
 extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
     }
 }
 
 enum GitHub {
-    case Zen
-    case UserProfile(String)
+    case zen
+    case userProfile(String)
 }
 
 extension GitHub: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    var baseURL: URL { return URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
-        case .Zen:
+        case .zen:
             return "/zen"
-        case .UserProfile(let name):
+        case .userProfile(let name):
             return "/users/\(name.URLEscapedString)"
         }
     }
@@ -35,17 +35,17 @@ extension GitHub: TargetType {
         return .Request
     }
     
-    var sampleData: NSData {
+    var sampleData: Data {
         switch self {
-        case .Zen:
-            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .zen:
+            return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+        case .userProfile(let name):
+            return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
     }
 }
 
-func url(route: TargetType) -> String {
+func url(_ route: TargetType) -> String {
     return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
 }
 
@@ -55,12 +55,12 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 }
 
 enum HTTPBin: TargetType {
-    case BasicAuth
+    case basicAuth
 
-    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
-        case .BasicAuth:
+        case .basicAuth:
             return "/basic-auth/user/passwd"
         }
     }
@@ -80,10 +80,10 @@ enum HTTPBin: TargetType {
         return .Request
     }
     
-    var sampleData: NSData {
+    var sampleData: Data {
         switch self {
-        case .BasicAuth:
-            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .basicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
         }
     }
 }

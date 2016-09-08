@@ -2,26 +2,26 @@ import Foundation
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
 public protocol TargetType {
-    var baseURL: NSURL { get }
+    var baseURL: URL { get }
     var path: String { get }
     var method: Moya.Method { get }
     var parameters: [String: AnyObject]? { get }
-    var sampleData: NSData { get }
+    var sampleData: Data { get }
     var task: Task { get }
 }
 
 public enum StructTarget: TargetType {
-    case Struct(TargetType)
+    case `struct`(TargetType)
 
     public init(_ target: TargetType) {
-        self = StructTarget.Struct(target)
+        self = StructTarget.struct(target)
     }
 
     public var path: String {
         return target.path
     }
 
-    public var baseURL: NSURL {
+    public var baseURL: URL {
         return target.baseURL
     }
 
@@ -33,7 +33,7 @@ public enum StructTarget: TargetType {
         return target.parameters
     }
 
-    public var sampleData: NSData {
+    public var sampleData: Data {
         return target.sampleData
     }
     public var task: Task {
@@ -42,7 +42,7 @@ public enum StructTarget: TargetType {
 
     public var target: TargetType {
         switch self {
-        case .Struct(let t): return t
+        case .struct(let t): return t
         }
     }
 }
@@ -65,31 +65,31 @@ public enum Method: String {
 }
 
 public enum StubBehavior {
-    case Never
-    case Immediate
-    case Delayed(seconds: NSTimeInterval)
+    case never
+    case immediate
+    case delayed(seconds: TimeInterval)
 }
 
 public enum UploadType {
-    case File(NSURL)
-    case Multipart([MultipartFormData])
+    case file(URL)
+    case multipart([MultipartFormData])
 }
 
 public enum DownloadType {
-    case Request(DownloadDestination)
+    case request(DownloadDestination)
 }
 
 public enum Task {
-    case Request
-    case Upload(UploadType)
-    case Download(DownloadType)
+    case request
+    case upload(UploadType)
+    case download(DownloadType)
 }
 
 public struct MultipartFormData {
     public enum FormDataProvider {
-        case Data(NSData)
-        case File(NSURL)
-        case Stream(NSInputStream, UInt64)
+        case data(Foundation.Data)
+        case file(URL)
+        case stream(InputStream, UInt64)
     }
 
     public init(provider: FormDataProvider, name: String, fileName: String? = nil, mimeType: String? = nil) {

@@ -4,39 +4,39 @@ import Moya
 let GitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(verbose: true)])
 
 public enum GitHubUserContent {
-    case DownloadMoyaWebContent(String)
+    case downloadMoyaWebContent(String)
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: NSURL { return NSURL(string: "https://raw.githubusercontent.com")! }
+    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
-        case .DownloadMoyaWebContent(let contentPath):
+        case .downloadMoyaWebContent(let contentPath):
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
     public var method: Moya.Method {
         switch self {
-        case .DownloadMoyaWebContent:
+        case .downloadMoyaWebContent:
             return .GET
         }
     }
     public var parameters: [String: AnyObject]? {
         switch self {
-        case .DownloadMoyaWebContent:
+        case .downloadMoyaWebContent:
             return nil
         }
     }
     public var task: Task {
         switch self {
-        case .DownloadMoyaWebContent:
+        case .downloadMoyaWebContent:
             return .Download(.Request(DefaultDownloadDestination))
         }
     }
-    public var sampleData: NSData {
+    public var sampleData: Data {
         switch self {
-        case .DownloadMoyaWebContent:
-            return animatedBirdData()
+        case .downloadMoyaWebContent:
+            return animatedBirdData() as Data
         }
     }
 

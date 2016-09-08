@@ -9,22 +9,22 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         progressView.frame = CGRect(origin: .zero, size: CGSize(width: 0, height: 2))
-        progressView.backgroundColor = .blueColor()
+        progressView.backgroundColor = .blue()
         navigationController?.navigationBar.addSubview(progressView)
         
         downloadRepositories("ashfurrow")
     }
 
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        let ok = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    fileprivate func showAlert(_ title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(ok)
-        presentViewController(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - API Stuff
 
-    func downloadRepositories(username: String) {
+    func downloadRepositories(_ username: String) {
         GitHubProvider.request(.UserRepositories(username)) { result in
             switch result {
             case let .Success(response):
@@ -63,14 +63,14 @@ class ViewController: UITableViewController {
     func uploadGiphy() {
         let data = animatedBirdData()
         GiphyProvider.request(.Upload(gif: data),
-            queue: dispatch_get_main_queue(),
+            queue: DispatchQueue.main,
             progress: progressClosure,
             completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
         GitHubUserContentProvider.request(.DownloadMoyaWebContent("logo_github.png"),
-        queue: dispatch_get_main_queue(),
+        queue: DispatchQueue.main,
         progress: progressClosure,
         completion: progressCompletionClosure)
     }
@@ -112,43 +112,43 @@ class ViewController: UITableViewController {
 
     // MARK: - User Interaction
 
-    @IBAction func giphyWasPressed(sender: UIBarButtonItem) {
+    @IBAction func giphyWasPressed(_ sender: UIBarButtonItem) {
         uploadGiphy()
     }
     
-    @IBAction func searchWasPressed(sender: UIBarButtonItem) {
+    @IBAction func searchWasPressed(_ sender: UIBarButtonItem) {
         var usernameTextField: UITextField?
 
-        let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .Alert)
-        let ok = UIAlertAction(title: "OK", style: .Default) { action in
+        let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default) { action in
             if let username = usernameTextField?.text {
                 self.downloadRepositories(username)
             }
         }
         promptController.addAction(ok)
-        promptController.addTextFieldWithConfigurationHandler { textField in
+        promptController.addTextField { textField in
             usernameTextField = textField
         }
-        presentViewController(promptController, animated: true, completion: nil)
+        present(promptController, animated: true, completion: nil)
     }
 
-    @IBAction func zenWasPressed(sender: UIBarButtonItem) {
+    @IBAction func zenWasPressed(_ sender: UIBarButtonItem) {
         downloadZen()
     }
 
-    @IBAction func downloadWasPressed(sender: UIBarButtonItem) {
+    @IBAction func downloadWasPressed(_ sender: UIBarButtonItem) {
         downloadMoyaLogo()
     }
     
     // MARK: - Table View
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repos.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-        let repo = repos[indexPath.row] as? NSDictionary
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
+        let repo = repos[(indexPath as NSIndexPath).row] as? NSDictionary
         cell.textLabel?.text = repo?["name"] as? String
         return cell
     }

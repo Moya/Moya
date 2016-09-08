@@ -21,19 +21,19 @@ extension Request: RequestType { }
 internal final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
-    private(set) var cancelled: Bool = false
+    fileprivate(set) var cancelled: Bool = false
 
-    private var lock: dispatch_semaphore_t = dispatch_semaphore_create(1)
+    fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
 
     func cancel() {
-        dispatch_semaphore_wait(lock, DISPATCH_TIME_FOREVER)
-        defer { dispatch_semaphore_signal(lock) }
+        lock.wait(timeout: DispatchTime.distantFuture)
+        defer { lock.signal() }
         guard !cancelled else { return }
         cancelled = true
         cancelAction()
     }
 
-    init(action: () -> Void) {
+    init(action: @escaping () -> Void) {
         self.cancelAction = action
         self.request = nil
     }
