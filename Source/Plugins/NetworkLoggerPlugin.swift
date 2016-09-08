@@ -24,7 +24,7 @@ public final class NetworkLoggerPlugin: PluginType {
     }
 
     public func willSendRequest(_ request: RequestType, target: TargetType) {
-        if let request = request as? CustomDebugStringConvertible , cURL {
+        if let request = request as? CustomDebugStringConvertible, cURL {
             output(request.debugDescription)
             output(request.debugDescription, separator, terminator)
             return
@@ -79,7 +79,7 @@ private extension NetworkLoggerPlugin {
             output += [format(loggerId, date: date, identifier: "HTTP Request Method", message: httpMethod)]
         }
 
-        if let body = request?.httpBody , verbose == true {
+        if let body = request?.httpBody, verbose == true {
             if let stringOutput = NSString(data: body, encoding: String.Encoding.utf8.rawValue) as? String {
                 output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
             }
@@ -97,7 +97,7 @@ private extension NetworkLoggerPlugin {
 
         output += [format(loggerId, date: date, identifier: "Response", message: response.description)]
 
-        if let data = data , verbose == true {
+        if let data = data, verbose == true {
             if let stringData = String(data: responseDataFormatter?(data) ?? data, encoding: String.Encoding.utf8) {
                 output += [stringData]
             }

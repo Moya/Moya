@@ -152,7 +152,7 @@ private extension MoyaProvider {
                 }
             }
         }
-        
+
         manager.upload(multipartFormData: multipartFormData, with: request) { (result: MultipartFormDataEncodingResult) in
             switch result {
             case .success(let alamoRequest, _, _):

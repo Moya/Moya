@@ -63,7 +63,7 @@ open class Endpoint<Target> {
     }
 
     fileprivate func addParameters(_ parameters: [String: AnyObject]?) -> [String: AnyObject]? {
-        guard let unwrappedParameters = parameters , unwrappedParameters.isEmpty == false else {
+        guard let unwrappedParameters = parameters, unwrappedParameters.isEmpty == false else {
             return self.parameters
         }
 
@@ -75,7 +75,7 @@ open class Endpoint<Target> {
     }
 
     fileprivate func addHTTPHeaderFields(_ headers: [String: String]?) -> [String: String]? {
-        guard let unwrappedHeaders = headers , unwrappedHeaders.isEmpty == false else {
+        guard let unwrappedHeaders = headers, unwrappedHeaders.isEmpty == false else {
             return self.httpHeaderFields
         }
 
