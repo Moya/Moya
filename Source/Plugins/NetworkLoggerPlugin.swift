@@ -9,14 +9,14 @@ public final class NetworkLoggerPlugin: PluginType {
     fileprivate let separator = ", "
     fileprivate let terminator = "\n"
     fileprivate let cURLTerminator = "\\\n"
-    fileprivate let output: (_ items: Any..., _ separator: String, _ terminator: String) -> Void
+    fileprivate let output: (_ items: [Any], _ separator: String, _ terminator: String) -> Void
     fileprivate let responseDataFormatter: ((Data) -> (Data))?
 
     /// If true, also logs response body data.
     public let verbose: Bool
     public let cURL: Bool
 
-    public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ items: Any..., _ separator: String, _ terminator: String) -> Void = print, responseDataFormatter: ((Data) -> (Data))? = nil) {
+    public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ items: [Any], _ separator: String, _ terminator: String) -> Void = NetworkLoggerPlugin.printArray, responseDataFormatter: ((Data) -> (Data))? = nil) {
         self.cURL = cURL
         self.verbose = verbose
         self.output = output
@@ -25,7 +25,7 @@ public final class NetworkLoggerPlugin: PluginType {
 
     public func willSendRequest(_ request: RequestType, target: TargetType) {
         if let request = request as? CustomDebugStringConvertible, cURL {
-            output(request.debugDescription, separator, terminator)
+            output([request.debugDescription], separator, terminator)
             return
         }
         outputItems(logNetworkRequest(request.request as URLRequest?))
@@ -41,7 +41,7 @@ public final class NetworkLoggerPlugin: PluginType {
 
     fileprivate func outputItems(_ items: [String]) {
         if verbose {
-            items.forEach { output($0, separator, terminator) }
+            items.forEach { output([$0], separator, terminator) }
         } else {
             output(items, separator, terminator)
         }
@@ -103,5 +103,13 @@ private extension NetworkLoggerPlugin {
         }
 
         return output
+    }
+}
+
+fileprivate extension NetworkLoggerPlugin {
+    // warning: This may potentially Swift.print an array literal ([]) around the items. This function is ripe for refactoring.
+    // for more information look at https://github.com/Moya/Moya/pull/608#issuecomment-245784660
+    static func printArray(items: [Any], seperator: String, terminator: String) {
+        print(items, separator: seperator, terminator: terminator)
     }
 }
