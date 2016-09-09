@@ -25,7 +25,6 @@ public final class NetworkLoggerPlugin: PluginType {
 
     public func willSendRequest(_ request: RequestType, target: TargetType) {
         if let request = request as? CustomDebugStringConvertible, cURL {
-            output(request.debugDescription)
             output(request.debugDescription, separator, terminator)
             return
         }
