@@ -5,7 +5,7 @@ public protocol TargetType {
     var baseURL: URL { get }
     var path: String { get }
     var method: Moya.Method { get }
-    var parameters: [String: AnyObject]? { get }
+    var parameters: [String: Any]? { get }
     var sampleData: Data { get }
     var task: Task { get }
 }
@@ -29,7 +29,7 @@ public enum StructTarget: TargetType {
         return target.method
     }
 
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         return target.parameters
     }
 

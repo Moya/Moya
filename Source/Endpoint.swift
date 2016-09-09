@@ -19,7 +19,7 @@ open class Endpoint<Target> {
     open let URL: String
     open let method: Moya.Method
     open let sampleResponseClosure: SampleResponseClosure
-    open let parameters: [String: AnyObject]?
+    open let parameters: [String: Any]?
     open let parameterEncoding: Moya.ParameterEncoding
     open let httpHeaderFields: [String: String]?
 
@@ -27,7 +27,7 @@ open class Endpoint<Target> {
     public init(URL: String,
         sampleResponseClosure: @escaping SampleResponseClosure,
         method: Moya.Method = Moya.Method.GET,
-        parameters: [String: AnyObject]? = nil,
+        parameters: [String: Any]? = nil,
         parameterEncoding: Moya.ParameterEncoding = URLEncoding(),
         httpHeaderFields: [String: String]? = nil) {
 
@@ -40,7 +40,7 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added parameters.
-    open func endpointByAddingParameters(_ parameters: [String: AnyObject]) -> Endpoint<Target> {
+    open func endpointByAddingParameters(_ parameters: [String: Any]) -> Endpoint<Target> {
         return endpointByAdding(parameters: parameters)
     }
 
@@ -55,19 +55,19 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
-    open func endpointByAdding(parameters: [String: AnyObject]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
+    open func endpointByAdding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
         let newParameters = addParameters(parameters)
         let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
         return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 
-    fileprivate func addParameters(_ parameters: [String: AnyObject]?) -> [String: AnyObject]? {
+    fileprivate func addParameters(_ parameters: [String: Any]?) -> [String: Any]? {
         guard let unwrappedParameters = parameters, unwrappedParameters.isEmpty == false else {
             return self.parameters
         }
 
-        var newParameters = self.parameters ?? [String: AnyObject]()
+        var newParameters = self.parameters ?? [String: Any]()
         unwrappedParameters.forEach { (key, value) in
             newParameters[key] = value
         }
