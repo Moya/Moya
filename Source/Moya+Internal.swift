@@ -213,17 +213,20 @@ private extension MoyaProvider {
                 if let uploadRequest = uploadRequest.uploadProgress(closure: progressClosure) as? T {
                     progressAlamoRequest = uploadRequest
                 }
-            case var dataRequest as DataRequest:
-                dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
-                    let result = convertResponseToResult(handler.response, data: handler.data, error: handler.error)
-                    // Inform all plugins about the response
-                    plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                    completion(result)
-                })
-                if let dataRequest = dataRequest as? T {
-                    progressAlamoRequest = dataRequest
-                }
             default: break
+            }
+        }
+        
+        if var dataRequest = progressAlamoRequest as? DataRequest {
+            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
+                let result = convertResponseToResult(handler.response, data: handler.data, error: handler.error)
+                // Inform all plugins about the response
+                plugins.forEach { $0.didReceiveResponse(result, target: target) }
+                completion(result)
+            })
+            
+            if let dataRequest = dataRequest as? T {
+                progressAlamoRequest = dataRequest
             }
         }
 
