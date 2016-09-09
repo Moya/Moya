@@ -247,14 +247,14 @@ private extension MoyaProvider {
 }
 
 /// Encode parameters for multipart/form-data
-private func multipartQueryComponents(_ key: String, _ value: AnyObject) -> [(String, String)] {
+private func multipartQueryComponents(_ key: String, _ value: Any) -> [(String, String)] {
     var components: [(String, String)] = []
 
-    if let dictionary = value as? [String: AnyObject] {
+    if let dictionary = value as? [String: Any] {
         for (nestedKey, value) in dictionary {
             components += multipartQueryComponents("\(key)[\(nestedKey)]", value)
         }
-    } else if let array = value as? [AnyObject] {
+    } else if let array = value as? [Any] {
         for value in array {
             components += multipartQueryComponents("\(key)[]", value)
         }
