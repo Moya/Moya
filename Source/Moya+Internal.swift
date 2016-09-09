@@ -190,7 +190,7 @@ private extension MoyaProvider {
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
 
         var progressAlamoRequest = alamoRequest
-        let progressBlock: (Int64, Int64, Int64) -> Void = { (bytesWritten, totalBytesWritten, totalBytesExpected) in
+        let progressClosure: (Int64, Int64, Int64) -> Void = { (bytesWritten, totalBytesWritten, totalBytesExpected) in
             let sendProgress: () -> () = {
                 progress?(ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
             }
@@ -206,11 +206,11 @@ private extension MoyaProvider {
         if let progress = progress {
             switch progressAlamoRequest {
             case let downloadRequest as DownloadRequest:
-                if let downloadRequest = downloadRequest.downloadProgress(closure: progressBlock) as? T {
+                if let downloadRequest = downloadRequest.downloadProgress(closure: progressClosure) as? T {
                     progressAlamoRequest = downloadRequest
                 }
             case let uploadRequest as UploadRequest:
-                if let uploadRequest = uploadRequest.uploadProgress(closure: progressBlock) as? T {
+                if let uploadRequest = uploadRequest.uploadProgress(closure: progressClosure) as? T {
                     progressAlamoRequest = uploadRequest
                 }
             case var dataRequest as DataRequest:
