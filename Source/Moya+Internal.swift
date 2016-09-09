@@ -194,14 +194,14 @@ private extension MoyaProvider {
             let sendProgress: () -> () = {
                 progress?(ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
             }
-            
+
             if let queue = queue {
                 queue.async(execute: sendProgress)
             } else {
                 sendProgress()
             }
         }
-        
+
         // Perform the actual request
         if let progress = progress {
             switch progressAlamoRequest {
@@ -216,7 +216,7 @@ private extension MoyaProvider {
             default: break
             }
         }
-        
+
         if var dataRequest = progressAlamoRequest as? DataRequest {
             dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
                 let result = convertResponseToResult(handler.response, data: handler.data, error: handler.error)
@@ -224,7 +224,7 @@ private extension MoyaProvider {
                 plugins.forEach { $0.didReceiveResponse(result, target: target) }
                 completion(result)
             })
-            
+
             if let dataRequest = dataRequest as? T {
                 progressAlamoRequest = dataRequest
             }
