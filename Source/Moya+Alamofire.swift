@@ -8,6 +8,8 @@ internal typealias UploadRequest = Alamofire.UploadRequest
 internal typealias DataRequest = Alamofire.DataRequest
 internal typealias StreamRequest = Alamofire.StreamRequest
 
+internal typealias URLRequestConvertible = Alamofire.URLRequestConvertible
+
 /// Choice of parameter encoding.
 public typealias ParameterEncoding = Alamofire.ParameterEncoding
 
