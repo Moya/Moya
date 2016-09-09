@@ -3,6 +3,9 @@ import Alamofire
 
 public typealias Manager = Alamofire.SessionManager
 internal typealias Request = Alamofire.Request
+internal typealias DownloadRequest = Alamofire.DownloadRequest
+internal typealias UploadRequest = Alamofire.UploadRequest
+internal typealias DataRequest = Alamofire.DataRequest
 
 /// Choice of parameter encoding.
 public typealias ParameterEncoding = Alamofire.ParameterEncoding

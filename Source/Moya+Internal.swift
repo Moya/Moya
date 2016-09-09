@@ -184,39 +184,52 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest(_ alamoRequest: Request, target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
 
+        var progressAlamoRequest = alamoRequest
+        let progressBlock: (Int64, Int64, Int64) -> Void = { (bytesWritten, totalBytesWritten, totalBytesExpected) in
+            let sendProgress: () -> () = {
+                progress?(ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+            }
+            
+            if let queue = queue {
+                queue.async(execute: sendProgress)
+            } else {
+                sendProgress()
+            }
+        }
+        
         // Perform the actual request
         if let progress = progress {
-            alamoRequest
-                .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
-                    let sendProgress: () -> () = {
-                        progress(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
-                    }
-
-                    if let queue = queue {
-                        dispatch_async(queue, sendProgress)
-                    } else {
-                        sendProgress()
-                    }
+            switch progressAlamoRequest {
+            case let downloadRequest as DownloadRequest:
+                if let downloadRequest = downloadRequest.downloadProgress(closure: progressBlock) as? T {
+                    progressAlamoRequest = downloadRequest
+                }
+            case let uploadRequest as UploadRequest:
+                if let uploadRequest = uploadRequest.uploadProgress(closure: progressBlock) as? T {
+                    progressAlamoRequest = uploadRequest
+                }
+            case var dataRequest as DataRequest:
+                dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
+                    let result = convertResponseToResult(handler.response, data: handler.data, error: handler.error)
+                    // Inform all plugins about the response
+                    plugins.forEach { $0.didReceiveResponse(result, target: target) }
+                    completion(result)
+                })
+                if let dataRequest = dataRequest as? T {
+                    progressAlamoRequest = dataRequest
+                }
+            default: break
             }
         }
 
-        alamoRequest
-            .response(queue: queue) { (_, response: HTTPURLResponse?, data: Data?, error: NSError?) -> () in
-                let result = convertResponseToResult(response, data: data, error: error)
-                // Inform all plugins about the response
-                plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                completion(result: result)
-        }
+        progressAlamoRequest.resume()
 
-
-        alamoRequest.resume()
-
-        return CancellableToken(request: alamoRequest)
+        return CancellableToken(request: progressAlamoRequest)
     }
 }
 
