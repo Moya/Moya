@@ -130,7 +130,7 @@ public extension MoyaProvider {
     }
 }
 
-public func convertResponseToResult(_ response: HTTPURLResponse?, data: Data?, error: NSError?) ->
+public func convertResponseToResult(_ response: HTTPURLResponse?, data: Data?, error: Swift.Error?) ->
     Result<Moya.Response, Moya.Error> {
     switch (response, data, error) {
     case let (.some(response), data, .none):
