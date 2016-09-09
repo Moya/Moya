@@ -7,7 +7,7 @@ def libraries
   pod 'Moya', :path => "../"
 #  pod 'Moya/ReactiveCocoa', :path => "../"
   pod 'Moya/RxSwift', :path => "../"
-  pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', :branch => 'swift3'
+  pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire', :branch => 'master'
   pod 'RxSwift', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'develop'
   pod 'RxCocoa', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'develop'
   pod 'Result', :git => 'https://github.com/antitypical/Result', :branch => 'master'

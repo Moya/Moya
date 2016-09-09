@@ -1,9 +1,9 @@
 PODS:
-  - Alamofire (4.0.0-beta.2)
+  - Alamofire (4.0.0)
   - Moya (7.0.0):
     - Moya/Core (= 7.0.0)
   - Moya/Core (7.0.0):
-    - Alamofire (= 4.0.0-beta.2)
+    - Alamofire (~> 4.0.0)
     - Result
   - Moya/RxSwift (7.0.0):
     - Moya/Core
@@ -29,7 +29,7 @@ PODS:
   - RxSwift (3.0.0.alpha.1)
 
 DEPENDENCIES:
-  - Alamofire (from `https://github.com/Alamofire/Alamofire`, branch `swift3`)
+  - Alamofire (from `https://github.com/Alamofire/Alamofire`, branch `master`)
   - Moya (from `../`)
   - Moya/RxSwift (from `../`)
   - Nimble
@@ -41,10 +41,10 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Alamofire:
-    :branch: swift3
+    :branch: master
     :git: https://github.com/Alamofire/Alamofire
   Moya:
-    :path: ../
+    :path: "../"
   Result:
     :branch: master
     :git: https://github.com/antitypical/Result
@@ -57,21 +57,21 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: 680690beaa7abf9578487688de4d24d038f679b5
+    :commit: 76558cf44275cc6a6b9ebee9e3ac53b281d504b2
     :git: https://github.com/Alamofire/Alamofire
   Result:
     :commit: cc1699dbd812c71bee7c44c8cbd75497713bc279
     :git: https://github.com/antitypical/Result
   RxCocoa:
-    :commit: 17208487dd81738be920e7f64cf5baec4659a168
+    :commit: c99a49aa66ea830780bd3be1f11b3bac2b690c90
     :git: https://github.com/ReactiveX/RxSwift
   RxSwift:
-    :commit: 17208487dd81738be920e7f64cf5baec4659a168
+    :commit: c99a49aa66ea830780bd3be1f11b3bac2b690c90
     :git: https://github.com/ReactiveX/RxSwift
 
 SPEC CHECKSUMS:
-  Alamofire: 7f837be535fe424db2b87d9117f13836939719ca
-  Moya: 0d28ab3f54ee02dd3fd96204c3d29210c465d758
+  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  Moya: 091a18b83d7c08368d852f46e32f3c32da3f26d9
   Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
   OHHTTPStubs: 29ae105797c3410112d10b217c8b7a55aab616b2
   Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
@@ -79,6 +79,6 @@ SPEC CHECKSUMS:
   RxCocoa: 37b3b167eaa14446a315493ef6a188b277942b15
   RxSwift: 0bccfee1e979c1b72a5d1dffdf96119303b5d111
 
-PODFILE CHECKSUM: 2c99a8428ccb3bbfb4119b4d7f23237078bff063
+PODFILE CHECKSUM: 92d674c84e13ae699026fd564d68aea39c8ab4d0
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.0.beta.2
