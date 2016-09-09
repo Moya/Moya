@@ -1,6 +1,6 @@
 machine:
   xcode:
-    version: "7.3.1"
+    version: "8.0"
   environment:
     LANG: en_US.UTF-8
 
