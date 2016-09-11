@@ -121,7 +121,7 @@ internal extension MoyaProvider {
 
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     final func notifyPluginsOfImpendingStub(_ request: URLRequest, target: Target) {
-        let alamoRequest = manager.request(resource: request as URLRequestConvertible)
+        let alamoRequest = manager.request(request as URLRequestConvertible)
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
     }
 }
@@ -175,12 +175,12 @@ private extension MoyaProvider {
     }
 
     func sendDownloadRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
-        let alamoRequest = manager.download(resource: request, to: destination)
+        let alamoRequest = manager.download(request, to: destination)
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
     func sendRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
-        let alamoRequest = manager.request(resource: request as URLRequestConvertible)
+        let alamoRequest = manager.request(request as URLRequestConvertible)
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
