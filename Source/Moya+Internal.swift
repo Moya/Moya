@@ -194,7 +194,7 @@ private extension MoyaProvider {
             let sendProgress: () -> () = {
                 progressCompletion?(ProgressResponse(progress: progress))
             }
-            
+
             if let queue = queue {
                 queue.async(execute: sendProgress)
             } else {
