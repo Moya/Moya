@@ -184,17 +184,17 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
 
         var progressAlamoRequest = alamoRequest
-        let progressClosure: (Int64, Int64, Int64) -> Void = { (bytesWritten, totalBytesWritten, totalBytesExpected) in
+        let progressClosure: (Progress) -> Void = { (progress) in
             let sendProgress: () -> () = {
-                progress?(ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
+                progressCompletion?(ProgressResponse(progress: progress))
             }
-
+            
             if let queue = queue {
                 queue.async(execute: sendProgress)
             } else {
