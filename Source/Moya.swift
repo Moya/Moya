@@ -8,24 +8,23 @@ public typealias Completion = (_ result: Result<Moya.Response, Moya.Error>) -> (
 public typealias ProgressBlock = (_ progress: ProgressResponse) -> Void
 
 public struct ProgressResponse {
-    public let totalBytes: Int64
-    public let bytesExpected: Int64
     public let response: Response?
-
-    init(totalBytes: Int64 = 0, bytesExpected: Int64 = 0, response: Response? = nil) {
-        self.totalBytes = totalBytes
-        self.bytesExpected = bytesExpected
+    public let progressObject : Progress
+    
+    init(progress: Progress, response: Response? = nil) {
+        self.progressObject = progress
         self.response = response
     }
-
+    
     public var progress: Double {
-        return bytesExpected > 0 ? min(Double(totalBytes) / Double(bytesExpected), 1.0) : 1.0
+        return self.progressObject.fractionCompleted
     }
-
+    
     public var completed: Bool {
-        return totalBytes >= bytesExpected && response != nil
+        return self.progressObject.fractionCompleted == 1.0 && response != nil
     }
 }
+
 
 /// Request provider class. Requests should be made through this class only.
 open class MoyaProvider<Target: TargetType> {
