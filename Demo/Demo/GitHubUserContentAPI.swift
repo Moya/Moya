@@ -45,7 +45,7 @@ extension GitHubUserContent: TargetType {
 private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response -> NSURL in
     let fileManager = NSFileManager.defaultManager()
     let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    let destination = directoryURLs[0].URLByAppendingPathComponent(response.suggestedFilename!)
+    let destination = directoryURLs[0].URLByAppendingPathComponent(response.suggestedFilename!)!
     //overwriting
     try! fileManager.removeItemAtURL(destination)
     return destination
