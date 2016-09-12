@@ -32,7 +32,7 @@ end
 
 def devices
   return {
-    ios: "name='iPhone 7'",
+    ios: "name='iPhone 6s'",
     osx: "arch='x86_64'",
     tvos: "name='Apple TV 1080p'"
   }
