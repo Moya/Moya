@@ -38,8 +38,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
             plugin.willSendRequest(TestBodyRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("Request: https://api.github.com/zen") )
             expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
             expect(log).to( contain("HTTP Request Method: GET") )
             expect(log).to( contain("Request Body: cool body") )
@@ -49,8 +48,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
             plugin.willSendRequest(TestStreamRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("Request: https://api.github.com/zen") )
             expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
             expect(log).to( contain("HTTP Request Method: GET") )
             expect(log).to( contain("Request Body Stream:") )
@@ -91,7 +89,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
             plugin.didReceiveResponse(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response: Received empty network response for Zen.") )
+            expect(log).to( contain("Response: Received empty network response for zen.") )
         }
 
         it("outputs cURL representation of request") {
