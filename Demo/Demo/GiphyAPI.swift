@@ -21,7 +21,7 @@ extension Giphy: TargetType {
             return .POST
         }
     }
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         switch self {
         case .upload:
             return ["api_key": "dc6zaTOxFJmzC" as AnyObject, "username": "Moya" as AnyObject]
@@ -30,7 +30,7 @@ extension Giphy: TargetType {
     public var task: Task {
         switch self {
         case let .upload(data):
-            return .Upload(.Multipart([MultipartFormData(provider: .Data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")]))
+            return .upload(.multipart([MultipartFormData(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")]))
         }
     }
     public var sampleData: Data {

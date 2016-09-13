@@ -21,7 +21,7 @@ extension GitHubUserContent: TargetType {
             return .GET
         }
     }
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         switch self {
         case .downloadMoyaWebContent:
             return nil
@@ -30,7 +30,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .Download(.Request(DefaultDownloadDestination))
+            return .download(.request(DefaultDownloadDestination))
         }
     }
     public var sampleData: Data {
@@ -42,12 +42,13 @@ extension GitHubUserContent: TargetType {
 
 }
 
-private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response -> NSURL in
-    let fileManager = NSFileManager.defaultManager()
-    let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    let destination = directoryURLs[0].URLByAppendingPathComponent(response.suggestedFilename!)
-    //overwriting
-    try! fileManager.removeItemAtURL(destination)
-    return destination
+private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+    let directoryURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    
+    if !directoryURLs.isEmpty {
+        return (directoryURLs[0].appendingPathComponent(response.suggestedFilename!), [])
+    }
+    
+    return (temporaryURL, [])
 }
 

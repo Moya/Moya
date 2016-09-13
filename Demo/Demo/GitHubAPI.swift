@@ -44,7 +44,7 @@ extension GitHub: TargetType {
     public var method: Moya.Method {
         return .GET
     }
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         switch self {
         case .userRepositories(_):
             return ["sort": "pushed" as AnyObject]
@@ -53,7 +53,7 @@ extension GitHub: TargetType {
         }
     }
     public var task: Task {
-        return .Request
+        return .request
     }
     public var sampleData: Data {
         switch self {
