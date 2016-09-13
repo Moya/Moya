@@ -6,7 +6,7 @@ public enum Error: Swift.Error {
     case stringMapping(Response)
     case statusCode(Response)
     case data(Response)
-    case underlying(NSError)
+    case underlying(Swift.Error)
 }
 
 public extension Moya.Error {

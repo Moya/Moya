@@ -121,7 +121,7 @@ internal extension MoyaProvider {
 
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     final func notifyPluginsOfImpendingStub(_ request: URLRequest, target: Target) {
-        let alamoRequest = manager.request(request)
+        let alamoRequest = manager.request(request as URLRequestConvertible)
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
     }
 }
@@ -175,48 +175,64 @@ private extension MoyaProvider {
     }
 
     func sendDownloadRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
-        let alamoRequest = manager.download(resource: request, to: destination)
+        let alamoRequest = manager.download(request, to: destination)
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
     func sendRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
-        let alamoRequest = manager.request(request)
+        let alamoRequest = manager.request(request as URLRequestConvertible)
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest(_ alamoRequest: Request, target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
 
-        // Perform the actual request
-        if let progress = progress {
-            alamoRequest
-                .progress { (bytesWritten, totalBytesWritten, totalBytesExpected) in
-                    let sendProgress: () -> () = {
-                        progress(progress: ProgressResponse(totalBytes: totalBytesWritten, bytesExpected: totalBytesExpected))
-                    }
+        var progressAlamoRequest = alamoRequest
+        let progressClosure: (Progress) -> Void = { (progress) in
+            let sendProgress: () -> () = {
+                progressCompletion?(ProgressResponse(progress: progress))
+            }
 
-                    if let queue = queue {
-                        dispatch_async(queue, sendProgress)
-                    } else {
-                        sendProgress()
-                    }
+            if let queue = queue {
+                queue.async(execute: sendProgress)
+            } else {
+                sendProgress()
             }
         }
 
-        alamoRequest
-            .response(queue: queue) { (_, response: HTTPURLResponse?, data: Data?, error: NSError?) -> () in
-                let result = convertResponseToResult(response, data: data, error: error)
-                // Inform all plugins about the response
-                plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                completion(result: result)
+        // Perform the actual request
+        if let progress = progressCompletion {
+            switch progressAlamoRequest {
+            case let downloadRequest as DownloadRequest:
+                if let downloadRequest = downloadRequest.downloadProgress(closure: progressClosure) as? T {
+                    progressAlamoRequest = downloadRequest
+                }
+            case let uploadRequest as UploadRequest:
+                if let uploadRequest = uploadRequest.uploadProgress(closure: progressClosure) as? T {
+                    progressAlamoRequest = uploadRequest
+                }
+            default: break
+            }
         }
 
+        if var dataRequest = progressAlamoRequest as? DataRequest {
+            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
+                let result = convertResponseToResult(handler.response, data: handler.data, error: handler.error)
+                // Inform all plugins about the response
+                plugins.forEach { $0.didReceiveResponse(result, target: target) }
+                completion(result)
+            })
 
-        alamoRequest.resume()
+            if let dataRequest = dataRequest as? T {
+                progressAlamoRequest = dataRequest
+            }
+        }
 
-        return CancellableToken(request: alamoRequest)
+        progressAlamoRequest.resume()
+
+        return CancellableToken(request: progressAlamoRequest)
     }
 }
 
