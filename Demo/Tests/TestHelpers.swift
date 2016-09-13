@@ -32,7 +32,7 @@ extension GitHub: TargetType {
     }
     
     var task: Task {
-        return .Request
+        return .request
     }
     
     var sampleData: Data {
@@ -46,7 +46,7 @@ extension GitHub: TargetType {
 }
 
 func url(_ route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
@@ -77,7 +77,7 @@ enum HTTPBin: TargetType {
     }
     
     var task: Task {
-        return .Request
+        return .request
     }
     
     var sampleData: Data {
