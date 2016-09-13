@@ -18,9 +18,9 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             it("returns a Response object") {
                 var called = false
                 
-                _ = provider.request(.Zen).subscribeNext { (object) -> Void in
+                _ = provider.request(.zen).subscribe(onNext: { (object) -> Void in
                     called = true
-                }
+                })
                 
                 expect(called).to(beTruthy())
             }
@@ -28,22 +28,22 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             it("returns stubbed data for zen request") {
                 var message: String?
                 
-                let target: GitHub = .Zen
-                _ = provider.request(target).subscribeNext { (response) -> Void in
-                    message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
-                }
+                let target: GitHub = .zen
+                _ = provider.request(target).subscribe(onNext: { (response) -> Void in
+                    message = String(data: response.data, encoding: .utf8)
+                })
                 
-                let sampleString = NSString(data: (target.sampleData as NSData), encoding: NSUTF8StringEncoding)
+                let sampleString = String(data: target.sampleData, encoding: .utf8)
                 expect(message).to(equal(sampleString))
             }
             
             it("returns correct data for user profile request") {
                 var receivedResponse: NSDictionary?
                 
-                let target: GitHub = .UserProfile("ashfurrow")
-                _ = provider.request(target).subscribeNext { (response) -> Void in
-                    receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
-                }
+                let target: GitHub = .userProfile("ashfurrow")
+                _ = provider.request(target).subscribe(onNext: { (response) -> Void in
+                    receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
+                })
                 
                 expect(receivedResponse).toNot(beNil())
             }
@@ -59,14 +59,14 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var receivedError: Moya.Error?
                 
                 waitUntil { done in
-                    _ = provider.request(.Zen).subscribeError { (error) -> Void in
+                    _ = provider.request(.zen).subscribe(onError: { (error) -> Void in
                         receivedError = error as? Moya.Error
                         done()
-                    }
+                    })
                 }
                 
                 switch receivedError {
-                case .Some(.Underlying(let error)):
+                case .some(.underlying(let error)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -76,10 +76,10 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             it("returns an error") {
                 var errored = false
                 
-                let target: GitHub = .Zen
-                _ = provider.request(target).subscribeError { (error) -> Void in
+                let target: GitHub = .zen
+                _ = provider.request(target).subscribe(onError: { (error) -> Void in
                     errored = true
-                }
+                })
                 
                 expect(errored).to(beTruthy())
             }
@@ -92,7 +92,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             }
             
             it("returns identical response for inflight requests") {
-                let target: GitHub = .Zen
+                let target: GitHub = .zen
                 let signalProducer1:Observable<Moya.Response> = provider.request(target)
                 let signalProducer2:Observable<Moya.Response> = provider.request(target)
                 
@@ -100,21 +100,19 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 
                 var receivedResponse: Moya.Response!
                 
-                _ = signalProducer1.subscribeNext { (response) -> Void in
+                _ = signalProducer1.subscribe(onNext: { (response) -> Void in
                     receivedResponse = response
                     expect(provider.inflightRequests.count).to(equal(1))
-                }
+                })
                 
-                _ = signalProducer2.subscribeNext { (response) -> Void in
+                _ = signalProducer2.subscribe(onNext: { (response) -> Void in
                     expect(receivedResponse).toNot(beNil())
                     expect(receivedResponse).to(beIndenticalToResponse(response))
                     expect(provider.inflightRequests.count).to(equal(1))
-                }
-                
+                })
                 
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually( equal(0))
-                
             }
         }
     }
