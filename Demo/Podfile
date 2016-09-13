@@ -16,8 +16,8 @@ end
 
 # Test Libraries
 def test_pods
-  pod 'Quick'
-  pod 'Nimble'
+  pod 'Quick', :git => "https://github.com/Quick/Quick", :branch => "swift-3.0"
+  pod 'Nimble', :git => "https://github.com/Quick/Nimble", :branch => "master" 
   pod 'OHHTTPStubs'
 end
 
