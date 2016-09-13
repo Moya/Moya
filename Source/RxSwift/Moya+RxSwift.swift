@@ -61,10 +61,9 @@ public extension RxMoyaProvider {
 
         // Accumulate all progress and combine them when the result comes
         return response.scan(ProgressResponse()) { (last, progress) in
-            let totalBytes = progress.totalBytes > 0 ? progress.totalBytes : last.totalBytes
-            let bytesExpected = progress.bytesExpected > 0 ? progress.bytesExpected : last.bytesExpected
+            let progressObject = progress.progressObject ?? last.progressObject
             let response = progress.response ?? last.response
-            return ProgressResponse(totalBytes: totalBytes, bytesExpected: bytesExpected, response: response)
+            return ProgressResponse(progress: progressObject, response: response)
         }
     }
 }

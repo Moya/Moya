@@ -9,19 +9,19 @@ public typealias ProgressBlock = (_ progress: ProgressResponse) -> Void
 
 public struct ProgressResponse {
     public let response: Response?
-    public let progressObject: Progress
+    public let progressObject: Progress?
 
-    init(progress: Progress, response: Response? = nil) {
+    init(progress: Progress? = nil, response: Response? = nil) {
         self.progressObject = progress
         self.response = response
     }
 
     public var progress: Double {
-        return self.progressObject.fractionCompleted
+        return progressObject?.fractionCompleted ?? 1.0
     }
 
     public var completed: Bool {
-        return self.progressObject.fractionCompleted == 1.0 && response != nil
+        return progress == 1.0 && response != nil
     }
 }
 
