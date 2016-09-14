@@ -27,12 +27,12 @@ extension GitHub: TargetType {
         return .GET
     }
     
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         return nil
     }
     
     var task: Task {
-        return .Request
+        return .request
     }
     
     var sampleData: Data {
@@ -46,12 +46,12 @@ extension GitHub: TargetType {
 }
 
 func url(_ route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkError(error)}, method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, parameters: target.parameters)
 }
 
 enum HTTPBin: TargetType {
@@ -69,7 +69,7 @@ enum HTTPBin: TargetType {
         return .GET
     }
     
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
         default:
             return [:]
@@ -77,7 +77,7 @@ enum HTTPBin: TargetType {
     }
     
     var task: Task {
-        return .Request
+        return .request
     }
     
     var sampleData: Data {
