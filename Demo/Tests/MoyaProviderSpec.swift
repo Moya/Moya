@@ -516,7 +516,7 @@ class MoyaProviderSpec: QuickSpec {
                 } as! CancellableWrapper
 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually( equal(0))
+                expect(provider.inflightRequests.count).toEventually(equal(0), timeout: 5.0)
                 
             }
         }
