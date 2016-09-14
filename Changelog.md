@@ -1,5 +1,11 @@
 # Next
 
+- Swift 2.3 support.
+
+# 7.0.1
+
+- Identical to 7.0.0, see [#594](https://github.com/Moya/Moya/pull/594) for an explanation.
+
 # 7.0.0
 
 - **Breaking Change** Drops support for `RACSignal`.

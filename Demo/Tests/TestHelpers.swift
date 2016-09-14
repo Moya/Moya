@@ -46,7 +46,7 @@ extension GitHub: TargetType {
 }
 
 func url(route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.URLByAppendingPathComponent(route.path)!.absoluteString!
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
