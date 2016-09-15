@@ -13,6 +13,7 @@ public enum GitHub {
     case Zen
     case UserProfile(String)
     case UserRepositories(String)
+    case Branches(String, Bool)
 }
 ```
 
@@ -39,10 +40,13 @@ public var path: String {
         return "/users/\(name.URLEscapedString)"
     case .UserRepositories(let name):
         return "/users/\(name.URLEscapedString)/repos"
+    case .Branches(let repo, _)
+        return "/repos/\(repo.URLEscapedString)/branches"
     }
 }
 ```
 
+Notice that we're ignoring the second associated value of our `Branches` Target using the Swift `_` ignored-value symbol. That's because we don't need it to define the `Branches` path.
 Note: we're cheating here and using a `URLEscapedString` extension on String.
 A sample implementation is given at the end of this document.
 
@@ -67,14 +71,16 @@ public var parameters: [String: AnyObject]? {
     switch self {
     case .UserRepositories(_):
         return ["sort": "pushed"]
+    case .Branches(_, let protected):
+        return ["protected": "\(protected)"]
     default:
         return nil
     }
 }
 ```
 
-Unlike our `path` property earlier, we don't actually care about the associated values
-of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
+Unlike our `path` property earlier, we don't actually care about the associated values of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
+Let's take a look at the `Branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
 
 Notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
@@ -90,6 +96,8 @@ public var sampleData: NSData {
         return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
     case .UserRepositories(let name):
         return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
+    case .Branches(_, _):
+        return "[{\"name\": \"master\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
     }
 }
 ```
