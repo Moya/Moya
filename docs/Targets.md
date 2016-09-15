@@ -96,7 +96,7 @@ public var sampleData: NSData {
         return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
     case .UserRepositories(let name):
         return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .Branches(_, _):
+    case .Branches:
         return "[{\"name\": \"master\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
     }
 }
