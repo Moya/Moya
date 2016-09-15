@@ -1,10 +1,10 @@
 Targets
 =======
 
-Using Moya starts with defining a target – typically some `enum` that conforms 
-to the `TargetType` protocol. Then, the rest of your app deals *only* with 
-those targets. Targets are some action that you want to take on the API, 
-like "`FavouriteTweet(tweetID: String)`". 
+Using Moya starts with defining a target – typically some `enum` that conforms
+to the `TargetType` protocol. Then, the rest of your app deals *only* with
+those targets. Targets are some action that you want to take on the API,
+like "`FavoriteTweet(tweetID: String)`".
 
 Here's an example:
 
@@ -16,10 +16,10 @@ public enum GitHub {
 }
 ```
 
-Targets must conform to `TargetType`. The `TargetType` protocol requires a 
-`baseURL` property to be defined on the enum. Note that this should *not* depend 
-on the value of `self`, but should just return a single value (if you're using 
-more than one API base URL, separate them out into separate enums and Moya 
+Targets must conform to `TargetType`. The `TargetType` protocol requires a
+`baseURL` property to be defined on the enum. Note that this should *not* depend
+on the value of `self`, but should just return a single value (if you're using
+more than one API base URL, separate them out into separate enums and Moya
 providers). Here's the beginning of our extension:
 
 ```swift
@@ -27,8 +27,8 @@ extension GitHub: TargetType {
     public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
 ```
 
-This protocol specifies the locations of 
-your API endpoints, relative to its base URL (more on that below). 
+This protocol specifies the locations of
+your API endpoints, relative to its base URL (more on that below).
 
 ```swift
 public var path: String {
@@ -43,8 +43,8 @@ public var path: String {
 }
 ```
 
-Note: we're cheating here and using a `URLEscapedString` extension on String. 
-A sample implementation is given at the end of this document. 
+Note: we're cheating here and using a `URLEscapedString` extension on String.
+A sample implementation is given at the end of this document.
 
 OK, cool. So now we need to have a `method` for our enum values. In our case, we
 are always using the GET HTTP method, so this is pretty easy:
@@ -56,7 +56,7 @@ public var method: Moya.Method {
 ```
 
 Nice. If some of your endpoints require POST or another method, then you can switch
-on `self` to return the appropriate value. This kind of switching technique is what 
+on `self` to return the appropriate value. This kind of switching technique is what
 we saw when calculating our `path` property.
 
 Our `TargetType` is shaping up, but we're not done yet. We also need a `parameters`
@@ -76,10 +76,10 @@ public var parameters: [String: AnyObject]? {
 Unlike our `path` property earlier, we don't actually care about the associated values
 of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
 
-Notice the `sampleData` property on the enum. This is a requirement of 
+Notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
 `NSData` that represents a sample response. This can be used later for tests or
-for providing offline support for developers. This *should* depend on `self`. 
+for providing offline support for developers. This *should* depend on `self`.
 
 ```swift
 public var sampleData: NSData {
@@ -94,8 +94,8 @@ public var sampleData: NSData {
 }
 ```
 
-Finally, our `TargetType` has a `multipartBody` property that can be either 
-`nil` or an array of `MultipartFormData`. This allows you to add data, 
+Finally, our `TargetType` has a `multipartBody` property that can be either
+`nil` or an array of `MultipartFormData`. This allows you to add data,
 files and streams to the request body.
 
 ```swift
@@ -114,7 +114,7 @@ let GitHubProvider = MoyaProvider<GitHub>()
 Escaping URLs
 -------------
 
-Here's an example extension that allows you to easily escape normal strings 
+Here's an example extension that allows you to easily escape normal strings
 "like this" to URL-encoded strings "like%20this":
 
 ```swift
