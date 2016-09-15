@@ -11,6 +11,10 @@
 - Added `supportsMultipart` to the `Method` type, which helps determine whether to use `multipart/form-data` encoding.
 - Added `PATCH` and `CONNECT` to the `Method` cases which support multipart encoding.
 
+# 7.0.3
+
+- Carthage support for Swift 2.3.
+
 # 7.0.2
 
 - Swift 2.3 support.
