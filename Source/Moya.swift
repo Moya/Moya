@@ -76,17 +76,20 @@ open class MoyaProvider<Target: TargetType> {
     }
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
+    @discardableResult
     open func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
         return self.request(target, queue: nil, completion: completion)
     }
 
     /// Designated request-making method with queue option. Returns a `Cancellable` token to cancel the request later.
+    @discardableResult
     open func request(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> Cancellable {
         return requestNormal(target, queue: queue, progress: progress, completion: completion)
     }
 
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
+    @discardableResult
     func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(request, target: target)
