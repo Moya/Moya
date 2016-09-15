@@ -813,21 +813,45 @@
 				TargetAttributes = {
 					0630A3171BE1C84500AD4789 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
+					};
+					0630A3201BE1C85000AD4789 = {
+						LastSwiftMigration = 0800;
+					};
+					0630A32B1BE1C85B00AD4789 = {
+						LastSwiftMigration = 0800;
 					};
 					091F0D331BDE998F009D0A49 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 					};
 					091F0D431BDE9A01009D0A49 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 					};
 					091F0D821BDE9D4D009D0A49 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
 					};
 					554B0FB81BE7ED4D00F3D266 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
+					};
+					554B0FC11BE7ED7C00F3D266 = {
+						LastSwiftMigration = 0800;
+					};
+					554B0FCB1BE7ED8700F3D266 = {
+						LastSwiftMigration = 0800;
 					};
 					554B10161BE7F11700F3D266 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0800;
+					};
+					554B101F1BE7F13600F3D266 = {
+						LastSwiftMigration = 0800;
+					};
+					554B10281BE7F14300F3D266 = {
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -1417,6 +1441,7 @@
 				PRODUCT_NAME = Moya;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1440,6 +1465,7 @@
 				PRODUCT_NAME = Moya;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1463,6 +1489,7 @@
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1486,6 +1513,7 @@
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1509,6 +1537,7 @@
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1532,6 +1561,7 @@
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1643,6 +1673,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
 				PRODUCT_NAME = Moya;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1665,6 +1696,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
 				PRODUCT_NAME = Moya;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1687,6 +1719,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
 				PRODUCT_NAME = ReactiveMoya;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1709,6 +1742,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
 				PRODUCT_NAME = ReactiveMoya;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1731,6 +1765,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
 				PRODUCT_NAME = RxMoya;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -1753,6 +1788,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
 				PRODUCT_NAME = RxMoya;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -1774,6 +1810,7 @@
 				PRODUCT_NAME = Moya;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1797,6 +1834,7 @@
 				PRODUCT_NAME = Moya;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1820,6 +1858,7 @@
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1843,6 +1882,7 @@
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1866,6 +1906,7 @@
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1889,6 +1930,7 @@
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -1913,6 +1955,7 @@
 				PRODUCT_NAME = Moya;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1937,6 +1980,7 @@
 				PRODUCT_NAME = Moya;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1961,6 +2005,7 @@
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -1985,6 +2030,7 @@
 				PRODUCT_NAME = ReactiveMoya;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -2009,6 +2055,7 @@
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
@@ -2033,6 +2080,7 @@
 				PRODUCT_NAME = RxMoya;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
