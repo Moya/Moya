@@ -104,3 +104,17 @@ task :release, :version do |task, args|
                    name: version,
                    body: changelog.split(/^# /)[2].strip)
 end
+
+desc 'Run a local copy of Carthage on this current directory.'
+task :carthage_test do
+  # make a folder, put a cartfile in and make it a consumer
+  # of the root dir
+
+  Dir.mkdir("carthage_test")
+  File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
+  Dir.chdir "carthage_test" do
+    sh "carthage bootstrap --platform 'iOS'"
+    has_artifacts = Dir.glob("Carthage/Build/*").count > 0
+    raise("Carthage did not succedd") unless has_artifacts
+  end
+end
