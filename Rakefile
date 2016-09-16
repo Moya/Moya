@@ -60,7 +60,10 @@ end
 
 desc 'Build, then run tests.'
 task :test do
-  targets.map { |platform| xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test' }
+  targets.map do |platform|
+    puts "Testing on #{platform}."
+    xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
+  end
   sh "killall Simulator"
 end
 
