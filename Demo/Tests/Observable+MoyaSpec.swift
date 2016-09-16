@@ -8,7 +8,7 @@ import Nimble
         return UIImageJPEGRepresentation(image, compression)
     }
 #elseif os(OSX)
-    private func ImageJPEGRepresentation(image: ImageType, _ compression: CGFloat) -> Data? {
+    private func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
         var imageRect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
         let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
         return imageRep.representation(using: .JPEG, properties:[:])
@@ -161,7 +161,7 @@ class ObservableMoyaSpec: QuickSpec {
         describe("image maping") {
             it("maps data representing an image to an image") {
                 let image = Image.testPNGImage(named: "testImage")
-                let data = ImageJPEGRepresentation(image: image, 0.75)
+                let data = ImageJPEGRepresentation(image, 0.75)
                 let observable = observableSendingData(data!)
                 
                 var size: CGSize?
