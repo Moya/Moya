@@ -44,7 +44,7 @@ def xcodebuild_in_demo_dir(tasks, platform, xcprety_args: '')
   destination = devices[platform]
 
   Dir.chdir('Demo') do
-    sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | xcpretty -c #{xcprety_args}"
+    sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
   end
 end
 
