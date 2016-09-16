@@ -44,7 +44,7 @@ def xcodebuild_in_demo_dir(tasks, platform, xcprety_args: '')
   destination = devices[platform]
 
   Dir.chdir('Demo') do
-    sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | xcpretty -c #{xcprety_args}"
+    sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
   end
 end
 
@@ -60,7 +60,10 @@ end
 
 desc 'Build, then run tests.'
 task :test do
-  targets.map { |platform| xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test' }
+  targets.map do |platform|
+    puts "Testing on #{platform}."
+    xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
+  end
   sh "killall Simulator"
 end
 
@@ -103,4 +106,18 @@ task :release, :version do |task, args|
                    version,
                    name: version,
                    body: changelog.split(/^# /)[2].strip)
+end
+
+desc 'Run a local copy of Carthage on this current directory.'
+task :carthage_test do
+  # make a folder, put a cartfile in and make it a consumer
+  # of the root dir
+
+  Dir.mkdir("carthage_test")
+  File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
+  Dir.chdir "carthage_test" do
+    sh "carthage bootstrap --platform 'iOS'"
+    has_artifacts = Dir.glob("Carthage/Build/*").count > 0
+    raise("Carthage did not succedd") unless has_artifacts
+  end
 end

@@ -41,7 +41,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
   Nimble:
     :branch: master
     :git: https://github.com/Quick/Nimble

@@ -17,6 +17,7 @@ test:
     - sleep 15
   override: 
     - rake test
+    - rake carthage_test
   post: 
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash)

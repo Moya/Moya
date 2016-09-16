@@ -8,10 +8,10 @@ import Nimble
         return UIImageJPEGRepresentation(image, compression)
     }
 #elseif os(OSX)
-    private func ImageJPEGRepresentation(image: ImageType, _ compression: CGFloat) -> NSData? {
-        var imageRect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
-        let imageRep = NSBitmapImageRep(CGImage: image.CGImageForProposedRect(&imageRect, context: nil, hints: nil)!)
-        return imageRep.representationUsingType(.NSJPEGFileType, properties:[:])
+    private func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
+        var imageRect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
+        return imageRep.representation(using: .JPEG, properties:[:])
     }
 #endif
 
