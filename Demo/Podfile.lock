@@ -41,7 +41,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
   Nimble:
     :branch: master
     :git: https://github.com/Quick/Nimble
@@ -85,6 +85,6 @@ SPEC CHECKSUMS:
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
 
-PODFILE CHECKSUM: 96e9b55f3f3195f74670d808fde9bdd2e6d114c8
+PODFILE CHECKSUM: ae70d7b4777b4acfa2e981467730494625bb07dd
 
 COCOAPODS: 1.0.1

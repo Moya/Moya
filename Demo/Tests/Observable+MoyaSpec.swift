@@ -11,7 +11,7 @@ import Nimble
     private func ImageJPEGRepresentation(image: ImageType, _ compression: CGFloat) -> NSData? {
         var imageRect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
         let imageRep = NSBitmapImageRep(CGImage: image.CGImageForProposedRect(&imageRect, context: nil, hints: nil)!)
-        return imageRep.representationUsingType(.NSJPEGFileType, properties:[:])
+        return imageRep.representationUsingType(.JPEG, properties:[:])
     }
 #endif
 

@@ -18,7 +18,7 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> NSURLCre
 ])
 ```
 
-This specific examples shows a use of HTTP that authenticates _every_ request, 
+This specific examples shows a use of HTTP that authenticates _every_ request,
 which is usually not necessary. This might be a better idea:
 
 ```swift
@@ -40,11 +40,11 @@ OAuth is quite a bit trickier. It involves a multi step process that is often
 different between different APIs. You _really_ don't want to do OAuth yourself –
 there are other libraries to do it for you. [Heimdallr.swift](https://github.com/rheinfabrik/Heimdallr.swift),
 for example. The trick is just getting Moya and whatever you're using to talk
-to one another. 
+to one another.
 
 Moya is built with OAuth in mind. "Signing" a network request with OAuth can
 itself sometimes require network requests be performed _first_, so signing
-a request for Moya is an asynchronous process. Let's see an example. 
+a request for Moya is an asynchronous process. Let's see an example.
 
 ```swift
 let requestClosure = { (endpoint: Endpoint<YourAPI>, done: NSURLRequest -> Void) in

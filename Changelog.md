@@ -12,6 +12,18 @@
 - Added `supportsMultipart` to the `Method` type, which helps determine whether to use `multipart/form-data` encoding.
 - Added `PATCH` and `CONNECT` to the `Method` cases which support multipart encoding.
 
+# 7.0.3
+
+- Carthage support for Swift 2.3.
+
+# 7.0.2
+
+- Swift 2.3 support.
+
+# 7.0.1
+
+- Identical to 7.0.0, see [#594](https://github.com/Moya/Moya/pull/594) for an explanation.
+
 # 7.0.0
 
 - **Breaking Change** Drops support for `RACSignal`.

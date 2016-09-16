@@ -8,7 +8,7 @@ Examples
 * [ReactiveCocoa](ReactiveCocoa.md)
 * [RxSwift](RxSwift.md)
 
-####Endpoints customisation
+####Endpoints customization
 
 * [Optional request parameters](OptionalParameters.md)
 * [Use Array instead of Dictionary as JSON root container](ArrayAsRootContainer.md)
