@@ -1,7 +1,6 @@
 
 import Quick
 import Moya
-import ReactiveCocoa
 import ReactiveSwift
 import Nimble
 

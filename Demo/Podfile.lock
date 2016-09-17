@@ -7,7 +7,7 @@ PODS:
     - Result
   - Moya/ReactiveCocoa (7.0.0):
     - Moya/Core
-    - ReactiveCocoa (~> 4.0)
+    - ReactiveSwift
   - Moya/RxSwift (7.0.0):
     - Moya/Core
     - RxSwift (= 3.0.0-beta.1)
@@ -26,9 +26,6 @@ PODS:
     - OHHTTPStubs/Core
   - OHHTTPStubs/OHPathHelpers (5.2.1)
   - Quick (0.9.3)
-  - ReactiveCocoa (4.2.1):
-    - ReactiveSwift
-    - Result
   - ReactiveSwift (0.0.1):
     - Result (~> 3.0)
   - Result (3.0.0)
@@ -44,7 +41,6 @@ DEPENDENCIES:
   - Nimble (from `https://github.com/Quick/Nimble`, branch `master`)
   - OHHTTPStubs
   - Quick (from `https://github.com/Quick/Quick`, branch `swift-3.0`)
-  - ReactiveCocoa (from `https://raw.githubusercontent.com/ashfurrow/Podspecs/025f8cc3baf5773eae4c89d72bf5343b203814c4/ReactiveCocoa.podspec`)
   - ReactiveSwift (from `https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec`)
   - Result (from `https://github.com/antitypical/Result`, branch `master`)
   - RxCocoa (from `https://github.com/ReactiveX/RxSwift`, branch `master`)
@@ -59,8 +55,6 @@ EXTERNAL SOURCES:
   Quick:
     :branch: swift-3.0
     :git: https://github.com/Quick/Quick
-  ReactiveCocoa:
-    :podspec: https://raw.githubusercontent.com/ashfurrow/Podspecs/025f8cc3baf5773eae4c89d72bf5343b203814c4/ReactiveCocoa.podspec
   ReactiveSwift:
     :podspec: https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec
   Result:
@@ -80,14 +74,11 @@ CHECKOUT OPTIONS:
   Quick:
     :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
     :git: https://github.com/Quick/Quick
-  ReactiveCocoa:
-    :commit: 9cb9fb7f54e34024fe5b1deaade2f2d6527e56ee
-    :git: https://github.com/ReactiveCocoa/ReactiveCocoa.git
   ReactiveSwift:
     :commit: d2794c7a0b34c375cd4532e10238205afe09de9a
     :git: https://github.com/ReactiveCocoa/ReactiveSwift.git
   Result:
-    :commit: df233a8d23a545153d5b5de13b1ac8db2503f088
+    :commit: 36393ea4ebeb56bdb2e6c6502d79905f255391a4
     :git: https://github.com/antitypical/Result
   RxCocoa:
     :commit: 06129b50cf17bc24bd0bef9e60982eac35f7d1c1
@@ -98,16 +89,15 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  Moya: 1e206b80225af90e6e1ca9d9d393dc1770fec2a5
+  Moya: 24236189772d63640d9d2f7c819157f3bc947420
   Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
   OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
   Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
-  ReactiveCocoa: e8d40b2d99732f2dbc81d7694016db814ed4bdb1
   ReactiveSwift: 07f7805f12097ee8315da8221878d29b93b7987d
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
 
-PODFILE CHECKSUM: b0c2e6ceb41a3a2cc633c32544ced8ecf0adcf26
+PODFILE CHECKSUM: 6f11a8d6318c28864f290f562faedca412c409d2
 
 COCOAPODS: 1.0.1

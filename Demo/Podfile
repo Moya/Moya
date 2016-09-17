@@ -11,7 +11,6 @@ def libraries
   pod 'RxSwift', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'master'
   pod 'RxCocoa', :git => 'https://github.com/ReactiveX/RxSwift', :branch => 'master'
   pod 'Result', :git => 'https://github.com/antitypical/Result', :branch => 'master'
-  pod 'ReactiveCocoa', :podspec => 'https://raw.githubusercontent.com/ashfurrow/Podspecs/025f8cc3baf5773eae4c89d72bf5343b203814c4/ReactiveCocoa.podspec'
   pod 'ReactiveSwift', :podspec => 'https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec'
 end
 
