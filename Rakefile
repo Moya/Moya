@@ -8,9 +8,9 @@ end
 
 def targets
   return [
-    :ios,
-    :osx,
-    # :tvos # Note: we're omiting this until Circle supports testing on tvOS simulators.
+    # :osx, # Note: we're experiencing macOS build problems on circle, commenting out.
+    :tvos,
+    :ios
   ]
 end
 
@@ -26,7 +26,7 @@ def sdks
   return {
     ios: 'iphonesimulator',
     osx: 'macosx',
-    tvos: 'appletvsimulator9.2'
+    tvos: 'appletvsimulator'
   }
 end
 
@@ -58,13 +58,31 @@ task :clean do
   xcodebuild_in_demo_dir 'clean', :ios
 end
 
-desc 'Build, then run tests.'
+desc 'Build, then run all tests.'
 task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
     xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
   end
   sh "killall Simulator"
+end
+
+desc 'Individual test tasks.'
+namespace :test do
+  desc 'Test on iOS.'
+  task :ios do
+    xcodebuild_in_demo_dir 'build test', :ios, xcprety_args: '--test'
+  end
+
+  desc 'Test on macOS.'
+  task :osx do
+    xcodebuild_in_demo_dir 'build test', :osx, xcprety_args: '--test'
+  end
+
+  desc 'Test on tvOS.'
+  task :tvos do
+    xcodebuild_in_demo_dir 'build test', :tvos, xcprety_args: '--test'
+  end
 end
 
 desc 'Release a version, specified as an argument.'
