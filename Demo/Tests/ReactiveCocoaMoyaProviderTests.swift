@@ -106,7 +106,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 expect(called).to(beTruthy())
             }
 
-            fit("returns stubbed data for zen request") {
+            it("returns stubbed data for zen request") {
                 var message: String?
                 
                 let target: GitHub = .zen
