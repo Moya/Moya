@@ -63,8 +63,8 @@ task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
     xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
+    sh "killall Simulator || true"
   end
-  sh "killall Simulator"
 end
 
 desc 'Individual test tasks.'
