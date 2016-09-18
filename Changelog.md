@@ -10,7 +10,7 @@
 - Updated `mapJSON` API to include an optional named parameter `failsOnEmptyData:` that when overriden returns an empty `NSNull()` result instead of throwing an error when the response data is empty.
 - Added `supportsMultipart` to the `Method` type, which helps determine whether to use `multipart/form-data` encoding.
 - Added `PATCH` and `CONNECT` to the `Method` cases which support multipart encoding.
-- Added `request` for `Rsponse`.
+- Added `request` for `Response`.
 
 # 7.0.3
 
