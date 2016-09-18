@@ -3,11 +3,13 @@ import Foundation
 public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
     public let data: NSData
+    public let request: NSURLRequest?
     public let response: NSURLResponse?
 
-    public init(statusCode: Int, data: NSData, response: NSURLResponse? = nil) {
+    public init(statusCode: Int, data: NSData, request: NSURLRequest? = nil, response: NSURLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
+        self.request = request
         self.response = response
     }
 

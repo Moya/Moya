@@ -46,7 +46,7 @@ public class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaPro
         let token = CancellableToken {
             dis?.dispose()
         }
-        let stub = createStubFunction(token, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+        let stub = createStubFunction(token, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
 
         switch stubBehavior {
         case .Immediate:
