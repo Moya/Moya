@@ -8,7 +8,7 @@ end
 
 def targets
   return [
-    # :osx, # Note: we're experiencing macOS build problems on circle, commenting out.
+    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
     :tvos,
     :ios
   ]
@@ -17,7 +17,7 @@ end
 def schemes
   return {
     ios: 'Demo',
-    osx: 'MoyaTests-Mac',
+    macos: 'MoyaTests-Mac',
     tvos: 'MoyaTests-tvOS'
   }
 end
@@ -25,7 +25,7 @@ end
 def sdks
   return {
     ios: 'iphonesimulator',
-    osx: 'macosx',
+    macos: 'macosx',
     tvos: 'appletvsimulator'
   }
 end
@@ -33,7 +33,7 @@ end
 def devices
   return {
     ios: "name='iPhone 6s'",
-    osx: "arch='x86_64'",
+    macos: "arch='x86_64'",
     tvos: "name='Apple TV 1080p'"
   }
 end
@@ -75,8 +75,8 @@ namespace :test do
   end
 
   desc 'Test on macOS.'
-  task :osx do
-    xcodebuild_in_demo_dir 'build test', :osx, xcprety_args: '--test'
+  task :macos do
+    xcodebuild_in_demo_dir 'build test', :macos, xcprety_args: '--test'
   end
 
   desc 'Test on tvOS.'
