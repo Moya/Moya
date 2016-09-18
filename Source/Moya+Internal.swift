@@ -99,7 +99,7 @@ internal extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType]) -> (() -> ()) {
+    final func createStubFunction(token: CancellableToken, forTarget target: Target, withCompletion completion: Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: NSURLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
         return {
             if token.cancelled {
                 self.cancelCompletion(completion, target: target)
@@ -108,7 +108,7 @@ internal extension MoyaProvider {
 
             switch endpoint.sampleResponseClosure() {
             case .NetworkResponse(let statusCode, let data):
-                let response = Moya.Response(statusCode: statusCode, data: data, response: nil)
+                let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
                 plugins.forEach { $0.didReceiveResponse(.Success(response), target: target) }
                 completion(result: .Success(response))
             case .NetworkError(let error):
@@ -206,8 +206,8 @@ private extension MoyaProvider {
         }
 
         alamoRequest
-            .response(queue: queue) { (_, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
-                let result = convertResponseToResult(response, data: data, error: error)
+            .response(queue: queue) { (request: NSURLRequest?, response: NSHTTPURLResponse?, data: NSData?, error: NSError?) -> () in
+                let result = convertResponseToResult(response, request: request, data: data, error: error)
                 // Inform all plugins about the response
                 plugins.forEach { $0.didReceiveResponse(result, target: target) }
                 completion(result: result)

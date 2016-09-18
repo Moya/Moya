@@ -24,7 +24,20 @@ class MoyaProviderSpec: QuickSpec {
             let sampleData = target.sampleData as NSData
             expect(message).to(equal(NSString(data: sampleData, encoding: NSUTF8StringEncoding)))
         }
-        
+
+        it("returns response with request for stubbed zen request") {
+            var request: NSURLRequest?
+
+            let target: GitHub = .Zen
+            provider.request(target) { result in
+                if case let .Success(response) = result {
+                    request = response.request
+                }
+            }
+
+            expect(request).toNot(beNil())
+        }
+
         it("returns stubbed data for user profile request") {
             var message: String?
             
@@ -46,16 +59,16 @@ class MoyaProviderSpec: QuickSpec {
             let endpoint2 = provider.endpoint(target)
             expect(endpoint1.urlRequest).to(equal(endpoint2.urlRequest))
         }
-        
+
         it("returns a cancellable object when a request is made") {
             let target: GitHub = .UserProfile("ashfurrow")
-            
+
             let cancellable: Cancellable = provider.request(target) { _ in  }
-            
+
             expect(cancellable).toNot(beNil())
-            
+
         }
-        
+
         it("uses a custom manager by default, startRequestsImmediately should be false") {
             expect(provider.manager).toNot(beNil())
             expect(provider.manager.startRequestsImmediately) == false
