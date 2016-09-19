@@ -89,12 +89,12 @@ open class Endpoint<Target> {
 
 /// Extension for converting an `Endpoint` into an `NSURLRequest`.
 extension Endpoint {
-    public var urlRequest: URLRequest {
+    public var urlRequest: URLRequest! {
         var request: URLRequest = URLRequest(url: Foundation.URL(string: URL)!) // swiftlint:disable:this force_unwrapping
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
-        return try! parameterEncoding.encode(request, with: parameters)
+        return try? parameterEncoding.encode(request, with: parameters)
     }
 }
 

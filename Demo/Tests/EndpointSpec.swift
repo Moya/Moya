@@ -90,8 +90,8 @@ class EndpointSpec: QuickSpec {
             
             it("returns a correct URL request") {
                 let request = endpoint.urlRequest
-                expect(request.url!.absoluteString).to(equal("https://api.github.com/zen"))
-                expect(String(data: request.httpBody!, encoding: .utf8)).to(equal("{\"Nemesis\":\"Harvey\"}"))
+                expect(request!.url!.absoluteString).to(equal("https://api.github.com/zen"))
+                expect(String(data: request!.httpBody!, encoding: .utf8)).to(equal("{\"Nemesis\":\"Harvey\"}"))
                 let titleObject: Any? = endpoint.httpHeaderFields?["Title"]
                 let title = titleObject as? String
                 expect(title).to(equal("Dominar"))
