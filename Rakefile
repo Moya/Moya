@@ -8,7 +8,7 @@ end
 
 def targets
   return [
-    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
+    :macos,
     :tvos,
     :ios
   ]
@@ -47,7 +47,7 @@ def uuids
 end
 
 def open_simulator_and_sleep(uuid)
-  return if uuid.nil?
+  return if uuid.nil? # Don't need a sleep on macOS because it runs first.
   sh "xcrun instruments -w '#{uuid}' || sleep 15"
 end
 
