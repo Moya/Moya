@@ -2,11 +2,11 @@ import Foundation
 import RxSwift
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
-public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
+open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     /// Initializes a reactive provider.
-    override public init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: StubClosure = MoyaProvider.NeverStub,
+    override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+        requestClosure: @escaping RequestClosure = MoyaProvider.DefaultRequestMapping,
+        stubClosure: @escaping StubClosure = MoyaProvider.NeverStub,
         manager: Manager = RxMoyaProvider<Target>.DefaultAlamofireManager(),
         plugins: [PluginType] = [],
         trackInflights: Bool = false) {
@@ -14,16 +14,16 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
     }
 
     /// Designated request-making method.
-    public func request(token: Target) -> Observable<Response> {
+    open func request(_ token: Target) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { [weak self] observer in
             let cancellableToken = self?.request(token) { result in
                 switch result {
-                case let .Success(response):
+                case let .success(response):
                     observer.onNext(response)
                     observer.onCompleted()
-                case let .Failure(error):
+                case let .failure(error):
                     observer.onError(error)
                 }
             }
@@ -36,7 +36,7 @@ public class RxMoyaProvider<Target where Target: TargetType>: MoyaProvider<Targe
 }
 
 public extension RxMoyaProvider {
-    public func requestWithProgress(token: Target) -> Observable<ProgressResponse> {
+    public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
         let progressBlock = { (observer: AnyObserver) -> (ProgressResponse) -> Void in
             return { (progress: ProgressResponse) in
                 observer.onNext(progress)
@@ -46,10 +46,10 @@ public extension RxMoyaProvider {
         let response: Observable<ProgressResponse> = Observable.create { [weak self] observer in
             let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
-                case let .Success(response):
+                case let .success(response):
                     observer.onNext(ProgressResponse(response: response))
                     observer.onCompleted()
-                case let .Failure(error):
+                case let .failure(error):
                     observer.onError(error)
                 }
             }
@@ -61,10 +61,9 @@ public extension RxMoyaProvider {
 
         // Accumulate all progress and combine them when the result comes
         return response.scan(ProgressResponse()) { (last, progress) in
-            let totalBytes = progress.totalBytes > 0 ? progress.totalBytes : last.totalBytes
-            let bytesExpected = progress.bytesExpected > 0 ? progress.bytesExpected : last.bytesExpected
+            let progressObject = progress.progressObject ?? last.progressObject
             let response = progress.response ?? last.response
-            return ProgressResponse(totalBytes: totalBytes, bytesExpected: bytesExpected, response: response)
+            return ProgressResponse(progress: progressObject, response: response)
         }
     }
 }

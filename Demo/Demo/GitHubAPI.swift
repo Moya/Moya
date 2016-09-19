@@ -3,10 +3,10 @@ import Moya
 
 // MARK: - Provider setup
 
-private func JSONResponseDataFormatter(data: NSData) -> NSData {
+private func JSONResponseDataFormatter(_ data: Data) -> Data {
     do {
-        let dataAsJSON = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-        let prettyData =  try NSJSONSerialization.dataWithJSONObject(dataAsJSON, options: .PrettyPrinted)
+        let dataAsJSON = try JSONSerialization.jsonObject(with: data)
+        let prettyData =  try JSONSerialization.data(withJSONObject: dataAsJSON, options: .prettyPrinted)
         return prettyData
     } catch {
         return data //fallback to original data if it cant be serialized
@@ -18,55 +18,55 @@ let GitHubProvider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose:
 // MARK: - Provider support
 
 private extension String {
-    var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    var urlEscapedString: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
 public enum GitHub {
-    case Zen
-    case UserProfile(String)
-    case UserRepositories(String)
+    case zen
+    case userProfile(String)
+    case userRepositories(String)
 }
 
 extension GitHub: TargetType {
-    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    public var baseURL: URL { return URL(string: "https://api.github.com")! }
     public var path: String {
         switch self {
-        case .Zen:
+        case .zen:
             return "/zen"
-        case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString)"
-        case .UserRepositories(let name):
-            return "/users/\(name.URLEscapedString)/repos"
+        case .userProfile(let name):
+            return "/users/\(name.urlEscapedString)"
+        case .userRepositories(let name):
+            return "/users/\(name.urlEscapedString)/repos"
         }
     }
     public var method: Moya.Method {
         return .GET
     }
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         switch self {
-        case .UserRepositories(_):
-            return ["sort": "pushed"]
+        case .userRepositories(_):
+            return ["sort": "pushed" as AnyObject]
         default:
             return nil
         }
     }
     public var task: Task {
-        return .Request
+        return .request
     }
-    public var sampleData: NSData {
+    public var sampleData: Data {
         switch self {
-        case .Zen:
-            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserRepositories(_):
-            return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .zen:
+            return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+        case .userProfile(let name):
+            return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
+        case .userRepositories(_):
+            return "[{\"name\": \"Repo Name\"}]".data(using: String.Encoding.utf8)!
         }
     }
 }
 
-public func url(route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path)!.absoluteString!
+public func url(_ route: TargetType) -> String {
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }

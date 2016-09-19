@@ -1,17 +1,18 @@
+
 import Quick
 import Moya
-import ReactiveCocoa
+import ReactiveSwift
 import Nimble
 
 #if os(iOS) || os(watchOS) || os(tvOS)
-    private func ImageJPEGRepresentation(image: Image, _ compression: CGFloat) -> NSData? {
-        return UIImageJPEGRepresentation(image, compression)
+    private func ImageJPEGRepresentation(_ image: Image, _ compression: CGFloat) -> Data? {
+        return UIImageJPEGRepresentation(image, compression) as Data?
     }
 #elseif os(OSX)
-    private func ImageJPEGRepresentation(image: Image, _ compression: CGFloat) -> NSData? {
-        var imageRect: CGRect = CGRectMake(0, 0, image.size.width, image.size.height)
-        let imageRep = NSBitmapImageRep(CGImage: image.CGImageForProposedRect(&imageRect, context: nil, hints: nil)!)
-        return imageRep.representationUsingType(.JPEG, properties:[:])
+    private func ImageJPEGRepresentation(_ image: Image, _ compression: CGFloat) -> Data? {
+        var imageRect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
+        return imageRep.representation(using: .JPEG, properties: [:])
     }
 #endif
 
@@ -19,29 +20,29 @@ import Nimble
 private extension ImageType {
     class func testPNGImage(named name: String) -> ImageType {
         class TestClass { }
-        let bundle = NSBundle(forClass: TestClass().dynamicType)
-        let path = bundle.pathForResource(name, ofType: "png")
+        let bundle = Bundle(for: type(of: TestClass()))
+        let path = bundle.path(forResource: name, ofType: "png")
         return Image(contentsOfFile: path!)!
     }
 }
 
-private func signalSendingData(data: NSData, statusCode: Int = 200) -> SignalProducer<Response, Error> {
-    return SignalProducer(value: Response(statusCode: statusCode, data: data, response: nil))
+private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalProducer<Response, Moya.Error> {
+    return SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
 }
 
 class SignalProducerMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data, statusCode: 10)
                 
                 var errored = false
-                signal.filterStatusCodes(0...9).start { (event) -> Void in
+                signal.filterStatusCodes(range: 0...9).start { (event) -> Void in
                     switch event {
-                    case .Next(let object):
+                    case .next(let object):
                         fail("called on non-correct status code: \(object)")
-                    case .Failed:
+                    case .failed:
                         errored = true
                     default:
                         break
@@ -52,15 +53,15 @@ class SignalProducerMoyaSpec: QuickSpec {
             }
             
             it("filters out non-successful status codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
                 signal.filterSuccessfulStatusCodes().start { (event) -> Void in
                     switch event {
-                    case .Next(let object):
+                    case .next(let object):
                         fail("called on non-success status code: \(object)")
-                    case .Failed:
+                    case .failed:
                         errored = true
                     default:
                         break
@@ -71,27 +72,27 @@ class SignalProducerMoyaSpec: QuickSpec {
             }
             
             it("passes through correct status codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data)
                 
                 var called = false
-                signal.filterSuccessfulStatusCodes().startWithNext { (object) -> Void in
+                signal.filterSuccessfulStatusCodes().startWithResult({ _ in
                     called = true
-                }
+                })
                 
                 expect(called).to(beTruthy())
             }
             
             it("filters out non-successful status and redirect codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
                 signal.filterSuccessfulStatusAndRedirectCodes().start { (event) -> Void in
                     switch event {
-                    case .Next(let object):
+                    case .next(let object):
                         fail("called on non-success status code: \(object)")
-                    case .Failed:
+                    case .failed:
                         errored = true
                     default:
                         break
@@ -102,51 +103,51 @@ class SignalProducerMoyaSpec: QuickSpec {
             }
             
             it("passes through correct status codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data)
                 
                 var called = false
-                signal.filterSuccessfulStatusAndRedirectCodes().startWithNext { (object) -> Void in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult({ _ in
                     called = true
-                }
+                })
                 
                 expect(called).to(beTruthy())
             }
             
             it("passes through correct redirect codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data, statusCode: 304)
                 
                 var called = false
-                signal.filterSuccessfulStatusAndRedirectCodes().startWithNext { (object) -> Void in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult({ _ in
                     called = true
-                }
+                })
                 
                 expect(called).to(beTruthy())
             }
             
             it("knows how to filter individual status codes") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data, statusCode: 42)
                 
                 var called = false
-                signal.filterStatusCode(42).startWithNext { (object) -> Void in
+                signal.filterStatusCode(code: 42).startWithResult({ _ in
                     called = true
-                }
+                })
                 
                 expect(called).to(beTruthy())
             }
             
             it("filters out different individual status code") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data, statusCode: 43)
                 
                 var errored = false
-                signal.filterStatusCode(42).start { (event) -> Void in
+                signal.filterStatusCode(code: 42).start { (event) -> Void in
                     switch event {
-                    case .Next(let object):
+                    case .next(let object):
                         fail("called on non-success status code: \(object)")
-                    case .Failed:
+                    case .failed:
                         errored = true
                     default:
                         break
@@ -164,23 +165,23 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data!)
                 
                 var size: CGSize?
-                signal.mapImage().startWithNext { (image) -> Void in
+                signal.mapImage().startWithResult({ _ in
                     size = image.size
-                }
+                })
                 
                 expect(size).to(equal(image.size))
             }
             
             it("ignores invalid data") {
-                let data = NSData()
+                let data = Data()
                 let signal = signalSendingData(data)
                 
-                var receivedError: Error?
+                var receivedError: Moya.Error?
                 signal.mapImage().start { (event) -> Void in
                     switch event {
-                    case .Next:
+                    case .next:
                         fail("next called for invalid data")
-                    case .Failed(let error):
+                    case .failed(let error):
                         receivedError = error
                     default:
                         break
@@ -188,7 +189,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = Error.ImageMapping(Response(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = Moya.Error.imageMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
@@ -196,12 +197,13 @@ class SignalProducerMoyaSpec: QuickSpec {
         describe("JSON mapping") {
             it("maps data representing some JSON to that JSON") {
                 let json = ["name": "John Crighton", "occupation": "Astronaut"]
-                let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+                let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
                 let signal = signalSendingData(data)
                 
                 var receivedJSON: [String: String]?
-                signal.mapJSON().startWithNext { (json) -> Void in
-                    if let json = json as? [String: String] {
+                signal.mapJSON().startWithResult { result -> Void in
+                    if case .success(let _json) = result,
+                        let json = _json as? [String: String] {
                         receivedJSON = json
                     }
                 }
@@ -212,15 +214,15 @@ class SignalProducerMoyaSpec: QuickSpec {
             
             it("returns a Cocoa error domain for invalid JSON") {
                 let json = "{ \"name\": \"john }"
-                let data = json.dataUsingEncoding(NSUTF8StringEncoding)
+                let data = json.data(using: String.Encoding.utf8)
                 let signal = signalSendingData(data!)
                 
-                var receivedError: Error?
+                var receivedError: Moya.Error?
                 signal.mapJSON().start { (event) -> Void in
                     switch event {
-                    case .Next:
+                    case .next:
                         fail("next called for invalid data")
-                    case .Failed(let error):
+                    case .failed(let error):
                         receivedError = error
                     default:
                         break
@@ -229,8 +231,8 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 switch receivedError {
-                case .Some(.Underlying(let error)):
-                    expect(error.domain).to(equal("\(NSCocoaErrorDomain)"))
+                case .some(.underlying(let error)):
+                    expect((error as NSError).domain).to(equal("\(NSCocoaErrorDomain)"))
                 default:
                     fail("expected NSError with \(NSCocoaErrorDomain) domain")
                 }
@@ -240,27 +242,27 @@ class SignalProducerMoyaSpec: QuickSpec {
         describe("string mapping") {
             it("maps data representing a string to a string") {
                 let string = "You have the rights to the remains of a silent attorney."
-                let data = string.dataUsingEncoding(NSUTF8StringEncoding)
+                let data = string.data(using: String.Encoding.utf8)
                 let signal = signalSendingData(data!)
                 
                 var receivedString: String?
-                signal.mapString().startWithNext { (string) -> Void in
+                signal.mapString().startWithResult({ _ in
                     receivedString = string
-                }
+                })
                 
                 expect(receivedString).to(equal(string))
             }
             
             it("ignores invalid data") {
                 let data = NSData(bytes: [0x11FFFF] as [UInt32], length: 1) //Byte exceeding UTF8
-                let signal = signalSendingData(data)
+                let signal = signalSendingData(data as Data)
                 
-                var receivedError: Error?
+                var receivedError: Moya.Error?
                 signal.mapString().start { (event) -> Void in
                     switch event {
-                    case .Next:
+                    case .next:
                         fail("next called for invalid data")
-                    case .Failed(let error):
+                    case .failed(let error):
                         receivedError = error
                     default:
                         break
@@ -268,7 +270,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = Error.StringMapping(Response(statusCode: 200, data: NSData(), response: nil))
+                let expectedError = Moya.Error.stringMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }

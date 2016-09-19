@@ -4,50 +4,51 @@ import Moya
 let GitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(verbose: true)])
 
 public enum GitHubUserContent {
-    case DownloadMoyaWebContent(String)
+    case downloadMoyaWebContent(String)
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: NSURL { return NSURL(string: "https://raw.githubusercontent.com")! }
+    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
-        case .DownloadMoyaWebContent(let contentPath):
+        case .downloadMoyaWebContent(let contentPath):
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
     public var method: Moya.Method {
         switch self {
-        case .DownloadMoyaWebContent:
+        case .downloadMoyaWebContent:
             return .GET
         }
     }
-    public var parameters: [String: AnyObject]? {
+    public var parameters: [String: Any]? {
         switch self {
-        case .DownloadMoyaWebContent:
+        case .downloadMoyaWebContent:
             return nil
         }
     }
     public var task: Task {
         switch self {
-        case .DownloadMoyaWebContent:
-            return .Download(.Request(DefaultDownloadDestination))
+        case .downloadMoyaWebContent:
+            return .download(.request(DefaultDownloadDestination))
         }
     }
-    public var sampleData: NSData {
+    public var sampleData: Data {
         switch self {
-        case .DownloadMoyaWebContent:
-            return animatedBirdData()
+        case .downloadMoyaWebContent:
+            return animatedBirdData() as Data
         }
     }
 
 }
 
-private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response -> NSURL in
-    let fileManager = NSFileManager.defaultManager()
-    let directoryURLs = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    let destination = directoryURLs[0].URLByAppendingPathComponent(response.suggestedFilename!)!
-    //overwriting
-    try! fileManager.removeItemAtURL(destination)
-    return destination
+private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+    let directoryURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    
+    if !directoryURLs.isEmpty {
+        return (directoryURLs[0].appendingPathComponent(response.suggestedFilename!), [])
+    }
+    
+    return (temporaryURL, [])
 }
 

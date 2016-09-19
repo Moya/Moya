@@ -1,6 +1,8 @@
 import Quick
 import Nimble
-import ReactiveCocoa
+import ReactiveSwift
+import OHHTTPStubs
+@testable
 import Moya
 import Alamofire
 
@@ -21,14 +23,14 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 var receivedError: Moya.Error?
                 
                 waitUntil { done in
-                    provider.request(.Zen).startWithFailed { (error) -> Void in
+                    provider.request(token: .zen).startWithFailed { (error) -> Void in
                         receivedError = error
                         done()
                     }
                 }
                 
                 switch receivedError {
-                case .Some(.Underlying(let error)):
+                case .some(.underlying(let error)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -38,8 +40,8 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             it("returns an error") {
                 var errored = false
                 
-                let target: GitHub = .Zen
-                provider.request(target).startWithFailed { (error) -> Void in
+                let target: GitHub = .zen
+                provider.request(token: target).startWithFailed { (error) -> Void in
                     errored = true
                 }
                 
@@ -58,16 +60,16 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             class TestProvider<Target: TargetType>: ReactiveCocoaMoyaProvider<Target> {
-                init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-                    requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-                    stubClosure: StubClosure = MoyaProvider.NeverStub,
-                    manager: Manager = Alamofire.Manager.sharedInstance,
+                init(endpointClosure: @escaping EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                    requestClosure: @escaping RequestClosure = MoyaProvider.DefaultRequestMapping,
+                    stubClosure: @escaping StubClosure = MoyaProvider.NeverStub,
+                    manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
                     plugins: [PluginType] = []) {
 
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
 
-                override func request(token: Target, completion: Moya.Completion) -> Cancellable {
+                override func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
                     return TestCancellable()
                 }
             }
@@ -80,9 +82,9 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             }
 
             it("cancels network request when subscription is cancelled") {
-                let target: GitHub = .Zen
+                let target: GitHub = .zen
 
-                let disposable = provider.request(target).startWithCompleted { () -> Void in
+                let disposable = provider.request(token: target).startWithCompleted { () -> Void in
                     // Should never be executed
                     fail()
                 }
@@ -97,9 +99,9 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             it("returns a Response object") {
                 var called = false
                 
-                provider.request(.Zen).startWithNext { (object) -> Void in
+                provider.request(token: .zen).startWithResult({ _ in
                     called = true
-                }
+                })
                 
                 expect(called).to(beTruthy())
             }
@@ -107,25 +109,29 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             it("returns stubbed data for zen request") {
                 var message: String?
                 
-                let target: GitHub = .Zen
-                provider.request(target).startWithNext { (response) -> Void in
-                    message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
+                let target: GitHub = .zen
+                provider.request(token: target).startWithResult { (result) -> Void in
+                    if case .success(let response) = result {
+                        message = String(data: response.data, encoding: .utf8)
+                    }
                 }
                 
-                let sampleString = NSString(data: (target.sampleData as NSData), encoding: NSUTF8StringEncoding)
-                expect(message).to(equal(sampleString))
+                let sampleString = String(data: target.sampleData, encoding: .utf8)
+                expect(message!).to(equal(sampleString))
             }
             
             it("returns correct data for user profile request") {
                 var receivedResponse: NSDictionary?
                 
-                let target: GitHub = .UserProfile("ashfurrow")
-                provider.request(target).startWithNext { (response) -> Void in
-                    receivedResponse = try! NSJSONSerialization.JSONObjectWithData(response.data, options: []) as? NSDictionary
+                let target: GitHub = .userProfile("ashfurrow")
+                provider.request(token: target).startWithResult { (result) -> Void in
+                    if case .success(let response) = result {
+                        receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
+                    }
                 }
                 
                 let sampleData = target.sampleData as NSData
-                let sampleResponse: NSDictionary = try! NSJSONSerialization.JSONObjectWithData(sampleData, options: []) as! NSDictionary
+                let sampleResponse: NSDictionary = try! JSONSerialization.jsonObject(with: sampleData as Data, options: []) as! NSDictionary
                 expect(receivedResponse).toNot(beNil())
                 expect(receivedResponse) == sampleResponse
             }
@@ -141,16 +147,16 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 class TestProvider<Target: TargetType>: ReactiveCocoaMoyaProvider<Target> {
-                    init(endpointClosure: EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-                        requestClosure: RequestClosure = MoyaProvider.DefaultRequestMapping,
-                        stubClosure: StubClosure = MoyaProvider.NeverStub,
-                        manager: Manager = Alamofire.Manager.sharedInstance,
+                    init(endpointClosure: @escaping EndpointClosure = MoyaProvider.DefaultEndpointMapping,
+                        requestClosure: @escaping RequestClosure = MoyaProvider.DefaultRequestMapping,
+                        stubClosure: @escaping StubClosure = MoyaProvider.NeverStub,
+                        manager: Manager = MoyaProvider<Target>.DefaultAlamofireManager(),
                         plugins: [PluginType] = []) {
 
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }
                     
-                    override func request(token: Target, completion: Moya.Completion) -> Cancellable {
+                    override func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
                         return TestCancellable()
                     }
                 }
@@ -163,9 +169,9 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 
                 it("cancels network request when subscription is cancelled") {
-                    let target: GitHub = .Zen
+                    let target: GitHub = .zen
                     
-                    let disposable = provider.request(target).startWithCompleted { () -> Void in
+                    let disposable = provider.request(token: target).startWithCompleted { () -> Void in
                         // Should never be executed
                         fail()
                     }
@@ -181,8 +187,10 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             beforeEach {
                 testScheduler = TestScheduler()
                 provider = ReactiveCocoaMoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, stubScheduler: testScheduler)
-                provider.request(.Zen).startWithNext { next in
-                    response = next
+                provider.request(token: .zen).startWithResult { result in
+                    if case .success(let next) = result {
+                        response = next
+                    }
                 }
             }
             afterEach {
@@ -201,32 +209,39 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         describe("a reactive provider") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                }
                 provider = ReactiveCocoaMoyaProvider<GitHub>(trackInflights: true)
             }
 
             it("returns identical signalproducers for inflight requests") {
-                let target: GitHub = .Zen
-                let signalProducer1:SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
-                let signalProducer2:SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
+                let target: GitHub = .zen
+                let signalProducer1: SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
+                let signalProducer2: SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
 
-                expect(provider.inflightRequests.keys.count).to(equal(0))
+                expect(provider.inflightRequests.keys.count).to( equal(0) )
 
                 var receivedResponse: Moya.Response!
 
-                signalProducer1.startWithNext { (response) -> Void in
-                    receivedResponse = response
-                    expect(provider.inflightRequests.count).to(equal(1))
+                signalProducer1.startWithResult { (result) -> Void in
+                    if case .success(let response) = result {
+                        receivedResponse = response
+                        expect(provider.inflightRequests.count).to( equal(1) )
+                    }
                 }
 
-                signalProducer2.startWithNext { (response) -> Void in
-                    expect(receivedResponse).toNot(beNil())
-                    expect(receivedResponse).to(beIndenticalToResponse(response))
-                    expect(provider.inflightRequests.count).to(equal(1))
+                signalProducer2.startWithResult { (result) -> Void in
+                    if case .success(let response) = result {
+                        expect(receivedResponse).toNot( beNil() )
+                        expect(receivedResponse).to( beIdenticalToResponse(response) )
+                        expect(provider.inflightRequests.count).to( equal(1) )
+                    }
                 }
 
 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually( equal(0))
+                expect(provider.inflightRequests.count).toEventually( equal(0) )
                 
             }
         }

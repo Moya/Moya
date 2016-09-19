@@ -50,17 +50,29 @@ Installation
 ------------
 
 ### CocoaPods
-Just add `pod 'Moya'` to your Podfile and go!
+
+For Moya, us the following entry in your Podfile:
+
+```rb
+pod 'Moya', '8.0.0-beta.1'
+```
 
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
 For RxSwift or ReactiveCocoa extensions, this project will include
-them as dependencies. You can do this via CocoaPods subspecs.
+them as dependencies. You can do this via CocoaPods subspecs, but you will also
+need to include the pre-release versions of RxSwift or ReactiveSwift manually.
 
 ```rb
 pod 'Moya/RxSwift'
+pod 'RxSwift', '3.0.0-beta.1'
+pod 'RxCocoa', '3.0.0-beta.1'
+
+# or
+
 pod 'Moya/ReactiveCocoa'
+pod 'ReactiveSwift', :podspec => 'https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec'
 ```
 
 Then run `pod install`.

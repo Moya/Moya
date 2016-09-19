@@ -1,5 +1,6 @@
 # Next
 
+- **Breaking Change** Support for `Swift 3` in favor of `Swift 2.x`.
 - **Breaking Change** `fileName` and `mimeType` are now optional properties on a MultipartFormData object.
 - Correct Alamofire `appendBodyPart` method id called in MultipartFormData.
 - **Breaking Change** Removes `multipartBody` from TargetType protocol and adds a `task` instead.

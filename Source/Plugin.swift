@@ -9,10 +9,10 @@ import Result
 ///     - inject additional information into a request
 public protocol PluginType {
     /// Called immediately before a request is sent over the network (or stubbed).
-    func willSendRequest(request: RequestType, target: TargetType)
+    func willSendRequest(_ request: RequestType, target: TargetType)
 
     // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType)
+    func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType)
 }
 
 /// Request type used by `willSendRequest` plugin function.
@@ -24,11 +24,11 @@ public protocol RequestType {
     // A plugin should not know about Alamofire at all.
 
     /// Retrieve an `NSURLRequest` representation.
-    var request: NSURLRequest? { get }
+    var request: URLRequest? { get }
 
     /// Authenticates the request with a username and password.
-    func authenticate(user user: String, password: String, persistence: NSURLCredentialPersistence) -> Self
+    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self
 
     /// Authenticates the request with an `NSURLCredential` instance.
-    func authenticate(usingCredential credential: NSURLCredential) -> Self
+    func authenticate(usingCredential credential: URLCredential) -> Self
 }

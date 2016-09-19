@@ -8,16 +8,16 @@ end
 
 def targets
   return [
-    :ios,
-    :osx,
-    # :tvos # Note: we're omiting this until Circle supports testing on tvOS simulators.
+    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
+    :tvos,
+    :ios
   ]
 end
 
 def schemes
   return {
     ios: 'Demo',
-    osx: 'MoyaTests-Mac',
+    macos: 'MoyaTests-Mac',
     tvos: 'MoyaTests-tvOS'
   }
 end
@@ -25,17 +25,30 @@ end
 def sdks
   return {
     ios: 'iphonesimulator',
-    osx: 'macosx',
-    tvos: 'appletvsimulator9.2'
+    macos: 'macosx',
+    tvos: 'appletvsimulator'
   }
 end
 
 def devices
   return {
     ios: "name='iPhone 6s'",
-    osx: "arch='x86_64'",
+    macos: "arch='x86_64'",
     tvos: "name='Apple TV 1080p'"
   }
+end
+
+# See: https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
+def uuids
+  return {
+    ios: 'F08BA729-6AD2-42DF-A210-34DC8D990011', # iPhone 6s
+    tvos: '48B0E1AB-F5EB-40FB-9372-A16B93349B12' # Apple TV 1080p
+  }
+end
+
+def open_simulator_and_sleep(uuid)
+  return if uuid.nil? # Don't need a sleep on macOS because it runs first.
+  sh "xcrun instruments -w '#{uuid}' || sleep 15"
 end
 
 def xcodebuild_in_demo_dir(tasks, platform, xcprety_args: '')
@@ -44,7 +57,8 @@ def xcodebuild_in_demo_dir(tasks, platform, xcprety_args: '')
   destination = devices[platform]
 
   Dir.chdir('Demo') do
-    sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | xcpretty -c #{xcprety_args}"
+    open_simulator_and_sleep(uuids[platform])
+    sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
   end
 end
 
@@ -58,15 +72,53 @@ task :clean do
   xcodebuild_in_demo_dir 'clean', :ios
 end
 
-desc 'Build, then run tests.'
+desc 'Build, then run all tests.'
 task :test do
-  targets.map { |platform| xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test' }
-  sh "killall Simulator"
+  targets.map do |platform|
+    puts "Testing on #{platform}."
+    xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
+    sh "killall Simulator"
+  end
+end
+
+desc 'Individual test tasks.'
+namespace :test do
+  desc 'Test on iOS.'
+  task :ios do
+    xcodebuild_in_demo_dir 'build test', :ios, xcprety_args: '--test'
+    sh "killall Simulator"
+  end
+
+  desc 'Test on macOS.'
+  task :macos do
+    xcodebuild_in_demo_dir 'build test', :macos, xcprety_args: '--test'
+  end
+
+  desc 'Test on tvOS.'
+  task :tvos do
+    xcodebuild_in_demo_dir 'build test', :tvos, xcprety_args: '--test'
+    sh "killall Simulator"
+  end
+
+  desc 'Run a local copy of Carthage on this current directory.'
+  task :carthage do
+    # make a folder, put a cartfile in and make it a consumer
+    # of the root dir
+
+    Dir.mkdir("carthage_test")
+    File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
+    Dir.chdir "carthage_test" do
+      sh "carthage bootstrap --platform 'iOS'"
+      has_artifacts = Dir.glob("Carthage/Build/*").count > 0
+      raise("Carthage did not succedd") unless has_artifacts
+    end
+  end
 end
 
 desc 'Release a version, specified as an argument.'
 task :release, :version do |task, args|
   version = args[:version]
+  # Needs a X.Y.Z-text format.
   abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+/).length == 0
 
   puts "Updating podspec."
@@ -103,18 +155,4 @@ task :release, :version do |task, args|
                    version,
                    name: version,
                    body: changelog.split(/^# /)[2].strip)
-end
-
-desc 'Run a local copy of Carthage on this current directory.'
-task :carthage_test do
-  # make a folder, put a cartfile in and make it a consumer
-  # of the root dir
-
-  Dir.mkdir("carthage_test")
-  File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
-  Dir.chdir "carthage_test" do
-    sh "carthage bootstrap --platform 'iOS'"
-    has_artifacts = Dir.glob("Carthage/Build/*").count > 0
-    raise("Carthage did not succedd") unless has_artifacts
-  end
 end

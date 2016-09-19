@@ -13,8 +13,8 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "License.md" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
-  s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.9'
+  s.ios.deployment_target = '9.0'
+  s.osx.deployment_target = '10.11'
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target = '9.0'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
@@ -22,20 +22,20 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Source/*.swift", "Source/Plugins/*swift"
-    ss.dependency "Alamofire", "~> 3.0"
-    ss.dependency "Result", "~> 2.0"
+    ss.dependency "Alamofire", "~> 4.0.0"
+    ss.dependency "Result"
     ss.framework  = "Foundation"
   end
 
   s.subspec "ReactiveCocoa" do |ss|
     ss.source_files = "Source/ReactiveCocoa/*.swift"
     ss.dependency "Moya/Core"
-    ss.dependency "ReactiveCocoa", "~> 4.0"
+    ss.dependency "ReactiveSwift"
   end
 
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Source/RxSwift/*.swift"
     ss.dependency "Moya/Core"
-    ss.dependency "RxSwift", "~> 2.0"
+    ss.dependency "RxSwift", "3.0.0-beta.1"
   end
 end

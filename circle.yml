@@ -6,18 +6,15 @@ machine:
 
 dependencies:
   override:
+    - brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
     - brew install swiftlint
     - bundle install
     - cd Demo ; bundle exec pod install
 
 test:
   pre:
-    # See https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
-    - xcrun instruments -w 'E8DD285C-51EE-4DB5-B326-7E927686EC36' || true
-    - sleep 15
   override: 
-    - rake test
-    - rake carthage_test
+  - rake test && rake test:carthage
   post: 
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash)
