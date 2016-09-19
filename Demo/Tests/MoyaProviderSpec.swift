@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import Alamofire
 import Foundation
+import OHHTTPStubs
 @testable import Moya
 
 class MoyaProviderSpec: QuickSpec {
@@ -503,6 +504,9 @@ class MoyaProviderSpec: QuickSpec {
         describe("an inflight-tracking provider") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                }
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
             
@@ -510,24 +514,24 @@ class MoyaProviderSpec: QuickSpec {
                 let target: GitHub = .zen
                 var receivedResponse: Moya.Response!
                 
-                expect(provider.inflightRequests.keys.count).to(equal(0))
+                expect(provider.inflightRequests.keys.count).to( equal(0) )
                 
                 _ = provider.request(target) { result in
                     if case let .success(response) = result {
                         receivedResponse = response
                     }
-                    expect(provider.inflightRequests.count).to(equal(1))
+                    expect(provider.inflightRequests.count).to( equal(1) )
                 }
                 _ = provider.request(target) { result in
-                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedResponse).toNot( beNil() )
                     if case let .success(response) = result {
-                        expect(receivedResponse).to(beIndenticalToResponse(response))
+                        expect(receivedResponse).to( beIdenticalToResponse(response) )
                     }
-                    expect(provider.inflightRequests.count).to(equal(1))
+                    expect(provider.inflightRequests.count).to( equal(1) )
                 } as! CancellableWrapper
 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually(equal(0), timeout: 5.0)
+                expect(provider.inflightRequests.count).toEventually( equal(0) )
                 
             }
         }

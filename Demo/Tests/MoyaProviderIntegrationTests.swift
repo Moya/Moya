@@ -4,7 +4,7 @@ import Nimble
 import OHHTTPStubs
 import Alamofire
 
-func beIndenticalToResponse(_ expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
+func beIdenticalToResponse(_ expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
             let instance = try actualExpression.evaluate()

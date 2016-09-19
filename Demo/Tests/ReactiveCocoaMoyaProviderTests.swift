@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import ReactiveSwift
+import OHHTTPStubs
 @testable
 import Moya
 import Alamofire
@@ -208,36 +209,39 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
         describe("a reactive provider") {
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                }
                 provider = ReactiveCocoaMoyaProvider<GitHub>(trackInflights: true)
             }
 
             it("returns identical signalproducers for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1:SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
-                let signalProducer2:SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
+                let signalProducer1: SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
+                let signalProducer2: SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
 
-                expect(provider.inflightRequests.keys.count).to(equal(0))
+                expect(provider.inflightRequests.keys.count).to( equal(0) )
 
                 var receivedResponse: Moya.Response!
 
                 signalProducer1.startWithResult { (result) -> Void in
                     if case .success(let response) = result {
                         receivedResponse = response
-                        expect(provider.inflightRequests.count).to(equal(1))
+                        expect(provider.inflightRequests.count).to( equal(1) )
                     }
                 }
 
                 signalProducer2.startWithResult { (result) -> Void in
                     if case .success(let response) = result {
-                        expect(receivedResponse).toNot(beNil())
-                        expect(receivedResponse).to(beIndenticalToResponse(response))
-                        expect(provider.inflightRequests.count).to(equal(1))
+                        expect(receivedResponse).toNot( beNil() )
+                        expect(receivedResponse).to( beIdenticalToResponse(response) )
+                        expect(provider.inflightRequests.count).to( equal(1) )
                     }
                 }
 
 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually( equal(0))
+                expect(provider.inflightRequests.count).toEventually( equal(0) )
                 
             }
         }
