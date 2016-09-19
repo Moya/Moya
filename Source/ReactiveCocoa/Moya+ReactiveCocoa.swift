@@ -23,10 +23,10 @@ open class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaProvi
             let cancellableToken = self?.request(token) { result in
                 switch result {
                 case let .success(response):
-                    observer.sendNext(response)
+                    observer.send(value: response)
                     observer.sendCompleted()
                 case let .failure(error):
-                    observer.sendFailed(error)
+                    observer.send(error: error)
                 }
             }
 
@@ -65,7 +65,7 @@ public extension ReactiveCocoaMoyaProvider {
     public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, Error> {
         let progressBlock = { (observer: Signal<ProgressResponse, Error>.Observer) -> (ProgressResponse) -> Void in
             return { (progress: ProgressResponse) in
-                observer.sendNext(progress)
+                observer.send(value: progress)
             }
         }
 
@@ -73,10 +73,10 @@ public extension ReactiveCocoaMoyaProvider {
             let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .success(response):
-                    observer.sendNext(ProgressResponse(response: response))
+                    observer.send(value: ProgressResponse(response: response))
                     observer.sendCompleted()
                 case let .failure(error):
-                    observer.sendFailed(error)
+                    observer.send(error: error)
                 }
             }
 
