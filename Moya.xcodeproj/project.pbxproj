@@ -12,7 +12,6 @@
 		0630A3101BE1C60200AD4789 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0630A3371BE1C92D00AD4789 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3361BE1C92D00AD4789 /* Alamofire.framework */; };
 		0630A35F1BE1C96B00AD4789 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3361BE1C92D00AD4789 /* Alamofire.framework */; };
-		0630A3611BE1C96B00AD4789 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3601BE1C96B00AD4789 /* ReactiveCocoa.framework */; };
 		0630A3621BE1C97E00AD4789 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3361BE1C92D00AD4789 /* Alamofire.framework */; };
 		0630A3641BE1C97E00AD4789 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3631BE1C97E00AD4789 /* RxSwift.framework */; };
 		0630A3661BE1C9FD00AD4789 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -145,19 +144,16 @@
 		0676A6991BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
 		091F0D6C1BDE9B0C009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
 		091F0D7A1BDE9B53009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
-		091F0D7C1BDE9B53009D0A49 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D7B1BDE9B53009D0A49 /* ReactiveCocoa.framework */; };
 		091F0D981BDE9D9A009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
 		554B100F1BE7EEA500F3D266 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10101BE7EEAD00F3D266 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10111BE7EEB000F3D266 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10321BE7F22100F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10311BE7F22100F3D266 /* Alamofire.framework */; };
 		554B10331BE7F23B00F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10311BE7F22100F3D266 /* Alamofire.framework */; };
-		554B10351BE7F23B00F3D266 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10341BE7F23B00F3D266 /* ReactiveCocoa.framework */; };
 		554B10361BE7F26100F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10311BE7F22100F3D266 /* Alamofire.framework */; };
 		554B10381BE7F26100F3D266 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10371BE7F26100F3D266 /* RxSwift.framework */; };
 		554B103A1BE7F27C00F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10391BE7F27C00F3D266 /* Alamofire.framework */; };
 		554B103B1BE7F28D00F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10391BE7F27C00F3D266 /* Alamofire.framework */; };
-		554B103D1BE7F28D00F3D266 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B103C1BE7F28D00F3D266 /* ReactiveCocoa.framework */; };
 		554B103E1BE7F29900F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10391BE7F27C00F3D266 /* Alamofire.framework */; };
 		554B10401BE7F29900F3D266 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B103F1BE7F29900F3D266 /* RxSwift.framework */; };
 		554B105E1BE7F2E100F3D266 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -235,6 +231,10 @@
 		5E5FA8F51D44630100ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
 		5E5FA8F61D44630100ED49AF /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
 		5E5FA8F71D44630100ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
+		D0EC37FE1D908CB7000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */; };
+		D0EC38001D908CC2000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */; };
+		D0EC38021D908CCC000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38011D908CCC000E5149 /* ReactiveSwift.framework */; };
+		D0EC38041D908CD5000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38031D908CD5000E5149 /* ReactiveSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -246,7 +246,6 @@
 		0630A3291BE1C85000AD4789 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0630A3341BE1C85B00AD4789 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0630A3361BE1C92D00AD4789 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
-		0630A3601BE1C96B00AD4789 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/Mac/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		0630A3631BE1C97E00AD4789 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/Mac/RxSwift.framework; sourceTree = "<group>"; };
 		0670D3291BE1CB010062593A /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		0676A5D41BFE80D3001C7F55 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
@@ -265,7 +264,6 @@
 		091F0D341BDE998F009D0A49 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D441BDE9A01009D0A49 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		091F0D7B1BDE9B53009D0A49 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		091F0D831BDE9D4D009D0A49 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,10 +272,8 @@
 		554B10271BE7F13600F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B10301BE7F14300F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B10311BE7F22100F3D266 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/tvOS/Alamofire.framework; sourceTree = "<group>"; };
-		554B10341BE7F23B00F3D266 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/tvOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		554B10371BE7F26100F3D266 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/tvOS/RxSwift.framework; sourceTree = "<group>"; };
 		554B10391BE7F27C00F3D266 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/watchOS/Alamofire.framework; sourceTree = "<group>"; };
-		554B103C1BE7F28D00F3D266 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/watchOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		554B103F1BE7F29900F3D266 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/watchOS/RxSwift.framework; sourceTree = "<group>"; };
 		55B5D5BC1C1F6F2B00A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		55B5D5C01C1F6F4A00A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
@@ -288,6 +284,10 @@
 		5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Defaults.swift"; sourceTree = "<group>"; };
 		5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Internal.swift"; sourceTree = "<group>"; };
 		5E5FA8C71D4462F300ED49AF /* Target.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/Mac/ReactiveSwift.framework; sourceTree = "<group>"; };
+		D0EC38011D908CCC000E5149 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/tvOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		D0EC38031D908CD5000E5149 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/watchOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -305,7 +305,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B5D5C21C1F6F5500A11B82 /* Result.framework in Frameworks */,
-				0630A3611BE1C96B00AD4789 /* ReactiveCocoa.framework in Frameworks */,
 				0630A35F1BE1C96B00AD4789 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +325,10 @@
 			files = (
 				55B5D5BD1C1F6F2B00A11B82 /* Result.framework in Frameworks */,
 				091F0D6C1BDE9B0C009D0A49 /* Alamofire.framework in Frameworks */,
+				D0EC38021D908CCC000E5149 /* ReactiveSwift.framework in Frameworks */,
+				D0EC37FE1D908CB7000E5149 /* ReactiveSwift.framework in Frameworks */,
+				D0EC38001D908CC2000E5149 /* ReactiveSwift.framework in Frameworks */,
+				D0EC38041D908CD5000E5149 /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +337,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B5D5BE1C1F6F3700A11B82 /* Result.framework in Frameworks */,
-				091F0D7C1BDE9B53009D0A49 /* ReactiveCocoa.framework in Frameworks */,
 				091F0D7A1BDE9B53009D0A49 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,7 +365,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B5D5C61C1F6F7400A11B82 /* Result.framework in Frameworks */,
-				554B10351BE7F23B00F3D266 /* ReactiveCocoa.framework in Frameworks */,
 				554B10331BE7F23B00F3D266 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,7 +393,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B5D5CA1C1F6F9C00A11B82 /* Result.framework in Frameworks */,
-				554B103D1BE7F28D00F3D266 /* ReactiveCocoa.framework in Frameworks */,
 				554B103B1BE7F28D00F3D266 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,22 +504,22 @@
 		091F0D7D1BDE9CF4009D0A49 /* Dependency Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0EC38031D908CD5000E5149 /* ReactiveSwift.framework */,
+				D0EC38011D908CCC000E5149 /* ReactiveSwift.framework */,
+				D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */,
+				D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */,
 				55B5D5C81C1F6F8F00A11B82 /* Result.framework */,
 				55B5D5C41C1F6F6900A11B82 /* Result.framework */,
 				55B5D5C01C1F6F4A00A11B82 /* Result.framework */,
 				55B5D5BC1C1F6F2B00A11B82 /* Result.framework */,
 				554B103F1BE7F29900F3D266 /* RxSwift.framework */,
-				554B103C1BE7F28D00F3D266 /* ReactiveCocoa.framework */,
-				554B10391BE7F27C00F3D266 /* Alamofire.framework */,
 				554B10371BE7F26100F3D266 /* RxSwift.framework */,
-				554B10341BE7F23B00F3D266 /* ReactiveCocoa.framework */,
+				0630A3631BE1C97E00AD4789 /* RxSwift.framework */,
+				0670D3291BE1CB010062593A /* RxSwift.framework */,
+				554B10391BE7F27C00F3D266 /* Alamofire.framework */,
 				554B10311BE7F22100F3D266 /* Alamofire.framework */,
 				0630A3361BE1C92D00AD4789 /* Alamofire.framework */,
 				091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */,
-				0630A3631BE1C97E00AD4789 /* RxSwift.framework */,
-				0670D3291BE1CB010062593A /* RxSwift.framework */,
-				091F0D7B1BDE9B53009D0A49 /* ReactiveCocoa.framework */,
-				0630A3601BE1C96B00AD4789 /* ReactiveCocoa.framework */,
 			);
 			name = "Dependency Frameworks";
 			sourceTree = "<group>";
@@ -1763,6 +1763,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1787,6 +1790,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
