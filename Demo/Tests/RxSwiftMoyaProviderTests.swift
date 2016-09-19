@@ -3,6 +3,7 @@ import Nimble
 import Moya
 import RxSwift
 import Alamofire
+import OHHTTPStubs
 
 class RxSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
@@ -88,6 +89,9 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         describe("a reactive provider") {
             var provider: RxMoyaProvider<GitHub>!
             beforeEach {
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                }
                 provider = RxMoyaProvider<GitHub>(trackInflights: true)
             }
             
@@ -106,13 +110,13 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 })
                 
                 _ = signalProducer2.subscribe(onNext: { (response) -> Void in
-                    expect(receivedResponse).toNot(beNil())
-                    expect(receivedResponse).to(beIndenticalToResponse(response))
-                    expect(provider.inflightRequests.count).to(equal(1))
+                    expect(receivedResponse).toNot( beNil() )
+                    expect(receivedResponse).to( beIdenticalToResponse(response) )
+                    expect(provider.inflightRequests.count).to( equal(1) )
                 })
                 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually(equal(0), timeout: 5.0)
+                expect(provider.inflightRequests.count).toEventually( equal(0) )
             }
         }
     }

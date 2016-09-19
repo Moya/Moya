@@ -42,9 +42,8 @@ DEPENDENCIES:
   - OHHTTPStubs
   - Quick (from `https://github.com/Quick/Quick`, branch `swift-3.0`)
   - ReactiveSwift (from `https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec`)
-  - Result (from `https://github.com/antitypical/Result`, branch `master`)
-  - RxCocoa (from `https://github.com/ReactiveX/RxSwift`, branch `master`)
-  - RxSwift (from `https://github.com/ReactiveX/RxSwift`, branch `master`)
+  - RxCocoa (= 3.0.0-beta.1)
+  - RxSwift (= 3.0.0-beta.1)
 
 EXTERNAL SOURCES:
   Moya:
@@ -57,15 +56,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/Quick/Quick
   ReactiveSwift:
     :podspec: https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec
-  Result:
-    :branch: master
-    :git: https://github.com/antitypical/Result
-  RxCocoa:
-    :branch: master
-    :git: https://github.com/ReactiveX/RxSwift
-  RxSwift:
-    :branch: master
-    :git: https://github.com/ReactiveX/RxSwift
 
 CHECKOUT OPTIONS:
   Nimble:
@@ -77,15 +67,6 @@ CHECKOUT OPTIONS:
   ReactiveSwift:
     :commit: d2794c7a0b34c375cd4532e10238205afe09de9a
     :git: https://github.com/ReactiveCocoa/ReactiveSwift.git
-  Result:
-    :commit: 36393ea4ebeb56bdb2e6c6502d79905f255391a4
-    :git: https://github.com/antitypical/Result
-  RxCocoa:
-    :commit: 06129b50cf17bc24bd0bef9e60982eac35f7d1c1
-    :git: https://github.com/ReactiveX/RxSwift
-  RxSwift:
-    :commit: 06129b50cf17bc24bd0bef9e60982eac35f7d1c1
-    :git: https://github.com/ReactiveX/RxSwift
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
@@ -98,6 +79,6 @@ SPEC CHECKSUMS:
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
 
-PODFILE CHECKSUM: 6f11a8d6318c28864f290f562faedca412c409d2
+PODFILE CHECKSUM: 31bd6956c39b5a6b002a2d365c22e5632cce0742
 
 COCOAPODS: 1.1.0.rc.2
