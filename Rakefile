@@ -8,7 +8,7 @@ end
 
 def targets
   return [
-    :macos,
+    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
     :tvos,
     :ios
   ]
