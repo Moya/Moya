@@ -1,14 +1,14 @@
 PODS:
   - Alamofire (4.0.0)
-  - Moya (7.0.0):
-    - Moya/Core (= 7.0.0)
-  - Moya/Core (7.0.0):
+  - Moya (8.0.0-beta.1):
+    - Moya/Core (= 8.0.0-beta.1)
+  - Moya/Core (8.0.0-beta.1):
     - Alamofire (~> 4.0.0)
     - Result
-  - Moya/ReactiveCocoa (7.0.0):
+  - Moya/ReactiveCocoa (8.0.0-beta.1):
     - Moya/Core
     - ReactiveSwift
-  - Moya/RxSwift (7.0.0):
+  - Moya/RxSwift (8.0.0-beta.1):
     - Moya/Core
     - RxSwift (= 3.0.0-beta.1)
   - Nimble (5.0.0-alpha.30p1)
@@ -70,7 +70,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  Moya: 24236189772d63640d9d2f7c819157f3bc947420
+  Moya: 63c4a59d2643c824df8c5a3b3a5f38dc2b48b055
   Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
   OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
   Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
