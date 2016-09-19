@@ -41,7 +41,7 @@ end
 # See: https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
 def uuids
   return {
-    ios: '84A11478-B7D4-4968-A626-E27CE7372148', # iPhone SE
+    ios: 'F08BA729-6AD2-42DF-A210-34DC8D990011', # iPhone 6s
     tvos: '48B0E1AB-F5EB-40FB-9372-A16B93349B12' # Apple TV 1080p
   }
 end
