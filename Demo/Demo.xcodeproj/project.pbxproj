@@ -727,7 +727,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7AA7BEF2AA2DEF9FE9133A0A /* Pods-MoyaTests-tvOS.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
@@ -744,7 +743,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B884EC902CBA233B25EE6357 /* Pods-MoyaTests-tvOS.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -762,7 +760,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7C709DF02DA056BF033C0298 /* Pods-MoyaTests-Mac.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -780,7 +777,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AC6FB71F11D38C06B1A7AEFF /* Pods-MoyaTests-Mac.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -888,7 +884,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AF335F4FBC9B94C359011B46 /* Pods-Demo.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -903,7 +898,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4BF06D5D3DD24C44F9301FB5 /* Pods-Demo.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -918,7 +912,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0480606784859ACFF9BF6C78 /* Pods-MoyaTests-iOS.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -936,7 +929,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FFA24DA9F9F1357E6C6CDC10 /* Pods-MoyaTests-iOS.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

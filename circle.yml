@@ -6,6 +6,7 @@ machine:
 
 dependencies:
   override:
+    - brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
     - brew install swiftlint
     - bundle install
     - cd Demo ; bundle exec pod install
