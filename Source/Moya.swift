@@ -94,7 +94,7 @@ open class MoyaProvider<Target: TargetType> {
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(request, target: target)
         let plugins = self.plugins
-        let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins)
+        let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
         switch stubBehavior {
         case .immediate:
             stub()
@@ -132,11 +132,11 @@ public extension MoyaProvider {
     }
 }
 
-public func convertResponseToResult(_ response: HTTPURLResponse?, data: Data?, error: Swift.Error?) ->
+public func convertResponseToResult(_ response: HTTPURLResponse?, request: URLRequest?, data: Data?, error: Swift.Error?) ->
     Result<Moya.Response, Moya.Error> {
     switch (response, data, error) {
     case let (.some(response), data, .none):
-        let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), response: response)
+        let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
         return .success(response)
     case let (_, _, .some(error)):
         let error = Moya.Error.underlying(error)
