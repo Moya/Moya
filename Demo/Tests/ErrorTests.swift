@@ -9,7 +9,7 @@ class ErrorTests: QuickSpec {
         var response: Response!
 
         beforeEach {
-            response = Response(statusCode: 200, data: Data(), response: nil)
+            response = Response(statusCode: 200, data: Data(), request: nil, response: nil)
         }
 
         describe("response computed variable") {
@@ -81,9 +81,10 @@ class ErrorTests: QuickSpec {
         describe("Alamofire responses should return the errors where appropriate") {
             it("should return the underlying error in spite of having a response and data") {
                 let underlyingError = NSError(domain: "", code: 0, userInfo: nil)
+                let request = NSURLRequest() as URLRequest
                 let response = HTTPURLResponse()
                 let data = Data()
-                let result = convertResponseToResult(response, data: data, error: underlyingError)
+                let result = convertResponseToResult(response, request: request, data: data, error: underlyingError)
                 switch result {
                 case let .failure(error):
                     switch error {
