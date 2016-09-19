@@ -130,7 +130,7 @@ task :release, :version do |task, args|
   puts "Updating Demo project."
   Dir.chdir('Demo') do
     ENV['COCOAPODS_DISABLE_DETERMINISTIC_UUIDS'] = 'true'
-    sh "pod update Moya"
+    sh "bundle exec pod update Moya"
   end
 
   puts "Updating changelog."
@@ -146,7 +146,7 @@ task :release, :version do |task, args|
   sh "git push --follow-tags"
 
   puts "Pushing to CocoaPods trunk."
-  sh "pod trunk push Moya.podspec --allow-warnings"
+  sh "bundle exec pod trunk push Moya.podspec --allow-warnings"
 
   puts "Pushing as a GitHub Release."
   require 'octokit'

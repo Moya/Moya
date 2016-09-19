@@ -54,7 +54,7 @@ Installation
 For Moya, us the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0-beta.1'
+pod 'Moya', git: 'https://github.com/Moya/Moya.git', tag: '8.0.0-beta.1'
 ```
 
 In any file you'd like to use Moya in, don't forget to
