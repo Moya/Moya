@@ -228,39 +228,43 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 }
             }
             
-//            describe("a reactive provider with SignalProducer") {
-//                var provider: ReactiveCocoaMoyaProvider<GitHub>!
-//                beforeEach {
-//                    provider = ReactiveCocoaMoyaProvider<GitHub>()
-//                }
-//                
-//                it("returns some data for zen request") {
-//                    var message: String?
-//
-//                    waitUntil { done in
-//                        provider.request(.Zen).startWithNext { response in
-//                            message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
-//                            done()
-//                        }
-//                    }
-//                    
-//                    expect(message) == zenMessage
-//                }
-//                
-//                it("returns some data for user profile request") {
-//                    var message: String?
-//
-//                    waitUntil { done in
-//                        let target: GitHub = .UserProfile("ashfurrow")
-//                        provider.request(target).startWithNext { response in
-//                            message = NSString(data: response.data, encoding: NSUTF8StringEncoding) as? String
-//                            done()
-//                        }
-//                    }
-//                    
-//                    expect(message) == userMessage
-//                }
-//            }
+            describe("a reactive provider with SignalProducer") {
+                var provider: ReactiveCocoaMoyaProvider<GitHub>!
+                beforeEach {
+                    provider = ReactiveCocoaMoyaProvider<GitHub>()
+                }
+                
+                it("returns some data for zen request") {
+                    var message: String?
+
+                    waitUntil { done in
+                        provider.request(token: .zen).startWithResult { result in
+                            if case .success(let response) = result {
+                                message = String(data: response.data, encoding: String.Encoding.utf8)
+                                done()
+                            }
+                        }
+                    }
+                    
+                    expect(message) == zenMessage
+                }
+                
+                it("returns some data for user profile request") {
+                    var message: String?
+
+                    waitUntil { done in
+                        let target: GitHub = .userProfile("ashfurrow")
+                        provider.request(token: target).startWithResult { result in
+                            if case .success(let response) = result {
+                                message = String(data: response.data, encoding: String.Encoding.utf8)
+                                done()
+                            }
+                        }
+                    }
+                    
+                    expect(message) == userMessage
+                }
+            }
         }
     }
 }
