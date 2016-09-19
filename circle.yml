@@ -12,11 +12,7 @@ dependencies:
 
 test:
   pre:
-    # See https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
-    - xcrun instruments -w 'E8DD285C-51EE-4DB5-B326-7E927686EC36' || true
-    - sleep 15
-  override: 
-    - rake test && rake carthage_test
+  override: rake test && rake test:carthage
   post: 
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash)

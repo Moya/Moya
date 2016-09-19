@@ -38,12 +38,26 @@ def devices
   }
 end
 
+# See: https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
+def uuids
+  return {
+    ios: '84A11478-B7D4-4968-A626-E27CE7372148', # iPhone SE
+    tvos: '48B0E1AB-F5EB-40FB-9372-A16B93349B12' # Apple TV 1080p
+  }
+end
+
+def open_simulator_and_sleep(uuid)
+  return if uuid.nil?
+  sh "xcrun instruments -w '#{uuid}' || sleep 15"
+end
+
 def xcodebuild_in_demo_dir(tasks, platform, xcprety_args: '')
   sdk = sdks[platform]
   scheme = schemes[platform]
   destination = devices[platform]
 
   Dir.chdir('Demo') do
+    open_simulator_and_sleep(uuids[platform])
     sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
   end
 end
@@ -63,7 +77,7 @@ task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
     xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
-    sh "killall Simulator || true"
+    sh "killall Simulator || sleep 15"
   end
 end
 
@@ -72,6 +86,7 @@ namespace :test do
   desc 'Test on iOS.'
   task :ios do
     xcodebuild_in_demo_dir 'build test', :ios, xcprety_args: '--test'
+    sh "killall Simulator || sleep 15"
   end
 
   desc 'Test on macOS.'
@@ -82,6 +97,21 @@ namespace :test do
   desc 'Test on tvOS.'
   task :tvos do
     xcodebuild_in_demo_dir 'build test', :tvos, xcprety_args: '--test'
+    sh "killall Simulator || sleep 15"
+  end
+
+  desc 'Run a local copy of Carthage on this current directory.'
+  task :carthage do
+    # make a folder, put a cartfile in and make it a consumer
+    # of the root dir
+
+    Dir.mkdir("carthage_test")
+    File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
+    Dir.chdir "carthage_test" do
+      sh "carthage bootstrap --platform 'iOS'"
+      has_artifacts = Dir.glob("Carthage/Build/*").count > 0
+      raise("Carthage did not succedd") unless has_artifacts
+    end
   end
 end
 
@@ -124,18 +154,4 @@ task :release, :version do |task, args|
                    version,
                    name: version,
                    body: changelog.split(/^# /)[2].strip)
-end
-
-desc 'Run a local copy of Carthage on this current directory.'
-task :carthage_test do
-  # make a folder, put a cartfile in and make it a consumer
-  # of the root dir
-
-  Dir.mkdir("carthage_test")
-  File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
-  Dir.chdir "carthage_test" do
-    sh "carthage bootstrap --platform 'iOS'"
-    has_artifacts = Dir.glob("Carthage/Build/*").count > 0
-    raise("Carthage did not succedd") unless has_artifacts
-  end
 end
