@@ -28,7 +28,7 @@ if (added_swift_library_files || deleted_swift_library_files) && modified_cartha
 end
 
 missing_doc_changes = git.modified_files.grep(/docs/).empty?
-doc_changes_recommended = insertions > 15
+doc_changes_recommended = git.insertions > 15
 if has_app_changes && missing_doc_changes && doc_changes_recommended
   warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
