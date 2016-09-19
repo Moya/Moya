@@ -77,7 +77,7 @@ task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
     xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
-    sh "killall Simulator || sleep 15"
+    sh "killall Simulator"
   end
 end
 
@@ -86,7 +86,7 @@ namespace :test do
   desc 'Test on iOS.'
   task :ios do
     xcodebuild_in_demo_dir 'build test', :ios, xcprety_args: '--test'
-    sh "killall Simulator || sleep 15"
+    sh "killall Simulator"
   end
 
   desc 'Test on macOS.'
@@ -97,7 +97,7 @@ namespace :test do
   desc 'Test on tvOS.'
   task :tvos do
     xcodebuild_in_demo_dir 'build test', :tvos, xcprety_args: '--test'
-    sh "killall Simulator || sleep 15"
+    sh "killall Simulator"
   end
 
   desc 'Run a local copy of Carthage on this current directory.'
