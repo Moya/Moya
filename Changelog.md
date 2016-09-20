@@ -1,5 +1,7 @@
 # Next
 
+- **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON
+
 # 8.0.0-beta.1
 
 - **Breaking Change** Support for `Swift 3` in favor of `Swift 2.x`.

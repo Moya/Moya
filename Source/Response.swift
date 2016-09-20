@@ -66,7 +66,7 @@ public extension Response {
             if data.count < 1 && !failsOnEmptyData {
                 return NSNull()
             }
-            throw Error.underlying(error as NSError)
+            throw Error.jsonMapping(self)
         }
     }
 
