@@ -1,6 +1,6 @@
 # Next
 
-- **Breaking Change** Throw dedicated Error.jsonMapping when ```mapJSON``` fails to parse JSON
+- **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON
 
 # 8.0.0-beta.1
 
