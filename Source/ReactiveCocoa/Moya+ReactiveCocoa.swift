@@ -2,7 +2,7 @@ import Foundation
 import ReactiveSwift
 
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
-open class ReactiveCocoaMoyaProvider<Target where Target: TargetType>: MoyaProvider<Target> {
+open class ReactiveCocoaMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     private let stubScheduler: DateSchedulerProtocol?
     /// Initializes a reactive provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.DefaultEndpointMapping,
