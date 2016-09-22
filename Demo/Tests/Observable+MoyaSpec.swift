@@ -230,8 +230,8 @@ class ObservableMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 switch receivedError {
-                case .some(.underlying(let error as NSError)):
-                    expect(error.domain).to(equal("\(NSCocoaErrorDomain)"))
+                case .some(.jsonMapping):
+                    break
                 default:
                     fail("expected NSError with \(NSCocoaErrorDomain) domain")
                 }
