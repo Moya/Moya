@@ -1,5 +1,0 @@
-os: osx
-language: objective-c
-osx_image: xcode8
-install: brew install carthage
-script: rake test:carthage
