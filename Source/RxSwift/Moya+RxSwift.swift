@@ -28,7 +28,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
                 }
             }
 
-            return AnonymousDisposable {
+            return Disposables.create {
                 cancellableToken?.cancel()
             }
         }
@@ -54,7 +54,7 @@ public extension RxMoyaProvider {
                 }
             }
 
-            return AnonymousDisposable {
+            return Disposables.create {
                 cancellableToken?.cancel()
             }
         }
