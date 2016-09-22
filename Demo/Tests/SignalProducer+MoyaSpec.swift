@@ -38,14 +38,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 10)
                 
                 var errored = false
-                signal.filterStatusCodes(range: 0...9).start { (event) -> Void in
+                signal.filterStatusCodes(range: 0...9).startWithResult { event -> Void in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-correct status code: \(object)")
-                    case .failed:
+                    case .failure:
                         errored = true
-                    default:
-                        break
                     }
                 }
                 
@@ -57,14 +55,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
-                signal.filterSuccessfulStatusCodes().start { (event) -> Void in
-                    switch event {
-                    case .next(let object):
+                signal.filterSuccessfulStatusCodes().startWithResult { result -> Void in
+                    switch result {
+                    case .success(let object):
                         fail("called on non-success status code: \(object)")
-                    case .failed:
+                    case .failure:
                         errored = true
-                    default:
-                        break
                     }
                 }
                 
@@ -88,14 +84,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
-                signal.filterSuccessfulStatusAndRedirectCodes().start { (event) -> Void in
-                    switch event {
-                    case .next(let object):
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult { result -> Void in
+                    switch result {
+                    case .success(let object):
                         fail("called on non-success status code: \(object)")
-                    case .failed:
+                    case .failure:
                         errored = true
-                    default:
-                        break
                     }
                 }
                 
@@ -143,14 +137,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 43)
                 
                 var errored = false
-                signal.filterStatusCode(code: 42).start { (event) -> Void in
-                    switch event {
-                    case .next(let object):
+                signal.filterStatusCode(code: 42).startWithResult { result -> Void in
+                    switch result {
+                    case .success(let object):
                         fail("called on non-success status code: \(object)")
-                    case .failed:
+                    case .failure:
                         errored = true
-                    default:
-                        break
                     }
                 }
                 
@@ -177,14 +169,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data)
                 
                 var receivedError: Moya.Error?
-                signal.mapImage().start { (event) -> Void in
-                    switch event {
-                    case .next:
+                signal.mapImage().startWithResult { result -> Void in
+                    switch result {
+                    case .success:
                         fail("next called for invalid data")
-                    case .failed(let error):
+                    case .failure(let error):
                         receivedError = error
-                    default:
-                        break
                     }
                 }
                 
@@ -218,14 +208,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data!)
                 
                 var receivedError: Moya.Error?
-                signal.mapJSON().start { (event) -> Void in
-                    switch event {
-                    case .next:
+                signal.mapJSON().startWithResult { result -> Void in
+                    switch result {
+                    case .success:
                         fail("next called for invalid data")
-                    case .failed(let error):
+                    case .failure(let error):
                         receivedError = error
-                    default:
-                        break
                     }
                 }
                 
@@ -258,14 +246,12 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data as Data)
                 
                 var receivedError: Moya.Error?
-                signal.mapString().start { (event) -> Void in
-                    switch event {
-                    case .next:
+                signal.mapString().startWithResult { result -> Void in
+                    switch result {
+                    case .success:
                         fail("next called for invalid data")
-                    case .failed(let error):
+                    case .failure(let error):
                         receivedError = error
-                    default:
-                        break
                     }
                 }
                 

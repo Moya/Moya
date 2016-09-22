@@ -41,13 +41,13 @@ DEPENDENCIES:
   - Nimble (from `https://github.com/Quick/Nimble`, branch `master`)
   - OHHTTPStubs
   - Quick (from `https://github.com/Quick/Quick`, branch `swift-3.0`)
-  - ReactiveSwift (from `https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec`)
+  - ReactiveSwift (from `https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/moya-swift-3/ReactiveSwift.podspec`)
   - RxCocoa (= 3.0.0-beta.1)
   - RxSwift (= 3.0.0-beta.1)
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
   Nimble:
     :branch: master
     :git: https://github.com/Quick/Nimble
@@ -55,7 +55,7 @@ EXTERNAL SOURCES:
     :branch: swift-3.0
     :git: https://github.com/Quick/Quick
   ReactiveSwift:
-    :podspec: https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/ea5a7f9c7e31adf262be14173a80709c15d25300/ReactiveSwift.podspec
+    :podspec: https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/moya-swift-3/ReactiveSwift.podspec
 
 CHECKOUT OPTIONS:
   Nimble:
@@ -65,7 +65,7 @@ CHECKOUT OPTIONS:
     :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
     :git: https://github.com/Quick/Quick
   ReactiveSwift:
-    :commit: d2794c7a0b34c375cd4532e10238205afe09de9a
+    :commit: 3f2daac74e4bd230fa9806de60a473db6b959073
     :git: https://github.com/ReactiveCocoa/ReactiveSwift.git
 
 SPEC CHECKSUMS:
@@ -74,11 +74,11 @@ SPEC CHECKSUMS:
   Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
   OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
   Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
-  ReactiveSwift: 07f7805f12097ee8315da8221878d29b93b7987d
+  ReactiveSwift: 0a2ef4a2f4443dfbcc47de600ab77e2d01b49994
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
 
-PODFILE CHECKSUM: 31bd6956c39b5a6b002a2d365c22e5632cce0742
+PODFILE CHECKSUM: b236b0307220e9d6efa3d1a6fd4c72cc2c59c422
 
 COCOAPODS: 1.1.0.rc.2
