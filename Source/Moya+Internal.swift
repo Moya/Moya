@@ -203,7 +203,7 @@ private extension MoyaProvider {
         }
 
         // Perform the actual request
-        if progressCompletion != nil {
+        if let _ = progressCompletion {
             switch progressAlamoRequest {
             case let downloadRequest as DownloadRequest:
                 if let downloadRequest = downloadRequest.downloadProgress(closure: progressClosure) as? T {
