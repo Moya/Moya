@@ -219,8 +219,8 @@ class SignalProducerMoyaSpec: QuickSpec {
                 
                 expect(receivedError).toNot(beNil())
                 switch receivedError {
-                case .some(.underlying(let error)):
-                    expect((error as NSError).domain).to(equal("\(NSCocoaErrorDomain)"))
+                case .some(.jsonMapping):
+                    break
                 default:
                     fail("expected NSError with \(NSCocoaErrorDomain) domain")
                 }
