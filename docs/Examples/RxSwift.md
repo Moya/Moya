@@ -31,10 +31,10 @@ provider.request(.allUsers)
 	.mapJSON()
     .doOn { event in
         guard case Event.next(let element) = event else { return }
-		guard let usersCount = element["usersCount"], usersArray = Mapper<User>().mapArray(element["users"]) else { return }
+        guard let usersCount = element["usersCount"], usersArray = Mapper<User>().mapArray(element["users"]) else { return }
 
         self.usersCount = usersCount
-		self.usersArray = usersArray
+        self.usersArray = usersArray
     }
     .subscribeNext { results in
         self.tableView.reloadData()
@@ -77,13 +77,13 @@ dismissed automatically.
 Usage:
 
 ```swift
-SVProgressHUD.show()			
+SVProgressHUD.show()
 MyService.request(.resetPassword(email: textField.text!))
-		    .filterSuccessfulStatusCodes()
-		    .showErrorHUD()
-		    .subscribeNext { response in
-		        SVProgressHUD.dismiss()
+        .filterSuccessfulStatusCodes()
+        .showErrorHUD()
+        .subscribeNext { response in
+          SVProgressHUD.dismiss()
 
-		        showAlert(title: "Your password has been reset.", message: "An email will be sent to you with a new password shortly.")
-		    }
+          showAlert(title: "Your password has been reset.", message: "An email will be sent to you with a new password shortly.")
+        }
 ```
