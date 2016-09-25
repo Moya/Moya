@@ -13,7 +13,7 @@ let provider = MoyaProvider<MyService>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.Zen) { result in
+provider.request(.zen) { result in
     // `result` is either .Success(response) or .Failure(error)
 }
 ```
@@ -43,7 +43,7 @@ concrete `Endpoint` instance. Let's take a look at what one might look like.
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    return Endpoint(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
@@ -60,14 +60,14 @@ might want to customize this.
 ### requestClosure:
 
 The next optional initializer parameter is `requestClosure`, which resolves
-an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md)
+an `Endpoint` to an actual `URLRequest`. Again, check out the [Endpoints](Endpoints.md)
 documentation for how and why you'd do this.
 
 ### stubClosure:
 
 The next option is to provide a `stubClosure`. This returns one of either `.Never` (the
-default), `.Immediate` or `.Delayed(seconds)`, where you can delay the stubbed
-request by a certain number of seconds. For example, `.Delayed(0.2)` would delay
+default), `.immediate` or `.delayed(seconds)`, where you can delay the stubbed
+request by a certain number of seconds. For example, `.delayed(0.2)` would delay
 every stubbed request. This can be good for simulating network delays in unit tests.
 
 What's nice is that if you need to stub some requests differently than others,
@@ -94,7 +94,7 @@ So, in the above example, if you wanted immediate stubbing behavior for all
 targets, either of the following would work.
 
 ```swift
-let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubBehavior in return .Immediate })
+let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubBehavior in return .immediate })
 let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
 ```
 
@@ -104,8 +104,8 @@ Next, there's the `manager` parameter. By default you'll get a custom `Alamofire
 
 ```swift
 public final class func DefaultAlamofireManager() -> Manager {
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
+    let configuration = URLSessionConfiguration.default
+    configuration.httpAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
 
     let manager = Alamofire.Manager(configuration: configuration)
     manager.startRequestsImmediately = false
@@ -128,7 +128,7 @@ let policies: [String: ServerTrustPolicy] = [
 ]
 
 let manager = Manager(
-    configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+    configuration: URLSessionConfiguration.default,
     serverTrustPolicyManager: ServerTrustPolicyManager(policies: policies)
 )
 
@@ -158,12 +158,12 @@ public final class NetworkActivityPlugin: PluginType {
 
     /// Called by the provider as soon as the request is about to start
     public func willSendRequest(request: RequestType, target: TargetType) {
-        networkActivityClosure(change: .Began)
+        networkActivityClosure(change: .began)
     }
 
     /// Called by the provider as soon as a response arrives
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: TargetType) {
-        networkActivityClosure(change: .Ended)
+    public func didReceiveResponse(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
+        networkActivityClosure(change: .ended)
     }
 }
 ```
@@ -171,5 +171,5 @@ public final class NetworkActivityPlugin: PluginType {
 The `networkActivityClosure` is a closure that you can provide to be notified whenever a network request begins or
 ends. This is useful for working with the [network activity indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
 Note that signature of this closure is `(change: NetworkActivityChangeType) -> ()`,
-so you will only be notified when a request has `.Began` or `.Ended` –
+so you will only be notified when a request has `.began` or `.ended` –
 you aren't provided any other details about the request itself.

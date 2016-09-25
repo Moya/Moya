@@ -6,9 +6,9 @@ In case of an error you may need to handle it:
 ```swift
 provider.request(target) { result in
     switch result {
-    case let .Success(response):
+    case let .success(response):
         // Do sg on success
-    case let .Failure(error):
+    case let .failure(error):
         // Handle error here
     }
 }
@@ -26,17 +26,17 @@ You can do that by a `switch` on different `cases` of `Moya.Error`. In case of a
 
 ```swift
 switch error {
-case .Data(let response):
+case .data(let response):
     print(response)
-case .ImageMapping(let response):
+case .imageMapping(let response):
     print(response)
-case .JSONMapping(let response):
+case .jsonMapping(let response):
     print(response)
-case .StatusCode(let response):
+case .statusCode(let response):
     print(response)
-case .StringMapping(let response):
+case .stringMapping(let response):
     print(response)
-case .Underlying(let nsError):
+case .underlying(let nsError):
     // now can access NSError error.code or whatever
     // e.g. NSURLErrorTimedOut or NSURLErrorNotConnectedToInternet
     print(nsError.code)
