@@ -25,7 +25,7 @@ providers). Here's the beginning of our extension:
 
 ```swift
 extension GitHub: TargetType {
-    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    public var baseURL: URL { return URL(string: "https://api.github.com")! }
 ```
 
 This protocol specifies the locations of
@@ -46,7 +46,7 @@ public var path: String {
 }
 ```
 
-Notice that we're ignoring the second associated value of our `Branches` Target using the Swift `_` ignored-value symbol. That's because we don't need it to define the `Branches` path.
+Notice that we're ignoring the second associated value of our `branches` Target using the Swift `_` ignored-value symbol. That's because we don't need it to define the `branches` path.
 Note: we're cheating here and using a `URLEscapedString` extension on String.
 A sample implementation is given at the end of this document.
 
@@ -84,20 +84,20 @@ Let's take a look at the `branches` case: we'll use our `Bool` associated value 
 
 Notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
-`NSData` that represents a sample response. This can be used later for tests or
+`Data` that represents a sample response. This can be used later for tests or
 for providing offline support for developers. This *should* depend on `self`.
 
 ```swift
-public var sampleData: NSData {
+public var sampleData: Data {
     switch self {
     case .zen:
-        return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
+        return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
     case .userProfile(let name):
-        return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+        return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
     case .userRepositories(let name):
-        return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
+        return "[{\"name\": \"Repo Name\"}]".data(using: String.Encoding.utf8)!
     case .branches:
-        return "[{\"name\": \"master\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
+        return "[{\"name\": \"master\"}]".data(using: String.Encoding.utf8)!
     }
 }
 ```

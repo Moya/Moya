@@ -19,9 +19,9 @@ After that simple setup, you're off to the races:
 ```swift
 provider.request(.zen).start { (event) -> Void in
     switch event {
-    case .Next(let response):
+    case .next(let response):
         // do something with the data
-    case .Failed(let error):
+    case .failed(let error):
         // handle the error
     default:
         break
@@ -43,7 +43,7 @@ then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
 The `Moya.Response` class contains a `statusCode`, some `data`,
-and a(n optional) `NSURLResponse`. You can use these values however
+and a(n optional) `URLResponse`. You can use these values however
 you like in `startWithNext` or `map` calls.
 
 To make things even awesomer, Moya provides some extensions to

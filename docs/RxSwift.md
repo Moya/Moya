@@ -37,12 +37,12 @@ If the request completes normally, two things happen:
 1. The observable sends a value, a `Moya.Response` instance.
 2. The observable completes.
 
-If the request produces an error (typically a NSURLSession error),
+If the request produces an error (typically a `URLSession` error),
 then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
 The `Moya.Response` class contains a `statusCode`, some `data`,
-and a(n optional) `NSURLResponse`. You can use these values however
+and a(n optional) `URLResponse`. You can use these values however
 you like in `subscribeNext` or `map` calls.
 
 To make things even awesomer, Moya provides some extensions to

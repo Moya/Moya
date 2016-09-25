@@ -30,7 +30,7 @@ Then we add some functionality to the function called when a request will be sen
 func willSendRequest(request: RequestType, target: TargetType) {
 
     //make sure we have a URL string to display
-    guard let requestURLString = request.request?.URL?.absoluteString else { return }
+    guard let requestURLString = request.request?.url?.absoluteString else { return }
 
     //create alert view controller with a single action
     let alertViewController = UIAlertController(title: "Sending Request", message: requestURLString, preferredStyle: .alert)
