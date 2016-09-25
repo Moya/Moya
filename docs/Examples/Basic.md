@@ -40,7 +40,7 @@ extension MyService: TargetType {
             return .POST
         }
     }
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
         case .zen, .showUser, .showAccounts:
             return nil

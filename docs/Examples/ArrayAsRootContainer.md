@@ -9,8 +9,8 @@ in [#467](https://github.com/Moya/Moya/issues/467)):
 Define JsonArrayEncoding closure:
 
 ```swift
-let JsonArrayEncodingClosure: (URLRequestConvertible, [String:AnyObject]?) -> (NSMutableURLRequest, NSError?) = { request, data in
     var req = request.URLRequest as NSMutableURLRequest
+let JsonArrayEncodingClosure: (URLRequestConvertible, [String: Any]?) -> (URLRequest, Error?) = { request, data in
 
     do {
         let json = try NSJSONSerialization.dataWithJSONObject(data!["jsonArray"]!, options: NSJSONWritingOptions.PrettyPrinted)
@@ -25,7 +25,7 @@ let JsonArrayEncodingClosure: (URLRequestConvertible, [String:AnyObject]?) -> (N
 
 Configure target :
 ```swift
-  var parameters: [String:AnyObject]? {
+  var parameters: [String: Any]? {
         switch self {
         case .someAPI:
             return ["jsonArray": ["Yes", "What", "Abc"]]

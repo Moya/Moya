@@ -10,10 +10,10 @@ public enum MyService {
 
 extension MyService: TargetType {
 //...
-	public var parameters: [String: AnyObject]? {
+	public var parameters: [String: Any]? {
 	    switch self {
 	    case .users(let limit):
-	        var params: [String : AnyObject] = [:]
+	        var params: [String : Any] = [:]
 	        params["limit"] = limit
 	        return params
         default:
