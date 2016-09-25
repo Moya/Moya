@@ -12,7 +12,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
     override init(endpointClosure: MoyaProvider<MyService>.EndpointClosure = MoyaProvider.DefaultEndpointMapping,
         requestClosure: MoyaProvider<MyService>.RequestClosure = MoyaProvider.DefaultRequestMapping,
         stubClosure: MoyaProvider<MyService>.StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = Alamofire.Manager.sharedInstance,
+        manager: Manager = Alamofire.SessionManager.default,
         plugins: [PluginType] = []) {
 
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
