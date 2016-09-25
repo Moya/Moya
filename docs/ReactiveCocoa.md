@@ -38,7 +38,7 @@ If the request completes normally, two things happen:
 1. The signal sends a value, a `Moya.Response` instance.
 2. The signal completes.
 
-If the request produces an error (typically a NSURLSession error),
+If the request produces an error (typically a URLSession error),
 then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
