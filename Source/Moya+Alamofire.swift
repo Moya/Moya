@@ -6,7 +6,6 @@ internal typealias Request = Alamofire.Request
 internal typealias DownloadRequest = Alamofire.DownloadRequest
 internal typealias UploadRequest = Alamofire.UploadRequest
 internal typealias DataRequest = Alamofire.DataRequest
-internal typealias StreamRequest = Alamofire.StreamRequest
 
 internal typealias URLRequestConvertible = Alamofire.URLRequestConvertible
 
