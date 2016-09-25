@@ -18,7 +18,7 @@ You _should not_ have to reference Alamofire directly. It's an _awesome_
 library, but the point of Moya is that you don't have to deal with details
 that are that low-level.
 
-(If you _need_ to use Alamofire, you can pass in a `Manager` instance to the
+(If you _need_ to use Alamofire, you can pass in a `SessionManager` instance to the
 `MoyaProvider` initializer.)
 
 If there is something you want to change about the behaviour of Moya, there is
