@@ -81,7 +81,7 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
 
     // Sign all non-authenticating requests
     switch target {
-    case .Authenticate:
+    case .authenticate:
         return endpoint
     default:
         return endpoint.endpointByAddingHTTPHeaderFields(["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])

@@ -24,7 +24,7 @@ which is usually not necessary. This might be a better idea:
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> NSURLCredential? in
     switch target {
-      case .TargetThatNeedsAuthentication:
+      case .targetThatNeedsAuthentication:
         return NSURLCredential(user: "user", password: "passwd", persistence: .None)
       default:
         return nil

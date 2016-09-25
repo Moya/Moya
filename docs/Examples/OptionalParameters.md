@@ -5,14 +5,14 @@ Suppose you want to call `api/users?limit=10` but also `api/users`:
 
 ```swift
 public enum MyService {
-	case Users(limit: Int?)
+	case users(limit: Int?)
 }
 
 extension MyService: TargetType {
 //...
 	public var parameters: [String: AnyObject]? {
 	    switch self {
-	    case .Users(let limit):
+	    case .users(let limit):
 	        var params: [String : AnyObject] = [:]
 	        params["limit"] = limit
 	        return params
@@ -33,7 +33,7 @@ extension MyService: TargetType {
 //...
     public var method: Moya.Method {
         switch self {
-        case .EmailAuth:
+        case .emailAuth:
             return .POST
         default:
             return .GET

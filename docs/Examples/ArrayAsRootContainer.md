@@ -27,7 +27,7 @@ Configure target :
 ```swift
   var parameters: [String:AnyObject]? {
         switch self {
-        case .SomeAPI:
+        case .someAPI:
             return ["jsonArray": ["Yes", "What", "Abc"]]
         default:
             return nil
@@ -36,7 +36,7 @@ Configure target :
 
     var parameterEncoding: Moya.ParameterEncoding {
         switch self {
-        case .SomeAPI:
+        case .someAPI:
             return ParameterEncoding.Custom(JsonArrayEncodingClosure)
         default:
             return ParameterEncoding.JSON

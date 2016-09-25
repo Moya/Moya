@@ -4,16 +4,16 @@ Targets
 Using Moya starts with defining a target – typically some `enum` that conforms
 to the `TargetType` protocol. Then, the rest of your app deals *only* with
 those targets. Targets are some action that you want to take on the API,
-like "`FavoriteTweet(tweetID: String)`".
+like "`favoriteTweet(tweetID: String)`".
 
 Here's an example:
 
 ```swift
 public enum GitHub {
-    case Zen
-    case UserProfile(String)
-    case UserRepositories(String)
-    case Branches(String, Bool)
+    case zen
+    case userProfile(String)
+    case userRepositories(String)
+    case branches(String, Bool)
 }
 ```
 
@@ -34,13 +34,13 @@ your API endpoints, relative to its base URL (more on that below).
 ```swift
 public var path: String {
     switch self {
-    case .Zen:
+    case .zen:
         return "/zen"
-    case .UserProfile(let name):
+    case .userProfile(let name):
         return "/users/\(name.URLEscapedString)"
-    case .UserRepositories(let name):
+    case .userRepositories(let name):
         return "/users/\(name.URLEscapedString)/repos"
-    case .Branches(let repo, _)
+    case .branches(let repo, _)
         return "/repos/\(repo.URLEscapedString)/branches"
     }
 }
@@ -69,9 +69,9 @@ computed property that returns parameters defined by the enum case. Here's an ex
 ```swift
 public var parameters: [String: AnyObject]? {
     switch self {
-    case .UserRepositories(_):
+    case .userRepositories(_):
         return ["sort": "pushed"]
-    case .Branches(_, let protected):
+    case .branches(_, let protected):
         return ["protected": "\(protected)"]
     default:
         return nil
@@ -79,8 +79,8 @@ public var parameters: [String: AnyObject]? {
 }
 ```
 
-Unlike our `path` property earlier, we don't actually care about the associated values of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
-Let's take a look at the `Branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
+Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we use the Swift `_` ignored-value symbol.
+Let's take a look at the `branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
 
 Notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
@@ -90,13 +90,13 @@ for providing offline support for developers. This *should* depend on `self`.
 ```swift
 public var sampleData: NSData {
     switch self {
-    case .Zen:
+    case .zen:
         return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .UserProfile(let name):
+    case .userProfile(let name):
         return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .UserRepositories(let name):
+    case .userRepositories(let name):
         return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .Branches:
+    case .branches:
         return "[{\"name\": \"master\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
     }
 }

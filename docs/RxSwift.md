@@ -16,11 +16,11 @@ let provider = RxMoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.Zen).subscribe { (event) -> Void in
+provider.request(.zen).subscribe { (event) -> Void in
     switch event {
-    case .Next(let response):
+    case .next(let response):
         // do something with the data
-    case .Error(let error):
+    case .error(let error):
         // handle the error
     default:
         break
