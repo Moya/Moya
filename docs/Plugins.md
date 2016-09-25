@@ -14,7 +14,7 @@ let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose: true)
 ```
 
 ####Authentication
-The authentication plugin allows a user to assign an optional `NSURLCredential` per request. There is no action when a request is received.
+The authentication plugin allows a user to assign an optional `URLCredential` per request. There is no action when a request is received.
 
 The plugin can be found at [`Source/Plugins/CredentialsPlugin.swift`](../Source/Plugins/CredentialsPlugin.swift)
 
@@ -26,7 +26,7 @@ The plugin can be found at [`Source/Plugins/NetworkActivityPlugin.swift`](../Sou
 ####Logging
 During development it can be very useful to log network activity to the console. This can be anything from the URL of a request as sent and received, to logging full headers, method, request body on each request and response.
 
-The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initializing the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputting data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `NSUTF8StringEncoding` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Demo/Demo/GitHubAPI.swift`](../Demo/Demo/GitHubAPI.swift) for an example that does exactly that)
+The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initializing the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputting data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `String.Encoding.utf8` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Demo/Demo/GitHubAPI.swift`](../Demo/Demo/GitHubAPI.swift) for an example that does exactly that)
 
 The plugin can be found at [`Source/Plugins/NetworkLoggerPlugin.swift`](../Source/Plugins/NetworkLoggerPlugin.swift)
 

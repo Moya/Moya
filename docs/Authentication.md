@@ -12,8 +12,8 @@ itself. If you need to use HTTP auth, you can provide a `CredentialsPlugin`
 when initializing your provider.
 
 ```swift
-let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> NSURLCredential? in
-    return NSURLCredential(user: "user", password: "passwd", persistence: .None)
+let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> URLCredential? in
+    return URLCredential(user: "user", password: "passwd", persistence: .none)
   }
 ])
 ```
@@ -22,10 +22,10 @@ This specific examples shows a use of HTTP that authenticates _every_ request,
 which is usually not necessary. This might be a better idea:
 
 ```swift
-let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> NSURLCredential? in
+let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> URLCredential? in
     switch target {
       case .targetThatNeedsAuthentication:
-        return NSURLCredential(user: "user", password: "passwd", persistence: .None)
+        return URLCredential(user: "user", password: "passwd", persistence: .none)
       default:
         return nil
     }
@@ -47,7 +47,7 @@ itself sometimes require network requests be performed _first_, so signing
 a request for Moya is an asynchronous process. Let's see an example.
 
 ```swift
-let requestClosure = { (endpoint: Endpoint<YourAPI>, done: NSURLRequest -> Void) in
+let requestClosure = { (endpoint: Endpoint<YourAPI>, done: URLRequest -> Void) in
     let request = endpoint.urlRequest // This is the request Moya generates
     YourAwesomeOAuthProvider.signRequest(request, completion: { signedRequest in
       // The OAuth provider can make its own network calls to sign your request.

@@ -60,7 +60,7 @@ might want to customize this.
 ### requestClosure:
 
 The next optional initializer parameter is `requestClosure`, which resolves
-an `Endpoint` to an actual `NSURLRequest`. Again, check out the [Endpoints](Endpoints.md)
+an `Endpoint` to an actual `URLRequest`. Again, check out the [Endpoints](Endpoints.md)
 documentation for how and why you'd do this.
 
 ### stubClosure:
@@ -104,8 +104,8 @@ Next, there's the `manager` parameter. By default you'll get a custom `Alamofire
 
 ```swift
 public final class func DefaultAlamofireManager() -> Manager {
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
+    let configuration = URLSessionConfiguration.default
+    configuration.httpAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
 
     let manager = Alamofire.Manager(configuration: configuration)
     manager.startRequestsImmediately = false
@@ -128,7 +128,7 @@ let policies: [String: ServerTrustPolicy] = [
 ]
 
 let manager = Manager(
-    configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+    configuration: URLSessionConfiguration.default,
     serverTrustPolicyManager: ServerTrustPolicyManager(policies: policies)
 )
 
@@ -162,7 +162,7 @@ public final class NetworkActivityPlugin: PluginType {
     }
 
     /// Called by the provider as soon as a response arrives
-    public func didReceiveResponse(data: NSData?, statusCode: Int?, response: NSURLResponse?, error: ErrorType?, target: TargetType) {
+    public func didReceiveResponse(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
         networkActivityClosure(change: .ended)
     }
 }

@@ -19,7 +19,7 @@ target (at compile time). You can see that parameters needed for requests can be
 ```swift
 // MARK: - TargetType Protocol Implementation
 extension MyService: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.myservice.com")! }
+    var baseURL: URL { return URL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
         case .zen:
@@ -48,7 +48,7 @@ extension MyService: TargetType {
             return ["first_name": firstName, "last_name": lastName]
         }
     }
-    var sampleData: NSData {
+    var sampleData: Data {
         switch self {
         case .zen:
             return "Half measures are as bad as nothing at all.".UTF8EncodedData
@@ -58,9 +58,9 @@ extension MyService: TargetType {
             return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
-            guard let path = NSBundle.mainBundle().pathForResource("accounts", ofType: "json"),
-                      data = NSData(contentsOfFile: path) else {
-                return NSData()
+            guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
+                      data = Data(contentsOf: path) else {
+                return Data()
             }
             return data
         }
@@ -74,10 +74,11 @@ extension MyService: TargetType {
 // MARK: - Helpers
 private extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)
     }
-    var UTF8EncodedData: NSData {
-        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+
+    var UTF8EncodedData: Data {
+        return self.data(using: .utf)!
     }
 }
 ```
@@ -99,14 +100,14 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
 ```
 
 The `TargetType` specifies both a base URL for the API and the sample data for
-each enum value. The sample data are `NSData` instances, and could represent
+each enum value. The sample data are `Data` instances, and could represent
 JSON, images, text, whatever you're expecting from that endpoint.
 
 You can also set up custom endpoints to alter the default behavior to your needs. For example:
 
 ```swift
 public func url(route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
@@ -166,11 +167,11 @@ The `request` method is given a `MyService` value (`.zen`), which contains *all 
 information necessary* to create the `Endpoint` – or to return a stubbed
 response during testing.
 
-The `Endpoint` instance is used to create a `NSURLRequest` (the heavy lifting is
+The `Endpoint` instance is used to create a `URLRequest` (the heavy lifting is
 done via Alamofire), and the request is sent (again - Alamofire).  Once
 Alamofire gets a response (or fails to get a response), Moya will wrap the
 success or failure in a `Result` enum.  `result` is either
-`.Success(Moya.Response)` or `.Failure(Moya.Error)`.
+`.success(Moya.Response)` or `.failure(Moya.Error)`.
 
 You will need to unpack the data and status code from `Moya.Response`.
 
@@ -178,7 +179,7 @@ You will need to unpack the data and status code from `Moya.Response`.
 provider.request(.zen) { result in
     switch result {
     case let .success(moyaResponse):
-        let data = moyaResponse.data // NSData, your JSON response is probably in here!
+        let data = moyaResponse.data // Data, your JSON response is probably in here!
         let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
 
         // do something in your app
