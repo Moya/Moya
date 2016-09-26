@@ -37,7 +37,7 @@ func willSendRequest(request: RequestType, target: TargetType) {
     alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 
     //and present using the view controller we created at initialization
-    viewController.present(viewControllerToPresent: alertViewController, animated: true, completion: nil)
+    viewController.present(viewControllerToPresent: alertViewController, animated: true)
 }
 ```
 
@@ -54,7 +54,7 @@ func didReceiveResponse(result: Result<Response, Error>, target: TargetType) {
     alertViewController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 
     //and present using the view controller we created at initialization
-    viewController.present(viewControllerToPresent: alertViewController, animated: true, completion: nil)
+    viewController.present(viewControllerToPresent: alertViewController, animated: true)
 }
 ```
 
