@@ -14,7 +14,7 @@ After that simple setup, you're off to the races:
 
 ```swift
 provider.request(.zen) { result in
-    // `result` is either .Success(response) or .Failure(error)
+    // `result` is either .success(response) or .failure(error)
 }
 ```
 
