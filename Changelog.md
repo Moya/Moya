@@ -6,6 +6,7 @@
 - **Breaking Change** Renamed `endpointByAddingParameters` to `adding(newParameters:)`
 - **Breaking Change** Renamed `endpointByAddingParameterEncoding` to `adding(newParameterEncoding:)`
 - **Breaking Change** Renamed `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)` to `adding(parameters:httpHeaderFields:parameterEncoding)`
+- **Breaking Change** Changed HTTP verbs enum to lowercase
 
 # 8.0.0-beta.1
 

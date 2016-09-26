@@ -34,9 +34,9 @@ extension MyService: TargetType {
     public var method: Moya.Method {
         switch self {
         case .emailAuth:
-            return .POST
+            return .post
         default:
-            return .GET
+            return .get
         }
     }
 //...

@@ -35,9 +35,9 @@ extension MyService: TargetType {
     var method: Moya.Method {
         switch self {
         case .zen, .showUser, .showAccounts:
-            return .GET
+            return .get
         case .createUser:
-            return .POST
+            return .post
         }
     }
     var parameters: [String: Any]? {

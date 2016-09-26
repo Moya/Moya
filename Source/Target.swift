@@ -49,14 +49,23 @@ public enum StructTarget: TargetType {
 
 /// Represents an HTTP method.
 public enum Method: String {
-    case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
+
+    case options = "OPTIONS"
+    case get     = "GET"
+    case head    = "HEAD"
+    case post    = "POST"
+    case put     = "PUT"
+    case patch   = "PATCH"
+    case delete  = "DELETE"
+    case trace   = "TRACE"
+    case connect = "CONNECT"
 
     public var supportsMultipart: Bool {
         switch self {
-        case .POST,
-             .PUT,
-             .PATCH,
-             .CONNECT:
+        case .post,
+             .put,
+             .patch,
+             .connect:
             return true
         default:
             return false

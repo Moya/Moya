@@ -42,7 +42,7 @@ extension GitHub: TargetType {
         }
     }
     public var method: Moya.Method {
-        return .GET
+        return .get
     }
     public var parameters: [String: Any]? {
         switch self {

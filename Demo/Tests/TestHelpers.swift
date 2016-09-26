@@ -24,7 +24,7 @@ extension GitHub: TargetType {
     }
     
     var method: Moya.Method {
-        return .GET
+        return .get
     }
     
     var parameters: [String: Any]? {
@@ -66,7 +66,7 @@ enum HTTPBin: TargetType {
     }
 
     var method: Moya.Method {
-        return .GET
+        return .get
     }
     
     var parameters: [String: Any]? {
