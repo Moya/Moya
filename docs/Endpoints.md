@@ -61,8 +61,8 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let url = target.baseURL.URLByAppendingPathComponent(target.path).absoluteString
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
     return endpoint.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
@@ -95,7 +95,7 @@ Awesome.
 Note that we can rely on the existing behavior of Moya and extend – instead
 of replace – it. The `endpointByAddingParameters` and `endpointByAddingHTTPHeaderFields`
 functions allow you to rely on the existing Moya code and add your own custom
-values. 
+values.
 
 Sample responses are a requirement of the `TargetType` protocol. However, they
 only specify the data returned. The Target-to-Endpoint mapping closure is where
