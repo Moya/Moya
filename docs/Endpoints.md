@@ -63,7 +63,7 @@ analytics.
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
     let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
-    return endpoint.endpointByAddingHTTPHeaderFields(["APP_NAME": "MY_AWESOME_APP"])
+    return endpoint.adding(newHttpHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
@@ -84,7 +84,7 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     case .authenticate:
         return endpoint
     default:
-        return endpoint.endpointByAddingHTTPHeaderFields(["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
+        return endpoint.adding(newHttpHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
     }
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
@@ -93,7 +93,7 @@ let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 Awesome.
 
 Note that we can rely on the existing behavior of Moya and extend – instead
-of replace – it. The `endpointByAddingParameters` and `endpointByAddingHTTPHeaderFields`
+of replace – it. The `adding(newParameters:)` and `adding(newHttpHeaderFields:)`
 functions allow you to rely on the existing Moya code and add your own custom
 values.
 
