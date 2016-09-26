@@ -40,22 +40,22 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added parameters.
-    open func endpointByAddingParameters(_ parameters: [String: Any]) -> Endpoint<Target> {
-        return endpointByAdding(parameters: parameters)
+    open func adding(newParameters: [String: Any]) -> Endpoint<Target> {
+        return adding(parameters: newParameters)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
-    open func endpointByAddingHTTPHeaderFields(_ httpHeaderFields: [String: String]) -> Endpoint<Target> {
-        return endpointByAdding(httpHeaderFields: httpHeaderFields)
+    open func adding(newHttpHeaderFields: [String: String]) -> Endpoint<Target> {
+        return adding(httpHeaderFields: newHttpHeaderFields)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with another parameter encoding.
-    open func endpointByAddingParameterEncoding(_ newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
-        return endpointByAdding(parameterEncoding: newParameterEncoding)
+    open func adding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
+        return adding(parameterEncoding: newParameterEncoding)
     }
 
     /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
-    open func endpointByAdding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
+    open func adding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
         let newParameters = addParameters(parameters)
         let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding

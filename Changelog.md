@@ -2,6 +2,10 @@
 
 - **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON
 - Removed the unused `StreamRequest` typealias that was causing watchOS failures.
+- **Breaking Change** Renamed `endpointByAddingHTTPHeaders` to `adding(newHttpHeaderFields:)`
+- **Breaking Change** Renamed `endpointByAddingParameters` to `adding(newParameters:)`
+- **Breaking Change** Renamed `endpointByAddingParameterEncoding` to `adding(newParameterEncoding:)`
+- **Breaking Change** Renamed `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)` to `adding(parameters:httpHeaderFields:parameterEncoding)`
 
 # 8.0.0-beta.1
 
