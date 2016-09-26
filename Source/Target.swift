@@ -1,4 +1,5 @@
 import Foundation
+import Alamofire
 
 /// Protocol to define the base URL, path, method, parameters and sample data for a target.
 public protocol TargetType {
@@ -48,15 +49,15 @@ public enum StructTarget: TargetType {
 }
 
 /// Represents an HTTP method.
-public enum Method: String {
-    case GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH, TRACE, CONNECT
+public typealias Method = Alamofire.HTTPMethod
 
+extension Method {
     public var supportsMultipart: Bool {
         switch self {
-        case .POST,
-             .PUT,
-             .PATCH,
-             .CONNECT:
+        case .post,
+             .put,
+             .patch,
+             .connect:
             return true
         default:
             return false

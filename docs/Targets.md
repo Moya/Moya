@@ -55,7 +55,7 @@ are always using the GET HTTP method, so this is pretty easy:
 
 ```swift
 public var method: Moya.Method {
-    return .GET
+    return .get
 }
 ```
 

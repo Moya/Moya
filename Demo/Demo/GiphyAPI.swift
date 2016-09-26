@@ -18,7 +18,7 @@ extension Giphy: TargetType {
     public var method: Moya.Method {
         switch self {
         case .upload:
-            return .POST
+            return .post
         }
     }
     public var parameters: [String: Any]? {

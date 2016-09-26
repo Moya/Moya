@@ -427,7 +427,7 @@ class MoyaProviderSpec: QuickSpec {
             struct StructAPI: TargetType {
                 var baseURL = URL(string: "http://example.com")!
                 var path = "/endpoint"
-                var method = Moya.Method.GET
+                var method = Moya.Method.get
                 var parameters: [String: Any]? = ["key": "value"]
                 var task: Task = .request
                 var sampleData = "sample data".data(using: .utf8)!
@@ -481,7 +481,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(requestMethod) == .GET
+                expect(requestMethod) == .get
             }
 
             it("uses correct sample data") {

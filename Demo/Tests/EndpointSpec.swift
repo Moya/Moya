@@ -11,7 +11,7 @@ class EndpointSpec: QuickSpec {
                 let target: GitHub = .zen
                 let parameters = ["Nemesis": "Harvey"]
                 let headerFields = ["Title": "Dominar"]
-                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.GET, parameters: parameters, parameterEncoding: JSONEncoding(), httpHeaderFields: headerFields)
+                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding(), httpHeaderFields: headerFields)
             }
             
             it("returns a new endpoint for endpointByAddingParameters") {
