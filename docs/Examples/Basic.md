@@ -73,11 +73,11 @@ extension MyService: TargetType {
 
 // MARK: - Helpers
 private extension String {
-    var URLEscapedString: String {
-        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)
+    var urlEscapedString: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 
-    var UTF8EncodedData: Data {
+    var utf8EncodedData: Data {
         return self.data(using: .utf)!
     }
 }
@@ -198,7 +198,7 @@ established.
 Once you have a `.success(response)` you might want to filter on status codes or
 convert the response data to JSON. `Moya.Response` can help!
 
-###### see more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
+###### See more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
 
 ```swift
 do {

@@ -6,9 +6,9 @@ the network request that will ultimately be made. An endpoint stores the
 following data:
 
 - The URL.
-- The HTTP method (GET, POST, etc).
+- The HTTP method (`GET`, `POST`, etc).
 - The request parameters.
-- The parameter encoding (URL, JSON, custom, etc).
+- The parameter encoding (`URL`, `JSON`, custom, etc).
 - The HTTP request header fields.
 - The sample response (for unit testing).
 
@@ -17,8 +17,8 @@ Endpoints to actual network requests.
 
 There are two ways that you interact with Endpoints.
 
-1. When creating a provider, you may specify a mapping from Target to Endpoint.
-1. When creating a provider, you may specify a mapping from Endpoint to `URLRequest`.
+1. When creating a provider, you may specify a mapping from `Target` to `Endpoint`.
+1. When creating a provider, you may specify a mapping from `Endpoint` to `URLRequest`.
 
 The first might resemble the following:
 
