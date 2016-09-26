@@ -143,9 +143,9 @@ for instance, we could do the following:
 provider = ReactiveCocoaMoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")).start { event in
     switch event {
-    case .Next(let response):
+    case let .value(response):
         image = UIImage(data: response.data)
-    case .Failed(let error):
+    case let .failed(error):
         print(error)
     default:
       break
@@ -163,9 +163,9 @@ want to do. To handle errors, for instance, we could do the following:
 provider = RxMoyaProvider<GitHub>()
 provider.request(.UserProfile("ashfurrow")).subscribe { event in
     switch event {
-    case .Next(let response):
+    case let .next(response):
         image = UIImage(data: response.data)
-    case .Error(let error):
+    case let .error(error):
         print(error)
     default:
         break
