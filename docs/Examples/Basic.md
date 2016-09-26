@@ -73,11 +73,11 @@ extension MyService: TargetType {
 
 // MARK: - Helpers
 private extension String {
-    var URLEscapedString: String {
-        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)
+    var urlEscapedString: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 
-    var UTF8EncodedData: Data {
+    var utf8EncodedData: Data {
         return self.data(using: .utf)!
     }
 }
