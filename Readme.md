@@ -51,7 +51,7 @@ Installation
 
 ### CocoaPods
 
-For Moya, us the following entry in your Podfile:
+For Moya, use the following entry in your Podfile:
 
 ```rb
 pod 'Moya', '8.0.0-beta.2'
