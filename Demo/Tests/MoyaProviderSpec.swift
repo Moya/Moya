@@ -231,7 +231,11 @@ class MoyaProviderSpec: QuickSpec {
             beforeEach {
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     delay(requestTime) {
-                        done(.success(endpoint.urlRequest))
+                        if let urlRequest = endpoint.urlRequest {
+                            done(.success(urlRequest))
+                        } else {
+                            done(.failure(Moya.Error.requestMapping))
+                        }
                     }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.DelayedStub(responseTime))
@@ -327,7 +331,11 @@ class MoyaProviderSpec: QuickSpec {
                 executed = false
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     executed = true
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping))
+                    }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
@@ -437,7 +445,11 @@ class MoyaProviderSpec: QuickSpec {
                 var requestedURL: String?
                 let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestedURL = endpoint.URL
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping))
+                    }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -454,7 +466,11 @@ class MoyaProviderSpec: QuickSpec {
                 var requestParameters: [String: Any]?
                 let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestParameters = endpoint.parameters
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping))
+                    }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -471,7 +487,11 @@ class MoyaProviderSpec: QuickSpec {
                 var requestMethod: Moya.Method?
                 let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestMethod = endpoint.method
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping))
+                    }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 

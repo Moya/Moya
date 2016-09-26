@@ -1,16 +1,16 @@
 PODS:
   - Alamofire (4.0.0)
-  - Moya (8.0.0-beta.1):
-    - Moya/Core (= 8.0.0-beta.1)
-  - Moya/Core (8.0.0-beta.1):
+  - Moya (8.0.0-beta.2):
+    - Moya/Core (= 8.0.0-beta.2)
+  - Moya/Core (8.0.0-beta.2):
     - Alamofire (~> 4.0.0)
     - Result
-  - Moya/ReactiveCocoa (8.0.0-beta.1):
+  - Moya/ReactiveCocoa (8.0.0-beta.2):
     - Moya/Core
     - ReactiveSwift
-  - Moya/RxSwift (8.0.0-beta.1):
+  - Moya/RxSwift (8.0.0-beta.2):
     - Moya/Core
-    - RxSwift (= 3.0.0-beta.1)
+    - RxSwift
   - Nimble (5.0.0-alpha.30p1)
   - OHHTTPStubs (5.2.1):
     - OHHTTPStubs/Default (= 5.2.1)
@@ -65,16 +65,16 @@ CHECKOUT OPTIONS:
     :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
     :git: https://github.com/Quick/Quick
   ReactiveSwift:
-    :commit: 3f2daac74e4bd230fa9806de60a473db6b959073
+    :commit: 3dc5b89068dc97fedd70de0c0cc9023bed554b1f
     :git: https://github.com/ReactiveCocoa/ReactiveSwift.git
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  Moya: 63c4a59d2643c824df8c5a3b3a5f38dc2b48b055
+  Moya: 920d40f738e6f4ece84010cec701bb9693be8251
   Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
   OHHTTPStubs: 3a42f25c00563b71355ac73112ba2324e9e6cef4
   Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
-  ReactiveSwift: 99bfc623cd1d5edc78e36e49a5ba74f7a77aad08
+  ReactiveSwift: 0a2ef4a2f4443dfbcc47de600ab77e2d01b49994
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710

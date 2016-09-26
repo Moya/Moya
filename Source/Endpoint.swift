@@ -87,10 +87,12 @@ open class Endpoint<Target> {
     }
 }
 
-/// Extension for converting an `Endpoint` into an `NSURLRequest`.
+/// Extension for converting an `Endpoint` into an optional `URLRequest`.
 extension Endpoint {
-    public var urlRequest: URLRequest! {
-        var request: URLRequest = URLRequest(url: Foundation.URL(string: URL)!) // swiftlint:disable:this force_unwrapping
+    public var urlRequest: URLRequest? {
+        guard let requestURL = Foundation.URL(string: URL) else { return nil }
+        
+        var request: URLRequest = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
@@ -100,12 +102,15 @@ extension Endpoint {
 
 /// Required for making `Endpoint` conform to `Equatable`.
 public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+    if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
+    if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
+    if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
     return (lhs.urlRequest == rhs.urlRequest)
 }
 
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
-        return (urlRequest as NSURLRequest).hash
+        return urlRequest?.hashValue ?? URL.hashValue
     }
 }
