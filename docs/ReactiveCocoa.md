@@ -19,9 +19,9 @@ After that simple setup, you're off to the races:
 ```swift
 provider.request(.zen).start { (event) -> Void in
     switch event {
-    case .next(let response):
+    case let .value(response):
         // do something with the data
-    case .failed(let error):
+    case let .failed(error):
         // handle the error
     default:
         break
