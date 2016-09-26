@@ -24,7 +24,7 @@ extension Giphy: TargetType {
     public var parameters: [String: Any]? {
         switch self {
         case .upload:
-            return ["api_key": "dc6zaTOxFJmzC" as AnyObject, "username": "Moya" as AnyObject]
+            return ["api_key": "dc6zaTOxFJmzC", "username": "Moya"]
         }
     }
     public var task: Task {
