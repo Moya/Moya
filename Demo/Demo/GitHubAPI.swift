@@ -47,7 +47,7 @@ extension GitHub: TargetType {
     public var parameters: [String: Any]? {
         switch self {
         case .userRepositories(_):
-            return ["sort": "pushed" as AnyObject]
+            return ["sort": "pushed"]
         default:
             return nil
         }
