@@ -7,6 +7,7 @@
 - **Breaking Change** Renamed `endpointByAddingParameterEncoding` to `adding(newParameterEncoding:)`
 - **Breaking Change** Renamed `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)` to `adding(parameters:httpHeaderFields:parameterEncoding)`
 - **Breaking Change** Changed HTTP verbs enum to lowercase
+- `urlRequest` property of `Endpoint` is now truly optional. The request will fail if the `urlRequest` turns out to be nil and a `requestMapping` error will be returned together with the problematic url.
 
 # 8.0.0-beta.1
 

@@ -19,8 +19,8 @@ class EndpointSpec: QuickSpec {
                 let newEndpoint = endpoint.adding(newParameters: ["message": message])
                 let newEndpointMessageObject: Any? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
-                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 
                 
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
@@ -37,8 +37,8 @@ class EndpointSpec: QuickSpec {
                 let agent = "Zalbinian"
                 let newEndpoint = endpoint.adding(newHttpHeaderFields: ["User-Agent": agent])
                 let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
-                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointAgent).to(equal(agent))
@@ -53,8 +53,8 @@ class EndpointSpec: QuickSpec {
             it ("returns a new endpoint for endpointByAddingParameterEncoding") {
                 let parameterEncoding = JSONEncoding()
                 let newEndpoint = endpoint.adding(newParameterEncoding: parameterEncoding)
-                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
 
                 // Make sure we updated the parameter encoding
                 expect(newEncodedRequest).to(equal(encodedRequest))
@@ -75,8 +75,8 @@ class EndpointSpec: QuickSpec {
                     httpHeaderFields: ["User-Agent": agent],
                     parameterEncoding: parameterEncoding
                 )
-                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 
                 
                 let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
