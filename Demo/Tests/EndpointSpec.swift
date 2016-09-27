@@ -96,6 +96,25 @@ class EndpointSpec: QuickSpec {
                 let title = titleObject as? String
                 expect(title).to(equal("Dominar"))
             }
+
+            it("returns a nil urlRequest for an invalid URL") {
+                let badEndpoint = Endpoint<Empty>(URL: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+
+                expect(badEndpoint.urlRequest).to( beNil() )
+            }
         }
     }
+}
+
+enum Empty {
+}
+
+extension Empty: TargetType {
+    // None of these matter since the Empty has no cases and can't be instantiated.
+    var baseURL: URL { return URL(string: "http://example.com")! }
+    var path: String { return "" }
+    var method: Moya.Method { return .get }
+    var parameters: [String: Any]? { return nil }
+    var task: Task { return .request }
+    var sampleData: Data { return Data() }
 }
