@@ -11,7 +11,7 @@
 		0630A30C1BE1C60200AD4789 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0630A3101BE1C60200AD4789 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0630A3371BE1C92D00AD4789 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3361BE1C92D00AD4789 /* Alamofire.framework */; };
-		0630A3611BE1C96B00AD4789 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3601BE1C96B00AD4789 /* ReactiveCocoa.framework */; };
+		0630A3611BE1C96B00AD4789 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		0630A3641BE1C97E00AD4789 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3631BE1C97E00AD4789 /* RxSwift.framework */; };
 		0630A3661BE1C9FD00AD4789 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0630A3671BE1CA0400AD4789 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -66,7 +66,7 @@
 		0676A6961BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
 		0676A6991BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
 		091F0D6C1BDE9B0C009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
-		091F0D7C1BDE9B53009D0A49 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D7B1BDE9B53009D0A49 /* ReactiveCocoa.framework */; };
+		091F0D7C1BDE9B53009D0A49 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -81,14 +81,18 @@
 		465D2C5F1D457C4C0059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FB91BE7ED4D00F3D266 /* Moya.framework */; };
 		465D2C601D457C540059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10171BE7F11700F3D266 /* Moya.framework */; };
 		465D2C611D457C550059D1B6 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10171BE7F11700F3D266 /* Moya.framework */; };
+		468C5C051D9B356B008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38011D908CCC000E5149 /* ReactiveSwift.framework */; };
+		468C5C061D9B357E008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */; };
+		468C5C071D9B3585008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */; };
+		468C5C081D9B358A008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38031D908CD5000E5149 /* ReactiveSwift.framework */; };
 		554B100F1BE7EEA500F3D266 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10101BE7EEAD00F3D266 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10111BE7EEB000F3D266 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10321BE7F22100F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10311BE7F22100F3D266 /* Alamofire.framework */; };
-		554B10351BE7F23B00F3D266 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10341BE7F23B00F3D266 /* ReactiveCocoa.framework */; };
+		554B10351BE7F23B00F3D266 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		554B10381BE7F26100F3D266 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10371BE7F26100F3D266 /* RxSwift.framework */; };
 		554B103A1BE7F27C00F3D266 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10391BE7F27C00F3D266 /* Alamofire.framework */; };
-		554B103D1BE7F28D00F3D266 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B103C1BE7F28D00F3D266 /* ReactiveCocoa.framework */; };
+		554B103D1BE7F28D00F3D266 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		554B10401BE7F29900F3D266 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B103F1BE7F29900F3D266 /* RxSwift.framework */; };
 		554B105E1BE7F2E100F3D266 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B105F1BE7F2E500F3D266 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -115,10 +119,6 @@
 		5E5FA8F41D44630100ED49AF /* Cancellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C41D4462F300ED49AF /* Cancellable.swift */; };
 		5E5FA8F51D44630100ED49AF /* Moya+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C51D4462F300ED49AF /* Moya+Defaults.swift */; };
 		5E5FA8F71D44630100ED49AF /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C71D4462F300ED49AF /* Target.swift */; };
-		D0EC37FE1D908CB7000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */; };
-		D0EC38001D908CC2000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */; };
-		D0EC38021D908CCC000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38011D908CCC000E5149 /* ReactiveSwift.framework */; };
-		D0EC38041D908CD5000E5149 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38031D908CD5000E5149 /* ReactiveSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -189,7 +189,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				465D2C5C1D457C460059D1B6 /* Moya.framework in Frameworks */,
-				0630A3611BE1C96B00AD4789 /* ReactiveCocoa.framework in Frameworks */,
+				0630A3611BE1C96B00AD4789 /* (null) in Frameworks */,
+				468C5C061D9B357E008093BA /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,10 +209,6 @@
 			files = (
 				55B5D5BD1C1F6F2B00A11B82 /* Result.framework in Frameworks */,
 				091F0D6C1BDE9B0C009D0A49 /* Alamofire.framework in Frameworks */,
-				D0EC38021D908CCC000E5149 /* ReactiveSwift.framework in Frameworks */,
-				D0EC37FE1D908CB7000E5149 /* ReactiveSwift.framework in Frameworks */,
-				D0EC38001D908CC2000E5149 /* ReactiveSwift.framework in Frameworks */,
-				D0EC38041D908CD5000E5149 /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +217,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				465D2C5B1D457C410059D1B6 /* Moya.framework in Frameworks */,
-				091F0D7C1BDE9B53009D0A49 /* ReactiveCocoa.framework in Frameworks */,
+				091F0D7C1BDE9B53009D0A49 /* (null) in Frameworks */,
+				468C5C071D9B3585008093BA /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +245,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				465D2C5E1D457C4C0059D1B6 /* Moya.framework in Frameworks */,
-				554B10351BE7F23B00F3D266 /* ReactiveCocoa.framework in Frameworks */,
+				554B10351BE7F23B00F3D266 /* (null) in Frameworks */,
+				468C5C051D9B356B008093BA /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +273,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				465D2C611D457C550059D1B6 /* Moya.framework in Frameworks */,
-				554B103D1BE7F28D00F3D266 /* ReactiveCocoa.framework in Frameworks */,
+				554B103D1BE7F28D00F3D266 /* (null) in Frameworks */,
+				468C5C081D9B358A008093BA /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,10 +400,6 @@
 				0630A3631BE1C97E00AD4789 /* RxSwift.framework */,
 				554B10371BE7F26100F3D266 /* RxSwift.framework */,
 				554B103F1BE7F29900F3D266 /* RxSwift.framework */,
-				091F0D7B1BDE9B53009D0A49 /* ReactiveCocoa.framework */,
-				0630A3601BE1C96B00AD4789 /* ReactiveCocoa.framework */,
-				554B10341BE7F23B00F3D266 /* ReactiveCocoa.framework */,
-				554B103C1BE7F28D00F3D266 /* ReactiveCocoa.framework */,
 			);
 			name = "Dependency Frameworks";
 			sourceTree = "<group>";
@@ -1589,6 +1585,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1613,6 +1610,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
 				INFOPLIST_FILE = "Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
