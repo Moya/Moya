@@ -58,6 +58,7 @@ class MoyaProviderSpec: QuickSpec {
             
             let endpoint1 = provider.endpoint(target)
             let endpoint2 = provider.endpoint(target)
+            expect(endpoint1.urlRequest).toNot(beNil())
             expect(endpoint1.urlRequest).to(equal(endpoint2.urlRequest))
         }
 
@@ -234,7 +235,7 @@ class MoyaProviderSpec: QuickSpec {
                         if let urlRequest = endpoint.urlRequest {
                             done(.success(urlRequest))
                         } else {
-                            done(.failure(Moya.Error.requestMapping))
+                            done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                         }
                     }
                 }
@@ -334,7 +335,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping))
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
@@ -448,7 +449,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping))
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
@@ -469,7 +470,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping))
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
@@ -490,7 +491,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping))
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)

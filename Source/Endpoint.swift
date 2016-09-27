@@ -91,7 +91,7 @@ open class Endpoint<Target> {
 extension Endpoint {
     public var urlRequest: URLRequest? {
         guard let requestURL = Foundation.URL(string: URL) else { return nil }
-        
+
         var request: URLRequest = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
