@@ -1,6 +1,6 @@
 import Foundation
 import RxSwift
-#if !COCOAPOD
+#if !COCOAPODS
 import Moya
 #endif
 

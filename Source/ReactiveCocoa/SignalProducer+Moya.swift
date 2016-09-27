@@ -1,6 +1,6 @@
 import Foundation
 import ReactiveSwift
-#if !COCOAPOD
+#if !COCOAPODS
 import Moya
 #endif
 
