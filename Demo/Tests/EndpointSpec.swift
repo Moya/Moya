@@ -19,8 +19,8 @@ class EndpointSpec: QuickSpec {
                 let newEndpoint = endpoint.adding(newParameters: ["message": message])
                 let newEndpointMessageObject: Any? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
-                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 
                 
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
@@ -37,8 +37,8 @@ class EndpointSpec: QuickSpec {
                 let agent = "Zalbinian"
                 let newEndpoint = endpoint.adding(newHttpHeaderFields: ["User-Agent": agent])
                 let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
-                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 
                 // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
                 expect(newEndpointAgent).to(equal(agent))
@@ -53,8 +53,8 @@ class EndpointSpec: QuickSpec {
             it ("returns a new endpoint for endpointByAddingParameterEncoding") {
                 let parameterEncoding = JSONEncoding()
                 let newEndpoint = endpoint.adding(newParameterEncoding: parameterEncoding)
-                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
 
                 // Make sure we updated the parameter encoding
                 expect(newEncodedRequest).to(equal(encodedRequest))
@@ -75,8 +75,8 @@ class EndpointSpec: QuickSpec {
                     httpHeaderFields: ["User-Agent": agent],
                     parameterEncoding: parameterEncoding
                 )
-                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
-                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest, with: newEndpoint.parameters)
+                let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
+                let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 
                 
                 let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
@@ -96,6 +96,25 @@ class EndpointSpec: QuickSpec {
                 let title = titleObject as? String
                 expect(title).to(equal("Dominar"))
             }
+
+            it("returns a nil urlRequest for an invalid URL") {
+                let badEndpoint = Endpoint<Empty>(URL: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+
+                expect(badEndpoint.urlRequest).to( beNil() )
+            }
         }
     }
+}
+
+enum Empty {
+}
+
+extension Empty: TargetType {
+    // None of these matter since the Empty has no cases and can't be instantiated.
+    var baseURL: URL { return URL(string: "http://example.com")! }
+    var path: String { return "" }
+    var method: Moya.Method { return .get }
+    var parameters: [String: Any]? { return nil }
+    var task: Task { return .request }
+    var sampleData: Data { return Data() }
 }

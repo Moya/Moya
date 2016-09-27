@@ -7,6 +7,7 @@ public enum Error: Swift.Error {
     case statusCode(Response)
     case data(Response)
     case underlying(Swift.Error)
+    case requestMapping(String)
 }
 
 public extension Moya.Error {
@@ -19,6 +20,7 @@ public extension Moya.Error {
         case .statusCode(let response): return response
         case .data(let response): return response
         case .underlying: return nil
+        case .requestMapping: return nil
         }
     }
 }

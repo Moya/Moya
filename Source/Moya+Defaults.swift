@@ -8,7 +8,11 @@ public extension MoyaProvider {
     }
 
     public final class func DefaultRequestMapping(_ endpoint: Endpoint<Target>, closure: RequestResultClosure) {
-        return closure(.success(endpoint.urlRequest))
+        if let urlRequest = endpoint.urlRequest {
+            closure(.success(urlRequest))
+        } else {
+            closure(.failure(Error.requestMapping(endpoint.URL)))
+        }
     }
 
     public final class func DefaultAlamofireManager() -> Manager {

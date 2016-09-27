@@ -51,6 +51,13 @@ public func beOfSameErrorType(_ expectedValue: Moya.Error) -> MatcherFunc<Moya.E
                 default:
                     return false
                 }
+            case .requestMapping:
+                switch expectedValue {
+                case .requestMapping:
+                    return true
+                default:
+                    return false
+                }
             }
         } catch {
             return false;
