@@ -11,7 +11,7 @@ public struct ProgressResponse {
     public let response: Response?
     public let progressObject: Progress?
 
-    init(progress: Progress? = nil, response: Response? = nil) {
+    public init(progress: Progress? = nil, response: Response? = nil) {
         self.progressObject = progress
         self.response = response
     }
