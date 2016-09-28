@@ -72,7 +72,7 @@ pod 'RxCocoa', '3.0.0-beta.1'
 # or
 
 pod 'Moya/ReactiveCocoa'
-pod 'ReactiveSwift', :podspec => 'https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/616a2461690008c61cdecd39200c4f4bb3b107bb/ReactiveSwift.podspec'
+pod 'ReactiveSwift', '1.0.0-alpha.1'
 ```
 
 Then run `pod install`.
