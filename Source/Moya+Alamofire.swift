@@ -26,14 +26,14 @@ public typealias DownloadDestination = Alamofire.DownloadRequest.DownloadFileDes
 extension Request: RequestType { }
 
 /// Internal token that can be used to cancel requests
-internal final class CancellableToken: Cancellable, CustomDebugStringConvertible {
+public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
-    fileprivate(set) var cancelled: Bool = false
+    public fileprivate(set) var cancelled: Bool = false
 
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
 
-    func cancel() {
+    public func cancel() {
         _ = lock.wait(timeout: DispatchTime.distantFuture)
         defer { lock.signal() }
         guard !cancelled else { return }
@@ -41,7 +41,7 @@ internal final class CancellableToken: Cancellable, CustomDebugStringConvertible
         cancelAction()
     }
 
-    init(action: @escaping () -> Void) {
+    public init(action: @escaping () -> Void) {
         self.cancelAction = action
         self.request = nil
     }
@@ -53,7 +53,7 @@ internal final class CancellableToken: Cancellable, CustomDebugStringConvertible
         }
     }
 
-    var debugDescription: String {
+    public var debugDescription: String {
         guard let request = self.request else {
             return "Empty Request"
         }
