@@ -8,6 +8,7 @@
 - **Breaking Change** Renamed `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)` to `adding(parameters:httpHeaderFields:parameterEncoding)`
 - **Breaking Change** Changed HTTP verbs enum to lowercase
 - `urlRequest` property of `Endpoint` is now truly optional. The request will fail if the `urlRequest` turns out to be nil and a `requestMapping` error will be returned together with the problematic url.
+- **Breaking Change** Made RxMoya & ReactiveMoya frameworks dependant on Moya framework, making them slimmer and not re-including Moya source in the Reactive extensions [PR](https://github.com/Moya/Moya/pull/563).
 
 # 8.0.0-beta.1
 

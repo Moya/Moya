@@ -2,7 +2,7 @@ import Foundation
 import Result
 
 /// Internal extension to keep the inner-workings outside the main Moya.swift file.
-internal extension MoyaProvider {
+public extension MoyaProvider {
     // Yup, we're disabling these. The function is complicated, but breaking it apart requires a large effort.
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
@@ -99,7 +99,7 @@ internal extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
+    public final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
         return {
             if token.cancelled {
                 self.cancelCompletion(completion, target: target)
