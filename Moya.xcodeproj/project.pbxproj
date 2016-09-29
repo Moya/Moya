@@ -65,14 +65,6 @@
 		0676A6961BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
 		0676A6991BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
 		091F0D6C1BDE9B0C009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
-		464CC4731D9DB604006B3E72 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4691D9DB604006B3E72 /* GitHubAPI.swift */; };
-		464CC4741D9DB604006B3E72 /* GiphyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC46A1D9DB604006B3E72 /* GiphyAPI.swift */; };
-		464CC4751D9DB604006B3E72 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC46B1D9DB604006B3E72 /* GitHubUserContentAPI.swift */; };
-		464CC4761D9DB604006B3E72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC46C1D9DB604006B3E72 /* AppDelegate.swift */; };
-		464CC4771D9DB604006B3E72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC46D1D9DB604006B3E72 /* ViewController.swift */; };
-		464CC4781D9DB604006B3E72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 464CC46E1D9DB604006B3E72 /* Main.storyboard */; };
-		464CC4791D9DB604006B3E72 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4701D9DB604006B3E72 /* Images.xcassets */; };
-		464CC47A1D9DB604006B3E72 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4711D9DB604006B3E72 /* LaunchScreen.xib */; };
 		464CC4831D9DBC54006B3E72 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
 		464CC4841D9DBC54006B3E72 /* Moya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		464CC48B1D9DBC54006B3E72 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D831BDE9D4D009D0A49 /* RxMoya.framework */; };
@@ -87,6 +79,14 @@
 		464CC4991D9DBC63006B3E72 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		464CC49A1D9DBC63006B3E72 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0670D3291BE1CB010062593A /* RxSwift.framework */; };
 		464CC49B1D9DBC63006B3E72 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0670D3291BE1CB010062593A /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC49D1D9DBCF2006B3E72 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC49C1D9DBCF2006B3E72 /* AppDelegate.swift */; };
+		464CC4A31D9DBD09006B3E72 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 464CC49F1D9DBD09006B3E72 /* LaunchScreen.xib */; };
+		464CC4A41D9DBD09006B3E72 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4A11D9DBD09006B3E72 /* Main.storyboard */; };
+		464CC4A91D9DBD1A006B3E72 /* GiphyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A51D9DBD1A006B3E72 /* GiphyAPI.swift */; };
+		464CC4AA1D9DBD1A006B3E72 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A61D9DBD1A006B3E72 /* GitHubAPI.swift */; };
+		464CC4AB1D9DBD1A006B3E72 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A71D9DBD1A006B3E72 /* GitHubUserContentAPI.swift */; };
+		464CC4AC1D9DBD1A006B3E72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A81D9DBD1A006B3E72 /* ViewController.swift */; };
+		464CC4AE1D9DBD24006B3E72 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4AD1D9DBD24006B3E72 /* Images.xcassets */; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -213,14 +213,14 @@
 		091F0D831BDE9D4D009D0A49 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		464CC4571D9DB576006B3E72 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		464CC4651D9DB577006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		464CC4691D9DB604006B3E72 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubAPI.swift; path = Demo/GitHubAPI.swift; sourceTree = "<group>"; };
-		464CC46A1D9DB604006B3E72 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GiphyAPI.swift; path = Demo/GiphyAPI.swift; sourceTree = "<group>"; };
-		464CC46B1D9DB604006B3E72 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubUserContentAPI.swift; path = Demo/GitHubUserContentAPI.swift; sourceTree = "<group>"; };
-		464CC46C1D9DB604006B3E72 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/AppDelegate.swift; sourceTree = "<group>"; };
-		464CC46D1D9DB604006B3E72 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Demo/ViewController.swift; sourceTree = "<group>"; };
-		464CC46F1D9DB604006B3E72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Demo/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		464CC4701D9DB604006B3E72 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Demo/Images.xcassets; sourceTree = "<group>"; };
-		464CC4721D9DB604006B3E72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Demo/Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		464CC49C1D9DBCF2006B3E72 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		464CC4A01D9DBD09006B3E72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		464CC4A21D9DBD09006B3E72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		464CC4A51D9DBD1A006B3E72 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyAPI.swift; sourceTree = "<group>"; };
+		464CC4A61D9DBD1A006B3E72 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		464CC4A71D9DBD1A006B3E72 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubUserContentAPI.swift; sourceTree = "<group>"; };
+		464CC4A81D9DBD1A006B3E72 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		464CC4AD1D9DBD24006B3E72 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FD31BE7ED8700F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -491,14 +491,14 @@
 		464CC4581D9DB577006B3E72 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				464CC4691D9DB604006B3E72 /* GitHubAPI.swift */,
-				464CC46A1D9DB604006B3E72 /* GiphyAPI.swift */,
-				464CC46B1D9DB604006B3E72 /* GitHubUserContentAPI.swift */,
-				464CC46C1D9DB604006B3E72 /* AppDelegate.swift */,
-				464CC46D1D9DB604006B3E72 /* ViewController.swift */,
-				464CC46E1D9DB604006B3E72 /* Main.storyboard */,
-				464CC4701D9DB604006B3E72 /* Images.xcassets */,
-				464CC4711D9DB604006B3E72 /* LaunchScreen.xib */,
+				464CC49C1D9DBCF2006B3E72 /* AppDelegate.swift */,
+				464CC4A51D9DBD1A006B3E72 /* GiphyAPI.swift */,
+				464CC4A61D9DBD1A006B3E72 /* GitHubAPI.swift */,
+				464CC4A71D9DBD1A006B3E72 /* GitHubUserContentAPI.swift */,
+				464CC4A81D9DBD1A006B3E72 /* ViewController.swift */,
+				464CC4AD1D9DBD24006B3E72 /* Images.xcassets */,
+				464CC49F1D9DBD09006B3E72 /* LaunchScreen.xib */,
+				464CC4A11D9DBD09006B3E72 /* Main.storyboard */,
 				464CC47B1D9DB616006B3E72 /* Supporting Files */,
 			);
 			path = Demo;
@@ -966,9 +966,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4781D9DB604006B3E72 /* Main.storyboard in Resources */,
-				464CC47A1D9DB604006B3E72 /* LaunchScreen.xib in Resources */,
-				464CC4791D9DB604006B3E72 /* Images.xcassets in Resources */,
+				464CC4AE1D9DBD24006B3E72 /* Images.xcassets in Resources */,
+				464CC4A31D9DBD09006B3E72 /* LaunchScreen.xib in Resources */,
+				464CC4A41D9DBD09006B3E72 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,11 +1099,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4771D9DB604006B3E72 /* ViewController.swift in Sources */,
-				464CC4761D9DB604006B3E72 /* AppDelegate.swift in Sources */,
-				464CC4741D9DB604006B3E72 /* GiphyAPI.swift in Sources */,
-				464CC4731D9DB604006B3E72 /* GitHubAPI.swift in Sources */,
-				464CC4751D9DB604006B3E72 /* GitHubUserContentAPI.swift in Sources */,
+				464CC4AC1D9DBD1A006B3E72 /* ViewController.swift in Sources */,
+				464CC4AB1D9DBD1A006B3E72 /* GitHubUserContentAPI.swift in Sources */,
+				464CC4A91D9DBD1A006B3E72 /* GiphyAPI.swift in Sources */,
+				464CC4AA1D9DBD1A006B3E72 /* GitHubAPI.swift in Sources */,
+				464CC49D1D9DBCF2006B3E72 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1206,20 +1206,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		464CC46E1D9DB604006B3E72 /* Main.storyboard */ = {
+		464CC49F1D9DBD09006B3E72 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				464CC46F1D9DB604006B3E72 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		464CC4711D9DB604006B3E72 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				464CC4721D9DB604006B3E72 /* Base */,
+				464CC4A01D9DBD09006B3E72 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		464CC4A11D9DBD09006B3E72 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				464CC4A21D9DBD09006B3E72 /* Base */,
+			);
+			name = Main.storyboard;
+			path = Base.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2054,6 +2056,7 @@
 				464CC4671D9DB577006B3E72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		554B0FBE1BE7ED4D00F3D266 /* Build configuration list for PBXNativeTarget "Moya tvOS" */ = {
 			isa = XCConfigurationList;
