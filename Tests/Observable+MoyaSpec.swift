@@ -3,6 +3,10 @@ import Moya
 import RxSwift
 import Nimble
 
+#if !COCOAPODS
+import RxMoya
+#endif
+
 #if os(iOS) || os(watchOS) || os(tvOS)
     private func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
         return UIImageJPEGRepresentation(image, compression)
