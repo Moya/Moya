@@ -50,6 +50,7 @@ You **have to** add optional parameters like shown above, one per line. Optional
 
 ```swift
 //...
+	// This won't work!
 	public var parameters: [String: Any]? {
 	    switch self {
 	    case .users(let limit):
