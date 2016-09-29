@@ -138,6 +138,15 @@
 		464CC5231D9DC4B1006B3E72 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5221D9DC4B1006B3E72 /* OHHTTPStubs.framework */; };
 		464CC5251D9DC4BE006B3E72 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5241D9DC4BE006B3E72 /* OHHTTPStubs.framework */; };
 		464CC5271D9DC4C6006B3E72 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */; };
+		464CC5281D9DC7DE006B3E72 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
+		464CC5291D9DC7ED006B3E72 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D441BDE9A01009D0A49 /* ReactiveMoya.framework */; };
+		464CC52A1D9DC7EF006B3E72 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D831BDE9D4D009D0A49 /* RxMoya.framework */; };
+		464CC52B1D9DC7F2006B3E72 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3181BE1C84500AD4789 /* Moya.framework */; };
+		464CC52C1D9DC7F6006B3E72 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3291BE1C85000AD4789 /* ReactiveMoya.framework */; };
+		464CC52D1D9DC7F9006B3E72 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3341BE1C85B00AD4789 /* RxMoya.framework */; };
+		464CC52E1D9DC7FD006B3E72 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FB91BE7ED4D00F3D266 /* Moya.framework */; };
+		464CC52F1D9DC7FF006B3E72 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */; };
+		464CC5301D9DC802006B3E72 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FD31BE7ED8700F3D266 /* RxMoya.framework */; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -397,6 +406,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC5281D9DC7DE006B3E72 /* Moya.framework in Frameworks */,
+				464CC5291D9DC7ED006B3E72 /* ReactiveMoya.framework in Frameworks */,
+				464CC52A1D9DC7EF006B3E72 /* RxMoya.framework in Frameworks */,
 				464CC5231D9DC4B1006B3E72 /* OHHTTPStubs.framework in Frameworks */,
 				464CC5151D9DC249006B3E72 /* Quick.framework in Frameworks */,
 				464CC5141D9DC249006B3E72 /* Nimble.framework in Frameworks */,
@@ -407,6 +419,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC52E1D9DC7FD006B3E72 /* Moya.framework in Frameworks */,
+				464CC52F1D9DC7FF006B3E72 /* ReactiveMoya.framework in Frameworks */,
+				464CC5301D9DC802006B3E72 /* RxMoya.framework in Frameworks */,
 				464CC5271D9DC4C6006B3E72 /* OHHTTPStubs.framework in Frameworks */,
 				464CC5211D9DC3A0006B3E72 /* Quick.framework in Frameworks */,
 				464CC5201D9DC3A0006B3E72 /* Nimble.framework in Frameworks */,
@@ -417,6 +432,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC52B1D9DC7F2006B3E72 /* Moya.framework in Frameworks */,
+				464CC52C1D9DC7F6006B3E72 /* ReactiveMoya.framework in Frameworks */,
+				464CC52D1D9DC7F9006B3E72 /* RxMoya.framework in Frameworks */,
 				464CC5251D9DC4BE006B3E72 /* OHHTTPStubs.framework in Frameworks */,
 				464CC51D1D9DC2DC006B3E72 /* Quick.framework in Frameworks */,
 				464CC51C1D9DC2DC006B3E72 /* Nimble.framework in Frameworks */,
