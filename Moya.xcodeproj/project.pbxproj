@@ -132,6 +132,15 @@
 		464CC50D1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */; };
 		464CC50E1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */; };
 		464CC50F1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */; };
+		464CC5141D9DC249006B3E72 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5121D9DC249006B3E72 /* Nimble.framework */; };
+		464CC5151D9DC249006B3E72 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5131D9DC249006B3E72 /* Quick.framework */; };
+		464CC51C1D9DC2DC006B3E72 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51A1D9DC2DC006B3E72 /* Nimble.framework */; };
+		464CC51D1D9DC2DC006B3E72 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51B1D9DC2DC006B3E72 /* Quick.framework */; };
+		464CC5201D9DC3A0006B3E72 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51E1D9DC3A0006B3E72 /* Nimble.framework */; };
+		464CC5211D9DC3A0006B3E72 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51F1D9DC3A0006B3E72 /* Quick.framework */; };
+		464CC5231D9DC4B1006B3E72 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5221D9DC4B1006B3E72 /* OHHTTPStubs.framework */; };
+		464CC5251D9DC4BE006B3E72 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5241D9DC4BE006B3E72 /* OHHTTPStubs.framework */; };
+		464CC5271D9DC4C6006B3E72 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -284,6 +293,15 @@
 		464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		464CC4E11D9DBFD6006B3E72 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
 		464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
+		464CC5121D9DC249006B3E72 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
+		464CC5131D9DC249006B3E72 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = SOURCE_ROOT; };
+		464CC51A1D9DC2DC006B3E72 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = SOURCE_ROOT; };
+		464CC51B1D9DC2DC006B3E72 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = SOURCE_ROOT; };
+		464CC51E1D9DC3A0006B3E72 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
+		464CC51F1D9DC3A0006B3E72 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = SOURCE_ROOT; };
+		464CC5221D9DC4B1006B3E72 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = SOURCE_ROOT; };
+		464CC5241D9DC4BE006B3E72 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/Mac/OHHTTPStubs.framework; sourceTree = SOURCE_ROOT; };
+		464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/tvOS/OHHTTPStubs.framework; sourceTree = SOURCE_ROOT; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FD31BE7ED8700F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -382,6 +400,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC5231D9DC4B1006B3E72 /* OHHTTPStubs.framework in Frameworks */,
+				464CC5151D9DC249006B3E72 /* Quick.framework in Frameworks */,
+				464CC5141D9DC249006B3E72 /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +410,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC5271D9DC4C6006B3E72 /* OHHTTPStubs.framework in Frameworks */,
+				464CC5211D9DC3A0006B3E72 /* Quick.framework in Frameworks */,
+				464CC5201D9DC3A0006B3E72 /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +420,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC5251D9DC4BE006B3E72 /* OHHTTPStubs.framework in Frameworks */,
+				464CC51D1D9DC2DC006B3E72 /* Quick.framework in Frameworks */,
+				464CC51C1D9DC2DC006B3E72 /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +644,7 @@
 				464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */,
 				464CC4E11D9DBFD6006B3E72 /* testImage.png */,
 				464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */,
+				464CC5111D9DC232006B3E72 /* Dependency Frameworks */,
 				464CC5101D9DBFF2006B3E72 /* Supporting Files */,
 			);
 			path = Tests;
@@ -628,6 +656,22 @@
 				464CC4D71D9DBFD6006B3E72 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		464CC5111D9DC232006B3E72 /* Dependency Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				464CC5121D9DC249006B3E72 /* Nimble.framework */,
+				464CC51E1D9DC3A0006B3E72 /* Nimble.framework */,
+				464CC51A1D9DC2DC006B3E72 /* Nimble.framework */,
+				464CC5131D9DC249006B3E72 /* Quick.framework */,
+				464CC51F1D9DC3A0006B3E72 /* Quick.framework */,
+				464CC51B1D9DC2DC006B3E72 /* Quick.framework */,
+				464CC5221D9DC4B1006B3E72 /* OHHTTPStubs.framework */,
+				464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */,
+				464CC5241D9DC4BE006B3E72 /* OHHTTPStubs.framework */,
+			);
+			name = "Dependency Frameworks";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1956,6 +2000,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1974,6 +2022,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1990,6 +2042,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-tvOS";
@@ -2008,6 +2064,10 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-tvOS";
@@ -2026,6 +2086,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-macOS";
@@ -2044,6 +2108,10 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-macOS";
