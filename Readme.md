@@ -97,11 +97,11 @@ After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can
 provider = MoyaProvider<GitHub>()
 provider.request(.Zen) { result in
     switch result {
-    case let .Success(moyaResponse):
+    case let .success(moyaResponse):
         let data = moyaResponse.data
         let statusCode = moyaResponse.statusCode
         // do something with the response data or statusCode
-    case let .Failure(error):
+    case let .failure(error):
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
         // timed out).  If the server responds with a 4xx or 5xx error, that
