@@ -53,7 +53,7 @@ You **have to** add optional parameters like shown above, one per line. Optional
 	public var parameters: [String: Any]? {
 	    switch self {
 	    case .users(let limit):
-	        let params: [String: Any] = ["limit" = limit]
+	        let params: [String: Any] = ["limit": limit]
 	        return params
         default:
             return nil
