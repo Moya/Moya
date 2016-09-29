@@ -6,6 +6,10 @@ import OHHTTPStubs
 import Moya
 import Alamofire
 
+#if !COCOAPODS
+import ReactiveMoya
+#endif
+
 class ReactiveCocoaMoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: ReactiveCocoaMoyaProvider<GitHub>!
