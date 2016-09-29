@@ -5,21 +5,21 @@ Suppose you want to call `api/users?limit=10` but also `api/users`:
 
 ```swift
 public enum MyService {
-	case users(limit: Int?)
+    case users(limit: Int?)
 }
 
 extension MyService: TargetType {
 //...
-	public var parameters: [String: Any]? {
-	    switch self {
-	    case .users(let limit):
-		var params: [String: Any] = [:]
-		params["limit"] = limit
-		return params
-	    default:
-	        return nil
-	}
-}
+    public var parameters: [String: Any]? {
+        switch self {
+        case .users(let limit):
+            var params: [String: Any] = [:]
+            params["limit"] = limit
+            return params
+        default:
+            return nil
+        }
+    }
 //...
 }
 ```
