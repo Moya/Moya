@@ -96,9 +96,6 @@
 		464CC4E91D9DBFD6006B3E72 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */; };
 		464CC4EA1D9DBFD6006B3E72 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */; };
 		464CC4EB1D9DBFD6006B3E72 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */; };
-		464CC4EC1D9DBFD6006B3E72 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4D71D9DBFD6006B3E72 /* Info.plist */; };
-		464CC4ED1D9DBFD6006B3E72 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4D71D9DBFD6006B3E72 /* Info.plist */; };
-		464CC4EE1D9DBFD6006B3E72 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4D71D9DBFD6006B3E72 /* Info.plist */; };
 		464CC4EF1D9DBFD6006B3E72 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */; };
 		464CC4F01D9DBFD6006B3E72 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */; };
 		464CC4F11D9DBFD6006B3E72 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */; };
@@ -1204,7 +1201,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4EC1D9DBFD6006B3E72 /* Info.plist in Resources */,
 				464CC50A1D9DBFD6006B3E72 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1213,7 +1209,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4ED1D9DBFD6006B3E72 /* Info.plist in Resources */,
 				464CC50B1D9DBFD6006B3E72 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1222,7 +1217,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4EE1D9DBFD6006B3E72 /* Info.plist in Resources */,
 				464CC50C1D9DBFD6006B3E72 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
