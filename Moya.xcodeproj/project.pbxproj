@@ -87,6 +87,9 @@
 		464CC4AB1D9DBD1A006B3E72 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A71D9DBD1A006B3E72 /* GitHubUserContentAPI.swift */; };
 		464CC4AC1D9DBD1A006B3E72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A81D9DBD1A006B3E72 /* ViewController.swift */; };
 		464CC4AE1D9DBD24006B3E72 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4AD1D9DBD24006B3E72 /* Images.xcassets */; };
+		464CC4B61D9DBE35006B3E72 /* MoyaTests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4B51D9DBE35006B3E72 /* MoyaTests_iOS.swift */; };
+		464CC4C21D9DBE56006B3E72 /* MoyaTests_tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4C11D9DBE56006B3E72 /* MoyaTests_tvOS.swift */; };
+		464CC4CE1D9DBE76006B3E72 /* MoyaTests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4CD1D9DBE76006B3E72 /* MoyaTests_macOS.swift */; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -221,6 +224,15 @@
 		464CC4A71D9DBD1A006B3E72 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubUserContentAPI.swift; sourceTree = "<group>"; };
 		464CC4A81D9DBD1A006B3E72 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		464CC4AD1D9DBD24006B3E72 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		464CC4B31D9DBE35006B3E72 /* MoyaTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		464CC4B51D9DBE35006B3E72 /* MoyaTests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests_iOS.swift; sourceTree = "<group>"; };
+		464CC4B71D9DBE35006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		464CC4BF1D9DBE56006B3E72 /* MoyaTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		464CC4C11D9DBE56006B3E72 /* MoyaTests_tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests_tvOS.swift; sourceTree = "<group>"; };
+		464CC4C31D9DBE56006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		464CC4CB1D9DBE76006B3E72 /* MoyaTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		464CC4CD1D9DBE76006B3E72 /* MoyaTests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests_macOS.swift; sourceTree = "<group>"; };
+		464CC4CF1D9DBE76006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FD31BE7ED8700F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -312,6 +324,27 @@
 				464CC4961D9DBC63006B3E72 /* Result.framework in Frameworks */,
 				464CC4901D9DBC5D006B3E72 /* ReactiveMoya.framework in Frameworks */,
 				464CC4941D9DBC63006B3E72 /* ReactiveSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4B01D9DBE35006B3E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4BC1D9DBE56006B3E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4C81D9DBE76006B3E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +471,9 @@
 				0676A5D31BFE80D3001C7F55 /* Source */,
 				0630A3001BE1C60200AD4789 /* Supporting Files */,
 				464CC4581D9DB577006B3E72 /* Demo */,
+				464CC4B41D9DBE35006B3E72 /* MoyaTests-iOS */,
+				464CC4C01D9DBE56006B3E72 /* MoyaTests-tvOS */,
+				464CC4CC1D9DBE76006B3E72 /* MoyaTests-macOS */,
 				091F0D351BDE998F009D0A49 /* Products */,
 				091F0D7D1BDE9CF4009D0A49 /* Dependency Frameworks */,
 			);
@@ -461,6 +497,9 @@
 				554B10271BE7F13600F3D266 /* ReactiveMoya.framework */,
 				554B10301BE7F14300F3D266 /* RxMoya.framework */,
 				464CC4571D9DB576006B3E72 /* Demo.app */,
+				464CC4B31D9DBE35006B3E72 /* MoyaTests-iOS.xctest */,
+				464CC4BF1D9DBE56006B3E72 /* MoyaTests-tvOS.xctest */,
+				464CC4CB1D9DBE76006B3E72 /* MoyaTests-macOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -510,6 +549,33 @@
 				464CC4651D9DB577006B3E72 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		464CC4B41D9DBE35006B3E72 /* MoyaTests-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				464CC4B51D9DBE35006B3E72 /* MoyaTests_iOS.swift */,
+				464CC4B71D9DBE35006B3E72 /* Info.plist */,
+			);
+			path = "MoyaTests-iOS";
+			sourceTree = "<group>";
+		};
+		464CC4C01D9DBE56006B3E72 /* MoyaTests-tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				464CC4C11D9DBE56006B3E72 /* MoyaTests_tvOS.swift */,
+				464CC4C31D9DBE56006B3E72 /* Info.plist */,
+			);
+			path = "MoyaTests-tvOS";
+			sourceTree = "<group>";
+		};
+		464CC4CC1D9DBE76006B3E72 /* MoyaTests-macOS */ = {
+			isa = PBXGroup;
+			children = (
+				464CC4CD1D9DBE76006B3E72 /* MoyaTests_macOS.swift */,
+				464CC4CF1D9DBE76006B3E72 /* Info.plist */,
+			);
+			path = "MoyaTests-macOS";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -743,6 +809,57 @@
 			productReference = 464CC4571D9DB576006B3E72 /* Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		464CC4B21D9DBE35006B3E72 /* MoyaTests-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 464CC4BA1D9DBE35006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-iOS" */;
+			buildPhases = (
+				464CC4AF1D9DBE35006B3E72 /* Sources */,
+				464CC4B01D9DBE35006B3E72 /* Frameworks */,
+				464CC4B11D9DBE35006B3E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MoyaTests-iOS";
+			productName = "MoyaTests-iOS";
+			productReference = 464CC4B31D9DBE35006B3E72 /* MoyaTests-iOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		464CC4BE1D9DBE56006B3E72 /* MoyaTests-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 464CC4C41D9DBE56006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-tvOS" */;
+			buildPhases = (
+				464CC4BB1D9DBE56006B3E72 /* Sources */,
+				464CC4BC1D9DBE56006B3E72 /* Frameworks */,
+				464CC4BD1D9DBE56006B3E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MoyaTests-tvOS";
+			productName = "MoyaTests-tvOS";
+			productReference = 464CC4BF1D9DBE56006B3E72 /* MoyaTests-tvOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		464CC4CA1D9DBE76006B3E72 /* MoyaTests-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 464CC4D01D9DBE76006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-macOS" */;
+			buildPhases = (
+				464CC4C71D9DBE76006B3E72 /* Sources */,
+				464CC4C81D9DBE76006B3E72 /* Frameworks */,
+				464CC4C91D9DBE76006B3E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MoyaTests-macOS";
+			productName = "MoyaTests-macOS";
+			productReference = 464CC4CB1D9DBE76006B3E72 /* MoyaTests-macOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		554B0FB81BE7ED4D00F3D266 /* Moya tvOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554B0FBE1BE7ED4D00F3D266 /* Build configuration list for PBXNativeTarget "Moya tvOS" */;
@@ -881,6 +998,18 @@
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
+					464CC4B21D9DBE35006B3E72 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+					464CC4BE1D9DBE56006B3E72 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+					464CC4CA1D9DBE76006B3E72 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
 					554B0FB81BE7ED4D00F3D266 = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -915,6 +1044,9 @@
 				554B101F1BE7F13600F3D266 /* ReactiveMoya watchOS */,
 				554B10281BE7F14300F3D266 /* RxMoya watchOS */,
 				464CC4561D9DB576006B3E72 /* Demo */,
+				464CC4B21D9DBE35006B3E72 /* MoyaTests-iOS */,
+				464CC4BE1D9DBE56006B3E72 /* MoyaTests-tvOS */,
+				464CC4CA1D9DBE76006B3E72 /* MoyaTests-macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -969,6 +1101,27 @@
 				464CC4AE1D9DBD24006B3E72 /* Images.xcassets in Resources */,
 				464CC4A31D9DBD09006B3E72 /* LaunchScreen.xib in Resources */,
 				464CC4A41D9DBD09006B3E72 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4B11D9DBE35006B3E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4BD1D9DBE56006B3E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4C91D9DBE76006B3E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1104,6 +1257,30 @@
 				464CC4A91D9DBD1A006B3E72 /* GiphyAPI.swift in Sources */,
 				464CC4AA1D9DBD1A006B3E72 /* GitHubAPI.swift in Sources */,
 				464CC49D1D9DBCF2006B3E72 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4AF1D9DBE35006B3E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				464CC4B61D9DBE35006B3E72 /* MoyaTests_iOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4BB1D9DBE56006B3E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				464CC4C21D9DBE56006B3E72 /* MoyaTests_tvOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC4C71D9DBE76006B3E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				464CC4CE1D9DBE76006B3E72 /* MoyaTests_macOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1677,6 +1854,107 @@
 			};
 			name = Release;
 		};
+		464CC4B81D9DBE35006B3E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "MoyaTests-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		464CC4B91D9DBE35006B3E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "MoyaTests-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		464CC4C51D9DBE56006B3E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = "MoyaTests-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		464CC4C61D9DBE56006B3E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = "MoyaTests-tvOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-tvOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 3.0;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		464CC4D11D9DBE76006B3E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "MoyaTests-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		464CC4D21D9DBE76006B3E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "MoyaTests-macOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "moya.MoyaTests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		554B0FBF1BE7ED4D00F3D266 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2057,6 +2335,30 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		464CC4BA1D9DBE35006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				464CC4B81D9DBE35006B3E72 /* Debug */,
+				464CC4B91D9DBE35006B3E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		464CC4C41D9DBE56006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				464CC4C51D9DBE56006B3E72 /* Debug */,
+				464CC4C61D9DBE56006B3E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		464CC4D01D9DBE76006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				464CC4D11D9DBE76006B3E72 /* Debug */,
+				464CC4D21D9DBE76006B3E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		554B0FBE1BE7ED4D00F3D266 /* Build configuration list for PBXNativeTarget "Moya tvOS" */ = {
 			isa = XCConfigurationList;
