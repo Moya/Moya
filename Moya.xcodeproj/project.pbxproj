@@ -147,6 +147,27 @@
 		464CC52E1D9DC7FD006B3E72 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FB91BE7ED4D00F3D266 /* Moya.framework */; };
 		464CC52F1D9DC7FF006B3E72 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */; };
 		464CC5301D9DC802006B3E72 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FD31BE7ED8700F3D266 /* RxMoya.framework */; };
+		464CC5341D9DC922006B3E72 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5121D9DC249006B3E72 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5351D9DC922006B3E72 /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5131D9DC249006B3E72 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5361D9DC922006B3E72 /* OHHTTPStubs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5221D9DC4B1006B3E72 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5371D9DC92E006B3E72 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5381D9DC92E006B3E72 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55B5D5BC1C1F6F2B00A11B82 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5391D9DC92E006B3E72 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC53A1D9DC92E006B3E72 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0670D3291BE1CB010062593A /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5411D9DC985006B3E72 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5421D9DC985006B3E72 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55B5D5C01C1F6F4A00A11B82 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5431D9DC985006B3E72 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3361BE1C92D00AD4789 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5441D9DC985006B3E72 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3631BE1C97E00AD4789 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5451D9DC992006B3E72 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38011D908CCC000E5149 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5461D9DC992006B3E72 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55B5D5C41C1F6F6900A11B82 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5471D9DC992006B3E72 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10311BE7F22100F3D266 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5481D9DC992006B3E72 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 554B10371BE7F26100F3D266 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC5491D9DC99C006B3E72 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51A1D9DC2DC006B3E72 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC54A1D9DC99C006B3E72 /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51B1D9DC2DC006B3E72 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC54B1D9DC99C006B3E72 /* OHHTTPStubs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5241D9DC4BE006B3E72 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC54C1D9DC9A2006B3E72 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51E1D9DC3A0006B3E72 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC54D1D9DC9A2006B3E72 /* Quick.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC51F1D9DC3A0006B3E72 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		464CC54E1D9DC9A2006B3E72 /* OHHTTPStubs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -237,6 +258,57 @@
 				464CC4971D9DBC63006B3E72 /* Result.framework in Embed Frameworks */,
 				464CC4911D9DBC5D006B3E72 /* ReactiveMoya.framework in Embed Frameworks */,
 				464CC4951D9DBC63006B3E72 /* ReactiveSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC5331D9DC90F006B3E72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				464CC5371D9DC92E006B3E72 /* ReactiveSwift.framework in Embed Frameworks */,
+				464CC5381D9DC92E006B3E72 /* Result.framework in Embed Frameworks */,
+				464CC5391D9DC92E006B3E72 /* Alamofire.framework in Embed Frameworks */,
+				464CC53A1D9DC92E006B3E72 /* RxSwift.framework in Embed Frameworks */,
+				464CC5341D9DC922006B3E72 /* Nimble.framework in Embed Frameworks */,
+				464CC5351D9DC922006B3E72 /* Quick.framework in Embed Frameworks */,
+				464CC5361D9DC922006B3E72 /* OHHTTPStubs.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC53B1D9DC945006B3E72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				464CC5411D9DC985006B3E72 /* ReactiveSwift.framework in Embed Frameworks */,
+				464CC5421D9DC985006B3E72 /* Result.framework in Embed Frameworks */,
+				464CC5431D9DC985006B3E72 /* Alamofire.framework in Embed Frameworks */,
+				464CC5441D9DC985006B3E72 /* RxSwift.framework in Embed Frameworks */,
+				464CC5491D9DC99C006B3E72 /* Nimble.framework in Embed Frameworks */,
+				464CC54A1D9DC99C006B3E72 /* Quick.framework in Embed Frameworks */,
+				464CC54B1D9DC99C006B3E72 /* OHHTTPStubs.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		464CC5401D9DC95A006B3E72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				464CC5451D9DC992006B3E72 /* ReactiveSwift.framework in Embed Frameworks */,
+				464CC5461D9DC992006B3E72 /* Result.framework in Embed Frameworks */,
+				464CC5471D9DC992006B3E72 /* Alamofire.framework in Embed Frameworks */,
+				464CC5481D9DC992006B3E72 /* RxSwift.framework in Embed Frameworks */,
+				464CC54C1D9DC9A2006B3E72 /* Nimble.framework in Embed Frameworks */,
+				464CC54D1D9DC9A2006B3E72 /* Quick.framework in Embed Frameworks */,
+				464CC54E1D9DC9A2006B3E72 /* OHHTTPStubs.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -927,6 +999,7 @@
 				464CC4AF1D9DBE35006B3E72 /* Sources */,
 				464CC4B01D9DBE35006B3E72 /* Frameworks */,
 				464CC4B11D9DBE35006B3E72 /* Resources */,
+				464CC5331D9DC90F006B3E72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -944,6 +1017,7 @@
 				464CC4BB1D9DBE56006B3E72 /* Sources */,
 				464CC4BC1D9DBE56006B3E72 /* Frameworks */,
 				464CC4BD1D9DBE56006B3E72 /* Resources */,
+				464CC5401D9DC95A006B3E72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -961,6 +1035,7 @@
 				464CC4C71D9DBE76006B3E72 /* Sources */,
 				464CC4C81D9DBE76006B3E72 /* Frameworks */,
 				464CC4C91D9DBE76006B3E72 /* Resources */,
+				464CC53B1D9DC945006B3E72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
