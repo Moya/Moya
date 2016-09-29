@@ -87,9 +87,51 @@
 		464CC4AB1D9DBD1A006B3E72 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A71D9DBD1A006B3E72 /* GitHubUserContentAPI.swift */; };
 		464CC4AC1D9DBD1A006B3E72 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4A81D9DBD1A006B3E72 /* ViewController.swift */; };
 		464CC4AE1D9DBD24006B3E72 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4AD1D9DBD24006B3E72 /* Images.xcassets */; };
-		464CC4B61D9DBE35006B3E72 /* MoyaTests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4B51D9DBE35006B3E72 /* MoyaTests_iOS.swift */; };
-		464CC4C21D9DBE56006B3E72 /* MoyaTests_tvOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4C11D9DBE56006B3E72 /* MoyaTests_tvOS.swift */; };
-		464CC4CE1D9DBE76006B3E72 /* MoyaTests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4CD1D9DBE76006B3E72 /* MoyaTests_macOS.swift */; };
+		464CC4E31D9DBFD6006B3E72 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D41D9DBFD6006B3E72 /* EndpointSpec.swift */; };
+		464CC4E41D9DBFD6006B3E72 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D41D9DBFD6006B3E72 /* EndpointSpec.swift */; };
+		464CC4E51D9DBFD6006B3E72 /* EndpointSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D41D9DBFD6006B3E72 /* EndpointSpec.swift */; };
+		464CC4E61D9DBFD6006B3E72 /* Error+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D51D9DBFD6006B3E72 /* Error+MoyaSpec.swift */; };
+		464CC4E71D9DBFD6006B3E72 /* Error+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D51D9DBFD6006B3E72 /* Error+MoyaSpec.swift */; };
+		464CC4E81D9DBFD6006B3E72 /* Error+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D51D9DBFD6006B3E72 /* Error+MoyaSpec.swift */; };
+		464CC4E91D9DBFD6006B3E72 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */; };
+		464CC4EA1D9DBFD6006B3E72 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */; };
+		464CC4EB1D9DBFD6006B3E72 /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */; };
+		464CC4EC1D9DBFD6006B3E72 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4D71D9DBFD6006B3E72 /* Info.plist */; };
+		464CC4ED1D9DBFD6006B3E72 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4D71D9DBFD6006B3E72 /* Info.plist */; };
+		464CC4EE1D9DBFD6006B3E72 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4D71D9DBFD6006B3E72 /* Info.plist */; };
+		464CC4EF1D9DBFD6006B3E72 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */; };
+		464CC4F01D9DBFD6006B3E72 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */; };
+		464CC4F11D9DBFD6006B3E72 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */; };
+		464CC4F21D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D91D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift */; };
+		464CC4F31D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D91D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift */; };
+		464CC4F41D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4D91D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift */; };
+		464CC4F51D9DBFD6006B3E72 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DA1D9DBFD6006B3E72 /* MoyaProviderSpec.swift */; };
+		464CC4F61D9DBFD6006B3E72 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DA1D9DBFD6006B3E72 /* MoyaProviderSpec.swift */; };
+		464CC4F71D9DBFD6006B3E72 /* MoyaProviderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DA1D9DBFD6006B3E72 /* MoyaProviderSpec.swift */; };
+		464CC4F81D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DB1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift */; };
+		464CC4F91D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DB1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift */; };
+		464CC4FA1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DB1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift */; };
+		464CC4FB1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift */; };
+		464CC4FC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift */; };
+		464CC4FD1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift */; };
+		464CC4FE1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DD1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift */; };
+		464CC4FF1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DD1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift */; };
+		464CC5001D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DD1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift */; };
+		464CC5011D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DE1D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift */; };
+		464CC5021D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DE1D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift */; };
+		464CC5031D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DE1D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift */; };
+		464CC5041D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DF1D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift */; };
+		464CC5051D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DF1D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift */; };
+		464CC5061D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4DF1D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift */; };
+		464CC5071D9DBFD6006B3E72 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */; };
+		464CC5081D9DBFD6006B3E72 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */; };
+		464CC5091D9DBFD6006B3E72 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */; };
+		464CC50A1D9DBFD6006B3E72 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4E11D9DBFD6006B3E72 /* testImage.png */; };
+		464CC50B1D9DBFD6006B3E72 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4E11D9DBFD6006B3E72 /* testImage.png */; };
+		464CC50C1D9DBFD6006B3E72 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 464CC4E11D9DBFD6006B3E72 /* testImage.png */; };
+		464CC50D1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */; };
+		464CC50E1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */; };
+		464CC50F1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */; };
 		465D2C531D457B2A0059D1B6 /* Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* Moya.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* Moya+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* Moya+Internal.swift */; };
@@ -225,14 +267,23 @@
 		464CC4A81D9DBD1A006B3E72 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		464CC4AD1D9DBD24006B3E72 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		464CC4B31D9DBE35006B3E72 /* MoyaTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		464CC4B51D9DBE35006B3E72 /* MoyaTests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests_iOS.swift; sourceTree = "<group>"; };
-		464CC4B71D9DBE35006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		464CC4BF1D9DBE56006B3E72 /* MoyaTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		464CC4C11D9DBE56006B3E72 /* MoyaTests_tvOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests_tvOS.swift; sourceTree = "<group>"; };
-		464CC4C31D9DBE56006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		464CC4CB1D9DBE76006B3E72 /* MoyaTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		464CC4CD1D9DBE76006B3E72 /* MoyaTests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaTests_macOS.swift; sourceTree = "<group>"; };
-		464CC4CF1D9DBE76006B3E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		464CC4D41D9DBFD6006B3E72 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
+		464CC4D51D9DBFD6006B3E72 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+MoyaSpec.swift"; sourceTree = "<group>"; };
+		464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
+		464CC4D71D9DBFD6006B3E72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MethodSpec.swift; sourceTree = "<group>"; };
+		464CC4D91D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
+		464CC4DA1D9DBFD6006B3E72 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
+		464CC4DB1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogginPluginSpec.swift; sourceTree = "<group>"; };
+		464CC4DC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
+		464CC4DD1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveCocoaMoyaProviderTests.swift; sourceTree = "<group>"; };
+		464CC4DE1D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
+		464CC4DF1D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
+		464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		464CC4E11D9DBFD6006B3E72 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
+		464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FD31BE7ED8700F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -471,9 +522,7 @@
 				0676A5D31BFE80D3001C7F55 /* Source */,
 				0630A3001BE1C60200AD4789 /* Supporting Files */,
 				464CC4581D9DB577006B3E72 /* Demo */,
-				464CC4B41D9DBE35006B3E72 /* MoyaTests-iOS */,
-				464CC4C01D9DBE56006B3E72 /* MoyaTests-tvOS */,
-				464CC4CC1D9DBE76006B3E72 /* MoyaTests-macOS */,
+				464CC4D31D9DBFD6006B3E72 /* Tests */,
 				091F0D351BDE998F009D0A49 /* Products */,
 				091F0D7D1BDE9CF4009D0A49 /* Dependency Frameworks */,
 			);
@@ -551,31 +600,34 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		464CC4B41D9DBE35006B3E72 /* MoyaTests-iOS */ = {
+		464CC4D31D9DBFD6006B3E72 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				464CC4B51D9DBE35006B3E72 /* MoyaTests_iOS.swift */,
-				464CC4B71D9DBE35006B3E72 /* Info.plist */,
+				464CC4D41D9DBFD6006B3E72 /* EndpointSpec.swift */,
+				464CC4D51D9DBFD6006B3E72 /* Error+MoyaSpec.swift */,
+				464CC4D61D9DBFD6006B3E72 /* ErrorTests.swift */,
+				464CC4D81D9DBFD6006B3E72 /* MethodSpec.swift */,
+				464CC4D91D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift */,
+				464CC4DA1D9DBFD6006B3E72 /* MoyaProviderSpec.swift */,
+				464CC4DB1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift */,
+				464CC4DC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift */,
+				464CC4DD1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift */,
+				464CC4DE1D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift */,
+				464CC4DF1D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift */,
+				464CC4E01D9DBFD6006B3E72 /* TestHelpers.swift */,
+				464CC4E11D9DBFD6006B3E72 /* testImage.png */,
+				464CC4E21D9DBFD6006B3E72 /* TestPlugin.swift */,
+				464CC5101D9DBFF2006B3E72 /* Supporting Files */,
 			);
-			path = "MoyaTests-iOS";
+			path = Tests;
 			sourceTree = "<group>";
 		};
-		464CC4C01D9DBE56006B3E72 /* MoyaTests-tvOS */ = {
+		464CC5101D9DBFF2006B3E72 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				464CC4C11D9DBE56006B3E72 /* MoyaTests_tvOS.swift */,
-				464CC4C31D9DBE56006B3E72 /* Info.plist */,
+				464CC4D71D9DBFD6006B3E72 /* Info.plist */,
 			);
-			path = "MoyaTests-tvOS";
-			sourceTree = "<group>";
-		};
-		464CC4CC1D9DBE76006B3E72 /* MoyaTests-macOS */ = {
-			isa = PBXGroup;
-			children = (
-				464CC4CD1D9DBE76006B3E72 /* MoyaTests_macOS.swift */,
-				464CC4CF1D9DBE76006B3E72 /* Info.plist */,
-			);
-			path = "MoyaTests-macOS";
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1108,6 +1160,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC4EC1D9DBFD6006B3E72 /* Info.plist in Resources */,
+				464CC50A1D9DBFD6006B3E72 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,6 +1169,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC4ED1D9DBFD6006B3E72 /* Info.plist in Resources */,
+				464CC50B1D9DBFD6006B3E72 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,6 +1178,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CC4EE1D9DBFD6006B3E72 /* Info.plist in Resources */,
+				464CC50C1D9DBFD6006B3E72 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1264,7 +1322,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4B61D9DBE35006B3E72 /* MoyaTests_iOS.swift in Sources */,
+				464CC4E91D9DBFD6006B3E72 /* ErrorTests.swift in Sources */,
+				464CC4FE1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
+				464CC5011D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift in Sources */,
+				464CC4FB1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift in Sources */,
+				464CC4E31D9DBFD6006B3E72 /* EndpointSpec.swift in Sources */,
+				464CC50D1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */,
+				464CC4F51D9DBFD6006B3E72 /* MoyaProviderSpec.swift in Sources */,
+				464CC4F81D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift in Sources */,
+				464CC5071D9DBFD6006B3E72 /* TestHelpers.swift in Sources */,
+				464CC4F21D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift in Sources */,
+				464CC4EF1D9DBFD6006B3E72 /* MethodSpec.swift in Sources */,
+				464CC5041D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift in Sources */,
+				464CC4E61D9DBFD6006B3E72 /* Error+MoyaSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1272,7 +1342,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4C21D9DBE56006B3E72 /* MoyaTests_tvOS.swift in Sources */,
+				464CC4EA1D9DBFD6006B3E72 /* ErrorTests.swift in Sources */,
+				464CC4FF1D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
+				464CC5021D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift in Sources */,
+				464CC4FC1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift in Sources */,
+				464CC4E41D9DBFD6006B3E72 /* EndpointSpec.swift in Sources */,
+				464CC50E1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */,
+				464CC4F61D9DBFD6006B3E72 /* MoyaProviderSpec.swift in Sources */,
+				464CC4F91D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift in Sources */,
+				464CC5081D9DBFD6006B3E72 /* TestHelpers.swift in Sources */,
+				464CC4F31D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift in Sources */,
+				464CC4F01D9DBFD6006B3E72 /* MethodSpec.swift in Sources */,
+				464CC5051D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift in Sources */,
+				464CC4E71D9DBFD6006B3E72 /* Error+MoyaSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1280,7 +1362,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464CC4CE1D9DBE76006B3E72 /* MoyaTests_macOS.swift in Sources */,
+				464CC4EB1D9DBFD6006B3E72 /* ErrorTests.swift in Sources */,
+				464CC5001D9DBFD6006B3E72 /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
+				464CC5031D9DBFD6006B3E72 /* RxSwiftMoyaProviderTests.swift in Sources */,
+				464CC4FD1D9DBFD6006B3E72 /* Observable+MoyaSpec.swift in Sources */,
+				464CC4E51D9DBFD6006B3E72 /* EndpointSpec.swift in Sources */,
+				464CC50F1D9DBFD6006B3E72 /* TestPlugin.swift in Sources */,
+				464CC4F71D9DBFD6006B3E72 /* MoyaProviderSpec.swift in Sources */,
+				464CC4FA1D9DBFD6006B3E72 /* NetworkLogginPluginSpec.swift in Sources */,
+				464CC5091D9DBFD6006B3E72 /* TestHelpers.swift in Sources */,
+				464CC4F41D9DBFD6006B3E72 /* MoyaProviderIntegrationTests.swift in Sources */,
+				464CC4F11D9DBFD6006B3E72 /* MethodSpec.swift in Sources */,
+				464CC5061D9DBFD6006B3E72 /* SignalProducer+MoyaSpec.swift in Sources */,
+				464CC4E81D9DBFD6006B3E72 /* Error+MoyaSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2343,6 +2437,7 @@
 				464CC4B91D9DBE35006B3E72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		464CC4C41D9DBE56006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -2351,6 +2446,7 @@
 				464CC4C61D9DBE56006B3E72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		464CC4D01D9DBE76006B3E72 /* Build configuration list for PBXNativeTarget "MoyaTests-macOS" */ = {
 			isa = XCConfigurationList;
@@ -2359,6 +2455,7 @@
 				464CC4D21D9DBE76006B3E72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		554B0FBE1BE7ED4D00F3D266 /* Build configuration list for PBXNativeTarget "Moya tvOS" */ = {
 			isa = XCConfigurationList;
