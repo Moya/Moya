@@ -677,14 +677,14 @@
 			isa = PBXGroup;
 			children = (
 				464CC5121D9DC249006B3E72 /* Nimble.framework */,
-				464CC51E1D9DC3A0006B3E72 /* Nimble.framework */,
 				464CC51A1D9DC2DC006B3E72 /* Nimble.framework */,
+				464CC51E1D9DC3A0006B3E72 /* Nimble.framework */,
 				464CC5131D9DC249006B3E72 /* Quick.framework */,
-				464CC51F1D9DC3A0006B3E72 /* Quick.framework */,
 				464CC51B1D9DC2DC006B3E72 /* Quick.framework */,
+				464CC51F1D9DC3A0006B3E72 /* Quick.framework */,
 				464CC5221D9DC4B1006B3E72 /* OHHTTPStubs.framework */,
-				464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */,
 				464CC5241D9DC4BE006B3E72 /* OHHTTPStubs.framework */,
+				464CC5261D9DC4C6006B3E72 /* OHHTTPStubs.framework */,
 			);
 			name = "Dependency Frameworks";
 			sourceTree = "<group>";
@@ -1156,8 +1156,8 @@
 				554B10281BE7F14300F3D266 /* RxMoya watchOS */,
 				464CC4561D9DB576006B3E72 /* Demo */,
 				464CC4B21D9DBE35006B3E72 /* MoyaTests-iOS */,
-				464CC4BE1D9DBE56006B3E72 /* MoyaTests-tvOS */,
 				464CC4CA1D9DBE76006B3E72 /* MoyaTests-macOS */,
+				464CC4BE1D9DBE56006B3E72 /* MoyaTests-tvOS */,
 			);
 		};
 /* End PBXProject section */
