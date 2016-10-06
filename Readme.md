@@ -95,7 +95,7 @@ After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.request(.Zen) { result in
+provider.request(.zen) { result in
     switch result {
     case let .success(moyaResponse):
         let data = moyaResponse.data
@@ -115,7 +115,7 @@ into the enum you use to access the endpoint, like this:
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")) { result in
+provider.request(.userProfile("ashfurrow")) { result in
     // do something with the result
 }
 ```
@@ -141,7 +141,7 @@ for instance, we could do the following:
 
 ```swift
 provider = ReactiveCocoaMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).start { event in
+provider.request(.userProfile("ashfurrow")).start { event in
     switch event {
     case let .value(response):
         image = UIImage(data: response.data)
@@ -161,7 +161,7 @@ want to do. To handle errors, for instance, we could do the following:
 
 ```swift
 provider = RxMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).subscribe { event in
+provider.request(.userProfile("ashfurrow")).subscribe { event in
     switch event {
     case let .next(response):
         image = UIImage(data: response.data)
