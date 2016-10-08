@@ -57,7 +57,8 @@ instance of a specific `ParameterEncoding` type. Additionally if you want to
 create your custom type, just implement the `ParameterEncoding` protocol and you
 are good to go. Usually you just want `URLEncoding.default`, but you can use
 whichever you like. These are mapped directly to the [Alamofire parameter encodings](https://github.com/Alamofire/Alamofire/blob/95a0ad51be27d99416401e186dc390063b4a85cf/Source/ParameterEncoding.swift#L48). If you want to get more information about the
-`ParameterEncoding` types, how to create your own type and more,  [here](https://github.com/Alamofire/Alamofire/blob/95a0ad51be27d99416401e186dc390063b4a85cf/README.md#parameter-encoding) is a great documentation on that matter.
+`ParameterEncoding` types and how to create your own,
+[check out this awesome documentation piece on that matter, by Alamofire](https://github.com/Alamofire/Alamofire/blob/95a0ad51be27d99416401e186dc390063b4a85cf/README.md#parameter-encoding).
 
 You can add parameters or HTTP header fields in this closure. For example, we
 may wish to set our application name in the HTTP header fields for server-side
