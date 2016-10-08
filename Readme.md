@@ -51,9 +51,9 @@ Installation
 
 ### Moya version vs Swift version.
 
-So because of many Swift version that Moya supports, it might be confusing to
-find one that you need. Below is the table that shows which versions of Moya
-fits which version of Swift.
+Because of the many Swift versions Moya supports, it might be confusing to
+find the version of Moya that you need. Below is a table that shows which version of Moya
+you should use for your Swift version.
 
 | Swift version | Moya version    |
 | ------------- | --------------- |
