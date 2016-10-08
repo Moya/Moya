@@ -44,16 +44,20 @@ an Endpoint can provide.
 From Target to Endpoint
 -----------------------
 
-By default, `Endpoint` instances use the `.URL` type parameter encoding. You
-can specify how you'd like to encode parameters on a target-by-target basis in
-the `endpointClosure` using the optional `parameterEncoding` parameter of the
-`Endpoint` initializer in your `endpointClosure` when setting up the provider.
+By default, `Endpoint` instances use the `URLEncoding.default` type parameter
+encoding. You can specify how you'd like to encode parameters on a
+target-by-target basis in the `endpointClosure` using the optional
+`parameterEncoding` parameter of the `Endpoint` initializer in your
+`endpointClosure` when setting up the provider.
 
-There are four parameter encoding types: `.URL`, `.JSON`, `.PropertyList`, and
-`.Custom`, which map directly to the corresponding types in Alamofire. These
-are also configured in the `endpointClosure` of the provider. Usually you just
-want `.URL`, but you can use whichever you like. These are mapped directly to
-the [Alamofire parameter encodings](https://github.com/Alamofire/Alamofire/blob/3d271dbbf12e104ab1373bff36c91c5ecbcc3890/Source/ParameterEncoding.swift#L47).
+There are three parameter encoding types: `URLEncoding`, `JSONEncoding`,
+`PropertyListEncoding`,  which map directly to the corresponding types in
+Alamofire. Each of these types has `.default` property, that gives you a default
+instance of a specific `ParameterEncoding` type. Additionally if you want to
+create your custom type, just implement the `ParameterEncoding` protocol and you
+are good to go. Usually you just want `URLEncoding.default`, but you can use
+whichever you like. These are mapped directly to the [Alamofire parameter encodings](https://github.com/Alamofire/Alamofire/blob/95a0ad51be27d99416401e186dc390063b4a85cf/Source/ParameterEncoding.swift#L48). If you want to get more information about the
+`ParameterEncoding` types, how to create your own type and more,  [here](https://github.com/Alamofire/Alamofire/blob/95a0ad51be27d99416401e186dc390063b4a85cf/README.md#parameter-encoding) is a great documentation on that matter.
 
 You can add parameters or HTTP header fields in this closure. For example, we
 may wish to set our application name in the HTTP header fields for server-side
