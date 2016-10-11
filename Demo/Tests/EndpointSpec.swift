@@ -11,7 +11,7 @@ class EndpointSpec: QuickSpec {
                 let target: GitHub = .zen
                 let parameters = ["Nemesis": "Harvey"]
                 let headerFields = ["Title": "Dominar"]
-                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding(), httpHeaderFields: headerFields)
+                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding.default, httpHeaderFields: headerFields)
             }
             
             it("returns a new endpoint for endpointByAddingParameters") {
@@ -51,7 +51,7 @@ class EndpointSpec: QuickSpec {
             }
 
             it ("returns a new endpoint for endpointByAddingParameterEncoding") {
-                let parameterEncoding = JSONEncoding()
+                let parameterEncoding = JSONEncoding.default
                 let newEndpoint = endpoint.adding(newParameterEncoding: parameterEncoding)
                 let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
@@ -67,7 +67,7 @@ class EndpointSpec: QuickSpec {
             }
             
             it ("returns a new endpoint for endpointByAdding with all parameters") {
-                let parameterEncoding = URLEncoding()
+                let parameterEncoding = URLEncoding.default
                 let agent = "Zalbinian"
                 let message = "I hate it when villains quote Shakespeare."
                 let newEndpoint = endpoint.adding(

@@ -10,6 +10,10 @@
 - `urlRequest` property of `Endpoint` is now truly optional. The request will fail if the `urlRequest` turns out to be nil and a `requestMapping` error will be returned together with the problematic url.
 - **Breaking Change** Made RxMoya & ReactiveMoya frameworks dependant on Moya framework, making them slimmer and not re-including Moya source in the Reactive extensions. ([PR](https://github.com/Moya/Moya/pull/563))
 
+# 8.0.0-beta.2
+
+- **Breaking Change** Transition from ReactiveCocoa to ReactiveSwift. ([PR](https://github.com/Moya/Moya/pull/661))
+
 # 8.0.0-beta.1
 
 - **Breaking Change** Support for `Swift 3` in favor of `Swift 2.x`.

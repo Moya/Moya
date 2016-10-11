@@ -28,7 +28,7 @@ open class Endpoint<Target> {
         sampleResponseClosure: @escaping SampleResponseClosure,
         method: Moya.Method = Moya.Method.get,
         parameters: [String: Any]? = nil,
-        parameterEncoding: Moya.ParameterEncoding = URLEncoding(),
+        parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
         httpHeaderFields: [String: String]? = nil) {
 
         self.URL = URL
