@@ -228,6 +228,18 @@ private extension MoyaProvider {
             if let dataRequest = dataRequest as? T {
                 progressAlamoRequest = dataRequest
             }
+        } else if var dataRequest = progressAlamoRequest as? DownloadRequest {
+            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
+                let result = convertResponseToResult(handler.response, request: handler.request, data: nil, error: handler.error)
+                // Inform all plugins about the response
+                plugins.forEach { $0.didReceiveResponse(result, target: target) }
+                progressCompletion?(ProgressResponse(response: result.value))
+                completion(result)
+            })
+            
+            if let dataRequest = dataRequest as? T {
+                progressAlamoRequest = dataRequest
+            }
         }
 
         progressAlamoRequest.resume()

@@ -587,5 +587,51 @@ class MoyaProviderSpec: QuickSpec {
                 expect(underlyingIsCancelled).to(beTrue())
             }
         }
+        
+        describe("a provider with progress tracking") {
+            var provider: MoyaProvider<GitHubUserContent>!
+            beforeEach {
+                
+                //delete downloaded filed before each test
+                let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                let file = directory.appendingPathComponent("logo_github.png")
+                try? FileManager.default.removeItem(at: file)
+                
+                //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
+                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                }
+                provider = MoyaProvidesr<GitHubUserContent>()
+            }
+            
+            it("tracks progress of request") {
+                
+                let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
+                
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: Moya.Error?
+                
+                waitUntil(timeout: 5.0) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+                    
+                    let progressCompletionClosure: Completion = { (result) in
+                        if case .failure(let err) = result {
+                            error = err
+                        }
+                        done()
+                    }
+                    
+                    provider.request(target, queue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+                
+                expect(error).to(beNil())
+                expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
+                expect(completedValues) == [false, false, false, false, true]
+            }
+        }
     }
 }
