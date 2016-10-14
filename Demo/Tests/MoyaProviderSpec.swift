@@ -601,7 +601,7 @@ class MoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 }
-                provider = MoyaProvidesr<GitHubUserContent>()
+                provider = MoyaProvider<GitHubUserContent>()
             }
             
             it("tracks progress of request") {
