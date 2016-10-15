@@ -216,32 +216,23 @@ private extension MoyaProvider {
             default: break
             }
         }
+        
+        let completionHandler: RequestableCompletion = { response, request, data, error in
+            let result = convertResponseToResult(response, request: request, data: data, error: error)
+            // Inform all plugins about the response
+            plugins.forEach { $0.didReceiveResponse(result, target: target) }
+            progressCompletion?(ProgressResponse(response: result.value))
+            completion(result)
+        }
+        
+        if var dataRequest = progressAlamoRequest as? Requestable {
+            dataRequest = dataRequest.response(queue: queue, completionHandler: completionHandler)
 
-        if var dataRequest = progressAlamoRequest as? DataRequest {
-            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
-                let result = convertResponseToResult(handler.response, request: handler.request, data: handler.data, error: handler.error)
-                // Inform all plugins about the response
-                plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                completion(result)
-            })
-
-            if let dataRequest = dataRequest as? T {
-                progressAlamoRequest = dataRequest
-            }
-        } else if var dataRequest = progressAlamoRequest as? DownloadRequest {
-            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
-                let result = convertResponseToResult(handler.response, request: handler.request, data: nil, error: handler.error)
-                // Inform all plugins about the response
-                plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                progressCompletion?(ProgressResponse(response: result.value))
-                completion(result)
-            })
-            
             if let dataRequest = dataRequest as? T {
                 progressAlamoRequest = dataRequest
             }
         }
-
+        
         progressAlamoRequest.resume()
 
         return CancellableToken(request: progressAlamoRequest)

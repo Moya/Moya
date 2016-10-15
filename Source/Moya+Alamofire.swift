@@ -61,3 +61,25 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     }
 
 }
+
+internal typealias RequestableCompletion = (HTTPURLResponse?, URLRequest?, Data?, Swift.Error?) -> Void
+
+internal protocol Requestable {
+    func response(queue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Requestable
+}
+
+extension DataRequest: Requestable {
+    func response(queue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Requestable {
+        return response(queue: queue, completionHandler: { handler  in
+            completionHandler(handler.response, handler.request, handler.data, handler.error)
+        })
+    }
+}
+
+extension DownloadRequest: Requestable {
+    func response(queue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Requestable {
+        return response(queue: queue, completionHandler: { handler  in
+            completionHandler(handler.response, handler.request, nil, handler.error)
+        })
+    }
+}
