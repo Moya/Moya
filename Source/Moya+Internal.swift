@@ -184,7 +184,7 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest<T where T: Requestable, T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
@@ -216,7 +216,7 @@ private extension MoyaProvider {
             default: break
             }
         }
-        
+
         let completionHandler: RequestableCompletion = { response, request, data, error in
             let result = convertResponseToResult(response, request: request, data: data, error: error)
             // Inform all plugins about the response
@@ -225,14 +225,8 @@ private extension MoyaProvider {
             completion(result)
         }
         
-        if var dataRequest = progressAlamoRequest as? Requestable {
-            dataRequest = dataRequest.response(queue: queue, completionHandler: completionHandler)
+        progressAlamoRequest = progressAlamoRequest.response(queue: queue, completionHandler: completionHandler)
 
-            if let dataRequest = dataRequest as? T {
-                progressAlamoRequest = dataRequest
-            }
-        }
-        
         progressAlamoRequest.resume()
 
         return CancellableToken(request: progressAlamoRequest)
