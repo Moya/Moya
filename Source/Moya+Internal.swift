@@ -111,6 +111,10 @@ public extension MoyaProvider {
                 let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
                 plugins.forEach { $0.didReceiveResponse(.success(response), target: target) }
                 completion(.success(response))
+            case .response(let customResponse, let data):
+                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
+                plugins.forEach { $0.didReceiveResponse(.success(response), target: target) }
+                completion(.success(response))
             case .networkError(let error):
                 let error = Moya.Error.underlying(error)
                 plugins.forEach { $0.didReceiveResponse(.failure(error), target: target) }
