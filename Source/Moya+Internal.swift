@@ -224,7 +224,7 @@ private extension MoyaProvider {
             progressCompletion?(ProgressResponse(response: result.value))
             completion(result)
         }
-        
+
         progressAlamoRequest = progressAlamoRequest.response(queue: queue, completionHandler: completionHandler)
 
         progressAlamoRequest.resume()
