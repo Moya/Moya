@@ -593,8 +593,8 @@ class MoyaProviderSpec: QuickSpec {
             beforeEach {
                 
                 //delete downloaded filed before each test
-                let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                let file = directory.appendingPathComponent("logo_github.png")
+                let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+                let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
                 try? FileManager.default.removeItem(at: file)
                 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.

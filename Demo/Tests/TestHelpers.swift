@@ -128,10 +128,10 @@ extension GitHubUserContent: TargetType {
 }
 
 private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
-    let directoryURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    
+    let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+
     if !directoryURLs.isEmpty {
-        return (directoryURLs[0].appendingPathComponent(response.suggestedFilename!), [])
+        return (directoryURLs.first!.appendingPathComponent(response.suggestedFilename!), [])
     }
     
     return (temporaryURL, [])
