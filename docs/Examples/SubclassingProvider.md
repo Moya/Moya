@@ -9,9 +9,9 @@ Used RxSwift.
 class OnlineProvider: RxMoyaProvider<MyService> {
 
     // First of all, we need to override designated initializer
-    override init(endpointClosure: MoyaProvider<MyService>.EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: MoyaProvider<MyService>.RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: MoyaProvider<MyService>.StubClosure = MoyaProvider.NeverStub,
+    override init(endpointClosure: MoyaProvider<MyService>.EndpointClosure = MoyaProvider.defaultEndpointMapping,
+        requestClosure: MoyaProvider<MyService>.RequestClosure = MoyaProvider.defaultRequestMapping,
+        stubClosure: MoyaProvider<MyService>.StubClosure = MoyaProvider.neverStub,
         manager: Manager = Alamofire.SessionManager.default,
         plugins: [PluginType] = []) {
 
