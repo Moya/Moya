@@ -359,7 +359,7 @@ class MoyaProviderSpec: QuickSpec {
 
                 var data: Data?
                 _ = provider.request(GitHub.zen) { result in
-                    if case .success(let response) = result{
+                    if case .success(let response) = result {
                         data = response.data
                     }
                 }
