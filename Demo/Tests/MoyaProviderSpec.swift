@@ -348,6 +348,65 @@ class MoyaProviderSpec: QuickSpec {
                 expect(executed).to(beTruthy())
             }
         }
+
+        describe("a provider with custom sample response closures") {
+            it("returns sample data") {
+                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
+                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+                }
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                var data: Data?
+                _ = provider.request(GitHub.zen) { result in
+                    if case .success(let response) = result{
+                        data = response.data
+                    }
+                }
+
+                expect(data) == GitHub.zen.sampleData
+            }
+
+            it("returns identical sample response") {
+                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
+                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    return Endpoint(URL: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, parameters: target.parameters)
+                }
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                var receivedResponse: URLResponse?
+                _ = provider.request(GitHub.zen) { result in
+                    if case .success(let response) = result {
+                        receivedResponse = response.response
+                    }
+                }
+
+                expect(receivedResponse) === response
+            }
+
+            it("returns error") {
+                let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
+                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
+                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    return Endpoint(URL: url, sampleResponseClosure: { .networkError(error) }, method: target.method, parameters: target.parameters)
+                }
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                var receivedError: Moya.Error?
+                _ = provider.request(GitHub.zen) { result in
+                    if case .failure(let error) = result {
+                        receivedError = error
+                    }
+                }
+
+                if case .some(Moya.Error.underlying(let underlyingError as NSError)) = receivedError {
+                    expect(underlyingError) == error
+                } else {
+                    fail("Expected to receive error, did not.")
+                }
+            }
+        }
         
         describe("a provider with error in request closure") {
             var provider: MoyaProvider<GitHub>!
