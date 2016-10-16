@@ -184,7 +184,7 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
@@ -217,18 +217,15 @@ private extension MoyaProvider {
             }
         }
 
-        if var dataRequest = progressAlamoRequest as? DataRequest {
-            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
-                let result = convertResponseToResult(handler.response, request: handler.request, data: handler.data, error: handler.error)
-                // Inform all plugins about the response
-                plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                completion(result)
-            })
-
-            if let dataRequest = dataRequest as? T {
-                progressAlamoRequest = dataRequest
-            }
+        let completionHandler: RequestableCompletion = { response, request, data, error in
+            let result = convertResponseToResult(response, request: request, data: data, error: error)
+            // Inform all plugins about the response
+            plugins.forEach { $0.didReceiveResponse(result, target: target) }
+            progressCompletion?(ProgressResponse(response: result.value))
+            completion(result)
         }
+
+        progressAlamoRequest = progressAlamoRequest.response(queue: queue, completionHandler: completionHandler)
 
         progressAlamoRequest.resume()
 

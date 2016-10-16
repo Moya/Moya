@@ -1,5 +1,7 @@
 # Next
 
+- Fixes download requests never calling the completion block
+- Adds new internal Requestable protocol
 - **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON
 - Removed the unused `StreamRequest` typealias that was causing watchOS failures.
 - **Breaking Change** Renamed `endpointByAddingHTTPHeaders` to `adding(newHttpHeaderFields:)`
