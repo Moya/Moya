@@ -87,3 +87,52 @@ enum HTTPBin: TargetType {
         }
     }
 }
+
+public enum GitHubUserContent {
+    case downloadMoyaWebContent(String)
+}
+
+extension GitHubUserContent: TargetType {
+    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var path: String {
+        switch self {
+        case .downloadMoyaWebContent(let contentPath):
+            return "/Moya/Moya/master/web/\(contentPath)"
+        }
+    }
+    public var method: Moya.Method {
+        switch self {
+        case .downloadMoyaWebContent:
+            return .get
+        }
+    }
+    public var parameters: [String: Any]? {
+        switch self {
+        case .downloadMoyaWebContent:
+            return nil
+        }
+    }
+    public var task: Task {
+        switch self {
+        case .downloadMoyaWebContent:
+            return .download(.request(DefaultDownloadDestination))
+        }
+    }
+    public var sampleData: Data {
+        switch self {
+        case .downloadMoyaWebContent:
+            return Data(count: 4000)
+        }
+    }
+   
+}
+
+private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+    let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+
+    if !directoryURLs.isEmpty {
+        return (directoryURLs.first!.appendingPathComponent(response.suggestedFilename!), [])
+    }
+    
+    return (temporaryURL, [])
+}

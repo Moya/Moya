@@ -7,6 +7,9 @@ public enum EndpointSampleResponse {
     /// The network returned a response, including status code and data.
     case networkResponse(Int, Data)
 
+    /// The network returned response which can be fully customized.
+    case response(HTTPURLResponse, Data)
+
     /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
     case networkError(NSError)
 }
