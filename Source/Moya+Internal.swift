@@ -2,7 +2,7 @@ import Foundation
 import Result
 
 /// Internal extension to keep the inner-workings outside the main Moya.swift file.
-internal extension MoyaProvider {
+public extension MoyaProvider {
     // Yup, we're disabling these. The function is complicated, but breaking it apart requires a large effort.
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
@@ -99,7 +99,7 @@ internal extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
+    public final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
         return {
             if token.cancelled {
                 self.cancelCompletion(completion, target: target)
@@ -109,6 +109,10 @@ internal extension MoyaProvider {
             switch endpoint.sampleResponseClosure() {
             case .networkResponse(let statusCode, let data):
                 let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
+                plugins.forEach { $0.didReceiveResponse(.success(response), target: target) }
+                completion(.success(response))
+            case .response(let customResponse, let data):
+                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
                 plugins.forEach { $0.didReceiveResponse(.success(response), target: target) }
                 completion(.success(response))
             case .networkError(let error):
@@ -184,7 +188,7 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest<T: Request>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
@@ -217,18 +221,15 @@ private extension MoyaProvider {
             }
         }
 
-        if var dataRequest = progressAlamoRequest as? DataRequest {
-            dataRequest = dataRequest.response(queue: queue, completionHandler: { handler in
-                let result = convertResponseToResult(handler.response, request: handler.request, data: handler.data, error: handler.error)
-                // Inform all plugins about the response
-                plugins.forEach { $0.didReceiveResponse(result, target: target) }
-                completion(result)
-            })
-
-            if let dataRequest = dataRequest as? T {
-                progressAlamoRequest = dataRequest
-            }
+        let completionHandler: RequestableCompletion = { response, request, data, error in
+            let result = convertResponseToResult(response, request: request, data: data, error: error)
+            // Inform all plugins about the response
+            plugins.forEach { $0.didReceiveResponse(result, target: target) }
+            progressCompletion?(ProgressResponse(response: result.value))
+            completion(result)
         }
+
+        progressAlamoRequest = progressAlamoRequest.response(queue: queue, completionHandler: completionHandler)
 
         progressAlamoRequest.resume()
 

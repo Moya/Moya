@@ -49,9 +49,21 @@ Currently, we support Xcode 7 and Swift 2.
 Installation
 ------------
 
+### Moya version vs Swift version.
+
+Because of the many Swift versions Moya supports, it might be confusing to
+find the version of Moya that you need. Below is a table that shows which version of Moya
+you should use for your Swift version.
+
+| Swift version | Moya version    |
+| ------------- | --------------- |
+| 3.X           | >= 8.0.0-beta.1 |
+| 2.3           | 7.0.2 - 7.0.3   |
+| 2.2           | <= 7.0.1        |
+
 ### CocoaPods
 
-For Moya, us the following entry in your Podfile:
+For Moya, use the following entry in your Podfile:
 
 ```rb
 pod 'Moya', '8.0.0-beta.2'
@@ -72,7 +84,7 @@ pod 'RxCocoa', '3.0.0-beta.1'
 # or
 
 pod 'Moya/ReactiveCocoa'
-pod 'ReactiveSwift', :podspec => 'https://raw.githubusercontent.com/ashfurrow/ReactiveSwift/616a2461690008c61cdecd39200c4f4bb3b107bb/ReactiveSwift.podspec'
+pod 'ReactiveSwift', '1.0.0-alpha.1'
 ```
 
 Then run `pod install`.
@@ -95,13 +107,13 @@ After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.request(.Zen) { result in
+provider.request(.zen) { result in
     switch result {
-    case let .Success(moyaResponse):
+    case let .success(moyaResponse):
         let data = moyaResponse.data
         let statusCode = moyaResponse.statusCode
         // do something with the response data or statusCode
-    case let .Failure(error):
+    case let .failure(error):
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
         // timed out).  If the server responds with a 4xx or 5xx error, that
@@ -115,7 +127,7 @@ into the enum you use to access the endpoint, like this:
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")) { result in
+provider.request(.userProfile("ashfurrow")) { result in
     // do something with the result
 }
 ```
@@ -141,11 +153,11 @@ for instance, we could do the following:
 
 ```swift
 provider = ReactiveCocoaMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).start { event in
+provider.request(.userProfile("ashfurrow")).start { event in
     switch event {
-    case .Next(let response):
+    case let .value(response):
         image = UIImage(data: response.data)
-    case .Failed(let error):
+    case let .failed(error):
         print(error)
     default:
       break
@@ -161,11 +173,11 @@ want to do. To handle errors, for instance, we could do the following:
 
 ```swift
 provider = RxMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).subscribe { event in
+provider.request(.userProfile("ashfurrow")).subscribe { event in
     switch event {
-    case .Next(let response):
+    case let .next(response):
         image = UIImage(data: response.data)
-    case .Error(let error):
+    case let .error(error):
         print(error)
     default:
         break
@@ -221,10 +233,10 @@ requests and help steer the ship :ship: You can read more details about that [in
 Moya's community has a tremendous positive energy, and the maintainers are committed to keeping things awesome. Like [in the CocoaPods community](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules), always assume positive intent; even if a comment sounds mean-spirited, give the person the benefit of the doubt.
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code of Conduct.md).
- 
+
 ### Adding new source files
- 
-If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget. 
+
+If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget.
 
 License
 -------

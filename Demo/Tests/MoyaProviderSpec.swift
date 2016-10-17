@@ -58,6 +58,7 @@ class MoyaProviderSpec: QuickSpec {
             
             let endpoint1 = provider.endpoint(target)
             let endpoint2 = provider.endpoint(target)
+            expect(endpoint1.urlRequest).toNot(beNil())
             expect(endpoint1.urlRequest).to(equal(endpoint2.urlRequest))
         }
 
@@ -231,7 +232,11 @@ class MoyaProviderSpec: QuickSpec {
             beforeEach {
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     delay(requestTime) {
-                        done(.success(endpoint.urlRequest))
+                        if let urlRequest = endpoint.urlRequest {
+                            done(.success(urlRequest))
+                        } else {
+                            done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                        }
                     }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.DelayedStub(responseTime))
@@ -327,7 +332,11 @@ class MoyaProviderSpec: QuickSpec {
                 executed = false
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     executed = true
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                    }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
             }
@@ -337,6 +346,65 @@ class MoyaProviderSpec: QuickSpec {
                 _ = provider.request(target) { _ in  }
                 
                 expect(executed).to(beTruthy())
+            }
+        }
+
+        describe("a provider with custom sample response closures") {
+            it("returns sample data") {
+                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
+                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+                }
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                var data: Data?
+                _ = provider.request(GitHub.zen) { result in
+                    if case .success(let response) = result {
+                        data = response.data
+                    }
+                }
+
+                expect(data) == GitHub.zen.sampleData
+            }
+
+            it("returns identical sample response") {
+                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
+                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    return Endpoint(URL: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, parameters: target.parameters)
+                }
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                var receivedResponse: URLResponse?
+                _ = provider.request(GitHub.zen) { result in
+                    if case .success(let response) = result {
+                        receivedResponse = response.response
+                    }
+                }
+
+                expect(receivedResponse) === response
+            }
+
+            it("returns error") {
+                let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
+                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
+                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    return Endpoint(URL: url, sampleResponseClosure: { .networkError(error) }, method: target.method, parameters: target.parameters)
+                }
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+
+                var receivedError: Moya.Error?
+                _ = provider.request(GitHub.zen) { result in
+                    if case .failure(let error) = result {
+                        receivedError = error
+                    }
+                }
+
+                if case .some(Moya.Error.underlying(let underlyingError as NSError)) = receivedError {
+                    expect(underlyingError) == error
+                } else {
+                    fail("Expected to receive error, did not.")
+                }
             }
         }
         
@@ -427,7 +495,7 @@ class MoyaProviderSpec: QuickSpec {
             struct StructAPI: TargetType {
                 var baseURL = URL(string: "http://example.com")!
                 var path = "/endpoint"
-                var method = Moya.Method.GET
+                var method = Moya.Method.get
                 var parameters: [String: Any]? = ["key": "value"]
                 var task: Task = .request
                 var sampleData = "sample data".data(using: .utf8)!
@@ -437,7 +505,11 @@ class MoyaProviderSpec: QuickSpec {
                 var requestedURL: String?
                 let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestedURL = endpoint.URL
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                    }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -454,7 +526,11 @@ class MoyaProviderSpec: QuickSpec {
                 var requestParameters: [String: Any]?
                 let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestParameters = endpoint.parameters
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                    }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -471,7 +547,11 @@ class MoyaProviderSpec: QuickSpec {
                 var requestMethod: Moya.Method?
                 let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
                     requestMethod = endpoint.method
-                    done(.success(endpoint.urlRequest))
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                    }
                 }
                 let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
 
@@ -481,7 +561,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(requestMethod) == .GET
+                expect(requestMethod) == .get
             }
 
             it("uses correct sample data") {
@@ -564,6 +644,52 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 expect(underlyingIsCancelled).to(beTrue())
+            }
+        }
+        
+        describe("a provider with progress tracking") {
+            var provider: MoyaProvider<GitHubUserContent>!
+            beforeEach {
+                
+                //delete downloaded filed before each test
+                let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+                let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
+                try? FileManager.default.removeItem(at: file)
+                
+                //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
+                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                }
+                provider = MoyaProvider<GitHubUserContent>()
+            }
+            
+            it("tracks progress of request") {
+                
+                let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
+                
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: Moya.Error?
+                
+                waitUntil(timeout: 5.0) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+                    
+                    let progressCompletionClosure: Completion = { (result) in
+                        if case .failure(let err) = result {
+                            error = err
+                        }
+                        done()
+                    }
+                    
+                    provider.request(target, queue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+                
+                expect(error).to(beNil())
+                expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
+                expect(completedValues) == [false, false, false, false, true]
             }
         }
     }

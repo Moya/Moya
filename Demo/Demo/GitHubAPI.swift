@@ -42,12 +42,12 @@ extension GitHub: TargetType {
         }
     }
     public var method: Moya.Method {
-        return .GET
+        return .get
     }
     public var parameters: [String: Any]? {
         switch self {
         case .userRepositories(_):
-            return ["sort": "pushed" as AnyObject]
+            return ["sort": "pushed"]
         default:
             return nil
         }

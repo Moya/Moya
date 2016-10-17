@@ -4,16 +4,16 @@ Targets
 Using Moya starts with defining a target – typically some `enum` that conforms
 to the `TargetType` protocol. Then, the rest of your app deals *only* with
 those targets. Targets are some action that you want to take on the API,
-like "`FavoriteTweet(tweetID: String)`".
+like "`favoriteTweet(tweetID: String)`".
 
 Here's an example:
 
 ```swift
 public enum GitHub {
-    case Zen
-    case UserProfile(String)
-    case UserRepositories(String)
-    case Branches(String, Bool)
+    case zen
+    case userProfile(String)
+    case userRepositories(String)
+    case branches(String, Bool)
 }
 ```
 
@@ -25,7 +25,7 @@ providers). Here's the beginning of our extension:
 
 ```swift
 extension GitHub: TargetType {
-    public var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    public var baseURL: URL { return URL(string: "https://api.github.com")! }
 ```
 
 This protocol specifies the locations of
@@ -34,20 +34,20 @@ your API endpoints, relative to its base URL (more on that below).
 ```swift
 public var path: String {
     switch self {
-    case .Zen:
+    case .zen:
         return "/zen"
-    case .UserProfile(let name):
-        return "/users/\(name.URLEscapedString)"
-    case .UserRepositories(let name):
-        return "/users/\(name.URLEscapedString)/repos"
-    case .Branches(let repo, _)
-        return "/repos/\(repo.URLEscapedString)/branches"
+    case .userProfile(let name):
+        return "/users/\(name.urlEscapedString)"
+    case .userRepositories(let name):
+        return "/users/\(name.urlEscapedString)/repos"
+    case .branches(let repo, _)
+        return "/repos/\(repo.urlEscapedString)/branches"
     }
 }
 ```
 
-Notice that we're ignoring the second associated value of our `Branches` Target using the Swift `_` ignored-value symbol. That's because we don't need it to define the `Branches` path.
-Note: we're cheating here and using a `URLEscapedString` extension on String.
+Notice that we're ignoring the second associated value of our `branches` Target using the Swift `_` ignored-value symbol. That's because we don't need it to define the `branches` path.
+Note: we're cheating here and using a `urlEscapedString` extension on String.
 A sample implementation is given at the end of this document.
 
 OK, cool. So now we need to have a `method` for our enum values. In our case, we
@@ -55,7 +55,7 @@ are always using the GET HTTP method, so this is pretty easy:
 
 ```swift
 public var method: Moya.Method {
-    return .GET
+    return .get
 }
 ```
 
@@ -67,11 +67,11 @@ Our `TargetType` is shaping up, but we're not done yet. We also need a `paramete
 computed property that returns parameters defined by the enum case. Here's an example:
 
 ```swift
-public var parameters: [String: AnyObject]? {
+public var parameters: [String: Any]? {
     switch self {
-    case .UserRepositories(_):
+    case .userRepositories(_):
         return ["sort": "pushed"]
-    case .Branches(_, let protected):
+    case .branches(_, let protected):
         return ["protected": "\(protected)"]
     default:
         return nil
@@ -79,25 +79,25 @@ public var parameters: [String: AnyObject]? {
 }
 ```
 
-Unlike our `path` property earlier, we don't actually care about the associated values of our `UserRepositories` case, so we use the Swift `_` ignored-value symbol.
-Let's take a look at the `Branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
+Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we use the Swift `_` ignored-value symbol.
+Let's take a look at the `branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
 
 Notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
-`NSData` that represents a sample response. This can be used later for tests or
+`Data` that represents a sample response. This can be used later for tests or
 for providing offline support for developers. This *should* depend on `self`.
 
 ```swift
-public var sampleData: NSData {
+public var sampleData: Data {
     switch self {
-    case .Zen:
-        return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .UserProfile(let name):
-        return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .UserRepositories(let name):
-        return "[{\"name\": \"Repo Name\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
-    case .Branches:
-        return "[{\"name\": \"master\"}]".dataUsingEncoding(NSUTF8StringEncoding)!
+    case .zen:
+        return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+    case .userProfile(let name):
+        return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
+    case .userRepositories(let name):
+        return "[{\"name\": \"Repo Name\"}]".data(using: String.Encoding.utf8)!
+    case .branches:
+        return "[{\"name\": \"master\"}]".data(using: String.Encoding.utf8)!
     }
 }
 ```
@@ -127,8 +127,8 @@ Here's an example extension that allows you to easily escape normal strings
 
 ```swift
 extension String {
-    var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    var urlEscapedString: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 ```

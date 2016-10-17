@@ -18,7 +18,7 @@ struct Network {
     ) {
         provider.request(target) { result in
             switch result {
-            case let .Success(response):
+            case let .success(response):
                 do {
                     try response.filterSuccessfulStatusCodes()
                     let json = try JSON(response.mapJSON())
@@ -27,7 +27,7 @@ struct Network {
                 catch error {
                     errorCallback(error)
                 }
-            case let .Failure(error):
+            case let .failure(error):
                 if target.shouldRetry {
                     retryWhenReachable(target, successCallback, errorCallback, failureCallback)
                 }
@@ -40,7 +40,7 @@ struct Network {
 }
 
 // usage:
-Network.request(.Zen, success: { zen in
+Network.request(.zen, success: { zen in
     showMessage(zen)
 }, error: { err in
     showError(err)

@@ -11,7 +11,7 @@ public struct ProgressResponse {
     public let response: Response?
     public let progressObject: Progress?
 
-    init(progress: Progress? = nil, response: Response? = nil) {
+    public init(progress: Progress? = nil, response: Response? = nil) {
         self.progressObject = progress
         self.response = response
     }
@@ -90,7 +90,7 @@ open class MoyaProvider<Target: TargetType> {
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
-    func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    open func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(request, target: target)
         let plugins = self.plugins

@@ -18,7 +18,7 @@ extension GitHubUserContent: TargetType {
     public var method: Moya.Method {
         switch self {
         case .downloadMoyaWebContent:
-            return .GET
+            return .get
         }
     }
     public var parameters: [String: Any]? {

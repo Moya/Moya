@@ -17,11 +17,11 @@ let provider = ReactiveCocoaMoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.Zen).start { (event) -> Void in
+provider.request(.zen).start { event in
     switch event {
-    case .Next(let response):
+    case let .value(response):
         // do something with the data
-    case .Failed(let error):
+    case let .failed(error):
         // handle the error
     default:
         break
@@ -38,12 +38,12 @@ If the request completes normally, two things happen:
 1. The signal sends a value, a `Moya.Response` instance.
 2. The signal completes.
 
-If the request produces an error (typically a NSURLSession error),
+If the request produces an error (typically a URLSession error),
 then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
 The `Moya.Response` class contains a `statusCode`, some `data`,
-and a(n optional) `NSURLResponse`. You can use these values however
+and a(n optional) `URLResponse`. You can use these values however
 you like in `startWithNext` or `map` calls.
 
 To make things even awesomer, Moya provides some extensions to

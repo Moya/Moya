@@ -11,11 +11,11 @@ let GitHubProvider = ReactiveCocoaMoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.Zen).start { (event) -> Void in
+provider.request(.zen).start { event in
     switch event {
-    case .Next(let response):
+    case .next(let response):
         // do something with the data
-    case .Failed(let error):
+    case .failed(let error):
         // handle the error
     default:
         break

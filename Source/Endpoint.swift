@@ -7,6 +7,9 @@ public enum EndpointSampleResponse {
     /// The network returned a response, including status code and data.
     case networkResponse(Int, Data)
 
+    /// The network returned response which can be fully customized.
+    case response(HTTPURLResponse, Data)
+
     /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
     case networkError(NSError)
 }
@@ -26,9 +29,9 @@ open class Endpoint<Target> {
     /// Main initializer for `Endpoint`.
     public init(URL: String,
         sampleResponseClosure: @escaping SampleResponseClosure,
-        method: Moya.Method = Moya.Method.GET,
+        method: Moya.Method = Moya.Method.get,
         parameters: [String: Any]? = nil,
-        parameterEncoding: Moya.ParameterEncoding = URLEncoding(),
+        parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
         httpHeaderFields: [String: String]? = nil) {
 
         self.URL = URL
@@ -40,22 +43,22 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added parameters.
-    open func endpointByAddingParameters(_ parameters: [String: Any]) -> Endpoint<Target> {
-        return endpointByAdding(parameters: parameters)
+    open func adding(newParameters: [String: Any]) -> Endpoint<Target> {
+        return adding(parameters: newParameters)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
-    open func endpointByAddingHTTPHeaderFields(_ httpHeaderFields: [String: String]) -> Endpoint<Target> {
-        return endpointByAdding(httpHeaderFields: httpHeaderFields)
+    open func adding(newHttpHeaderFields: [String: String]) -> Endpoint<Target> {
+        return adding(httpHeaderFields: newHttpHeaderFields)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with another parameter encoding.
-    open func endpointByAddingParameterEncoding(_ newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
-        return endpointByAdding(parameterEncoding: newParameterEncoding)
+    open func adding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
+        return adding(parameterEncoding: newParameterEncoding)
     }
 
     /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
-    open func endpointByAdding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
+    open func adding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
         let newParameters = addParameters(parameters)
         let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
@@ -87,10 +90,12 @@ open class Endpoint<Target> {
     }
 }
 
-/// Extension for converting an `Endpoint` into an `NSURLRequest`.
+/// Extension for converting an `Endpoint` into an optional `URLRequest`.
 extension Endpoint {
-    public var urlRequest: URLRequest! {
-        var request: URLRequest = URLRequest(url: Foundation.URL(string: URL)!) // swiftlint:disable:this force_unwrapping
+    public var urlRequest: URLRequest? {
+        guard let requestURL = Foundation.URL(string: URL) else { return nil }
+
+        var request: URLRequest = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
@@ -100,12 +105,15 @@ extension Endpoint {
 
 /// Required for making `Endpoint` conform to `Equatable`.
 public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+    if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
+    if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
+    if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
     return (lhs.urlRequest == rhs.urlRequest)
 }
 
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
-        return (urlRequest as NSURLRequest).hash
+        return urlRequest?.hashValue ?? URL.hashValue
     }
 }
