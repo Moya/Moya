@@ -1,10 +1,8 @@
 # Next
 
-- **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON.
 # 8.0.0-beta.3
 
-- **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON
-- Removed the unused `StreamRequest` typealias that was causing watchOS failures.
+- **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON.
 - **Breaking Change** Renamed `endpointByAddingHTTPHeaders` to `adding(newHttpHeaderFields:)`.
 - **Breaking Change** Renamed `endpointByAddingParameters` to `adding(newParameters:)`.
 - **Breaking Change** Renamed `endpointByAddingParameterEncoding` to `adding(newParameterEncoding:)`.
@@ -13,10 +11,11 @@
 - `urlRequest` property of `Endpoint` is now truly optional. The request will fail if the `urlRequest` turns out to be nil and a `requestMapping` error will be returned together with the problematic url.
 - **Breaking Change** Made RxMoya & ReactiveMoya frameworks dependant on Moya framework, making them slimmer and not re-including Moya source in the Reactive extensions. ([PR](https://github.com/Moya/Moya/pull/563))
 - **Breaking Change** Made some `class func`s [mimicking enum cases](https://github.com/Moya/Moya/blob/master/Source/Moya.swift#L117-L133) lowercased.
+- Removed the unused `StreamRequest` typealias that was causing watchOS failures.
 - Fixes download requests never calling the completion block.
-- Adds new internal Requestable protocol.
+- Added a new internal Requestable protocol.
 - Added a new case to `SampleResponseClosure` which allows mocking of the whole `URLResponse`.
-- Adds test for new `SampleResponseClosure` case.
+- Added a test for new `SampleResponseClosure` case.
 
 # 8.0.0-beta.2
 
