@@ -1,5 +1,7 @@
 # Next
 
+- **Breaking Change** Made some `class func`s [mimicking enum cases](https://github.com/Moya/Moya/blob/master/Source/Moya.swift#L117-L133) lowercased.
+
 # 8.0.0-beta.3
 
 - **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON.
@@ -10,7 +12,6 @@
 - **Breaking Change** Changed HTTP verbs enum to lowercase.
 - `urlRequest` property of `Endpoint` is now truly optional. The request will fail if the `urlRequest` turns out to be nil and a `requestMapping` error will be returned together with the problematic url.
 - **Breaking Change** Made RxMoya & ReactiveMoya frameworks dependant on Moya framework, making them slimmer and not re-including Moya source in the Reactive extensions. ([PR](https://github.com/Moya/Moya/pull/563))
-- **Breaking Change** Made some `class func`s [mimicking enum cases](https://github.com/Moya/Moya/blob/master/Source/Moya.swift#L117-L133) lowercased.
 - Removed the unused `StreamRequest` typealias that was causing watchOS failures.
 - Fixes download requests never calling the completion block.
 - Added a new internal Requestable protocol.
