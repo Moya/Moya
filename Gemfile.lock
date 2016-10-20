@@ -1,37 +1,3 @@
-GIT
-  remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 60c97e39892548096257f05ba39c4cc686dc4fa0
-  branch: master
-  specs:
-    cocoapods (1.1.0.rc.2)
-      activesupport (>= 4.0.2, < 5)
-      claide (>= 1.0.0, < 2.0)
-      cocoapods-core (= 1.1.0.rc.2)
-      cocoapods-deintegrate (>= 1.0.1, < 2.0)
-      cocoapods-downloader (>= 1.1.1, < 2.0)
-      cocoapods-plugins (>= 1.0.0, < 2.0)
-      cocoapods-search (>= 1.0.0, < 2.0)
-      cocoapods-stats (>= 1.0.0, < 2.0)
-      cocoapods-trunk (>= 1.0.0, < 2.0)
-      cocoapods-try (>= 1.1.0, < 2.0)
-      colored (~> 1.2)
-      escape (~> 0.0.4)
-      fourflusher (~> 1.0.1)
-      gh_inspector (~> 1.0)
-      molinillo (~> 0.5.1)
-      nap (~> 1.0)
-      xcodeproj (>= 1.3.1, < 2.0)
-
-GIT
-  remote: https://github.com/CocoaPods/Core.git
-  revision: fc8c258d0bce73e091f09de260a1a65bed3482a1
-  branch: master
-  specs:
-    cocoapods-core (1.1.0.rc.2)
-      activesupport (>= 4.0.2, < 5)
-      fuzzy_match (~> 2.0.4)
-      nap (~> 1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,18 +8,40 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    claide (1.0.0)
+    claide (1.0.1)
     claide-plugins (0.9.1)
       cork
       nap
       open4 (~> 1.3)
+    cocoapods (1.1.1)
+      activesupport (>= 4.0.2, < 5)
+      claide (>= 1.0.1, < 2.0)
+      cocoapods-core (= 1.1.1)
+      cocoapods-deintegrate (>= 1.0.1, < 2.0)
+      cocoapods-downloader (>= 1.1.2, < 2.0)
+      cocoapods-plugins (>= 1.0.0, < 2.0)
+      cocoapods-search (>= 1.0.0, < 2.0)
+      cocoapods-stats (>= 1.0.0, < 2.0)
+      cocoapods-trunk (>= 1.1.1, < 2.0)
+      cocoapods-try (>= 1.1.0, < 2.0)
+      colored (~> 1.2)
+      escape (~> 0.0.4)
+      fourflusher (~> 2.0.1)
+      gh_inspector (~> 1.0)
+      molinillo (~> 0.5.1)
+      nap (~> 1.0)
+      xcodeproj (>= 1.3.3, < 2.0)
+    cocoapods-core (1.1.1)
+      activesupport (>= 4.0.2, < 5)
+      fuzzy_match (~> 2.0.4)
+      nap (~> 1.0)
     cocoapods-deintegrate (1.0.1)
-    cocoapods-downloader (1.1.1)
+    cocoapods-downloader (1.1.2)
     cocoapods-plugins (1.0.0)
       nap
     cocoapods-search (1.0.0)
     cocoapods-stats (1.0.0)
-    cocoapods-trunk (1.0.0)
+    cocoapods-trunk (1.1.1)
       nap (>= 0.8, < 2.0)
       netrc (= 0.7.8)
     cocoapods-try (1.1.0)
@@ -79,7 +67,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (1.3.1)
       faraday (~> 0.8)
-    fourflusher (1.0.1)
+    fourflusher (2.0.1)
     fuzzy_match (2.0.4)
     gh_inspector (1.0.2)
     git (1.3.0)
@@ -92,7 +80,7 @@ GEM
     i18n (0.7.0)
     json (1.8.3)
     kramdown (1.12.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     molinillo (0.5.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -112,9 +100,9 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.1.1)
-    xcodeproj (1.3.1)
+    xcodeproj (1.3.3)
       activesupport (>= 3)
-      claide (>= 1.0.0, < 2.0)
+      claide (>= 1.0.1, < 2.0)
       colored (~> 1.2)
     xcpretty (0.2.2)
       rouge (~> 1.8)
@@ -123,8 +111,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods!
-  cocoapods-core!
+  cocoapods
   danger
   danger-swiftlint
   octokit (~> 4.3)
