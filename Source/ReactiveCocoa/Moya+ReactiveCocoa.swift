@@ -19,7 +19,7 @@ open class ReactiveCocoaMoyaProvider<Target>: MoyaProvider<Target> where Target:
     }
 
     /// Designated request-making method.
-    public func request(token: Target) -> SignalProducer<Response, Moya.Error> {
+    open func request(token: Target) -> SignalProducer<Response, Moya.Error> {
 
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
