@@ -16,8 +16,8 @@ public protocol PluginType {
 }
 
 public extension PluginType {
-	func willSendRequest(_ request: RequestType, target: TargetType) { }
-	func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType){ }
+    func willSendRequest(_ request: RequestType, target: TargetType) { }
+    func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType){ }
 }
 
 /// Request type used by `willSendRequest` plugin function.
