@@ -9,7 +9,7 @@ class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
         beforeEach {
-            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub)
+            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
         }
         
         it("returns stubbed data for zen request") {
@@ -81,7 +81,7 @@ class MoyaProviderSpec: QuickSpec {
                 return nil
             }
             
-            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: HTTPBin = .basicAuth
             _ = provider.request(target) { _ in  }
             
@@ -95,7 +95,7 @@ class MoyaProviderSpec: QuickSpec {
                 return URLCredential(user: "user", password: "passwd", persistence: .none)
             }
             
-            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: HTTPBin = .basicAuth
             _ = provider.request(target) { _ in  }
             
@@ -117,7 +117,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
             }
             
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: GitHub = .zen
             _ = provider.request(target) { _ in  }
             
@@ -132,7 +132,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
             }
             
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.ImmediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: GitHub = .zen
             _ = provider.request(target) { _ in  }
             
@@ -146,7 +146,7 @@ class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 plugin = TestingPlugin()
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(delay), plugins: [plugin])
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(delay), plugins: [plugin])
             }
 
             it("delays execution") {
@@ -239,7 +239,7 @@ class MoyaProviderSpec: QuickSpec {
                         }
                     }
                 }
-                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.DelayedStub(responseTime))
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.delayedStub(responseTime))
             }
 
             it("returns success eventually") {
@@ -338,7 +338,7 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
             
             it("executes the endpoint resolver") {
@@ -355,7 +355,7 @@ class MoyaProviderSpec: QuickSpec {
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
                     return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
                 }
-                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var data: Data?
                 _ = provider.request(GitHub.zen) { result in
@@ -373,7 +373,7 @@ class MoyaProviderSpec: QuickSpec {
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
                     return Endpoint(URL: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, parameters: target.parameters)
                 }
-                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var receivedResponse: URLResponse?
                 _ = provider.request(GitHub.zen) { result in
@@ -391,7 +391,7 @@ class MoyaProviderSpec: QuickSpec {
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
                     return Endpoint(URL: url, sampleResponseClosure: { .networkError(error) }, method: target.method, parameters: target.parameters)
                 }
-                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var receivedError: Moya.Error?
                 _ = provider.request(GitHub.zen) { result in
@@ -416,7 +416,7 @@ class MoyaProviderSpec: QuickSpec {
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
                     done(.failure(.underlying(underyingError)))
                 }
-                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
             
             it("returns failure for any given request") {
@@ -435,7 +435,7 @@ class MoyaProviderSpec: QuickSpec {
         describe("with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.ImmediatelyStub)
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
             
             it("returns stubbed data for zen request") {
@@ -511,7 +511,7 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
                     _ = provider.request(StructTarget(StructAPI())) { _ in
@@ -532,7 +532,7 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
                     _ = provider.request(StructTarget(StructAPI())) { _ in
@@ -553,7 +553,7 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
                     _ = provider.request(StructTarget(StructAPI())) { _ in
@@ -566,7 +566,7 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct sample data") {
                 var dataString: String?
-                let provider = MoyaProvider<StructTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
+                let provider = MoyaProvider<StructTarget>(stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
                     _ = provider.request(StructTarget(StructAPI())) { result in
@@ -619,7 +619,7 @@ class MoyaProviderSpec: QuickSpec {
         describe("the cancellable token") {
             var provider: MoyaProvider<GitHub>!
             beforeEach{
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.DelayedStub(0.5))
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(0.5))
             }
             
             it("invokes completion and returns .Failure if cancelled immediately") {
