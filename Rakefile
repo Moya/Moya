@@ -9,7 +9,7 @@ def safe_sh(command)
       break      # If command was successful, break out of the loop.
     rescue => exception
       puts "Received non-zero exit code: #{$1}"
-      raise exception unless attempt_count >= 2 # Ignore exit code 65
+      raise exception unless attempt_count < 2 # Ignore exit code 65
     end
   end
 end
