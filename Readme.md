@@ -207,6 +207,7 @@ Moya has a great community around it and some people have created some very help
 - [Moya-Gloss](https://github.com/spxrogers/Moya-Gloss) - Gloss bindings for Moya for easier JSON serialization
 - [Moya-JASON](https://github.com/DroidsOnRoids/Moya-JASON) - JASON bindings for Moya for easier JSON serialization
 - [Moya-Unbox](https://github.com/RyogaK/Moya-Unbox) - Unbox bindings for Moya for easier JSON serialization
+- [MoyaSugar](https://github.com/devxoul/MoyaSugar) – Syntactic sugar for Moya
 
 We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
 

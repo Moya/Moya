@@ -53,7 +53,7 @@ initializer anymore, since Swift will infer it from the type of our
 `endpointClosure`. Neat!
 
 This `endpointClosure` is about as simple as you can get. It's actually the
-default implementation, too, stored in `MoyaProvider.DefaultEndpointMapping`.
+default implementation, too, stored in `MoyaProvider.defaultEndpointMapping`.
 Check out the [Endpoints](Endpoints.md) documentation for more on _why_ you
 might want to customize this.
 
@@ -65,7 +65,7 @@ documentation for how and why you'd do this.
 
 ### stubClosure:
 
-The next option is to provide a `stubClosure`. This returns one of either `.Never` (the
+The next option is to provide a `stubClosure`. This returns one of either `.never` (the
 default), `.immediate` or `.delayed(seconds)`, where you can delay the stubbed
 request by a certain number of seconds. For example, `.delayed(0.2)` would delay
 every stubbed request. This can be good for simulating network delays in unit tests.
@@ -85,9 +85,9 @@ But usually you want the same stubbing behavior for all your targets. There are
 three class methods on `MoyaProvider` you can use instead.
 
 ```swift
-MoyaProvider.NeverStub
-MoyaProvider.ImmediatelyStub
-MoyaProvider.DelayedStub(seconds)
+MoyaProvider.neverStub
+MoyaProvider.immediatelyStub
+MoyaProvider.delayedStub(seconds)
 ```
 
 So, in the above example, if you wanted immediate stubbing behavior for all
@@ -95,7 +95,7 @@ targets, either of the following would work.
 
 ```swift
 let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubBehavior in return .immediate })
-let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
+let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.immediatelyStub)
 ```
 
 ### manager:
@@ -103,7 +103,7 @@ let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.ImmediatelyStub)
 Next, there's the `manager` parameter. By default you'll get a custom `Alamofire.Manager` instance with basic configurations.
 
 ```swift
-public final class func DefaultAlamofireManager() -> Manager {
+public final class func defaultAlamofireManager() -> Manager {
     let configuration = URLSessionConfiguration.default
     configuration.httpAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
 
