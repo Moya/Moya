@@ -2,14 +2,14 @@
 # This function will re-run a command up to three times if it yeilds a 65 exit code.
 def safe_sh(command)
   attempt_count = 0
-  while attempt_count < 3
+  while true
     begin
       attempt_count += 1
       sh command # Attempt command
       break      # If command was successful, break out of the loop.
     rescue => exception
       puts "Received non-zero exit code: #{$1}"
-      raise exception unless $1 == 65 # Ignore exit code 65
+      raise exception unless attempt_count < 2 # Ignore exit code 65
     end
   end
 end

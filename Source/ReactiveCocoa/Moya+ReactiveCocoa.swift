@@ -8,10 +8,10 @@ import Moya
 open class ReactiveCocoaMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     private let stubScheduler: DateSchedulerProtocol?
     /// Initializes a reactive provider.
-    public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.DefaultEndpointMapping,
-        requestClosure: @escaping RequestClosure = MoyaProvider.DefaultRequestMapping,
-        stubClosure: @escaping StubClosure = MoyaProvider.NeverStub,
-        manager: Manager = ReactiveCocoaMoyaProvider<Target>.DefaultAlamofireManager(),
+    public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
+        requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+        stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+        manager: Manager = ReactiveCocoaMoyaProvider<Target>.defaultAlamofireManager(),
         plugins: [PluginType] = [], stubScheduler: DateSchedulerProtocol? = nil,
         trackInflights: Bool = false) {
             self.stubScheduler = stubScheduler
@@ -19,7 +19,7 @@ open class ReactiveCocoaMoyaProvider<Target>: MoyaProvider<Target> where Target:
     }
 
     /// Designated request-making method.
-    public func request(token: Target) -> SignalProducer<Response, Moya.Error> {
+    open func request(token: Target) -> SignalProducer<Response, Moya.Error> {
 
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
