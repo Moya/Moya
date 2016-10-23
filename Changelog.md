@@ -1,6 +1,7 @@
 # Next
 
 - **Breaking Change** Made some `class func`s [mimicking enum cases](https://github.com/Moya/Moya/blob/master/Source/Moya.swift#L117-L133) lowercased.
+- Updates for RxSwift 3.0 final release.
 
 # 8.0.0-beta.3
 
