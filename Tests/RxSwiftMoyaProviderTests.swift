@@ -5,6 +5,10 @@ import RxSwift
 import Alamofire
 import OHHTTPStubs
 
+#if !COCOAPODS
+import RxMoya
+#endif
+
 class RxSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
         

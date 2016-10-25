@@ -1,0 +1,3 @@
+github "Quick/Quick"
+github "Quick/Nimble"
+github "AliSoftware/OHHTTPStubs" "swift-3.0"

@@ -4,6 +4,10 @@ import Nimble
 import OHHTTPStubs
 import Alamofire
 
+#if !COCOAPODS
+import ReactiveMoya
+#endif
+
 func beIdenticalToResponse(_ expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
