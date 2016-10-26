@@ -7,6 +7,12 @@ let package = Package(
             name: "Moya"
         ),
         Target(
+            name: "ReactiveMoya",
+            dependencies: [
+                .Target(name: "Moya")
+            ]
+        ),
+        Target(
             name: "RxMoya",
             dependencies: [
                 .Target(name: "Moya")
@@ -14,10 +20,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .Package(url: "https://github.com/AndrewSB/RxSwift", versions: Version(3, 0, 2)...Version(4, 0, 0)),
-        .Package(url: "https://github.com/Alamofire/Alamofire", versions: Version(4, 0, 0)...Version(5, 0, 0))
+        .Package(url: "https://github.com/Alamofire/Alamofire", majorVersion: 4),
+        .Package(url: "https://github.com/ReactiveCocoa/ReactiveSwift", "1.0.0-alpha.3"),
+        .Package(url: "https://github.com/ReactiveX/RxSwift", majorVersion: 3)
     ],
     exclude: [
         ".build",
+        "Demo",
+        "Tests"
     ]
 )
