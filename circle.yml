@@ -10,6 +10,8 @@ dependencies:
     - brew install swiftlint
     - bundle install
     - cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.
+  cache_directories:
+    - "~/.cocoapods/repos/master"
 
 test:
   pre:
