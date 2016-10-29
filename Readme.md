@@ -116,7 +116,7 @@ provider.request(.zen) { result in
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
         // timed out).  If the server responds with a 4xx or 5xx error, that
-        // will be sent as a ".Success"-ful response.
+        // will be sent as a ".success"-ful response.
     }
 }
 ```
