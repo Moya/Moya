@@ -79,7 +79,7 @@ private extension NetworkLoggerPlugin {
         }
 
         if let body = request?.httpBody, verbose == true {
-            if let stringOutput = NSString(data: body, encoding: String.Encoding.utf8.rawValue) as? String {
+            if let stringOutput = String(data: body, encoding: .utf8) {
                 output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
             }
         }

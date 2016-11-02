@@ -72,9 +72,9 @@ public extension Response {
 
     /// Maps data received from the signal into a String.
     func mapString() throws -> String {
-        guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
+        guard let string = String(data: data, encoding: .utf8) else {
             throw Error.stringMapping(self)
         }
-        return string as String
+        return string
     }
 }
