@@ -46,11 +46,12 @@ def sdks
   }
 end
 
+# See: https://discuss.circleci.com/t/multiple-ios-simulators-available-for-single-os-device-configurations/7854
 def devices
   return {
-    ios: "name='iPhone 6s'",
+    ios: ENV['CIRCLECI'] ? "id='F08BA729-6AD2-42DF-A210-34DC8D990011'" : "name='iPhone 6s'",
     macos: "arch='x86_64'",
-    tvos: "name='Apple TV 1080p'"
+    tvos: ENV['CIRCLECI'] ? "id='48B0E1AB-F5EB-40FB-9372-A16B93349B12'" : "name='Apple TV 1080p'"
   }
 end
 
