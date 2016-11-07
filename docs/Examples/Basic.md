@@ -65,6 +65,9 @@ extension MyService: TargetType {
             return data
         }
     }
+    var task: Task {
+        return .request
+    }
     var multipartBody: [MultipartFormData]? {
         // Optional
         return nil
