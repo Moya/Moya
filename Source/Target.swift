@@ -44,11 +44,11 @@ public enum StructTarget: TargetType {
     public var sampleData: Data {
         return target.sampleData
     }
-    
+
     public var task: Task {
         return target.task
     }
-    
+
     public var validate: Bool {
         return target.validate
     }
