@@ -217,6 +217,7 @@ catch {
 ```
 
 **Alamofire automatic validation**
+
 Sometimes, you will want to use [Alamofire automatic validation](https://github.com/Alamofire/Alamofire#automatic-validation) for some requests.
 When a request is configured with Alamofire validation, Moya will internally call Alamofire's  `validate()` method on the concerned `DataRequest`.
 
