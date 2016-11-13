@@ -9,7 +9,7 @@ public protocol TargetType {
     var parameters: [String: Any]? { get }
     var sampleData: Data { get }
     var task: Task { get }
-    var validate: Bool { get } // Alamofire validation, optional (defaults to `false`)
+    var validate: Bool { get } // Alamofire validation (defaults to `false`)
 }
 
 public extension TargetType {
