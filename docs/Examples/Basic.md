@@ -224,23 +224,25 @@ When a request is configured with Alamofire validation, Moya will internally cal
 ```swift
 // MARK: - TargetType Protocol Implementation
 extension MyService: TargetType {
-var baseURL: URL { return URL(string: "https://api.myservice.com")! }
+    var baseURL: URL { return URL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
         case .zen:
             return "/zen"
         case .showUser(let id):
             return "/users/\(id)"
-        case .createUser(_, _):
+        case .createUser:
             return "/users"
         case .showAccounts:
               return "/accounts"
         }
     }
-    //Other needed configurations
-    //...
     
-    //validate setup is not required
+    // Other needed configurations
+    // ...
+    
+    // Validate setup is not required; defaults to `false`
+    // for all requests unless specified otherwise.
     var validate: Bool {
         switch self {
         case .zen, .showUser, .showAccounts:
