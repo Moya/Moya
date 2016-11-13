@@ -55,6 +55,14 @@ extension GitHub: TargetType {
     public var task: Task {
         return .request
     }
+    var validate: Bool {
+        switch self {
+        case .zen:
+            return true
+        default:
+            return false
+        }
+    }
     public var sampleData: Data {
         switch self {
         case .zen:
