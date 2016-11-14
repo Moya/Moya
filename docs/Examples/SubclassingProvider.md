@@ -21,7 +21,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
     // Request to fetch and store new XApp token if the current token is missing or expired.
     func XAppTokenRequest() -> Observable<String?> {
 
-        var appToken = UserInfo.sharedInstance.accessToken
+        var appToken = UserInfo.shared.accessToken
 
         // If we have a valid token, just return it
         if appToken.isValidAndNotExpired {
@@ -29,12 +29,12 @@ class OnlineProvider: RxMoyaProvider<MyService> {
         }
 
         // Do not attempt to refresh a session if we don't have valid credentials
-        guard let userId = UserInfo.sharedInstance.userId, refreshToken = UserInfo.sharedInstance.accessToken.refreshToken else {
+        guard let userId = UserInfo.shared.userId, refreshToken = UserInfo.shared.accessToken.refreshToken else {
             return Observable.just(nil)
         }
 
         // Create actual refresh request
-        let newTokenRequest = super.request(MyService.RefreshSession(userId: userId, refreshToken: refreshToken))
+        let newTokenRequest = super.request(MyService.refreshSession(userId: userId, refreshToken: refreshToken))
             .filterSuccessfulStatusCodes()
             .mapJSON()
             .map { element -> (token: String?, refreshToken: String?, expiryTime: Double?) in
@@ -43,23 +43,23 @@ class OnlineProvider: RxMoyaProvider<MyService> {
                 return (token: dictionary["auth_token"] as? String, refreshToken: dictionary["refresh_token"] as? String, expiryTime: dictionary["session_time_valid"] as? Double)
             }
             .doOn { event in
-                guard case Event.Next(let element) = event else { return }
+                guard case .next(let element) = event else { return }
 
-                UserInfo.sharedInstance.accessToken.token = element.0
-                UserInfo.sharedInstance.accessToken.refreshToken = element.1
-                UserInfo.sharedInstance.accessToken.setExpirySecondsLeft(element.2)
+                UserInfo.shared.accessToken.token = element.0
+                UserInfo.shared.accessToken.refreshToken = element.1
+                UserInfo.shared.accessToken.setExpirySecondsLeft(element.2)
             }
             .map { (token, refreshToken, expiry) -> String? in
                 return token
             }
             .catchError { e -> Observable<String?> in
                 guard let error = e as? Moya.Error else { throw e }
-                guard case .StatusCode(let response) = error else { throw e }
+                guard case .statusCode(let response) = error else { throw e }
 
                 // If we have 401 error - delete all credentials and handle logout
                 if response.statusCode == 401 {
-                    UserInfo.sharedInstance.invalidate()
-                    Router.sharedInstance.popToLoginScreen()
+                    UserInfo.shared.invalidate()
+                    Router.shared.popToLoginScreen()
                 }
                 throw error
             }
