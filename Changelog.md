@@ -1,4 +1,7 @@
 # Next
+# 8.0.0-beta.5
+
+- Added _validate_ option in `TargetType`, to allow enabling Alamofire automatic validation on requests.
 
 # 8.0.0-beta.4
 

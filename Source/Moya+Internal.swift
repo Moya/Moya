@@ -174,17 +174,20 @@ private extension MoyaProvider {
     }
 
     func sendUploadFile(_ target: Target, request: URLRequest, queue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
-        let alamoRequest = manager.upload(file, with: request)
+        let uploadRequest = manager.upload(file, with: request)
+        let alamoRequest = target.validate ? uploadRequest.validate() : uploadRequest
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
     func sendDownloadRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
-        let alamoRequest = manager.download(request, to: destination)
+        let downloadRequest = manager.download(request, to: destination)
+        let alamoRequest = target.validate ? downloadRequest.validate() : downloadRequest
         return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 
     func sendRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
-        let alamoRequest = manager.request(request as URLRequestConvertible)
+        let initialRequest = manager.request(request as URLRequestConvertible)
+        let alamoRequest = target.validate ? initialRequest.validate() : initialRequest
         return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
     }
 

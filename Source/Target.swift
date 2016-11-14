@@ -9,6 +9,13 @@ public protocol TargetType {
     var parameters: [String: Any]? { get }
     var sampleData: Data { get }
     var task: Task { get }
+    var validate: Bool { get } // Alamofire validation (defaults to `false`)
+}
+
+public extension TargetType {
+    var validate: Bool {
+        return false
+    }
 }
 
 public enum StructTarget: TargetType {
@@ -37,8 +44,13 @@ public enum StructTarget: TargetType {
     public var sampleData: Data {
         return target.sampleData
     }
+
     public var task: Task {
         return target.task
+    }
+
+    public var validate: Bool {
+        return target.validate
     }
 
     public var target: TargetType {
