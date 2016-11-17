@@ -66,9 +66,8 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
-    return endpoint.adding(newHttpHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(target)
+    return defaultEndpoint.adding(newHttpHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
