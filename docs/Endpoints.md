@@ -81,15 +81,14 @@ target that actually does the authentication. We could construct an
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(target)
 
     // Sign all non-authenticating requests
     switch target {
     case .authenticate:
-        return endpoint
+        return defaultEndpoint
     default:
-        return endpoint.adding(newHttpHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
+        return defaultEndpoint.adding(newHttpHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
     }
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
