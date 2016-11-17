@@ -29,15 +29,15 @@ extension Request: RequestType { }
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
-    public fileprivate(set) var cancelled: Bool = false
+    public fileprivate(set) var isCancelled = false
 
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
 
     public func cancel() {
         _ = lock.wait(timeout: DispatchTime.distantFuture)
         defer { lock.signal() }
-        guard !cancelled else { return }
-        cancelled = true
+        guard !isCancelled else { return }
+        isCancelled = true
         cancelAction()
     }
 

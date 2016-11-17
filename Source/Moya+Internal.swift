@@ -29,7 +29,7 @@ public extension MoyaProvider {
         }
 
         let performNetworking = { (requestResult: Result<URLRequest, Moya.Error>) in
-            if cancellableToken.cancelled {
+            if cancellableToken.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
             }
@@ -101,7 +101,7 @@ public extension MoyaProvider {
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
     public final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
         return {
-            if token.cancelled {
+            if token.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
             }
@@ -160,7 +160,7 @@ private extension MoyaProvider {
         manager.upload(multipartFormData: multipartFormData, with: request) { result in
             switch result {
             case .success(let alamoRequest, _, _):
-                if cancellable.cancelled {
+                if cancellable.isCancelled {
                     self.cancelCompletion(completion, target: target)
                     return
                 }
