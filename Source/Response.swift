@@ -20,7 +20,7 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     public var debugDescription: String {
         return description
     }
-    
+
     public static func == (lhs: Response, rhs: Response) -> Bool {
         return lhs.statusCode == rhs.statusCode
             && lhs.data == rhs.data
