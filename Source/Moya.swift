@@ -25,7 +25,6 @@ public struct ProgressResponse {
     }
 }
 
-
 /// Request provider class. Requests should be made through this class only.
 open class MoyaProvider<Target: TargetType> {
 
