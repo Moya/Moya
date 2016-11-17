@@ -47,8 +47,8 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
-    open func adding(newHttpHeaderFields: [String: String]) -> Endpoint<Target> {
-        return adding(httpHeaderFields: newHttpHeaderFields)
+    open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target> {
+        return adding(httpHeaderFields: newHTTPHeaderFields)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with another parameter encoding.
