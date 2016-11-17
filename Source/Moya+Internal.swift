@@ -48,7 +48,7 @@ public extension MoyaProvider {
             case .never:
                 let networkCompletion: Moya.Completion = { result in
                     if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach({ $0(result) })
+                        self.inflightRequests[endpoint]?.forEach { $0(result) }
 
                         objc_sync_enter(self)
                         self.inflightRequests.removeValue(forKey: endpoint)
@@ -73,7 +73,7 @@ public extension MoyaProvider {
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
                     if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach({ $0(result) })
+                        self.inflightRequests[endpoint]?.forEach { $0(result) }
 
                         objc_sync_enter(self)
                         self.inflightRequests.removeValue(forKey: endpoint)
@@ -148,8 +148,8 @@ private extension MoyaProvider {
 
             if let parameters = target.parameters {
                 parameters
-                    .flatMap { (key, value) in multipartQueryComponents(key, value) }
-                    .forEach { (key, value) in
+                    .flatMap { key, value in multipartQueryComponents(key, value) }
+                    .forEach { key, value in
                         if let data = value.data(using: .utf8, allowLossyConversion: false) {
                             form.append(data, withName: key)
                         }
@@ -157,7 +157,7 @@ private extension MoyaProvider {
             }
         }
 
-        manager.upload(multipartFormData: multipartFormData, with: request) { (result: MultipartFormDataEncodingResult) in
+        manager.upload(multipartFormData: multipartFormData, with: request) { result in
             switch result {
             case .success(let alamoRequest, _, _):
                 if cancellable.cancelled {
@@ -197,7 +197,7 @@ private extension MoyaProvider {
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
 
         var progressAlamoRequest = alamoRequest
-        let progressClosure: (Progress) -> Void = { (progress) in
+        let progressClosure: (Progress) -> Void = { progress in
             let sendProgress: () -> () = {
                 progressCompletion?(ProgressResponse(progress: progress))
             }

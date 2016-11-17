@@ -67,7 +67,7 @@ open class ReactiveCocoaMoyaProvider<Target>: MoyaProvider<Target> where Target:
 public extension ReactiveCocoaMoyaProvider {
     public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, Moya.Error> {
         let progressBlock = { (observer: Signal<ProgressResponse, Moya.Error>.Observer) -> (ProgressResponse) -> Void in
-            return { (progress: ProgressResponse) in
+            return { progress in
                 observer.send(value: progress)
             }
         }
@@ -90,7 +90,7 @@ public extension ReactiveCocoaMoyaProvider {
         }
 
         // Accumulate all progress and combine them when the result comes
-        return response.scan(ProgressResponse()) { (last, progress) in
+        return response.scan(ProgressResponse()) { last, progress in
             let progressObject = progress.progressObject ?? last.progressObject
             let response = progress.response ?? last.response
             return ProgressResponse(progress: progressObject, response: response)

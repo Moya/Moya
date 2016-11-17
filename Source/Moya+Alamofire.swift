@@ -70,16 +70,16 @@ internal protocol Requestable {
 
 extension DataRequest: Requestable {
     internal func response(queue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
-        return response(queue: queue, completionHandler: { handler  in
+        return response(queue: queue) { handler  in
             completionHandler(handler.response, handler.request, handler.data, handler.error)
-        })
+        }
     }
 }
 
 extension DownloadRequest: Requestable {
     internal func response(queue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
-        return response(queue: queue, completionHandler: { handler  in
+        return response(queue: queue) { handler  in
             completionHandler(handler.response, handler.request, nil, handler.error)
-        })
+        }
     }
 }
