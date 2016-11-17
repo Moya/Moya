@@ -14,7 +14,6 @@ public enum EndpointSampleResponse {
     case networkError(NSError)
 }
 
-
 /// Class for reifying a target of the `Target` enum unto a concrete `Endpoint`.
 open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
