@@ -52,6 +52,13 @@ extension ObservableType where E == Response {
             return Observable.just(try response.mapString())
         }
     }
+
+    /// Maps received data at key path into a String. If the conversion fails, the signal errors.
+    public func mapString(atKeyPath keyPath: String? = nil) -> Observable<String> {
+        return flatMap { response -> Observable<String> in
+            return Observable.just(try response.mapString(withKeyPath: keyPath))
+        }
+    }
 }
 
 extension ObservableType where E == ProgressResponse {

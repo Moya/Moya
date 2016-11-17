@@ -77,4 +77,16 @@ public extension Response {
         }
         return string
     }
+
+    /// Maps received data at key path into a String.
+    public func mapString(atKeyPath keyPath: String?) throws -> String {
+        guard let keyPath = keyPath else { return try mapString() }
+
+        guard let jsonDictionary = try mapJSON() as? NSDictionary,
+            let object = jsonDictionary.value(forKeyPath:keyPath) as? String else {
+                throw Error.jsonMapping(self)
+        }
+
+        return object
+    }
 }
