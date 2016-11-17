@@ -54,7 +54,7 @@ extension SignalProducerProtocol where Value == Response, Error == Moya.Error {
     }
 }
 
-/// Maps throwable to SignalProducer
+/// Maps throwable to SignalProducer.
 private func unwrapThrowable<T>(throwable: () throws -> T) -> SignalProducer<T, Moya.Error> {
     do {
         return SignalProducer(value: try throwable())

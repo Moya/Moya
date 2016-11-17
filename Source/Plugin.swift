@@ -11,7 +11,7 @@ public protocol PluginType {
     /// Called immediately before a request is sent over the network (or stubbed).
     func willSendRequest(_ request: RequestType, target: TargetType)
 
-    // Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
+    /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
     func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType)
 }
 

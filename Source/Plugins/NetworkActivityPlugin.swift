@@ -23,7 +23,7 @@ public final class NetworkActivityPlugin: PluginType {
         networkActivityClosure(.began)
     }
 
-    /// Called by the provider as soon as a response arrives, even the request is cancelled.
+    /// Called by the provider as soon as a response arrives, even if the request is cancelled.
     public func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         networkActivityClosure(.ended)
     }
