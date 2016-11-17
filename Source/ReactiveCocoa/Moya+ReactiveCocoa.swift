@@ -58,7 +58,7 @@ open class ReactiveCocoaMoyaProvider<Target>: MoyaProvider<Target> where Target:
             let date = Date(timeIntervalSinceNow: seconds)
             dis = stubScheduler.schedule(after: date, action: stub)
         case .never:
-            fatalError("Attempted to stub request when behavior requested was never stub!")
+            fatalError("Attempted to stub request when behavior requested was never stubbed!")
         }
         return token
     }

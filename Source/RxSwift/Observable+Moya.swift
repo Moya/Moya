@@ -32,7 +32,7 @@ extension ObservableType where E == Response {
         }
     }
 
-    /// Maps data received from the signal into a UIImage. If the conversion fails, the signal errors.
+    /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
     public func mapImage() -> Observable<Image?> {
         return flatMap { response -> Observable<Image?> in
             return Observable.just(try response.mapImage())
