@@ -51,11 +51,11 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
 
         describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
             struct TestCancellable: Cancellable {
-                static var cancelled = false
-                var cancelled: Bool { return TestCancellable.cancelled }
+                static var isCancelled = false
+                var isCancelled: Bool { return TestCancellable.isCancelled }
 
                 func cancel() {
-                    TestCancellable.cancelled = true
+                    TestCancellable.isCancelled = true
                 }
             }
 
@@ -76,7 +76,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
 
             var provider: ReactiveCocoaMoyaProvider<GitHub>!
             beforeEach {
-                TestCancellable.cancelled = false
+                TestCancellable.isCancelled = false
 
                 provider = TestProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(1))
             }
@@ -90,7 +90,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 }
                 disposable.dispose()
 
-                expect(TestCancellable.cancelled).to( beTrue() )
+                expect(TestCancellable.isCancelled).to( beTrue() )
             }
         }
 
@@ -138,11 +138,11 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
             
             describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
                 struct TestCancellable: Cancellable {
-                    static var cancelled = false
-                    var cancelled: Bool { return TestCancellable.cancelled }
+                    static var isCancelled = false
+                    var isCancelled: Bool { return TestCancellable.isCancelled }
                     
                     func cancel() {
-                        TestCancellable.cancelled = true
+                        TestCancellable.isCancelled = true
                     }
                 }
                 
@@ -163,7 +163,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                 
                 var provider: ReactiveCocoaMoyaProvider<GitHub>!
                 beforeEach {
-                    TestCancellable.cancelled = false
+                    TestCancellable.isCancelled = false
                     
                     provider = TestProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(1))
                 }
@@ -177,7 +177,7 @@ class ReactiveCocoaMoyaProviderSpec: QuickSpec {
                     }
                     disposable.dispose()
                     
-                    expect(TestCancellable.cancelled).to( beTrue() )
+                    expect(TestCancellable.isCancelled).to( beTrue() )
                 }
             }
         }

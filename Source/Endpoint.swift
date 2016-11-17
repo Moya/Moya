@@ -70,7 +70,7 @@ open class Endpoint<Target> {
         }
 
         var newParameters = self.parameters ?? [String: Any]()
-        unwrappedParameters.forEach { (key, value) in
+        unwrappedParameters.forEach { key, value in
             newParameters[key] = value
         }
         return newParameters
@@ -82,7 +82,7 @@ open class Endpoint<Target> {
         }
 
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-        unwrappedHeaders.forEach { (key, value) in
+        unwrappedHeaders.forEach { key, value in
             newHTTPHeaderFields[key] = value
         }
         return newHTTPHeaderFields
