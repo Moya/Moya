@@ -2,6 +2,7 @@ Examples
 ========
 
 * [Basic usage](Basic.md)
+* [Advanced usage - use MultiTarget for multiple Targets using the same Provider](MultiTarget.md)
 
 ####Reactive extensions
 
