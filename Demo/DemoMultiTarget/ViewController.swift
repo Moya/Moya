@@ -1,6 +1,8 @@
 import UIKit
 import Moya
 
+let provider = MoyaProvider<MultiTarget>(plugins: [NetworkLoggerPlugin(verbose: true)])
+
 class ViewController: UITableViewController {
     var progressView = UIView()
     var repos = NSArray()
@@ -25,7 +27,7 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
     
     func downloadRepositories(_ username: String) {
-        _ = GitHubProvider.request(.userRepositories(username)) { result in
+        _ = provider.request(MultiTarget(GitHub.userRepositories(username))) { result in
             switch result {
             case let .success(response):
                 do {
@@ -49,7 +51,7 @@ class ViewController: UITableViewController {
     }
     
     func downloadZen() {
-        _ = GitHubProvider.request(.zen) { result in
+        _ = provider.request(MultiTarget(GitHub.zen)) { result in
             var message = "Couldn't access API"
             if case let .success(response) = result {
                 let jsonString = try? response.mapString()
@@ -62,14 +64,14 @@ class ViewController: UITableViewController {
     
     func uploadGiphy() {
         let data = animatedBirdData()
-        _ = GiphyProvider.request(.upload(gif: data),
+        _ = provider.request(MultiTarget(Giphy.upload(gif: data)),
                                   queue: DispatchQueue.main,
                                   progress: progressClosure,
                                   completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
-        _ = GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
+        _ = provider.request(MultiTarget(GitHubUserContent.downloadMoyaWebContent("logo_github.png")),
                                               queue: DispatchQueue.main,
                                               progress: progressClosure,
                                               completion: progressCompletionClosure)
