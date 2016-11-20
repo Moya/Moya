@@ -503,7 +503,7 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct URL") {
                 var requestedURL: String?
-                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
                     requestedURL = endpoint.URL
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
@@ -511,10 +511,10 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(StructTarget(StructAPI())) { _ in
+                    _ = provider.request(MultiTarget(StructAPI())) { _ in
                         done()
                     }
                 }
@@ -524,7 +524,7 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct parameters") {
                 var requestParameters: [String: Any]?
-                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
                     requestParameters = endpoint.parameters
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
@@ -532,10 +532,10 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(StructTarget(StructAPI())) { _ in
+                    _ = provider.request(MultiTarget(StructAPI())) { _ in
                         done()
                     }
                 }
@@ -545,7 +545,7 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct method") {
                 var requestMethod: Moya.Method?
-                let endpointResolution: MoyaProvider<StructTarget>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
                     requestMethod = endpoint.method
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
@@ -553,10 +553,10 @@ class MoyaProviderSpec: QuickSpec {
                         done(.failure(Moya.Error.requestMapping(endpoint.URL)))
                     }
                 }
-                let provider = MoyaProvider<StructTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(StructTarget(StructAPI())) { _ in
+                    _ = provider.request(MultiTarget(StructAPI())) { _ in
                         done()
                     }
                 }
@@ -566,10 +566,10 @@ class MoyaProviderSpec: QuickSpec {
 
             it("uses correct sample data") {
                 var dataString: String?
-                let provider = MoyaProvider<StructTarget>(stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(StructTarget(StructAPI())) { result in
+                    _ = provider.request(MultiTarget(StructAPI())) { result in
                         if case let .success(response) = result {
                             dataString = String(data: response.data, encoding: .utf8)
                         }
