@@ -27,7 +27,7 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
     
     func downloadRepositories(_ username: String) {
-        _ = provider.request(MultiTarget(GitHub.userRepositories(username))) { result in
+        provider.request(MultiTarget(GitHub.userRepositories(username))) { result in
             switch result {
             case let .success(response):
                 do {
@@ -51,7 +51,7 @@ class ViewController: UITableViewController {
     }
     
     func downloadZen() {
-        _ = provider.request(MultiTarget(GitHub.zen)) { result in
+        provider.request(MultiTarget(GitHub.zen)) { result in
             var message = "Couldn't access API"
             if case let .success(response) = result {
                 let jsonString = try? response.mapString()
@@ -64,14 +64,14 @@ class ViewController: UITableViewController {
     
     func uploadGiphy() {
         let data = animatedBirdData()
-        _ = provider.request(MultiTarget(Giphy.upload(gif: data)),
+        provider.request(MultiTarget(Giphy.upload(gif: data)),
                                   queue: DispatchQueue.main,
                                   progress: progressClosure,
                                   completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
-        _ = provider.request(MultiTarget(GitHubUserContent.downloadMoyaWebContent("logo_github.png")),
+        provider.request(MultiTarget(GitHubUserContent.downloadMoyaWebContent("logo_github.png")),
                                               queue: DispatchQueue.main,
                                               progress: progressClosure,
                                               completion: progressCompletionClosure)

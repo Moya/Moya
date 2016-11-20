@@ -16,7 +16,7 @@ class MoyaProviderSpec: QuickSpec {
             var message: String?
             
             let target: GitHub = .zen
-            _ = provider.request(target) { result in
+            provider.request(target) { result in
                 if case let .success(response) = result {
                     message = String(data: response.data, encoding: .utf8)
                 }
@@ -43,7 +43,7 @@ class MoyaProviderSpec: QuickSpec {
             var message: String?
             
             let target: GitHub = .userProfile("ashfurrow")
-            _ = provider.request(target) { result in
+            provider.request(target) { result in
                 if case let .success(response) = result {
                     message = String(data: response.data, encoding: .utf8)
                 }
@@ -83,7 +83,7 @@ class MoyaProviderSpec: QuickSpec {
             
             let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: HTTPBin = .basicAuth
-            _ = provider.request(target) { _ in  }
+            provider.request(target) { _ in  }
             
             expect(called) == true
         }
@@ -97,7 +97,7 @@ class MoyaProviderSpec: QuickSpec {
             
             let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: HTTPBin = .basicAuth
-            _ = provider.request(target) { _ in  }
+            provider.request(target) { _ in  }
             
             expect(called) == true
         }
@@ -119,7 +119,7 @@ class MoyaProviderSpec: QuickSpec {
             
             let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: GitHub = .zen
-            _ = provider.request(target) { _ in  }
+            provider.request(target) { _ in  }
             
             expect(called) == true
         }
@@ -134,7 +134,7 @@ class MoyaProviderSpec: QuickSpec {
             
             let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: GitHub = .zen
-            _ = provider.request(target) { _ in  }
+            provider.request(target) { _ in  }
             
             expect(called) == true
         }
@@ -154,7 +154,7 @@ class MoyaProviderSpec: QuickSpec {
                 var endDate: NSDate?
                 let target: GitHub = .zen
                 waitUntil { done in
-                    _ = provider.request(target) { _ in
+                    provider.request(target) { _ in
                         endDate = NSDate()
                         done()
                     }
@@ -247,7 +247,7 @@ class MoyaProviderSpec: QuickSpec {
 
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    _ = provider.request(target) { result in
+                    provider.request(target) { result in
                         if case let .failure(error) = result {
                             receivedError = error
                         }
@@ -343,7 +343,7 @@ class MoyaProviderSpec: QuickSpec {
             
             it("executes the endpoint resolver") {
                 let target: GitHub = .zen
-                _ = provider.request(target) { _ in  }
+                provider.request(target) { _ in  }
                 
                 expect(executed).to(beTruthy())
             }
@@ -358,7 +358,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var data: Data?
-                _ = provider.request(GitHub.zen) { result in
+                provider.request(GitHub.zen) { result in
                     if case .success(let response) = result {
                         data = response.data
                     }
@@ -376,7 +376,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var receivedResponse: URLResponse?
-                _ = provider.request(GitHub.zen) { result in
+                provider.request(GitHub.zen) { result in
                     if case .success(let response) = result {
                         receivedResponse = response.response
                     }
@@ -394,7 +394,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var receivedError: Moya.Error?
-                _ = provider.request(GitHub.zen) { result in
+                provider.request(GitHub.zen) { result in
                     if case .failure(let error) = result {
                         receivedError = error
                     }
@@ -422,7 +422,7 @@ class MoyaProviderSpec: QuickSpec {
             it("returns failure for any given request") {
                 let target: GitHub = .zen
                 var receivedError: Moya.Error?
-                _ = provider.request(target) { response in
+                provider.request(target) { response in
                     if case .failure(let error) = response {
                         receivedError = error
                     }
@@ -443,7 +443,7 @@ class MoyaProviderSpec: QuickSpec {
                 let target: GitHub = .zen
 
                 waitUntil { done in
-                    _ = provider.request(target) { result in
+                    provider.request(target) { result in
                         if case .failure = result {
                             errored = true
                         }
@@ -460,7 +460,7 @@ class MoyaProviderSpec: QuickSpec {
 
                 let target: GitHub = .userProfile("ashfurrow")
                 waitUntil { done in
-                    _ = provider.request(target) { result in
+                    provider.request(target) { result in
                         if case .failure = result {
                             errored = true
                         }
@@ -476,7 +476,7 @@ class MoyaProviderSpec: QuickSpec {
                 var receivedError: Moya.Error?
                 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.request(target) { result in
+                provider.request(target) { result in
                     if case let .failure(error) = result {
                         receivedError = error
                     }
@@ -514,7 +514,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(MultiTarget(StructAPI())) { _ in
+                    provider.request(MultiTarget(StructAPI())) { _ in
                         done()
                     }
                 }
@@ -535,7 +535,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(MultiTarget(StructAPI())) { _ in
+                    provider.request(MultiTarget(StructAPI())) { _ in
                         done()
                     }
                 }
@@ -556,7 +556,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(MultiTarget(StructAPI())) { _ in
+                    provider.request(MultiTarget(StructAPI())) { _ in
                         done()
                     }
                 }
@@ -569,7 +569,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.immediatelyStub)
 
                 waitUntil { done in
-                    _ = provider.request(MultiTarget(StructAPI())) { result in
+                    provider.request(MultiTarget(StructAPI())) { result in
                         if case let .success(response) = result {
                             dataString = String(data: response.data, encoding: .utf8)
                         }
@@ -596,7 +596,7 @@ class MoyaProviderSpec: QuickSpec {
                 
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
                 
-                _ = provider.request(target) { result in
+                provider.request(target) { result in
                     if case let .success(response) = result {
                         receivedResponse = response
                     }
