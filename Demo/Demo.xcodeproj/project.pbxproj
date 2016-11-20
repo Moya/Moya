@@ -217,7 +217,7 @@
 			children = (
 				14E5C63A1DE148960008CCC3 /* AppDelegate.swift */,
 				14E5C63C1DE148960008CCC3 /* ViewController.swift */,
-				14E5C6461DE148960008CCC3 /* Info.plist */,
+				14E5C6521DE14BDD0008CCC3 /* Supporting Files */,
 			);
 			path = DemoMultiTarget;
 			sourceTree = "<group>";
@@ -233,6 +233,14 @@
 				14E5C6431DE148960008CCC3 /* LaunchScreen.storyboard */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		14E5C6521DE14BDD0008CCC3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				14E5C6461DE148960008CCC3 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4EA28E847926FEF1338D42F3 /* Frameworks */ = {
