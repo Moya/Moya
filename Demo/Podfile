@@ -25,6 +25,11 @@ target 'Demo' do
   libraries
 end
 
+target 'DemoMultiTarget' do
+  platform :ios, '9.0'
+  libraries
+end
+
 target 'MoyaTests-iOS' do
     platform :ios, '9.0'
     libraries
