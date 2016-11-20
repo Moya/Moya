@@ -18,11 +18,11 @@ public extension TargetType {
     }
 }
 
-public enum StructTarget: TargetType {
+public enum MultiTarget: TargetType {
     case `struct`(TargetType)
 
     public init(_ target: TargetType) {
-        self = StructTarget.struct(target)
+        self = MultiTarget.struct(target)
     }
 
     public var path: String {
