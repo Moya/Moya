@@ -83,10 +83,10 @@ public extension Response {
         guard let keyPath = keyPath else { return try mapString() }
 
         guard let jsonDictionary = try mapJSON() as? NSDictionary,
-            let object = jsonDictionary.value(forKeyPath:keyPath) as? String else {
+            let string = jsonDictionary.value(forKeyPath:keyPath) as? String else {
                 throw Error.jsonMapping(self)
         }
 
-        return object
+        return string
     }
 }
