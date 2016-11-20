@@ -41,7 +41,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
 public extension RxMoyaProvider {
     public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
         let progressBlock = { (observer: AnyObserver) -> (ProgressResponse) -> Void in
-            return { (progress: ProgressResponse) in
+            return { progress in
                 observer.onNext(progress)
             }
         }
@@ -63,7 +63,7 @@ public extension RxMoyaProvider {
         }
 
         // Accumulate all progress and combine them when the result comes
-        return response.scan(ProgressResponse()) { (last, progress) in
+        return response.scan(ProgressResponse()) { last, progress in
             let progressObject = progress.progressObject ?? last.progressObject
             let response = progress.response ?? last.response
             return ProgressResponse(progress: progressObject, response: response)

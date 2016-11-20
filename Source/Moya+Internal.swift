@@ -29,7 +29,7 @@ public extension MoyaProvider {
         }
 
         let performNetworking = { (requestResult: Result<URLRequest, Moya.Error>) in
-            if cancellableToken.cancelled {
+            if cancellableToken.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
             }
@@ -48,7 +48,7 @@ public extension MoyaProvider {
             case .never:
                 let networkCompletion: Moya.Completion = { result in
                     if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach({ $0(result) })
+                        self.inflightRequests[endpoint]?.forEach { $0(result) }
 
                         objc_sync_enter(self)
                         self.inflightRequests.removeValue(forKey: endpoint)
@@ -73,7 +73,7 @@ public extension MoyaProvider {
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
                     if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach({ $0(result) })
+                        self.inflightRequests[endpoint]?.forEach { $0(result) }
 
                         objc_sync_enter(self)
                         self.inflightRequests.removeValue(forKey: endpoint)
@@ -101,7 +101,7 @@ public extension MoyaProvider {
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
     public final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> ()) { // swiftlint:disable:this function_parameter_count
         return {
-            if token.cancelled {
+            if token.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
             }
@@ -148,8 +148,8 @@ private extension MoyaProvider {
 
             if let parameters = target.parameters {
                 parameters
-                    .flatMap { (key, value) in multipartQueryComponents(key, value) }
-                    .forEach { (key, value) in
+                    .flatMap { key, value in multipartQueryComponents(key, value) }
+                    .forEach { key, value in
                         if let data = value.data(using: .utf8, allowLossyConversion: false) {
                             form.append(data, withName: key)
                         }
@@ -157,10 +157,10 @@ private extension MoyaProvider {
             }
         }
 
-        manager.upload(multipartFormData: multipartFormData, with: request) { (result: MultipartFormDataEncodingResult) in
+        manager.upload(multipartFormData: multipartFormData, with: request) { result in
             switch result {
             case .success(let alamoRequest, _, _):
-                if cancellable.cancelled {
+                if cancellable.isCancelled {
                     self.cancelCompletion(completion, target: target)
                     return
                 }
@@ -197,7 +197,7 @@ private extension MoyaProvider {
         plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
 
         var progressAlamoRequest = alamoRequest
-        let progressClosure: (Progress) -> Void = { (progress) in
+        let progressClosure: (Progress) -> Void = { progress in
             let sendProgress: () -> () = {
                 progressCompletion?(ProgressResponse(progress: progress))
             }

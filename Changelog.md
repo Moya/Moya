@@ -1,4 +1,7 @@
 # Next
+
+- `adding(newHttpHeaderFields: [String: String]) -> Endpoint<Target>` has been renamed to `adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target>`.
+
 # 8.0.0-beta.5
 
 - Added _validate_ option in `TargetType`, to allow enabling Alamofire automatic validation on requests.
