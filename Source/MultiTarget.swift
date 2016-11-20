@@ -1,10 +1,10 @@
 import Foundation
 
 public enum MultiTarget: TargetType {
-    case `struct`(TargetType)
+    case target(TargetType)
     
     public init(_ target: TargetType) {
-        self = MultiTarget.struct(target)
+        self = MultiTarget.target(target)
     }
     
     public var path: String {
@@ -37,7 +37,7 @@ public enum MultiTarget: TargetType {
     
     public var target: TargetType {
         switch self {
-        case .struct(let t): return t
+        case .target(let t): return t
         }
     }
 }
