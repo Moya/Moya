@@ -46,10 +46,10 @@ extension SignalProducerProtocol where Value == Response, Error == Moya.Error {
         })
     }
 
-    /// Maps data received from the signal into a String. If the conversion fails, the signal errors.
-    public func mapString() -> SignalProducer<String, Moya.Error> {
+    /// Maps received data at key path into a String. If the conversion fails, the signal errors.
+    public func mapString(atKeyPath keyPath: String? = nil) -> SignalProducer<String, Moya.Error> {
         return producer.flatMap(.latest) { response -> SignalProducer<String, Error> in
-            return unwrapThrowable { try response.mapString() }
+            return unwrapThrowable { try response.mapString(atKeyPath: keyPath) }
         }
     }
 }

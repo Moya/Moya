@@ -71,10 +71,22 @@ public extension Response {
     }
 
     /// Maps data received from the signal into a String.
-    func mapString() throws -> String {
-        guard let string = String(data: data, encoding: .utf8) else {
-            throw Error.stringMapping(self)
+    ///
+    /// - parameter atKeyPath: Optional key path at which to parse string.
+    public func mapString(atKeyPath keyPath: String? = nil) throws -> String {
+        if let keyPath = keyPath {
+            // Key path was provided, try to parse string at key path
+            guard let jsonDictionary = try mapJSON() as? NSDictionary,
+                let string = jsonDictionary.value(forKeyPath:keyPath) as? String else {
+                    throw Error.stringMapping(self)
+            }
+            return string
+        } else {
+            // Key path was not provided, parse entire response as string
+            guard let string = String(data: data, encoding: .utf8) else {
+                throw Error.stringMapping(self)
+            }
+            return string
         }
-        return string
     }
 }

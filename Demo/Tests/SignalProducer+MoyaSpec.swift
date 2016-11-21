@@ -234,10 +234,24 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data!)
                 
                 var receivedString: String?
-                signal.mapString().startWithResult({ _ in
-                    receivedString = string
+                signal.mapString().startWithResult({ result -> Void in
+                    receivedString = result.value
                 })
                 
+                expect(receivedString).to(equal(string))
+            }
+
+            it("maps data representing a string at a key path to a string") {
+                let string = "You have the rights to the remains of a silent attorney."
+                let json = ["words_to_live_by": string]
+                let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                let signal = signalSendingData(data)
+
+                var receivedString: String?
+                signal.mapString(atKeyPath: "words_to_live_by").startWithResult({ result -> Void in
+                    receivedString = result.value
+                })
+
                 expect(receivedString).to(equal(string))
             }
             

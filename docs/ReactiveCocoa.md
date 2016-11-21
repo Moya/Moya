@@ -65,6 +65,8 @@ really easy.
   errors if unsuccessful.
 - `mapString()` tries to map the response data to a string and
   errors if unsuccessful.
+- `mapString(atKeyPath:)` tries to map a response data key path to a string and
+  errors if unsuccessful.
 
 In the error cases, the error's `domain` is `MoyaErrorDomain`. The code
 is one of `MoyaErrorCode`'s `rawValue`s, where appropriate. Wherever

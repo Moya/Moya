@@ -6,6 +6,7 @@ structure and more.
 # 8.0.0-beta.5
 
 - Added _validate_ option in `TargetType`, to allow enabling Alamofire automatic validation on requests.
+- Added `mapString(atKeyPath:)` to `Response`, `SignalProducerProtocol`, and `ObservableType`
 
 # 8.0.0-beta.4
 
