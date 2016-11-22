@@ -1,6 +1,7 @@
 # Next
 
-- `cancelled` in the `Cancellable` protocol has been renamed to `isCancelled`.
+- **Breaking Change** Renamed `cancelled` in the `Cancellable` protocol to `isCancelled`.
+- **Breaking Change** Renamed `URL` in `Endpoint` to `url`.
 - **Breaking Change** Renamed `StructTarget` to `MultiTarget`.
 - Demo project has been updated with new DemoMultiTarget target, new project
 structure and more.
