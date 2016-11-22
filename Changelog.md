@@ -2,6 +2,7 @@
 - **Breaking Change** Renamed `StructTarget` to `MultiTarget`.
 - Demo project has been updated with new DemoMultiTarget target, new project
 structure and more.
+- Readded support for iOS 8.
 
 # 8.0.0-beta.5
 
