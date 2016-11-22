@@ -43,7 +43,7 @@ target 'MoyaTests-tvOS' do
 end
 
 target 'MoyaTests-Mac' do
-    platform :osx, '10.11'
+    platform :osx, '10.10'
     libraries
     test_pods
 end
