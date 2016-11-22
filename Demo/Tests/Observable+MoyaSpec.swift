@@ -251,6 +251,20 @@ class ObservableMoyaSpec: QuickSpec {
                 
                 expect(receivedString).to(equal(string))
             }
+
+            it("maps data representing a string at a key path to a string") {
+                let string = "You have the rights to the remains of a silent attorney."
+                let json = ["words_to_live_by": string]
+                let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                let observable = observableSendingData(data)
+
+                var receivedString: String?
+                _ = observable.mapString(atKeyPath: "words_to_live_by").subscribe(onNext: { (string) -> Void in
+                    receivedString = string
+                })
+
+                expect(receivedString).to(equal(string))
+            }
             
             it("ignores invalid data") {
                 let data = Data(bytes: [0x11FFFF] as [UInt32], count: 1) //Byte exceeding UTF8
