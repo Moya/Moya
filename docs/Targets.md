@@ -102,14 +102,14 @@ public var sampleData: Data {
 }
 ```
 
-Finally, our `TargetType` has a `multipartBody` property that can be either
-`nil` or an array of `MultipartFormData`. This allows you to add data,
-files and streams to the request body.
+Finally, our `TargetType` has a `task` property that represents how you are sending / receiving data. This can be either `.request`, `.upload` or `.download`, and allows you to add data, files and streams to the request body.
 
 ```swift
-public var multipartBody: [MultipartFormData]? {
-	// Optional
-	return nil
+public var task: Task {
+    switch self {
+    case .zen, .userProfile, .userRepositories, .branches:
+        return .request
+    }
 }
 ```
 
