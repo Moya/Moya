@@ -235,7 +235,7 @@ class MoyaProviderSpec: QuickSpec {
                         if let urlRequest = endpoint.urlRequest {
                             done(.success(urlRequest))
                         } else {
-                            done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                            done(.failure(Moya.Error.requestMapping(endpoint.url)))
                         }
                     }
                 }
@@ -335,7 +335,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
                     }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -353,7 +353,7 @@ class MoyaProviderSpec: QuickSpec {
             it("returns sample data") {
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -371,7 +371,7 @@ class MoyaProviderSpec: QuickSpec {
                 let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(URL: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, parameters: target.parameters)
+                    return Endpoint(url: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, parameters: target.parameters)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -389,7 +389,7 @@ class MoyaProviderSpec: QuickSpec {
                 let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(URL: url, sampleResponseClosure: { .networkError(error) }, method: target.method, parameters: target.parameters)
+                    return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, method: target.method, parameters: target.parameters)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -504,11 +504,11 @@ class MoyaProviderSpec: QuickSpec {
             it("uses correct URL") {
                 var requestedURL: String?
                 let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
-                    requestedURL = endpoint.URL
+                    requestedURL = endpoint.url
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -529,7 +529,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -550,7 +550,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.URL)))
+                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)

@@ -11,12 +11,12 @@ class EndpointSpec: QuickSpec {
                 let target: GitHub = .zen
                 let parameters = ["Nemesis": "Harvey"]
                 let headerFields = ["Title": "Dominar"]
-                endpoint = Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding.default, httpHeaderFields: headerFields)
+                endpoint = Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding.default, httpHeaderFields: headerFields)
             }
             
             it("returns a new endpoint for endpointByAddingParameters") {
                 let message = "I hate it when villains quote Shakespeare."
-                let newEndpoint = endpoint.adding(newParameters: ["message": message])
+                let newEndpoint = endpoint.adding(parameters: ["message": message])
                 let newEndpointMessageObject: Any? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
                 let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
@@ -27,7 +27,7 @@ class EndpointSpec: QuickSpec {
                 expect(newEndpointMessage).to(equal(message))
                 
                 // Compare other properties to ensure they've been copied correctly
-                expect(newEndpoint.URL).to(equal(endpoint.URL))
+                expect(newEndpoint.url).to(equal(endpoint.url))
                 expect(newEndpoint.method).to(equal(endpoint.method))
                 expect(newEndpoint.httpHeaderFields?.count).to(equal(endpoint.httpHeaderFields?.count))
                 expect(newEncodedRequest).to(equal(encodedRequest))
@@ -35,7 +35,7 @@ class EndpointSpec: QuickSpec {
             
             it("returns a new endpoint for endpointByAddingHTTPHeaderFields") {
                 let agent = "Zalbinian"
-                let newEndpoint = endpoint.adding(newHttpHeaderFields: ["User-Agent": agent])
+                let newEndpoint = endpoint.adding(httpHeaderFields: ["User-Agent": agent])
                 let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
                 let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
@@ -44,7 +44,7 @@ class EndpointSpec: QuickSpec {
                 expect(newEndpointAgent).to(equal(agent))
                 
                 // Compare other properties to ensure they've been copied correctly
-                expect(newEndpoint.URL).to(equal(endpoint.URL))
+                expect(newEndpoint.url).to(equal(endpoint.url))
                 expect(newEndpoint.method).to(equal(endpoint.method))
                 expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
                 expect(newEncodedRequest).to(equal(encodedRequest))
@@ -52,7 +52,7 @@ class EndpointSpec: QuickSpec {
 
             it ("returns a new endpoint for endpointByAddingParameterEncoding") {
                 let parameterEncoding = JSONEncoding.default
-                let newEndpoint = endpoint.adding(newParameterEncoding: parameterEncoding)
+                let newEndpoint = endpoint.adding(parameterEncoding: parameterEncoding)
                 let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
 
@@ -60,7 +60,7 @@ class EndpointSpec: QuickSpec {
                 expect(newEncodedRequest).to(equal(encodedRequest))
 
                 // Compare other properties to ensure they've been copied correctly
-                expect(newEndpoint.URL).to(equal(endpoint.URL))
+                expect(newEndpoint.url).to(equal(endpoint.url))
                 expect(newEndpoint.method).to(equal(endpoint.method))
                 expect(newEndpoint.parameters?.count).to(equal(endpoint.parameters?.count))
                 expect(newEndpoint.httpHeaderFields?.count).to(equal(endpoint.httpHeaderFields?.count))
@@ -98,7 +98,7 @@ class EndpointSpec: QuickSpec {
             }
 
             it("returns a nil urlRequest for an invalid URL") {
-                let badEndpoint = Endpoint<Empty>(URL: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+                let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
 
                 expect(badEndpoint.urlRequest).to( beNil() )
             }

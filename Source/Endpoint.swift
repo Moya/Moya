@@ -18,7 +18,7 @@ public enum EndpointSampleResponse {
 open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
-    open let URL: String
+    open let url: String
     open let method: Moya.Method
     open let sampleResponseClosure: SampleResponseClosure
     open let parameters: [String: Any]?
@@ -26,14 +26,14 @@ open class Endpoint<Target> {
     open let httpHeaderFields: [String: String]?
 
     /// Main initializer for `Endpoint`.
-    public init(URL: String,
+    public init(url: String,
         sampleResponseClosure: @escaping SampleResponseClosure,
         method: Moya.Method = Moya.Method.get,
         parameters: [String: Any]? = nil,
         parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
         httpHeaderFields: [String: String]? = nil) {
 
-        self.URL = URL
+        self.url = url
         self.sampleResponseClosure = sampleResponseClosure
         self.method = method
         self.parameters = parameters
@@ -47,8 +47,8 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
-    open func adding(newHttpHeaderFields: [String: String]) -> Endpoint<Target> {
-        return adding(httpHeaderFields: newHttpHeaderFields)
+    open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target> {
+        return adding(httpHeaderFields: newHTTPHeaderFields)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with another parameter encoding.
@@ -61,7 +61,7 @@ open class Endpoint<Target> {
         let newParameters = addParameters(parameters)
         let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
-        return Endpoint(URL: URL, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 
     fileprivate func addParameters(_ parameters: [String: Any]?) -> [String: Any]? {
@@ -70,7 +70,7 @@ open class Endpoint<Target> {
         }
 
         var newParameters = self.parameters ?? [String: Any]()
-        unwrappedParameters.forEach { (key, value) in
+        unwrappedParameters.forEach { key, value in
             newParameters[key] = value
         }
         return newParameters
@@ -82,7 +82,7 @@ open class Endpoint<Target> {
         }
 
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-        unwrappedHeaders.forEach { (key, value) in
+        unwrappedHeaders.forEach { key, value in
             newHTTPHeaderFields[key] = value
         }
         return newHTTPHeaderFields
@@ -92,7 +92,7 @@ open class Endpoint<Target> {
 /// Extension for converting an `Endpoint` into an optional `URLRequest`.
 extension Endpoint {
     public var urlRequest: URLRequest? {
-        guard let requestURL = Foundation.URL(string: URL) else { return nil }
+        guard let requestURL = Foundation.URL(string: url) else { return nil }
 
         var request: URLRequest = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
@@ -102,17 +102,16 @@ extension Endpoint {
     }
 }
 
-/// Required for making `Endpoint` conform to `Equatable`.
-public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
-    if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
-    if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
-    if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
-    return (lhs.urlRequest == rhs.urlRequest)
-}
-
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
-        return urlRequest?.hashValue ?? URL.hashValue
+        return urlRequest?.hashValue ?? url.hashValue
+    }
+
+    public static func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+        if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
+        if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
+        if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
+        return (lhs.urlRequest == rhs.urlRequest)
     }
 }

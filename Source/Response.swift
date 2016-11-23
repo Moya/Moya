@@ -20,12 +20,12 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     public var debugDescription: String {
         return description
     }
-}
 
-public func == (lhs: Response, rhs: Response) -> Bool {
-    return lhs.statusCode == rhs.statusCode
-        && lhs.data == rhs.data
-        && lhs.response == rhs.response
+    public static func == (lhs: Response, rhs: Response) -> Bool {
+        return lhs.statusCode == rhs.statusCode
+            && lhs.data == rhs.data
+            && lhs.response == rhs.response
+    }
 }
 
 public extension Response {
