@@ -127,7 +127,7 @@ namespace :test do
     Dir.chdir "carthage_test" do
       sh "carthage bootstrap --platform 'iOS'"
       has_artifacts = Dir.glob("Carthage/Build/*").count > 0
-      raise("Carthage did not succedd") unless has_artifacts
+      raise("Carthage did not succeed") unless has_artifacts
     end
   end
 end
