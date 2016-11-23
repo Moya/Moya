@@ -71,10 +71,6 @@ extension MyService: TargetType {
                 return .request
         }
     }
-    var multipartBody: [MultipartFormData]? {
-        // Optional
-        return nil
-    }
 }
 
 // MARK: - Helpers
