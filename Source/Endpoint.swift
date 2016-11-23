@@ -70,7 +70,7 @@ open class Endpoint<Target> {
         }
 
         var newParameters = self.parameters ?? [String: Any]()
-        unwrappedParameters.forEach { (key, value) in
+        unwrappedParameters.forEach { key, value in
             newParameters[key] = value
         }
         return newParameters
@@ -82,7 +82,7 @@ open class Endpoint<Target> {
         }
 
         var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
-        unwrappedHeaders.forEach { (key, value) in
+        unwrappedHeaders.forEach { key, value in
             newHTTPHeaderFields[key] = value
         }
         return newHTTPHeaderFields
@@ -102,17 +102,16 @@ extension Endpoint {
     }
 }
 
-/// Required for making `Endpoint` conform to `Equatable`.
-public func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
-    if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
-    if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
-    if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
-    return (lhs.urlRequest == rhs.urlRequest)
-}
-
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
         return urlRequest?.hashValue ?? URL.hashValue
+    }
+    
+    public static func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+        if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
+        if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
+        if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
+        return (lhs.urlRequest == rhs.urlRequest)
     }
 }
