@@ -148,7 +148,7 @@ class ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
-        let repo = repos[(indexPath as NSIndexPath).row] as? NSDictionary
+        let repo = repos[indexPath.row] as? NSDictionary
         cell.textLabel?.text = repo?["name"] as? String
         return cell
     }
