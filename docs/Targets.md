@@ -106,8 +106,10 @@ Finally, our `TargetType` has a `task` property that represents how you are send
 
 ```swift
 public var task: Task {
-  // .request, .upload or .download
-	return .request
+    switch self {
+    case .zen, .userProfile, .userRepositories, .branches:
+        return .request
+    }
 }
 ```
 
