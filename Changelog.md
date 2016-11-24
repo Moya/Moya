@@ -2,6 +2,8 @@
 
 # 8.0.0-beta.5
 
+# 8.0.0-beta.5
+
 - **Breaking Change** Renamed `cancelled` in the `Cancellable` protocol to `isCancelled`.
 - **Breaking Change** Renamed `URL` in `Endpoint` to `url`.
 - **Breaking Change** Renamed `StructTarget` to `MultiTarget`.
