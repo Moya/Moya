@@ -10,7 +10,7 @@ def libraries
   pod 'Alamofire', "~> 4.2.0"
   pod 'RxSwift'
   pod 'RxCocoa'
-  pod 'ReactiveSwift', '1.0.0-alpha.3'
+  pod 'ReactiveSwift', '1.0.0-alpha.4'
 end
 
 # Test Libraries
