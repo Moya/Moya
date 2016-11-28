@@ -127,7 +127,7 @@ Here's an example extension that allows you to easily escape normal strings
 
 ```swift
 extension String {
-    var urlEscapedString: String {
+    var urlEscaped: String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
