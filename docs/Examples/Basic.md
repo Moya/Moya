@@ -113,7 +113,7 @@ public func url(route: TargetType) -> String {
 }
 
 let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
-    return Endpoint<MyService>(URL: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -139,7 +139,7 @@ let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
             return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint<MyService>(URL: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
 }
 ```
 
