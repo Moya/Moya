@@ -1,5 +1,8 @@
 # Next
 
+- **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
+- Renamed the `ReactiveCocoa` subspec to `ReactiveSwift`.
+
 # 8.0.0-beta.5
 
 # 8.0.0-beta.5
