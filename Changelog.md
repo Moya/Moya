@@ -2,17 +2,12 @@
 
 # 8.0.0-beta.5
 
-# 8.0.0-beta.5
-
 - **Breaking Change** Renamed `cancelled` in the `Cancellable` protocol to `isCancelled`.
 - **Breaking Change** Renamed `URL` in `Endpoint` to `url`.
 - **Breaking Change** Renamed `StructTarget` to `MultiTarget`.
 - Demo project has been updated with new DemoMultiTarget target, new project
 structure and more.
 - Readded support for iOS 8 and macOS 10.10.
-
-# 8.0.0-beta.5
-
 - Added _validate_ option in `TargetType`, to allow enabling Alamofire automatic validation on requests.
 - Added `mapString(atKeyPath:)` to `Response`, `SignalProducerProtocol`, and `ObservableType`
 
