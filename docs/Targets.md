@@ -37,17 +37,17 @@ public var path: String {
     case .zen:
         return "/zen"
     case .userProfile(let name):
-        return "/users/\(name.urlEscapedString)"
+        return "/users/\(name.urlEscaped)"
     case .userRepositories(let name):
-        return "/users/\(name.urlEscapedString)/repos"
+        return "/users/\(name.urlEscaped)/repos"
     case .branches(let repo, _)
-        return "/repos/\(repo.urlEscapedString)/branches"
+        return "/repos/\(repo.urlEscaped)/branches"
     }
 }
 ```
 
 Notice that we're ignoring the second associated value of our `branches` Target using the Swift `_` ignored-value symbol. That's because we don't need it to define the `branches` path.
-Note: we're cheating here and using a `urlEscapedString` extension on String.
+Note: we're cheating here and using a `urlEscaped` extension on String.
 A sample implementation is given at the end of this document.
 
 OK, cool. So now we need to have a `method` for our enum values. In our case, we

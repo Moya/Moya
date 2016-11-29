@@ -18,7 +18,7 @@ let GitHubProvider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose:
 // MARK: - Provider support
 
 private extension String {
-    var urlEscapedString: String {
+    var urlEscaped: String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
@@ -36,9 +36,9 @@ extension GitHub: TargetType {
         case .zen:
             return "/zen"
         case .userProfile(let name):
-            return "/users/\(name.urlEscapedString)"
+            return "/users/\(name.urlEscaped)"
         case .userRepositories(let name):
-            return "/users/\(name.urlEscapedString)/repos"
+            return "/users/\(name.urlEscaped)/repos"
         }
     }
     public var method: Moya.Method {
