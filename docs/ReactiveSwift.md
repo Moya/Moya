@@ -1,17 +1,17 @@
-ReactiveCocoa
+ReactiveSwift
 =============
 
-Moya provides an optional `ReactiveCocoaMoyaProvider` subclass of
+Moya provides an optional `ReactiveSwiftMoyaProvider` subclass of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `SignalProducer`s
 (`RACSignal`s are also available for those who need it).
 
-A `ReactiveCocoaMoyaProvider` can be created much like a
+A `ReactiveSwiftMoyaProvider` can be created much like a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
-let provider = ReactiveCocoaMoyaProvider<GitHub>()
+let provider = ReactiveSwiftMoyaProvider<GitHub>()
 ```
 
 After that simple setup, you're off to the races:
@@ -29,7 +29,7 @@ provider.request(.zen).start { event in
 }
 ```
 
-For `ReactiveCocoaMoyaProvider`, the network request is not started
+For `ReactiveSwiftMoyaProvider`, the network request is not started
 until the signal is subscribed to. If the subscription to the signal
 is disposed of before the request completes, the request is cancelled.
 

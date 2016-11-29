@@ -74,7 +74,7 @@ pod 'Moya', '8.0.0-beta.4'
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For RxSwift or ReactiveCocoa extensions, this project will include
+For RxSwift or ReactiveSwift extensions, this project will include
 them as dependencies. You can do this via CocoaPods subspecs, but you will also
 need to include the pre-release versions of RxSwift or ReactiveSwift manually.
 
@@ -83,7 +83,7 @@ pod 'Moya/RxSwift'
 
 # or
 
-pod 'Moya/ReactiveCocoa'
+pod 'Moya/ReactiveSwift'
 pod 'ReactiveSwift', '1.0.0-alpha.3'
 ```
 
@@ -142,18 +142,18 @@ Reactive Extensions
 -------------------
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
-[ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) and
+[ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and
 [RxSwift](https://github.com/ReactiveX/RxSwift).
 
-## ReactiveCocoa
+## ReactiveSwift
 
-After `ReactiveCocoa` [setup](docs/ReactiveCocoa.md), `request(:)` method
+After `ReactiveSwift` [setup](docs/ReactiveSwift.md), `request(:)` method
 immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
 that you can start or bind or map or whatever you want to do. To handle errors,
 for instance, we could do the following:
 
 ```swift
-provider = ReactiveCocoaMoyaProvider<GitHub>()
+provider = ReactiveSwiftMoyaProvider<GitHub>()
 provider.request(.userProfile("ashfurrow")).start { event in
     switch event {
     case let .value(response):
@@ -189,7 +189,7 @@ provider.request(.userProfile("ashfurrow")).subscribe { event in
 ---
 
 In addition to the option of using signals instead of callback blocks, there are
-also a series of signal operators for RxSwift and ReactiveCocoa that will attempt
+also a series of signal operators for RxSwift and ReactiveSwift that will attempt
 to map the data received from the network response into either an image, some JSON,
 or a string, with `mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is unsuccessful, you'll get an error on the signal. You also get handy methods
 for filtering out certain status codes. This means that you can place your code for
