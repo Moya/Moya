@@ -75,7 +75,7 @@ extension MyService: TargetType {
 
 // MARK: - Helpers
 private extension String {
-    var urlEscapedString: String {
+    var urlEscaped: String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
     }
 
