@@ -39,7 +39,7 @@ podspec_updated = !git.modified_files.grep(/Moya.podspec).empty?
 cartfile_updated = !git.modified_files.grep(/Cartfile).empty?
 cartfile_resolved_updated = !git.modified_files.grep(/Cartfile.resolved).empty?
 
-if podspec_updated && !cartfile_updated && !cartfile_resolved_updated
+if podspec_updated && (!cartfile_updated || !cartfile_resolved_updated)
   warn("The `podspec` was updated, but there were no changes in either the `Cartfile` nor `Cartfile.resolved`. Did you forget updating `Cartfile` or `Cartfile.resolved`?")
 end
 
