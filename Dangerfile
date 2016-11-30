@@ -33,5 +33,19 @@ if has_app_changes && missing_doc_changes && doc_changes_recommended
   warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
 
+# Warn when either the podspec or Cartfile + Cartfile.resolved has been updated,
+# but not both.
+podspec_updated = !git.modified_files.grep(/Moya.podspec/).empty?
+cartfile_updated = !git.modified_files.grep(/Cartfile/).empty?
+cartfile_resolved_updated = !git.modified_files.grep(/Cartfile.resolved/).empty?
+
+if podspec_updated && (!cartfile_updated || !cartfile_resolved_updated)
+  warn("The `podspec` was updated, but there were no changes in either the `Cartfile` nor `Cartfile.resolved`. Did you forget updating `Cartfile` or `Cartfile.resolved`?")
+end
+
+if (cartfile_updated || cartfile_resolved_updated) && !podspec_updated
+  warn("The `Cartfile` or `Cartfile.resolved` was updated, but there were no changes in the `podspec`. Did you forget updating the `podspec`?")
+end
+
 # Run SwiftLint
 swiftlint.lint_files
