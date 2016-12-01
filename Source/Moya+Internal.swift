@@ -13,8 +13,7 @@ public extension MoyaProvider {
         let cancellableToken = CancellableWrapper()
 
         // Allow plugins to modify response
-        let pluginsWithCompletion: Moya.Completion = {
-            result in
+        let pluginsWithCompletion: Moya.Completion = { result in
             var result = result
             self.plugins.forEach { result = $0.processResponse(result, target: target) }
             completion(result)
