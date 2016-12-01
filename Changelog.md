@@ -2,6 +2,7 @@
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
 - Renamed the `ReactiveCocoa` subspec to `ReactiveSwift`.
+- `PluginType` can now modify requests and responses through `prepareRequest` and `processResponse`
 
 # 8.0.0-beta.5
 
