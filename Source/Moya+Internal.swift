@@ -14,9 +14,8 @@ public extension MoyaProvider {
 
         // Allow plugins to modify response
         let pluginsWithCompletion: Moya.Completion = { result in
-            var result = result
-            self.plugins.forEach { result = $0.processResponse(result, target: target) }
-            completion(result)
+            let processedResult = self.plugins.reduce(result) { $1.processResponse($0, target: target) }
+            completion(processedResult)
         }
 
         if trackInflights {
@@ -52,7 +51,7 @@ public extension MoyaProvider {
             }
 
             // Allow plugins to modify request
-            self.plugins.forEach { request = $0.prepareRequest(request, target: target) }
+            let preparedRequest = self.plugins.reduce(request) { $1.prepareRequest($0, target: target) }
 
             switch stubBehavior {
             case .never:
@@ -69,19 +68,19 @@ public extension MoyaProvider {
                 }
                 switch target.task {
                 case .request:
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: request, queue: queue, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
                 case .upload(.file(let file)):
-                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: request, queue: queue, file: file, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, queue: queue, file: file, progress: progress, completion: networkCompletion)
                 case .upload(.multipart(let multipartBody)):
                     guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
-                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: request, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
                 case .download(.request(let destination)):
-                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: request, queue: queue, destination: destination, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, queue: queue, destination: destination, progress: progress, completion: networkCompletion)
                 }
             default:
-                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
+                cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, completion: { result in
                     if self.trackInflights {
                         self.inflightRequests[endpoint]?.forEach { $0(result) }
 
