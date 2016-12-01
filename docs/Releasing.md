@@ -20,4 +20,8 @@ To make a release:
 1. Grab a :tea: or :coffee:.
 1. Make sure everything went smoothly.
 
+What you'll need to do manually afterwards:
+
+1. Update the Readme CocoaPods instructions to use the release you just made public. This might also include changes to the subspecs' instructions in the Readme.
+
 If anything goes wrong, don't panic! Get in touch with someone else who has released, or [Ash](mailto:ash@ashfurrow.com).
