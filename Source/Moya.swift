@@ -51,7 +51,7 @@ open class MoyaProvider<Target: TargetType> {
 
     open let trackInflights: Bool
 
-    open internal(set) var inflightRequests = Dictionary<Endpoint<Target>, [Moya.Completion]>()
+    open internal(set) var inflightRequests: [Endpoint<Target>: [Moya.Completion]] = [:]
 
     /// Initializes a provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
