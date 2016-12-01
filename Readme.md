@@ -161,7 +161,7 @@ provider.request(.userProfile("ashfurrow")).start { event in
     case let .failed(error):
         print(error)
     default:
-      break
+        break
     }
 }
 ```
