@@ -68,7 +68,7 @@ you should use for your Swift version.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0-beta.4'
+pod 'Moya', '8.0.0-beta.5'
 ```
 
 In any file you'd like to use Moya in, don't forget to
