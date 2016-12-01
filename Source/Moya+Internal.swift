@@ -12,10 +12,18 @@ public extension MoyaProvider {
         let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
 
+        // Allow plugins to modify response
+        let pluginsWithCompletion: Moya.Completion = {
+            result in
+            var result = result
+            self.plugins.forEach { result = $0.processResponse(result, target: target) }
+            completion(result)
+        }
+
         if trackInflights {
             objc_sync_enter(self)
             var inflightCompletionBlocks = self.inflightRequests[endpoint]
-            inflightCompletionBlocks?.append(completion)
+            inflightCompletionBlocks?.append(pluginsWithCompletion)
             self.inflightRequests[endpoint] = inflightCompletionBlocks
             objc_sync_exit(self)
 
@@ -23,14 +31,14 @@ public extension MoyaProvider {
                 return cancellableToken
             } else {
                 objc_sync_enter(self)
-                self.inflightRequests[endpoint] = [completion]
+                self.inflightRequests[endpoint] = [pluginsWithCompletion]
                 objc_sync_exit(self)
             }
         }
 
         let performNetworking = { (requestResult: Result<URLRequest, Moya.Error>) in
             if cancellableToken.isCancelled {
-                self.cancelCompletion(completion, target: target)
+                self.cancelCompletion(pluginsWithCompletion, target: target)
                 return
             }
 
@@ -40,9 +48,12 @@ public extension MoyaProvider {
             case .success(let urlRequest):
                 request = urlRequest
             case .failure(let error):
-                completion(.failure(error))
+                pluginsWithCompletion(.failure(error))
                 return
             }
+
+            // Allow plugins to modify request
+            self.plugins.forEach { request = $0.prepareRequest(request, target: target) }
 
             switch stubBehavior {
             case .never:
@@ -54,7 +65,7 @@ public extension MoyaProvider {
                         self.inflightRequests.removeValue(forKey: endpoint)
                         objc_sync_exit(self)
                     } else {
-                        completion(result)
+                        pluginsWithCompletion(result)
                     }
                 }
                 switch target.task {
@@ -79,7 +90,7 @@ public extension MoyaProvider {
                         self.inflightRequests.removeValue(forKey: endpoint)
                         objc_sync_exit(self)
                     } else {
-                        completion(result)
+                        pluginsWithCompletion(result)
                     }
                 }, endpoint: endpoint, stubBehavior: stubBehavior)
             }
