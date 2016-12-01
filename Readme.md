@@ -84,7 +84,7 @@ pod 'Moya/RxSwift'
 # or
 
 pod 'Moya/ReactiveSwift'
-pod 'ReactiveSwift', '1.0.0-alpha.3'
+pod 'ReactiveSwift', '1.0.0-alpha.4'
 ```
 
 Then run `pod install`.
