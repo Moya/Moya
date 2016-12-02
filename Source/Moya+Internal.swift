@@ -12,10 +12,16 @@ public extension MoyaProvider {
         let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
 
+        // Allow plugins to modify response
+        let pluginsWithCompletion: Moya.Completion = { result in
+            let processedResult = self.plugins.reduce(result) { $1.processResponse($0, target: target) }
+            completion(processedResult)
+        }
+
         if trackInflights {
             objc_sync_enter(self)
             var inflightCompletionBlocks = self.inflightRequests[endpoint]
-            inflightCompletionBlocks?.append(completion)
+            inflightCompletionBlocks?.append(pluginsWithCompletion)
             self.inflightRequests[endpoint] = inflightCompletionBlocks
             objc_sync_exit(self)
 
@@ -23,14 +29,14 @@ public extension MoyaProvider {
                 return cancellableToken
             } else {
                 objc_sync_enter(self)
-                self.inflightRequests[endpoint] = [completion]
+                self.inflightRequests[endpoint] = [pluginsWithCompletion]
                 objc_sync_exit(self)
             }
         }
 
         let performNetworking = { (requestResult: Result<URLRequest, Moya.Error>) in
             if cancellableToken.isCancelled {
-                self.cancelCompletion(completion, target: target)
+                self.cancelCompletion(pluginsWithCompletion, target: target)
                 return
             }
 
@@ -40,9 +46,12 @@ public extension MoyaProvider {
             case .success(let urlRequest):
                 request = urlRequest
             case .failure(let error):
-                completion(.failure(error))
+                pluginsWithCompletion(.failure(error))
                 return
             }
+
+            // Allow plugins to modify request
+            let preparedRequest = self.plugins.reduce(request) { $1.prepareRequest($0, target: target) }
 
             switch stubBehavior {
             case .never:
@@ -54,24 +63,24 @@ public extension MoyaProvider {
                         self.inflightRequests.removeValue(forKey: endpoint)
                         objc_sync_exit(self)
                     } else {
-                        completion(result)
+                        pluginsWithCompletion(result)
                     }
                 }
                 switch target.task {
                 case .request:
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: request, queue: queue, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
                 case .upload(.file(let file)):
-                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: request, queue: queue, file: file, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, queue: queue, file: file, progress: progress, completion: networkCompletion)
                 case .upload(.multipart(let multipartBody)):
                     guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
-                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: request, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
                 case .download(.request(let destination)):
-                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: request, queue: queue, destination: destination, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, queue: queue, destination: destination, progress: progress, completion: networkCompletion)
                 }
             default:
-                cancellableToken.innerCancellable = self.stubRequest(target, request: request, completion: { result in
+                cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, completion: { result in
                     if self.trackInflights {
                         self.inflightRequests[endpoint]?.forEach { $0(result) }
 
@@ -79,7 +88,7 @@ public extension MoyaProvider {
                         self.inflightRequests.removeValue(forKey: endpoint)
                         objc_sync_exit(self)
                     } else {
-                        completion(result)
+                        pluginsWithCompletion(result)
                     }
                 }, endpoint: endpoint, stubBehavior: stubBehavior)
             }

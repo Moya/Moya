@@ -8,16 +8,24 @@ import Result
 ///     - hide and show a network activity indicator
 ///     - inject additional information into a request
 public protocol PluginType {
+    /// Called to modify a request before sending
+    func prepareRequest(_ request: URLRequest, target: TargetType) -> URLRequest
+
     /// Called immediately before a request is sent over the network (or stubbed).
     func willSendRequest(_ request: RequestType, target: TargetType)
 
     /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
     func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType)
+
+    /// Called to modify a result before completion
+    func processResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) -> Result<Moya.Response, Moya.Error>
 }
 
 public extension PluginType {
+    func prepareRequest(_ request: URLRequest, target: TargetType) -> URLRequest { return request }
     func willSendRequest(_ request: RequestType, target: TargetType) { }
     func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) { }
+    func processResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) -> Result<Moya.Response, Moya.Error> { return result }
 }
 
 /// Request type used by `willSendRequest` plugin function.

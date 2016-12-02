@@ -200,6 +200,16 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).toNot( beNil() )
             }
 
+            it("prepares the request using plugins") {
+                waitUntil { done in
+                    let target: GitHub = .userProfile("ashfurrow")
+                    let token = provider.request(target) { _ in
+                        done()
+                    }
+                }
+                expect(plugin.didPrepare).to( beTrue() )
+            }
+
             it("returns success when request is not cancelled") {
                 var receivedError: Swift.Error?
 
@@ -214,6 +224,21 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(receivedError).to( beNil() )
+            }
+
+            it("processes the response with plugins") {
+                var receivedStatusCode: Int?
+                waitUntil { done in
+                    let target: GitHub = .userProfile("ashfurrow")
+                    let token = provider.request(target) { result in
+                        if case let .success(response) = result {
+                            receivedStatusCode = response.statusCode
+                        }
+                        done()
+                    }
+                }
+
+                expect(receivedStatusCode).to( equal(-1) )
             }
         }
 
