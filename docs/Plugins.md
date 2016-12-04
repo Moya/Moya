@@ -3,14 +3,14 @@ Plugins
 
 Moya plugins are used to modify requests and responses or perform side-effects.
 A plugin is called:
-- (`prepareRequest`) after Moya has resolved the `TargetType` to a `URLRequest`.
+- (`prepare`) after Moya has resolved the `TargetType` to a `URLRequest`.
   This is an opportunity to modify the request before it is sent (e.g. add
   headers).
-- (`willSendRequest`) before a request is about to be sent. This is an
+- (`willSend`) before a request is about to be sent. This is an
   opportunity to inspect the request and perform any side-effects (e.g. logging).
-- (`didReceiveResponse`) after a response has been received. This is an
+- (`didReceive`) after a response has been received. This is an
   opportunity to inspect the response and perform side-effects.
-- (`processResponse`) before `completion` is called with the `Result`. This is
+- (`process`) before `completion` is called with the `Result`. This is
   an opportunity to make any modifications to the `Result` of the `request`.
 
 ## Built in plugins

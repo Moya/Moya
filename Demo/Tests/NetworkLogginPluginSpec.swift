@@ -36,7 +36,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
         it("outputs all request fields with body") {
 
-            plugin.willSendRequest(TestBodyRequest(), target: GitHub.zen)
+            plugin.willSend(TestBodyRequest(), target: GitHub.zen)
 
             expect(log).to( contain("Request: https://api.github.com/zen") )
             expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
@@ -46,7 +46,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
         it("outputs all request fields with stream") {
 
-            plugin.willSendRequest(TestStreamRequest(), target: GitHub.zen)
+            plugin.willSend(TestStreamRequest(), target: GitHub.zen)
 
             expect(log).to( contain("Request: https://api.github.com/zen") )
             expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
@@ -56,7 +56,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
 
         it("will output invalid request when reguest is nil") {
 
-            plugin.willSendRequest(TestNilRequest(), target: GitHub.zen)
+            plugin.willSend(TestNilRequest(), target: GitHub.zen)
 
             expect(log).to( contain("Request: (invalid request)") )
         }
@@ -65,7 +65,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: URLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, Moya.Error> = .success(response)
 
-            plugin.didReceiveResponse(result, target: GitHub.zen)
+            plugin.didReceive(result, target: GitHub.zen)
 
             expect(log).to( contain("Response:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
@@ -76,7 +76,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: URLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, Moya.Error> = .success(response)
 
-            pluginWithResponseDataFormatter.didReceiveResponse(result, target: GitHub.zen)
+            pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
 
             expect(log).to( contain("Response:") )
             expect(log).to( contain("{ URL: https://api.github.com/zen }") )
@@ -87,14 +87,14 @@ final class NetworkLogginPluginSpec: QuickSpec {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: nil)
             let result: Result<Moya.Response, Moya.Error> = .failure(Moya.Error.data(response))
 
-            plugin.didReceiveResponse(result, target: GitHub.zen)
+            plugin.didReceive(result, target: GitHub.zen)
 
             expect(log).to( contain("Response: Received empty network response for zen.") )
         }
 
         it("outputs cURL representation of request") {
 
-            pluginWithCurl.willSendRequest(TestCurlBodyRequest(), target: GitHub.zen)
+            pluginWithCurl.willSend(TestCurlBodyRequest(), target: GitHub.zen)
             print(log)
 
             expect(log).to( contain("$ curl -i") )

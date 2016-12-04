@@ -14,7 +14,7 @@ public extension MoyaProvider {
 
         // Allow plugins to modify response
         let pluginsWithCompletion: Moya.Completion = { result in
-            let processedResult = self.plugins.reduce(result) { $1.processResponse($0, target: target) }
+            let processedResult = self.plugins.reduce(result) { $1.process($0, target: target) }
             completion(processedResult)
         }
 
@@ -51,7 +51,7 @@ public extension MoyaProvider {
             }
 
             // Allow plugins to modify request
-            let preparedRequest = self.plugins.reduce(request) { $1.prepareRequest($0, target: target) }
+            let preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
 
             switch stubBehavior {
             case .never:
@@ -103,7 +103,7 @@ public extension MoyaProvider {
 
     func cancelCompletion(_ completion: Moya.Completion, target: Target) {
         let error = Moya.Error.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
-        plugins.forEach { $0.didReceiveResponse(.failure(error), target: target) }
+        plugins.forEach { $0.didReceive(.failure(error), target: target) }
         completion(.failure(error))
     }
 
@@ -118,15 +118,15 @@ public extension MoyaProvider {
             switch endpoint.sampleResponseClosure() {
             case .networkResponse(let statusCode, let data):
                 let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
-                plugins.forEach { $0.didReceiveResponse(.success(response), target: target) }
+                plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
             case .response(let customResponse, let data):
                 let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
-                plugins.forEach { $0.didReceiveResponse(.success(response), target: target) }
+                plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
             case .networkError(let error):
                 let error = Moya.Error.underlying(error)
-                plugins.forEach { $0.didReceiveResponse(.failure(error), target: target) }
+                plugins.forEach { $0.didReceive(.failure(error), target: target) }
                 completion(.failure(error))
             }
         }
@@ -135,7 +135,7 @@ public extension MoyaProvider {
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     final func notifyPluginsOfImpendingStub(_ request: URLRequest, target: Target) {
         let alamoRequest = manager.request(request as URLRequestConvertible)
-        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+        plugins.forEach { $0.willSend(alamoRequest, target: target) }
     }
 }
 
@@ -203,7 +203,7 @@ private extension MoyaProvider {
     func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
-        plugins.forEach { $0.willSendRequest(alamoRequest, target: target) }
+        plugins.forEach { $0.willSend(alamoRequest, target: target) }
 
         var progressAlamoRequest = alamoRequest
         let progressClosure: (Progress) -> Void = { progress in
@@ -236,7 +236,7 @@ private extension MoyaProvider {
         let completionHandler: RequestableCompletion = { response, request, data, error in
             let result = convertResponseToResult(response, request: request, data: data, error: error)
             // Inform all plugins about the response
-            plugins.forEach { $0.didReceiveResponse(result, target: target) }
+            plugins.forEach { $0.didReceive(result, target: target) }
             progressCompletion?(ProgressResponse(response: result.value))
             completion(result)
         }
