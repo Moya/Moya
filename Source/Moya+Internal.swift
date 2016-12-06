@@ -143,7 +143,7 @@ private extension MoyaProvider {
     func sendUploadMultipart(_ target: Target, request: URLRequest, queue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableWrapper {
         let cancellable = CancellableWrapper()
 
-        let multipartFormData = { (form: RequestMultipartFormData) -> Void in
+        let multipartFormData: (RequestMultipartFormData) -> Void = { form in
             for bodyPart in multipartBody {
                 switch bodyPart.provider {
                 case .data(let data):
