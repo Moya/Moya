@@ -93,9 +93,7 @@ final class NetworkLogginPluginSpec: QuickSpec {
         }
 
         it("outputs cURL representation of request") {
-
             pluginWithCurl.willSend(TestCurlBodyRequest(), target: GitHub.zen)
-            print(log)
 
             expect(log).to( contain("$ curl -i") )
             expect(log).to( contain("-H \"Content-Type: application/json\"") )
