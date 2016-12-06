@@ -19,7 +19,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
     }
 
     /// Designated request-making method.
-    open func request(token: Target) -> SignalProducer<Response, Moya.Error> {
+    open func request(_ token: Target) -> SignalProducer<Response, Moya.Error> {
 
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
@@ -65,7 +65,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
 }
 
 public extension ReactiveSwiftMoyaProvider {
-    public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, Moya.Error> {
+    public func requestWithProgress(_ token: Target) -> SignalProducer<ProgressResponse, Moya.Error> {
         let progressBlock = { (observer: Signal<ProgressResponse, Moya.Error>.Observer) -> (ProgressResponse) -> Void in
             return { progress in
                 observer.send(value: progress)

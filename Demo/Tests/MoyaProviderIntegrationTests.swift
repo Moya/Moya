@@ -238,7 +238,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                     var message: String?
 
                     waitUntil { done in
-                        provider.request(token: .zen).startWithResult { result in
+                        provider.request(.zen).startWithResult { result in
                             if case .success(let response) = result {
                                 message = String(data: response.data, encoding: String.Encoding.utf8)
                                 done()
@@ -254,7 +254,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     waitUntil { done in
                         let target: GitHub = .userProfile("ashfurrow")
-                        provider.request(token: target).startWithResult { result in
+                        provider.request(target).startWithResult { result in
                             if case .success(let response) = result {
                                 message = String(data: response.data, encoding: String.Encoding.utf8)
                                 done()

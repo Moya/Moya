@@ -23,7 +23,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var receivedError: Moya.Error?
                 
                 waitUntil { done in
-                    provider.request(token: .zen).startWithFailed { (error) -> Void in
+                    provider.request(.zen).startWithFailed { (error) -> Void in
                         receivedError = error
                         done()
                     }
@@ -41,7 +41,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var errored = false
                 
                 let target: GitHub = .zen
-                provider.request(token: target).startWithFailed { (error) -> Void in
+                provider.request(target).startWithFailed { (error) -> Void in
                     errored = true
                 }
                 
@@ -84,7 +84,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             it("cancels network request when subscription is cancelled") {
                 let target: GitHub = .zen
 
-                let disposable = provider.request(token: target).startWithCompleted {
+                let disposable = provider.request(target).startWithCompleted {
                     // Should never be executed
                     fail()
                 }
@@ -99,7 +99,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             it("returns a Response object") {
                 var called = false
                 
-                provider.request(token: .zen).startWithResult { _ in
+                provider.request(.zen).startWithResult { _ in
                     called = true
                 }
                 
@@ -110,7 +110,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var message: String?
                 
                 let target: GitHub = .zen
-                provider.request(token: target).startWithResult { result in
+                provider.request(target).startWithResult { result in
                     if case .success(let response) = result {
                         message = String(data: response.data, encoding: .utf8)
                     }
@@ -124,7 +124,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var receivedResponse: NSDictionary?
                 
                 let target: GitHub = .userProfile("ashfurrow")
-                provider.request(token: target).startWithResult { (result) -> Void in
+                provider.request(target).startWithResult { (result) -> Void in
                     if case .success(let response) = result {
                         receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
                     }
@@ -171,7 +171,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 it("cancels network request when subscription is cancelled") {
                     let target: GitHub = .zen
                     
-                    let disposable = provider.request(token: target).startWithCompleted {
+                    let disposable = provider.request(target).startWithCompleted {
                         // Should never be executed
                         fail()
                     }
@@ -187,7 +187,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             beforeEach {
                 testScheduler = TestScheduler()
                 provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
-                provider.request(token: .zen).startWithResult { result in
+                provider.request(.zen).startWithResult { result in
                     if case .success(let next) = result {
                         response = next
                     }
@@ -217,8 +217,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
             it("returns identical signalproducers for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1: SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
-                let signalProducer2: SignalProducer<Moya.Response, Moya.Error> = provider.request(token: target)
+                let signalProducer1: SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
+                let signalProducer2: SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
 
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
 
