@@ -66,7 +66,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
 
 public extension ReactiveSwiftMoyaProvider {
     public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, Moya.Error> {
-        let progressBlock = { (observer: Signal<ProgressResponse, Moya.Error>.Observer) -> (ProgressResponse) -> Void in
+        let progressBlock: (Signal<ProgressResponse, Moya.Error>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
             }
