@@ -37,7 +37,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 10)
                 
                 var errored = false
-                _ = observable.filterStatusCodes(0...9).subscribe { (event) -> Void in
+                _ = observable.filterStatusCodes(in: 0...9).subscribe { (event) -> Void in
                     switch event {
                     case .next(let object):
                         fail("called on non-correct status code: \(object)")

@@ -8,9 +8,9 @@ import Moya
 extension SignalProducerProtocol where Value == Response, Error == Moya.Error {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filterStatusCodes(range: ClosedRange<Int>) -> SignalProducer<Value, Error> {
+    public func filterStatusCodes(in range: ClosedRange<Int>) -> SignalProducer<Value, Error> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, Error> in
-            return unwrapThrowable { try response.filterStatusCodes(range) }
+            return unwrapThrowable { try response.filterStatusCodes(in: range) }
         }
     }
 

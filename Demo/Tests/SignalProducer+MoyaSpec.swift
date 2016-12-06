@@ -38,7 +38,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 10)
                 
                 var errored = false
-                signal.filterStatusCodes(range: 0...9).startWithResult { event -> Void in
+                signal.filterStatusCodes(in: 0...9).startWithResult { event -> Void in
                     switch event {
                     case .success(let object):
                         fail("called on non-correct status code: \(object)")
