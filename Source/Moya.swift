@@ -91,7 +91,7 @@ open class MoyaProvider<Target: TargetType> {
     @discardableResult
     open func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let cancellableToken = CancellableToken { }
-        notifyPluginsOfImpendingStub(request, target: target)
+        notifyPluginsOfImpendingStub(for: request, target: target)
         let plugins = self.plugins
         let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
         switch stubBehavior {

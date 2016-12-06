@@ -44,7 +44,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
         guard let stubScheduler = self.stubScheduler else {
             return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
-        notifyPluginsOfImpendingStub(request, target: target)
+        notifyPluginsOfImpendingStub(for: request, target: target)
         var dis: Disposable? = .none
         let token = CancellableToken {
             dis?.dispose()
