@@ -38,7 +38,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 10)
                 
                 var errored = false
-                signal.filterStatusCodes(range: 0...9).startWithResult { event -> Void in
+                signal.filterStatusCodes(range: 0...9).startWithResult { event in
                     switch event {
                     case .success(let object):
                         fail("called on non-correct status code: \(object)")
@@ -55,7 +55,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
-                signal.filterSuccessfulStatusCodes().startWithResult { result -> Void in
+                signal.filterSuccessfulStatusCodes().startWithResult { result in
                     switch result {
                     case .success(let object):
                         fail("called on non-success status code: \(object)")
@@ -72,9 +72,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data)
                 
                 var called = false
-                signal.filterSuccessfulStatusCodes().startWithResult({ _ in
+                signal.filterSuccessfulStatusCodes().startWithResult { _ in
                     called = true
-                })
+                }
                 
                 expect(called).to(beTruthy())
             }
@@ -84,7 +84,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 404)
                 
                 var errored = false
-                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult { result -> Void in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult { result in
                     switch result {
                     case .success(let object):
                         fail("called on non-success status code: \(object)")
@@ -101,9 +101,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data)
                 
                 var called = false
-                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult({ _ in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult { _ in
                     called = true
-                })
+                }
                 
                 expect(called).to(beTruthy())
             }
@@ -113,9 +113,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 304)
                 
                 var called = false
-                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult({ _ in
+                signal.filterSuccessfulStatusAndRedirectCodes().startWithResult { _ in
                     called = true
-                })
+                }
                 
                 expect(called).to(beTruthy())
             }
@@ -125,9 +125,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 42)
                 
                 var called = false
-                signal.filterStatusCode(code: 42).startWithResult({ _ in
+                signal.filterStatusCode(code: 42).startWithResult { _ in
                     called = true
-                })
+                }
                 
                 expect(called).to(beTruthy())
             }
@@ -137,7 +137,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data, statusCode: 43)
                 
                 var errored = false
-                signal.filterStatusCode(code: 42).startWithResult { result -> Void in
+                signal.filterStatusCode(code: 42).startWithResult { result in
                     switch result {
                     case .success(let object):
                         fail("called on non-success status code: \(object)")
@@ -157,9 +157,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data!)
                 
                 var size: CGSize?
-                signal.mapImage().startWithResult({ _ in
+                signal.mapImage().startWithResult { _ in
                     size = image.size
-                })
+                }
                 
                 expect(size).to(equal(image.size))
             }
@@ -169,7 +169,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data)
                 
                 var receivedError: Moya.Error?
-                signal.mapImage().startWithResult { result -> Void in
+                signal.mapImage().startWithResult { result in
                     switch result {
                     case .success:
                         fail("next called for invalid data")
@@ -191,7 +191,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data)
                 
                 var receivedJSON: [String: String]?
-                signal.mapJSON().startWithResult { result -> Void in
+                signal.mapJSON().startWithResult { result in
                     if case .success(let _json) = result,
                         let json = _json as? [String: String] {
                         receivedJSON = json
@@ -208,7 +208,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data!)
                 
                 var receivedError: Moya.Error?
-                signal.mapJSON().startWithResult { result -> Void in
+                signal.mapJSON().startWithResult { result in
                     switch result {
                     case .success:
                         fail("next called for invalid data")
@@ -234,9 +234,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data!)
                 
                 var receivedString: String?
-                signal.mapString().startWithResult({ result -> Void in
+                signal.mapString().startWithResult { result in
                     receivedString = result.value
-                })
+                }
                 
                 expect(receivedString).to(equal(string))
             }
@@ -248,9 +248,9 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data)
 
                 var receivedString: String?
-                signal.mapString(atKeyPath: "words_to_live_by").startWithResult({ result -> Void in
+                signal.mapString(atKeyPath: "words_to_live_by").startWithResult { result in
                     receivedString = result.value
-                })
+                }
 
                 expect(receivedString).to(equal(string))
             }
@@ -260,7 +260,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let signal = signalSendingData(data as Data)
                 
                 var receivedError: Moya.Error?
-                signal.mapString().startWithResult { result -> Void in
+                signal.mapString().startWithResult { result in
                     switch result {
                     case .success:
                         fail("next called for invalid data")
