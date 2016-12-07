@@ -31,23 +31,23 @@ public final class Response: CustomDebugStringConvertible, Equatable {
 public extension Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filterStatusCodes(in range: ClosedRange<Int>) throws -> Response {
-        guard range.contains(statusCode) else {
+    public func filter(statusCodes: ClosedRange<Int>) throws -> Response {
+        guard statusCodes.contains(statusCode) else {
             throw Error.statusCode(self)
         }
         return self
     }
 
-    public func filterStatusCode(_ code: Int) throws -> Response {
-        return try filterStatusCodes(in: code...code)
+    public func filter(statusCode: Int) throws -> Response {
+        return try filter(statusCodes: statusCode...statusCode)
     }
 
     public func filterSuccessfulStatusCodes() throws -> Response {
-        return try filterStatusCodes(in: 200...299)
+        return try filter(statusCodes: 200...299)
     }
 
     public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
-        return try filterStatusCodes(in: 200...399)
+        return try filter(statusCodes: 200...399)
     }
 
     /// Maps data received from the signal into a UIImage.

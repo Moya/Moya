@@ -23,7 +23,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var receivedError: Moya.Error?
                 
                 waitUntil { done in
-                    provider.request(token: .zen).startWithFailed { error in
+                    provider.request(.zen).startWithFailed { error in
                         receivedError = error
                         done()
                     }
@@ -41,7 +41,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var errored = false
                 
                 let target: GitHub = .zen
-                provider.request(token: target).startWithFailed { error in
+                provider.request(target).startWithFailed { error in
                     errored = true
                 }
                 
@@ -124,7 +124,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var receivedResponse: NSDictionary?
                 
                 let target: GitHub = .userProfile("ashfurrow")
-                provider.request(token: target).startWithResult { result in
+                provider.request(target).startWithResult { result in
                     if case .success(let response) = result {
                         receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
                     }
