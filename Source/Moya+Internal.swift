@@ -133,7 +133,7 @@ public extension MoyaProvider {
     }
 
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
-    final func notifyPluginsOfImpendingStub(_ request: URLRequest, target: Target) {
+    final func notifyPluginsOfImpendingStub(for request: URLRequest, target: Target) {
         let alamoRequest = manager.request(request as URLRequestConvertible)
         plugins.forEach { $0.willSend(alamoRequest, target: target) }
     }
@@ -143,7 +143,7 @@ private extension MoyaProvider {
     func sendUploadMultipart(_ target: Target, request: URLRequest, queue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableWrapper {
         let cancellable = CancellableWrapper()
 
-        let multipartFormData = { (form: RequestMultipartFormData) -> Void in
+        let multipartFormData: (RequestMultipartFormData) -> Void = { form in
             for bodyPart in multipartBody {
                 switch bodyPart.provider {
                 case .data(let data):

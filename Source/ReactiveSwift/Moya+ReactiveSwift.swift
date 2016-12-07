@@ -19,7 +19,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
     }
 
     /// Designated request-making method.
-    open func request(token: Target) -> SignalProducer<Response, Moya.Error> {
+    open func request(_ token: Target) -> SignalProducer<Response, Moya.Error> {
 
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
@@ -44,7 +44,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
         guard let stubScheduler = self.stubScheduler else {
             return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
-        notifyPluginsOfImpendingStub(request, target: target)
+        notifyPluginsOfImpendingStub(for: request, target: target)
         var dis: Disposable? = .none
         let token = CancellableToken {
             dis?.dispose()
@@ -66,7 +66,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
 
 public extension ReactiveSwiftMoyaProvider {
     public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, Moya.Error> {
-        let progressBlock = { (observer: Signal<ProgressResponse, Moya.Error>.Observer) -> (ProgressResponse) -> Void in
+        let progressBlock: (Signal<ProgressResponse, Moya.Error>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
             }

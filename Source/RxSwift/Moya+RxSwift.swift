@@ -40,7 +40,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
 
 public extension RxMoyaProvider {
     public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
-        let progressBlock = { (observer: AnyObserver) -> (ProgressResponse) -> Void in
+        let progressBlock: (AnyObserver) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.onNext(progress)
             }
