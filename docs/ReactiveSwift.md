@@ -50,10 +50,10 @@ To make things even awesomer, Moya provides some extensions to
 `SignalProducer` (and `RACSignal`) that make dealing with `Moya.Responses`
 really easy.
 
-- `filterStatusCodes()` takes a range of status codes. If the
+- `filter(statusCodes:)` takes a range of status codes. If the
   response's status code is not within that range, an error is
   produced.
-- `filterStatusCode()` looks for a specific status code, and errors
+- `filter(statusCode:)` looks for a specific status code, and errors
   if it finds anything else.
 - `filterSuccessfulStatusCodes()` filters status codes that
   are in the 200-range.

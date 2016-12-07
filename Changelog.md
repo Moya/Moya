@@ -1,7 +1,7 @@
 # Next
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
-- **Breaking Change** Renamed `filterStatusCodes(:)` to `filter(statusCodes:)`.
+- **Breaking Change** Renamed `filterStatusCodes(:)` to `filter(statusCodes:)` (and `filterStatusCode(:)` to `filter(statusCode:)`).
 - **Breaking Change** Renamed `request(token:)` to simply `request(:_)` (ReactiveSwift).
 - **Breaking Change** Renamed `notifyPluginsOfImpendingStub(request:)` to `notifyPluginsOfImpendingStub(for:)`.
 - Renamed the `ReactiveCocoa` subspec to `ReactiveSwift`.
