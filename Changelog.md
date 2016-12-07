@@ -2,6 +2,10 @@
 
 - Swift 2.3 support.
 
+# 7.0.4
+
+- Adds multipart body request building for Swift 2.2 and 2.3, see [#828](https://github.com/Moya/Moya/pull/828).
+
 # 7.0.1
 
 - Identical to 7.0.0, see [#594](https://github.com/Moya/Moya/pull/594) for an explanation.
