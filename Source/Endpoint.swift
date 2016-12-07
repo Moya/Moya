@@ -58,13 +58,13 @@ open class Endpoint<Target> {
 
     /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
     open func adding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
-        let newParameters = addParameters(parameters)
-        let newHTTPHeaderFields = addHTTPHeaderFields(httpHeaderFields)
+        let newParameters = add(parameters: parameters)
+        let newHTTPHeaderFields = add(httpHeaderFields: httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
         return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 
-    fileprivate func addParameters(_ parameters: [String: Any]?) -> [String: Any]? {
+    fileprivate func add(parameters: [String: Any]?) -> [String: Any]? {
         guard let unwrappedParameters = parameters, unwrappedParameters.isEmpty == false else {
             return self.parameters
         }
@@ -76,7 +76,7 @@ open class Endpoint<Target> {
         return newParameters
     }
 
-    fileprivate func addHTTPHeaderFields(_ headers: [String: String]?) -> [String: String]? {
+    fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {
         guard let unwrappedHeaders = headers, unwrappedHeaders.isEmpty == false else {
             return self.httpHeaderFields
         }
