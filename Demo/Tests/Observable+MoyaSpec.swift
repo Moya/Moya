@@ -37,7 +37,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 10)
                 
                 var errored = false
-                _ = observable.filterStatusCodes(0...9).subscribe { (event) -> Void in
+                _ = observable.filterStatusCodes(0...9).subscribe { event in
                     switch event {
                     case .next(let object):
                         fail("called on non-correct status code: \(object)")
@@ -56,7 +56,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 404)
                 
                 var errored = false
-                _ = observable.filterSuccessfulStatusCodes().subscribe { (event) -> Void in
+                _ = observable.filterSuccessfulStatusCodes().subscribe { event in
                     switch event {
                     case .next(let object):
                         fail("called on non-success status code: \(object)")
@@ -75,7 +75,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data)
                 
                 var called = false
-                _ = observable.filterSuccessfulStatusCodes().subscribe(onNext: { (object) -> Void in
+                _ = observable.filterSuccessfulStatusCodes().subscribe(onNext: { object in
                     called = true
                 })
                 
@@ -87,7 +87,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 404)
                 
                 var errored = false
-                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe { (event) -> Void in
+                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe { event in
                     switch event {
                     case .next(let object):
                         fail("called on non-success status code: \(object)")
@@ -106,7 +106,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data)
                 
                 var called = false
-                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe(onNext: { (object) -> Void in
+                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe(onNext: { object in
                     called = true
                 })
                 
@@ -118,7 +118,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 304)
                 
                 var called = false
-                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe(onNext: { (object) -> Void in
+                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe(onNext: { object in
                     called = true
                 })
                 
@@ -131,7 +131,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 42)
                 
                 var called = false
-                _ = observable.filterStatusCode(42).subscribe(onNext: { (object) -> Void in
+                _ = observable.filterStatusCode(42).subscribe(onNext: { object in
                     called = true
                 })
                 
@@ -143,7 +143,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data, statusCode: 43)
                 
                 var errored = false
-                _ = observable.filterStatusCode(42).subscribe { (event) -> Void in
+                _ = observable.filterStatusCode(42).subscribe { event in
                     switch event {
                     case .next(let object):
                         fail("called on non-success status code: \(object)")
@@ -165,7 +165,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data!)
                 
                 var size: CGSize?
-                _ = observable.mapImage().subscribe(onNext: { (image) -> Void in
+                _ = observable.mapImage().subscribe(onNext: { image in
                     size = image?.size
                 })
                 
@@ -177,7 +177,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data)
                 
                 var receivedError: Moya.Error?
-                _ = observable.mapImage().subscribe { (event) -> Void in
+                _ = observable.mapImage().subscribe { event in
                     switch event {
                     case .next:
                         fail("next called for invalid data")
@@ -201,7 +201,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data)
                 
                 var receivedJSON: [String: String]?
-                _ = observable.mapJSON().subscribe(onNext: { (json) -> Void in
+                _ = observable.mapJSON().subscribe(onNext: { json in
                     if let json = json as? [String: String] {
                         receivedJSON = json
                     }
@@ -217,7 +217,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data!)
                 
                 var receivedError: Moya.Error?
-                _ = observable.mapJSON().subscribe { (event) -> Void in
+                _ = observable.mapJSON().subscribe { event in
                     switch event {
                     case .next:
                         fail("next called for invalid data")
@@ -245,7 +245,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data!)
                 
                 var receivedString: String?
-                _ = observable.mapString().subscribe(onNext: { (string) -> Void in
+                _ = observable.mapString().subscribe(onNext: { string in
                     receivedString = string
                 })
                 
@@ -259,7 +259,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data)
 
                 var receivedString: String?
-                _ = observable.mapString(atKeyPath: "words_to_live_by").subscribe(onNext: { (string) -> Void in
+                _ = observable.mapString(atKeyPath: "words_to_live_by").subscribe(onNext: { string in
                     receivedString = string
                 })
 
@@ -271,7 +271,7 @@ class ObservableMoyaSpec: QuickSpec {
                 let observable = observableSendingData(data)
                 
                 var receivedError: Moya.Error?
-                _ = observable.mapString().subscribe { (event) -> Void in
+                _ = observable.mapString().subscribe { event in
                     switch event {
                     case .next:
                         fail("next called for invalid data")

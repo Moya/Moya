@@ -19,7 +19,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             it("returns a Response object") {
                 var called = false
                 
-                _ = provider.request(.zen).subscribe(onNext: { (object) -> Void in
+                _ = provider.request(.zen).subscribe(onNext: { object in
                     called = true
                 })
                 
@@ -30,7 +30,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var message: String?
                 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onNext: { (response) -> Void in
+                _ = provider.request(target).subscribe(onNext: { response in
                     message = String(data: response.data, encoding: .utf8)
                 })
                 
@@ -42,7 +42,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var receivedResponse: NSDictionary?
                 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.request(target).subscribe(onNext: { (response) -> Void in
+                _ = provider.request(target).subscribe(onNext: { response in
                     receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
                 })
                 
@@ -60,7 +60,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var receivedError: Moya.Error?
                 
                 waitUntil { done in
-                    _ = provider.request(.zen).subscribe(onError: { (error) -> Void in
+                    _ = provider.request(.zen).subscribe(onError: { error in
                         receivedError = error as? Moya.Error
                         done()
                     })
@@ -78,7 +78,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var errored = false
                 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onError: { (error) -> Void in
+                _ = provider.request(target).subscribe(onError: { error in
                     errored = true
                 })
                 
@@ -104,12 +104,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 
                 var receivedResponse: Moya.Response!
                 
-                _ = signalProducer1.subscribe(onNext: { (response) -> Void in
+                _ = signalProducer1.subscribe(onNext: { response in
                     receivedResponse = response
                     expect(provider.inflightRequests.count).to(equal(1))
                 })
                 
-                _ = signalProducer2.subscribe(onNext: { (response) -> Void in
+                _ = signalProducer2.subscribe(onNext: { response in
                     expect(receivedResponse).toNot( beNil() )
                     expect(receivedResponse).to( beIdenticalToResponse(response) )
                     expect(provider.inflightRequests.count).to( equal(1) )
