@@ -28,9 +28,9 @@
 		067D498E1C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D496F1C0D3886005BBA79 /* Observable+MoyaSpec.swift */; };
 		067D498F1C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D496F1C0D3886005BBA79 /* Observable+MoyaSpec.swift */; };
 		067D49901C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D496F1C0D3886005BBA79 /* Observable+MoyaSpec.swift */; };
-		067D49941C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49711C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift */; };
-		067D49951C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49711C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift */; };
-		067D49961C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49711C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift */; };
+		067D49941C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49711C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift */; };
+		067D49951C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49711C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift */; };
+		067D49961C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49711C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift */; };
 		067D49971C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49721C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift */; };
 		067D49981C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49721C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift */; };
 		067D49991C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 067D49721C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift */; };
@@ -94,7 +94,7 @@
 		067D496D1C0D3886005BBA79 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MoyaProviderSpec.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067D496E1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = NetworkLogginPluginSpec.swift; sourceTree = "<group>"; tabWidth = 4; };
 		067D496F1C0D3886005BBA79 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
-		067D49711C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReactiveCocoaMoyaProviderTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		067D49711C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ReactiveSwiftMoyaProviderTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		067D49721C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
 		067D49731C0D3886005BBA79 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
 		067D49741C0D3886005BBA79 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				067D496D1C0D3886005BBA79 /* MoyaProviderSpec.swift */,
 				067D496E1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift */,
 				067D496F1C0D3886005BBA79 /* Observable+MoyaSpec.swift */,
-				067D49711C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift */,
+				067D49711C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift */,
 				067D49721C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift */,
 				067D49731C0D3886005BBA79 /* SignalProducer+MoyaSpec.swift */,
 				067D49741C0D3886005BBA79 /* TestHelpers.swift */,
@@ -760,7 +760,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				067D49951C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
+				067D49951C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift in Sources */,
 				067D49981C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift in Sources */,
 				1D9CF9A91D4BD594004A95B7 /* MethodSpec.swift in Sources */,
 				067D498C1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift in Sources */,
@@ -780,7 +780,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				067D49961C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
+				067D49961C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift in Sources */,
 				067D49991C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift in Sources */,
 				1D9CF9AA1D4BD594004A95B7 /* MethodSpec.swift in Sources */,
 				067D498D1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift in Sources */,
@@ -824,7 +824,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				067D49941C0D3886005BBA79 /* ReactiveCocoaMoyaProviderTests.swift in Sources */,
+				067D49941C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift in Sources */,
 				067D49971C0D3886005BBA79 /* RxSwiftMoyaProviderTests.swift in Sources */,
 				1D9CF9A81D4BD593004A95B7 /* MethodSpec.swift in Sources */,
 				067D498B1C0D3886005BBA79 /* NetworkLogginPluginSpec.swift in Sources */,
