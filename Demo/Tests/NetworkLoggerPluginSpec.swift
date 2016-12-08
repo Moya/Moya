@@ -3,7 +3,7 @@ import Nimble
 import Moya
 import Result
 
-final class NetworkLogginPluginSpec: QuickSpec {
+final class NetworkLoggerPluginSpec: QuickSpec {
     override func spec() {
 
         var log = ""
