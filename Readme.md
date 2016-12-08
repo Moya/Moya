@@ -101,6 +101,16 @@ ambiguous lookups at compile time.
 github "Moya/Moya"
 ```
 
+### Manually
+
+Although we recommend you to use either CocoaPods or Carthage, it is possible to add Moya to your project manually.
+
+1. Add [`Alamofire`](https://github.com/Alamofire/Alamofire) to your project; they provide a great guide to do so [in their Readme](https://github.com/Alamofire/Alamofire#manually).
+2. Add [`Result`](https://github.com/antitypical/Result) to your project, following the same steps as you did with Alamofire.
+3. Do the same for Moya.
+
+After that, you should be good to go!
+
 Usage
 ---
 
