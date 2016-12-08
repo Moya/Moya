@@ -60,8 +60,8 @@ extension MyService: TargetType {
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
             guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                let data = Data(base64Encoded: path) else {
-                    return Data()
+                  let data = Data(base64Encoded: path) else {
+                      return Data()
             }
             return data
         }
