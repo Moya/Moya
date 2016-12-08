@@ -10,6 +10,7 @@ enum MyService {
     case zen
     case showUser(id: Int)
     case createUser(firstName: String, lastName: String)
+    case showAccounts
 }
 ```
 
@@ -51,16 +52,16 @@ extension MyService: TargetType {
     var sampleData: Data {
         switch self {
         case .zen:
-            return "Half measures are as bad as nothing at all.".UTF8EncodedData
+            return "Half measures are as bad as nothing at all.".utf8Encoded
         case .showUser(let id):
-            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".UTF8EncodedData
+            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
         case .createUser(let firstName, let lastName):
-            return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
+            return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
             guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                      data = Data(contentsOf: path) else {
-                return Data()
+                let data = Data(base64Encoded: path) else {
+                    return Data()
             }
             return data
         }
@@ -76,11 +77,11 @@ extension MyService: TargetType {
 // MARK: - Helpers
 private extension String {
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 
-    var utf8EncodedData: Data {
-        return self.data(using: .utf)!
+    var utf8Encoded: Data {
+        return self.data(using: .utf8)!
     }
 }
 ```
