@@ -157,12 +157,12 @@ public final class NetworkActivityPlugin: PluginType {
     // MARK: Plugin
 
     /// Called by the provider as soon as the request is about to start
-    public func willSendRequest(request: RequestType, target: TargetType) {
+    public func willSend(request: RequestType, target: TargetType) {
         networkActivityClosure(change: .began)
     }
 
     /// Called by the provider as soon as a response arrives
-    public func didReceiveResponse(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
+    public func didReceive(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
         networkActivityClosure(change: .ended)
     }
 }

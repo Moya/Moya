@@ -23,7 +23,7 @@ public final class NetworkLoggerPlugin: PluginType {
         self.responseDataFormatter = responseDataFormatter
     }
 
-    public func willSendRequest(_ request: RequestType, target: TargetType) {
+    public func willSend(_ request: RequestType, target: TargetType) {
         if let request = request as? CustomDebugStringConvertible, cURL {
             output(separator, terminator, request.debugDescription)
             return
@@ -31,7 +31,7 @@ public final class NetworkLoggerPlugin: PluginType {
         outputItems(logNetworkRequest(request.request as URLRequest?))
     }
 
-    public func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
+    public func didReceive(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         if case .success(let response) = result {
             outputItems(logNetworkResponse(response.response, data: response.data, target: target))
         } else {

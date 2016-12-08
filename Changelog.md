@@ -1,11 +1,14 @@
 # Next
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
+- **Breaking Change** Renamed `PluginType` functions to comply with Swift 3 design guideline:
+  - `willSendRequest` renamed to `willSend`.
+  - `didReceiveResponse` renamed to `didReceive`.
 - **Breaking Change** Renamed `filterStatusCodes(:)` to `filter(statusCodes:)` (and `filterStatusCode(:)` to `filter(statusCode:)`).
 - **Breaking Change** Renamed `request(token:)` to simply `request(:_)` (ReactiveSwift).
 - **Breaking Change** Renamed `notifyPluginsOfImpendingStub(request:)` to `notifyPluginsOfImpendingStub(for:)`.
 - Renamed the `ReactiveCocoa` subspec to `ReactiveSwift`.
-- `PluginType` can now modify requests and responses through `prepareRequest` and `processResponse`
+- `PluginType` can now modify requests and responses through `prepare` and `process`
 
 # 8.0.0-beta.5
 

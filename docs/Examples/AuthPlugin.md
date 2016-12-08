@@ -9,7 +9,7 @@ of how we might add a jwt to a request via a plugin:
 struct AuthPlugin: PluginType {
   let token: String
 
-  func prepareRequest(_ request: URLRequest, target: TargetType) -> URLRequest {
+  func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
     var request = request
     request.addValue("Bearer " + token, forHTTPHeaderField: "Authorization")
     return request
@@ -38,7 +38,7 @@ protocol AuthorizedTargetType: TargetType {
 struct AuthPlugin: PluginType {
   let tokenClosure: () -> String?
 
-  func prepareRequest(_ request: URLRequest, target: TargetType) -> URLRequest {
+  func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
     guard
       let token = tokenClosure(),
       let target = target as? AuthorizedTargetType,
