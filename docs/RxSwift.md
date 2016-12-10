@@ -16,7 +16,7 @@ let provider = RxMoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.zen).subscribe { (event) -> Void in
+provider.request(.zen).subscribe { event in
     switch event {
     case .next(let response):
         // do something with the data
