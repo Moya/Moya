@@ -1,5 +1,7 @@
 # Next
 
+# 8.0.0-beta.6
+
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
 - **Breaking Change** Renamed `PluginType` functions to comply with Swift 3 design guideline:
   - `willSendRequest` renamed to `willSend`.
