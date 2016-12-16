@@ -151,11 +151,11 @@ class MoyaProviderSpec: QuickSpec {
 
             it("delays execution") {
                 let startDate = Date()
-                var endDate: NSDate?
+                var endDate: Date?
                 let target: GitHub = .zen
                 waitUntil { done in
                     provider.request(target) { _ in
-                        endDate = NSDate()
+                        endDate = Date()
                         done()
                     }
                     return
