@@ -83,7 +83,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         let provider = MoyaProvider<GitHub>(manager: manager)
 
                         waitUntil { done in
-                            provider.request(GitHub.zen) { _ in done() }
+                            provider.request(.zen) { _ in done() }
                         }
 
                         expect(manager.called) == true
@@ -214,7 +214,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         waitUntil { done in
-                            provider.request(GitHub.zen) { _ in done() }
+                            provider.request(.zen) { _ in done() }
                         }
 
                         expect(log).to( contain("Request:") )

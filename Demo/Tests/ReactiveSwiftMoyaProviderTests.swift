@@ -130,8 +130,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                     }
                 }
                 
-                let sampleData = target.sampleData as NSData
-                let sampleResponse: NSDictionary = try! JSONSerialization.jsonObject(with: sampleData as Data, options: []) as! NSDictionary
+                let sampleData = target.sampleData
+                let sampleResponse = try! JSONSerialization.jsonObject(with: sampleData, options: []) as! NSDictionary
                 expect(receivedResponse).toNot(beNil())
                 expect(receivedResponse) == sampleResponse
             }

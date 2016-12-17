@@ -151,11 +151,11 @@ class MoyaProviderSpec: QuickSpec {
 
             it("delays execution") {
                 let startDate = Date()
-                var endDate: NSDate?
+                var endDate: Date?
                 let target: GitHub = .zen
                 waitUntil { done in
                     provider.request(target) { _ in
-                        endDate = NSDate()
+                        endDate = Date()
                         done()
                     }
                     return
@@ -383,7 +383,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var data: Data?
-                provider.request(GitHub.zen) { result in
+                provider.request(.zen) { result in
                     if case .success(let response) = result {
                         data = response.data
                     }
@@ -401,7 +401,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var receivedResponse: URLResponse?
-                provider.request(GitHub.zen) { result in
+                provider.request(.zen) { result in
                     if case .success(let response) = result {
                         receivedResponse = response.response
                     }
@@ -419,7 +419,7 @@ class MoyaProviderSpec: QuickSpec {
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
                 var receivedError: Moya.Error?
-                provider.request(GitHub.zen) { result in
+                provider.request(.zen) { result in
                     if case .failure(let error) = result {
                         receivedError = error
                     }
@@ -650,7 +650,7 @@ class MoyaProviderSpec: QuickSpec {
             it("invokes completion and returns .Failure if cancelled immediately") {
                 var error: Moya.Error?
                 waitUntil { done in
-                    let cancellable = provider.request(GitHub.zen, completion: { (result) in
+                    let cancellable = provider.request(.zen, completion: { (result) in
                         if case let .failure(err) = result {
                             error = err
                         }
