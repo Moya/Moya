@@ -1,5 +1,7 @@
 # Next
 
+- **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
+
 # 8.0.0-beta.6
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
