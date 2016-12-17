@@ -46,7 +46,8 @@ This project is actively under development, and is being used in [Artsy's
 new auction app](https://github.com/Artsy/eidolon). We consider it
 ready for production use.
 
-Currently, we support Xcode 7 and Swift 2.
+Currently, we develop for Xcode 8 and Swift 3, but there are versions
+available for Swift 2.3 and 2.2 as well.
 
 Installation
 ------------
