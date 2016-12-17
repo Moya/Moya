@@ -1,7 +1,7 @@
 import UIKit
 import Moya
 
-let provider = MoyaProvider<MultiTarget>(plugins: [NetworkLoggerPlugin(verbose: true)])
+let provider = MoyaProvider<MultiTarget>(plugins: [NetworkLoggerPlugin(isVerbose: true)])
 
 class ViewController: UITableViewController {
     var progressView = UIView()
