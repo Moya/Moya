@@ -8,7 +8,7 @@
 </p>
 
 You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
-NSURLSession and all those nasty details you don't really care about. But then,
+`URLSession` and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
 are probably called "APIManager" or "NetworkModel", and they always end in tears.
 
@@ -25,7 +25,7 @@ sufficiently encapsulates actually calling Alamofire directly. It should be simp
 enough that common things are easy, but comprehensive enough that complicated things
 are also easy.
 
-> If you use Alamofire to abstract away `NSURLSession`, why not use something
+> If you use Alamofire to abstract away `URLSession`, why not use something
 to abstract away the nitty gritty of URLs, parameters, etc?
 
 Some awesome features of Moya:
@@ -282,4 +282,4 @@ If you add or remove a source file from Moya, a corresponding change needs to be
 License
 -------
 
-Moya is released under an MIT license. See LICENSE for more information.
+Moya is released under an MIT license. See License.md for more information.
