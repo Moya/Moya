@@ -9,7 +9,7 @@ def libraries
   pod 'Moya/RxSwift', :path => "../"
   pod 'Alamofire', "~> 4.2.0"
   pod 'RxSwift'
-  pod 'ReactiveSwift', '1.0.0-rc.1'
+  pod 'ReactiveSwift', '1.0.0-rc.2'
 end
 
 # Test Libraries
