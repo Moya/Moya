@@ -2,13 +2,14 @@ Examples
 ========
 
 * [Basic usage](Basic.md)
+* [Advanced usage - use MultiTarget for multiple Targets using the same Provider](MultiTarget.md)
 
 ####Reactive extensions
 
 * [ReactiveCocoa](ReactiveCocoa.md)
 * [RxSwift](RxSwift.md)
 
-####Endpoints customisation
+####Endpoints customization
 
 * [Optional request parameters](OptionalParameters.md)
 * [Use Array instead of Dictionary as JSON root container](ArrayAsRootContainer.md)

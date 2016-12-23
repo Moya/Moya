@@ -1,7 +1,7 @@
 import Nimble
 import Moya
 
-public func beOfSameErrorType(expectedValue: Error) -> MatcherFunc<Error> {
+public func beOfSameErrorType(_ expectedValue: Moya.Error) -> MatcherFunc<Moya.Error> {
     return MatcherFunc { actualExpression, failureMessage in
         do {
             guard let actualValue = try actualExpression.evaluate() else {
@@ -9,44 +9,51 @@ public func beOfSameErrorType(expectedValue: Error) -> MatcherFunc<Error> {
             }
             
             switch actualValue {
-            case .ImageMapping:
+            case .imageMapping:
                 switch expectedValue {
-                case .ImageMapping:
+                case .imageMapping:
                     return true
                 default:
                     return false
                 }
-            case .JSONMapping:
+            case .jsonMapping:
                 switch expectedValue {
-                case .JSONMapping:
+                case .jsonMapping:
                     return true
                 default:
                     return false
                 }
-            case .StringMapping:
+            case .stringMapping:
                 switch expectedValue {
-                case .StringMapping:
+                case .stringMapping:
                     return true
                 default:
                     return false
                 }
-            case .StatusCode:
+            case .statusCode:
                 switch expectedValue {
-                case .StatusCode:
+                case .statusCode:
                     return true
                 default:
                     return false
                 }
-            case .Data:
+            case .data:
                 switch expectedValue {
-                case .Data:
+                case .data:
                     return true
                 default:
                     return false
                 }
-            case .Underlying:
+            case .underlying:
                 switch expectedValue {
-                case .Underlying:
+                case .underlying:
+                    return true
+                default:
+                    return false
+                }
+            case .requestMapping:
+                switch expectedValue {
+                case .requestMapping:
                     return true
                 default:
                     return false

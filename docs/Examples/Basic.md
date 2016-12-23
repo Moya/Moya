@@ -7,9 +7,10 @@ can include information as part of your enum. Let's look at a common example. Fi
 
 ```swift
 enum MyService {
-    case Zen
-    case ShowUser(id: Int)
-    case CreateUser(firstName: String, lastName: String)
+    case zen
+    case showUser(id: Int)
+    case createUser(firstName: String, lastName: String)
+    case showAccounts
 }
 ```
 
@@ -19,52 +20,68 @@ target (at compile time). You can see that parameters needed for requests can be
 ```swift
 // MARK: - TargetType Protocol Implementation
 extension MyService: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.myservice.com")! }
+    var baseURL: URL { return URL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
-        case .Zen:
+        case .zen:
             return "/zen"
-        case .ShowUser(let id):
+        case .showUser(let id):
             return "/users/\(id)"
-        case .CreateUser(_, _):
+        case .createUser(_, _):
             return "/users"
+        case .showAccounts:
+        	  return "/accounts"
         }
     }
     var method: Moya.Method {
         switch self {
-        case .Zen, .ShowUser:
-            return .GET
-        case .CreateUser:
-            return .POST
+        case .zen, .showUser, .showAccounts:
+            return .get
+        case .createUser:
+            return .post
         }
     }
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
-        case .Zen, .ShowUser:
+        case .zen, .showUser, .showAccounts:
             return nil
-        case .CreateUser(let firstName, let lastName):
+        case .createUser(let firstName, let lastName):
             return ["first_name": firstName, "last_name": lastName]
         }
     }
-    var sampleData: NSData {
+    var sampleData: Data {
         switch self {
-        case .Zen:
-            return "Half measures are as bad as nothing at all.".UTF8EncodedData
-        case .ShowUser(let id):
-            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".UTF8EncodedData
-        case .CreateUser(let firstName, let lastName):
-            return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".UTF8EncodedData
+        case .zen:
+            return "Half measures are as bad as nothing at all.".utf8Encoded
+        case .showUser(let id):
+            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
+        case .createUser(let firstName, let lastName):
+            return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
+        case .showAccounts:
+            // Provided you have a file named accounts.json in your bundle.
+            guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
+                  let data = Data(base64Encoded: path) else {
+                      return Data()
+            }
+            return data
+        }
+    }
+    var task: Task {
+        switch self {
+            case .zen, .showUser, .createUser, .showAccounts:
+                return .request
         }
     }
 }
 
 // MARK: - Helpers
 private extension String {
-    var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    var urlEscaped: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
-    var UTF8EncodedData: NSData {
-        return self.dataUsingEncoding(NSUTF8StringEncoding)!
+
+    var utf8Encoded: Data {
+        return self.data(using: .utf8)!
     }
 }
 ```
@@ -77,7 +94,7 @@ Note that at this point you have added enough information for a basic API networ
 
 ```swift
 let provider = MoyaProvider<MyService>()
-provider.request(.CreateUser(firstName: "James", lastName: "Potter")) { result in
+provider.request(.createUser(firstName: "James", lastName: "Potter")) { result in
     // do something with the result (read on for more details)
 }
 
@@ -86,18 +103,18 @@ provider.request(.CreateUser(firstName: "James", lastName: "Potter")) { result i
 ```
 
 The `TargetType` specifies both a base URL for the API and the sample data for
-each enum value. The sample data are `NSData` instances, and could represent
+each enum value. The sample data are `Data` instances, and could represent
 JSON, images, text, whatever you're expecting from that endpoint.
 
 You can also set up custom endpoints to alter the default behavior to your needs. For example:
 
 ```swift
 public func url(route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
-    return Endpoint<MyService>(URL: url(target), sampleResponseClosure: {.NetworkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -118,12 +135,12 @@ whatever you want. Say you want to test network error conditions like timeouts, 
 let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
     let sampleResponseClosure = { () -> (EndpointSampleResponse) in
         if shouldTimeout {
-            return .NetworkError(NSError())
+            return .networkError(NSError())
         } else {
-            return .NetworkResponse(200, target.sampleData)
+            return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint<MyService>(URL: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -144,47 +161,47 @@ let provider = MoyaProvider(endpointClosure: endpointClosure)
 Neato. Now how do we make a request?
 
 ```swift
-provider.request(.Zen) { result in
+provider.request(.zen) { result in
     // do something with `result`
 }
 ```
 
-The `request` method is given a `MyService` value (`.Zen`), which contains *all the
+The `request` method is given a `MyService` value (`.zen`), which contains *all the
 information necessary* to create the `Endpoint` – or to return a stubbed
 response during testing.
 
-The `Endpoint` instance is used to create a `NSURLRequest` (the heavy lifting is
+The `Endpoint` instance is used to create a `URLRequest` (the heavy lifting is
 done via Alamofire), and the request is sent (again - Alamofire).  Once
 Alamofire gets a response (or fails to get a response), Moya will wrap the
 success or failure in a `Result` enum.  `result` is either
-`.Success(Moya.Response)` or `.Failure(Moya.Error)`.
+`.success(Moya.Response)` or `.failure(Moya.Error)`.
 
 You will need to unpack the data and status code from `Moya.Response`.
 
 ```swift
-provider.request(.Zen) { result in
+provider.request(.zen) { result in
     switch result {
-    case let .Success(moyaResponse):
-        let data = moyaResponse.data // NSData, your JSON response is probably in here!
+    case let .success(moyaResponse):
+        let data = moyaResponse.data // Data, your JSON response is probably in here!
         let statusCode = moyaResponse.statusCode // Int - 200, 401, 500, etc
 
         // do something in your app
-    case let .Failure(error):
+    case let .failure(error):
         // TODO: handle the error ==  best. comment. ever.
     }
 }
 ```
 
-Take special note: a `.Failure` means that the server either didn't *receive the
+Take special note: a `.failure` means that the server either didn't *receive the
 request* (e.g. reachability/connectivity error) or it didn't send a response
 (e.g. the request timed out).  If you get a `.Failure`, you probably want to
 re-send the request after a time delay or when an internet connection is
 established.
 
-Once you have a `.Success(response)` you might want to filter on status codes or
+Once you have a `.success(response)` you might want to filter on status codes or
 convert the response data to JSON. `Moya.Response` can help!
 
-###### see more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
+###### See more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
 
 ```swift
 do {

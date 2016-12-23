@@ -1,58 +1,65 @@
 PODS:
-  - Alamofire (3.4.1)
-  - Moya (7.0.0):
-    - Moya/Core (= 7.0.0)
-  - Moya/Core (7.0.0):
-    - Alamofire (~> 3.0)
-    - Result (~> 2.0)
-  - Moya/ReactiveCocoa (7.0.0):
+  - Alamofire (4.2.0)
+  - Moya (8.0.0-beta.6):
+    - Moya/Core (= 8.0.0-beta.6)
+  - Moya/Core (8.0.0-beta.6):
+    - Alamofire (~> 4.0)
+    - Result (~> 3.0)
+  - Moya/ReactiveSwift (8.0.0-beta.6):
     - Moya/Core
-    - ReactiveCocoa (~> 4.0)
-  - Moya/RxSwift (7.0.0):
+    - ReactiveSwift (= 1.0.0-alpha.4)
+  - Moya/RxSwift (8.0.0-beta.6):
     - Moya/Core
-    - RxSwift (~> 2.0)
-  - Nimble (4.0.0)
-  - OHHTTPStubs (4.7.0):
-    - OHHTTPStubs/Default (= 4.7.0)
-  - OHHTTPStubs/Core (4.7.0)
-  - OHHTTPStubs/Default (4.7.0):
+    - RxSwift (~> 3.0)
+  - Nimble (5.1.1)
+  - OHHTTPStubs (5.2.3):
+    - OHHTTPStubs/Default (= 5.2.3)
+  - OHHTTPStubs/Core (5.2.3)
+  - OHHTTPStubs/Default (5.2.3):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (4.7.0):
+  - OHHTTPStubs/JSON (5.2.3):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (4.7.0):
+  - OHHTTPStubs/NSURLSession (5.2.3):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (4.7.0)
-  - Quick (0.9.2)
-  - ReactiveCocoa (4.2.1):
-    - Result (~> 2.0)
-  - Result (2.1.2)
-  - RxSwift (2.6.0)
+  - OHHTTPStubs/OHPathHelpers (5.2.3)
+  - Quick (1.0.0)
+  - ReactiveSwift (1.0.0-alpha.4):
+    - Result (~> 3.0)
+  - Result (3.1.0)
+  - RxCocoa (3.0.1):
+    - RxSwift (~> 3.0)
+  - RxSwift (3.0.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.2.0)
   - Moya (from `../`)
-  - Moya/ReactiveCocoa (from `../`)
+  - Moya/ReactiveSwift (from `../`)
   - Moya/RxSwift (from `../`)
   - Nimble
   - OHHTTPStubs
   - Quick
+  - ReactiveSwift (= 1.0.0-alpha.4)
+  - RxCocoa
+  - RxSwift
 
 EXTERNAL SOURCES:
   Moya:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  Moya: f004b82418fb8165ee1fc9f86190db4b3611fda9
-  Nimble: 72bcc3e2f02242e6bfaaf8d9412ca7bfe3d8b417
-  OHHTTPStubs: d2bf6a0f407620d67e75a1d3f12d86a2b1dd15c0
-  Quick: 18d057bc66451eedd5d1c8dc99ba2a5db6e60226
-  ReactiveCocoa: 5a42745f11ea236f405bb9ce5e97c5e3b23562dd
-  Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
-  RxSwift: 77f3a0b15324baa7a1c9bfa9f199648a82424e26
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Moya: bcae3999f8365c14d6c00c98e108aaed3b1d61e8
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
+  OHHTTPStubs: e238cd5b66d8efa51c861db45895de8fe079f4a7
+  Quick: 8024e4a47e6cc03a9d5245ef0948264fc6d27cff
+  ReactiveSwift: 3fa49d2db97609ea700cd2b8f1bfbdd162024f97
+  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
+  RxSwift: af5680055c4ad04480189c52d28385b1029493a6
 
-PODFILE CHECKSUM: a3ce498a78552b79ee027ef1ae7d306c71cf33ad
+PODFILE CHECKSUM: d8bf52ceb1cd27b42eff0bb50f66b7ea39c0bf99
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

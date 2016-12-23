@@ -1,10 +1,14 @@
 [![CircleCI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya) [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
 
-![Moya Logo](web/moya_logo_github.png)
+
+<p align="center">
+  <img height="160" src="web/logo_github.png" />
+</p>
 
 You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
-NSURLSession and all those nasty details you don't really care about. But then,
+`URLSession` and all those nasty details you don't really care about. But then,
 like lots of smart developers, you write ad hoc network abstraction layers. They
 are probably called "APIManager" or "NetworkModel", and they always end in tears.
 
@@ -21,7 +25,7 @@ sufficiently encapsulates actually calling Alamofire directly. It should be simp
 enough that common things are easy, but comprehensive enough that complicated things
 are also easy.
 
-> If you use Alamofire to abstract away `NSURLSession`, why not use something
+> If you use Alamofire to abstract away `URLSession`, why not use something
 to abstract away the nitty gritty of URLs, parameters, etc?
 
 Some awesome features of Moya:
@@ -33,7 +37,7 @@ Some awesome features of Moya:
 Sample Project
 --------------
 
-There's a sample project in the Demo directory. Have fun!
+There's a sample project in the Demo directory. To use it, run `pod install` to download the required libraries. Have fun!
 
 Project Status
 --------------
@@ -42,28 +46,49 @@ This project is actively under development, and is being used in [Artsy's
 new auction app](https://github.com/Artsy/eidolon). We consider it
 ready for production use.
 
-Currently, we support Xcode 7 and Swift 2.
-
 Installation
 ------------
 
+### Moya version vs Swift version.
+
+Because of the many Swift versions Moya supports, it might be confusing to
+find the version of Moya that you need. Below is a table that shows which version of Moya
+you should use for your Swift version.
+
+| Swift version | Moya version    |
+| ------------- | --------------- |
+| 3.X           | >= 8.0.0-beta.1 |
+| 2.3           | 7.0.2 - 7.0.3   |
+| 2.2           | <= 7.0.1        |
+
 ### CocoaPods
-Just add `pod 'Moya'` to your Podfile and go!
+
+For Moya, use the following entry in your Podfile:
+
+```rb
+pod 'Moya', '8.0.0-beta.6'
+```
 
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
-For RxSwift or ReactiveCocoa extensions, this project will include
-them as dependencies. You can do this via CocoaPods subspecs.
+For RxSwift or ReactiveSwift extensions, this project will include
+them as dependencies. You can do this via CocoaPods subspecs, but you will also
+need to include the pre-release versions of RxSwift or ReactiveSwift manually.
 
 ```rb
 pod 'Moya/RxSwift'
-pod 'Moya/ReactiveCocoa'
+
+# or
+
+pod 'Moya/ReactiveSwift'
+pod 'ReactiveSwift', '1.0.0-alpha.4'
 ```
 
 Then run `pod install`.
 
 ### Carthage
+
 Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 The full Moya framework is bundled in each of those frameworks;
@@ -74,6 +99,45 @@ ambiguous lookups at compile time.
 github "Moya/Moya"
 ```
 
+### Manually
+
+- Open up Terminal, `cd` into your top-level project directory, and run the following command *if* your project is not initialized as a git repository:
+
+```bash
+$ git init
+```
+
+- Add Alamofire, Result & Moya as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following commands:
+
+```bash
+$ git submodule add https://github.com/Alamofire/Alamofire.git
+$ git submodule add https://github.com/antitypical/Result.git
+$ git submodule add https://github.com/Moya/Moya.git
+```
+
+- Open the new `Alamofire` folder, and drag the `Alamofire.xcodeproj` into the Project Navigator of your application's Xcode project. Do the same with the `Result.xcodeproj` in the `Result` folder and `Moya.xcodeproj` in the `Moya` folder.
+
+> They should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
+
+- Verify that the deployment targets of the `xcodeproj`s match that of your application target in the Project Navigator.
+- Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
+- In the tab bar at the top of that window, open the "General" panel.
+- Click on the `+` button under the "Embedded Binaries" section.
+- You will see two different `Alamofire.xcodeproj` folders each with two different versions of the `Alamofire.framework` nested inside a `Products` folder.
+
+> It does not matter which `Products` folder you choose from, but it does matter whether you choose the top or bottom `Alamofire.framework`.
+
+- Select the top `Alamofire.framework` for iOS and the bottom one for OS X.
+
+> You can verify which one you selected by inspecting the build log for your project. The build target for `Alamofire` will be listed as either `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` or `Alamofire watchOS`.
+
+- Click on the `+` button under "Embedded Binaries" again and add the build target you need for `Result`.
+- Click on the `+` button again and add the correct build target for `Moya`.
+
+- And that's it!
+
+> The three frameworks are automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
+
 Usage
 ---
 
@@ -81,17 +145,17 @@ After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.request(.Zen) { result in
+provider.request(.zen) { result in
     switch result {
-    case let .Success(moyaResponse):
+    case let .success(moyaResponse):
         let data = moyaResponse.data
         let statusCode = moyaResponse.statusCode
         // do something with the response data or statusCode
-    case let .Failure(error):
+    case let .failure(error):
         // this means there was a network failure - either the request
         // wasn't sent (connectivity), or no response was received (server
         // timed out).  If the server responds with a 4xx or 5xx error, that
-        // will be sent as a ".Success"-ful response.
+        // will be sent as a ".success"-ful response.
     }
 }
 ```
@@ -101,7 +165,7 @@ into the enum you use to access the endpoint, like this:
 
 ```swift
 provider = MoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")) { result in
+provider.request(.userProfile("ashfurrow")) { result in
     // do something with the result
 }
 ```
@@ -115,26 +179,26 @@ Reactive Extensions
 -------------------
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
-[ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) and
+[ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and
 [RxSwift](https://github.com/ReactiveX/RxSwift).
 
-## ReactiveCocoa
+## ReactiveSwift
 
-After `ReactiveCocoa` [setup](docs/ReactiveCocoa.md), `request(:)` method
+After `ReactiveSwift` [setup](docs/ReactiveSwift.md), `request(:)` method
 immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
-that you can start or bind or map or whateveryou want to do. To handle errors,
+that you can start or bind or map or whatever you want to do. To handle errors,
 for instance, we could do the following:
 
 ```swift
-provider = ReactiveCocoaMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).start { (event) -> Void in
+provider = ReactiveSwiftMoyaProvider<GitHub>()
+provider.request(.userProfile("ashfurrow")).start { event in
     switch event {
-    case .Next(let response):
+    case let .value(response):
         image = UIImage(data: response.data)
-    case .Failed(let error):
+    case let .failed(error):
         print(error)
     default:
-      break
+        break
     }
 }
 ```
@@ -147,11 +211,11 @@ want to do. To handle errors, for instance, we could do the following:
 
 ```swift
 provider = RxMoyaProvider<GitHub>()
-provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
+provider.request(.userProfile("ashfurrow")).subscribe { event in
     switch event {
-    case .Next(let response):
+    case let .next(response):
         image = UIImage(data: response.data)
-    case .Error(let error):
+    case let .error(error):
         print(error)
     default:
         break
@@ -162,7 +226,7 @@ provider.request(.UserProfile("ashfurrow")).subscribe { (event) -> Void in
 ---
 
 In addition to the option of using signals instead of callback blocks, there are
-also a series of signal operators for RxSwift and ReactiveCocoa that will attempt
+also a series of signal operators for RxSwift and ReactiveSwift that will attempt
 to map the data received from the network response into either an image, some JSON,
 or a string, with `mapImage()`, `mapJSON()`, and `mapString()`, respectively. If the mapping is unsuccessful, you'll get an error on the signal. You also get handy methods
 for filtering out certain status codes. This means that you can place your code for
@@ -180,6 +244,8 @@ Moya has a great community around it and some people have created some very help
 - [Moya-ModelMapper](https://github.com/sunshinejr/Moya-ModelMapper) - ModelMapper bindings for Moya for easier JSON serialization
 - [Moya-Gloss](https://github.com/spxrogers/Moya-Gloss) - Gloss bindings for Moya for easier JSON serialization
 - [Moya-JASON](https://github.com/DroidsOnRoids/Moya-JASON) - JASON bindings for Moya for easier JSON serialization
+- [Moya-Unbox](https://github.com/RyogaK/Moya-Unbox) - Unbox bindings for Moya for easier JSON serialization
+- [MoyaSugar](https://github.com/devxoul/MoyaSugar) – Syntactic sugar for Moya
 
 We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
 
@@ -201,11 +267,17 @@ following:
 
 If any of that sounds cool to you, send a pull request! After a few
 contributions, we'll add you as an admin to the repo so you can merge pull
-requests and help steer the ship :ship:
+requests and help steer the ship :ship: You can read more details about that [in our contributor guidelines](https://github.com/Moya/contributors).
+
+Moya's community has a tremendous positive energy, and the maintainers are committed to keeping things awesome. Like [in the CocoaPods community](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules), always assume positive intent; even if a comment sounds mean-spirited, give the person the benefit of the doubt.
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code of Conduct.md).
+
+### Adding new source files
+
+If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget.
 
 License
 -------
 
-Moya is released under an MIT license. See LICENSE for more information.
+Moya is released under an MIT license. See License.md for more information.

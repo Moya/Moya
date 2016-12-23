@@ -23,5 +23,7 @@ DerivedData
 
 Carthage/Build
 Carthage/Checkouts
-Cartfile.resolved
+
 Demo/Pods
+.ruby-version
+.ruby-gemset

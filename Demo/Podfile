@@ -5,18 +5,27 @@ use_frameworks!
 # Our Libraries
 def libraries
   pod 'Moya', :path => "../"
-  pod 'Moya/ReactiveCocoa', :path => "../"
+  pod 'Moya/ReactiveSwift', :path => "../"
   pod 'Moya/RxSwift', :path => "../"
+  pod 'Alamofire', "~> 4.2.0"
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'ReactiveSwift', '1.0.0-alpha.4'
 end
 
 # Test Libraries
 def test_pods
   pod 'Quick'
-  pod 'Nimble'
+  pod 'Nimble' 
   pod 'OHHTTPStubs'
 end
 
 target 'Demo' do
+  platform :ios, '8.0'
+  libraries
+end
+
+target 'DemoMultiTarget' do
   platform :ios, '8.0'
   libraries
 end
@@ -34,7 +43,7 @@ target 'MoyaTests-tvOS' do
 end
 
 target 'MoyaTests-Mac' do
-    platform :osx, '10.9'
+    platform :osx, '10.10'
     libraries
     test_pods
 end
@@ -45,6 +54,7 @@ post_install do |installer|
     target.build_configurations.each do |config|
       if config.name == 'Debug'
         config.build_settings['ENABLE_TESTABILITY'] = 'YES'
+        config.build_settings['SWIFT_VERSION'] = '3.0'
       end
     end
   end

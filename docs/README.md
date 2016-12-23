@@ -9,7 +9,7 @@ It accomplishes this with the following pipeline.
 ----------------
 
 <p align="center">
-    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveCocoa.md">ReactiveCocoa</a> &bull; <a href="RxSwift.md">RxSwift</a> &bull; <a href="Plugins.md">Plugins</a>
+    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveSwift.md">ReactiveSwift</a> &bull; <a href="RxSwift.md">RxSwift</a> &bull; <a href="Plugins.md">Plugins</a>
 </p>
 
 ----------------
@@ -18,7 +18,7 @@ You _should not_ have to reference Alamofire directly. It's an _awesome_
 library, but the point of Moya is that you don't have to deal with details
 that are that low-level.
 
-(If you _need_ to use Alamofire, you can pass in a `Manager` instance to the
+(If you _need_ to use Alamofire, you can pass in a `SessionManager` instance to the
 `MoyaProvider` initializer.)
 
 If there is something you want to change about the behaviour of Moya, there is

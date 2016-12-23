@@ -2,88 +2,137 @@ import Moya
 import Foundation
 
 extension String {
-    var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+    var urlEscaped: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
 enum GitHub {
-    case Zen
-    case UserProfile(String)
+    case zen
+    case userProfile(String)
 }
 
 extension GitHub: TargetType {
-    var baseURL: NSURL { return NSURL(string: "https://api.github.com")! }
+    var baseURL: URL { return URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
-        case .Zen:
+        case .zen:
             return "/zen"
-        case .UserProfile(let name):
-            return "/users/\(name.URLEscapedString)"
+        case .userProfile(let name):
+            return "/users/\(name.urlEscaped)"
         }
     }
     
     var method: Moya.Method {
-        return .GET
+        return .get
     }
     
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         return nil
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task: Task {
+        return .request
     }
     
-    var sampleData: NSData {
+    var sampleData: Data {
         switch self {
-        case .Zen:
-            return "Half measures are as bad as nothing at all.".dataUsingEncoding(NSUTF8StringEncoding)!
-        case .UserProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .zen:
+            return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+        case .userProfile(let name):
+            return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
     }
 }
 
-func url(route: TargetType) -> String {
-    return route.baseURL.URLByAppendingPathComponent(route.path).absoluteString
+func url(_ route: TargetType) -> String {
+    return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.error", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(URL: url(target), sampleResponseClosure: {.NetworkError(error)}, method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, parameters: target.parameters)
 }
 
 enum HTTPBin: TargetType {
-    case BasicAuth
+    case basicAuth
 
-    var baseURL: NSURL { return NSURL(string: "http://httpbin.org")! }
+    var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
-        case .BasicAuth:
+        case .basicAuth:
             return "/basic-auth/user/passwd"
         }
     }
 
     var method: Moya.Method {
-        return .GET
+        return .get
     }
     
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
         default:
             return [:]
         }
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task: Task {
+        return .request
     }
     
-    var sampleData: NSData {
+    var sampleData: Data {
         switch self {
-        case .BasicAuth:
-            return "{\"authenticated\": true, \"user\": \"user\"}".dataUsingEncoding(NSUTF8StringEncoding)!
+        case .basicAuth:
+            return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
         }
     }
+}
+
+public enum GitHubUserContent {
+    case downloadMoyaWebContent(String)
+}
+
+extension GitHubUserContent: TargetType {
+    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var path: String {
+        switch self {
+        case .downloadMoyaWebContent(let contentPath):
+            return "/Moya/Moya/master/web/\(contentPath)"
+        }
+    }
+    public var method: Moya.Method {
+        switch self {
+        case .downloadMoyaWebContent:
+            return .get
+        }
+    }
+    public var parameters: [String: Any]? {
+        switch self {
+        case .downloadMoyaWebContent:
+            return nil
+        }
+    }
+    public var task: Task {
+        switch self {
+        case .downloadMoyaWebContent:
+            return .download(.request(DefaultDownloadDestination))
+        }
+    }
+    public var sampleData: Data {
+        switch self {
+        case .downloadMoyaWebContent:
+            return Data(count: 4000)
+        }
+    }
+   
+}
+
+private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+    let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+
+    if !directoryURLs.isEmpty {
+        return (directoryURLs.first!.appendingPathComponent(response.suggestedFilename!), [])
+    }
+    
+    return (temporaryURL, [])
 }

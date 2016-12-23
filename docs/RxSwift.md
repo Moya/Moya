@@ -16,11 +16,11 @@ let provider = RxMoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.Zen).subscribe { (event) -> Void in
+provider.request(.zen).subscribe { event in
     switch event {
-    case .Next(let response):
+    case .next(let response):
         // do something with the data
-    case .Error(let error):
+    case .error(let error):
         // handle the error
     default:
         break
@@ -37,21 +37,21 @@ If the request completes normally, two things happen:
 1. The observable sends a value, a `Moya.Response` instance.
 2. The observable completes.
 
-If the request produces an error (typically a NSURLSession error),
+If the request produces an error (typically a `URLSession` error),
 then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
 The `Moya.Response` class contains a `statusCode`, some `data`,
-and a(n optional) `NSURLResponse`. You can use these values however
+and a(n optional) `URLResponse`. You can use these values however
 you like in `subscribeNext` or `map` calls.
 
 To make things even awesomer, Moya provides some extensions to
 `Observable` that make dealing with `MoyaResponses`really easy.
 
-- `filterStatusCodes()` takes a range of status codes. If the
+- `filter(statusCodes:)` takes a range of status codes. If the
   response's status code is not within that range, an error is
   produced.
-- `filterStatusCode()` looks for a specific status code, and errors
+- `filter(statusCode:)` looks for a specific status code, and errors
   if it finds anything else.
 - `filterSuccessfulStatusCodes()` filters status codes that
   are in the 200-range.
@@ -62,6 +62,8 @@ To make things even awesomer, Moya provides some extensions to
 - `mapJSON()` tries to map the response data to a JSON object and
   errors if unsuccessful.
 - `mapString()` tries to map the response data to a string and
+  errors if unsuccessful.
+- `mapString(atKeyPath:)` tries to map a response data key path to a string and
   errors if unsuccessful.
 
 In the error cases, the error's `domain` is `MoyaErrorDomain`. The code
