@@ -30,7 +30,11 @@ extension GitHub: TargetType {
     var parameters: [String: Any]? {
         return nil
     }
-    
+
+    public var parameterEncoding: ParameterEncoding {
+        return JSONEncoding.default
+    }
+
     var task: Task {
         return .request
     }
