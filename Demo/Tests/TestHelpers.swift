@@ -22,23 +22,11 @@ extension GitHub: TargetType {
             return "/users/\(name.urlEscaped)"
         }
     }
-    
-    var method: Moya.Method {
-        return .get
-    }
-    
-    var parameters: [String: Any]? {
-        return nil
-    }
 
     public var parameterEncoding: ParameterEncoding {
         return JSONEncoding.default
     }
 
-    var task: Task {
-        return .request
-    }
-    
     var sampleData: Data {
         switch self {
         case .zen:
@@ -69,25 +57,6 @@ enum HTTPBin: TargetType {
         }
     }
 
-    var method: Moya.Method {
-        return .get
-    }
-    
-    var parameters: [String: Any]? {
-        switch self {
-        default:
-            return [:]
-        }
-    }
-
-    var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-    
-    var task: Task {
-        return .request
-    }
-    
     var sampleData: Data {
         switch self {
         case .basicAuth:
@@ -108,21 +77,7 @@ extension GitHubUserContent: TargetType {
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
-    public var method: Moya.Method {
-        switch self {
-        case .downloadMoyaWebContent:
-            return .get
-        }
-    }
-    public var parameters: [String: Any]? {
-        switch self {
-        case .downloadMoyaWebContent:
-            return nil
-        }
-    }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
+
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
@@ -135,7 +90,7 @@ extension GitHubUserContent: TargetType {
             return Data(count: 4000)
         }
     }
-   
+
 }
 
 private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
@@ -144,6 +99,6 @@ private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, re
     if !directoryURLs.isEmpty {
         return (directoryURLs.first!.appendingPathComponent(response.suggestedFilename!), [])
     }
-    
+
     return (temporaryURL, [])
 }
