@@ -39,6 +39,16 @@ public extension TargetType {
     var validate: Bool { return false }
 }
 
+/// A TargetType that represents a GET request to a single URL with no parameters.
+public struct SingleURLTarget: TargetType {
+    public let baseURL: URL
+
+    /// Initialize a SingleURLTarget
+    public init(url: URL) {
+        baseURL = url
+    }
+}
+
 /// Represents a type of upload task.
 public enum UploadType {
 
