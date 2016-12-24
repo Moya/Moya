@@ -7,22 +7,22 @@ public protocol TargetType {
     /// The target's base `URL`.
     var baseURL: URL { get }
 
-    /// The path to be appended to `baseURL` to form the full `URL`.
+    /// The path to be appended to `baseURL` to form the full `URL`. Defaults to none.
     var path: String { get }
 
-    /// The HTTP method used in the request.
+    /// The HTTP method used in the request. Defaults to `.get`.
     var method: Moya.Method { get }
 
-    /// The parameters to be incoded in the request.
+    /// The parameters to be incoded in the request. Defaults to `nil`.
     var parameters: [String: Any]? { get }
 
-    /// The method used for parameter encoding.
+    /// The method used for parameter encoding. Defaults to `URLEncoding`.
     var parameterEncoding: ParameterEncoding { get }
 
-    /// Provides stub data for use in testing.
+    /// Provides stub data for use in testing. Defaults to `Data()`.
     var sampleData: Data { get }
 
-    /// The type of HTTP task to be performed.
+    /// The type of HTTP task to be performed. Defaults to `.request`.
     var task: Task { get }
 
     /// Whether or not to perform Alamofire validation. Defaults to `false`.
@@ -39,7 +39,7 @@ public extension TargetType {
     var validate: Bool { return false }
 }
 
-/// A TargetType that represents a GET request to a single URL with no parameters.
+/// A `TargetType` that represents a GET request to a single `URL` with no parameters.
 public struct SingleURLTarget: TargetType {
     public let baseURL: URL
 
