@@ -2,7 +2,7 @@ import Foundation
 import Result
 
 /// Closure to be executed when a request has completed.
-public typealias Completion = (_ result: Result<Moya.Response, Moya.Error>) -> ()
+public typealias Completion = (_ result: Result<Moya.Response, Moya.Error>) -> Void
 
 /// Closure to be executed when progress changes.
 public typealias ProgressBlock = (_ progress: ProgressResponse) -> Void
@@ -93,7 +93,7 @@ open class MoyaProvider<Target: TargetType> {
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(for: request, target: target)
         let plugins = self.plugins
-        let stub: () -> () = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
+        let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
         switch stubBehavior {
         case .immediate:
             stub()
