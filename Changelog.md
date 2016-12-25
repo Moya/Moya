@@ -1,5 +1,7 @@
 # Next
 
+- `TargetType` can specify its `ParameterEncoding`. The Default is `URLEncoding`.
+
 # 8.0.0-beta.6
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
