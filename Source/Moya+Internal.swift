@@ -6,12 +6,9 @@ import Result
 extension Method {
     public var supportsMultipart: Bool {
         switch self {
-        case .post,
-             .put,
-             .patch,
-             .connect:
+        case .post, .put, .patch, .connect:
             return true
-        default:
+        case .get, .delete, .head, .options, .trace:
             return false
         }
     }
