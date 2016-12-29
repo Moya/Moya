@@ -16,9 +16,9 @@ public final class NetworkLoggerPlugin: PluginType {
     public let isVerbose: Bool
     public let cURL: Bool
 
-    public init(isVerbose: Bool = false, cURL: Bool = false, output: @escaping (_ seperator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, responseDataFormatter: ((Data) -> (Data))? = nil) {
+    public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ seperator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, responseDataFormatter: ((Data) -> (Data))? = nil) {
         self.cURL = cURL
-        self.isVerbose = isVerbose
+        self.isVerbose = verbose
         self.output = output
         self.responseDataFormatter = responseDataFormatter
     }
