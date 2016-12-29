@@ -47,12 +47,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 expect(responseData).to(equal(target.sampleData))
             }
             
-            it("returns correct data for user profile request") {
-                var receivedResponse: NSDictionary?
+            it("maps JSON data correctly for user profile request") {
+                var receivedResponse: [String: Any]?
                 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.request(target).subscribe(onNext: { response in
-                    receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
+                _ = provider.request(target).mapJSON().subscribe(onNext: { response in
+                    receivedResponse = response as? [String: Any]
                 })
                 
                 expect(receivedResponse).toNot(beNil())
