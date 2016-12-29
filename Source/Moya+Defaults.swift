@@ -4,7 +4,13 @@ import Alamofire
 public extension MoyaProvider {
     public final class func defaultEndpointMapping(for target: Target) -> Endpoint<Target> {
         let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-        return Endpoint(url: url, sampleResponseClosure: { .networkResponse(200, target.sampleData) }, method: target.method, parameters: target.parameters)
+        return Endpoint(
+            url: url,
+            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+            method: target.method,
+            parameters: target.parameters,
+            parameterEncoding: target.parameterEncoding
+        )
     }
 
     public final class func defaultRequestMapping(for endpoint: Endpoint<Target>, closure: RequestResultClosure) {

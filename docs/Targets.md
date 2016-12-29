@@ -26,6 +26,7 @@ providers). Here's the beginning of our extension:
 ```swift
 extension GitHub: TargetType {
     public var baseURL: URL { return URL(string: "https://api.github.com")! }
+}
 ```
 
 This protocol specifies the locations of
@@ -81,6 +82,19 @@ public var parameters: [String: Any]? {
 
 Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we use the Swift `_` ignored-value symbol.
 Let's take a look at the `branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
+
+By default, Moya will encode parameters using URL encoding. If you wish for certain requests to be encoded differently (e.g. as JSON in the HTTP Body), you can provide a value for the `parameterEncoding` property. Alamofire provides `JSONEncoding` and `PropertyListEncoding`, but you can also create your own encoder that conforms to `ParameterEncoding` (e.g. `XMLEncoder`).
+
+```swift
+public var parameterEncoding: ParameterEcoding {
+    switch self {
+    case .zen:
+        return JSONEncoding.default
+    default:
+        return URLEncoding.default
+    }
+}
+```
 
 Notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil

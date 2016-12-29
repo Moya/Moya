@@ -7,12 +7,17 @@ public protocol TargetType {
     var path: String { get }
     var method: Moya.Method { get }
     var parameters: [String: Any]? { get }
+    var parameterEncoding: ParameterEncoding { get } // Defaults to `URLEncoding`
     var sampleData: Data { get }
     var task: Task { get }
     var validate: Bool { get } // Alamofire validation (defaults to `false`)
 }
 
 public extension TargetType {
+    var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
+
     var validate: Bool {
         return false
     }

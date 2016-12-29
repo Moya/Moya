@@ -1,6 +1,7 @@
 # Next
 
 - **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
+- `TargetType` can specify its `ParameterEncoding`. The Default is `URLEncoding`.
 
 # 8.0.0-beta.6
 
