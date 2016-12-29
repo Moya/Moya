@@ -13,12 +13,12 @@ public final class NetworkLoggerPlugin: PluginType {
     fileprivate let responseDataFormatter: ((Data) -> (Data))?
 
     /// If true, also logs response body data.
-    public let verbose: Bool
+    public let isVerbose: Bool
     public let cURL: Bool
 
     public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ seperator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, responseDataFormatter: ((Data) -> (Data))? = nil) {
         self.cURL = cURL
-        self.verbose = verbose
+        self.isVerbose = verbose
         self.output = output
         self.responseDataFormatter = responseDataFormatter
     }
@@ -40,7 +40,7 @@ public final class NetworkLoggerPlugin: PluginType {
     }
 
     fileprivate func outputItems(_ items: [String]) {
-        if verbose {
+        if isVerbose {
             items.forEach { output(separator, terminator, $0) }
         } else {
             output(separator, terminator, items)
@@ -78,7 +78,7 @@ private extension NetworkLoggerPlugin {
             output += [format(loggerId, date: date, identifier: "HTTP Request Method", message: httpMethod)]
         }
 
-        if let body = request?.httpBody, let stringOutput = String(data: body, encoding: .utf8), verbose == true {
+        if let body = request?.httpBody, let stringOutput = String(data: body, encoding: .utf8), isVerbose {
             output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
         }
 
@@ -94,7 +94,7 @@ private extension NetworkLoggerPlugin {
 
         output += [format(loggerId, date: date, identifier: "Response", message: response.description)]
 
-        if let data = data, let stringData = String(data: responseDataFormatter?(data) ?? data, encoding: String.Encoding.utf8), verbose == true {
+        if let data = data, let stringData = String(data: responseDataFormatter?(data) ?? data, encoding: String.Encoding.utf8), isVerbose {
             output += [stringData]
         }
 
