@@ -1,6 +1,7 @@
 # Next
 
 - `TargetType` can specify its `ParameterEncoding`. The Default is `URLEncoding`.
+- Re-add `MultiTarget` to project.
 
 # 8.0.0-beta.6
 
