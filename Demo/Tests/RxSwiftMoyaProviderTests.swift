@@ -16,14 +16,14 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider(stubClosure: MoyaProvider.immediatelyStub)
             }
             
-            it("returns a Response object") {
+            it("emits a Response object") {
                 var called = false
                 
-                _ = provider.request(.zen).subscribe(onNext: { object in
+                _ = provider.request(.zen).subscribe(onNext: { _ in
                     called = true
                 })
                 
-                expect(called).to(beTruthy())
+                expect(called).to(beTrue())
             }
 
             it("emits complete") {
