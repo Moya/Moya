@@ -1,6 +1,7 @@
 # Next
 
 - `TargetType` can specify its `ParameterEncoding`. The Default is `URLEncoding`.
+- Added documentation for `TargetType` and associated data structures.
 
 # 8.0.0-beta.6
 
