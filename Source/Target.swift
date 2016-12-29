@@ -39,20 +39,6 @@ public extension TargetType {
     }
 }
 
-extension Method {
-    public var supportsMultipart: Bool {
-        switch self {
-        case .post,
-             .put,
-             .patch,
-             .connect:
-            return true
-        default:
-            return false
-        }
-    }
-}
-
 /// Represents a type of upload task.
 public enum UploadType {
 
