@@ -53,19 +53,6 @@ extension Method {
     }
 }
 
-/// Controls stub responses are returned.
-public enum StubBehavior {
-
-    /// Never return  a response.
-    case never
-
-    /// Return a response immediately.
-    case immediate
-
-    /// Return a response after a delay.
-    case delayed(seconds: TimeInterval)
-}
-
 /// Represents a type of upload task.
 public enum UploadType {
 

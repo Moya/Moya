@@ -113,6 +113,19 @@ open class MoyaProvider<Target: TargetType> {
 
 /// Mark: Stubbing
 
+/// Controls how stub responses are returned.
+public enum StubBehavior {
+
+    /// Do not stub.
+    case never
+
+    /// Return a response immediately.
+    case immediate
+
+    /// Return a response after a delay.
+    case delayed(seconds: TimeInterval)
+}
+
 public extension MoyaProvider {
 
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
