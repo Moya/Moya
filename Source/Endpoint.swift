@@ -69,7 +69,7 @@ open class Endpoint<Target> {
             return self.parameters
         }
 
-        var newParameters = self.parameters ?? [String: Any]()
+        var newParameters = self.parameters ?? [:]
         unwrappedParameters.forEach { key, value in
             newParameters[key] = value
         }
@@ -81,7 +81,7 @@ open class Endpoint<Target> {
             return self.httpHeaderFields
         }
 
-        var newHTTPHeaderFields = self.httpHeaderFields ?? [String: String]()
+        var newHTTPHeaderFields = self.httpHeaderFields ?? [:]
         unwrappedHeaders.forEach { key, value in
             newHTTPHeaderFields[key] = value
         }
@@ -94,7 +94,7 @@ extension Endpoint {
     public var urlRequest: URLRequest? {
         guard let requestURL = Foundation.URL(string: url) else { return nil }
 
-        var request: URLRequest = URLRequest(url: requestURL)
+        var request = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
