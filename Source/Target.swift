@@ -39,9 +39,6 @@ public extension TargetType {
     }
 }
 
-/// Represents an HTTP method.
-public typealias Method = Alamofire.HTTPMethod
-
 extension Method {
     public var supportsMultipart: Bool {
         switch self {
