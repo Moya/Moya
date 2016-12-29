@@ -25,7 +25,17 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 
                 expect(called).to(beTruthy())
             }
-            
+
+            it("emits complete") {
+                var complete = false
+
+                _ = provider.request(.zen).subscribe(onCompleted: { _ in
+                    complete = true
+                })
+
+                expect(complete).to(beTrue())
+            }
+
             it("returns stubbed data for zen request") {
                 var message: String?
                 
