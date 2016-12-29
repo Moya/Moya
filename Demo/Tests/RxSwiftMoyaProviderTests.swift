@@ -36,16 +36,15 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 expect(complete).to(beTrue())
             }
 
-            it("returns stubbed data for zen request") {
-                var message: String?
+            it("emits stubbed data for zen request") {
+                var responseData: Data?
                 
                 let target: GitHub = .zen
                 _ = provider.request(target).subscribe(onNext: { response in
-                    message = String(data: response.data, encoding: .utf8)
+                    responseData = response.data
                 })
-                
-                let sampleString = String(data: target.sampleData, encoding: .utf8)
-                expect(message).to(equal(sampleString))
+
+                expect(responseData).to(equal(target.sampleData))
             }
             
             it("returns correct data for user profile request") {
