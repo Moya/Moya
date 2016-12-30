@@ -9,13 +9,13 @@ def libraries
   pod 'Moya/RxSwift', :path => "../"
   pod 'Alamofire', "~> 4.2.0"
   pod 'RxSwift'
-  pod 'ReactiveSwift', '1.0.0-rc.3'
+  pod 'ReactiveSwift', '= 1.0.0-rc.3'
 end
 
 # Test Libraries
 def test_pods
   pod 'Quick'
-  pod 'Nimble' 
+  pod 'Nimble'
   pod 'OHHTTPStubs'
 end
 
