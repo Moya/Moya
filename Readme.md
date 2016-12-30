@@ -244,6 +244,7 @@ Moya has a great community around it and some people have created some very help
 - [Moya-ModelMapper](https://github.com/sunshinejr/Moya-ModelMapper) - ModelMapper bindings for Moya for easier JSON serialization
 - [Moya-Gloss](https://github.com/spxrogers/Moya-Gloss) - Gloss bindings for Moya for easier JSON serialization
 - [Moya-JASON](https://github.com/DroidsOnRoids/Moya-JASON) - JASON bindings for Moya for easier JSON serialization
+- [Moya-JASONMapper](https://github.com/AvdLee/Moya-JASONMapper) - JASON bindings for Moya for easier JSON serialization
 - [Moya-Unbox](https://github.com/RyogaK/Moya-Unbox) - Unbox bindings for Moya for easier JSON serialization
 - [MoyaSugar](https://github.com/devxoul/MoyaSugar) – Syntactic sugar for Moya
 
