@@ -33,6 +33,29 @@ public extension TargetType {
     var validate: Bool {
         return false
     }
+
+    /**
+     A helper function for loading `sampleData` from a file.
+     
+     - note: This traps when compiled in debug mode and the requested file cannot be loaded.
+
+     - parameters:
+       - fileName: The filename (without extension) containing the stubbed response.
+       - ofType: The extension of the file containing the stubbed response. Defaults to "json".
+       - inBundle: The `Bundle` to search in. Defaults to `Bundle.main`.
+     - returns: The `Data` stored in the file or an empty `Data` if compiled in release mode and the requested file cannot be loaded.
+    */
+    public func stubbedResponse(_ fileName: String, ofType type: String = "json", inBundle bundle: Bundle = Bundle.main) -> Data {
+        guard
+            let url = bundle.url(forResource: fileName, withExtension: type),
+            let data = try? Data(contentsOf: url)
+        else {
+            assert(false, "Unable to load stubbed response for \"\(fileName).\(type)\"")
+            return Data()
+        }
+
+        return data
+    }
 }
 
 /// Represents a type of upload task.
