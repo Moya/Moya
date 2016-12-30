@@ -527,7 +527,7 @@ class MoyaProviderSpec: QuickSpec {
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let parameters: [String: Any]? = ["key": "value"]
-                let parameterEncoding = JSONEncoding.default
+                let parameterEncoding: Moya.ParameterEncoding = JSONEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
                 let validate = true
@@ -573,6 +573,11 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(requestParameters?.count) == 1
+            }
+
+            it("uses correct parameter encoding.") {
+                let target = MultiTarget.target(StructAPI())
+                expect(target.parameterEncoding is JSONEncoding) == true
             }
 
             it("uses correct method") {
