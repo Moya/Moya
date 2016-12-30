@@ -616,6 +616,11 @@ class MoyaProviderSpec: QuickSpec {
 
                 expect(dataString) == "sample data"
             }
+
+            it("uses correct validate") {
+                let target = MultiTarget.target(StructAPI())
+                expect(target.validate) == true
+            }
         }
         
         describe("an inflight-tracking provider") {
