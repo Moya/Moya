@@ -527,10 +527,8 @@ class MoyaProviderSpec: QuickSpec {
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let parameters: [String: Any]? = ["key": "value"]
-                let parameterEncoding: Moya.ParameterEncoding = JSONEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
-                let validate = true
             }
 
             it("uses correct URL") {
@@ -575,11 +573,6 @@ class MoyaProviderSpec: QuickSpec {
                 expect(requestParameters?.count) == 1
             }
 
-            it("uses correct parameter encoding.") {
-                let target = MultiTarget.target(StructAPI())
-                expect(target.parameterEncoding is JSONEncoding) == true
-            }
-
             it("uses correct method") {
                 var requestMethod: Moya.Method?
                 let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
@@ -601,11 +594,6 @@ class MoyaProviderSpec: QuickSpec {
                 expect(requestMethod) == .get
             }
 
-            it("uses correct task") {
-                let target = MultiTarget.target(StructAPI())
-                expect(String(describing: target.task)) == "request" // Hack to avoid implementing Equatable for Task
-            }
-
             it("uses correct sample data") {
                 var dataString: String?
                 let provider = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.immediatelyStub)
@@ -620,11 +608,6 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(dataString) == "sample data"
-            }
-
-            it("uses correct validate") {
-                let target = MultiTarget.target(StructAPI())
-                expect(target.validate) == true
             }
         }
         

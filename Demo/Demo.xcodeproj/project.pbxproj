@@ -65,6 +65,9 @@
 		1DC29BB31D3694B10041B1DC /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB01D36949C0041B1DC /* TestPlugin.swift */; };
 		1DC29BB41D3694B20041B1DC /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC29BB01D36949C0041B1DC /* TestPlugin.swift */; };
 		36CED1FF03F2BD97EFDFCC07 /* Pods_MoyaTests_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8A2ED7FAC502C9DEFF05137 /* Pods_MoyaTests_Mac.framework */; };
+		3BA460521E15EB9100511D6A /* MultiTargetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA460501E15EA4700511D6A /* MultiTargetSpec.swift */; };
+		3BA460531E15EB9200511D6A /* MultiTargetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA460501E15EA4700511D6A /* MultiTargetSpec.swift */; };
+		3BA460541E15EB9200511D6A /* MultiTargetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA460501E15EA4700511D6A /* MultiTargetSpec.swift */; };
 		4ACBAFF102F6CE19E4A569DE /* Pods_DemoMultiTarget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F71370BEE9C086CDD6D71B8 /* Pods_DemoMultiTarget.framework */; };
 		5EC197E61A1BB16D00F4DFD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC197E51A1BB16D00F4DFD4 /* AppDelegate.swift */; };
 		5EC197E81A1BB16D00F4DFD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC197E71A1BB16D00F4DFD4 /* ViewController.swift */; };
@@ -113,6 +116,7 @@
 		1DC29BB01D36949C0041B1DC /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		286AAA5F0654F6F6A0CFF235 /* Pods_MoyaTests_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoyaTests_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		292BF354BC027FDF50F146C1 /* Pods-DemoMultiTarget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoMultiTarget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoMultiTarget/Pods-DemoMultiTarget.debug.xcconfig"; sourceTree = "<group>"; };
+		3BA460501E15EA4700511D6A /* MultiTargetSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTargetSpec.swift; sourceTree = "<group>"; };
 		4BF06D5D3DD24C44F9301FB5 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		5E0646561BE7999C00E900DC /* Moya.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = Moya.podspec; path = ../Moya.podspec; sourceTree = "<group>"; };
 		5E0646571BE799C500E900DC /* License.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = License.md; path = ../License.md; sourceTree = "<group>"; };
@@ -191,6 +195,7 @@
 				1D9CF9A61D4BD4A3004A95B7 /* MethodSpec.swift */,
 				067D496C1C0D3886005BBA79 /* MoyaProviderIntegrationTests.swift */,
 				067D496D1C0D3886005BBA79 /* MoyaProviderSpec.swift */,
+				3BA460501E15EA4700511D6A /* MultiTargetSpec.swift */,
 				067D496E1C0D3886005BBA79 /* NetworkLoggerPluginSpec.swift */,
 				067D496F1C0D3886005BBA79 /* Observable+MoyaSpec.swift */,
 				067D49711C0D3886005BBA79 /* ReactiveSwiftMoyaProviderTests.swift */,
@@ -769,6 +774,7 @@
 				067D49891C0D3886005BBA79 /* MoyaProviderSpec.swift in Sources */,
 				067D499E1C0D3886005BBA79 /* TestHelpers.swift in Sources */,
 				067D498F1C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */,
+				3BA460531E15EB9200511D6A /* MultiTargetSpec.swift in Sources */,
 				067D497A1C0D3886005BBA79 /* EndpointSpec.swift in Sources */,
 				067D499B1C0D3886005BBA79 /* SignalProducer+MoyaSpec.swift in Sources */,
 				1DC29BB31D3694B10041B1DC /* TestPlugin.swift in Sources */,
@@ -789,6 +795,7 @@
 				067D498A1C0D3886005BBA79 /* MoyaProviderSpec.swift in Sources */,
 				067D499F1C0D3886005BBA79 /* TestHelpers.swift in Sources */,
 				067D49901C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */,
+				3BA460541E15EB9200511D6A /* MultiTargetSpec.swift in Sources */,
 				067D497B1C0D3886005BBA79 /* EndpointSpec.swift in Sources */,
 				067D499C1C0D3886005BBA79 /* SignalProducer+MoyaSpec.swift in Sources */,
 				1DC29BB41D3694B20041B1DC /* TestPlugin.swift in Sources */,
@@ -833,6 +840,7 @@
 				067D49881C0D3886005BBA79 /* MoyaProviderSpec.swift in Sources */,
 				067D499D1C0D3886005BBA79 /* TestHelpers.swift in Sources */,
 				067D498E1C0D3886005BBA79 /* Observable+MoyaSpec.swift in Sources */,
+				3BA460521E15EB9100511D6A /* MultiTargetSpec.swift in Sources */,
 				067D49791C0D3886005BBA79 /* EndpointSpec.swift in Sources */,
 				067D499A1C0D3886005BBA79 /* SignalProducer+MoyaSpec.swift in Sources */,
 				1DC29BB21D3694B10041B1DC /* TestPlugin.swift in Sources */,
