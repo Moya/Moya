@@ -101,7 +101,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider<GitHub>(trackInflights: true)
             }
             
-            it("returns identical response for inflight requests") {
+            it("emits identical response for inflight requests") {
                 let target: GitHub = .zen
                 let signalProducer1:Observable<Moya.Response> = provider.request(target)
                 let signalProducer2:Observable<Moya.Response> = provider.request(target)
@@ -116,13 +116,13 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 })
                 
                 _ = signalProducer2.subscribe(onNext: { response in
-                    expect(receivedResponse).toNot( beNil() )
-                    expect(receivedResponse).to( beIdenticalToResponse(response) )
-                    expect(provider.inflightRequests.count).to( equal(1) )
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedResponse).to(beIdenticalToResponse(response))
+                    expect(provider.inflightRequests.count).to(equal(1))
                 })
                 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually( equal(0) )
+                expect(provider.inflightRequests.count).toEventually(equal(0))
             }
         }
     }
