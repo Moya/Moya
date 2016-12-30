@@ -601,6 +601,11 @@ class MoyaProviderSpec: QuickSpec {
                 expect(requestMethod) == .get
             }
 
+            it("uses correct task") {
+                let target = MultiTarget.target(StructAPI())
+                expect(String(describing: target.task)) == "request" // Hack to avoid implementing Equatable for Task
+            }
+
             it("uses correct sample data") {
                 var dataString: String?
                 let provider = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.immediatelyStub)
