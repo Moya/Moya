@@ -24,7 +24,7 @@ public final class NetworkActivityPlugin: PluginType {
     }
 
     /// Called by the provider as soon as a response arrives, even if the request is cancelled.
-    public func didReceive(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
+    public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         networkActivityClosure(.ended)
     }
 }

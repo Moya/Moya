@@ -31,7 +31,7 @@ public final class NetworkLoggerPlugin: PluginType {
         outputItems(logNetworkRequest(request.request as URLRequest?))
     }
 
-    public func didReceive(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
+    public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         if case .success(let response) = result {
             outputItems(logNetworkResponse(response.response, data: response.data, target: target))
         } else {

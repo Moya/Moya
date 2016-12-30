@@ -17,7 +17,7 @@ public extension MoyaProvider {
         if let urlRequest = endpoint.urlRequest {
             closure(.success(urlRequest))
         } else {
-            closure(.failure(Error.requestMapping(endpoint.url)))
+            closure(.failure(MoyaError.requestMapping(endpoint.url)))
         }
     }
 

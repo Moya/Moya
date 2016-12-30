@@ -49,7 +49,7 @@ public extension MoyaProvider {
             }
         }
 
-        let performNetworking = { (requestResult: Result<URLRequest, Moya.Error>) in
+        let performNetworking = { (requestResult: Result<URLRequest, MoyaError>) in
             if cancellableToken.isCancelled {
                 self.cancelCompletion(pluginsWithCompletion, target: target)
                 return
@@ -117,7 +117,7 @@ public extension MoyaProvider {
     // swiftlint:enable function_body_length
 
     func cancelCompletion(_ completion: Moya.Completion, target: Target) {
-        let error = Moya.Error.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
+        let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil))
         plugins.forEach { $0.didReceive(.failure(error), target: target) }
         completion(.failure(error))
     }
@@ -140,7 +140,7 @@ public extension MoyaProvider {
                 plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
             case .networkError(let error):
-                let error = Moya.Error.underlying(error)
+                let error = MoyaError.underlying(error)
                 plugins.forEach { $0.didReceive(.failure(error), target: target) }
                 completion(.failure(error))
             }
@@ -190,7 +190,7 @@ private extension MoyaProvider {
                 }
                 cancellable.innerCancellable = self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
             case .failure(let error):
-                completion(.failure(Moya.Error.underlying(error as NSError)))
+                completion(.failure(MoyaError.underlying(error as NSError)))
             }
         }
 

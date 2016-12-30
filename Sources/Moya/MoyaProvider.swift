@@ -2,7 +2,7 @@ import Foundation
 import Result
 
 /// Closure to be executed when a request has completed.
-public typealias Completion = (_ result: Result<Moya.Response, Moya.Error>) -> Void
+public typealias Completion = (_ result: Result<Moya.Response, MoyaError>) -> Void
 
 /// Closure to be executed when progress changes.
 public typealias ProgressBlock = (_ progress: ProgressResponse) -> Void
@@ -32,7 +32,7 @@ open class MoyaProvider<Target: TargetType> {
     public typealias EndpointClosure = (Target) -> Endpoint<Target>
 
     /// Closure that decides if and what request should be performed
-    public typealias RequestResultClosure = (Result<URLRequest, Moya.Error>) -> Void
+    public typealias RequestResultClosure = (Result<URLRequest, MoyaError>) -> Void
 
     /// Closure that resolves an `Endpoint` into a `RequestResult`.
     public typealias RequestClosure = (Endpoint<Target>, @escaping RequestResultClosure) -> Void
@@ -145,16 +145,16 @@ public extension MoyaProvider {
 }
 
 public func convertResponseToResult(_ response: HTTPURLResponse?, request: URLRequest?, data: Data?, error: Swift.Error?) ->
-    Result<Moya.Response, Moya.Error> {
+    Result<Moya.Response, MoyaError> {
     switch (response, data, error) {
     case let (.some(response), data, .none):
         let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
         return .success(response)
     case let (_, _, .some(error)):
-        let error = Moya.Error.underlying(error)
+        let error = MoyaError.underlying(error)
         return .failure(error)
     default:
-        let error = Moya.Error.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
+        let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
         return .failure(error)
     }
 }
