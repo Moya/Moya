@@ -1,5 +1,6 @@
 # Next
 
+- **Breaking Change** Renamed `Moya.Error` to `MoyaError`.
 - **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
 - **Breaking Change** `TargetType` now specifies its `ParameterEncoding`.
 - **Breaking Change** Removed unused `Moya.Error.data`.
