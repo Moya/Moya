@@ -65,15 +65,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
             
-            it("returns the correct error message") {
+            it("emits the correct error message") {
                 var receivedError: Moya.Error?
-                
-                waitUntil { done in
-                    _ = provider.request(.zen).subscribe(onError: { error in
-                        receivedError = error as? Moya.Error
-                        done()
-                    })
-                }
+
+                _ = provider.request(.zen).subscribe(onError: { error in
+                    receivedError = error as? Moya.Error
+                })
                 
                 switch receivedError {
                 case .some(.underlying(let error)):
