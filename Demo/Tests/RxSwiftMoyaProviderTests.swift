@@ -80,15 +80,15 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 }
             }
             
-            it("returns an error") {
+            it("emits an error") {
                 var errored = false
                 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onError: { error in
+                _ = provider.request(target).subscribe(onError: { _ in
                     errored = true
                 })
                 
-                expect(errored).to(beTruthy())
+                expect(errored).to(beTrue())
             }
         }
         
