@@ -523,12 +523,12 @@ class MoyaProviderSpec: QuickSpec {
 
         describe("struct targets") {
             struct StructAPI: TargetType {
-                var baseURL = URL(string: "http://example.com")!
-                var path = "/endpoint"
-                var method = Moya.Method.get
-                var parameters: [String: Any]? = ["key": "value"]
-                var task: Task = .request
-                var sampleData = "sample data".data(using: .utf8)!
+                let baseURL = URL(string: "http://example.com")!
+                let path = "/endpoint"
+                let method = Moya.Method.get
+                let parameters: [String: Any]? = ["key": "value"]
+                let task = Task.request
+                let sampleData = "sample data".data(using: .utf8)!
             }
 
             it("uses correct URL") {
