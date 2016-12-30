@@ -39,36 +39,6 @@ public extension TargetType {
     }
 }
 
-/// Represents an HTTP method.
-public typealias Method = Alamofire.HTTPMethod
-
-extension Method {
-    public var supportsMultipart: Bool {
-        switch self {
-        case .post,
-             .put,
-             .patch,
-             .connect:
-            return true
-        default:
-            return false
-        }
-    }
-}
-
-/// Controls stub responses are returned.
-public enum StubBehavior {
-
-    /// Never return  a response.
-    case never
-
-    /// Return a response immediately.
-    case immediate
-
-    /// Return a response after a delay.
-    case delayed(seconds: TimeInterval)
-}
-
 /// Represents a type of upload task.
 public enum UploadType {
 
@@ -97,35 +67,4 @@ public enum Task {
 
     /// A download task.
     case download(DownloadType)
-}
-
-/// Represents "multipart/form-data" for an upload.
-public struct MultipartFormData {
-
-    /// Method to provide the form data.
-    public enum FormDataProvider {
-        case data(Foundation.Data)
-        case file(URL)
-        case stream(InputStream, UInt64)
-    }
-
-    /// Initialize a new `MultipartFormData`.
-    public init(provider: FormDataProvider, name: String, fileName: String? = nil, mimeType: String? = nil) {
-        self.provider = provider
-        self.name = name
-        self.fileName = fileName
-        self.mimeType = mimeType
-    }
-
-    /// The method being used for providing form data.
-    public let provider: FormDataProvider
-
-    /// The name.
-    public let name: String
-
-    /// The file name.
-    public let fileName: String?
-
-    /// The MIME type
-    public let mimeType: String?
 }

@@ -1,6 +1,21 @@
 import Foundation
 import Result
 
+// MARK: - Method
+
+extension Method {
+    public var supportsMultipart: Bool {
+        switch self {
+        case .post, .put, .patch, .connect:
+            return true
+        case .get, .delete, .head, .options, .trace:
+            return false
+        }
+    }
+}
+
+// MARK: - MoyaProvider
+
 /// Internal extension to keep the inner-workings outside the main Moya.swift file.
 public extension MoyaProvider {
     // Yup, we're disabling these. The function is complicated, but breaking it apart requires a large effort.
@@ -249,7 +264,7 @@ private extension MoyaProvider {
     }
 }
 
-// MARK: - RequestMultipartFormData appending
+// MARK: RequestMultipartFormData appending
 
 private extension MoyaProvider {
     func append(data: Data, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
