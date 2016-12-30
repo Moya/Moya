@@ -64,7 +64,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs the response data") {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: URLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-            let result: Result<Moya.Response, Moya.Error> = .success(response)
+            let result: Result<Moya.Response, MoyaError> = .success(response)
 
             plugin.didReceive(result, target: GitHub.zen)
 
@@ -75,7 +75,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs the formatted response data") {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: URLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-            let result: Result<Moya.Response, Moya.Error> = .success(response)
+            let result: Result<Moya.Response, MoyaError> = .success(response)
 
             pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
 
@@ -86,7 +86,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs an empty response message") {
             let emptyResponseError = AFError.responseSerializationFailed(reason: .inputDataNil)
-            let result: Result<Moya.Response, Moya.Error> = .failure(.underlying(emptyResponseError))
+            let result: Result<Moya.Response, MoyaError> = .failure(.underlying(emptyResponseError))
 
             plugin.didReceive(result, target: GitHub.zen)
 

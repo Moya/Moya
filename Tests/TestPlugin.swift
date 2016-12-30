@@ -4,7 +4,7 @@ import Alamofire
 
 final class TestingPlugin: PluginType {
     var request: (RequestType, TargetType)?
-    var result: Result<Moya.Response, Moya.Error>?
+    var result: Result<Moya.Response, MoyaError>?
     var didPrepare = false
 
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
@@ -21,11 +21,11 @@ final class TestingPlugin: PluginType {
         didPrepare = request.request?.allHTTPHeaderFields?["prepared"] == "yes"
     }
 
-    func didReceive(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
+    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         self.result = result
     }
 
-    func process(_ result: Result<Response, Moya.Error>, target: TargetType) -> Result<Response, Moya.Error> {
+    func process(_ result: Result<Response, MoyaError>, target: TargetType) -> Result<Response, MoyaError> {
         var result = result
 
         if case .success(let response) = result {
