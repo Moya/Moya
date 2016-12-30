@@ -18,7 +18,7 @@ final class RequestAlertPlugin: PluginType {
 
     }
 
-    func didReceive(result: Result<Response, Error>, target: TargetType) {
+    func didReceive(result: Result<Response, MoyaError>, target: TargetType) {
 
     }
 }
@@ -44,7 +44,7 @@ func willSend(request: RequestType, target: TargetType) {
 Finally, let's implement `didReceive` to show an alert if the result was a failure
 
 ```swift
-func didReceive(result: Result<Response, Error>, target: TargetType) {
+func didReceive(result: Result<Response, MoyaError>, target: TargetType) {
 
     //only continue if result is a failure
     guard case Result.failure(_) = result else { return }
