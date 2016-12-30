@@ -22,8 +22,8 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Source/*.swift", "Source/Plugins/*swift"
-    ss.dependency "Alamofire", "~> 4.0"
-    ss.dependency "Result", "~> 3.0"
+    ss.dependency "Alamofire", "~> 4.2.0"
+    ss.dependency "Result", "~> 3.1.0"
     ss.framework  = "Foundation"
   end
 
@@ -34,12 +34,12 @@ Pod::Spec.new do |s|
   s.subspec "ReactiveSwift" do |ss|
     ss.source_files = "Source/ReactiveSwift/*.swift"
     ss.dependency "Moya/Core"
-    ss.dependency "ReactiveSwift", "1.0.0-alpha.4"
+    ss.dependency "ReactiveSwift", "1.0.0-rc.3"
   end
 
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Source/RxSwift/*.swift"
     ss.dependency "Moya/Core"
-    ss.dependency "RxSwift", "~> 3.0"
+    ss.dependency "RxSwift", "~> 3.0.1"
   end
 end
