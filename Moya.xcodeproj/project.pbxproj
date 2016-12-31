@@ -52,10 +52,10 @@
 		0676A6871BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E41BFE80D3001C7F55 /* RxMoyaProvider.swift */; };
 		0676A68A1BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E41BFE80D3001C7F55 /* RxMoyaProvider.swift */; };
 		0676A68D1BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E41BFE80D3001C7F55 /* RxMoyaProvider.swift */; };
-		0676A6901BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
-		0676A6931BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
-		0676A6961BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
-		0676A6991BFE80D3001C7F55 /* Observable+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */; };
+		0676A6901BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
+		0676A6931BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
+		0676A6961BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
+		0676A6991BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
 		091F0D6C1BDE9B0C009D0A49 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */; };
 		3BC0F9831E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
 		3BC0F9841E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
@@ -146,7 +146,7 @@
 		0676A5DC1BFE80D3001C7F55 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		0676A5E11BFE80D3001C7F55 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		0676A5E41BFE80D3001C7F55 /* RxMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxMoyaProvider.swift; sourceTree = "<group>"; };
-		0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Moya.swift"; sourceTree = "<group>"; };
+		0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Response.swift"; sourceTree = "<group>"; };
 		091F0D341BDE998F009D0A49 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D441BDE9A01009D0A49 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D6B1BDE9B0C009D0A49 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				0676A5E41BFE80D3001C7F55 /* RxMoyaProvider.swift */,
-				0676A5E51BFE80D3001C7F55 /* Observable+Moya.swift */,
+				0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */,
 			);
 			path = RxSwift;
 			sourceTree = "<group>";
@@ -912,7 +912,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A6871BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */,
-				0676A6931BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				0676A6931BFE80D3001C7F55 /* Observable+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -953,7 +953,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A6841BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */,
-				0676A6901BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				0676A6901BFE80D3001C7F55 /* Observable+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,7 +994,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A68A1BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */,
-				0676A6961BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				0676A6961BFE80D3001C7F55 /* Observable+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,7 +1035,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0676A68D1BFE80D3001C7F55 /* RxMoyaProvider.swift in Sources */,
-				0676A6991BFE80D3001C7F55 /* Observable+Moya.swift in Sources */,
+				0676A6991BFE80D3001C7F55 /* Observable+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
