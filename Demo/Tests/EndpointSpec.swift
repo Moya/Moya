@@ -115,6 +115,7 @@ extension Empty: TargetType {
     var path: String { return "" }
     var method: Moya.Method { return .get }
     var parameters: [String: Any]? { return nil }
+    var parameterEncoding: ParameterEncoding { return URLEncoding.default }
     var task: Task { return .request }
     var sampleData: Data { return Data() }
 }

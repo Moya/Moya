@@ -527,6 +527,7 @@ class MoyaProviderSpec: QuickSpec {
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let parameters: [String: Any]? = ["key": "value"]
+                let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
             }
