@@ -1,7 +1,7 @@
 # Next
 
 - **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
-- `TargetType` can specify its `ParameterEncoding`. The Default is `URLEncoding`.
+- **Breaking Change** `TargetType` now specifies its `ParameterEncoding`.
 - Added documentation for `TargetType` and associated data structures.
 - Re-add `MultiTarget` to project.
 

@@ -79,6 +79,10 @@ enum HTTPBin: TargetType {
             return [:]
         }
     }
+
+    var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
     
     var task: Task {
         return .request
@@ -115,6 +119,9 @@ extension GitHubUserContent: TargetType {
         case .downloadMoyaWebContent:
             return nil
         }
+    }
+    public var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
     }
     public var task: Task {
         switch self {
