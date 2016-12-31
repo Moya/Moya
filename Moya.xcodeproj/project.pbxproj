@@ -83,14 +83,14 @@
 		468C5C061D9B357E008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FF1D908CC2000E5149 /* ReactiveSwift.framework */; };
 		468C5C071D9B3585008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC37FD1D908CB7000E5149 /* ReactiveSwift.framework */; };
 		468C5C081D9B358A008093BA /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0EC38031D908CD5000E5149 /* ReactiveSwift.framework */; };
-		492F83C51DED981400C79972 /* Moya+ReactiveSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* Moya+ReactiveSwift.swift */; };
-		492F83C61DED981600C79972 /* Moya+ReactiveSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* Moya+ReactiveSwift.swift */; };
-		492F83C71DED981700C79972 /* Moya+ReactiveSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* Moya+ReactiveSwift.swift */; };
-		492F83C81DED981800C79972 /* Moya+ReactiveSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* Moya+ReactiveSwift.swift */; };
-		492F83C91DED981E00C79972 /* SignalProducer+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Moya.swift */; };
-		492F83CA1DED981F00C79972 /* SignalProducer+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Moya.swift */; };
-		492F83CB1DED982000C79972 /* SignalProducer+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Moya.swift */; };
-		492F83CC1DED982000C79972 /* SignalProducer+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Moya.swift */; };
+		492F83C51DED981400C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */; };
+		492F83C61DED981600C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */; };
+		492F83C71DED981700C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */; };
+		492F83C81DED981800C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */; };
+		492F83C91DED981E00C79972 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Response.swift */; };
+		492F83CA1DED981F00C79972 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Response.swift */; };
+		492F83CB1DED982000C79972 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Response.swift */; };
+		492F83CC1DED982000C79972 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492F83C01DED97F100C79972 /* SignalProducer+Response.swift */; };
 		554B100F1BE7EEA500F3D266 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3021BE1C60200AD4789 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10101BE7EEAD00F3D266 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3031BE1C60200AD4789 /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554B10111BE7EEB000F3D266 /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 0630A3041BE1C60200AD4789 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -153,8 +153,8 @@
 		091F0D831BDE9D4D009D0A49 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BC0F9821E15AF2400F4406F /* MultiTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
-		492F83BF1DED97F100C79972 /* Moya+ReactiveSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Moya+ReactiveSwift.swift"; path = "Source/ReactiveSwift/Moya+ReactiveSwift.swift"; sourceTree = SOURCE_ROOT; };
-		492F83C01DED97F100C79972 /* SignalProducer+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SignalProducer+Moya.swift"; path = "Source/ReactiveSwift/SignalProducer+Moya.swift"; sourceTree = SOURCE_ROOT; };
+		492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactiveSwiftMoyaProvider.swift; path = Source/ReactiveSwift/ReactiveSwiftMoyaProvider.swift; sourceTree = SOURCE_ROOT; };
+		492F83C01DED97F100C79972 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SignalProducer+Response.swift"; path = "Source/ReactiveSwift/SignalProducer+Response.swift"; sourceTree = SOURCE_ROOT; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FD31BE7ED8700F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,8 +339,8 @@
 		0676A5DD1BFE80D3001C7F55 /* ReactiveSwift */ = {
 			isa = PBXGroup;
 			children = (
-				492F83BF1DED97F100C79972 /* Moya+ReactiveSwift.swift */,
-				492F83C01DED97F100C79972 /* SignalProducer+Moya.swift */,
+				492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */,
+				492F83C01DED97F100C79972 /* SignalProducer+Response.swift */,
 			);
 			name = ReactiveSwift;
 			path = ReactiveCocoa;
@@ -902,8 +902,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492F83C61DED981600C79972 /* Moya+ReactiveSwift.swift in Sources */,
-				492F83CA1DED981F00C79972 /* SignalProducer+Moya.swift in Sources */,
+				492F83C61DED981600C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
+				492F83CA1DED981F00C79972 /* SignalProducer+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,8 +943,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492F83C51DED981400C79972 /* Moya+ReactiveSwift.swift in Sources */,
-				492F83C91DED981E00C79972 /* SignalProducer+Moya.swift in Sources */,
+				492F83C51DED981400C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
+				492F83C91DED981E00C79972 /* SignalProducer+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -984,8 +984,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492F83C71DED981700C79972 /* Moya+ReactiveSwift.swift in Sources */,
-				492F83CB1DED982000C79972 /* SignalProducer+Moya.swift in Sources */,
+				492F83C71DED981700C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
+				492F83CB1DED982000C79972 /* SignalProducer+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1025,8 +1025,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492F83C81DED981800C79972 /* Moya+ReactiveSwift.swift in Sources */,
-				492F83CC1DED982000C79972 /* SignalProducer+Moya.swift in Sources */,
+				492F83C81DED981800C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
+				492F83CC1DED982000C79972 /* SignalProducer+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
