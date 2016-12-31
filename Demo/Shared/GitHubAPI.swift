@@ -41,9 +41,6 @@ extension GitHub: TargetType {
             return "/users/\(name.urlEscaped)/repos"
         }
     }
-    public var method: Moya.Method {
-        return .get
-    }
     public var parameters: [String: Any]? {
         switch self {
         case .userRepositories(_):
@@ -51,12 +48,6 @@ extension GitHub: TargetType {
         default:
             return nil
         }
-    }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-    public var task: Task {
-        return .request
     }
     public var validate: Bool {
         switch self {
