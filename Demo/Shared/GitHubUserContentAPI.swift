@@ -27,6 +27,9 @@ extension GitHubUserContent: TargetType {
             return nil
         }
     }
+    public var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
