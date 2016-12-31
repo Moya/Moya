@@ -16,7 +16,7 @@ public protocol TargetType {
     /// The parameters to be incoded in the request.
     var parameters: [String: Any]? { get }
 
-    /// The method used for parameter encoding. Defaults to `URLEncoding`.
+    /// The method used for parameter encoding.
     var parameterEncoding: ParameterEncoding { get }
 
     /// Provides stub data for use in testing.
@@ -30,10 +30,6 @@ public protocol TargetType {
 }
 
 public extension TargetType {
-    var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-
     var validate: Bool {
         return false
     }
