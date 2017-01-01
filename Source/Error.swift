@@ -31,7 +31,7 @@ extension Moya.Error: LocalizedError {
         case .imageMapping:
             return "Failed to map data to an Image."
         case .jsonMapping:
-            return "Failed to map data to a JSON."
+            return "Failed to map data to JSON."
         case .stringMapping:
             return "Failed to map data to a String."
         case .statusCode:
