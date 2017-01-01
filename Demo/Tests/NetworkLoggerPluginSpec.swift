@@ -83,7 +83,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to( contain("formatted body") )
         }
 
-        it("outputs an empty reponse message") {
+        it("outputs an empty response message") {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: nil)
             let result: Result<Moya.Response, Moya.Error> = .failure(Moya.Error.data(response))
 
