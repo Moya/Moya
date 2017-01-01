@@ -37,13 +37,6 @@ public func beOfSameErrorType(_ expectedValue: Moya.Error) -> MatcherFunc<Moya.E
                 default:
                     return false
                 }
-            case .data:
-                switch expectedValue {
-                case .data:
-                    return true
-                default:
-                    return false
-                }
             case .underlying:
                 switch expectedValue {
                 case .underlying:
