@@ -21,8 +21,7 @@ DerivedData
 # AppCode
 .idea/
 
-Carthage/Build
-Carthage/Checkouts
+Carthage
 
 Demo/Pods
 .ruby-version

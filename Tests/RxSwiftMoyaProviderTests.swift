@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import Moya
 import RxSwift
+import RxMoya
 import Alamofire
 import OHHTTPStubs
 
