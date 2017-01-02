@@ -16,34 +16,43 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider(stubClosure: MoyaProvider.immediatelyStub)
             }
             
-            it("returns a Response object") {
+            it("emits a Response object") {
                 var called = false
                 
-                _ = provider.request(.zen).subscribe(onNext: { object in
+                _ = provider.request(.zen).subscribe(onNext: { _ in
                     called = true
                 })
                 
-                expect(called).to(beTruthy())
+                expect(called).to(beTrue())
             }
-            
-            it("returns stubbed data for zen request") {
-                var message: String?
+
+            it("emits complete") {
+                var complete = false
+
+                _ = provider.request(.zen).subscribe(onCompleted: { _ in
+                    complete = true
+                })
+
+                expect(complete).to(beTrue())
+            }
+
+            it("emits stubbed data for zen request") {
+                var responseData: Data?
                 
                 let target: GitHub = .zen
                 _ = provider.request(target).subscribe(onNext: { response in
-                    message = String(data: response.data, encoding: .utf8)
+                    responseData = response.data
                 })
-                
-                let sampleString = String(data: target.sampleData, encoding: .utf8)
-                expect(message).to(equal(sampleString))
+
+                expect(responseData).to(equal(target.sampleData))
             }
             
-            it("returns correct data for user profile request") {
-                var receivedResponse: NSDictionary?
+            it("maps JSON data correctly for user profile request") {
+                var receivedResponse: [String: Any]?
                 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.request(target).subscribe(onNext: { response in
-                    receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
+                _ = provider.request(target).mapJSON().subscribe(onNext: { response in
+                    receivedResponse = response as? [String: Any]
                 })
                 
                 expect(receivedResponse).toNot(beNil())
@@ -56,15 +65,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
             
-            it("returns the correct error message") {
+            it("emits the correct error message") {
                 var receivedError: Moya.Error?
-                
-                waitUntil { done in
-                    _ = provider.request(.zen).subscribe(onError: { error in
-                        receivedError = error as? Moya.Error
-                        done()
-                    })
-                }
+
+                _ = provider.request(.zen).subscribe(onError: { error in
+                    receivedError = error as? Moya.Error
+                })
                 
                 switch receivedError {
                 case .some(.underlying(let error)):
@@ -74,15 +80,15 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 }
             }
             
-            it("returns an error") {
+            it("emits an error") {
                 var errored = false
                 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onError: { error in
+                _ = provider.request(target).subscribe(onError: { _ in
                     errored = true
                 })
                 
-                expect(errored).to(beTruthy())
+                expect(errored).to(beTrue())
             }
         }
         
@@ -95,7 +101,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 provider = RxMoyaProvider<GitHub>(trackInflights: true)
             }
             
-            it("returns identical response for inflight requests") {
+            it("emits identical response for inflight requests") {
                 let target: GitHub = .zen
                 let signalProducer1:Observable<Moya.Response> = provider.request(target)
                 let signalProducer2:Observable<Moya.Response> = provider.request(target)
@@ -110,13 +116,13 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 })
                 
                 _ = signalProducer2.subscribe(onNext: { response in
-                    expect(receivedResponse).toNot( beNil() )
-                    expect(receivedResponse).to( beIdenticalToResponse(response) )
-                    expect(provider.inflightRequests.count).to( equal(1) )
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedResponse).to(beIdenticalToResponse(response))
+                    expect(provider.inflightRequests.count).to(equal(1))
                 })
                 
                 // Allow for network request to complete
-                expect(provider.inflightRequests.count).toEventually( equal(0) )
+                expect(provider.inflightRequests.count).toEventually(equal(0))
             }
         }
     }
