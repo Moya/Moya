@@ -1,3 +1,6 @@
 github "Alamofire/Alamofire" ~> 4.2.0
 github "ReactiveCocoa/ReactiveSwift" "1.0.0-rc.3"
 github "ReactiveX/RxSwift" ~> 3.0.1
+github "Quick/Quick"
+github "Quick/Nimble"
+github "AliSoftware/OHHTTPStubs" "swift-3.0"
