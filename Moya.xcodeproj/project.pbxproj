@@ -165,6 +165,12 @@
 		463CF3731E1A122400824884 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3701E1A122400824884 /* Nimble.framework */; };
 		463CF3741E1A122400824884 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3711E1A122400824884 /* OHHTTPStubs.framework */; };
 		463CF3751E1A122400824884 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3721E1A122400824884 /* Quick.framework */; };
+		463CF3761E1A1B1D00824884 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D441BDE9A01009D0A49 /* ReactiveMoya.framework */; };
+		463CF3771E1A1B2100824884 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D831BDE9D4D009D0A49 /* RxMoya.framework */; };
+		463CF3781E1A1B2800824884 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3291BE1C85000AD4789 /* ReactiveMoya.framework */; };
+		463CF3791E1A1B2B00824884 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3341BE1C85B00AD4789 /* RxMoya.framework */; };
+		463CF37A1E1A1B3200824884 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */; };
+		463CF37B1E1A1B3500824884 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FD31BE7ED8700F3D266 /* RxMoya.framework */; };
 		465D2C531D457B2A0059D1B6 /* MoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* MoyaProvider.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* MoyaProvider+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* MoyaProvider+Internal.swift */; };
@@ -385,11 +391,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463CF37B1E1A1B3500824884 /* RxMoya.framework in Frameworks */,
 				463CF2791E1A05C300824884 /* Moya.framework in Frameworks */,
 				463CF3691E1A121200824884 /* Nimble.framework in Frameworks */,
 				463CF36A1E1A121200824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF36B1E1A121200824884 /* Quick.framework in Frameworks */,
 				463CF3621E1A121200824884 /* Alamofire.framework in Frameworks */,
+				463CF37A1E1A1B3200824884 /* ReactiveMoya.framework in Frameworks */,
 				463CF3631E1A121200824884 /* ReactiveSwift.framework in Frameworks */,
 				463CF3641E1A121200824884 /* Result.framework in Frameworks */,
 				463CF3651E1A121200824884 /* RxSwift.framework in Frameworks */,
@@ -400,11 +408,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463CF3771E1A1B2100824884 /* RxMoya.framework in Frameworks */,
 				463CF2881E1A05D200824884 /* Moya.framework in Frameworks */,
 				463CF35F1E1A120300824884 /* Nimble.framework in Frameworks */,
 				463CF3601E1A120300824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF3611E1A120300824884 /* Quick.framework in Frameworks */,
 				463CF3581E1A120300824884 /* Alamofire.framework in Frameworks */,
+				463CF3761E1A1B1D00824884 /* ReactiveMoya.framework in Frameworks */,
 				463CF3591E1A120300824884 /* ReactiveSwift.framework in Frameworks */,
 				463CF35A1E1A120300824884 /* Result.framework in Frameworks */,
 				463CF35B1E1A120300824884 /* RxSwift.framework in Frameworks */,
@@ -415,11 +425,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463CF3791E1A1B2B00824884 /* RxMoya.framework in Frameworks */,
 				463CF2971E1A05E100824884 /* Moya.framework in Frameworks */,
 				463CF3731E1A122400824884 /* Nimble.framework in Frameworks */,
 				463CF3741E1A122400824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF3751E1A122400824884 /* Quick.framework in Frameworks */,
 				463CF36C1E1A122300824884 /* Alamofire.framework in Frameworks */,
+				463CF3781E1A1B2800824884 /* ReactiveMoya.framework in Frameworks */,
 				463CF36D1E1A122300824884 /* ReactiveSwift.framework in Frameworks */,
 				463CF36E1E1A122300824884 /* Result.framework in Frameworks */,
 				463CF36F1E1A122300824884 /* RxSwift.framework in Frameworks */,
@@ -2080,7 +2092,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "MoyaTests-tvOS/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.MoyaTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2102,7 +2114,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "MoyaTests-tvOS/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.MoyaTests-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2166,7 +2178,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "MoyaTests-macOS/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.MoyaTests-macOS";
@@ -2190,7 +2202,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
-				INFOPLIST_FILE = "MoyaTests-macOS/Info.plist";
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.MoyaTests-macOS";

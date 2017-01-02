@@ -1,9 +1,11 @@
 import Quick
 import Nimble
-import Moya
 import RxSwift
 import Alamofire
 import OHHTTPStubs
+
+@testable import Moya
+@testable import RxMoya
 
 class RxSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
