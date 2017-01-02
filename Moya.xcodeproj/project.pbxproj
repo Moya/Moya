@@ -140,6 +140,10 @@
 		463CF34D1E1A0C0C00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF34B1E1A0C0C00824884 /* Result.framework */; };
 		463CF34F1E1A0C1200824884 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF34E1E1A0C1200824884 /* ReactiveSwift.framework */; };
 		463CF3511E1A0C1600824884 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3501E1A0C1600824884 /* RxSwift.framework */; };
+		463CF3521E1A0CCA00824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; };
+		463CF3531E1A0CCA00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; };
+		463CF3541E1A0CCB00824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; };
+		463CF3551E1A0CCB00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; };
 		465D2C531D457B2A0059D1B6 /* MoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D71BFE80D3001C7F55 /* MoyaProvider.swift */; };
 		465D2C541D457B320059D1B6 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5D81BFE80D3001C7F55 /* Plugin.swift */; };
 		465D2C561D457B680059D1B6 /* MoyaProvider+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5FA8C61D4462F300ED49AF /* MoyaProvider+Internal.swift */; };
@@ -375,7 +379,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463CF3531E1A0CCA00824884 /* Result.framework in Frameworks */,
 				463CF3291E1A088600824884 /* Moya.framework in Frameworks */,
+				463CF3521E1A0CCA00824884 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +389,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463CF3551E1A0CCB00824884 /* Result.framework in Frameworks */,
 				463CF32A1E1A088800824884 /* Moya.framework in Frameworks */,
+				463CF3541E1A0CCB00824884 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,10 +655,10 @@
 				463CF33E1E1A0BE200824884 /* ReactiveSwift.framework */,
 				463CF33A1E1A0BDD00824884 /* Alamofire.framework */,
 				463CF33B1E1A0BDE00824884 /* Result.framework */,
+				463CF3331E1A0B7C00824884 /* RxSwift.framework */,
 				463CF3371E1A0BB700824884 /* ReactiveSwift.framework */,
 				463CF3311E1A0B7C00824884 /* Alamofire.framework */,
 				463CF3321E1A0B7C00824884 /* Result.framework */,
-				463CF3331E1A0B7C00824884 /* RxSwift.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -914,6 +922,7 @@
 				463CF2DE1E1A068000824884 /* Sources */,
 				463CF2DF1E1A068000824884 /* Frameworks */,
 				463CF2E01E1A068000824884 /* Resources */,
+				463CF3561E1A0D1500824884 /* Copy Carthage Frameworks */,
 			);
 			buildRules = (
 			);
@@ -931,6 +940,7 @@
 				463CF2F41E1A069100824884 /* Sources */,
 				463CF2F51E1A069100824884 /* Frameworks */,
 				463CF2F61E1A069100824884 /* Resources */,
+				463CF3571E1A0D4B00824884 /* Copy Carthage Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1269,6 +1279,41 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		463CF3561E1A0D1500824884 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			name = "Copy Carthage Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		463CF3571E1A0D4B00824884 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+			);
+			name = "Copy Carthage Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0630A3131BE1C84500AD4789 /* Sources */ = {
@@ -2082,6 +2127,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2103,6 +2149,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2123,6 +2170,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2144,6 +2192,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
