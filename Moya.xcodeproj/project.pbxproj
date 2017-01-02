@@ -940,6 +940,7 @@
 				463CF2701E1A05C300824884 /* Sources */,
 				463CF2711E1A05C300824884 /* Frameworks */,
 				463CF2721E1A05C300824884 /* Resources */,
+				463CF37D1E1A1D9600824884 /* Carthage Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -958,6 +959,7 @@
 				463CF27F1E1A05D200824884 /* Sources */,
 				463CF2801E1A05D200824884 /* Frameworks */,
 				463CF2811E1A05D200824884 /* Resources */,
+				463CF37C1E1A1D3200824884 /* Carthage Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -976,6 +978,7 @@
 				463CF28E1E1A05E100824884 /* Sources */,
 				463CF28F1E1A05E100824884 /* Frameworks */,
 				463CF2901E1A05E100824884 /* Resources */,
+				463CF37E1E1A1DEB00824884 /* Carthage Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1379,6 +1382,69 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			name = "Copy Carthage Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		463CF37C1E1A1D3200824884 /* Carthage Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+			);
+			name = "Carthage Copy Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		463CF37D1E1A1D9600824884 /* Carthage Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/tvOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
+			);
+			name = "Carthage Copy Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		463CF37E1E1A1DEB00824884 /* Carthage Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/Mac/Result.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/OHHTTPStubs.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Quick.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/Nimble.framework",
+			);
+			name = "Carthage Copy Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
