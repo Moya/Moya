@@ -2,6 +2,7 @@ import Quick
 import Nimble
 import Moya
 import Result
+import enum Alamofire.AFError
 
 final class NetworkLoggerPluginSpec: QuickSpec {
     override func spec() {
@@ -83,9 +84,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to( contain("formatted body") )
         }
 
-        it("outputs an empty reponse message") {
-            let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: nil)
-            let result: Result<Moya.Response, Moya.Error> = .failure(Moya.Error.data(response))
+        it("outputs an empty response message") {
+            let emptyResponseError = AFError.responseSerializationFailed(reason: .inputDataNil)
+            let result: Result<Moya.Response, Moya.Error> = .failure(.underlying(emptyResponseError))
 
             plugin.didReceive(result, target: GitHub.zen)
 

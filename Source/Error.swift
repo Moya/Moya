@@ -5,7 +5,6 @@ public enum Error: Swift.Error {
     case jsonMapping(Response)
     case stringMapping(Response)
     case statusCode(Response)
-    case data(Response)
     case underlying(Swift.Error)
     case requestMapping(String)
 }
@@ -18,9 +17,29 @@ public extension Moya.Error {
         case .jsonMapping(let response): return response
         case .stringMapping(let response): return response
         case .statusCode(let response): return response
-        case .data(let response): return response
         case .underlying: return nil
         case .requestMapping: return nil
+        }
+    }
+}
+
+// MARK: - Error Descriptions
+
+extension Moya.Error: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .imageMapping:
+            return "Failed to map data to an Image."
+        case .jsonMapping:
+            return "Failed to map data to JSON."
+        case .stringMapping:
+            return "Failed to map data to a String."
+        case .statusCode:
+            return "Status code didn't fall within the given range."
+        case .requestMapping:
+            return "Failed to map Endpoint to a URLRequest."
+        case .underlying(let error):
+            return error.localizedDescription
         }
     }
 }
