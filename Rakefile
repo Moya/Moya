@@ -78,7 +78,7 @@ def xcodebuild(tasks, platform, xcprety_args: '')
 end
 
 def xcodebuild_demo(tasks, xcprety_args: '')
-  platform = 'ios'
+  platform = :ios
   sdk = sdks[platform]
   destination = devices[platform]
   demo_workspace = 'Demo.xcworkspace'
@@ -97,7 +97,7 @@ end
 
 desc 'Build the Demo app.'
 task :build_demo do
-  xcodebuild_demo 'build', :ios
+  xcodebuild_demo 'build'
 end
 
 desc 'Clean build directory.'
