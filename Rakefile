@@ -30,11 +30,11 @@ def targets
   ]
 end
 
-def test_schemes
+def schemes
   return {
-    ios: 'MoyaTests iOS',
-    macos: 'MoyaTests OSX',
-    tvos: 'MoyaTests tvOS'
+    ios: 'Moya iOS',
+    macos: 'Moya OSX',
+    tvos: 'Moya tvOS'
   }
 end
 
@@ -70,7 +70,7 @@ end
 
 def xcodebuild(tasks, platform, xcprety_args: '')
   sdk = sdks[platform]
-  scheme = test_schemes[platform]
+  scheme = schemes[platform]
   destination = devices[platform]
 
   open_simulator_and_sleep(uuids[platform])
