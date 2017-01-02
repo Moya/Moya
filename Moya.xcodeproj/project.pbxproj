@@ -55,6 +55,27 @@
 		3BCBBDCC1E15A52C00F53224 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */; };
 		3BCBBDCD1E15A53600F53224 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */; };
 		3BCBBDCE1E15A53800F53224 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */; };
+		3BE5C7B21E1A345C003C9B91 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7B31E1A345C003C9B91 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7B41E1A345C003C9B91 /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3371E1A0BB700824884 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7B51E1A345C003C9B91 /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3331E1A0B7C00824884 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7B61E1A345C003C9B91 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF35C1E1A120300824884 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7B71E1A345C003C9B91 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF35D1E1A120300824884 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7B81E1A345C003C9B91 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF35E1E1A120300824884 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7BA1E1A3474003C9B91 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3431E1A0BF900824884 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7BB1E1A3474003C9B91 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3421E1A0BF900824884 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7BC1E1A3474003C9B91 /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3461E1A0BFE00824884 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7BD1E1A3474003C9B91 /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3481E1A0C0400824884 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7BE1E1A3474003C9B91 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3661E1A121200824884 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7BF1E1A3474003C9B91 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3671E1A121200824884 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C01E1A3474003C9B91 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3681E1A121200824884 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C21E1A3486003C9B91 /* Result.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF33B1E1A0BDE00824884 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C31E1A3486003C9B91 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF33A1E1A0BDD00824884 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C41E1A3486003C9B91 /* ReactiveSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF33E1E1A0BE200824884 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C51E1A3486003C9B91 /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3401E1A0BE800824884 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C61E1A3486003C9B91 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3701E1A122400824884 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C71E1A3486003C9B91 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3711E1A122400824884 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3BE5C7C81E1A3486003C9B91 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 463CF3721E1A122400824884 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		463CF2791E1A05C300824884 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554B0FB91BE7ED4D00F3D266 /* Moya.framework */; };
 		463CF2881E1A05D200824884 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
 		463CF2971E1A05E100824884 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0630A3181BE1C84500AD4789 /* Moya.framework */; };
@@ -106,24 +127,6 @@
 		463CF2DA1E1A062600824884 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 463CF2AC1E1A062600824884 /* testImage.png */; };
 		463CF2DB1E1A062600824884 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 463CF2AC1E1A062600824884 /* testImage.png */; };
 		463CF2DC1E1A062600824884 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 463CF2AC1E1A062600824884 /* testImage.png */; };
-		463CF3151E1A06CA00824884 /* GiphyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF30C1E1A06CA00824884 /* GiphyAPI.swift */; };
-		463CF3161E1A06CA00824884 /* GiphyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF30C1E1A06CA00824884 /* GiphyAPI.swift */; };
-		463CF3171E1A06CA00824884 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF30D1E1A06CA00824884 /* GitHubAPI.swift */; };
-		463CF3181E1A06CA00824884 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF30D1E1A06CA00824884 /* GitHubAPI.swift */; };
-		463CF3191E1A06CA00824884 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF30E1E1A06CA00824884 /* GitHubUserContentAPI.swift */; };
-		463CF31A1E1A06CA00824884 /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF30E1E1A06CA00824884 /* GitHubUserContentAPI.swift */; };
-		463CF31B1E1A06CA00824884 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 463CF30F1E1A06CA00824884 /* Images.xcassets */; };
-		463CF31C1E1A06CA00824884 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 463CF30F1E1A06CA00824884 /* Images.xcassets */; };
-		463CF31D1E1A06CA00824884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463CF3111E1A06CA00824884 /* LaunchScreen.storyboard */; };
-		463CF31E1E1A06CA00824884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463CF3111E1A06CA00824884 /* LaunchScreen.storyboard */; };
-		463CF31F1E1A06CA00824884 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463CF3131E1A06CA00824884 /* Main.storyboard */; };
-		463CF3201E1A06CA00824884 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 463CF3131E1A06CA00824884 /* Main.storyboard */; };
-		463CF3231E1A06D800824884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF3211E1A06D800824884 /* AppDelegate.swift */; };
-		463CF3241E1A06D800824884 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF3221E1A06D800824884 /* ViewController.swift */; };
-		463CF3271E1A06DE00824884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF3251E1A06DE00824884 /* AppDelegate.swift */; };
-		463CF3281E1A06DE00824884 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CF3261E1A06DE00824884 /* ViewController.swift */; };
-		463CF3291E1A088600824884 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
-		463CF32A1E1A088800824884 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 091F0D341BDE998F009D0A49 /* Moya.framework */; };
 		463CF3341E1A0B7C00824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; };
 		463CF3351E1A0B7C00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; };
 		463CF3381E1A0BB700824884 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3371E1A0BB700824884 /* ReactiveSwift.framework */; };
@@ -140,28 +143,12 @@
 		463CF34D1E1A0C0C00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF34B1E1A0C0C00824884 /* Result.framework */; };
 		463CF34F1E1A0C1200824884 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF34E1E1A0C1200824884 /* ReactiveSwift.framework */; };
 		463CF3511E1A0C1600824884 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3501E1A0C1600824884 /* RxSwift.framework */; };
-		463CF3521E1A0CCA00824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; };
-		463CF3531E1A0CCA00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; };
-		463CF3541E1A0CCB00824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; };
-		463CF3551E1A0CCB00824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; };
-		463CF3581E1A120300824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3311E1A0B7C00824884 /* Alamofire.framework */; };
-		463CF3591E1A120300824884 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3371E1A0BB700824884 /* ReactiveSwift.framework */; };
-		463CF35A1E1A120300824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3321E1A0B7C00824884 /* Result.framework */; };
-		463CF35B1E1A120300824884 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3331E1A0B7C00824884 /* RxSwift.framework */; };
 		463CF35F1E1A120300824884 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF35C1E1A120300824884 /* Nimble.framework */; };
 		463CF3601E1A120300824884 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF35D1E1A120300824884 /* OHHTTPStubs.framework */; };
 		463CF3611E1A120300824884 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF35E1E1A120300824884 /* Quick.framework */; };
-		463CF3621E1A121200824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3421E1A0BF900824884 /* Alamofire.framework */; };
-		463CF3631E1A121200824884 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3461E1A0BFE00824884 /* ReactiveSwift.framework */; };
-		463CF3641E1A121200824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3431E1A0BF900824884 /* Result.framework */; };
-		463CF3651E1A121200824884 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3481E1A0C0400824884 /* RxSwift.framework */; };
 		463CF3691E1A121200824884 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3661E1A121200824884 /* Nimble.framework */; };
 		463CF36A1E1A121200824884 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3671E1A121200824884 /* OHHTTPStubs.framework */; };
 		463CF36B1E1A121200824884 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3681E1A121200824884 /* Quick.framework */; };
-		463CF36C1E1A122300824884 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF33A1E1A0BDD00824884 /* Alamofire.framework */; };
-		463CF36D1E1A122300824884 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF33E1E1A0BE200824884 /* ReactiveSwift.framework */; };
-		463CF36E1E1A122300824884 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF33B1E1A0BDE00824884 /* Result.framework */; };
-		463CF36F1E1A122300824884 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3401E1A0BE800824884 /* RxSwift.framework */; };
 		463CF3731E1A122400824884 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3701E1A122400824884 /* Nimble.framework */; };
 		463CF3741E1A122400824884 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3711E1A122400824884 /* OHHTTPStubs.framework */; };
 		463CF3751E1A122400824884 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 463CF3721E1A122400824884 /* Quick.framework */; };
@@ -214,6 +201,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3BE5C7C91E1A37E5003C9B91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 091F0D431BDE9A01009D0A49;
+			remoteInfo = "ReactiveMoya iOS";
+		};
+		3BE5C7CB1E1A37E5003C9B91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 091F0D821BDE9D4D009D0A49;
+			remoteInfo = "RxMoya iOS";
+		};
+		3BE5C7CD1E1A37F1003C9B91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 554B0FC11BE7ED7C00F3D266;
+			remoteInfo = "ReactiveMoya tvOS";
+		};
+		3BE5C7CF1E1A37F1003C9B91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 554B0FCB1BE7ED8700F3D266;
+			remoteInfo = "RxMoya tvOS";
+		};
+		3BE5C7D11E1A37FD003C9B91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0630A3201BE1C85000AD4789;
+			remoteInfo = "ReactiveMoya OSX";
+		};
+		3BE5C7D31E1A37FD003C9B91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0630A32B1BE1C85B00AD4789;
+			remoteInfo = "RxMoya OSX";
+		};
 		463CF27A1E1A05C300824884 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 091F0D2B1BDE998F009D0A49 /* Project object */;
@@ -236,6 +265,57 @@
 			remoteInfo = "Moya OSX";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3BE5C7AD1E1A33A8003C9B91 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3BE5C7B21E1A345C003C9B91 /* Result.framework in CopyFiles */,
+				3BE5C7B31E1A345C003C9B91 /* Alamofire.framework in CopyFiles */,
+				3BE5C7B41E1A345C003C9B91 /* ReactiveSwift.framework in CopyFiles */,
+				3BE5C7B51E1A345C003C9B91 /* RxSwift.framework in CopyFiles */,
+				3BE5C7B61E1A345C003C9B91 /* Nimble.framework in CopyFiles */,
+				3BE5C7B71E1A345C003C9B91 /* OHHTTPStubs.framework in CopyFiles */,
+				3BE5C7B81E1A345C003C9B91 /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BE5C7B91E1A346B003C9B91 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3BE5C7BA1E1A3474003C9B91 /* Result.framework in CopyFiles */,
+				3BE5C7BB1E1A3474003C9B91 /* Alamofire.framework in CopyFiles */,
+				3BE5C7BC1E1A3474003C9B91 /* ReactiveSwift.framework in CopyFiles */,
+				3BE5C7BD1E1A3474003C9B91 /* RxSwift.framework in CopyFiles */,
+				3BE5C7BE1E1A3474003C9B91 /* Nimble.framework in CopyFiles */,
+				3BE5C7BF1E1A3474003C9B91 /* OHHTTPStubs.framework in CopyFiles */,
+				3BE5C7C01E1A3474003C9B91 /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BE5C7C11E1A3482003C9B91 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3BE5C7C21E1A3486003C9B91 /* Result.framework in CopyFiles */,
+				3BE5C7C31E1A3486003C9B91 /* Alamofire.framework in CopyFiles */,
+				3BE5C7C41E1A3486003C9B91 /* ReactiveSwift.framework in CopyFiles */,
+				3BE5C7C51E1A3486003C9B91 /* RxSwift.framework in CopyFiles */,
+				3BE5C7C61E1A3486003C9B91 /* Nimble.framework in CopyFiles */,
+				3BE5C7C71E1A3486003C9B91 /* OHHTTPStubs.framework in CopyFiles */,
+				3BE5C7C81E1A3486003C9B91 /* Quick.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0630A3011BE1C60200AD4789 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -278,20 +358,6 @@
 		463CF2AA1E1A062600824884 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		463CF2AB1E1A062600824884 /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		463CF2AC1E1A062600824884 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
-		463CF2E21E1A068000824884 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		463CF2F01E1A068100824884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		463CF2F81E1A069100824884 /* MultiTargetDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiTargetDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		463CF3061E1A069100824884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		463CF30C1E1A06CA00824884 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyAPI.swift; sourceTree = "<group>"; };
-		463CF30D1E1A06CA00824884 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
-		463CF30E1E1A06CA00824884 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubUserContentAPI.swift; sourceTree = "<group>"; };
-		463CF30F1E1A06CA00824884 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		463CF3101E1A06CA00824884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		463CF3121E1A06CA00824884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		463CF3211E1A06D800824884 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		463CF3221E1A06D800824884 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		463CF3251E1A06DE00824884 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		463CF3261E1A06DE00824884 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		463CF3311E1A0B7C00824884 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		463CF3321E1A0B7C00824884 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		463CF3331E1A0B7C00824884 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
@@ -396,11 +462,7 @@
 				463CF3691E1A121200824884 /* Nimble.framework in Frameworks */,
 				463CF36A1E1A121200824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF36B1E1A121200824884 /* Quick.framework in Frameworks */,
-				463CF3621E1A121200824884 /* Alamofire.framework in Frameworks */,
 				463CF37A1E1A1B3200824884 /* ReactiveMoya.framework in Frameworks */,
-				463CF3631E1A121200824884 /* ReactiveSwift.framework in Frameworks */,
-				463CF3641E1A121200824884 /* Result.framework in Frameworks */,
-				463CF3651E1A121200824884 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,11 +475,7 @@
 				463CF35F1E1A120300824884 /* Nimble.framework in Frameworks */,
 				463CF3601E1A120300824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF3611E1A120300824884 /* Quick.framework in Frameworks */,
-				463CF3581E1A120300824884 /* Alamofire.framework in Frameworks */,
 				463CF3761E1A1B1D00824884 /* ReactiveMoya.framework in Frameworks */,
-				463CF3591E1A120300824884 /* ReactiveSwift.framework in Frameworks */,
-				463CF35A1E1A120300824884 /* Result.framework in Frameworks */,
-				463CF35B1E1A120300824884 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,31 +488,7 @@
 				463CF3731E1A122400824884 /* Nimble.framework in Frameworks */,
 				463CF3741E1A122400824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF3751E1A122400824884 /* Quick.framework in Frameworks */,
-				463CF36C1E1A122300824884 /* Alamofire.framework in Frameworks */,
 				463CF3781E1A1B2800824884 /* ReactiveMoya.framework in Frameworks */,
-				463CF36D1E1A122300824884 /* ReactiveSwift.framework in Frameworks */,
-				463CF36E1E1A122300824884 /* Result.framework in Frameworks */,
-				463CF36F1E1A122300824884 /* RxSwift.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		463CF2DF1E1A068000824884 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				463CF3531E1A0CCA00824884 /* Result.framework in Frameworks */,
-				463CF3291E1A088600824884 /* Moya.framework in Frameworks */,
-				463CF3521E1A0CCA00824884 /* Alamofire.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		463CF2F51E1A069100824884 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				463CF3551E1A0CCB00824884 /* Result.framework in Frameworks */,
-				463CF32A1E1A088800824884 /* Moya.framework in Frameworks */,
-				463CF3541E1A0CCB00824884 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,7 +599,6 @@
 			isa = PBXGroup;
 			children = (
 				0676A5D31BFE80D3001C7F55 /* Sources */,
-				463CF2DD1E1A066600824884 /* Demos */,
 				463CF2601E1A058100824884 /* Tests */,
 				091F0D351BDE998F009D0A49 /* Products */,
 				463CF3301E1A0B7C00824884 /* Frameworks */,
@@ -592,10 +625,61 @@
 				463CF2741E1A05C300824884 /* MoyaTests-tvOS.xctest */,
 				463CF2831E1A05D200824884 /* MoyaTests-iOS.xctest */,
 				463CF2921E1A05E100824884 /* MoyaTests-macOS.xctest */,
-				463CF2E21E1A068000824884 /* Demo.app */,
-				463CF2F81E1A069100824884 /* MultiTargetDemo.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3BE5C7AE1E1A33E3003C9B91 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				463CF33B1E1A0BDE00824884 /* Result.framework */,
+				463CF33A1E1A0BDD00824884 /* Alamofire.framework */,
+				463CF33E1E1A0BE200824884 /* ReactiveSwift.framework */,
+				463CF3401E1A0BE800824884 /* RxSwift.framework */,
+				463CF3701E1A122400824884 /* Nimble.framework */,
+				463CF3711E1A122400824884 /* OHHTTPStubs.framework */,
+				463CF3721E1A122400824884 /* Quick.framework */,
+			);
+			name = macOS;
+			sourceTree = "<group>";
+		};
+		3BE5C7AF1E1A33F0003C9B91 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				463CF3431E1A0BF900824884 /* Result.framework */,
+				463CF3421E1A0BF900824884 /* Alamofire.framework */,
+				463CF3461E1A0BFE00824884 /* ReactiveSwift.framework */,
+				463CF3481E1A0C0400824884 /* RxSwift.framework */,
+				463CF3661E1A121200824884 /* Nimble.framework */,
+				463CF3671E1A121200824884 /* OHHTTPStubs.framework */,
+				463CF3681E1A121200824884 /* Quick.framework */,
+			);
+			name = tvOS;
+			sourceTree = "<group>";
+		};
+		3BE5C7B01E1A3401003C9B91 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				463CF3321E1A0B7C00824884 /* Result.framework */,
+				463CF3311E1A0B7C00824884 /* Alamofire.framework */,
+				463CF3371E1A0BB700824884 /* ReactiveSwift.framework */,
+				463CF3331E1A0B7C00824884 /* RxSwift.framework */,
+				463CF35C1E1A120300824884 /* Nimble.framework */,
+				463CF35D1E1A120300824884 /* OHHTTPStubs.framework */,
+				463CF35E1E1A120300824884 /* Quick.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		3BE5C7B11E1A340C003C9B91 /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				463CF34B1E1A0C0C00824884 /* Result.framework */,
+				463CF34A1E1A0C0C00824884 /* Alamofire.framework */,
+				463CF34E1E1A0C1200824884 /* ReactiveSwift.framework */,
+				463CF3501E1A0C1600824884 /* RxSwift.framework */,
+			);
+			name = watchOS;
 			sourceTree = "<group>";
 		};
 		463CF25E1E1A052C00824884 /* Moya */ = {
@@ -644,93 +728,13 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		463CF2DD1E1A066600824884 /* Demos */ = {
-			isa = PBXGroup;
-			children = (
-				463CF3141E1A06CA00824884 /* Shared */,
-				463CF2E31E1A068100824884 /* Demo */,
-				463CF2F91E1A069100824884 /* MultiTargetDemo */,
-			);
-			path = Demos;
-			sourceTree = "<group>";
-		};
-		463CF2E31E1A068100824884 /* Demo */ = {
-			isa = PBXGroup;
-			children = (
-				463CF3211E1A06D800824884 /* AppDelegate.swift */,
-				463CF3221E1A06D800824884 /* ViewController.swift */,
-				463CF30A1E1A06B200824884 /* Supporting Files */,
-			);
-			path = Demo;
-			sourceTree = "<group>";
-		};
-		463CF2F91E1A069100824884 /* MultiTargetDemo */ = {
-			isa = PBXGroup;
-			children = (
-				463CF3251E1A06DE00824884 /* AppDelegate.swift */,
-				463CF3261E1A06DE00824884 /* ViewController.swift */,
-				463CF30B1E1A06B800824884 /* Supporting Files */,
-			);
-			path = MultiTargetDemo;
-			sourceTree = "<group>";
-		};
-		463CF30A1E1A06B200824884 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				463CF2F01E1A068100824884 /* Info.plist */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		463CF30B1E1A06B800824884 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				463CF3061E1A069100824884 /* Info.plist */,
-			);
-			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		463CF3141E1A06CA00824884 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				463CF30C1E1A06CA00824884 /* GiphyAPI.swift */,
-				463CF30D1E1A06CA00824884 /* GitHubAPI.swift */,
-				463CF30E1E1A06CA00824884 /* GitHubUserContentAPI.swift */,
-				463CF30F1E1A06CA00824884 /* Images.xcassets */,
-				463CF3111E1A06CA00824884 /* LaunchScreen.storyboard */,
-				463CF3131E1A06CA00824884 /* Main.storyboard */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		463CF3301E1A0B7C00824884 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				463CF3701E1A122400824884 /* Nimble.framework */,
-				463CF3711E1A122400824884 /* OHHTTPStubs.framework */,
-				463CF3721E1A122400824884 /* Quick.framework */,
-				463CF3661E1A121200824884 /* Nimble.framework */,
-				463CF3671E1A121200824884 /* OHHTTPStubs.framework */,
-				463CF3681E1A121200824884 /* Quick.framework */,
-				463CF35C1E1A120300824884 /* Nimble.framework */,
-				463CF35D1E1A120300824884 /* OHHTTPStubs.framework */,
-				463CF35E1E1A120300824884 /* Quick.framework */,
-				463CF3501E1A0C1600824884 /* RxSwift.framework */,
-				463CF34E1E1A0C1200824884 /* ReactiveSwift.framework */,
-				463CF34A1E1A0C0C00824884 /* Alamofire.framework */,
-				463CF34B1E1A0C0C00824884 /* Result.framework */,
-				463CF3481E1A0C0400824884 /* RxSwift.framework */,
-				463CF3461E1A0BFE00824884 /* ReactiveSwift.framework */,
-				463CF3421E1A0BF900824884 /* Alamofire.framework */,
-				463CF3431E1A0BF900824884 /* Result.framework */,
-				463CF3401E1A0BE800824884 /* RxSwift.framework */,
-				463CF33E1E1A0BE200824884 /* ReactiveSwift.framework */,
-				463CF33A1E1A0BDD00824884 /* Alamofire.framework */,
-				463CF33B1E1A0BDE00824884 /* Result.framework */,
-				463CF3331E1A0B7C00824884 /* RxSwift.framework */,
-				463CF3371E1A0BB700824884 /* ReactiveSwift.framework */,
-				463CF3311E1A0B7C00824884 /* Alamofire.framework */,
-				463CF3321E1A0B7C00824884 /* Result.framework */,
+				3BE5C7AE1E1A33E3003C9B91 /* macOS */,
+				3BE5C7AF1E1A33F0003C9B91 /* tvOS */,
+				3BE5C7B01E1A3401003C9B91 /* iOS */,
+				3BE5C7B11E1A340C003C9B91 /* watchOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -940,11 +944,13 @@
 				463CF2701E1A05C300824884 /* Sources */,
 				463CF2711E1A05C300824884 /* Frameworks */,
 				463CF2721E1A05C300824884 /* Resources */,
-				463CF37D1E1A1D9600824884 /* Carthage Copy Frameworks */,
+				3BE5C7B91E1A346B003C9B91 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3BE5C7CE1E1A37F1003C9B91 /* PBXTargetDependency */,
+				3BE5C7D01E1A37F1003C9B91 /* PBXTargetDependency */,
 				463CF27B1E1A05C300824884 /* PBXTargetDependency */,
 			);
 			name = "MoyaTests-tvOS";
@@ -959,11 +965,13 @@
 				463CF27F1E1A05D200824884 /* Sources */,
 				463CF2801E1A05D200824884 /* Frameworks */,
 				463CF2811E1A05D200824884 /* Resources */,
-				463CF37C1E1A1D3200824884 /* Carthage Copy Frameworks */,
+				3BE5C7AD1E1A33A8003C9B91 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3BE5C7CA1E1A37E5003C9B91 /* PBXTargetDependency */,
+				3BE5C7CC1E1A37E5003C9B91 /* PBXTargetDependency */,
 				463CF28A1E1A05D200824884 /* PBXTargetDependency */,
 			);
 			name = "MoyaTests-iOS";
@@ -978,53 +986,19 @@
 				463CF28E1E1A05E100824884 /* Sources */,
 				463CF28F1E1A05E100824884 /* Frameworks */,
 				463CF2901E1A05E100824884 /* Resources */,
-				463CF37E1E1A1DEB00824884 /* Carthage Copy Frameworks */,
+				3BE5C7C11E1A3482003C9B91 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3BE5C7D21E1A37FD003C9B91 /* PBXTargetDependency */,
+				3BE5C7D41E1A37FD003C9B91 /* PBXTargetDependency */,
 				463CF2991E1A05E100824884 /* PBXTargetDependency */,
 			);
 			name = "MoyaTests-macOS";
 			productName = "MoyaTests-macOS";
 			productReference = 463CF2921E1A05E100824884 /* MoyaTests-macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		463CF2E11E1A068000824884 /* Demo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 463CF2F11E1A068100824884 /* Build configuration list for PBXNativeTarget "Demo" */;
-			buildPhases = (
-				463CF2DE1E1A068000824884 /* Sources */,
-				463CF2DF1E1A068000824884 /* Frameworks */,
-				463CF2E01E1A068000824884 /* Resources */,
-				463CF3561E1A0D1500824884 /* Copy Carthage Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Demo;
-			productName = Demo;
-			productReference = 463CF2E21E1A068000824884 /* Demo.app */;
-			productType = "com.apple.product-type.application";
-		};
-		463CF2F71E1A069100824884 /* MultiTargetDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 463CF3071E1A069100824884 /* Build configuration list for PBXNativeTarget "MultiTargetDemo" */;
-			buildPhases = (
-				463CF2F41E1A069100824884 /* Sources */,
-				463CF2F51E1A069100824884 /* Frameworks */,
-				463CF2F61E1A069100824884 /* Resources */,
-				463CF3571E1A0D4B00824884 /* Copy Carthage Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MultiTargetDemo;
-			productName = MultiTargetDemo;
-			productReference = 463CF2F81E1A069100824884 /* MultiTargetDemo.app */;
-			productType = "com.apple.product-type.application";
 		};
 		554B0FB81BE7ED4D00F3D266 /* Moya tvOS */ = {
 			isa = PBXNativeTarget;
@@ -1174,14 +1148,6 @@
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
-					463CF2E11E1A068000824884 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-					};
-					463CF2F71E1A069100824884 = {
-						CreatedOnToolsVersion = 8.2.1;
-						ProvisioningStyle = Automatic;
-					};
 					554B0FB81BE7ED4D00F3D266 = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -1218,8 +1184,6 @@
 				463CF2821E1A05D200824884 /* MoyaTests-iOS */,
 				463CF2731E1A05C300824884 /* MoyaTests-tvOS */,
 				463CF2911E1A05E100824884 /* MoyaTests-macOS */,
-				463CF2E11E1A068000824884 /* Demo */,
-				463CF2F71E1A069100824884 /* MultiTargetDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -1291,26 +1255,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		463CF2E01E1A068000824884 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				463CF31F1E1A06CA00824884 /* Main.storyboard in Resources */,
-				463CF31B1E1A06CA00824884 /* Images.xcassets in Resources */,
-				463CF31D1E1A06CA00824884 /* LaunchScreen.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		463CF2F61E1A069100824884 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				463CF3201E1A06CA00824884 /* Main.storyboard in Resources */,
-				463CF31C1E1A06CA00824884 /* Images.xcassets in Resources */,
-				463CF31E1E1A06CA00824884 /* LaunchScreen.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		554B0FB71BE7ED4D00F3D266 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1354,104 +1298,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		463CF3561E1A0D1500824884 /* Copy Carthage Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-			);
-			name = "Copy Carthage Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		463CF3571E1A0D4B00824884 /* Copy Carthage Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-			);
-			name = "Copy Carthage Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		463CF37C1E1A1D3200824884 /* Carthage Copy Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
-			);
-			name = "Carthage Copy Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		463CF37D1E1A1D9600824884 /* Carthage Copy Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/tvOS/Result.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/ReactiveSwift.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/tvOS/Nimble.framework",
-			);
-			name = "Carthage Copy Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-		463CF37E1E1A1DEB00824884 /* Carthage Copy Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/Mac/Result.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/ReactiveSwift.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/OHHTTPStubs.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/Quick.framework",
-				"$(SRCROOT)/Carthage/Build/Mac/Nimble.framework",
-			);
-			name = "Carthage Copy Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0630A3131BE1C84500AD4789 /* Sources */ = {
@@ -1602,30 +1448,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		463CF2DE1E1A068000824884 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				463CF3241E1A06D800824884 /* ViewController.swift in Sources */,
-				463CF3231E1A06D800824884 /* AppDelegate.swift in Sources */,
-				463CF3151E1A06CA00824884 /* GiphyAPI.swift in Sources */,
-				463CF3171E1A06CA00824884 /* GitHubAPI.swift in Sources */,
-				463CF3191E1A06CA00824884 /* GitHubUserContentAPI.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		463CF2F41E1A069100824884 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				463CF3281E1A06DE00824884 /* ViewController.swift in Sources */,
-				463CF3271E1A06DE00824884 /* AppDelegate.swift in Sources */,
-				463CF3161E1A06CA00824884 /* GiphyAPI.swift in Sources */,
-				463CF3181E1A06CA00824884 /* GitHubAPI.swift in Sources */,
-				463CF31A1E1A06CA00824884 /* GitHubUserContentAPI.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		554B0FB41BE7ED4D00F3D266 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1711,6 +1533,36 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3BE5C7CA1E1A37E5003C9B91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 091F0D431BDE9A01009D0A49 /* ReactiveMoya iOS */;
+			targetProxy = 3BE5C7C91E1A37E5003C9B91 /* PBXContainerItemProxy */;
+		};
+		3BE5C7CC1E1A37E5003C9B91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 091F0D821BDE9D4D009D0A49 /* RxMoya iOS */;
+			targetProxy = 3BE5C7CB1E1A37E5003C9B91 /* PBXContainerItemProxy */;
+		};
+		3BE5C7CE1E1A37F1003C9B91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 554B0FC11BE7ED7C00F3D266 /* ReactiveMoya tvOS */;
+			targetProxy = 3BE5C7CD1E1A37F1003C9B91 /* PBXContainerItemProxy */;
+		};
+		3BE5C7D01E1A37F1003C9B91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 554B0FCB1BE7ED8700F3D266 /* RxMoya tvOS */;
+			targetProxy = 3BE5C7CF1E1A37F1003C9B91 /* PBXContainerItemProxy */;
+		};
+		3BE5C7D21E1A37FD003C9B91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0630A3201BE1C85000AD4789 /* ReactiveMoya OSX */;
+			targetProxy = 3BE5C7D11E1A37FD003C9B91 /* PBXContainerItemProxy */;
+		};
+		3BE5C7D41E1A37FD003C9B91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0630A32B1BE1C85B00AD4789 /* RxMoya OSX */;
+			targetProxy = 3BE5C7D31E1A37FD003C9B91 /* PBXContainerItemProxy */;
+		};
 		463CF27B1E1A05C300824884 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 554B0FB81BE7ED4D00F3D266 /* Moya tvOS */;
@@ -1727,27 +1579,6 @@
 			targetProxy = 463CF2981E1A05E100824884 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		463CF3111E1A06CA00824884 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				463CF3101E1A06CA00824884 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			path = .;
-			sourceTree = "<group>";
-		};
-		463CF3131E1A06CA00824884 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				463CF3121E1A06CA00824884 /* Base */,
-			);
-			name = Main.storyboard;
-			path = .;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		0630A31E1BE1C84500AD4789 /* Debug */ = {
@@ -2245,7 +2076,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.MoyaTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2269,97 +2100,11 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "Moya.MoyaTests-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		463CF2F21E1A068100824884 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		463CF2F31E1A068100824884 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		463CF3081E1A069100824884 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		463CF3091E1A069100824884 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Dependency\\ Frameworks/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
-				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -2759,24 +2504,6 @@
 			buildConfigurations = (
 				463CF29B1E1A05E100824884 /* Debug */,
 				463CF29C1E1A05E100824884 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		463CF2F11E1A068100824884 /* Build configuration list for PBXNativeTarget "Demo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				463CF2F21E1A068100824884 /* Debug */,
-				463CF2F31E1A068100824884 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		463CF3071E1A069100824884 /* Build configuration list for PBXNativeTarget "MultiTargetDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				463CF3081E1A069100824884 /* Debug */,
-				463CF3091E1A069100824884 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
