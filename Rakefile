@@ -139,7 +139,7 @@ namespace :test do
     # of the root dir
 
     Dir.mkdir("carthage_test")
-    File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\"")
+    File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\" \"HEAD\"")
     Dir.chdir "carthage_test" do
       sh "carthage bootstrap --platform 'iOS'"
       has_artifacts = Dir.glob("Carthage/Build/*").count > 0
