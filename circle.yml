@@ -11,13 +11,14 @@ dependencies:
     - brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
     - brew install swiftlint
     - bundle install
+    - scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
     - cd Demo ; bundle exec pod repo update
     - cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.
 
 test:
   pre:
   override:
-  - rake bootstrap && rake test && rake test:carthage && rake build_demo
+  - rake test && rake test:carthage && rake build_demo
   post:
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash) -J Moya

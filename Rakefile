@@ -90,14 +90,6 @@ def xcodebuild_demo(tasks, xcprety_args: '')
   end
 end
 
-desc 'Bootstrap Carthage.'
-task :bootstrap do
-  # only bootstrapping iOS, macOS, and tvOS since that's all we need for the tests.
-  safe_sh "carthage bootstrap --platform ios"
-  safe_sh "carthage bootstrap --platform tvos"
-  safe_sh "carthage bootstrap --platform macos"
-end
-
 desc 'Build Moya.'
 task :build do
   xcodebuild 'build', :ios
