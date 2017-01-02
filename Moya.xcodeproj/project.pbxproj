@@ -231,40 +231,40 @@
 		3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		463CF2741E1A05C300824884 /* MoyaTests-tvOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-tvOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		463CF2831E1A05D200824884 /* MoyaTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		463CF2871E1A05D200824884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "MoyaTests-iOS/Info.plist"; sourceTree = "<group>"; };
+		463CF2871E1A05D200824884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Info.plist; sourceTree = "<group>"; };
 		463CF2921E1A05E100824884 /* MoyaTests-macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MoyaTests-macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		463CF29D1E1A062600824884 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndpointSpec.swift; path = Demo/Tests/EndpointSpec.swift; sourceTree = "<group>"; };
-		463CF29E1E1A062600824884 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Error+MoyaSpec.swift"; path = "Demo/Tests/Error+MoyaSpec.swift"; sourceTree = "<group>"; };
-		463CF29F1E1A062600824884 /* ErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorTests.swift; path = Demo/Tests/ErrorTests.swift; sourceTree = "<group>"; };
-		463CF2A01E1A062600824884 /* MethodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MethodSpec.swift; path = Demo/Tests/MethodSpec.swift; sourceTree = "<group>"; };
-		463CF2A11E1A062600824884 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoyaProviderIntegrationTests.swift; path = Demo/Tests/MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
-		463CF2A21E1A062600824884 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoyaProviderSpec.swift; path = Demo/Tests/MoyaProviderSpec.swift; sourceTree = "<group>"; };
-		463CF2A31E1A062600824884 /* MultiTargetSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultiTargetSpec.swift; path = Demo/Tests/MultiTargetSpec.swift; sourceTree = "<group>"; };
-		463CF2A41E1A062600824884 /* MultipartFormDataSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartFormDataSpec.swift; path = Demo/Tests/MultipartFormDataSpec.swift; sourceTree = "<group>"; };
-		463CF2A51E1A062600824884 /* NetworkLoggerPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPluginSpec.swift; path = Demo/Tests/NetworkLoggerPluginSpec.swift; sourceTree = "<group>"; };
-		463CF2A61E1A062600824884 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+MoyaSpec.swift"; path = "Demo/Tests/Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
-		463CF2A71E1A062600824884 /* ReactiveSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactiveSwiftMoyaProviderTests.swift; path = Demo/Tests/ReactiveSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
-		463CF2A81E1A062600824884 /* RxSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxSwiftMoyaProviderTests.swift; path = Demo/Tests/RxSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
-		463CF2A91E1A062600824884 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SignalProducer+MoyaSpec.swift"; path = "Demo/Tests/SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
-		463CF2AA1E1A062600824884 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Demo/Tests/TestHelpers.swift; sourceTree = "<group>"; };
-		463CF2AB1E1A062600824884 /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestPlugin.swift; path = Demo/Tests/TestPlugin.swift; sourceTree = "<group>"; };
-		463CF2AC1E1A062600824884 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testImage.png; path = Demo/Tests/testImage.png; sourceTree = "<group>"; };
+		463CF29D1E1A062600824884 /* EndpointSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EndpointSpec.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
+		463CF29E1E1A062600824884 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Error+MoyaSpec.swift"; path = "Error+MoyaSpec.swift"; sourceTree = "<group>"; };
+		463CF29F1E1A062600824884 /* ErrorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorTests.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
+		463CF2A01E1A062600824884 /* MethodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MethodSpec.swift; path = MethodSpec.swift; sourceTree = "<group>"; };
+		463CF2A11E1A062600824884 /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoyaProviderIntegrationTests.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
+		463CF2A21E1A062600824884 /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoyaProviderSpec.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
+		463CF2A31E1A062600824884 /* MultiTargetSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultiTargetSpec.swift; path = MultiTargetSpec.swift; sourceTree = "<group>"; };
+		463CF2A41E1A062600824884 /* MultipartFormDataSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipartFormDataSpec.swift; path = MultipartFormDataSpec.swift; sourceTree = "<group>"; };
+		463CF2A51E1A062600824884 /* NetworkLoggerPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPluginSpec.swift; path = NetworkLoggerPluginSpec.swift; sourceTree = "<group>"; };
+		463CF2A61E1A062600824884 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+MoyaSpec.swift"; path = "Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
+		463CF2A71E1A062600824884 /* ReactiveSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactiveSwiftMoyaProviderTests.swift; path = ReactiveSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
+		463CF2A81E1A062600824884 /* RxSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxSwiftMoyaProviderTests.swift; path = RxSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
+		463CF2A91E1A062600824884 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SignalProducer+MoyaSpec.swift"; path = "SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
+		463CF2AA1E1A062600824884 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		463CF2AB1E1A062600824884 /* TestPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestPlugin.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
+		463CF2AC1E1A062600824884 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = testImage.png; path = testImage.png; sourceTree = "<group>"; };
 		463CF2E21E1A068000824884 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		463CF2F01E1A068100824884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		463CF2F81E1A069100824884 /* MultiTargetDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiTargetDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		463CF3061E1A069100824884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		463CF30C1E1A06CA00824884 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GiphyAPI.swift; path = Shared/GiphyAPI.swift; sourceTree = "<group>"; };
-		463CF30D1E1A06CA00824884 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubAPI.swift; path = Shared/GitHubAPI.swift; sourceTree = "<group>"; };
-		463CF30E1E1A06CA00824884 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubUserContentAPI.swift; path = Shared/GitHubUserContentAPI.swift; sourceTree = "<group>"; };
-		463CF30F1E1A06CA00824884 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Shared/Images.xcassets; sourceTree = "<group>"; };
-		463CF3101E1A06CA00824884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Shared/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		463CF3121E1A06CA00824884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Shared/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		463CF3211E1A06D800824884 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/AppDelegate.swift; sourceTree = "<group>"; };
-		463CF3221E1A06D800824884 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Demo/ViewController.swift; sourceTree = "<group>"; };
+		463CF30C1E1A06CA00824884 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GiphyAPI.swift; path = GiphyAPI.swift; sourceTree = "<group>"; };
+		463CF30D1E1A06CA00824884 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubAPI.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		463CF30E1E1A06CA00824884 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubUserContentAPI.swift; path = GitHubUserContentAPI.swift; sourceTree = "<group>"; };
+		463CF30F1E1A06CA00824884 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images.xcassets; sourceTree = "<group>"; };
+		463CF3101E1A06CA00824884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		463CF3121E1A06CA00824884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		463CF3211E1A06D800824884 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		463CF3221E1A06D800824884 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		463CF3251E1A06DE00824884 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		463CF3261E1A06DE00824884 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactiveSwiftMoyaProvider.swift; path = Source/ReactiveSwift/ReactiveSwiftMoyaProvider.swift; sourceTree = SOURCE_ROOT; };
-		492F83C01DED97F100C79972 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SignalProducer+Response.swift"; path = "Source/ReactiveSwift/SignalProducer+Response.swift"; sourceTree = SOURCE_ROOT; };
+		492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReactiveSwiftMoyaProvider.swift; path = ReactiveSwiftMoyaProvider.swift; sourceTree = "<group>"; };
+		492F83C01DED97F100C79972 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "SignalProducer+Response.swift"; path = "SignalProducer+Response.swift"; sourceTree = "<group>"; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FC91BE7ED7C00F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B0FD31BE7ED8700F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,9 +272,9 @@
 		554B10271BE7F13600F3D266 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B10301BE7F14300F3D266 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		554B10311BE7F22100F3D266 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/tvOS/Alamofire.framework; sourceTree = "<group>"; };
-		554B10371BE7F26100F3D266 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/tvOS/RxSwift.framework; sourceTree = "<group>"; };
+		554B10371BE7F26100F3D266 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = RxSwift.framework; sourceTree = "<group>"; };
 		554B10391BE7F27C00F3D266 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/watchOS/Alamofire.framework; sourceTree = "<group>"; };
-		554B103F1BE7F29900F3D266 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/watchOS/RxSwift.framework; sourceTree = "<group>"; };
+		554B103F1BE7F29900F3D266 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = RxSwift.framework; sourceTree = "<group>"; };
 		55B5D5BC1C1F6F2B00A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		55B5D5C01C1F6F4A00A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/Mac/Result.framework; sourceTree = "<group>"; };
 		55B5D5C41C1F6F6900A11B82 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/tvOS/Result.framework; sourceTree = "<group>"; };
@@ -446,7 +446,7 @@
 				0630A3011BE1C60200AD4789 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			path = "../Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		0676A5D31BFE80D3001C7F55 /* Sources */ = {
@@ -457,7 +457,7 @@
 				0676A5E31BFE80D3001C7F55 /* RxMoya */,
 			);
 			name = Sources;
-			path = Source;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		0676A5D91BFE80D3001C7F55 /* Plugins */ = {
@@ -477,7 +477,7 @@
 				492F83C01DED97F100C79972 /* SignalProducer+Response.swift */,
 			);
 			name = ReactiveMoya;
-			path = ReactiveCocoa;
+			path = ReactiveMoya;
 			sourceTree = "<group>";
 		};
 		0676A5E31BFE80D3001C7F55 /* RxMoya */ = {
@@ -487,7 +487,7 @@
 				0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */,
 			);
 			name = RxMoya;
-			path = RxSwift;
+			path = RxMoya;
 			sourceTree = "<group>";
 		};
 		091F0D2A1BDE998F009D0A49 = {
@@ -548,6 +548,7 @@
 				554B103F1BE7F29900F3D266 /* RxSwift.framework */,
 			);
 			name = "Dependency Frameworks";
+			path = "Dependency Frameworks";
 			sourceTree = "<group>";
 		};
 		463CF25E1E1A052C00824884 /* Moya */ = {
@@ -570,6 +571,7 @@
 				0630A3001BE1C60200AD4789 /* Supporting Files */,
 			);
 			name = Moya;
+			path = Moya;
 			sourceTree = "<group>";
 		};
 		463CF2601E1A058100824884 /* Tests */ = {
@@ -594,6 +596,7 @@
 				463CF2871E1A05D200824884 /* Info.plist */,
 			);
 			name = Tests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		463CF2DD1E1A066600824884 /* Demos */ = {
@@ -604,6 +607,7 @@
 				463CF2F91E1A069100824884 /* MultiTargetDemo */,
 			);
 			name = Demos;
+			path = Demos;
 			sourceTree = "<group>";
 		};
 		463CF2E31E1A068100824884 /* Demo */ = {
@@ -632,6 +636,7 @@
 				463CF2F01E1A068100824884 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		463CF30B1E1A06B800824884 /* Supporting Files */ = {
@@ -640,6 +645,7 @@
 				463CF3061E1A069100824884 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		463CF3141E1A06CA00824884 /* Shared */ = {
@@ -653,7 +659,7 @@
 				463CF3131E1A06CA00824884 /* Main.storyboard */,
 			);
 			name = Shared;
-			path = Demo;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1553,6 +1559,7 @@
 				463CF3101E1A06CA00824884 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		463CF3131E1A06CA00824884 /* Main.storyboard */ = {
@@ -1561,6 +1568,7 @@
 				463CF3121E1A06CA00824884 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1579,7 +1587,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1604,7 +1612,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1629,7 +1637,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1654,7 +1662,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1679,7 +1687,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1704,7 +1712,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -1829,7 +1837,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
@@ -1856,7 +1864,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
@@ -1881,7 +1889,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
@@ -1906,7 +1914,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
@@ -1930,7 +1938,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
@@ -1954,7 +1962,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
@@ -2077,7 +2085,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = Demo/Info.plist;
+				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
@@ -2094,7 +2102,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = Demo/Info.plist;
+				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
@@ -2110,7 +2118,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = MultiTargetDemo/Info.plist;
+				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
@@ -2127,7 +2135,7 @@
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = MultiTargetDemo/Info.plist;
+				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
@@ -2148,7 +2156,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
@@ -2173,7 +2181,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
@@ -2198,7 +2206,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
@@ -2223,7 +2231,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
@@ -2248,7 +2256,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
@@ -2273,7 +2281,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
@@ -2299,7 +2307,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
@@ -2325,7 +2333,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.Moya;
@@ -2351,7 +2359,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
@@ -2377,7 +2385,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.ReactiveMoya;
@@ -2403,7 +2411,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
@@ -2429,7 +2437,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/watchOS",
 				);
-				INFOPLIST_FILE = "Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Sources/Moya/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cocoapods.RxMoya;
