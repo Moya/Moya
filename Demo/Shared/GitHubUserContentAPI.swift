@@ -15,21 +15,6 @@ extension GitHubUserContent: TargetType {
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
-    public var method: Moya.Method {
-        switch self {
-        case .downloadMoyaWebContent:
-            return .get
-        }
-    }
-    public var parameters: [String: Any]? {
-        switch self {
-        case .downloadMoyaWebContent:
-            return nil
-        }
-    }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
