@@ -1,5 +1,6 @@
 import Quick
 import Moya
+import ReactiveMoya
 import Nimble
 import OHHTTPStubs
 import Alamofire

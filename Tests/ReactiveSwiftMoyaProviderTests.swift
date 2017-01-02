@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import ReactiveSwift
+import ReactiveMoya
 import OHHTTPStubs
 @testable
 import Moya
