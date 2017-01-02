@@ -97,7 +97,7 @@ end
 
 desc 'Build the Demo app.'
 task :build_demo do
-  xcodebuild_demo 'build'
+  xcodebuild_demo 'build', :ios
 end
 
 desc 'Clean build directory.'
