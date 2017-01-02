@@ -92,7 +92,10 @@ end
 
 desc 'Bootstrap Carthage.'
 task :bootstrap do
-  safe_sh "carthage bootstrap"
+  # only bootstrapping iOS, macOS, and tvOS since that's all we need for the tests.
+  safe_sh "carthage bootstrap --platform ios"
+  safe_sh "carthage bootstrap --platform tvos"
+  safe_sh "carthage bootstrap --platform macos"
 end
 
 desc 'Build Moya.'
