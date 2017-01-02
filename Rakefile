@@ -14,8 +14,8 @@ def safe_sh(command)
   end
 end
 
-def workspace
-  return 'Demo.xcworkspace'
+def moya_project
+  return 'Moya.xcodeproj'
 end
 
 def configuration
@@ -30,11 +30,11 @@ def targets
   ]
 end
 
-def schemes
+def test_schemes
   return {
-    ios: 'Demo',
-    macos: 'MoyaTests-Mac',
-    tvos: 'MoyaTests-tvOS'
+    ios: 'MoyaTests iOS',
+    macos: 'MoyaTests OSX',
+    tvos: 'MoyaTests tvOS'
   }
 end
 
@@ -68,32 +68,53 @@ def open_simulator_and_sleep(uuid)
   sh "xcrun instruments -w '#{uuid}' || sleep 15"
 end
 
-def xcodebuild_in_demo_dir(tasks, platform, xcprety_args: '')
+def xcodebuild(tasks, platform, xcprety_args: '')
   sdk = sdks[platform]
-  scheme = schemes[platform]
+  scheme = test_schemes[platform]
   destination = devices[platform]
+
+  open_simulator_and_sleep(uuids[platform])
+  safe_sh "set -o pipefail && xcodebuild -project '#{moya_project}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
+end
+
+def xcodebuild_demo(tasks, xcprety_args: '')
+  platform = 'ios'
+  sdk = sdks[platform]
+  destination = devices[platform]
+  demo_workspace = 'Demo.xcworkspace'
+  demo_scheme = 'Demo'
 
   Dir.chdir('Demo') do
     open_simulator_and_sleep(uuids[platform])
-    safe_sh "set -o pipefail && xcodebuild -workspace '#{workspace}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
+    safe_sh "set -o pipefail && xcodebuild -workspace '#{demo_workspace}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
   end
 end
 
-desc 'Build the Demo app.'
+desc 'Bootstrap Carthage.'
+task :bootstrap do
+  safe_sh "carthage bootstrap"
+end
+
+desc 'Build Moya.'
 task :build do
-  xcodebuild_in_demo_dir 'build', :ios
+  xcodebuild 'build', :ios
+end
+
+desc 'Build the Demo app.'
+task :build_demo do
+  xcodebuild_demo 'build'
 end
 
 desc 'Clean build directory.'
 task :clean do
-  xcodebuild_in_demo_dir 'clean', :ios
+  xcodebuild 'clean', :ios
 end
 
 desc 'Build, then run all tests.'
 task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
-    xcodebuild_in_demo_dir 'build test', platform, xcprety_args: '--test'
+    xcodebuild 'build test', platform, xcprety_args: '--test'
     sh "killall Simulator"
   end
 end
@@ -102,18 +123,18 @@ desc 'Individual test tasks.'
 namespace :test do
   desc 'Test on iOS.'
   task :ios do
-    xcodebuild_in_demo_dir 'build test', :ios, xcprety_args: '--test'
+    xcodebuild 'build test', :ios, xcprety_args: '--test'
     sh "killall Simulator"
   end
 
   desc 'Test on macOS.'
   task :macos do
-    xcodebuild_in_demo_dir 'build test', :macos, xcprety_args: '--test'
+    xcodebuild 'build test', :macos, xcprety_args: '--test'
   end
 
   desc 'Test on tvOS.'
   task :tvos do
-    xcodebuild_in_demo_dir 'build test', :tvos, xcprety_args: '--test'
+    xcodebuild 'build test', :tvos, xcprety_args: '--test'
     sh "killall Simulator"
   end
 
