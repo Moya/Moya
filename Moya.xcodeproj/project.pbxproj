@@ -51,6 +51,9 @@
 		3B3F9C651E1B273C0083107D /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */; };
 		3B3F9C661E1B273C0083107D /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */; };
 		3B3F9C671E1B273C0083107D /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */; };
+		3B3F9C691E1B2A7A0083107D /* AccessTokenPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */; };
+		3B3F9C6A1E1B2A7A0083107D /* AccessTokenPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */; };
+		3B3F9C6B1E1B2A7A0083107D /* AccessTokenPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */; };
 		3BC0F9831E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
 		3BC0F9841E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
 		3BC0F9851E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
@@ -341,6 +344,7 @@
 		091F0D441BDE9A01009D0A49 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D831BDE9D4D009D0A49 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenPlugin.swift; sourceTree = "<group>"; };
+		3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenPluginSpec.swift; sourceTree = "<group>"; };
 		3BC0F9821E15AF2400F4406F /* MultiTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		3BE0900A1E1AD730000F5DD4 /* TargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
@@ -722,6 +726,7 @@
 				463CF2A31E1A062600824884 /* MultiTargetSpec.swift */,
 				463CF2A41E1A062600824884 /* MultipartFormDataSpec.swift */,
 				463CF2A51E1A062600824884 /* NetworkLoggerPluginSpec.swift */,
+				3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */,
 				463CF2A61E1A062600824884 /* Observable+MoyaSpec.swift */,
 				463CF2A71E1A062600824884 /* ReactiveSwiftMoyaProviderTests.swift */,
 				463CF2A81E1A062600824884 /* RxSwiftMoyaProviderTests.swift */,
@@ -1397,6 +1402,7 @@
 				463CF2B91E1A062600824884 /* MoyaProviderIntegrationTests.swift in Sources */,
 				463CF2C21E1A062600824884 /* MultipartFormDataSpec.swift in Sources */,
 				463CF2AD1E1A062600824884 /* EndpointSpec.swift in Sources */,
+				3B3F9C6A1E1B2A7A0083107D /* AccessTokenPluginSpec.swift in Sources */,
 				463CF2BF1E1A062600824884 /* MultiTargetSpec.swift in Sources */,
 				463CF2D71E1A062600824884 /* TestPlugin.swift in Sources */,
 				463CF2CE1E1A062600824884 /* RxSwiftMoyaProviderTests.swift in Sources */,
@@ -1419,6 +1425,7 @@
 				463CF2BA1E1A062600824884 /* MoyaProviderIntegrationTests.swift in Sources */,
 				463CF2C31E1A062600824884 /* MultipartFormDataSpec.swift in Sources */,
 				463CF2AE1E1A062600824884 /* EndpointSpec.swift in Sources */,
+				3B3F9C691E1B2A7A0083107D /* AccessTokenPluginSpec.swift in Sources */,
 				463CF2C01E1A062600824884 /* MultiTargetSpec.swift in Sources */,
 				463CF2D81E1A062600824884 /* TestPlugin.swift in Sources */,
 				463CF2CF1E1A062600824884 /* RxSwiftMoyaProviderTests.swift in Sources */,
@@ -1441,6 +1448,7 @@
 				463CF2BB1E1A062600824884 /* MoyaProviderIntegrationTests.swift in Sources */,
 				463CF2C41E1A062600824884 /* MultipartFormDataSpec.swift in Sources */,
 				463CF2AF1E1A062600824884 /* EndpointSpec.swift in Sources */,
+				3B3F9C6B1E1B2A7A0083107D /* AccessTokenPluginSpec.swift in Sources */,
 				463CF2C11E1A062600824884 /* MultiTargetSpec.swift in Sources */,
 				463CF2D91E1A062600824884 /* TestPlugin.swift in Sources */,
 				463CF2D01E1A062600824884 /* RxSwiftMoyaProviderTests.swift in Sources */,
