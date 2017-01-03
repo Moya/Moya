@@ -1,4 +1,5 @@
 import Result
+import ReactiveSwift
 
 extension Endpoint {
     @available(*, unavailable, renamed: "adding(newParameters:)")
@@ -25,10 +26,10 @@ extension MoyaProvider {
 @available(*, unavailable, renamed: "ReactiveSwiftMoyaProvider")
 public class ReactiveCocoaMoyaProvider { }
 
-//extension ReactiveSwiftMoyaProvider {
-//    @available(*, unavailable, renamed: "request(_:)")
-//    public func request(token: Target) -> SignalProducer<Response, Error> { fatalError() }
-//}
+extension ReactiveSwiftMoyaProvider {
+    @available(*, unavailable, renamed: "request(_:)")
+    public func request(token: Target) -> SignalProducer<Response, MoyaError> { fatalError() }
+}
 
 extension Response {
     @available(*, unavailable, renamed: "filter(statusCodes:)")
