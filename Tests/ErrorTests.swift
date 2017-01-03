@@ -15,32 +15,32 @@ class ErrorTests: QuickSpec {
         describe("response computed variable") {
 
             it("should handle ImageMapping error") {
-                let error = Moya.Error.imageMapping(response)
+                let error = MoyaError.imageMapping(response)
 
                 expect(error.response) == response
             }
 
             it("should handle JSONMapping error") {
-                let error = Moya.Error.jsonMapping(response)
+                let error = MoyaError.jsonMapping(response)
 
                 expect(error.response) == response
             }
 
             it("should handle StringMapping error") {
-                let error = Moya.Error.stringMapping(response)
+                let error = MoyaError.stringMapping(response)
 
                 expect(error.response) == response
             }
 
             it("should handle StatusCode error") {
-                let error = Moya.Error.statusCode(response)
+                let error = MoyaError.statusCode(response)
 
                 expect(error.response) == response
             }
 
             it("should not handle Underlying error ") {
                 let nsError = NSError(domain: "Domain", code: 200, userInfo: ["data" : "some data"])
-                let error = Moya.Error.underlying(nsError)
+                let error = MoyaError.underlying(nsError)
 
                 expect(error.response).to( beNil() )
             }

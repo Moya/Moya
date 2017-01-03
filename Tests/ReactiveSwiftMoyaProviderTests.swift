@@ -21,7 +21,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             }
             
             it("returns the correct error message") {
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 
                 waitUntil { done in
                     provider.request(.zen).startWithFailed { error in
@@ -218,8 +218,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
             it("returns identical signalproducers for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1: SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
-                let signalProducer2: SignalProducer<Moya.Response, Moya.Error> = provider.request(target)
+                let signalProducer1: SignalProducer<Moya.Response, MoyaError> = provider.request(target)
+                let signalProducer2: SignalProducer<Moya.Response, MoyaError> = provider.request(target)
 
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
 

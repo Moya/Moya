@@ -14,7 +14,7 @@ struct Network {
         target: MyService,
         success successCallback: (JSON) -> Void,
         error errorCallback: (statusCode: Int) -> Void,
-        failure failureCallback: (Moya.Error) -> Void
+        failure failureCallback: (MoyaError) -> Void
     ) {
         provider.request(target) { result in
             switch result {

@@ -176,20 +176,20 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = Data()
                 let observable = observableSendingData(data)
                 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 _ = observable.mapImage().subscribe { event in
                     switch event {
                     case .next:
                         fail("next called for invalid data")
                     case .error(let error):
-                        receivedError = error as? Moya.Error
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = Moya.Error.imageMapping(Response(statusCode: 200, data: Data(), response: nil))
+                let expectedError = MoyaError.imageMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
@@ -216,13 +216,13 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = json.data(using: .utf8)
                 let observable = observableSendingData(data!)
                 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 _ = observable.mapJSON().subscribe { event in
                     switch event {
                     case .next:
                         fail("next called for invalid data")
                     case .error(let error):
-                        receivedError = error as? Moya.Error
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
@@ -270,20 +270,20 @@ class ObservableMoyaSpec: QuickSpec {
                 let data = Data(bytes: [0x11FFFF] as [UInt32], count: 1) //Byte exceeding UTF8
                 let observable = observableSendingData(data)
                 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 _ = observable.mapString().subscribe { event in
                     switch event {
                     case .next:
                         fail("next called for invalid data")
                     case .error(let error):
-                        receivedError = error as? Moya.Error
+                        receivedError = error as? MoyaError
                     default:
                         break
                     }
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = Moya.Error.stringMapping(Response(statusCode: 200, data: Data(), response: nil))
+                let expectedError = MoyaError.stringMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }

@@ -128,7 +128,7 @@ that hits the network. It has a default value of `MoyaProvider.DefaultRequestMap
 which simply uses the `urlRequest` property of the `Endpoint` instance.
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
-its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, Moya.Error> -> Void`) with a request that represents the Endpoint.
+its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, MoyaError> -> Void`) with a request that represents the Endpoint.
 It's here that you'd do your OAuth signing or whatever. Since you may invoke the
 closure asynchronously, you can use whatever authentication library you like ([example](https://github.com/rheinfabrik/Heimdallr.swift)).
 Instead of modifying the request, you could simply log it, instead.

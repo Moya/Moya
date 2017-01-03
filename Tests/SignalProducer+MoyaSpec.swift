@@ -26,7 +26,7 @@ private extension ImageType {
     }
 }
 
-private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalProducer<Response, Moya.Error> {
+private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalProducer<Response, MoyaError> {
     return SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
 }
 
@@ -168,7 +168,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = Data()
                 let signal = signalSendingData(data)
                 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 signal.mapImage().startWithResult { result in
                     switch result {
                     case .success:
@@ -179,7 +179,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = Moya.Error.imageMapping(Response(statusCode: 200, data: Data(), response: nil))
+                let expectedError = MoyaError.imageMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
@@ -207,7 +207,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = json.data(using: String.Encoding.utf8)
                 let signal = signalSendingData(data!)
                 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 signal.mapJSON().startWithResult { result in
                     switch result {
                     case .success:
@@ -259,7 +259,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 let data = Data(bytes: [0x11FFFF] as [UInt32], count: 1) //Byte exceeding UTF8
                 let signal = signalSendingData(data as Data)
                 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 signal.mapString().startWithResult { result in
                     switch result {
                     case .success:
@@ -270,7 +270,7 @@ class SignalProducerMoyaSpec: QuickSpec {
                 }
                 
                 expect(receivedError).toNot(beNil())
-                let expectedError = Moya.Error.stringMapping(Response(statusCode: 200, data: Data(), response: nil))
+                let expectedError = MoyaError.stringMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }

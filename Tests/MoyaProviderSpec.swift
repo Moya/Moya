@@ -265,7 +265,7 @@ class MoyaProviderSpec: QuickSpec {
                         if let urlRequest = endpoint.urlRequest {
                             done(.success(urlRequest))
                         } else {
-                            done(.failure(Moya.Error.requestMapping(endpoint.url)))
+                            done(.failure(MoyaError.requestMapping(endpoint.url)))
                         }
                     }
                 }
@@ -365,7 +365,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
                     }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -423,14 +423,14 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 provider.request(.zen) { result in
                     if case .failure(let error) = result {
                         receivedError = error
                     }
                 }
 
-                if case .some(Moya.Error.underlying(let underlyingError as NSError)) = receivedError {
+                if case .some(MoyaError.underlying(let underlyingError as NSError)) = receivedError {
                     expect(underlyingError) == error
                 } else {
                     fail("Expected to receive error, did not.")
@@ -451,7 +451,7 @@ class MoyaProviderSpec: QuickSpec {
             
             it("returns failure for any given request") {
                 let target: GitHub = .zen
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 provider.request(target) { response in
                     if case .failure(let error) = response {
                         receivedError = error
@@ -503,7 +503,7 @@ class MoyaProviderSpec: QuickSpec {
             }
             
             it("returns stubbed error data when present") {
-                var receivedError: Moya.Error?
+                var receivedError: MoyaError?
                 
                 let target: GitHub = .userProfile("ashfurrow")
                 provider.request(target) { result in
@@ -539,7 +539,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -560,7 +560,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -581,7 +581,7 @@ class MoyaProviderSpec: QuickSpec {
                     if let urlRequest = endpoint.urlRequest {
                         done(.success(urlRequest))
                     } else {
-                        done(.failure(Moya.Error.requestMapping(endpoint.url)))
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -654,7 +654,7 @@ class MoyaProviderSpec: QuickSpec {
             }
             
             it("invokes completion and returns .Failure if cancelled immediately") {
-                var error: Moya.Error?
+                var error: MoyaError?
                 waitUntil { done in
                     let cancellable = provider.request(.zen, completion: { (result) in
                         if case let .failure(err) = result {
@@ -700,7 +700,7 @@ class MoyaProviderSpec: QuickSpec {
                 
                 var progressValues: [Double] = []
                 var completedValues: [Bool] = []
-                var error: Moya.Error?
+                var error: MoyaError?
                 
                 waitUntil(timeout: 5.0) { done in
                     let progressClosure: ProgressBlock = { progress in
