@@ -58,6 +58,10 @@
 		3B58596C1E1C2FE7009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596A1E1C2FE7009BBDF1 /* Availability.swift */; };
 		3B58596D1E1C2FE7009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596A1E1C2FE7009BBDF1 /* Availability.swift */; };
 		3B58596E1E1C2FE7009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596A1E1C2FE7009BBDF1 /* Availability.swift */; };
+		3B5859701E1C33A6009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596F1E1C33A6009BBDF1 /* Availability.swift */; };
+		3B5859711E1C33A6009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596F1E1C33A6009BBDF1 /* Availability.swift */; };
+		3B5859721E1C33A6009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596F1E1C33A6009BBDF1 /* Availability.swift */; };
+		3B5859731E1C33A6009BBDF1 /* Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B58596F1E1C33A6009BBDF1 /* Availability.swift */; };
 		3BC0F9831E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
 		3BC0F9841E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
 		3BC0F9851E15AF2400F4406F /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC0F9821E15AF2400F4406F /* MultiTarget.swift */; };
@@ -350,6 +354,7 @@
 		3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenPlugin.swift; sourceTree = "<group>"; };
 		3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenPluginSpec.swift; sourceTree = "<group>"; };
 		3B58596A1E1C2FE7009BBDF1 /* Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Availability.swift; sourceTree = "<group>"; };
+		3B58596F1E1C33A6009BBDF1 /* Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Availability.swift; sourceTree = "<group>"; };
 		3BC0F9821E15AF2400F4406F /* MultiTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		3BCBBDCA1E15A48400F53224 /* MultipartFormData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		3BE0900A1E1AD730000F5DD4 /* TargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
@@ -595,6 +600,7 @@
 		0676A5DD1BFE80D3001C7F55 /* ReactiveMoya */ = {
 			isa = PBXGroup;
 			children = (
+				3B58596F1E1C33A6009BBDF1 /* Availability.swift */,
 				492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */,
 				492F83C01DED97F100C79972 /* SignalProducer+Response.swift */,
 			);
@@ -1346,6 +1352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B5859711E1C33A6009BBDF1 /* Availability.swift in Sources */,
 				492F83C61DED981600C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
 				492F83CA1DED981F00C79972 /* SignalProducer+Response.swift in Sources */,
 			);
@@ -1389,6 +1396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B5859701E1C33A6009BBDF1 /* Availability.swift in Sources */,
 				492F83C51DED981400C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
 				492F83C91DED981E00C79972 /* SignalProducer+Response.swift in Sources */,
 			);
@@ -1501,6 +1509,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B5859721E1C33A6009BBDF1 /* Availability.swift in Sources */,
 				492F83C71DED981700C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
 				492F83CB1DED982000C79972 /* SignalProducer+Response.swift in Sources */,
 			);
@@ -1544,6 +1553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B5859731E1C33A6009BBDF1 /* Availability.swift in Sources */,
 				492F83C81DED981800C79972 /* ReactiveSwiftMoyaProvider.swift in Sources */,
 				492F83CC1DED982000C79972 /* SignalProducer+Response.swift in Sources */,
 			);
