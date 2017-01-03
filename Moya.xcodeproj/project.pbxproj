@@ -467,14 +467,14 @@
 		4682E0AA1E1B27C300004D27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4682E0B21E1B27CC00004D27 /* MultiTargetDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiTargetDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4682E0C01E1B27CC00004D27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4682E0C51E1B283500004D27 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GiphyAPI.swift; path = Shared/GiphyAPI.swift; sourceTree = "<group>"; };
-		4682E0C61E1B283500004D27 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubAPI.swift; path = Shared/GitHubAPI.swift; sourceTree = "<group>"; };
-		4682E0C71E1B283500004D27 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubUserContentAPI.swift; path = Shared/GitHubUserContentAPI.swift; sourceTree = "<group>"; };
-		4682E0C81E1B283500004D27 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Shared/Images.xcassets; sourceTree = "<group>"; };
-		4682E0C91E1B283500004D27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Shared/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		4682E0CB1E1B283500004D27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Shared/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4682E0DA1E1B284800004D27 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Demo/AppDelegate.swift; sourceTree = "<group>"; };
-		4682E0DB1E1B284800004D27 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Demo/ViewController.swift; sourceTree = "<group>"; };
+		4682E0C51E1B283500004D27 /* GiphyAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GiphyAPI.swift; path = GiphyAPI.swift; sourceTree = "<group>"; };
+		4682E0C61E1B283500004D27 /* GitHubAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubAPI.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		4682E0C71E1B283500004D27 /* GitHubUserContentAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubUserContentAPI.swift; path = GitHubUserContentAPI.swift; sourceTree = "<group>"; };
+		4682E0C81E1B283500004D27 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images.xcassets; sourceTree = "<group>"; };
+		4682E0C91E1B283500004D27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4682E0CB1E1B283500004D27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4682E0DA1E1B284800004D27 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		4682E0DB1E1B284800004D27 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4682E0DE1E1B285500004D27 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4682E0DF1E1B285500004D27 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveSwiftMoyaProvider.swift; sourceTree = "<group>"; };
@@ -887,6 +887,7 @@
 				4682E0B31E1B27CC00004D27 /* MultiTargetDemo */,
 			);
 			name = Demos;
+			path = Demos;
 			sourceTree = "<group>";
 		};
 		4682E0CD1E1B283500004D27 /* Shared */ = {
@@ -900,7 +901,7 @@
 				4682E0CC1E1B283500004D27 /* Main.storyboard */,
 			);
 			name = Shared;
-			path = Demo;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		4682E0E21E1B285B00004D27 /* Supporting Files */ = {
@@ -909,6 +910,7 @@
 				4682E0C01E1B27CC00004D27 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4682E0E31E1B286100004D27 /* Supporting Files */ = {
@@ -917,6 +919,7 @@
 				4682E0AA1E1B27C300004D27 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1921,6 +1924,7 @@
 				4682E0C91E1B283500004D27 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		4682E0CC1E1B283500004D27 /* Main.storyboard */ = {
@@ -1929,6 +1933,7 @@
 				4682E0CB1E1B283500004D27 /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2476,7 +2481,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Demo/Info.plist;
+				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
@@ -2500,7 +2505,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Demo/Info.plist;
+				INFOPLIST_FILE = "Demos/Demo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
@@ -2523,7 +2528,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = MultiTargetDemo/Info.plist;
+				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
@@ -2547,7 +2552,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = MultiTargetDemo/Info.plist;
+				INFOPLIST_FILE = "Demos/MultiTargetDemo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
