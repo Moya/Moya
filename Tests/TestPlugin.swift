@@ -1,5 +1,6 @@
-import Result
-import Moya
+import enum Result.Result
+import Alamofire
+@testable import Moya
 
 final class TestingPlugin: PluginType {
     var request: (RequestType, TargetType)?

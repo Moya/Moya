@@ -2,9 +2,10 @@ import Quick
 import Nimble
 import ReactiveSwift
 import OHHTTPStubs
-@testable
-import Moya
 import Alamofire
+
+@testable import Moya
+@testable import ReactiveMoya
 
 class ReactiveSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {

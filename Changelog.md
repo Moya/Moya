@@ -6,6 +6,8 @@
 - `Moya.Error` now conforms to `LocalizedError` protocol.
 - Added documentation for `TargetType` and associated data structures.
 - Re-add `MultiTarget` to project.
+- Adopted an SPM-compatible project structure.
+- Moved tests to Moya.xcodeproj.
 
 # 8.0.0-beta.6
 

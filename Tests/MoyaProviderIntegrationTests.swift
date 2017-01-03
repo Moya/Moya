@@ -1,8 +1,10 @@
 import Quick
-import Moya
 import Nimble
 import OHHTTPStubs
 import Alamofire
+
+@testable import Moya
+@testable import ReactiveMoya
 
 func beIdenticalToResponse(_ expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
     return MatcherFunc { actualExpression, failureMessage in
