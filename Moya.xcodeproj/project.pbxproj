@@ -403,6 +403,10 @@
 		463CF3701E1A122400824884 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
 		463CF3711E1A122400824884 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/Mac/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		463CF3721E1A122400824884 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/Mac/Quick.framework; sourceTree = "<group>"; };
+		4682E09C1E1B27C300004D27 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4682E0AA1E1B27C300004D27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4682E0B21E1B27CC00004D27 /* MultiTargetDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiTargetDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4682E0C01E1B27CC00004D27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		492F83BF1DED97F100C79972 /* ReactiveSwiftMoyaProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveSwiftMoyaProvider.swift; sourceTree = "<group>"; };
 		492F83C01DED97F100C79972 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SignalProducer+Response.swift"; sourceTree = "<group>"; };
 		554B0FB91BE7ED4D00F3D266 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -508,6 +512,20 @@
 				463CF3741E1A122400824884 /* OHHTTPStubs.framework in Frameworks */,
 				463CF3751E1A122400824884 /* Quick.framework in Frameworks */,
 				463CF3781E1A1B2800824884 /* ReactiveMoya.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4682E0991E1B27C300004D27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4682E0AF1E1B27CC00004D27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +637,7 @@
 		091F0D2A1BDE998F009D0A49 = {
 			isa = PBXGroup;
 			children = (
+				4682E0C41E1B27D400004D27 /* Demos */,
 				0676A5D31BFE80D3001C7F55 /* Sources */,
 				463CF2601E1A058100824884 /* Tests */,
 				091F0D351BDE998F009D0A49 /* Products */,
@@ -646,6 +665,8 @@
 				463CF2741E1A05C300824884 /* MoyaTests-tvOS.xctest */,
 				463CF2831E1A05D200824884 /* MoyaTests-iOS.xctest */,
 				463CF2921E1A05E100824884 /* MoyaTests-macOS.xctest */,
+				4682E09C1E1B27C300004D27 /* Demo.app */,
+				4682E0B21E1B27CC00004D27 /* MultiTargetDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -760,6 +781,31 @@
 				3BE5C7B11E1A340C003C9B91 /* watchOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4682E09D1E1B27C300004D27 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				4682E0AA1E1B27C300004D27 /* Info.plist */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		4682E0B31E1B27CC00004D27 /* MultiTargetDemo */ = {
+			isa = PBXGroup;
+			children = (
+				4682E0C01E1B27CC00004D27 /* Info.plist */,
+			);
+			path = MultiTargetDemo;
+			sourceTree = "<group>";
+		};
+		4682E0C41E1B27D400004D27 /* Demos */ = {
+			isa = PBXGroup;
+			children = (
+				4682E0B31E1B27CC00004D27 /* MultiTargetDemo */,
+				4682E09D1E1B27C300004D27 /* Demo */,
+			);
+			name = Demos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1023,6 +1069,40 @@
 			productReference = 463CF2921E1A05E100824884 /* MoyaTests-macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4682E09B1E1B27C300004D27 /* Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4682E0AD1E1B27C400004D27 /* Build configuration list for PBXNativeTarget "Demo" */;
+			buildPhases = (
+				4682E0981E1B27C300004D27 /* Sources */,
+				4682E0991E1B27C300004D27 /* Frameworks */,
+				4682E09A1E1B27C300004D27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Demo;
+			productName = Demo;
+			productReference = 4682E09C1E1B27C300004D27 /* Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4682E0B11E1B27CC00004D27 /* MultiTargetDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4682E0C11E1B27CC00004D27 /* Build configuration list for PBXNativeTarget "MultiTargetDemo" */;
+			buildPhases = (
+				4682E0AE1E1B27CC00004D27 /* Sources */,
+				4682E0AF1E1B27CC00004D27 /* Frameworks */,
+				4682E0B01E1B27CC00004D27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MultiTargetDemo;
+			productName = MultiTargetDemo;
+			productReference = 4682E0B21E1B27CC00004D27 /* MultiTargetDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
 		554B0FB81BE7ED4D00F3D266 /* Moya tvOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 554B0FBE1BE7ED4D00F3D266 /* Build configuration list for PBXNativeTarget "Moya tvOS" */;
@@ -1171,6 +1251,14 @@
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
+					4682E09B1E1B27C300004D27 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					4682E0B11E1B27CC00004D27 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					554B0FB81BE7ED4D00F3D266 = {
 						CreatedOnToolsVersion = 7.1;
 					};
@@ -1207,6 +1295,8 @@
 				463CF2821E1A05D200824884 /* MoyaTests-iOS */,
 				463CF2731E1A05C300824884 /* MoyaTests-tvOS */,
 				463CF2911E1A05E100824884 /* MoyaTests-macOS */,
+				4682E09B1E1B27C300004D27 /* Demo */,
+				4682E0B11E1B27CC00004D27 /* MultiTargetDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -1275,6 +1365,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				463CF2DC1E1A062600824884 /* testImage.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4682E09A1E1B27C300004D27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4682E0B01E1B27CC00004D27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1477,6 +1581,20 @@
 				463CF2BE1E1A062600824884 /* MoyaProviderSpec.swift in Sources */,
 				463CF2B51E1A062600824884 /* ErrorTests.swift in Sources */,
 				463CF2B81E1A062600824884 /* MethodSpec.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4682E0981E1B27C300004D27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4682E0AE1E1B27CC00004D27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2147,6 +2265,72 @@
 			};
 			name = Release;
 		};
+		4682E0AB1E1B27C400004D27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4682E0AC1E1B27C400004D27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Demo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Moya.Demo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		4682E0C21E1B27CC00004D27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = MultiTargetDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4682E0C31E1B27CC00004D27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = MultiTargetDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Moya.MultiTargetDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		554B0FBF1BE7ED4D00F3D266 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2545,6 +2729,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4682E0AD1E1B27C400004D27 /* Build configuration list for PBXNativeTarget "Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4682E0AB1E1B27C400004D27 /* Debug */,
+				4682E0AC1E1B27C400004D27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		4682E0C11E1B27CC00004D27 /* Build configuration list for PBXNativeTarget "MultiTargetDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4682E0C21E1B27CC00004D27 /* Debug */,
+				4682E0C31E1B27CC00004D27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		554B0FBE1BE7ED4D00F3D266 /* Build configuration list for PBXNativeTarget "Moya tvOS" */ = {
 			isa = XCConfigurationList;
