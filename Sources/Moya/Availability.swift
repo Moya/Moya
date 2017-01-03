@@ -31,8 +31,8 @@ public class ReactiveCocoaMoyaProvider { }
 //}
 
 extension Response {
-//    @available(*, unavailable, renamed: "filter(statusCodes:)")
-//    public func filterStatusCodes(range: ClosedInterval<Int>) throws -> Response { fatalError() }
+    @available(*, unavailable, renamed: "filter(statusCodes:)")
+    public func filterStatusCodes(range: ClosedRange<Int>) throws -> Response { fatalError() }
 
     @available(*, unavailable, renamed: "filter(statusCode:)")
     public func filterStatusCode(code: Int) throws -> Response { fatalError() }
