@@ -13,13 +13,13 @@ public protocol AccessTokenAuthorizable {
 
 // MARK: - AccessTokenPlugin
 
-/** 
+/**
  A plugin for adding bearer-type authorization headers to requests. Example:
- 
+
  ```
  Authorization: Bearer <token>
  ```
- 
+
  - Note: By default, requests to all `TargetType`s will receive this header. You can control this
    behvaior by conforming to `AccessTokenAuthorizable`.
 */
@@ -34,7 +34,7 @@ public struct AccessTokenPlugin: PluginType {
 
     /**
      Initialize a new `AccessTokenPlugin`.
-     
+
      - parameters:
        - token: The token to be applied in the pattern `Authorization: Bearer <token>`
     */
@@ -44,14 +44,14 @@ public struct AccessTokenPlugin: PluginType {
 
     /**
      Prepare a request by adding an authorization header if necessary.
-     
+
      - parameters:
        - request: The request to modify.
        - target: The target of the request.
      - returns: The modified `URLRequest`.
     */
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
-        if let authorizable = target as? AccessTokenAuthorizable, !authorizable.shouldAuthorize {
+        if let authorizable = target as? AccessTokenAuthorizable, authorizable.shouldAuthorize == false {
             return request
         }
 
