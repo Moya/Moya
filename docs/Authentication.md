@@ -61,8 +61,8 @@ specify the behavior:
 
 ```swift
 enum YourAPI: TargetType, AccessTokenAuthorizable {
-  case needsAuthorization
-  case doesntNeedAuthorization
+  case targetThatNeedsAuthorization
+  case targetThatDoesntNeedAuthorization
 
   /*
   TargetType implementation
@@ -70,9 +70,9 @@ enum YourAPI: TargetType, AccessTokenAuthorizable {
 
   var shouldAuthorize: Bool {
     switch self {
-    case .needsAuthorization:
+    case .targetThatNeedsAuthorization:
       return true
-    case .doesntNeedAuthorization:
+    case .targetThatDoesntNeedAuthorization:
       return false
     }
   }
