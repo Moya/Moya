@@ -54,9 +54,9 @@ let authPlugin = AccessTokenPlugin(token: token)
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
 
-By default, `AccessTokenPlugin` will add the authorization header to requests to
-any `TargetType`. If you want to control this behavior, you can have your
-`TargetType` conform to `AccessTokenAuthorizable` and use `shouldAuthorize` to
+By default, `AccessTokenPlugin` will add the authorization header to all
+requests. If you want to control this behavior for a `TargetType`, you can
+conform to `AccessTokenAuthorizable` and use `shouldAuthorize` to
 specify the behavior:
 
 ```swift
