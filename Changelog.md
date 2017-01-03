@@ -9,6 +9,7 @@
 - Re-add `MultiTarget` to project.
 - Adopted an SPM-compatible project structure.
 - Moved tests to Moya.xcodeproj.
+- Supported the swift package manager
 
 # 8.0.0-beta.6
 

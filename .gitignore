@@ -26,3 +26,6 @@ Carthage
 Demo/Pods
 .ruby-version
 .ruby-gemset
+# Swift Package Manager
+.build
+Packages

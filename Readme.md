@@ -61,6 +61,34 @@ you should use for your Swift version.
 | 2.3           | 7.0.2 - 7.0.3   |
 | 2.2           | <= 7.0.1        |
 
+### Swift Package Manager
+
+To integrate using Apple's swift package manager, add the following as a dependency to your Package.swift:
+
+```swift
+.Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
+```
+
+and then specify `.Target(name: "Moya")` as a dependency of the Target in which you wish to use Moya.
+Here's an example PackageDescription:
+
+```swift
+import PackageDescription
+
+let package = Package(
+  name: "MyApp",
+  targets: [
+    Target(
+      name: "MyApp",
+      dependencies: [.Target(name: "Moya")]  
+    )
+  ],
+  dependencies: [
+    .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
+  ]
+)
+```
+
 ### CocoaPods
 
 For Moya, use the following entry in your Podfile:
