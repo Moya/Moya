@@ -1,5 +1,5 @@
+import Foundation
 import Result
-import ReactiveSwift
 
 extension Endpoint {
     @available(*, unavailable, renamed: "adding(newParameters:)")
@@ -20,15 +20,7 @@ enum StructTarget { }
 
 extension MoyaProvider {
     @available(*, unavailable, renamed: "notifyPluginsOfImpendingStub(for:target:)")
-    internal final func notifyPluginsOfImpendingStub(request: NSURLRequest, target: Target) { fatalError() }
-}
-
-@available(*, unavailable, renamed: "ReactiveSwiftMoyaProvider")
-public class ReactiveCocoaMoyaProvider { }
-
-extension ReactiveSwiftMoyaProvider {
-    @available(*, unavailable, renamed: "request(_:)")
-    public func request(token: Target) -> SignalProducer<Response, MoyaError> { fatalError() }
+    internal final func notifyPluginsOfImpendingStub(request: URLRequest, target: Target) { fatalError() }
 }
 
 extension Response {
