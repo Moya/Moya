@@ -1,4 +1,6 @@
-import Moya
+#if !COCOAPODS
+    import Moya
+#endif
 import ReactiveSwift
 
 @available(*, unavailable, renamed: "ReactiveSwiftMoyaProvider")
