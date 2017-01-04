@@ -57,11 +57,11 @@ Because of the many Swift versions Moya supports, it might be confusing to
 find the version of Moya that you need. Below is a table that shows which version of Moya
 you should use for your Swift version.
 
-| Swift version | Moya version    |
-| ------------- | --------------- |
-| 3.X           | >= 8.0.0        |
-| 2.3           | 7.0.2 - 7.0.3   |
-| 2.2           | <= 7.0.1        |
+| Swift version | Moya version  |
+| ------------- | ------------- |
+| 3.X           | >= 8.0.0      |
+| 2.3           | 7.0.2 - 7.0.3 |
+| 2.2           | <= 7.0.1      |
 
 ### Swift Package Manager
 
@@ -79,12 +79,6 @@ import PackageDescription
 
 let package = Package(
   name: "MyApp",
-  targets: [
-    Target(
-      name: "MyApp",
-      dependencies: [.Target(name: "Moya")]  
-    )
-  ],
   dependencies: [
     .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
   ]
