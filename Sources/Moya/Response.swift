@@ -1,11 +1,13 @@
 import Foundation
 
+/// Represents a rsponse to a `MoyaProvider.request`.
 public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
     public let data: Data
     public let request: URLRequest?
     public let response: URLResponse?
 
+    /// Initialize a new `Response`.
     public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: URLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
@@ -13,10 +15,12 @@ public final class Response: CustomDebugStringConvertible, Equatable {
         self.response = response
     }
 
+    /// A text description of the `Response`.
     public var description: String {
         return "Status Code: \(statusCode), Data Length: \(data.count)"
     }
 
+    /// A text description of the `Response`. Suitable for debugging.
     public var debugDescription: String {
         return description
     }
@@ -38,14 +42,17 @@ public extension Response {
         return self
     }
 
+    /// Filters out responses of a specific status code, generating errors when others are encountered.
     public func filter(statusCode: Int) throws -> Response {
         return try filter(statusCodes: statusCode...statusCode)
     }
 
+    /// Filters out responses with status codes in the range 200 - 299, generating errors when others are encountered.
     public func filterSuccessfulStatusCodes() throws -> Response {
         return try filter(statusCodes: 200...299)
     }
 
+    /// Filters out responses with status codes in the range 200 - 399, generating errors when others are encountered.
     public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
         return try filter(statusCodes: 200...399)
     }
