@@ -1,6 +1,8 @@
 import Foundation
 
+/// A `TargetType` used to enable `MoyaProvider` to process multiple `TargetType`s.
 public enum MultiTarget: TargetType {
+    /// The embedded `TargetType`.
     case target(TargetType)
 
     public init(_ target: TargetType) {
@@ -39,6 +41,7 @@ public enum MultiTarget: TargetType {
         return target.validate
     }
 
+    /// The embedded `TargetType`.
     public var target: TargetType {
         switch self {
         case .target(let t): return t
