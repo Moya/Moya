@@ -38,7 +38,7 @@ public extension Response {
      Returns the `Response` if the `statusCode` falls within the specified range.
 
      - parameters:
-        - statusCodes: The range of acceptible status codes.
+        - statusCodes: The range of acceptable status codes.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
     public func filter(statusCodes: ClosedRange<Int>) throws -> Response {
@@ -52,7 +52,7 @@ public extension Response {
      Returns the `Response` if it has the specified `statusCode`.
 
      - parameters:
-        - statusCode: The acceptible status code.
+        - statusCode: The acceptable status code.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
     public func filter(statusCode: Int) throws -> Response {
