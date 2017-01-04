@@ -9,9 +9,10 @@
 - Re-add `MultiTarget` to project.
 - Adopted an SPM-compatible project structure.
 - Moved tests to Moya.xcodeproj.
-- Supported the swift package manager
+- Supported the Swift package manager
 - Added `AccessTokenPlugin` for easier authorization.
 - Added `AccessTokenAuthorizable` protocol for optionally controlling the authorization behavior of `TargetType`s when using `AccessTokenPlugin`.
+- Added availability tags for renamed functions included in the Swift 3 migration.
 
 # 8.0.0-beta.6
 
