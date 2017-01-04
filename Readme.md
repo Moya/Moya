@@ -65,14 +65,14 @@ you should use for your Swift version.
 
 ### Swift Package Manager
 
-To integrate using Apple's swift package manager, add the following as a dependency to your Package.swift:
+To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
 .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
 ```
 
 and then specify `.Target(name: "Moya")` as a dependency of the Target in which you wish to use Moya.
-Here's an example PackageDescription:
+Here's an example `PackageDescription`:
 
 ```swift
 import PackageDescription
@@ -90,7 +90,7 @@ let package = Package(
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0-beta.6'
+pod 'Moya', '8.0.0'
 ```
 
 In any file you'd like to use Moya in, don't forget to
@@ -106,7 +106,6 @@ pod 'Moya/RxSwift'
 # or
 
 pod 'Moya/ReactiveSwift'
-pod 'ReactiveSwift', '1.0.0-alpha.4'
 ```
 
 Then run `pod install`.
