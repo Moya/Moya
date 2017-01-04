@@ -59,7 +59,7 @@ you should use for your Swift version.
 
 | Swift version | Moya version    |
 | ------------- | --------------- |
-| 3.X           | >= 8.0.0-beta.1 |
+| 3.X           | >= 8.0.0        |
 | 2.3           | 7.0.2 - 7.0.3   |
 | 2.2           | <= 7.0.1        |
 
@@ -96,7 +96,7 @@ let package = Package(
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0-beta.6'
+pod 'Moya', '8.0.0'
 ```
 
 In any file you'd like to use Moya in, don't forget to
@@ -112,7 +112,7 @@ pod 'Moya/RxSwift'
 # or
 
 pod 'Moya/ReactiveSwift'
-pod 'ReactiveSwift', '1.0.0-alpha.4'
+pod 'ReactiveSwift', '1.0.0'
 ```
 
 Then run `pod install`.
