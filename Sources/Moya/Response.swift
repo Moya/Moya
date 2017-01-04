@@ -1,6 +1,6 @@
 import Foundation
 
-/// Represents a rsponse to a `MoyaProvider.request`.
+/// Represents a response to a `MoyaProvider.request`.
 public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
     public let data: Data
