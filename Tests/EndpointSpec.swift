@@ -14,9 +14,9 @@ class EndpointSpec: QuickSpec {
                 endpoint = Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding.default, httpHeaderFields: headerFields)
             }
             
-            it("returns a new endpoint for endpointByAddingParameters") {
+            it("returns a new endpoint for adding(newParameters:)") {
                 let message = "I hate it when villains quote Shakespeare."
-                let newEndpoint = endpoint.adding(parameters: ["message": message])
+                let newEndpoint = endpoint.adding(newParameters: ["message": message])
                 let newEndpointMessageObject: Any? = newEndpoint.parameters?["message"]
                 let newEndpointMessage = newEndpointMessageObject as? String
                 let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
@@ -33,9 +33,9 @@ class EndpointSpec: QuickSpec {
                 expect(newEncodedRequest).to(equal(encodedRequest))
             }
             
-            it("returns a new endpoint for endpointByAddingHTTPHeaderFields") {
+            it("returns a new endpoint for adding(newHTTPHeaderFields:)") {
                 let agent = "Zalbinian"
-                let newEndpoint = endpoint.adding(httpHeaderFields: ["User-Agent": agent])
+                let newEndpoint = endpoint.adding(newHTTPHeaderFields: ["User-Agent": agent])
                 let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
                 let encodedRequest = try? endpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
@@ -50,9 +50,9 @@ class EndpointSpec: QuickSpec {
                 expect(newEncodedRequest).to(equal(encodedRequest))
             }
 
-            it ("returns a new endpoint for endpointByAddingParameterEncoding") {
+            it ("returns a new endpoint for adding(newParameterEncoding:)") {
                 let parameterEncoding = JSONEncoding.default
-                let newEndpoint = endpoint.adding(parameterEncoding: parameterEncoding)
+                let newEndpoint = endpoint.adding(newParameterEncoding: parameterEncoding)
                 let encodedRequest = try? parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
                 let newEncodedRequest = try? newEndpoint.parameterEncoding.encode(newEndpoint.urlRequest!, with: newEndpoint.parameters)
 
