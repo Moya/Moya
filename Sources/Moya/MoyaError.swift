@@ -38,3 +38,24 @@ public extension MoyaError {
         }
     }
 }
+
+// MARK: - Error Descriptions
+
+extension MoyaError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .imageMapping:
+            return "Failed to map data to an Image."
+        case .jsonMapping:
+            return "Failed to map data to JSON."
+        case .stringMapping:
+            return "Failed to map data to a String."
+        case .statusCode:
+            return "Status code didn't fall within the given range."
+        case .requestMapping:
+            return "Failed to map Endpoint to a URLRequest."
+        case .underlying(let error):
+            return error.localizedDescription
+        }
+    }
+}
