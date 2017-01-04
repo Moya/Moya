@@ -6,4 +6,5 @@
     public typealias ImageType = NSImage
 #endif
 
+/// An alias for the SDK's image type.
 public typealias Image = ImageType
