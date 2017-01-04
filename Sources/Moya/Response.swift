@@ -34,7 +34,13 @@ public final class Response: CustomDebugStringConvertible, Equatable {
 
 public extension Response {
 
-    /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
+    /**
+     Returns the `Response` if the `statusCode` falls within the specified range.
+
+     - parameters:
+        - statusCodes: The range of acceptible status codes.
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filter(statusCodes: ClosedRange<Int>) throws -> Response {
         guard statusCodes.contains(statusCode) else {
             throw MoyaError.statusCode(self)
@@ -42,17 +48,31 @@ public extension Response {
         return self
     }
 
-    /// Filters out responses of a specific status code, generating errors when others are encountered.
+    /**
+     Returns the `Response` if it has the specified `statusCode`.
+
+     - parameters:
+        - statusCode: The acceptible status code.
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filter(statusCode: Int) throws -> Response {
         return try filter(statusCodes: statusCode...statusCode)
     }
 
-    /// Filters out responses with status codes in the range 200 - 299, generating errors when others are encountered.
+    /**
+     Returns the `Response` if the `statusCode` falls within the range 200 - 299.
+
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filterSuccessfulStatusCodes() throws -> Response {
         return try filter(statusCodes: 200...299)
     }
 
-    /// Filters out responses with status codes in the range 200 - 399, generating errors when others are encountered.
+    /**
+     Returns the `Response` if the `statusCode` falls within the range 200 - 399.
+
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
         return try filter(statusCodes: 200...399)
     }
