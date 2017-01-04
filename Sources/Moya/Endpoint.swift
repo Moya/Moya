@@ -91,6 +91,7 @@ open class Endpoint<Target> {
 
 /// Extension for converting an `Endpoint` into an optional `URLRequest`.
 extension Endpoint {
+    /// Returns the `Endpoint` converted to a `URLRequest` if valid. Returns `nil` otherwise.
     public var urlRequest: URLRequest? {
         guard let requestURL = Foundation.URL(string: url) else { return nil }
 
