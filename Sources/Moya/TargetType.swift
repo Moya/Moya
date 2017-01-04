@@ -45,7 +45,7 @@ public extension TargetType {
        - inBundle: The `Bundle` to search in. Defaults to `Bundle.main`.
      - returns: The `Data` stored in the file or an empty `Data` if compiled in release mode and the requested file cannot be loaded.
     */
-    public func stubbedResponse(_ fileName: String, ofType type: String = "json", inBundle bundle: Bundle = Bundle.main) -> Data {
+    public func stubbedResponse(forFileNamed fileName: String, ofType type: String = "json", inBundle bundle: Bundle = Bundle.main) -> Data {
         guard
             let url = bundle.url(forResource: fileName, withExtension: type),
             let data = try? Data(contentsOf: url)

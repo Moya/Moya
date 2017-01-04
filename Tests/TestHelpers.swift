@@ -42,7 +42,7 @@ extension GitHub: TargetType {
     var sampleData: Data {
         switch self {
         case .zen:
-            return stubbedResponse("Zen", ofType: "txt", inBundle: Bundle(for: MoyaProviderSpec.self))
+            return stubbedResponse(forFileNamed: "Zen", ofType: "txt", inBundle: Bundle(for: MoyaProviderSpec.self))
         case .userProfile(let name):
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
