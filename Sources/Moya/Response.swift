@@ -1,11 +1,13 @@
 import Foundation
 
+/// Represents a response to a `MoyaProvider.request`.
 public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
     public let data: Data
     public let request: URLRequest?
     public let response: URLResponse?
 
+    /// Initialize a new `Response`.
     public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: URLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
@@ -13,10 +15,12 @@ public final class Response: CustomDebugStringConvertible, Equatable {
         self.response = response
     }
 
+    /// A text description of the `Response`.
     public var description: String {
         return "Status Code: \(statusCode), Data Length: \(data.count)"
     }
 
+    /// A text description of the `Response`. Suitable for debugging.
     public var debugDescription: String {
         return description
     }
@@ -30,7 +34,13 @@ public final class Response: CustomDebugStringConvertible, Equatable {
 
 public extension Response {
 
-    /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
+    /**
+     Returns the `Response` if the `statusCode` falls within the specified range.
+
+     - parameters:
+        - statusCodes: The range of acceptable status codes.
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filter(statusCodes: ClosedRange<Int>) throws -> Response {
         guard statusCodes.contains(statusCode) else {
             throw MoyaError.statusCode(self)
@@ -38,14 +48,31 @@ public extension Response {
         return self
     }
 
+    /**
+     Returns the `Response` if it has the specified `statusCode`.
+
+     - parameters:
+        - statusCode: The acceptable status code.
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filter(statusCode: Int) throws -> Response {
         return try filter(statusCodes: statusCode...statusCode)
     }
 
+    /**
+     Returns the `Response` if the `statusCode` falls within the range 200 - 299.
+
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filterSuccessfulStatusCodes() throws -> Response {
         return try filter(statusCodes: 200...299)
     }
 
+    /**
+     Returns the `Response` if the `statusCode` falls within the range 200 - 399.
+
+     - throws: `MoyaError.statusCode` when others are encountered.
+    */
     public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
         return try filter(statusCodes: 200...399)
     }

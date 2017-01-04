@@ -1,4 +1,5 @@
-[![CircleCI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya) [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
+[![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya.svg)](https://circleci.com/gh/Moya/Moya)
+[![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
@@ -56,34 +57,28 @@ Because of the many Swift versions Moya supports, it might be confusing to
 find the version of Moya that you need. Below is a table that shows which version of Moya
 you should use for your Swift version.
 
-| Swift version | Moya version    |
-| ------------- | --------------- |
-| 3.X           | >= 8.0.0-beta.1 |
-| 2.3           | 7.0.2 - 7.0.3   |
-| 2.2           | <= 7.0.1        |
+| Swift version | Moya version  |
+| ------------- | ------------- |
+| 3.X           | >= 8.0.0      |
+| 2.3           | 7.0.2 - 7.0.3 |
+| 2.2           | <= 7.0.1      |
 
 ### Swift Package Manager
 
-To integrate using Apple's swift package manager, add the following as a dependency to your Package.swift:
+To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
 .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
 ```
 
 and then specify `.Target(name: "Moya")` as a dependency of the Target in which you wish to use Moya.
-Here's an example PackageDescription:
+Here's an example `PackageDescription`:
 
 ```swift
 import PackageDescription
 
 let package = Package(
   name: "MyApp",
-  targets: [
-    Target(
-      name: "MyApp",
-      dependencies: [.Target(name: "Moya")]  
-    )
-  ],
   dependencies: [
     .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
   ]
@@ -95,7 +90,7 @@ let package = Package(
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0-beta.6'
+pod 'Moya', '8.0.0'
 ```
 
 In any file you'd like to use Moya in, don't forget to
@@ -111,7 +106,6 @@ pod 'Moya/RxSwift'
 # or
 
 pod 'Moya/ReactiveSwift'
-pod 'ReactiveSwift', '1.0.0-alpha.4'
 ```
 
 Then run `pod install`.

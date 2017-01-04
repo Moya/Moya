@@ -91,7 +91,7 @@ also create your own encoder that conforms to `ParameterEncoding` (e.g.
 `XMLEncoder`).
 
 ```swift
-public var parameterEncoding: ParameterEcoding {
+public var parameterEncoding: ParameterEncoding {
     switch self {
     case .zen:
         return JSONEncoding.default
