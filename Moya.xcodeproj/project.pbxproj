@@ -47,6 +47,9 @@
 		0676A6931BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
 		0676A6961BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
 		0676A6991BFE80D3001C7F55 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0676A5E51BFE80D3001C7F55 /* Observable+Response.swift */; };
+		3B2EC3451E1CAB0B008C9208 /* Zen.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B2EC3441E1CAB0B008C9208 /* Zen.txt */; };
+		3B2EC3461E1CAB0B008C9208 /* Zen.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B2EC3441E1CAB0B008C9208 /* Zen.txt */; };
+		3B2EC3471E1CAB0B008C9208 /* Zen.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3B2EC3441E1CAB0B008C9208 /* Zen.txt */; };
 		3B3F9C641E1B273C0083107D /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */; };
 		3B3F9C651E1B273C0083107D /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */; };
 		3B3F9C661E1B273C0083107D /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */; };
@@ -343,6 +346,7 @@
 		091F0D341BDE998F009D0A49 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D441BDE9A01009D0A49 /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		091F0D831BDE9D4D009D0A49 /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B2EC3441E1CAB0B008C9208 /* Zen.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Zen.txt; sourceTree = "<group>"; };
 		3B3F9C631E1B273C0083107D /* AccessTokenPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenPlugin.swift; sourceTree = "<group>"; };
 		3B3F9C681E1B2A7A0083107D /* AccessTokenPluginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenPluginSpec.swift; sourceTree = "<group>"; };
 		3BC0F9821E15AF2400F4406F /* MultiTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
@@ -639,6 +643,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3B2EC3431E1CAB0B008C9208 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				3B2EC3441E1CAB0B008C9208 /* Zen.txt */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
 		3BE5C7AE1E1A33E3003C9B91 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +729,7 @@
 		463CF2601E1A058100824884 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				3B2EC3431E1CAB0B008C9208 /* Fixtures */,
 				463CF29D1E1A062600824884 /* EndpointSpec.swift */,
 				463CF29E1E1A062600824884 /* Error+MoyaSpec.swift */,
 				463CF29F1E1A062600824884 /* ErrorTests.swift */,
@@ -1246,6 +1259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B2EC3461E1CAB0B008C9208 /* Zen.txt in Resources */,
 				463CF2DA1E1A062600824884 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1254,6 +1268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B2EC3451E1CAB0B008C9208 /* Zen.txt in Resources */,
 				463CF2DB1E1A062600824884 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1262,6 +1277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B2EC3471E1CAB0B008C9208 /* Zen.txt in Resources */,
 				463CF2DC1E1A062600824884 /* testImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

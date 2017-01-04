@@ -42,7 +42,7 @@ extension GitHub: TargetType {
     var sampleData: Data {
         switch self {
         case .zen:
-            return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+            return stubbedResponse("Zen", ofType: "txt", inBundle: Bundle(for: MoyaProviderSpec.self))
         case .userProfile(let name):
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
