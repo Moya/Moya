@@ -1,6 +1,9 @@
 import Foundation
 import Result
 
+@available(*, unavailable, renamed: "MoyaError", message: "Moya.Error has been renamed to MoyaError in version 8.0.0")
+public typealias Error = MoyaError
+
 extension Endpoint {
     @available(*, unavailable, renamed: "adding(newParameters:)")
     public func endpointByAddingParameters(parameters: [String: AnyObject]) -> Endpoint<Target> { fatalError() }
@@ -15,7 +18,7 @@ extension Endpoint {
     public func endpointByAdding(parameters: [String: AnyObject]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> { fatalError() }
 }
 
-@available(*, unavailable, renamed: "MultiTarget")
+@available(*, unavailable, renamed: "MultiTarget", message: "StructTarget has been renamed to MultiTarget in version 8.0.0")
 enum StructTarget { }
 
 extension MoyaProvider {

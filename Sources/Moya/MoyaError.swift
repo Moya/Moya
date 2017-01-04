@@ -1,9 +1,5 @@
 import Foundation
 
-// Mark Moya.Error as unavaiable and offer a quick fix.
-@available(*, unavailable, renamed: "MoyaError", message: "Moya.Error has been renamed to MoyaError in version 8.0.0")
-public typealias Error = MoyaError
-
 public enum MoyaError: Swift.Error {
     case imageMapping(Response)
     case jsonMapping(Response)
