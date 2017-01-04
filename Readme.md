@@ -85,7 +85,9 @@ let package = Package(
       dependencies: ["Moya"]
     )
   ],
-  dependencies: ["Moya"]
+  dependencies: [
+    .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
+  ]
 )
 ```
 
