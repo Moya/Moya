@@ -163,7 +163,7 @@ task :release, :version do |task, args|
   puts "Updating Demo project."
   Dir.chdir('Demo') do
     ENV['COCOAPODS_DISABLE_DETERMINISTIC_UUIDS'] = 'true'
-    sh "bundle exec pod update Moya"
+    sh "bundle exec pod update Moya --verbose"
   end
 
   puts "Updating changelog."
