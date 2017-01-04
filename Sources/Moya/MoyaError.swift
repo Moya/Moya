@@ -5,11 +5,23 @@ import Foundation
 public typealias Error = MoyaError
 
 public enum MoyaError: Swift.Error {
+
+    /// Indicates a response failed to map to an image.
     case imageMapping(Response)
+
+    /// Indicates a response failed to map to a JSON structure.
     case jsonMapping(Response)
+
+    /// Indicates a response failed to map to a String.
     case stringMapping(Response)
+
+    /// Indicates a response failed with an invalid HTTP status code.
     case statusCode(Response)
+
+    /// Indicates a response failed due to an underlying `Error`.
     case underlying(Swift.Error)
+
+    /// Indicates that an `Endpoint` failed to map to a `URLRequest`.
     case requestMapping(String)
 }
 
