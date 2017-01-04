@@ -110,7 +110,7 @@ for providing offline support for developers. This *should* depend on `self`.
 public var sampleData: Data {
     switch self {
     case .zen:
-        return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
+        return stubbedResponse(forFileNamed: "Zen")  // you can load data from files using `stubbedResponse`.
     case .userProfile(let name):
         return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
     case .userRepositories(let name):
