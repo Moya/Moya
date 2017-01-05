@@ -22,7 +22,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { [weak self] observer in
             guard let strongSelf = self else {
-                observer.onError(RxError.disposed(object: self))
+                observer.onError(RxError.disposed(object: self?))
             }
             let cancellableToken = strongSelf.request(token) { result in
                 switch result {
