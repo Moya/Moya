@@ -1,6 +1,6 @@
 # Next
 
-- RxMoyaProvider never sends next or errors out if it is disposed before a subscription is made
+- Fixed an issue where `RxMoyaProvider` never sends `next` or errors if it's disposed before a subscription is made.
 
 # 8.0.0
 
