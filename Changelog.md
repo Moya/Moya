@@ -1,5 +1,7 @@
 # Next
 
+- Added `stubbedResponse` helper funtion to `TargetType` for loading `sampleData` from files.
+
 # 8.0.0
 
 - **Breaking Change** Renamed `Moya.Error` to `MoyaError`.
