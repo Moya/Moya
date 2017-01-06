@@ -114,9 +114,8 @@ Then run `pod install`.
 
 Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
-The full Moya framework is bundled in each of those frameworks;
-importing more than one framework in a single file will result in
-ambiguous lookups at compile time.
+When linking frameworks remember to always link `Moya` along with `RxMoya` and 
+`ReactiveMoya`, if you use any of these.
 
 ```
 github "Moya/Moya"
