@@ -1,5 +1,7 @@
 # Next
 
+- RxMoyaProvider never sends next or errors out if it is disposed before a subscription is made
+
 # 8.0.0
 
 - **Breaking Change** Renamed `Moya.Error` to `MoyaError`.
