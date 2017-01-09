@@ -20,8 +20,8 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
     open func request(_ token: Target) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
-        return Observable.create { [weak self] observer in
-            let cancellableToken = self?.request(token) { result in
+        return Observable.create { observer in
+            let cancellableToken = self.request(token) { result in
                 switch result {
                 case let .success(response):
                     observer.onNext(response)
@@ -32,7 +32,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
             }
 
             return Disposables.create {
-                cancellableToken?.cancel()
+                cancellableToken.cancel()
             }
         }
     }
@@ -46,8 +46,8 @@ public extension RxMoyaProvider {
             }
         }
 
-        let response: Observable<ProgressResponse> = Observable.create { [weak self] observer in
-            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
+        let response: Observable<ProgressResponse> = Observable.create { observer in
+            let cancellableToken = self.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .success(response):
                     observer.onNext(ProgressResponse(response: response))
@@ -58,7 +58,7 @@ public extension RxMoyaProvider {
             }
 
             return Disposables.create {
-                cancellableToken?.cancel()
+                cancellableToken.cancel()
             }
         }
 
