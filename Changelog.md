@@ -8,6 +8,7 @@
 - **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
 - **Breaking Change** `TargetType` now specifies its `ParameterEncoding`.
 - **Breaking Change** Removed unused `Moya.Error.data`.
+- **Breaking Change** Renamed `adding(newHttpHeaderFields:)` to `adding(newHTTPHeaderFields:)`.
 - `Moya.Error` now conforms to `LocalizedError` protocol.
 - Added documentation for `TargetType` and associated data structures.
 - Re-add `MultiTarget` to project.
