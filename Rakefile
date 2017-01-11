@@ -49,17 +49,17 @@ end
 # See: https://discuss.circleci.com/t/multiple-ios-simulators-available-for-single-os-device-configurations/7854
 def devices
   return {
-    ios: ENV['CIRCLECI'] ? "id='F08BA729-6AD2-42DF-A210-34DC8D990011'" : "name='iPhone 6s'",
+    ios: ENV['CIRCLECI'] ? "id='00E25E25-4920-42E1-8CC6-360AEF34C5CE'" : "name='iPhone 6s'",
     macos: "arch='x86_64'",
-    tvos: ENV['CIRCLECI'] ? "id='020C899D-5A53-4519-88D7-E04C6F73F098'" : "name='Apple TV 1080p'"
+    tvos: ENV['CIRCLECI'] ? "id='31F99277-CC9E-409E-A257-7D1907DECB03'" : "name='Apple TV 1080p'"
   }
 end
 
 # See: https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
 def uuids
   return {
-    ios: 'F08BA729-6AD2-42DF-A210-34DC8D990011', # iPhone 6s
-    tvos: '020C899D-5A53-4519-88D7-E04C6F73F098' # Apple TV 1080p
+    ios: '00E25E25-4920-42E1-8CC6-360AEF34C5CE', # iPhone 6s
+    tvos: '31F99277-CC9E-409E-A257-7D1907DECB03' # Apple TV 1080p
   }
 end
 
