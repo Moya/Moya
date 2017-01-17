@@ -201,7 +201,7 @@ established.
 Once you have a `.success(response)` you might want to filter on status codes or
 convert the response data to JSON. `Moya.Response` can help!
 
-###### See more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
+###### See more at <https://github.com/Moya/Moya/blob/master/Sources/Moya/Response.swift>
 
 ```swift
 do {
