@@ -21,8 +21,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
 
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { observer in
-            let cancellableToken = self?.request(token, queue: nil, progress: progress, completion:
-                { (result) in
+            let cancellableToken = self.request(token, queue: nil, progress: progress, completion: { (result) in
                 switch result {
                 case let .success(response):
                     observer.onNext(response)
