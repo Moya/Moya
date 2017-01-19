@@ -1,4 +1,4 @@
-[![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya.svg)](https://circleci.com/gh/Moya/Moya)
+[![CircleCI](https://circleci.com/gh/Moya/Moya/tree/master.svg?style=svg)](https://circleci.com/gh/Moya/Moya/tree/master)
 [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
