@@ -69,8 +69,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
-
-                override func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
+                
+                override func request(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> Cancellable {
                     return TestCancellable()
                 }
             }
@@ -157,7 +157,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }
                     
-                    override func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
+                    override func request(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> Cancellable {
                         return TestCancellable()
                     }
                 }
