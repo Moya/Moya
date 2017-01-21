@@ -90,7 +90,7 @@ let package = Package(
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0'
+pod 'Moya', '8.0.1'
 ```
 
 In any file you'd like to use Moya in, don't forget to
