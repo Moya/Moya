@@ -1,5 +1,7 @@
 # Next
 
+# 8.0.1
+
 - Fixed an issue where `RxMoyaProvider` never sends `next` or errors if it's disposed before a subscription is made.
 
 # 8.0.0
