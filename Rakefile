@@ -46,26 +46,31 @@ def sdks
   }
 end
 
-# See: https://discuss.circleci.com/t/multiple-ios-simulators-available-for-single-os-device-configurations/7854
 def devices
   return {
-    ios: ENV['CIRCLECI'] ? "id='00E25E25-4920-42E1-8CC6-360AEF34C5CE'" : "name='iPhone 6s'",
-    macos: "arch='x86_64'",
-    tvos: ENV['CIRCLECI'] ? "id='31F99277-CC9E-409E-A257-7D1907DECB03'" : "name='Apple TV 1080p'"
+    ios: "OS=#{device_os[:ios]},name=#{device_names[:ios]}",
+    macos: "arch=x86_64",
+    tvos: "OS=#{device_os[:tvos]},name=#{device_names[:tvos]}"
   }
 end
 
-# See: https://discuss.circleci.com/t/xcode-exit-code-65/4284/13
-def uuids
+def device_names
   return {
-    ios: '00E25E25-4920-42E1-8CC6-360AEF34C5CE', # iPhone 6s
-    tvos: '31F99277-CC9E-409E-A257-7D1907DECB03' # Apple TV 1080p
+    ios: "iPhone 6s",
+    tvos: "Apple TV 1080p"
   }
 end
 
-def open_simulator_and_sleep(uuid)
-  return if uuid.nil? # Don't need a sleep on macOS because it runs first.
-  sh "xcrun instruments -w '#{uuid}' || sleep 15"
+def device_os
+  return {
+    ios: "10.2",
+    tvos: "10.0"
+  }
+end
+
+def open_simulator_and_sleep(platform)
+  return if platform == :macos # Don't need a sleep on macOS because it runs first.
+  sh "xcrun instruments -w '#{device_names[platform]} (#{device_os[platform]})' || sleep 15"
 end
 
 def xcodebuild(tasks, platform, xcprety_args: '')
@@ -73,8 +78,8 @@ def xcodebuild(tasks, platform, xcprety_args: '')
   scheme = schemes[platform]
   destination = devices[platform]
 
-  open_simulator_and_sleep(uuids[platform])
-  safe_sh "set -o pipefail && xcodebuild -project '#{moya_project}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
+  open_simulator_and_sleep(platform)
+  safe_sh "set -o pipefail && xcodebuild -project '#{moya_project}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
 end
 
 def xcodebuild_demo(tasks, xcprety_args: '')
@@ -85,8 +90,8 @@ def xcodebuild_demo(tasks, xcprety_args: '')
   demo_scheme = 'Demo'
 
   Dir.chdir('Demo') do
-    open_simulator_and_sleep(uuids[platform])
-    safe_sh "set -o pipefail && xcodebuild -workspace '#{demo_workspace}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination #{destination} #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
+    open_simulator_and_sleep(platform)
+    safe_sh "set -o pipefail && xcodebuild -workspace '#{demo_workspace}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
   end
 end
 
