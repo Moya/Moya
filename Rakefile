@@ -157,12 +157,12 @@ desc 'Release a version, specified as an argument.'
 task :release, :version do |task, args|
   version = args[:version]
   # Needs a X.Y.Z-text format.
-  abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+/).length == 0
+  abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+(-\w+\.\d+)?/).length == 0
 
   puts "Updating podspec."
   filename = "Moya.podspec"
   contents = File.read(filename)
-  contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+"/, "s.version      = \"#{version}\"")
+  contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+(-\w+\.\d)?"/, "s.version      = \"#{version}\"")
   File.open(filename, 'w') { |file| file.puts contents }
 
   puts "Updating Demo project."
