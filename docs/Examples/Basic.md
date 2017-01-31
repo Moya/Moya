@@ -49,6 +49,9 @@ extension MyService: TargetType {
             return ["first_name": firstName, "last_name": lastName]
         }
     }
+    var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
     var sampleData: Data {
         switch self {
         case .zen:
