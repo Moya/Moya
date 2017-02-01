@@ -90,22 +90,21 @@ let package = Package(
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.2'
+pod 'Moya', '~> 8.0'
 ```
 
 In any file you'd like to use Moya in, don't forget to
 import the framework with `import Moya`.
 
 For RxSwift or ReactiveSwift extensions, this project will include
-them as dependencies. You can do this via CocoaPods subspecs, but you will also
-need to include the pre-release versions of RxSwift or ReactiveSwift manually.
+them as dependencies. You can do this via CocoaPods subspecs.
 
 ```rb
-pod 'Moya/RxSwift'
+pod 'Moya/RxSwift', '~> 8.0'
 
 # or
 
-pod 'Moya/ReactiveSwift'
+pod 'Moya/ReactiveSwift', '~> 8.0'
 ```
 
 Then run `pod install`.
