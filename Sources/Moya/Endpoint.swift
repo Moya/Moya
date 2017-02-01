@@ -27,11 +27,11 @@ open class Endpoint<Target> {
 
     /// Main initializer for `Endpoint`.
     public init(url: String,
-        sampleResponseClosure: @escaping SampleResponseClosure,
-        method: Moya.Method = Moya.Method.get,
-        parameters: [String: Any]? = nil,
-        parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
-        httpHeaderFields: [String: String]? = nil) {
+                sampleResponseClosure: @escaping SampleResponseClosure,
+                method: Moya.Method = Moya.Method.get,
+                parameters: [String: Any]? = nil,
+                parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
+                httpHeaderFields: [String: String]? = nil) {
 
         self.url = url
         self.sampleResponseClosure = sampleResponseClosure

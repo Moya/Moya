@@ -9,13 +9,13 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
     private let stubScheduler: DateSchedulerProtocol?
     /// Initializes a reactive provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-        requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-        stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-        manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
-        plugins: [PluginType] = [], stubScheduler: DateSchedulerProtocol? = nil,
-        trackInflights: Bool = false) {
-            self.stubScheduler = stubScheduler
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+                requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
+                plugins: [PluginType] = [], stubScheduler: DateSchedulerProtocol? = nil,
+                trackInflights: Bool = false) {
+        self.stubScheduler = stubScheduler
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
