@@ -7,7 +7,7 @@ PODS:
     - Result (~> 3.0)
   - Moya/ReactiveSwift (8.0.1):
     - Moya/Core
-    - ReactiveSwift (= 1.0)
+    - ReactiveSwift (~> 1.0)
   - Moya/RxSwift (8.0.1):
     - Moya/Core
     - RxSwift (~> 3.0)
@@ -30,7 +30,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
-  Moya: 9bdcc92e8a0475cde06ed0dfa6ccd27cf9333916
+  Moya: 00fde4b4edb4364e95830a10860b74d6c334c1c7
   ReactiveSwift: f391724ee318a2cfd3e37dfb041cd49ecf4e7869
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
