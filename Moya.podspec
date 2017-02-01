@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.subspec "Core" do |ss|
     ss.source_files  = "Sources/Moya/", "Sources/Moya/Plugins/"
-    ss.dependency "Alamofire", "~> 4.0"
+    ss.dependency "Alamofire", "~> 4.1"
     ss.dependency "Result", "~> 3.0"
     ss.framework  = "Foundation"
   end
