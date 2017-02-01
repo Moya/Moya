@@ -1,5 +1,7 @@
 # Next
 
+# 8.0.2
+
 - Changed dependency pinning to rely only on major versions.
 
 # 8.0.1
