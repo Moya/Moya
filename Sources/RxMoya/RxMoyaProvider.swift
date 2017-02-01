@@ -8,12 +8,12 @@ import Moya
 open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     /// Initializes a reactive provider.
     override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-        requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-        stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-        manager: Manager = RxMoyaProvider<Target>.defaultAlamofireManager(),
-        plugins: [PluginType] = [],
-        trackInflights: Bool = false) {
-            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+                         requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                         stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                         manager: Manager = RxMoyaProvider<Target>.defaultAlamofireManager(),
+                         plugins: [PluginType] = [],
+                         trackInflights: Bool = false) {
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
