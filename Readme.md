@@ -91,15 +91,9 @@ For Moya, use the following entry in your Podfile:
 
 ```rb
 pod 'Moya', '~> 8.0'
-```
 
-In any file you'd like to use Moya in, don't forget to
-import the framework with `import Moya`.
+# or 
 
-For RxSwift or ReactiveSwift extensions, this project will include
-them as dependencies. You can do this via CocoaPods subspecs.
-
-```rb
 pod 'Moya/RxSwift', '~> 8.0'
 
 # or
@@ -109,15 +103,24 @@ pod 'Moya/ReactiveSwift', '~> 8.0'
 
 Then run `pod install`.
 
+In any file you'd like to use Moya in, don't forget to
+import the framework with `import Moya`.
+
 ### Carthage
 
 Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
-When linking frameworks remember to always link `Moya` along with `RxMoya` and 
-`ReactiveMoya`, if you use any of these.
 
 ```
-github "Moya/Moya"
+github "Moya/Moya" ~> 8.0
+
+# or
+
+github "Moya/RxMoya" ~> 8.0
+
+# or
+
+github "Moya/ReactiveMoya" ~> 8.0
 ```
 
 ### Manually
