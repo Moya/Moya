@@ -90,15 +90,15 @@ let package = Package(
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '~> 8.0'
+pod 'Moya'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 8.0'
+pod 'Moya/RxSwift'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 8.0'
+pod 'Moya/ReactiveSwift'
 ```
 
 Then run `pod install`.
@@ -112,15 +112,15 @@ Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 
 ```
-github "Moya/Moya" ~> 8.0
+github "Moya/Moya"
 
 # or
 
-github "Moya/RxMoya" ~> 8.0
+github "Moya/RxMoya"
 
 # or
 
-github "Moya/ReactiveMoya" ~> 8.0
+github "Moya/ReactiveMoya"
 ```
 
 ### Manually

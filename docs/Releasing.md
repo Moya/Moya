@@ -22,6 +22,6 @@ To make a release:
 
 What you'll need to do manually afterwards (if you released a major version):
 
-1. Update the CocoaPods, Carthage & Swift Package Manager instructions in the Readme to use the release you just made public.
+1. Update the Swift Package Manager instructions in the Readme to use the release you just made public.
 
 If anything goes wrong, don't panic! Get in touch with someone else who has released, or [Ash](mailto:ash@ashfurrow.com).
