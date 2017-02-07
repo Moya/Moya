@@ -10,6 +10,7 @@ enum MyService {
     case zen
     case showUser(id: Int)
     case createUser(firstName: String, lastName: String)
+    case updateUser(id:Int, firstName: String, lastName: String)
     case showAccounts
 }
 ```
@@ -25,19 +26,19 @@ extension MyService: TargetType {
         switch self {
         case .zen:
             return "/zen"
-        case .showUser(let id):
+        case .showUser(let id), .updateUser(let id, _, _):
             return "/users/\(id)"
         case .createUser(_, _):
             return "/users"
         case .showAccounts:
-        	  return "/accounts"
+            return "/accounts"
         }
     }
     var method: Moya.Method {
         switch self {
         case .zen, .showUser, .showAccounts:
             return .get
-        case .createUser:
+        case .createUser, .updateUser:
             return .post
         }
     }
@@ -45,12 +46,18 @@ extension MyService: TargetType {
         switch self {
         case .zen, .showUser, .showAccounts:
             return nil
-        case .createUser(let firstName, let lastName):
+        case .createUser(let firstName, let lastName), .updateUser(_, let firstName, let lastName):
             return ["first_name": firstName, "last_name": lastName]
         }
     }
+
     var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
+        switch self {
+        case .zen, .showUser, .showAccounts, .updateUser:
+            return URLEncoding.default // Send parameters in URL
+        case .createUser:
+            return JSONEncoding.default // Send parameters as JSON in request body
+        }
     }
     var sampleData: Data {
         switch self {
@@ -60,23 +67,24 @@ extension MyService: TargetType {
             return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
         case .createUser(let firstName, let lastName):
             return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
+        case .updateUser(let id, let firstName, let lastName):
+            return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
             guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                  let data = Data(base64Encoded: path) else {
-                      return Data()
+                let data = Data(base64Encoded: path) else {
+                    return Data()
             }
             return data
         }
     }
     var task: Task {
         switch self {
-            case .zen, .showUser, .createUser, .showAccounts:
-                return .request
+        case .zen, .showUser, .createUser, .updateUser, .showAccounts:
+            return .request
         }
     }
 }
-
 // MARK: - Helpers
 private extension String {
     var urlEscaped: String {
@@ -101,8 +109,20 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
     // do something with the result (read on for more details)
 }
 
-// The full request will result to the following (by default):
-// POST https://api.myservice.com/users?first_name=James&last_name=Potter
+// The full request will result to the following:
+// POST https://api.myservice.com/users
+// Request body: 
+// { 
+//  "first_name": "James", 
+//  "last_name": "Potter" 
+// }
+
+provider.request(.updateUser(id: 123, firstName: "Harry", lastName: "Potter")) { result in
+    // do something with the result (read on for more details)
+}
+
+// The full request will result to the following:
+// POST https://api.myservice.com/users/123?first_name=Harry&last_name=Potter
 ```
 
 The `TargetType` specifies both a base URL for the API and the sample data for
