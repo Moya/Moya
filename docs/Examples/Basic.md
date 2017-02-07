@@ -30,7 +30,7 @@ extension MyService: TargetType {
         case .createUser(_, _):
             return "/users"
         case .showAccounts:
-        	  return "/accounts"
+            return "/accounts"
         }
     }
     var method: Moya.Method {
@@ -49,8 +49,14 @@ extension MyService: TargetType {
             return ["first_name": firstName, "last_name": lastName]
         }
     }
+
     var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
+        switch self {
+        case .zen, .showUser, .showAccounts:
+            return URLEncoding.default
+        case .createUser(_, _):
+            return JSONEncoding.default // Send parameters as JSON in request body
+        }
     }
     var sampleData: Data {
         switch self {
@@ -63,20 +69,19 @@ extension MyService: TargetType {
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
             guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                  let data = Data(base64Encoded: path) else {
-                      return Data()
+                let data = Data(base64Encoded: path) else {
+                    return Data()
             }
             return data
         }
     }
     var task: Task {
         switch self {
-            case .zen, .showUser, .createUser, .showAccounts:
-                return .request
+        case .zen, .showUser, .createUser, .showAccounts:
+            return .request
         }
     }
 }
-
 // MARK: - Helpers
 private extension String {
     var urlEscaped: String {
@@ -101,8 +106,13 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
     // do something with the result (read on for more details)
 }
 
-// The full request will result to the following (by default):
-// POST https://api.myservice.com/users?first_name=James&last_name=Potter
+// The full request will result to the following:
+// POST https://api.myservice.com/users
+// Request body: 
+// { 
+//  "first_name": "James", 
+//  "last_name": "Potter" 
+// }
 ```
 
 The `TargetType` specifies both a base URL for the API and the sample data for
