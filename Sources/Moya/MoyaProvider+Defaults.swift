@@ -7,7 +7,7 @@ public extension MoyaProvider {
         let url = target.baseURL.appendingPathComponent(target.path).absoluteString
         return Endpoint(
             url: url,
-            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+            sampleResponseClosure: { .networkResponse(200, target.sampleData, nil) },
             method: target.method,
             parameters: target.parameters,
             parameterEncoding: target.parameterEncoding

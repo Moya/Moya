@@ -383,7 +383,7 @@ class MoyaProviderSpec: QuickSpec {
             it("returns sample data") {
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData, nil)}, method: target.method, parameters: target.parameters)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -401,7 +401,7 @@ class MoyaProviderSpec: QuickSpec {
                 let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, parameters: target.parameters)
+                    return Endpoint(url: url, sampleResponseClosure: { .response(response, Data(), nil) }, method: target.method, parameters: target.parameters)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -701,6 +701,7 @@ class MoyaProviderSpec: QuickSpec {
                 var progressValues: [Double] = []
                 var completedValues: [Bool] = []
                 var error: MoyaError?
+                var destinationURL: URL?
                 
                 waitUntil(timeout: 5.0) { done in
                     let progressClosure: ProgressBlock = { progress in
@@ -709,8 +710,12 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     
                     let progressCompletionClosure: Completion = { (result) in
-                        if case .failure(let err) = result {
+                        switch result {
+                        case .failure(let err):
                             error = err
+                            
+                        case .success(let response):
+                            destinationURL = response.destinationURL
                         }
                         done()
                     }
@@ -721,6 +726,8 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).to(beNil())
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
+                expect(destinationURL).toNot(beNil())
+                expect(FileManager.default.fileExists(atPath: destinationURL!.absoluteString))
             }
         }
     }
