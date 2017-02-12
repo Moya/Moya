@@ -66,8 +66,8 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(target)
-    return defaultEndpoint.adding(newHttpHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+    return defaultEndpoint.adding(newHTTPHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
@@ -80,14 +80,14 @@ target that actually does the authentication. We could construct an
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(target)
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
 
     // Sign all non-authenticating requests
     switch target {
     case .authenticate:
         return defaultEndpoint
     default:
-        return defaultEndpoint.adding(newHttpHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
+        return defaultEndpoint.adding(newHTTPHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
     }
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
