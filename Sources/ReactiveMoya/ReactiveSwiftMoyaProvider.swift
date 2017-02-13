@@ -6,16 +6,36 @@ import Moya
 
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
 open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
-    private let stubScheduler: DateSchedulerProtocol?
+    private var stubScheduler: DateSchedulerProtocol? = nil
     /// Initializes a reactive provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
-                plugins: [PluginType] = [], stubScheduler: DateSchedulerProtocol? = nil,
-                trackInflights: Bool = false) {
+                         requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                         stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                         manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
+                         plugins: [PluginType] = [],
+                         stubScheduler: DateSchedulerProtocol? = nil,
+                         trackInflights: Bool = false) {
         self.stubScheduler = stubScheduler
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+        super.init(endpointClosure: endpointClosure,
+                  requestClosure: requestClosure,
+                  stubClosure: stubClosure,
+                  manager: manager,
+                  plugins: plugins,
+                  trackInflights: trackInflights)
+    }
+
+    public required init(endpointClosure: @escaping EndpointClosure,
+                         requestClosure: @escaping RequestClosure,
+                         stubClosure: @escaping StubClosure,
+                         manager: Manager,
+                         plugins: [PluginType],
+                         trackInflights: Bool) {
+        super.init(endpointClosure: endpointClosure,
+                   requestClosure: requestClosure,
+                   stubClosure: stubClosure,
+                   manager: manager,
+                   plugins: plugins,
+                   trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
