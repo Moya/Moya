@@ -32,9 +32,9 @@ end
 
 def schemes
   return {
-    ios: 'Moya iOS',
-    macos: 'Moya OSX',
-    tvos: 'Moya tvOS'
+    ios: 'MoyaTests',
+    macos: 'MoyaTests',
+    tvos: 'MoyaTests'
   }
 end
 
@@ -115,6 +115,7 @@ task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
     xcodebuild 'build test', platform, xcprety_args: '--test'
+    next unless platform == :mac
     sh "killall Simulator"
   end
 end
