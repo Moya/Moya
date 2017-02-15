@@ -39,5 +39,5 @@ extension PluginType {
     func willSendRequest(request: RequestType, target: TargetType) { fatalError() }
 
     @available(*, unavailable, renamed: "didReceive(_:)")
-    func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) { fatalError() }
+    func didReceiveResponse(result: Result<Moya.Response, MoyaError>, target: TargetType) { fatalError() }
 }
