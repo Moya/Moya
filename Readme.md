@@ -60,7 +60,7 @@ you should use for your Swift version.
 | Swift version | Moya version  |
 | ------------- | ------------- |
 | 3.X           | >= 8.0.0      |
-| 2.3           | 7.0.2 - 7.0.3 |
+| 2.3           | 7.0.2 - 7.0.4 |
 | 2.2           | <= 7.0.1      |
 
 ### Swift Package Manager
