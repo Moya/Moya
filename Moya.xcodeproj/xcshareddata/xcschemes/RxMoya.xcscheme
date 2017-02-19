@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1BF71FCF25C01E3345DFB0F9'
+               BlueprintIdentifier = 'B6C8A4A789E22E800EEFB070'
                BlueprintName = 'RxMoya'
                ReferencedContainer = 'container:Moya.xcodeproj'
                BuildableName = 'RxMoya.framework'>
@@ -26,9 +26,22 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      buildConfiguration = "Debug"
+      codeCoverageEnabled = "YES">
       <AdditionalOptions>
       </AdditionalOptions>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = 'primary'
+               BlueprintIdentifier = 'D10CA15BF20EAB3DBF61DEA5'
+               BlueprintName = 'MoyaTests'
+               ReferencedContainer = 'container:Moya.xcodeproj'
+               BuildableName = 'MoyaTests.xctest'>
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
