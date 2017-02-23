@@ -9,14 +9,14 @@ public final class NetworkLoggerPlugin: PluginType {
     fileprivate let separator = ", "
     fileprivate let terminator = "\n"
     fileprivate let cURLTerminator = "\\\n"
-    fileprivate let output: (_ seperator: String, _ terminator: String, _ items: Any...) -> Void
+    fileprivate let output: (_ separator: String, _ terminator: String, _ items: Any...) -> Void
     fileprivate let responseDataFormatter: ((Data) -> (Data))?
 
     /// If true, also logs response body data.
     public let isVerbose: Bool
     public let cURL: Bool
 
-    public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ seperator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, responseDataFormatter: ((Data) -> (Data))? = nil) {
+    public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ separator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, responseDataFormatter: ((Data) -> (Data))? = nil) {
         self.cURL = cURL
         self.isVerbose = verbose
         self.output = output
@@ -103,7 +103,9 @@ private extension NetworkLoggerPlugin {
 }
 
 fileprivate extension NetworkLoggerPlugin {
-    static func reversedPrint(seperator: String, terminator: String, items: Any...) {
-        print(items, separator: seperator, terminator: terminator)
+    static func reversedPrint(_ separator: String, terminator: String, items: Any...) {
+        for item in items {
+            print(item, separator: separator, terminator: terminator)
+        }
     }
 }
