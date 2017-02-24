@@ -86,3 +86,22 @@ extension DownloadRequest: Requestable {
         }
     }
 }
+
+extension Swift.Error {
+    internal func convertToMoyaError(response: Moya.Response?) -> MoyaError {
+        if let afError = self as? AFError {
+            switch afError {
+            case .responseValidationFailed:
+                if let response = response {
+                    return MoyaError.statusCode(response)
+                } else {
+                    return MoyaError.underlying(self)
+                }
+            case .invalidURL, .parameterEncodingFailed, .multipartEncodingFailed, .responseSerializationFailed:
+                return MoyaError.underlying(self)
+            }
+        } else {
+            return MoyaError.underlying(self)
+        }
+    }
+}

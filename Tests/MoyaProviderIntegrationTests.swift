@@ -37,7 +37,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
             OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/search/repositories"}) { request in
                 if request.url?.query == "q=" {
-                    return OHHTTPStubsResponse(data: GitHub.searchRepositories("abc").sampleData, statusCode: 400, headers: nil)
+                    return OHHTTPStubsResponse(data: GitHub.searchRepositories("").sampleData, statusCode: 400, headers: nil)
                 } else {
                     return OHHTTPStubsResponse(data: GitHub.searchRepositories("abc").sampleData, statusCode: 200, headers: nil)
                 }
@@ -89,19 +89,19 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     describe("with validation") {
                         it("returns success for search result request") {
-                            var statusCode: Int?
+                            var message: String?
 
                             waitUntil { done in
-                                let target: GitHub = .searchRepositories("")
+                                let target: GitHub = .searchRepositories("abc")
                                 provider.request(target) { result in
-                                if case let .success(response) = result {
-                                        statusCode = response.statusCode
+                                    if case let .success(response) = result {
+                                        message = String(data: response.data, encoding: .utf8)
                                     }
                                     done()
                                 }
                             }
 
-                            expect(statusCode).to(equal(200))
+                            expect(message).notTo(beNil())
                         }
 
                         it("returns failure for search result request") {

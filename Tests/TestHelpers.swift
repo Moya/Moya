@@ -42,7 +42,7 @@ extension GitHub: TargetType {
     }
 
     public var parameterEncoding: ParameterEncoding {
-        return JSONEncoding.default
+        return URLEncoding.default
     }
 
     var task: Task {
