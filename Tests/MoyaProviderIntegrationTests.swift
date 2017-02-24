@@ -34,7 +34,14 @@ class MoyaProviderIntegrationTests: QuickSpec {
             OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}) { _ in
                 return OHHTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
             }
-            
+
+            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/search/repositories"}) { request in
+                if request.url?.query == "q=" {
+                    return OHHTTPStubsResponse(data: GitHub.searchRepositories("abc").sampleData, statusCode: 400, headers: nil)
+                } else {
+                    return OHHTTPStubsResponse(data: GitHub.searchRepositories("abc").sampleData, statusCode: 200, headers: nil)
+                }
+            }
         }
         
         afterEach {
@@ -78,6 +85,40 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         }
                         
                         expect(message) == userMessage
+                    }
+
+                    describe("with validation") {
+                        it("returns success for search result request") {
+                            var statusCode: Int?
+
+                            waitUntil { done in
+                                let target: GitHub = .searchRepositories("")
+                                provider.request(target) { result in
+                                if case let .success(response) = result {
+                                        statusCode = response.statusCode
+                                    }
+                                    done()
+                                }
+                            }
+
+                            expect(statusCode).to(equal(200))
+                        }
+
+                        it("returns failure for search result request") {
+                            var statusCode: Int?
+
+                            waitUntil { done in
+                                let target: GitHub = .searchRepositories("")
+                                provider.request(target) { result in
+                                    if case let .failure(error) = result {
+                                        statusCode = error.response?.statusCode
+                                    }
+                                    done()
+                                }
+                            }
+
+                            expect(statusCode).to(equal(400))
+                        }
                     }
 
                     it("uses a custom Alamofire.Manager request generation") {
