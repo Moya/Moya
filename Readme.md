@@ -113,14 +113,6 @@ generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 
 ```
 github "Moya/Moya"
-
-# or
-
-github "Moya/RxMoya"
-
-# or
-
-github "Moya/ReactiveMoya"
 ```
 
 ### Manually
