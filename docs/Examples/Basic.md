@@ -197,7 +197,7 @@ The `Endpoint` instance is used to create a `URLRequest` (the heavy lifting is
 done via Alamofire), and the request is sent (again - Alamofire).  Once
 Alamofire gets a response (or fails to get a response), Moya will wrap the
 success or failure in a `Result` enum.  `result` is either
-`.success(Moya.Response)` or `.failure(Moya.Error)`.
+`.success(Moya.Response)` or `.failure(MoyaError)`.
 
 You will need to unpack the data and status code from `Moya.Response`.
 
