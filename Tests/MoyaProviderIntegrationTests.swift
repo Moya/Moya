@@ -31,6 +31,10 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 return OHHTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             }
             
+            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}) { _ in
+                return OHHTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData, statusCode: 400, headers: nil)
+            }
+            
             OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}) { _ in
                 return OHHTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
             }
@@ -80,6 +84,23 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(message) == userMessage
                     }
 
+                    it("returns real response when validation fails") {
+                        var response: Response?
+                        
+                        waitUntil { done in
+                            let target: GitHub = .userProfile("invalid")
+                            provider.request(target) { result in
+                                if case let .failure(error) = result {
+                                    response = error.response
+                                }
+                                done()
+                            }
+                        }
+                        
+                        expect(response).toNot(beNil())
+                        expect(response?.statusCode).to(equal(400))
+                    }
+                    
                     it("uses a custom Alamofire.Manager request generation") {
                         let manager = StubManager()
                         let provider = MoyaProvider<GitHub>(manager: manager)
@@ -110,7 +131,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         var isMainThread: Bool?
                         let target: GitHub = .zen
                         
-                        waitUntil { done in 
+                        waitUntil { done in
                             provider.request(target) { _ in
                                 isMainThread = Thread.isMainThread
                                 done()

@@ -3,6 +3,7 @@
 - Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
 - Move project to using a single target for all platforms.
 - Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
+- **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
 
 # 8.0.3
 
