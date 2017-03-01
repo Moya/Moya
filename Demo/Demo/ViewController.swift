@@ -25,22 +25,31 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(_ username: String) {
-         GitHubProvider.request(.userRepositories(username)) { result in
-            do {
-                let response = try result.dematerialize()
-                let value = try response.mapNSArray()
-                self.repos = value
+        _ = GitHubProvider.request(.userRepositories(username)) { result in
+            switch result {
+            case let .success(response):
+                do {
+                    if let json = try response.mapJSON() as? NSArray {
+                        // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
+                        self.repos = json
+                    } else {
+                        self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
+                    }
+                } catch {
+                    self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
+                }
                 self.tableView.reloadData()
-            } catch {
-                let printableError = error as? CustomStringConvertible
-                let errorMessage = printableError?.description ?? "Unable to fetch from GitHub"
-                self.showAlert("GitHub Fetch", message: errorMessage)
+            case let .failure(error):
+                guard let error = error as? CustomStringConvertible else {
+                    break
+                }
+                self.showAlert("GitHub Fetch", message: error.description)
             }
         }
     }
 
     func downloadZen() {
-         GitHubProvider.request(.zen) { result in
+        _ = GitHubProvider.request(.zen) { result in
             var message = "Couldn't access API"
             if case let .success(response) = result {
                 let jsonString = try? response.mapString()
@@ -53,14 +62,14 @@ class ViewController: UITableViewController {
     
     func uploadGiphy() {
         let data = animatedBirdData()
-         GiphyProvider.request(.upload(gif: data),
+        _ = GiphyProvider.request(.upload(gif: data),
                                   queue: DispatchQueue.main,
                                   progress: progressClosure,
                                   completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
-         GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
+        _ = GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
                                               queue: DispatchQueue.main,
                                               progress: progressClosure,
                                               completion: progressCompletionClosure)
@@ -139,7 +148,7 @@ class ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
-        let repo = repos[indexPath.row] as? NSDictionary
+        let repo = repos[(indexPath as NSIndexPath).row] as? NSDictionary
         cell.textLabel?.text = repo?["name"] as? String
         return cell
     }
