@@ -43,7 +43,7 @@ concrete `Endpoint` instance. Let's take a look at what one might look like.
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-    return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
@@ -157,12 +157,12 @@ public final class NetworkActivityPlugin: PluginType {
     // MARK: Plugin
 
     /// Called by the provider as soon as the request is about to start
-    public func willSendRequest(request: RequestType, target: TargetType) {
+    public func willSend(request: RequestType, target: TargetType) {
         networkActivityClosure(change: .began)
     }
 
     /// Called by the provider as soon as a response arrives
-    public func didReceiveResponse(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
+    public func didReceive(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
         networkActivityClosure(change: .ended)
     }
 }

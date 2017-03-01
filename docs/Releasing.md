@@ -20,4 +20,8 @@ To make a release:
 1. Grab a :tea: or :coffee:.
 1. Make sure everything went smoothly.
 
+What you'll need to do manually afterwards (if you released a major version):
+
+1. Update the Swift Package Manager instructions in the Readme to use the release you just made public.
+
 If anything goes wrong, don't panic! Get in touch with someone else who has released, or [Ash](mailto:ash@ashfurrow.com).

@@ -1,4 +1,5 @@
 coverage:
   ignore:
-    - Demo/Demo/.*
-
+    - Demo
+    - Carthage
+    - Tests
