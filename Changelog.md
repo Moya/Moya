@@ -4,6 +4,7 @@
 
 - Enabled the "Allow app extension API only" flag.
 - Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
+- **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
 
 # 8.0.5
 
