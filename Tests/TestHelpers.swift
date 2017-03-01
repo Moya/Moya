@@ -47,6 +47,10 @@ extension GitHub: TargetType {
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
     }
+    
+    var validate: Bool {
+        return true
+    }
 }
 
 func url(_ route: TargetType) -> String {

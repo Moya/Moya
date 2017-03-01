@@ -86,7 +86,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs an empty response message") {
             let emptyResponseError = AFError.responseSerializationFailed(reason: .inputDataNil)
-            let result: Result<Moya.Response, MoyaError> = .failure(.underlying(emptyResponseError))
+            let result: Result<Moya.Response, MoyaError> = .failure(.underlying(emptyResponseError, nil))
 
             plugin.didReceive(result, target: GitHub.zen)
 

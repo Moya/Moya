@@ -1,4 +1,5 @@
 # Next
+- **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
 
 # 8.0.5
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
