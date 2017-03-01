@@ -6,6 +6,7 @@ public extension MoyaProvider {
     public final class func defaultEndpointMapping(for target: Target) -> Endpoint<Target> {
         let url = target.baseURL.appendingPathComponent(target.path).absoluteString
         return Endpoint(
+            source: target,
             url: url,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,

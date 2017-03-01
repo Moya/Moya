@@ -18,6 +18,7 @@ public enum EndpointSampleResponse {
 open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
+    open let source: Target
     open let url: String
     open let method: Moya.Method
     open let sampleResponseClosure: SampleResponseClosure
@@ -26,13 +27,15 @@ open class Endpoint<Target> {
     open let httpHeaderFields: [String: String]?
 
     /// Main initializer for `Endpoint`.
-    public init(url: String,
+    public init(source: Target,
+                url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method = Moya.Method.get,
                 parameters: [String: Any]? = nil,
                 parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
                 httpHeaderFields: [String: String]? = nil) {
 
+        self.source = source
         self.url = url
         self.sampleResponseClosure = sampleResponseClosure
         self.method = method
@@ -61,7 +64,7 @@ open class Endpoint<Target> {
         let newParameters = add(parameters: parameters)
         let newHTTPHeaderFields = add(httpHeaderFields: httpHeaderFields)
         let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
+        return Endpoint(source: source, url: url, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
     }
 
     fileprivate func add(parameters: [String: Any]?) -> [String: Any]? {
