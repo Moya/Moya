@@ -16,7 +16,7 @@ let provider = RxMoyaProvider<GitHub>()
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.zen).subscribe { event in
+provider.request(.zen).subscribe { (event) -> Void in
     switch event {
     case .next(let response):
         // do something with the data
@@ -48,10 +48,10 @@ you like in `subscribeNext` or `map` calls.
 To make things even awesomer, Moya provides some extensions to
 `Observable` that make dealing with `MoyaResponses`really easy.
 
-- `filter(statusCodes:)` takes a range of status codes. If the
+- `filterStatusCodes()` takes a range of status codes. If the
   response's status code is not within that range, an error is
   produced.
-- `filter(statusCode:)` looks for a specific status code, and errors
+- `filterStatusCode()` looks for a specific status code, and errors
   if it finds anything else.
 - `filterSuccessfulStatusCodes()` filters status codes that
   are in the 200-range.
@@ -62,8 +62,6 @@ To make things even awesomer, Moya provides some extensions to
 - `mapJSON()` tries to map the response data to a JSON object and
   errors if unsuccessful.
 - `mapString()` tries to map the response data to a string and
-  errors if unsuccessful.
-- `mapString(atKeyPath:)` tries to map a response data key path to a string and
   errors if unsuccessful.
 
 In the error cases, the error's `domain` is `MoyaErrorDomain`. The code

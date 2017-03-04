@@ -5,7 +5,7 @@ An endpoint is a semi-internal data structure that Moya uses to reason about
 the network request that will ultimately be made. An endpoint stores the
 following data:
 
-- The url.
+- The URL.
 - The HTTP method (`GET`, `POST`, etc).
 - The request parameters.
 - The parameter encoding (`URL`, `JSON`, custom, etc).
@@ -25,7 +25,7 @@ The first might resemble the following:
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
 
@@ -66,8 +66,9 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
-    return defaultEndpoint.adding(newHTTPHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
+    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return endpoint.adding(newHttpHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
@@ -80,14 +81,15 @@ target that actually does the authentication. We could construct an
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let endpoint: Endpoint<MyTarget> = Endpoint<MyTarget>(URL: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 
     // Sign all non-authenticating requests
     switch target {
     case .authenticate:
-        return defaultEndpoint
+        return endpoint
     default:
-        return defaultEndpoint.adding(newHTTPHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
+        return endpoint.adding(newHttpHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
     }
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
@@ -128,7 +130,7 @@ that hits the network. It has a default value of `MoyaProvider.DefaultRequestMap
 which simply uses the `urlRequest` property of the `Endpoint` instance.
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
-its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, MoyaError> -> Void`) with a request that represents the Endpoint.
+its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, Moya.Error> -> Void`) with a request that represents the Endpoint.
 It's here that you'd do your OAuth signing or whatever. Since you may invoke the
 closure asynchronously, you can use whatever authentication library you like ([example](https://github.com/rheinfabrik/Heimdallr.swift)).
 Instead of modifying the request, you could simply log it, instead.
