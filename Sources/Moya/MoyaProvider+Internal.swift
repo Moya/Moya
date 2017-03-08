@@ -151,6 +151,7 @@ public extension MoyaProvider {
     final func notifyPluginsOfImpendingStub(for request: URLRequest, target: Target) {
         let alamoRequest = manager.request(request as URLRequestConvertible)
         plugins.forEach { $0.willSend(alamoRequest, target: target) }
+        alamoRequest.cancel()
     }
 }
 
