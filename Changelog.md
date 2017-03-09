@@ -2,6 +2,7 @@
 
 - Fixed `reversedPrint` arguments for output.
 - **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
+- Fixed memory leak when request with stub
 
 # 8.0.2
 
