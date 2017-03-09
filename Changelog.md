@@ -1,6 +1,7 @@
 # Next
 
 - Fixed `reversedPrint` arguments for output.
+- Fixed memory leak when request with stub
 
 # 8.0.2
 
