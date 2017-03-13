@@ -1,7 +1,8 @@
 # Next
 
 - Fixed `reversedPrint` arguments for output.
-- Fixed memory leak when request with stub
+- Fixed memory leak when request with stub.
+- Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
 
 # 8.0.2
 
