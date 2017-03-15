@@ -63,7 +63,7 @@ private func unwrapThrowable<T>(throwable: () throws -> T) -> SignalProducer<T, 
             return SignalProducer(error: error)
         } else {
             // The cast above should never fail, but just in case.
-            return SignalProducer(error: MoyaError.underlying(error as NSError, nil))
+            return SignalProducer(error: MoyaError.underlying(error as NSError))
         }
     }
 }

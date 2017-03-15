@@ -1,7 +1,5 @@
 # Next
 
-- **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
-
 # 8.0.3
 
 - Fixed `reversedPrint` arguments for output.

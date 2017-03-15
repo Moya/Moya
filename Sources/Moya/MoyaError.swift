@@ -15,7 +15,7 @@ public enum MoyaError: Swift.Error {
     case statusCode(Response)
 
     /// Indicates a response failed due to an underlying `Error`.
-    case underlying(Swift.Error, Response?)
+    case underlying(Swift.Error)
 
     /// Indicates that an `Endpoint` failed to map to a `URLRequest`.
     case requestMapping(String)
@@ -29,7 +29,7 @@ public extension MoyaError {
         case .jsonMapping(let response): return response
         case .stringMapping(let response): return response
         case .statusCode(let response): return response
-        case .underlying(_, let response): return response
+        case .underlying: return nil
         case .requestMapping: return nil
         }
     }
@@ -50,7 +50,7 @@ extension MoyaError: LocalizedError {
             return "Status code didn't fall within the given range."
         case .requestMapping:
             return "Failed to map Endpoint to a URLRequest."
-        case .underlying(let error, _):
+        case .underlying(let error):
             return error.localizedDescription
         }
     }
