@@ -75,7 +75,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 })
 
                 switch receivedError {
-                case .some(.underlying(let error, _)):
+                case .some(.underlying(let error)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
