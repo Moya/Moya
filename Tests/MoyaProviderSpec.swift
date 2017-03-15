@@ -430,7 +430,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                if case .some(MoyaError.underlying(let underlyingError as NSError, _)) = receivedError {
+                if case .some(MoyaError.underlying(let underlyingError as NSError)) = receivedError {
                     expect(underlyingError) == error
                 } else {
                     fail("Expected to receive error, did not.")
@@ -444,7 +444,7 @@ class MoyaProviderSpec: QuickSpec {
             beforeEach {
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
-                    done(.failure(.underlying(underyingError, nil)))
+                    done(.failure(.underlying(underyingError)))
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
@@ -513,7 +513,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 switch receivedError {
-                case .some(.underlying(let error, _)):
+                case .some(.underlying(let error)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -668,7 +668,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).toNot(beNil())
                 
                 let underlyingIsCancelled: Bool
-                if let error = error, case .underlying(let err, _) = error {
+                if let error = error, case .underlying(let err) = error {
                     underlyingIsCancelled = (err as NSError).code == NSURLErrorCancelled
                 } else {
                     underlyingIsCancelled = false
