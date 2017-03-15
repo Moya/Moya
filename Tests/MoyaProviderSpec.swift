@@ -141,7 +141,7 @@ class MoyaProviderSpec: QuickSpec {
 
         it("uses the target's parameter encoding") {
             let endpoint = MoyaProvider.defaultEndpointMapping(for: GitHub.zen)
-            expect(endpoint.parameterEncoding is JSONEncoding) == true
+            expect(endpoint.parameterEncoding is URLEncoding) == true
         }
 
         describe("a provider with delayed stubs") {

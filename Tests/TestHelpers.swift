@@ -10,6 +10,7 @@ extension String {
 enum GitHub {
     case zen
     case userProfile(String)
+    case searchRepositories(String)
 }
 
 extension GitHub: TargetType {
@@ -20,6 +21,8 @@ extension GitHub: TargetType {
             return "/zen"
         case .userProfile(let name):
             return "/users/\(name.urlEscaped)"
+        case .searchRepositories:
+            return "/search/repositories"
         }
     }
     
@@ -28,11 +31,18 @@ extension GitHub: TargetType {
     }
     
     var parameters: [String: Any]? {
-        return nil
+        switch self {
+        case .zen:
+            return nil
+        case .userProfile:
+            return nil
+        case .searchRepositories(let keyword):
+            return ["q": keyword]
+        }
     }
 
     public var parameterEncoding: ParameterEncoding {
-        return JSONEncoding.default
+        return URLEncoding.default
     }
 
     var task: Task {
@@ -45,6 +55,23 @@ extension GitHub: TargetType {
             return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
         case .userProfile(let name):
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
+        case .searchRepositories(let keyword):
+            if keyword.isEmpty {
+                return "{\"message\": \"error\"}".data(using: String.Encoding.utf8)!
+            } else {
+                return "{\"name\": \"\(keyword)\"}".data(using: String.Encoding.utf8)!
+            }
+        }
+    }
+
+    var validate: Bool {
+        switch self {
+        case .zen:
+            return false
+        case .userProfile:
+            return false
+        case .searchRepositories:
+            return true
         }
     }
 }

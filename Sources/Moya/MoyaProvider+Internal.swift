@@ -250,7 +250,7 @@ private extension MoyaProvider {
         }
 
         let completionHandler: RequestableCompletion = { response, request, data, error in
-            let result = convertResponseToResult(response, request: request, data: data, error: error)
+            let result = convertResponseToResult(response, target: target, request: request, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceive(result, target: target) }
             progressCompletion?(ProgressResponse(response: result.value))
