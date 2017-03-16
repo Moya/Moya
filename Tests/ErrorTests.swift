@@ -40,7 +40,7 @@ class ErrorTests: QuickSpec {
 
             it("should not handle Underlying error ") {
                 let nsError = NSError(domain: "Domain", code: 200, userInfo: ["data" : "some data"])
-                let error = MoyaError.underlying(nsError)
+                let error = MoyaError.underlying(nsError, nil)
 
                 expect(error.response).to( beNil() )
             }
@@ -82,7 +82,7 @@ class ErrorTests: QuickSpec {
                 switch result {
                 case let .failure(error):
                     switch error {
-                    case let .underlying(e):
+                    case let .underlying(e, _):
                         expect(e as NSError) == underlyingError
                     default:
                         XCTFail("expected to get underlying error")

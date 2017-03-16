@@ -31,7 +31,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 }
                 
                 switch receivedError {
-                case .some(.underlying(let error)):
+                case .some(.underlying(let error, _)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
