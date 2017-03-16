@@ -1,6 +1,7 @@
 # Next
 
 - **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
+- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123)
 
 # 8.0.3
 
