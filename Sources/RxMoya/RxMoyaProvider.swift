@@ -22,8 +22,8 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
     /// - Parameters:
     ///   - token: Entity, which provides specifications necessary for a `MoyaProvider`.
     ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
-    /// - Returns: Cold observable, which emits one element or error.
-    open func request(_ token: Target, callbackQueue: DispatchQueue? = nil) -> Observable<Response> {
+    /// - Returns: Single response object.
+    open func request(_ token: Target, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { observer in
             let cancellableToken = self.request(token, callbackQueue: callbackQueue) { result in
@@ -39,7 +39,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
             return Disposables.create {
                 cancellableToken.cancel()
             }
-        }
+        }.asSingle()
     }
 }
 
