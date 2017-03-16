@@ -11,7 +11,7 @@ PODS:
     - ReactiveSwift (~> 1.0)
   - Moya/RxSwift (8.0.3):
     - Moya/Core
-    - RxSwift (~> 3.0)
+    - RxSwift (~> 3.3)
   - ReactiveSwift (1.1.0):
     - Result (~> 3.1)
   - Result (3.2.1)
@@ -27,7 +27,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -38,4 +38,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2566af7232bac99ae05ef21466be44b8eb453506
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0
