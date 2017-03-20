@@ -13,7 +13,7 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
-    /// The parameters to be incoded in the request.
+    /// The parameters to be encoded in the request.
     var parameters: [String: Any]? { get }
 
     /// The method used for parameter encoding.
