@@ -35,12 +35,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var responseData: Data?
 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe({ event in
+                _ = provider.request(target).subscribe { event in
                     switch event {
                     case .success(let response):    responseData = response.data
                     case .error(let error):         fail("errored: \(error)")
                     }
-                })
+                }
 
                 expect(responseData).to(equal(target.sampleData))
             }
