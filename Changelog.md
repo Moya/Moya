@@ -1,6 +1,10 @@
 # Next
 
 - **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
+- Fixed memory leak when request with stub
+- Fixed memory leak when request with stub.
+- Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
+- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123)
 
 # 8.0.3
 

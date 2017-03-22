@@ -10,11 +10,11 @@ PODS:
     - ReactiveSwift (~> 1.0)
   - Moya/RxSwift (8.0.3):
     - Moya/Core
-    - RxSwift (~> 3.0)
+    - RxSwift (~> 3.3)
   - ReactiveSwift (1.0.0):
     - Result (~> 3.1)
   - Result (3.1.0)
-  - RxSwift (3.2.0)
+  - RxSwift (3.3.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -33,7 +33,7 @@ SPEC CHECKSUMS:
   Moya: 927d890afda9db693e3560ebcd7f3a8a421333d8
   ReactiveSwift: f391724ee318a2cfd3e37dfb041cd49ecf4e7869
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
-  RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
+  RxSwift: 8fc9f2de6275a9101d518444e00bf32f1a42caac
 
 PODFILE CHECKSUM: 2566af7232bac99ae05ef21466be44b8eb453506
 
