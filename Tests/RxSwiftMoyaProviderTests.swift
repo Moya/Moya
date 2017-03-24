@@ -10,7 +10,7 @@ import OHHTTPStubs
 class RxSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
 
-        describe("provider with Observable") {
+        describe("provider with Single") {
 
             var provider: RxMoyaProvider<GitHub>!
 
@@ -21,30 +21,26 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             it("emits a Response object") {
                 var called = false
 
-                _ = provider.request(.zen).subscribe(onNext: { _ in
-                    called = true
-                })
+                _ = provider.request(.zen).subscribe { event in
+                    switch event {
+                    case .success:          called = true
+                    case .error(let error): fail("errored: \(error)")
+                    }
+                }
 
                 expect(called).to(beTrue())
-            }
-
-            it("emits complete") {
-                var complete = false
-
-                _ = provider.request(.zen).subscribe(onCompleted: { _ in
-                    complete = true
-                })
-
-                expect(complete).to(beTrue())
             }
 
             it("emits stubbed data for zen request") {
                 var responseData: Data?
 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onNext: { response in
-                    responseData = response.data
-                })
+                _ = provider.request(target).subscribe { event in
+                    switch event {
+                    case .success(let response):    responseData = response.data
+                    case .error(let error):         fail("errored: \(error)")
+                    }
+                }
 
                 expect(responseData).to(equal(target.sampleData))
             }
@@ -53,7 +49,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var receivedResponse: [String: Any]?
 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.request(target).mapJSON().subscribe(onNext: { response in
+                _ = provider.request(target).asObservable().mapJSON().subscribe(onNext: { response in
                     receivedResponse = response as? [String: Any]
                 })
 
@@ -70,9 +66,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             it("emits the correct error message") {
                 var receivedError: MoyaError?
 
-                _ = provider.request(.zen).subscribe(onError: { error in
-                    receivedError = error as? MoyaError
-                })
+                _ = provider.request(.zen).subscribe { event in
+                    switch event {
+                    case .success:          fail("should have errored")
+                    case .error(let error): receivedError = error as? MoyaError
+                    }
+                }
 
                 switch receivedError {
                 case .some(.underlying(let error, _)):
@@ -86,9 +85,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var errored = false
 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onError: { _ in
-                    errored = true
-                })
+                _ = provider.request(target).subscribe { event in
+                    switch event {
+                    case .success:  fail("we should have errored")
+                    case .error:    errored = true
+                    }
+                }
 
                 expect(errored).to(beTrue())
             }
@@ -105,23 +107,35 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
 
             it("emits identical response for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1:Observable<Moya.Response> = provider.request(target)
-                let signalProducer2:Observable<Moya.Response> = provider.request(target)
+                let signalProducer1 = provider.request(target)
+                let signalProducer2 = provider.request(target)
 
                 expect(provider.inflightRequests.keys.count).to(equal(0))
 
                 var receivedResponse: Moya.Response!
 
-                _ = signalProducer1.subscribe(onNext: { response in
-                    receivedResponse = response
-                    expect(provider.inflightRequests.count).to(equal(1))
-                })
+                _ = signalProducer1.subscribe { event in
+                    switch event {
+                    case .success(let response):
+                        receivedResponse = response
+                        expect(provider.inflightRequests.count).to(equal(1))
 
-                _ = signalProducer2.subscribe(onNext: { response in
-                    expect(receivedResponse).toNot(beNil())
-                    expect(receivedResponse).to(beIdenticalToResponse(response))
-                    expect(provider.inflightRequests.count).to(equal(1))
-                })
+                    case .error(let error):
+                        fail("errored: \(error)")
+                    }
+                }
+
+                _ = signalProducer2.subscribe { event in
+                    switch event {
+                    case .success(let response):
+                        expect(receivedResponse).toNot(beNil())
+                        expect(receivedResponse).to(beIdenticalToResponse(response))
+                        expect(provider.inflightRequests.count).to(equal(1))
+
+                    case .error(let error):
+                        fail("errored: \(error)")
+                    }
+                }
 
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually(equal(0))
