@@ -1,4 +1,5 @@
 # Next
+- Move project to using a single target for all platforms
 
 # 8.0.3
 
