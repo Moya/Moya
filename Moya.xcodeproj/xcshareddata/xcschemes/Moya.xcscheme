@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
-               BuildableName = "RxMoya.framework"
-               BlueprintName = "RxMoya iOS"
+               BlueprintIdentifier = "091F0D331BDE998F009D0A49"
+               BuildableName = "Moya.framework"
+               BlueprintName = "Moya"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "463CF2821E1A05D200824884"
-               BuildableName = "MoyaTests-iOS.xctest"
-               BlueprintName = "MoyaTests-iOS"
+               BuildableName = "MoyaTests.xctest"
+               BlueprintName = "MoyaTests"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
-            BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya iOS"
+            BlueprintIdentifier = "091F0D331BDE998F009D0A49"
+            BuildableName = "Moya.framework"
+            BlueprintName = "Moya"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
-            BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya iOS"
+            BlueprintIdentifier = "091F0D331BDE998F009D0A49"
+            BuildableName = "Moya.framework"
+            BlueprintName = "Moya"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +83,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "091F0D821BDE9D4D009D0A49"
-            BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya iOS"
+            BlueprintIdentifier = "091F0D331BDE998F009D0A49"
+            BuildableName = "Moya.framework"
+            BlueprintName = "Moya"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

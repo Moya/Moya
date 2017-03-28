@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" ~> 4.1
-github "ReactiveCocoa/ReactiveSwift" ~> 1.0
+github "Alamofire/Alamofire" ~> 4.4
+github "ReactiveCocoa/ReactiveSwift" ~> 1.1
 github "ReactiveX/RxSwift" ~> 3.3
-github "antitypical/Result" ~> 3.1
+github "antitypical/Result" ~> 3.2
