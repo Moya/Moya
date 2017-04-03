@@ -1,5 +1,8 @@
 # Next
 
+- Bumped minimum version of ReactiveSwift to 1.1
+- Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
+
 # 8.0.3
 
 - Fixed `reversedPrint` arguments for output.
