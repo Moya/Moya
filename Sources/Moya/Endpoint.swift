@@ -110,8 +110,8 @@ extension Endpoint: Equatable, Hashable {
     }
 
     public static func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
-        if let _ = lhs.urlRequest, rhs.urlRequest == nil { return false }
-        if lhs.urlRequest == nil, let _ = rhs.urlRequest { return false }
+        if lhs.urlRequest != nil, rhs.urlRequest == nil { return false }
+        if lhs.urlRequest == nil, rhs.urlRequest != nil { return false }
         if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
         return (lhs.urlRequest == rhs.urlRequest)
     }
