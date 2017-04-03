@@ -9,6 +9,7 @@
 # 8.0.2
 
 - Changed dependency pinning to rely only on major versions.
+- Add `required` to `MoyaProvider` initializer (Fix an issue when initialize `MoyaProvider` in class function.)
 
 # 8.0.1
 
@@ -405,3 +406,5 @@ structure and more.
 # 0.1
 
 - Initial release.
+
+

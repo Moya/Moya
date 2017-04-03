@@ -54,12 +54,12 @@ open class MoyaProvider<Target: TargetType> {
     open internal(set) var inflightRequests: [Endpoint<Target>: [Moya.Completion]] = [:]
 
     /// Initializes a provider.
-    public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                plugins: [PluginType] = [],
-                trackInflights: Bool = false) {
+    public required init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
+                         requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                         stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                         manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                         plugins: [PluginType] = [],
+                         trackInflights: Bool = false) {
 
         self.endpointClosure = endpointClosure
         self.requestClosure = requestClosure

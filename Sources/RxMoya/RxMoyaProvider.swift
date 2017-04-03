@@ -7,7 +7,7 @@ import Moya
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     /// Initializes a reactive provider.
-    override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
+    public required init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                          requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                          stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
                          manager: Manager = RxMoyaProvider<Target>.defaultAlamofireManager(),
