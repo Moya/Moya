@@ -405,7 +405,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
-                var receivedResponse: URLResponse?
+                var receivedResponse: HTTPURLResponse?
                 provider.request(.zen) { result in
                     if case .success(let response) = result {
                         receivedResponse = response.response
