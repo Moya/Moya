@@ -299,4 +299,4 @@ If you add or remove a source file from Moya, a corresponding change needs to be
 License
 -------
 
-Moya is released under an MIT license. See License.md for more information.
+Moya is released under an MIT license. See [License.md](License.md) for more information.
