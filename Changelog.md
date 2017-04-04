@@ -17,9 +17,9 @@
 - Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
 - **Breaking Change**: Added support to get the response (if any) from `MoyaError`.
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
-- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123)
+- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
+- **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - Updated the `RxSwift` version requirement to `3.3`.
-- Changed `Moya.Response` response class to `HTTPURLResponse`
 
 # 8.0.3
 
