@@ -87,7 +87,7 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-    func logNetworkResponse(_ response: URLResponse?, data: Data?, target: TargetType) -> [String] {
+    func logNetworkResponse(_ response: HTTPURLResponse?, data: Data?, target: TargetType) -> [String] {
         guard let response = response else {
            return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
         }
