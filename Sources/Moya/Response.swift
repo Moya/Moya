@@ -5,10 +5,10 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     public let statusCode: Int
     public let data: Data
     public let request: URLRequest?
-    public let response: URLResponse?
+    public let response: HTTPURLResponse?
 
     /// Initialize a new `Response`.
-    public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: URLResponse? = nil) {
+    public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: HTTPURLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
         self.request = request

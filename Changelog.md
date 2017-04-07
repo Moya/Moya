@@ -1,7 +1,8 @@
 # Next
 
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
-- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123)
+- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
+- **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - Updated the `RxSwift` version requirement to `3.3`.
 
 # 8.0.3
