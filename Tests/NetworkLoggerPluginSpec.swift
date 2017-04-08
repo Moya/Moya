@@ -8,23 +8,23 @@ final class NetworkLoggerPluginSpec: QuickSpec {
     override func spec() {
 
         var log = ""
-        let plugin = NetworkLoggerPlugin(verbose: true, output: { printing in
+        let plugin = NetworkLoggerPlugin(verbose: true, output: { (separator: String, terminator: String, items: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.2.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = items.map { $0 as? String }.flatMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         })
 
-        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { printing in
+        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { (separator: String, terminator: String, items: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.2.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = items.map { $0 as? String }.flatMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         })
 
-        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { printing in
+        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (separator: String, terminator: String, items: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.2.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = items.map { $0 as? String }.flatMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
             }, responseDataFormatter: { _ in

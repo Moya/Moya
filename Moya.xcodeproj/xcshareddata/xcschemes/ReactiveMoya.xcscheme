@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "554B0FCB1BE7ED8700F3D266"
-               BuildableName = "RxMoya.framework"
-               BlueprintName = "RxMoya tvOS"
+               BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
+               BuildableName = "ReactiveMoya.framework"
+               BlueprintName = "ReactiveMoya"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,9 +33,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "463CF2731E1A05C300824884"
-               BuildableName = "MoyaTests-tvOS.xctest"
-               BlueprintName = "MoyaTests-tvOS"
+               BlueprintIdentifier = "463CF2821E1A05D200824884"
+               BuildableName = "MoyaTests.xctest"
+               BlueprintName = "MoyaTests"
                ReferencedContainer = "container:Moya.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "554B0FCB1BE7ED8700F3D266"
-            BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya tvOS"
+            BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
+            BuildableName = "ReactiveMoya.framework"
+            BlueprintName = "ReactiveMoya"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +65,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "554B0FCB1BE7ED8700F3D266"
-            BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya tvOS"
+            BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
+            BuildableName = "ReactiveMoya.framework"
+            BlueprintName = "ReactiveMoya"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +83,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "554B0FCB1BE7ED8700F3D266"
-            BuildableName = "RxMoya.framework"
-            BlueprintName = "RxMoya tvOS"
+            BlueprintIdentifier = "091F0D431BDE9A01009D0A49"
+            BuildableName = "ReactiveMoya.framework"
+            BlueprintName = "ReactiveMoya"
             ReferencedContainer = "container:Moya.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

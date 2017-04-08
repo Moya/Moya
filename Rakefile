@@ -24,7 +24,7 @@ end
 
 def targets
   return [
-    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
+    :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
     :tvos,
     :ios
   ]
@@ -32,9 +32,9 @@ end
 
 def schemes
   return {
-    ios: 'Moya iOS',
-    macos: 'Moya OSX',
-    tvos: 'Moya tvOS'
+    ios: 'Moya',
+    macos: 'Moya',
+    tvos: 'Moya'
   }
 end
 
