@@ -9,6 +9,15 @@
 - Fixed memory leak when request with stub.
 - Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
 
+- Bumped minimum version of ReactiveSwift to 1.1
+- Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
+
+# 8.0.3
+
+- Fixed `reversedPrint` arguments for output.
+- Fixed memory leak when request with stub.
+- Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
+
 # 8.0.2
 
 - Changed dependency pinning to rely only on major versions.

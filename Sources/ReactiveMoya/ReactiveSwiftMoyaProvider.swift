@@ -6,13 +6,13 @@ import Moya
 
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
 open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
-    private let stubScheduler: DateSchedulerProtocol?
+    private let stubScheduler: DateScheduler?
     /// Initializes a reactive provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
                 manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
-                plugins: [PluginType] = [], stubScheduler: DateSchedulerProtocol? = nil,
+                plugins: [PluginType] = [], stubScheduler: DateScheduler? = nil,
                 trackInflights: Bool = false) {
         self.stubScheduler = stubScheduler
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
