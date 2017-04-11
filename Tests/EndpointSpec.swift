@@ -11,7 +11,7 @@ class EndpointSpec: QuickSpec {
                 let target: GitHub = .zen
                 let parameters = ["Nemesis": "Harvey"]
                 let headerFields = ["Title": "Dominar"]
-                endpoint = Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding.default, httpHeaderFields: headerFields)
+                endpoint = Endpoint<GitHub>(source: target, url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, parameters: parameters, parameterEncoding: JSONEncoding.default, httpHeaderFields: headerFields)
             }
             
             it("returns a new endpoint for adding(newParameters:)") {
@@ -98,7 +98,8 @@ class EndpointSpec: QuickSpec {
             }
 
             it("returns a nil urlRequest for an invalid URL") {
-                let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+                // FIXME: no target
+                let badEndpoint = Endpoint<Empty>(source: target, url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
 
                 expect(badEndpoint.urlRequest).to( beNil() )
             }

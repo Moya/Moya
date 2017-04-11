@@ -55,7 +55,7 @@ func url(_ route: TargetType) -> String {
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(source: target, url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, parameters: target.parameters)
 }
 
 enum HTTPBin: TargetType {
