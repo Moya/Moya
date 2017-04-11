@@ -4,11 +4,11 @@ import Alamofire
 /// Used for stubbing responses.
 public enum EndpointSampleResponse {
 
-    /// The network returned a response, including status code and data.
-    case networkResponse(Int, Data)
+    /// The network returned a response, including status code, data and destination path of any downloaded data.
+    case networkResponse(Int, Data, URL?)
 
     /// The network returned response which can be fully customized.
-    case response(HTTPURLResponse, Data)
+    case response(HTTPURLResponse, Data, URL?)
 
     /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
     case networkError(NSError)

@@ -78,7 +78,7 @@ class ErrorTests: QuickSpec {
                 let request = NSURLRequest() as URLRequest
                 let response = HTTPURLResponse()
                 let data = Data()
-                let result = convertResponseToResult(response, request: request, data: data, error: underlyingError)
+                let result = convertResponseToResult(response, request: request, data: data, destinationURL: nil, error: underlyingError)
                 switch result {
                 case let .failure(error):
                     switch error {

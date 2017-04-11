@@ -131,12 +131,12 @@ public extension MoyaProvider {
             }
 
             switch endpoint.sampleResponseClosure() {
-            case .networkResponse(let statusCode, let data):
-                let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
+            case .networkResponse(let statusCode, let data, let url):
+                let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil, destinationURL: url)
                 plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
-            case .response(let customResponse, let data):
-                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
+            case .response(let customResponse, let data, let url):
+                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse, destinationURL: url)
                 plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
             case .networkError(let error):
@@ -249,8 +249,8 @@ private extension MoyaProvider {
             }
         }
 
-        let completionHandler: RequestableCompletion = { response, request, data, error in
-            let result = convertResponseToResult(response, request: request, data: data, error: error)
+        let completionHandler: RequestableCompletion = { response, request, data, destinationURL, error in
+            let result = convertResponseToResult(response, request: request, data: data, destinationURL: destinationURL, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceive(result, target: target) }
             progressCompletion?(ProgressResponse(response: result.value))

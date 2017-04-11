@@ -6,13 +6,15 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     public let data: Data
     public let request: URLRequest?
     public let response: URLResponse?
+    public let destinationURL: URL?
 
     /// Initialize a new `Response`.
-    public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: URLResponse? = nil) {
+    public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: URLResponse? = nil, destinationURL: URL? = nil) {
         self.statusCode = statusCode
         self.data = data
         self.request = request
         self.response = response
+        self.destinationURL = destinationURL
     }
 
     /// A text description of the `Response`.
