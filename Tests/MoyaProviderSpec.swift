@@ -611,6 +611,23 @@ class MoyaProviderSpec: QuickSpec {
                 expect(dataString) == "sample data"
             }
         }
+
+        describe("a target with empty path") {
+            struct PathlessAPI: TargetType {
+                let baseURL = URL(string: "http://example.com/123/somepath?X-ABC-Asd=123")!
+                let path = ""
+                let method = Moya.Method.get
+                let parameters: [String: Any]? = ["key": "value"]
+                let parameterEncoding: ParameterEncoding = URLEncoding.default
+                let task = Task.request
+                let sampleData = "sample data".data(using: .utf8)!
+            }
+
+            it("uses the base url unchanged") {
+                let endpoint = MoyaProvider.defaultEndpointMapping(for: PathlessAPI())
+                expect(endpoint.url) == "http://example.com/123/somepath?X-ABC-Asd=123"
+            }
+        }
         
         describe("an inflight-tracking provider") {
             var provider: MoyaProvider<GitHub>!
