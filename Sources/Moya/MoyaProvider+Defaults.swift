@@ -31,7 +31,7 @@ public extension MoyaProvider {
     }
 
     private final class func url(for target: Target) -> URL {
-        if (target.path.isEmpty) {
+        if target.path.isEmpty {
             return target.baseURL
         }
 
