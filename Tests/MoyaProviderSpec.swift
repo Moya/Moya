@@ -623,6 +623,9 @@ class MoyaProviderSpec: QuickSpec {
                 let sampleData = "sample data".data(using: .utf8)!
             }
 
+            // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases
+            // See: https://github.com/Moya/Moya/pull/1053
+            // And: https://github.com/Moya/Moya/issues/1049
             it("uses the base url unchanged") {
                 let endpoint = MoyaProvider.defaultEndpointMapping(for: PathlessAPI())
                 expect(endpoint.url) == "http://example.com/123/somepath?X-ABC-Asd=123"

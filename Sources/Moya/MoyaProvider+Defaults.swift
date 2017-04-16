@@ -30,6 +30,9 @@ public extension MoyaProvider {
         return manager
     }
 
+    // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases
+    // See: https://github.com/Moya/Moya/pull/1053
+    // And: https://github.com/Moya/Moya/issues/1049
     private final class func url(for target: Target) -> URL {
         if target.path.isEmpty {
             return target.baseURL
