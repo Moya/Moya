@@ -1,7 +1,8 @@
 # Next
-- Bumped minimum version of ReactiveSwift to 1.1
+- Bumped minimum version of ReactiveSwift to 1.1.
 - Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
-- Move project to using a single target for all platforms
+- Move project to using a single target for all platforms.
+- Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
 
 # 8.0.3
 
