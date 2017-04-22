@@ -52,7 +52,7 @@ open class MoyaProvider<Target: TargetType> {
     open let trackInflights: Bool
 
     open internal(set) var inflightRequests: [Endpoint<Target>: [Moya.Completion]] = [:]
-    
+
     /// Propagated to Alamofire as callback queue. If nil - main queue will be used.
     let queue: DispatchQueue?
 
