@@ -17,7 +17,6 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, queue: queue, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
-    
     /// Designated request-making method.
     ///
     /// - Parameters:
