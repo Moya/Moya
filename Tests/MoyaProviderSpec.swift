@@ -723,5 +723,99 @@ class MoyaProviderSpec: QuickSpec {
                 expect(completedValues) == [false, false, false, false, true]
             }
         }
+        
+        describe("a custom callback queue") {
+            var stubDescriptor: OHHTTPStubsDescriptor!
+            
+            beforeEach {
+                stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                }
+            }
+            
+            afterEach {
+                OHHTTPStubs.removeStub(stubDescriptor)
+            }
+            
+            describe("a provider with predefined queue", {
+                var provider: MoyaProvider<GitHub>!
+                var queue: DispatchQueue!
+                
+                beforeEach {
+                    queue = DispatchQueue(label: UUID().uuidString)
+                    provider = MoyaProvider<GitHub>(queue: queue)
+                }
+                
+                context("queue is provided with request", {
+                    it("invoke callback on request queue", closure: { 
+                        let requestQueue = DispatchQueue(label: UUID().uuidString)
+                        var callbackQueueLabel: String?
+                        
+                        waitUntil(action: { completion in
+                            provider.request(.zen, queue: requestQueue) { _ in
+                                callbackQueueLabel = DispatchQueue.currentLabel
+                                completion()
+                            }
+                        })
+                        
+                        expect(callbackQueueLabel) == requestQueue.label
+                    })
+                })
+                
+                context("queue is not provided with request", {
+                    it("invoke callback on provider queue", closure: {
+                        var callbackQueueLabel: String?
+                        
+                        waitUntil(action: { completion in
+                            provider.request(.zen) { _ in
+                                callbackQueueLabel = DispatchQueue.currentLabel
+                                completion()
+                            }
+                        })
+                        
+                        expect(callbackQueueLabel) == queue.label
+                    })
+                })
+            })
+            
+            describe("a provider without predefined queue", {
+                var provider: MoyaProvider<GitHub>!
+                
+                beforeEach {
+                    provider = MoyaProvider<GitHub>()
+                }
+                
+                context("queue is provided with request", {
+                    it("invoke callback on request queue", closure: {
+                        let requestQueue = DispatchQueue(label: UUID().uuidString)
+                        var callbackQueueLabel: String?
+                        
+                        waitUntil(action: { completion in
+                            provider.request(.zen, queue: requestQueue) { _ in
+                                callbackQueueLabel = DispatchQueue.currentLabel
+                                completion()
+                            }
+                        })
+                        
+                        expect(callbackQueueLabel) == requestQueue.label
+                    })
+                })
+                
+                context("queue is not provided with request", {
+                    it("invoke callback on main queue", closure: {
+                        var callbackQueueLabel: String?
+                        
+                        waitUntil(action: { completion in
+                            provider.request(.zen) { _ in
+                                callbackQueueLabel = DispatchQueue.currentLabel
+                                completion()
+                            }
+                        })
+                        
+                        expect(callbackQueueLabel) == DispatchQueue.main.label
+                    })
+                })
+            })
+        }
     }
 }
