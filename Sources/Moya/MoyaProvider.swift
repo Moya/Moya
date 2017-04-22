@@ -52,11 +52,15 @@ open class MoyaProvider<Target: TargetType> {
     open let trackInflights: Bool
 
     open internal(set) var inflightRequests: [Endpoint<Target>: [Moya.Completion]] = [:]
+    
+    /// Propagated to Alamofire as callback queue. If nil - main queue will be used.
+    let queue: DispatchQueue?
 
     /// Initializes a provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                queue: DispatchQueue? = nil,
                 manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
                 plugins: [PluginType] = [],
                 trackInflights: Bool = false) {
@@ -67,6 +71,7 @@ open class MoyaProvider<Target: TargetType> {
         self.manager = manager
         self.plugins = plugins
         self.trackInflights = trackInflights
+        self.queue = queue
     }
 
     /// Returns an `Endpoint` based on the token, method, and parameters by invoking the `endpointClosure`.
@@ -77,13 +82,14 @@ open class MoyaProvider<Target: TargetType> {
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
     open func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
-        return self.request(target, queue: nil, completion: completion)
+        return self.request(target, queue: queue, completion: completion)
     }
 
     /// Designated request-making method with queue option. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
     open func request(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> Cancellable {
-        return requestNormal(target, queue: queue, progress: progress, completion: completion)
+        let callbackQueue = queue ?? self.queue
+        return requestNormal(target, queue: callbackQueue, progress: progress, completion: completion)
     }
 
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
