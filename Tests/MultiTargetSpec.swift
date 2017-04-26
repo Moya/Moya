@@ -14,6 +14,7 @@ class MultiTargetSpec: QuickSpec {
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
                 let validate = true
+                let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
             var target: MultiTarget!
@@ -54,6 +55,10 @@ class MultiTargetSpec: QuickSpec {
 
             it("uses correct validate") {
                 expect(target.validate) == true
+            }
+
+            it("uses correct headers") {
+                expect(target.headers) == ["headerKey": "headerValue"]
             }
         }
     }

@@ -118,4 +118,5 @@ extension Empty: TargetType {
     var parameterEncoding: ParameterEncoding { return URLEncoding.default }
     var task: Task { return .request }
     var sampleData: Data { return Data() }
+    var headers: [String: String]? { return nil }
 }

@@ -42,6 +42,9 @@ extension GitHubUserContent: TargetType {
             return animatedBirdData() as Data
         }
     }
+    public var headers: [String: String]? {
+        return nil
+    }
 
 }
 

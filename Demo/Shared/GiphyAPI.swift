@@ -42,6 +42,10 @@ extension Giphy: TargetType {
             return "{\"data\":{\"id\":\"your_new_gif_id\"},\"meta\":{\"status\":200,\"msg\":\"OK\"}}".data(using: String.Encoding.utf8)!
         }
     }
+
+    public var headers: [String: String]? {
+        return nil
+    }
 }
 
 func animatedBirdData() -> Data {
