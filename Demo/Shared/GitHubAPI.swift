@@ -76,6 +76,9 @@ extension GitHub: TargetType {
             return "[{\"name\": \"Repo Name\"}]".data(using: String.Encoding.utf8)!
         }
     }
+    public var headers: [String: String]? {
+        return nil
+    }
 }
 
 public func url(_ route: TargetType) -> String {
