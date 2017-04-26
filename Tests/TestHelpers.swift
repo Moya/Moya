@@ -47,9 +47,13 @@ extension GitHub: TargetType {
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
     }
-    
+
     var validate: Bool {
         return true
+    }
+
+    var headers: [String: String]? {
+        return nil
     }
 }
 
@@ -98,6 +102,10 @@ enum HTTPBin: TargetType {
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
         }
     }
+
+    var headers: [String: String]? {
+        return nil
+    }
 }
 
 public enum GitHubUserContent {
@@ -140,6 +148,9 @@ extension GitHubUserContent: TargetType {
         }
     }
 
+    public var headers: [String: String]? {
+        return nil
+    }
 }
 
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html

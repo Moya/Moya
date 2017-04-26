@@ -529,6 +529,7 @@ class MoyaProviderSpec: QuickSpec {
                 let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
+                let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
             it("uses correct URL") {
@@ -609,6 +610,27 @@ class MoyaProviderSpec: QuickSpec {
 
                 expect(dataString) == "sample data"
             }
+
+            it("uses correct headers") {
+                var headers: [String : String]?
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
+                    headers = endpoint.httpHeaderFields
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
+                    }
+                }
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+
+                waitUntil { done in
+                    provider.request(MultiTarget(StructAPI())) { _ in
+                        done()
+                    }
+                }
+
+                expect(headers) == ["headerKey": "headerValue"]
+            }
         }
 
         describe("a target with empty path") {
@@ -620,6 +642,7 @@ class MoyaProviderSpec: QuickSpec {
                 let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
+                let headers: [String: String]? = nil
             }
 
             // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases
