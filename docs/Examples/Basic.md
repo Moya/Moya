@@ -83,6 +83,9 @@ extension MyService: TargetType {
             return .request
         }
     }
+    var headers: [String: String]? {
+        return ["Content-type": "application/json"]
+    }
 }
 // MARK: - Helpers
 private extension String {
