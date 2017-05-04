@@ -131,7 +131,7 @@ public var task: Task {
 }
 ```
 
-Finally, `headers` property stores header fields that should be sent on the request.
+Finally, the `headers` property stores header fields that should be sent on the request.
 
 ```swift
 public var headers: [String: String]? {
