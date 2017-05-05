@@ -47,9 +47,13 @@ extension GitHub: TargetType {
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
     }
-    
+
     var validate: Bool {
         return true
+    }
+
+    var headers: [String: String]? {
+        return nil
     }
 }
 
@@ -98,6 +102,10 @@ enum HTTPBin: TargetType {
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
         }
     }
+
+    var headers: [String: String]? {
+        return nil
+    }
 }
 
 public enum GitHubUserContent {
@@ -139,7 +147,11 @@ extension GitHubUserContent: TargetType {
             return Data(count: 4000)
         }
     }
-   
+
+    public var headers: [String: String]? {
+        return nil
+    }
+
 }
 
 private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in

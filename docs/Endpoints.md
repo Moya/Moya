@@ -72,6 +72,8 @@ let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
 
+*Note that header fields can also be added as part of the [Target](Targets.md) definition.*
+
 This also means that you can provide additional parameters to some or all of
 your endpoints. For example, say that there is an authentication token we need
 for  all values of the hypothetical `MyTarget` target, with the exception of the

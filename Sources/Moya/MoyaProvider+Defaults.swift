@@ -9,7 +9,8 @@ public extension MoyaProvider {
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,
             parameters: target.parameters,
-            parameterEncoding: target.parameterEncoding
+            parameterEncoding: target.parameterEncoding,
+            httpHeaderFields: target.headers
         )
     }
 
