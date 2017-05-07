@@ -8,6 +8,8 @@
 - Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
 - Move project to using a single target for all platforms.
 - Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
+- Move project to using a single target for all platforms
+- Add optional callback queue parameter to reactive providers
 
 # 8.0.3
 
