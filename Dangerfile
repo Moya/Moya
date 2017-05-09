@@ -15,7 +15,7 @@ fail("fit left in tests") if `grep -r "fit Demo/Tests/ `.length > 1
 # Changelog entries are required for changes to library files.
 no_changelog_entry = !git.modified_files.include?("Changelog.md")
 if has_app_changes && no_changelog_entry && not_declared_trivial
-  fail("Any changes to library code need a summary in the Changelog.")
+  warn("Any changes to library code need a summary in the Changelog.")
 end
 
 # Added (or removed) library files need to be added (or removed) from the
