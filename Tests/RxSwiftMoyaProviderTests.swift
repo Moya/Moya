@@ -171,7 +171,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 }
                 
                 context("the queueless request method is invoked") {
-                    it("invokes the callback on provider queue", closure: {
+                    it("invokes the callback on provider queue") {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
