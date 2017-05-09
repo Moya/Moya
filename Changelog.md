@@ -1,4 +1,6 @@
 # Next
+
+# 8.0.4
 - Bumped minimum version of ReactiveSwift to 1.1.
 - Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
 - Move project to using a single target for all platforms.
