@@ -141,7 +141,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.removeStub(stubDescriptor)
             }
             
-            describe("a provider with predefined queue", {
+            describe("a provider with predefined queue") {
                 var provider: RxMoyaProvider<GitHub>!
                 var queue: DispatchQueue!
                 var disposeBag: DisposeBag!
@@ -153,8 +153,8 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                     provider = RxMoyaProvider<GitHub>(queue: queue)
                 }
                 
-                context("queue is provided with request", {
-                    it("invoke callback on request queue", closure: {
+                context("the queue is provided with the request") {
+                    it("invokes the callback on request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
                         
@@ -167,11 +167,11 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == requestQueue.label
-                    })
-                })
+                    }
+                }
                 
-                context("queue is not provided with request", {
-                    it("invoke callback on provider queue", closure: {
+                context("the queueless request method is invoked") {
+                    it("invokes the callback on provider queue", closure: {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
@@ -183,11 +183,11 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == queue.label
-                    })
-                })
-            })
+                    }
+                }
+            }
             
-            describe("a provider without predefined queue", {
+            describe("a provider without predefined queue") {
                 var provider: RxMoyaProvider<GitHub>!
                 var disposeBag: DisposeBag!
                 
@@ -196,8 +196,8 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                     provider = RxMoyaProvider<GitHub>()
                 }
                 
-                context("queue is provided with request", {
-                    it("invoke callback on request queue", closure: {
+                context("the queue is provided with request") {
+                    it("invokes the callback on the specified queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
                         
@@ -210,11 +210,11 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == requestQueue.label
-                    })
-                })
+                    }
+                }
                 
-                context("queue is not provided with request", {
-                    it("invoke callback on main queue", closure: {
+                context("the queue is not provided with request") {
+                    it("invokes the callback on main queue") {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
@@ -226,8 +226,8 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == DispatchQueue.main.label
-                    })
-                })
+                    }
+                }
             })
         }
     }
