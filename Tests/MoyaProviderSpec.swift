@@ -462,7 +462,7 @@ class MoyaProviderSpec: QuickSpec {
             }
         }
         
-        describe("with stubbed errors") {
+        describe("a provider with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
                 provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
@@ -724,7 +724,7 @@ class MoyaProviderSpec: QuickSpec {
             }
         }
         
-        describe("a custom callback queue") {
+        describe("using a custom callback queue") {
             var stubDescriptor: OHHTTPStubsDescriptor!
             
             beforeEach {
@@ -737,7 +737,7 @@ class MoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.removeStub(stubDescriptor)
             }
             
-            describe("a provider with predefined queue", {
+            describe("a provider with predefined queue") {
                 var provider: MoyaProvider<GitHub>!
                 var queue: DispatchQueue!
                 
@@ -746,8 +746,8 @@ class MoyaProviderSpec: QuickSpec {
                     provider = MoyaProvider<GitHub>(queue: queue)
                 }
                 
-                context("queue is provided with request", {
-                    it("invoke callback on request queue", closure: { 
+                context("a provider is given a queue with request") {
+                    it("invokes the callback on request queue") { 
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
                         
@@ -759,11 +759,11 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == requestQueue.label
-                    })
-                })
+                    }
+                }
                 
-                context("queue is not provided with request", {
-                    it("invoke callback on provider queue", closure: {
+                context("a provider uses the queueless request function") {
+                    it("invokes the callback on provider queue") {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
@@ -774,19 +774,19 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == queue.label
-                    })
-                })
-            })
+                    }
+                }
+            }
             
-            describe("a provider without predefined queue", {
+            describe("a provider without predefined queue") {
                 var provider: MoyaProvider<GitHub>!
                 
                 beforeEach {
                     provider = MoyaProvider<GitHub>()
                 }
                 
-                context("queue is provided with request", {
-                    it("invoke callback on request queue", closure: {
+                context("where the queue is provided with request") {
+                    it("invokes the callback on request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
                         
@@ -798,11 +798,11 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == requestQueue.label
-                    })
-                })
+                    }
+                }
                 
-                context("queue is not provided with request", {
-                    it("invoke callback on main queue", closure: {
+                context("where the queueless request method is invoked") {
+                    it("invokes the callback on main queue") {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
@@ -813,9 +813,9 @@ class MoyaProviderSpec: QuickSpec {
                         })
                         
                         expect(callbackQueueLabel) == DispatchQueue.main.label
-                    })
-                })
-            })
+                    }
+                }
+            }
         }
     }
 }
