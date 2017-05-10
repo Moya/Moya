@@ -265,6 +265,7 @@ Moya has a great community around it and some people have created some very help
 - [MoyaSugar](https://github.com/devxoul/MoyaSugar) – Syntactic sugar for Moya
 - [Moya-EVReflection](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya) - EVReflection bindings for Moya for easier JSON serialization (including subspecs for [RxSwift](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/RxSwift) and [ReactiveCocoa](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/ReactiveCocoa))
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Marshal bindings for Moya for easier JSON serialization
+- [NetClient/Moya](https://github.com/intelygenz/NetClient-iOS) - Versatile HTTP networking library written in Swift 3.
 
 We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
 
