@@ -275,7 +275,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         expect(callbackQueueLabel) == DispatchQueue.main.label
                     }
                 }
-            })
+            }
         }
     }
 }
