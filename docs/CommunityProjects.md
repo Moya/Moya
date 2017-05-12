@@ -1,7 +1,7 @@
 Community Projects
 --------------------
 
-We appreciate all the work being done by the community around Moya. If you would like to have your work featured in the list below, simply create a pull request adding it to the list (if there is no fitting headline, please add one).
+We appreciate all the work being done by the community around Moya. If you would like to have your work featured in the list below, simply create a pull request adding it to the list (if there is no fitting headline, please consider adding one).
 
 Extensions
 --------------------
