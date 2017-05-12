@@ -249,10 +249,10 @@ for filtering out certain status codes. This means that you can place your code 
 handling API errors like 400's in the same places as code for handling invalid
 responses.
 
-Community Extensions
+Community Projects
 --------------------
 
-[Moya has a great community around it and some people have created some very helpful extensions.](https://github.com/Moya/Moya/blob/master/docs/Endpoints.md)
+[Moya has a great community around it and some people have created some very helpful extensions.](https://github.com/Moya/Moya/blob/master/docs/CommunityProjects.md)
 
 Contributing
 ------------
