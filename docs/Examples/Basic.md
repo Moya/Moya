@@ -217,7 +217,7 @@ provider.request(.zen) { result in
 
 Take special note: a `.failure` means that the server either didn't *receive the
 request* (e.g. reachability/connectivity error) or it didn't send a response
-(e.g. the request timed out).  If you get a `.Failure`, you probably want to
+(e.g. the request timed out).  If you get a `.failure`, you probably want to
 re-send the request after a time delay or when an internet connection is
 established.
 
