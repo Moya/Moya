@@ -25,7 +25,7 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(_ username: String) {
-         GitHubProvider.request(.userRepositories(username)) { result in
+        GitHubProvider.request(.userRepositories(username)) { result in
             do {
                 let response = try result.dematerialize()
                 let value = try response.mapNSArray()
@@ -40,7 +40,7 @@ class ViewController: UITableViewController {
     }
 
     func downloadZen() {
-         GitHubProvider.request(.zen) { result in
+        GitHubProvider.request(.zen) { result in
             var message = "Couldn't access API"
             if case let .success(response) = result {
                 let jsonString = try? response.mapString()
@@ -53,17 +53,17 @@ class ViewController: UITableViewController {
     
     func uploadGiphy() {
         let data = animatedBirdData()
-         GiphyProvider.request(.upload(gif: data),
-                                  queue: DispatchQueue.main,
-                                  progress: progressClosure,
-                                  completion: progressCompletionClosure)
+        GiphyProvider.request(.upload(gif: data),
+                              queue: DispatchQueue.main,
+                              progress: progressClosure,
+                              completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
-         GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
-                                              queue: DispatchQueue.main,
-                                              progress: progressClosure,
-                                              completion: progressCompletionClosure)
+        GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
+                                          queue: DispatchQueue.main,
+                                          progress: progressClosure,
+                                          completion: progressCompletionClosure)
     }
     
     // MARK: - Progress Helpers
