@@ -75,9 +75,9 @@ you can use your own closure.
 
 ```swift
 let provider = MoyaProvider<MyTarget>(stubClosure: { target: MyTarget -> Moya.StubBehavior in
-	switch target {
-		/* Return something different based on the target. */
-	}
+    switch target {
+        /* Return something different based on the target. */
+    }
 })
 ```
 
