@@ -21,3 +21,8 @@ Extensions
 Libraries
 --------------------
 - [NetClient/Moya](https://github.com/intelygenz/NetClient-iOS) - Versatile HTTP networking library written in Swift 3.
+
+Applications
+--------------------
+- [Drrrible](https://github.com/devxoul/Drrrible) - Dribbble for iOS using ReactorKit
+- [Eidolon](https://github.com/artsy/eidolon) - The Artsy Auction Kiosk App
