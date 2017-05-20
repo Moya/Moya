@@ -27,7 +27,7 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
     
     func downloadRepositories(_ username: String) {
-        provider.request(.userRepositories(username)) { result in
+        provider.request(MultiTarget(GitHub.userRepositories(username))) { result in
             do {
                 let response = try result.dematerialize()
                 let value = try response.mapNSArray()
