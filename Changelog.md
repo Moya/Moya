@@ -97,7 +97,7 @@ structure and more.
 - Adds Download and Upload Task type support to Moya.
 - Corrects SwiftLint warnings.
 - Separates `Moya.swift` into multiple files.
-- Updated `mapJSON` API to include an optional named parameter `failsOnEmptyData:` that when overriden returns an empty `NSNull()` result instead of throwing an error when the response data is empty.
+- Updated `mapJSON` API to include an optional named parameter `failsOnEmptyData:` that when overridden returns an empty `NSNull()` result instead of throwing an error when the response data is empty.
 - Added `supportsMultipart` to the `Method` type, which helps determine whether to use `multipart/form-data` encoding.
 - Added `PATCH` and `CONNECT` to the `Method` cases which support multipart encoding.
 - Added `request` for `Response`.
@@ -126,7 +126,7 @@ structure and more.
 - Moves from OSSpinLock to `dispatch_semaphor` to avoid deadlocks.
 - Integrates Danger into the repo.
 - Fixes a xcodeproj referencing bug introduced by the new cURL-based logging plugin.
-- Calls completion even when cancellable token is cancelled
+- Calls completion even when cancellable token is canceled
 
 # 6.5.0
 
@@ -342,18 +342,18 @@ structure and more.
 
 - **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.
 - **Breaking change** Renames `Moya/Reactive` subspec to `Moya/ReactiveCocoa`.
-- **Breaking change** Removes `stubResponses` from initializer; replaced with new stubbing behavior `.NoStubbing`. Added class methods to `MoyaProvider` to provide defaults, while allowing users to still change stubbing behaviour on a per-request basis.
+- **Breaking change** Removes `stubResponses` from initializer; replaced with new stubbing behavior `.NoStubbing`. Added class methods to `MoyaProvider` to provide defaults, while allowing users to still change stubbing behavior on a per-request basis.
 - **Breaking change** Redefines types of `DefaultEndpointMapping` and `DefaultEnpointResolution` class functions on `MoyaProvider`. You no longer invoke these functions to return a closure, rather, you reference the functions themselves _as_ closures.
 - **Breaking change** Renames `endpointsClosure` parameter and property of `MoyaProvider` to `endpointClosure`.
 - **Breaking change** Renames `ReactiveMoyaProvider` to `ReactiveCocoaMoyaProvider` for consistency.
-- Fixes problem that the `ReactiveMoyaProvider` initializer would not respect the stubbing behaviour it was passed.
+- Fixes problem that the `ReactiveMoyaProvider` initializer would not respect the stubbing behavior it was passed.
 - Adds official Carthage support – [@neonichu](http://github.com/neonichu)
 - Relaxes version dependency on RxSwift - [@alcarvalho](http://github.com/alcarvalho)
 - Fixes possible concurrency bugs with reactive providers - [@alcarvalho](http://github.com/alcarvalho)
 
 # 1.1.1
 
-- Fixes problem where `RxMoyaProvider` would not respect customized stubbing behaviour (delays).
+- Fixes problem where `RxMoyaProvider` would not respect customized stubbing behavior (delays).
 
 # 1.1.0
 
@@ -406,7 +406,7 @@ structure and more.
 
 # 0.2
 
-- Fixes [#44](https://github.com/AshFurrow/Moya/issues/44) where status codes weren't being pass through to completion blocks. This also modified the behaviour of the ReactiveCocoa extensions significantly but sending MoyaResponse objects instead of just NSData ones. —[@ashfurrow](http://github.com/AshFurrow)
+- Fixes [#44](https://github.com/AshFurrow/Moya/issues/44) where status codes weren't being passed through to completion blocks. This also modified the behavior of the ReactiveCocoa extensions significantly but sending MoyaResponse objects instead of just NSData ones. —[@ashfurrow](http://github.com/AshFurrow)
 
 # 0.1
 

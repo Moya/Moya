@@ -169,7 +169,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(endDate?.timeIntervalSince(startDate)) >= delay
             }
 
-            it("returns an error when request is cancelled") {
+            it("returns an error when request is canceled") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -186,7 +186,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).toNot( beNil() )
             }
 
-            it("notifies plugins when request is cancelled") {
+            it("notifies plugins when request is canceled") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -215,7 +215,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(plugin.didPrepare).to( beTrue() )
             }
 
-            it("returns success when request is not cancelled") {
+            it("returns success when request is not canceled") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -288,7 +288,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).to( beNil() )
             }
 
-            it("calls completion if cancelled immediately") {
+            it("calls completion if canceled immediately") {
                 var receivedError: Swift.Error?
                 var calledCompletion = false
 
@@ -310,7 +310,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(calledCompletion).to( beTrue() )
             }
 
-            it("calls completion if cancelled before request is created") {
+            it("calls completion if canceled before request is created") {
                 var receivedError: Swift.Error?
                 var calledCompletion = false
 
@@ -334,7 +334,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(calledCompletion).to( beTrue() )
             }
 
-            it("receives an error if request is cancelled before response comes back") {
+            it("receives an error if request is canceled before response comes back") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -673,7 +673,7 @@ class MoyaProviderSpec: QuickSpec {
                 provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(0.5))
             }
             
-            it("invokes completion and returns .Failure if cancelled immediately") {
+            it("invokes completion and returns. Failure if canceled immediately") {
                 var error: MoyaError?
                 waitUntil { done in
                     let cancellable = provider.request(.zen, completion: { (result) in
