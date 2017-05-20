@@ -82,7 +82,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 provider = TestProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(1))
             }
 
-            it("cancels network request when subscription is cancelled") {
+            it("cancels network request when subscription is canceled") {
                 let target: GitHub = .zen
 
                 let disposable = provider.request(target).startWithCompleted {
@@ -169,7 +169,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                     provider = TestProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(1))
                 }
                 
-                it("cancels network request when subscription is cancelled") {
+                it("cancels network request when subscription is canceled") {
                     let target: GitHub = .zen
                     
                     let disposable = provider.request(target).startWithCompleted {

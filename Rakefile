@@ -178,7 +178,7 @@ task :release, :version do |task, args|
   changelog.gsub!(/# Next/, "# Next\n\n# #{version}")
   File.open(changelog_filename, 'w') { |file| file.puts changelog }
 
-  puts "Comitting, tagging, and pushing."
+  puts "Committing, tagging, and pushing."
   message = "Releasing version #{version}."
   sh "git commit -am '#{message}'"
   sh "git tag #{version} -m '#{message}'"

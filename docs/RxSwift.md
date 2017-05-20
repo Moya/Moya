@@ -30,7 +30,7 @@ provider.request(.zen).subscribe { event in
 
 For `RxMoyaProvider`, the network request is not started
 until the signal is subscribed to. If the subscription to the signal
-is disposed of before the request completes, the request is cancelled.
+is disposed of before the request completes, the request is canceled.
 
 If the request completes normally, two things happen:
 
