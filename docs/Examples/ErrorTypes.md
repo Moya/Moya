@@ -22,7 +22,7 @@ Or RxSwift way:
 }
 ```
 
-You can do that by a `switch` on different `cases` of `Moya.Error`. In case of an `.Underlying` error you can also get the original `NSError` and its properties, e.g. `code` to be informed about `NSURLError` types like `NSURLErrorTimedOut` or `NSURLErrorNotConnectedToInternet`
+You can do that by a `switch` on different `cases` of `MoyaError`. In case of an `.Underlying` error you can also get the original `NSError` and its properties, e.g. `code` to be informed about `NSURLError` types like `NSURLErrorTimedOut` or `NSURLErrorNotConnectedToInternet`
 
 ```swift
 switch error {

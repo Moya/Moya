@@ -53,7 +53,7 @@ class OnlineProvider: RxMoyaProvider<MyService> {
                 return token
             }
             .catchError { e -> Observable<String?> in
-                guard let error = e as? Moya.Error else { throw e }
+                guard let error = e as? MoyaError else { throw e }
                 guard case .statusCode(let response) = error else { throw e }
 
                 // If we have 401 error - delete all credentials and handle logout

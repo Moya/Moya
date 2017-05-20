@@ -1,0 +1,4 @@
+github "AliSoftware/OHHTTPStubs" "swift-3.0" # waiting for a Swift 3 compatible release
+
+github "Quick/Quick"
+github "Quick/Nimble"

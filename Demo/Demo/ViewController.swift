@@ -25,31 +25,22 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(_ username: String) {
-         GitHubProvider.request(.userRepositories(username)) { result in
-            switch result {
-            case let .success(response):
-                do {
-                    if let json = try response.mapJSON() as? NSArray {
-                        // Presumably, you'd parse the JSON into a model object. This is just a demo, so we'll keep it as-is.
-                        self.repos = json
-                    } else {
-                        self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
-                    }
-                } catch {
-                    self.showAlert("GitHub Fetch", message: "Unable to fetch from GitHub")
-                }
+        GitHubProvider.request(.userRepositories(username)) { result in
+            do {
+                let response = try result.dematerialize()
+                let value = try response.mapNSArray()
+                self.repos = value
                 self.tableView.reloadData()
-            case let .failure(error):
-                guard let error = error as? CustomStringConvertible else {
-                    break
-                }
-                self.showAlert("GitHub Fetch", message: error.description)
+            } catch {
+                let printableError = error as? CustomStringConvertible
+                let errorMessage = printableError?.description ?? "Unable to fetch from GitHub"
+                self.showAlert("GitHub Fetch", message: errorMessage)
             }
         }
     }
 
     func downloadZen() {
-         GitHubProvider.request(.zen) { result in
+        GitHubProvider.request(.zen) { result in
             var message = "Couldn't access API"
             if case let .success(response) = result {
                 let jsonString = try? response.mapString()
@@ -62,17 +53,17 @@ class ViewController: UITableViewController {
     
     func uploadGiphy() {
         let data = animatedBirdData()
-         GiphyProvider.request(.upload(gif: data),
-                                  queue: DispatchQueue.main,
-                                  progress: progressClosure,
-                                  completion: progressCompletionClosure)
+        GiphyProvider.request(.upload(gif: data),
+                              queue: DispatchQueue.main,
+                              progress: progressClosure,
+                              completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
-         GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
-                                              queue: DispatchQueue.main,
-                                              progress: progressClosure,
-                                              completion: progressCompletionClosure)
+        GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
+                                          queue: DispatchQueue.main,
+                                          progress: progressClosure,
+                                          completion: progressCompletionClosure)
     }
     
     // MARK: - Progress Helpers

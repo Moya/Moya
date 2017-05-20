@@ -8,7 +8,7 @@ opt_in_rules:
   - force_unwrapping
 
 included:
-  - Source
+  - Sources
 
 function_body_length:
   warning: 50

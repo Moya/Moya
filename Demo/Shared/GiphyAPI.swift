@@ -27,6 +27,9 @@ extension Giphy: TargetType {
             return ["api_key": "dc6zaTOxFJmzC", "username": "Moya"]
         }
     }
+    public var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
     public var task: Task {
         switch self {
         case let .upload(data):

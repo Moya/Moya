@@ -66,8 +66,8 @@ analytics.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(target)
-    return defaultEndpoint.adding(newHttpHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+    return defaultEndpoint.adding(newHTTPHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 ```
@@ -80,14 +80,14 @@ target that actually does the authentication. We could construct an
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(target)
+    let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
 
     // Sign all non-authenticating requests
     switch target {
     case .authenticate:
         return defaultEndpoint
     default:
-        return defaultEndpoint.adding(newHttpHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
+        return defaultEndpoint.adding(newHTTPHeaderFields: ["AUTHENTICATION_TOKEN": GlobalAppStorage.authToken])
     }
 }
 let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
@@ -128,7 +128,7 @@ that hits the network. It has a default value of `MoyaProvider.DefaultRequestMap
 which simply uses the `urlRequest` property of the `Endpoint` instance.
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
-its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, Moya.Error> -> Void`) with a request that represents the Endpoint.
+its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, MoyaError> -> Void`) with a request that represents the Endpoint.
 It's here that you'd do your OAuth signing or whatever. Since you may invoke the
 closure asynchronously, you can use whatever authentication library you like ([example](https://github.com/rheinfabrik/Heimdallr.swift)).
 Instead of modifying the request, you could simply log it, instead.

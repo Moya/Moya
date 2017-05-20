@@ -1,5 +1,42 @@
 # Next
 
+# 8.0.4
+- Bumped minimum version of ReactiveSwift to 1.1.
+- Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
+- Move project to using a single target for all platforms.
+- Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
+
+# 8.0.3
+
+- Fixed `reversedPrint` arguments for output.
+- Fixed memory leak when request with stub.
+- Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
+
+# 8.0.2
+
+- Changed dependency pinning to rely only on major versions.
+
+# 8.0.1
+
+- Fixed an issue where `RxMoyaProvider` never sends `next` or errors if it's disposed before a subscription is made.
+
+# 8.0.0
+
+- **Breaking Change** Renamed `Moya.Error` to `MoyaError`.
+- **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
+- **Breaking Change** `TargetType` now specifies its `ParameterEncoding`.
+- **Breaking Change** Removed unused `Moya.Error.data`.
+- **Breaking Change** Renamed `adding(newHttpHeaderFields:)` to `adding(newHTTPHeaderFields:)`.
+- `Moya.Error` now conforms to `LocalizedError` protocol.
+- Added documentation for `TargetType` and associated data structures.
+- Re-add `MultiTarget` to project.
+- Adopted an SPM-compatible project structure.
+- Moved tests to Moya.xcodeproj.
+- Supported the Swift package manager
+- Added `AccessTokenPlugin` for easier authorization.
+- Added `AccessTokenAuthorizable` protocol for optionally controlling the authorization behavior of `TargetType`s when using `AccessTokenPlugin`.
+- Added availability tags for renamed functions included in the Swift 3 migration.
+
 # 8.0.0-beta.6
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.

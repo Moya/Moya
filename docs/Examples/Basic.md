@@ -10,6 +10,7 @@ enum MyService {
     case zen
     case showUser(id: Int)
     case createUser(firstName: String, lastName: String)
+    case updateUser(id:Int, firstName: String, lastName: String)
     case showAccounts
 }
 ```
@@ -25,19 +26,19 @@ extension MyService: TargetType {
         switch self {
         case .zen:
             return "/zen"
-        case .showUser(let id):
+        case .showUser(let id), .updateUser(let id, _, _):
             return "/users/\(id)"
         case .createUser(_, _):
             return "/users"
         case .showAccounts:
-        	  return "/accounts"
+            return "/accounts"
         }
     }
     var method: Moya.Method {
         switch self {
         case .zen, .showUser, .showAccounts:
             return .get
-        case .createUser:
+        case .createUser, .updateUser:
             return .post
         }
     }
@@ -45,8 +46,17 @@ extension MyService: TargetType {
         switch self {
         case .zen, .showUser, .showAccounts:
             return nil
-        case .createUser(let firstName, let lastName):
+        case .createUser(let firstName, let lastName), .updateUser(_, let firstName, let lastName):
             return ["first_name": firstName, "last_name": lastName]
+        }
+    }
+
+    var parameterEncoding: ParameterEncoding {
+        switch self {
+        case .zen, .showUser, .showAccounts, .updateUser:
+            return URLEncoding.default // Send parameters in URL
+        case .createUser:
+            return JSONEncoding.default // Send parameters as JSON in request body
         }
     }
     var sampleData: Data {
@@ -57,23 +67,24 @@ extension MyService: TargetType {
             return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
         case .createUser(let firstName, let lastName):
             return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
+        case .updateUser(let id, let firstName, let lastName):
+            return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
             guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                  let data = Data(base64Encoded: path) else {
-                      return Data()
+                let data = Data(base64Encoded: path) else {
+                    return Data()
             }
             return data
         }
     }
     var task: Task {
         switch self {
-            case .zen, .showUser, .createUser, .showAccounts:
-                return .request
+        case .zen, .showUser, .createUser, .updateUser, .showAccounts:
+            return .request
         }
     }
 }
-
 // MARK: - Helpers
 private extension String {
     var urlEscaped: String {
@@ -98,8 +109,20 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
     // do something with the result (read on for more details)
 }
 
-// The full request will result to the following (by default):
-// POST https://api.myservice.com/users?first_name=James&last_name=Potter
+// The full request will result to the following:
+// POST https://api.myservice.com/users
+// Request body: 
+// { 
+//  "first_name": "James", 
+//  "last_name": "Potter" 
+// }
+
+provider.request(.updateUser(id: 123, firstName: "Harry", lastName: "Potter")) { result in
+    // do something with the result (read on for more details)
+}
+
+// The full request will result to the following:
+// POST https://api.myservice.com/users/123?first_name=Harry&last_name=Potter
 ```
 
 The `TargetType` specifies both a base URL for the API and the sample data for
@@ -174,7 +197,7 @@ The `Endpoint` instance is used to create a `URLRequest` (the heavy lifting is
 done via Alamofire), and the request is sent (again - Alamofire).  Once
 Alamofire gets a response (or fails to get a response), Moya will wrap the
 success or failure in a `Result` enum.  `result` is either
-`.success(Moya.Response)` or `.failure(Moya.Error)`.
+`.success(Moya.Response)` or `.failure(MoyaError)`.
 
 You will need to unpack the data and status code from `Moya.Response`.
 
@@ -194,14 +217,14 @@ provider.request(.zen) { result in
 
 Take special note: a `.failure` means that the server either didn't *receive the
 request* (e.g. reachability/connectivity error) or it didn't send a response
-(e.g. the request timed out).  If you get a `.Failure`, you probably want to
+(e.g. the request timed out).  If you get a `.failure`, you probably want to
 re-send the request after a time delay or when an internet connection is
 established.
 
 Once you have a `.success(response)` you might want to filter on status codes or
 convert the response data to JSON. `Moya.Response` can help!
 
-###### See more at <https://github.com/Moya/Moya/blob/master/Source/Response.swift>
+###### See more at <https://github.com/Moya/Moya/blob/master/Sources/Moya/Response.swift>
 
 ```swift
 do {

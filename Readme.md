@@ -1,6 +1,8 @@
-[![CircleCI](https://circleci.com/gh/Moya/Moya.svg?style=svg)](https://circleci.com/gh/Moya/Moya) [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
+[![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya/master.svg)](https://circleci.com/gh/Moya/Moya/tree/master)
+[![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 
 <p align="center">
@@ -55,45 +57,59 @@ Because of the many Swift versions Moya supports, it might be confusing to
 find the version of Moya that you need. Below is a table that shows which version of Moya
 you should use for your Swift version.
 
-| Swift version | Moya version    |
-| ------------- | --------------- |
-| 3.X           | >= 8.0.0-beta.1 |
-| 2.3           | 7.0.2 - 7.0.3   |
-| 2.2           | <= 7.0.1        |
+| Swift version | Moya version  |
+| ------------- | ------------- |
+| 3.X           | >= 8.0.0      |
+| 2.3           | 7.0.2 - 7.0.4 |
+| 2.2           | <= 7.0.1      |
+
+### Swift Package Manager
+
+To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
+
+```swift
+.Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
+```
+
+and then specify `.Target(name: "Moya")` as a dependency of the Target in which you wish to use Moya.
+Here's an example `PackageDescription`:
+
+```swift
+import PackageDescription
+
+let package = Package(
+  name: "MyApp",
+  dependencies: [
+    .Package(url: "https://github.com/Moya/Moya", majorVersion: 8)
+  ]
+)
+```
 
 ### CocoaPods
 
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '8.0.0-beta.6'
-```
+pod 'Moya'
 
-In any file you'd like to use Moya in, don't forget to
-import the framework with `import Moya`.
+# or 
 
-For RxSwift or ReactiveSwift extensions, this project will include
-them as dependencies. You can do this via CocoaPods subspecs, but you will also
-need to include the pre-release versions of RxSwift or ReactiveSwift manually.
-
-```rb
 pod 'Moya/RxSwift'
 
 # or
 
 pod 'Moya/ReactiveSwift'
-pod 'ReactiveSwift', '1.0.0-alpha.4'
 ```
 
 Then run `pod install`.
+
+In any file you'd like to use Moya in, don't forget to
+import the framework with `import Moya`.
 
 ### Carthage
 
 Carthage users can point to this repository and use whichever
 generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
-The full Moya framework is bundled in each of those frameworks;
-importing more than one framework in a single file will result in
-ambiguous lookups at compile time.
 
 ```
 github "Moya/Moya"
@@ -233,21 +249,10 @@ for filtering out certain status codes. This means that you can place your code 
 handling API errors like 400's in the same places as code for handling invalid
 responses.
 
-Community Extensions
+Community Projects
 --------------------
 
-Moya has a great community around it and some people have created some very helpful extensions.
-
-- [Moya-ObjectMapper](https://github.com/ivanbruel/Moya-ObjectMapper) - ObjectMapper bindings for Moya for easier JSON serialization
-- [Moya-SwiftyJSONMapper](https://github.com/AvdLee/Moya-SwiftyJSONMapper) - SwiftyJSON bindings for Moya for easier JSON serialization
-- [Moya-Argo](https://github.com/wattson12/Moya-Argo) - Argo bindings for Moya for easier JSON serialization
-- [Moya-ModelMapper](https://github.com/sunshinejr/Moya-ModelMapper) - ModelMapper bindings for Moya for easier JSON serialization
-- [Moya-Gloss](https://github.com/spxrogers/Moya-Gloss) - Gloss bindings for Moya for easier JSON serialization
-- [Moya-JASON](https://github.com/DroidsOnRoids/Moya-JASON) - JASON bindings for Moya for easier JSON serialization
-- [Moya-Unbox](https://github.com/RyogaK/Moya-Unbox) - Unbox bindings for Moya for easier JSON serialization
-- [MoyaSugar](https://github.com/devxoul/MoyaSugar) – Syntactic sugar for Moya
-
-We appreciate all the work being done by the community around Moya. If you would like to have your extension featured in the list above, simply create a pull request adding your extensions to the list.
+[Moya has a great community around it and some people have created some very helpful extensions.](https://github.com/Moya/Moya/blob/master/docs/CommunityProjects.md)
 
 Contributing
 ------------
@@ -271,7 +276,7 @@ requests and help steer the ship :ship: You can read more details about that [in
 
 Moya's community has a tremendous positive energy, and the maintainers are committed to keeping things awesome. Like [in the CocoaPods community](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules), always assume positive intent; even if a comment sounds mean-spirited, give the person the benefit of the doubt.
 
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code of Conduct.md).
+Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/contributors/blob/master/Code%20of%20Conduct.md).
 
 ### Adding new source files
 
@@ -280,4 +285,4 @@ If you add or remove a source file from Moya, a corresponding change needs to be
 License
 -------
 
-Moya is released under an MIT license. See License.md for more information.
+Moya is released under an MIT license. See [License.md](License.md) for more information.

@@ -33,6 +33,52 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> URL
 ])
 ```
 
+Bearer HTTP Auth
+----------------
+
+Another common method of authentication is by using an access token. Commonly
+this is a [JWT](https://jwt.io/introduction/), but it can take other forms as
+well. These requests are authorized by adding an HTTP header of the following
+form:
+
+```
+Authorization: Bearer <token>
+```
+
+To make adding these authorization headers easier, Moya comes with an
+`AccessTokenPlugin`. It can be added to your provider like this:
+
+```swift
+let token = "eyeAm.AJsoN.weBTOKen"
+let authPlugin = AccessTokenPlugin(token: token)
+let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
+```
+
+By default, `AccessTokenPlugin` will add the authorization header to all
+requests. If you want to control this behavior for a `TargetType`, you can
+conform to `AccessTokenAuthorizable` and use `shouldAuthorize` to
+specify the behavior:
+
+```swift
+enum YourAPI: TargetType, AccessTokenAuthorizable {
+  case targetThatNeedsAuthorization
+  case targetThatDoesntNeedAuthorization
+
+  /*
+  TargetType implementation
+  */
+
+  var shouldAuthorize: Bool {
+    switch self {
+    case .targetThatNeedsAuthorization:
+      return true
+    case .targetThatDoesntNeedAuthorization:
+      return false
+    }
+  }
+}
+```
+
 OAuth
 -----
 
