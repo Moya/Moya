@@ -34,8 +34,8 @@ class ViewController: UITableViewController {
                 self.repos = value
                 self.tableView.reloadData()
             } catch {
-                let printableError = error as? CustomStringConvertible
-                let errorMessage = printableError?.description ?? "Unable to fetch from GitHub"
+                let printableError = error as CustomStringConvertible
+                let errorMessage = printableError.description
                 self.showAlert("GitHub Fetch", message: errorMessage)
             }
         }
