@@ -27,15 +27,15 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
     
     func downloadRepositories(_ username: String) {
-        provider.request(.userRepositories(username)) { result in
+        provider.request(MultiTarget(GitHub.userRepositories(username))) { result in
             do {
                 let response = try result.dematerialize()
                 let value = try response.mapNSArray()
                 self.repos = value
                 self.tableView.reloadData()
             } catch {
-                let printableError = error as? CustomStringConvertible
-                let errorMessage = printableError?.description ?? "Unable to fetch from GitHub"
+                let printableError = error as CustomStringConvertible
+                let errorMessage = printableError.description
                 self.showAlert("GitHub Fetch", message: errorMessage)
             }
         }
