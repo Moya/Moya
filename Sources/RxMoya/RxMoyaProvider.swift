@@ -49,7 +49,7 @@ public extension RxMoyaProvider {
         let response: Observable<ProgressResponse> = Observable.create { observer in
             let cancellableToken = self.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
-                case let .success:
+                case .success:
                     observer.onCompleted()
                 case let .failure(error):
                     observer.onError(error)
