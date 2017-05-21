@@ -1,4 +1,5 @@
 # Next
+- Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
 
 # 8.0.4
 - Bumped minimum version of ReactiveSwift to 1.1.
