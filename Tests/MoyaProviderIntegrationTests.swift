@@ -6,14 +6,16 @@ import Alamofire
 @testable import Moya
 @testable import ReactiveMoya
 
-func beIdenticalToResponse(_ expectedValue: Moya.Response) -> MatcherFunc<Moya.Response> {
-    return MatcherFunc { actualExpression, _ in
-        do {
-            let instance = try actualExpression.evaluate()
-            return instance === expectedValue
-        } catch {
-            return false
+func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Response> {
+    return Predicate { expression in
+        let test: Bool
+        if let value = try expression.evaluate(), value == expectedValue {
+            test = true
+        } else {
+            test = false
         }
+
+        return PredicateResult(bool: test, message: .expectedActualValueTo("<\(expectedValue)>"))
     }
 }
 
