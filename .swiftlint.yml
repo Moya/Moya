@@ -9,6 +9,7 @@ opt_in_rules:
 
 included:
   - Sources
+  - Tests
 
 function_body_length:
   warning: 50
