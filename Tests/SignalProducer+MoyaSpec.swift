@@ -17,8 +17,10 @@ import Nimble
 
 // Necessary since Image(named:) doesn't work correctly in the test bundle
 private extension ImageType {
+
+    class TestClass { }
+
     class func testPNGImage(named name: String) -> ImageType {
-        class TestClass { }
         let bundle = Bundle(for: type(of: TestClass()))
         let path = bundle.path(forResource: name, ofType: "png")
         return Image(contentsOfFile: path!)!
