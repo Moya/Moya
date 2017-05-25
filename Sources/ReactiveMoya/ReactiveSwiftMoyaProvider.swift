@@ -19,11 +19,11 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
     }
 
     /// Designated request-making method.
-    open func request(_ token: Target) -> SignalProducer<Response, MoyaError> {
+    open func request(_ token: Target, progress: ProgressBlock? = nil) -> SignalProducer<Response, MoyaError> {
 
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
-            let cancellableToken = self?.request(token) { result in
+            let cancellableToken = self?.request(token, queue: nil, progress: progress, completion: { (result) in
                 switch result {
                 case let .success(response):
                     observer.send(value: response)
@@ -31,7 +31,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
                 case let .failure(error):
                     observer.send(error: error)
                 }
-            }
+            })
 
             requestDisposable.add {
                 // Cancel the request

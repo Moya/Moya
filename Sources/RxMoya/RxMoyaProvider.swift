@@ -17,11 +17,11 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
     }
 
     /// Designated request-making method.
-    open func request(_ token: Target) -> Observable<Response> {
+    open func request(_ token: Target, progress: ProgressBlock? = nil) -> Observable<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { observer in
-            let cancellableToken = self.request(token) { result in
+            let cancellableToken = self.request(token, queue: nil, progress: progress, completion: { (result) in
                 switch result {
                 case let .success(response):
                     observer.onNext(response)
@@ -29,7 +29,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
                 case let .failure(error):
                     observer.onError(error)
                 }
-            }
+            })
 
             return Disposables.create {
                 cancellableToken.cancel()
