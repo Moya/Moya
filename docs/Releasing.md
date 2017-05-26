@@ -30,7 +30,7 @@ Note: to make a release, you need at least one entry in the `Next` section of th
 To make a release:
 
 1. Pull latest from master and make sure your git is clean (the script will fail if it's not).
-1. Run `rake release["X.Y.Z"]`.
+1. Run `rake release["X.Y.Z"]`. (If you use ZSH, use `rake release\["X.Y.Z"\]`)
 1. Grab a :tea: or :coffee:.
 1. Make sure everything went smoothly.
 
