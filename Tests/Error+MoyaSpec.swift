@@ -52,7 +52,7 @@ public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError
         } else {
             test = false
         }
-        
+
         return PredicateResult(bool: test, message: .expectedActualValueTo("<\(expectedValue)>"))
     }
 }

@@ -108,7 +108,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 private class TestStreamRequest: RequestType {
     var request: URLRequest? {
         var r = URLRequest(url: URL(string: url(GitHub.zen))!)
-        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
+        r.allHTTPHeaderFields = ["Content-Type": "application/json"]
         r.httpBodyStream = InputStream(data: "cool body".data(using: .utf8)!)
 
         return r
@@ -126,7 +126,7 @@ private class TestStreamRequest: RequestType {
 private class TestBodyRequest: RequestType {
     var request: URLRequest? {
         var r = URLRequest(url: URL(string: url(GitHub.zen))!)
-        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
+        r.allHTTPHeaderFields = ["Content-Type": "application/json"]
         r.httpBody = "cool body".data(using: .utf8)
 
         return r
@@ -144,7 +144,7 @@ private class TestBodyRequest: RequestType {
 private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
     var request: URLRequest? {
         var r = URLRequest(url: URL(string: url(GitHub.zen))!)
-        r.allHTTPHeaderFields = ["Content-Type" : "application/json"]
+        r.allHTTPHeaderFields = ["Content-Type": "application/json"]
         r.httpBody = "cool body".data(using: .utf8)
 
         return r
@@ -159,7 +159,7 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
     }
 
     var debugDescription: String {
-        return ["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"","\"https://api.github.com/zen\""].joined(separator: " \\\n\t")
+        return ["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"", "\"https://api.github.com/zen\""].joined(separator: " \\\n\t")
     }
 }
 

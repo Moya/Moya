@@ -35,5 +35,5 @@ final class TestingPlugin: PluginType {
 
         return result
     }
-    
-} 
+
+}

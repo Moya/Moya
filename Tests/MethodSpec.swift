@@ -14,7 +14,7 @@ class MethodSpec: QuickSpec {
                 (.head, false),
                 (.patch, true),
                 (.trace, false),
-                (.connect, true),
+                (.connect, true)
             ]
             for (method, expected) in expectations {
                 it("\(method) should \(expected ? "" : "not") support multipart") {
