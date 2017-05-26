@@ -1,5 +1,4 @@
-Subclassing Provider and refreshing session automatically
-=========================================================
+# Subclassing Provider and refreshing session automatically
 
 Based on [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/Networking.swift).
 

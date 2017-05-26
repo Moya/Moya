@@ -1,5 +1,4 @@
-RxSwift
-=======
+# RxSwift
 
 Moya provides an optional `RxMoyaProvider` subclass of
 `MoyaProvider` that does a few interesting things. Instead of

@@ -1,10 +1,9 @@
-Community Projects
---------------------
+# Community Projects
 
 We appreciate all the work being done by the community around Moya. If you would like to have your work featured in the list below, simply create a pull request adding it to the list (if there is no fitting headline, please consider adding one).
 
-Extensions
---------------------
+## Extensions
+
 - [Moya-ObjectMapper](https://github.com/ivanbruel/Moya-ObjectMapper) - ObjectMapper bindings for Moya for easier JSON serialization
 - [Moya-SwiftyJSONMapper](https://github.com/AvdLee/Moya-SwiftyJSONMapper) - SwiftyJSON bindings for Moya for easier JSON serialization
 - [Moya-Argo](https://github.com/wattson12/Moya-Argo) - Argo bindings for Moya for easier JSON serialization
@@ -18,11 +17,11 @@ Extensions
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Marshal bindings for Moya for easier JSON serialization
 
 
-Libraries
---------------------
+## Libraries
+
 - [NetClient/Moya](https://github.com/intelygenz/NetClient-iOS) - Versatile HTTP networking library written in Swift 3.
 
-Applications
---------------------
+## Applications
+
 - [Drrrible](https://github.com/devxoul/Drrrible) - Dribbble for iOS using ReactorKit
 - [Eidolon](https://github.com/artsy/eidolon) - The Artsy Auction Kiosk App

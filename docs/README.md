@@ -1,5 +1,4 @@
-Documentation
-=============
+# Documentation
 
 Moya is about working at *high levels of abstraction* in your application.
 It accomplishes this with the following pipeline.

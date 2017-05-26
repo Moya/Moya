@@ -1,5 +1,4 @@
-Providers
-=========
+# Providers
 
 When using Moya, you make all API requests through a `MoyaProvider` instance,
 passing in a value of your enum that specifies which endpoint you want to call.
@@ -29,8 +28,7 @@ for an example.
 
 But don't forget to keep a reference for it in property. If it gets deallocated you'll see `-999 "canceled"` error on response.
 
-Advanced Usage
-------------
+## Advanced Usage
 
 To explain all configuration options you have with a `MoyaProvider` we will cover each parameter one by one in the following sections.
 

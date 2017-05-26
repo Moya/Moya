@@ -1,5 +1,4 @@
-Optional request parameters
-===========================
+# Optional request parameters
 
 Suppose you want to call `api/users?limit=10` but also `api/users`:
 
@@ -43,9 +42,8 @@ extension MyService: TargetType {
 }
 ```
 
+## Important Note
 
-Important Note
---------------
 You **have to** add optional parameters like shown above, one per line. Optional parameters won't be removed in case of ```nil``` if you try to initialize them within one line, e.g.:
 
 ```swift

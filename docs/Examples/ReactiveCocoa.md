@@ -1,5 +1,4 @@
-ReactiveCocoa examples
-======================
+# ReactiveCocoa examples
 
 A `ReactiveCocoaMoyaProvider` can be created much like a
 [`MoyaProvider`](../Providers.md) and can be used as follows:

@@ -1,5 +1,4 @@
-Basic Usage
-===========
+# Basic Usage
 
 So how do you use this library? Well, it's pretty easy. Just follow this
 template. First, set up an `enum` with all of your API targets. Note that you
@@ -113,8 +112,8 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
 // POST https://api.myservice.com/users
 // Request body: 
 // { 
-//  "first_name": "James", 
-//  "last_name": "Potter" 
+//   "first_name": "James", 
+//   "last_name": "Potter" 
 // }
 
 provider.request(.updateUser(id: 123, firstName: "Harry", lastName: "Potter")) { result in
@@ -210,7 +209,7 @@ provider.request(.zen) { result in
 
         // do something in your app
     case let .failure(error):
-        // TODO: handle the error ==  best. comment. ever.
+        // TODO: handle the error == best. comment. ever.
     }
 }
 ```

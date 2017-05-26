@@ -1,5 +1,4 @@
-ReactiveSwift
-=============
+# ReactiveSwift
 
 Moya provides an optional `ReactiveSwiftMoyaProvider` subclass of
 `MoyaProvider` that does a few interesting things. Instead of

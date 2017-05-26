@@ -1,5 +1,4 @@
-Advanced
-=======
+# Advanced
 
 #### Alamofire automatic validation
 Sometimes, you will want to use [Alamofire automatic validation](https://github.com/Alamofire/Alamofire#automatic-validation) for some requests.

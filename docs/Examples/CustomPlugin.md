@@ -1,5 +1,4 @@
-Creating a custom plugin
-=========================================================
+# Creating a custom plugin
 
 As an example of building a custom plugin, let's say we wanted to inform the user about our network activity so we will show an alert view with some basic info about the request as it is being sent, and let users know if a response indicated a failed request (for this example we will also need to assume we don’t mind bothering the user with lots of alerts)
 
