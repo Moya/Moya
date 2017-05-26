@@ -1,7 +1,7 @@
 Releasing
 =========
 
-(Note: This document is a reference for people with push access to Moya and to [CocoaPods](https://cocoapods.org/pods/Moya).)
+(_Note: This document is a reference for people with push access to Moya and to [CocoaPods](https://cocoapods.org/pods/Moya)._)
 
 Releasing a new version of Moya has been automated as much as possible. There are a few prerequisite steps:
 
@@ -25,7 +25,7 @@ If you see an error command that you do not have registered session, run command
 pod trunk register you@youremailaddress.com
 ```
 
-Note: to make a release, you need at least one entry in the `Next` section of the changelog.
+(_Note: to make a release, you need at least one entry in the `Next` section of the changelog._)
 
 To make a release:
 
