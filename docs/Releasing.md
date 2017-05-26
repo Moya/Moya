@@ -2,7 +2,7 @@
 
 (_Note: This document is a reference for people with push access to Moya and to [CocoaPods](https://cocoapods.org/pods/Moya)._)
 
-## Before release:
+## Before release
 
 Releasing a new version of Moya has been automated as much as possible. There are a few prerequisite steps:
 
