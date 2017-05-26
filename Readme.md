@@ -36,20 +36,17 @@ Some awesome features of Moya:
 - Lets you define a clear usage of different endpoints with associated enum values.
 - Treats test stubs as first-class citizens so unit testing is super-easy.
 
-Sample Project
---------------
+## Sample Project
 
 There's a sample project in the Demo directory. To use it, run `pod install` to download the required libraries. Have fun!
 
-Project Status
---------------
+## Project Status
 
 This project is actively under development, and is being used in [Artsy's
 new auction app](https://github.com/Artsy/eidolon). We consider it
 ready for production use.
 
-Installation
-------------
+## Installation
 
 ### Moya version vs Swift version.
 
@@ -78,10 +75,10 @@ Here's an example `PackageDescription`:
 import PackageDescription
 
 let package = Package(
-  name: "MyApp",
-  dependencies: [
-    .Package(url: "https://github.com/Moya/Moya.git", majorVersion: 8)
-  ]
+    name: "MyApp",
+    dependencies: [
+        .Package(url: "https://github.com/Moya/Moya.git", majorVersion: 8)
+    ]
 )
 ```
 
@@ -154,8 +151,7 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 > The three frameworks are automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
 
-Usage
----
+## Usage
 
 After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can access an API like this:
 
@@ -191,14 +187,13 @@ parameter encoding.
 
 For more examples, see the [documentation](docs/Examples).
 
-Reactive Extensions
--------------------
+## Reactive Extensions
 
 Even cooler are the reactive extensions. Moya provides reactive extensions for
 [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) and
 [RxSwift](https://github.com/ReactiveX/RxSwift).
 
-## ReactiveSwift
+### ReactiveSwift
 
 After `ReactiveSwift` [setup](docs/ReactiveSwift.md), `request(:)` method
 immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
@@ -219,7 +214,7 @@ provider.request(.userProfile("ashfurrow")).start { event in
 }
 ```
 
-## RxSwift
+### RxSwift
 
 After `RxSwift` [setup](docs/RxSwift.md), `request(:)` method immediately
 returns an `Observable` that you can subscribe to or bind or map or whatever you
@@ -239,8 +234,6 @@ provider.request(.userProfile("ashfurrow")).subscribe { event in
 }
 ```
 
----
-
 In addition to the option of using signals instead of callback blocks, there are
 also a series of signal operators for RxSwift and ReactiveSwift that will attempt
 to map the data received from the network response into either an image, some JSON,
@@ -249,15 +242,13 @@ for filtering out certain status codes. This means that you can place your code 
 handling API errors like 400's in the same places as code for handling invalid
 responses.
 
-Community Projects
---------------------
+## Community Projects
 
 [Moya has a great community around it and some people have created some very helpful extensions.](https://github.com/Moya/Moya/blob/master/docs/CommunityProjects.md)
 
-Contributing
-------------
+## Contributing
 
-Hey! Like Moya? Awesome! We could actually really use your help!
+Hey! Do you like Moya? Awesome! We could actually really use your help!
 
 Open source isn't just writing code. Moya could use your help with any of the
 following:
@@ -282,7 +273,6 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget.
 
-License
--------
+## License
 
 Moya is released under an MIT license. See [License.md](License.md) for more information.

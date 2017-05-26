@@ -1,5 +1,4 @@
-Releasing
-=========
+# Releasing
 
 (Note: This document is a reference for people with push access to Moya and to [CocoaPods](https://cocoapods.org/pods/Moya).)
 

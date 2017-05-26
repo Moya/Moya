@@ -1,5 +1,4 @@
-Plugins
-=======
+# Plugins
 
 Moya plugins are used to modify requests and responses or perform side-effects.
 A plugin is called:
@@ -13,7 +12,7 @@ A plugin is called:
 - (`process`) before `completion` is called with the `Result`. This is
   an opportunity to make any modifications to the `Result` of the `request`.
 
-## Built in plugins
+## Built-in plugins
 Moya ships with some default plugins which can be used for common functions: authentication, network activity indicator management and logging.
 You can use a plugin simply declaring it during the initialization of the provider:
 
@@ -21,17 +20,17 @@ You can use a plugin simply declaring it during the initialization of the provid
 let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose: true)])
 ```
 
-#### Authentication
+### Authentication
 The authentication plugin allows a user to assign an optional `URLCredential` per request. There is no action when a request is received.
 
 The plugin can be found at [`Sources/Moya/Plugins/CredentialsPlugin.swift`](../Sources/Moya/Plugins/CredentialsPlugin.swift)
 
-#### Network Activity Indicator
+### Network Activity Indicator
 One very common task with iOS networking is to show a network activity indicator during network requests, and remove it when all requests have finished. The provided plugin adds callbacks which are called when a requests starts and finishes, which can be used to keep track of the number of requests in progress, and show / hide the network activity indicator accordingly.
 
 The plugin can be found at [`Sources/Moya/Plugins/NetworkActivityPlugin.swift`](../Sources/Moya/Plugins/NetworkActivityPlugin.swift)
 
-#### Logging
+### Logging
 During development it can be very useful to log network activity to the console. This can be anything from the URL of a request as sent and received, to logging full headers, method, request body on each request and response.
 
 The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initializing the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputting data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `String.Encoding.utf8` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Demo/Shared/GitHubAPI.swift`](../Demo/Shared/GitHubAPI.swift) for an example that does exactly that)
