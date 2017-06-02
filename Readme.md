@@ -249,6 +249,25 @@ for filtering out certain status codes. This means that you can place your code 
 handling API errors like 400's in the same places as code for handling invalid
 responses.
 
+By default, all of your requests will be put onto a background thread by `Alamofire`, and the 
+response will be called on the main scheduler.
+If you want your response called on a different thread, you can either initialize your `Provider` with a thread
+```swift
+provider = RxMoyaProvider<GitHub>(queue: DispatchQueue.global(.utility))
+provider.request(.userProfile("ashfurrow"))
+  .map { /* this is called on a utility thread */ }
+```
+
+or, you can choose to `.observeOn` the response on a specific scheduler:
+```swift
+provider = RxMoyaProvider<GitHub>()
+provider.request(.userProfile("ashfurrow"))
+  .map { /* this is called on the current thread */ }
+  .observeOn(ConcurrentDispatchQueueScheduler(qos: .utility))
+  .map { /* this is called on a utility thread */ }
+```
+
+
 Community Extensions
 --------------------
 
