@@ -3,6 +3,7 @@
 * [Basic usage](Basic.md)
 * [Use MultiTarget for multiple Targets using the same Provider](MultiTarget.md)
 * [Setup for Assets downloading](Assets.md)
+* [Alamofire automatic validation](AlamofireValidation.md)
 
 ## Reactive extensions
 
