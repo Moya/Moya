@@ -79,7 +79,7 @@ final class TestViewModel {
     }
 
     func loadImage() {
-        loader.load(.star) { result in
+        loader.load(asset: .star) { result in
             // handle the result
         }
     }
