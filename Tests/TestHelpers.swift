@@ -126,7 +126,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(defaultDownloadDestination))
+            return .download(.request(DefaultDownloadDestination))
         }
     }
     public var sampleData: Data {
