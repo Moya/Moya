@@ -70,8 +70,8 @@ extension MyService: TargetType {
             return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
-            guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                let data = Data(base64Encoded: path) else {
+            guard let url = Bundle.main.url(forResource: "accounts", withExtension: "json"),
+                let data = try? Data(contentsOf: url) else {
                     return Data()
             }
             return data
