@@ -12,24 +12,24 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                queue: DispatchQueue? = nil,
+                callbackQueue: DispatchQueue? = nil,
                 manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
                 plugins: [PluginType] = [], stubScheduler: DateScheduler? = nil,
                 trackInflights: Bool = false) {
         self.stubScheduler = stubScheduler
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, queue: queue, manager: manager, plugins: plugins, trackInflights: trackInflights)
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
     ///
     /// - Parameters:
     ///   - token: Entity, which provides specifications necessary for a `MoyaProvider`.
-    ///   - queue: Callback queue. If nil - queue from provider initializer will be used.
+    ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
     /// - Returns: SignalProducer, which emits one element or error.
-    open func request(_ token: Target, queue: DispatchQueue? = nil) -> SignalProducer<Response, MoyaError> {
+    open func request(_ token: Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<Response, MoyaError> {
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
-            let cancellableToken = self?.request(token, queue: queue) { result in
+            let cancellableToken = self?.request(token, callbackQueue: callbackQueue) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: response)
@@ -71,7 +71,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
 }
 
 public extension ReactiveSwiftMoyaProvider {
-    public func requestWithProgress(token: Target, queue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
+    public func requestWithProgress(token: Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
         let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
@@ -79,7 +79,7 @@ public extension ReactiveSwiftMoyaProvider {
         }
 
         let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, disposable in
-            let cancellableToken = self?.request(token, queue: queue, progress: progressBlock(observer)) { result in
+            let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: ProgressResponse(response: response))

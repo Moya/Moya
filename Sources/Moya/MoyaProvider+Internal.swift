@@ -22,7 +22,7 @@ public extension MoyaProvider {
     // swiftlint:disable cyclomatic_complexity
     // swiftlint:disable function_body_length
     /// Performs normal requests.
-    func requestNormal(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable {
+    func requestNormal(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
@@ -83,16 +83,16 @@ public extension MoyaProvider {
                 }
                 switch target.task {
                 case .request:
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
                 case .upload(.file(let file)):
-                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, queue: queue, file: file, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, callbackQueue: callbackQueue, file: file, progress: progress, completion: networkCompletion)
                 case .upload(.multipart(let multipartBody)):
                     guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
-                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
                 case .download(.request(let destination)):
-                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, queue: queue, destination: destination, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
                 }
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, completion: { result in
@@ -156,7 +156,7 @@ public extension MoyaProvider {
 }
 
 private extension MoyaProvider {
-    func sendUploadMultipart(_ target: Target, request: URLRequest, queue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableWrapper {
+    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableWrapper {
         let cancellable = CancellableWrapper()
 
         let multipartFormData: (RequestMultipartFormData) -> Void = { form in
@@ -189,7 +189,7 @@ private extension MoyaProvider {
                     self.cancelCompletion(completion, target: target)
                     return
                 }
-                cancellable.innerCancellable = self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
+                cancellable.innerCancellable = self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .failure(let error):
                 completion(.failure(MoyaError.underlying(error as NSError)))
             }
@@ -198,25 +198,25 @@ private extension MoyaProvider {
         return cancellable
     }
 
-    func sendUploadFile(_ target: Target, request: URLRequest, queue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
+    func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let uploadRequest = manager.upload(file, with: request)
         let alamoRequest = target.validate ? uploadRequest.validate() : uploadRequest
-        return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
+        return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
-    func sendDownloadRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
+    func sendDownloadRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let downloadRequest = manager.download(request, to: destination)
         let alamoRequest = target.validate ? downloadRequest.validate() : downloadRequest
-        return self.sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
+        return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
-    func sendRequest(_ target: Target, request: URLRequest, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+    func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         let initialRequest = manager.request(request as URLRequestConvertible)
         let alamoRequest = target.validate ? initialRequest.validate() : initialRequest
-        return sendAlamofireRequest(alamoRequest, target: target, queue: queue, progress: progress, completion: completion)
+        return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
-    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, queue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
+    func sendAlamofireRequest<T>(_ alamoRequest: T, target: Target, callbackQueue: DispatchQueue?, progress progressCompletion: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken where T: Requestable, T: Request {
         // Give plugins the chance to alter the outgoing request
         let plugins = self.plugins
         plugins.forEach { $0.willSend(alamoRequest, target: target) }
@@ -227,8 +227,8 @@ private extension MoyaProvider {
                 progressCompletion?(ProgressResponse(progress: progress))
             }
 
-            if let queue = queue {
-                queue.async(execute: sendProgress)
+            if let callbackQueue = callbackQueue {
+                callbackQueue.async(execute: sendProgress)
             } else {
                 sendProgress()
             }
@@ -257,7 +257,7 @@ private extension MoyaProvider {
             completion(result)
         }
 
-        progressAlamoRequest = progressAlamoRequest.response(queue: queue, completionHandler: completionHandler)
+        progressAlamoRequest = progressAlamoRequest.response(callbackQueue: callbackQueue, completionHandler: completionHandler)
 
         progressAlamoRequest.resume()
 

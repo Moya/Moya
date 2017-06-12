@@ -190,14 +190,14 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
 
                 describe("a provider with predefined queue") {
                     var provider: RxMoyaProvider<GitHub>!
-                    var queue: DispatchQueue!
+                    var callbackQueue: DispatchQueue!
                     var disposeBag: DisposeBag!
 
                     beforeEach {
                         disposeBag = DisposeBag()
 
-                        queue = DispatchQueue(label: UUID().uuidString)
-                        provider = RxMoyaProvider<GitHub>(queue: queue)
+                        callbackQueue = DispatchQueue(label: UUID().uuidString)
+                        provider = RxMoyaProvider<GitHub>(callbackQueue: callbackQueue)
                     }
 
                     context("the queue is provided with the request") {
@@ -206,7 +206,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen, queue: requestQueue)
+                                provider.request(.zen, callbackQueue: requestQueue)
                                     .subscribe(onNext: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
@@ -229,7 +229,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                                     }).addDisposableTo(disposeBag)
                             })
 
-                            expect(callbackQueueLabel) == queue.label
+                            expect(callbackQueueLabel) == callbackQueue.label
                         }
                     }
                 }
@@ -249,7 +249,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen, queue: requestQueue)
+                                provider.request(.zen, callbackQueue: requestQueue)
                                     .subscribe(onNext: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()

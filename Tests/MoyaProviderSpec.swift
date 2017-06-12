@@ -734,7 +734,7 @@ class MoyaProviderSpec: QuickSpec {
                         done()
                     }
 
-                    provider.request(target, queue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                    provider.request(target, callbackQueue: nil, progress: progressClosure, completion: progressCompletionClosure)
                 }
 
                 expect(error).to(beNil())
@@ -758,11 +758,11 @@ class MoyaProviderSpec: QuickSpec {
             
             describe("a provider with predefined queue") {
                 var provider: MoyaProvider<GitHub>!
-                var queue: DispatchQueue!
+                var callbackQueue: DispatchQueue!
                 
                 beforeEach {
-                    queue = DispatchQueue(label: UUID().uuidString)
-                    provider = MoyaProvider<GitHub>(queue: queue)
+                    callbackQueue = DispatchQueue(label: UUID().uuidString)
+                    provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
                 }
                 
                 context("a provider is given a queue with request") {
@@ -771,7 +771,7 @@ class MoyaProviderSpec: QuickSpec {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
-                            provider.request(.zen, queue: requestQueue) { _ in
+                            provider.request(.zen, callbackQueue: requestQueue) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
@@ -792,7 +792,7 @@ class MoyaProviderSpec: QuickSpec {
                             }
                         })
                         
-                        expect(callbackQueueLabel) == queue.label
+                        expect(callbackQueueLabel) == callbackQueue.label
                     }
                 }
             }
@@ -810,7 +810,7 @@ class MoyaProviderSpec: QuickSpec {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
-                            provider.request(.zen, queue: requestQueue) { _ in
+                            provider.request(.zen, callbackQueue: requestQueue) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }

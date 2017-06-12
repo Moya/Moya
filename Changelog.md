@@ -1,4 +1,6 @@
 # Next
+- **Breaking Change** Renamed all occurrences of `queue` to `callbackQueue`.
+- Add optional callback queue parameter to reactive providers.
 
 # 8.0.5
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
@@ -9,7 +11,6 @@
 - Move project to using a single target for all platforms.
 - Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
 - Move project to using a single target for all platforms
-- Add optional callback queue parameter to reactive providers
 
 # 8.0.3
 
