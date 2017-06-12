@@ -49,11 +49,12 @@ extension MyService: TargetType {
             return ["first_name": firstName, "last_name": lastName]
         }
     }
-
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .zen, .showUser, .showAccounts, .updateUser:
+        case .zen, .showUser, .showAccounts:
             return URLEncoding.default // Send parameters in URL
+        case .updateUser:
+            return URLEncoding.queryString // Send parameters in URL
         case .createUser:
             return JSONEncoding.default // Send parameters as JSON in request body
         }
