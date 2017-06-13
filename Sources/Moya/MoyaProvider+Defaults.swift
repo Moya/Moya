@@ -37,7 +37,10 @@ public extension MoyaProvider {
         if target.path.isEmpty {
             return target.baseURL
         }
-
-        return target.baseURL.appendingPathComponent(target.path)
+        
+        let originalString = target.baseURL.absoluteString+target.path
+        let urlString = originalString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        
+        return URL.init(string: urlString)!
     }
 }
