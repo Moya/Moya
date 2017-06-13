@@ -52,9 +52,9 @@ extension MyService: TargetType {
     var parameterEncoding: ParameterEncoding {
         switch self {
         case .zen, .showUser, .showAccounts:
-            return URLEncoding.default // Send parameters in URL
+            return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
         case .updateUser:
-            return URLEncoding.queryString // Send parameters in URL
+            return URLEncoding.queryString // Always sends parameters in URL, regardless of which HTTP method is used
         case .createUser:
             return JSONEncoding.default // Send parameters as JSON in request body
         }
