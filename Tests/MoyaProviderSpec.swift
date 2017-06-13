@@ -756,7 +756,7 @@ class MoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.removeStub(stubDescriptor)
             }
             
-            describe("a provider with predefined queue") {
+            describe("a provider with a predefined callback queue") {
                 var provider: MoyaProvider<GitHub>!
                 var callbackQueue: DispatchQueue!
                 
@@ -765,8 +765,8 @@ class MoyaProviderSpec: QuickSpec {
                     provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
                 }
                 
-                context("a provider is given a queue with request") {
-                    it("invokes the callback on request queue") { 
+                context("a provider is given a callback queue with request") {
+                    it("invokes the callback on the request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
                         
@@ -782,7 +782,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 context("a provider uses the queueless request function") {
-                    it("invokes the callback on provider queue") {
+                    it("invokes the callback on the provider queue") {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in
@@ -797,15 +797,15 @@ class MoyaProviderSpec: QuickSpec {
                 }
             }
             
-            describe("a provider without predefined queue") {
+            describe("a provider without a predefined callback queue") {
                 var provider: MoyaProvider<GitHub>!
                 
                 beforeEach {
                     provider = MoyaProvider<GitHub>()
                 }
                 
-                context("where the queue is provided with request") {
-                    it("invokes the callback on request queue") {
+                context("where the callback queue is provided with request") {
+                    it("invokes the callback on the request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
                         
@@ -821,7 +821,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 
                 context("where the queueless request method is invoked") {
-                    it("invokes the callback on main queue") {
+                    it("invokes the callback on the main queue") {
                         var callbackQueueLabel: String?
                         
                         waitUntil(action: { completion in

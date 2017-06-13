@@ -85,7 +85,7 @@ open class MoyaProvider<Target: TargetType> {
         return self.request(target, callbackQueue: callbackQueue, completion: completion)
     }
 
-    /// Designated request-making method with queue option. Returns a `Cancellable` token to cancel the request later.
+    /// Designated request-making method with an optional callback queue. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
     open func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> Cancellable {
         let callbackQueue = callbackQueue ?? self.callbackQueue

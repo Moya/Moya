@@ -93,7 +93,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(manager.called) == true
                     }
 
-                    it("uses other background queue") {
+                    it("uses a background queue") {
                         var isMainThread: Bool?
                         let callbackQueue = DispatchQueue(label: "background_queue", attributes: .concurrent)
                         let target: GitHub = .zen
@@ -108,7 +108,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(isMainThread) == false
                     }
 
-                    it("uses main queue") {
+                    it("uses the main queue") {
                         var isMainThread: Bool?
                         let target: GitHub = .zen
 
