@@ -1,5 +1,4 @@
-Targets
-=======
+# Targets
 
 Using Moya starts with defining a target – typically some `enum` that conforms
 to the `TargetType` protocol. Then, the rest of your app deals *only* with
@@ -70,7 +69,7 @@ computed property that returns parameters defined by the enum case. Here's an ex
 ```swift
 public var parameters: [String: Any]? {
     switch self {
-    case .userRepositories(_):
+    case .userRepositories:
         return ["sort": "pushed"]
     case .branches(_, let protected):
         return ["protected": "\(protected)"]
@@ -155,7 +154,7 @@ Here's an example extension that allows you to easily escape normal strings
 ```swift
 extension String {
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 ```

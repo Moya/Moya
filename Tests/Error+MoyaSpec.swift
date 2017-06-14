@@ -1,59 +1,58 @@
 import Nimble
 import Moya
 
-public func beOfSameErrorType(_ expectedValue: MoyaError) -> MatcherFunc<MoyaError> {
-    return MatcherFunc { actualExpression, failureMessage in
-        do {
-            guard let actualValue = try actualExpression.evaluate() else {
-                return false
-            }
-            
-            switch actualValue {
+public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError> {
+    return Predicate { expression -> PredicateResult in
+        let test: Bool
+        if let value = try expression.evaluate() {
+            switch value {
             case .imageMapping:
                 switch expectedValue {
                 case .imageMapping:
-                    return true
+                    test = true
                 default:
-                    return false
+                    test = false
                 }
             case .jsonMapping:
                 switch expectedValue {
                 case .jsonMapping:
-                    return true
+                    test = true
                 default:
-                    return false
+                    test = false
                 }
             case .stringMapping:
                 switch expectedValue {
                 case .stringMapping:
-                    return true
+                    test = true
                 default:
-                    return false
+                    test = false
                 }
             case .statusCode:
                 switch expectedValue {
                 case .statusCode:
-                    return true
+                    test = true
                 default:
-                    return false
+                    test = false
                 }
             case .underlying:
                 switch expectedValue {
                 case .underlying:
-                    return true
+                    test = true
                 default:
-                    return false
+                    test = false
                 }
             case .requestMapping:
                 switch expectedValue {
                 case .requestMapping:
-                    return true
+                    test = true
                 default:
-                    return false
+                    test = false
                 }
             }
-        } catch {
-            return false;
+        } else {
+            test = false
         }
+
+        return PredicateResult(bool: test, message: .expectedActualValueTo("<\(expectedValue)>"))
     }
 }

@@ -1,5 +1,4 @@
-Providers
-=========
+# Providers
 
 When using Moya, you make all API requests through a `MoyaProvider` instance,
 passing in a value of your enum that specifies which endpoint you want to call.
@@ -27,10 +26,9 @@ Remember, *where* you put your target and the provider, are completely up
 to you. You can check out [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/ArtsyAPI.swift)
 for an example.
 
-But don't forget to keep a reference for it in property. If it gets deallocated you'll see `-999 "cancelled"` error on response.
+But don't forget to keep a reference for it in property. If it gets deallocated you'll see `-999 "canceled"` error on response.
 
-Advanced Usage
-------------
+## Advanced Usage
 
 To explain all configuration options you have with a `MoyaProvider` we will cover each parameter one by one in the following sections.
 
@@ -75,9 +73,9 @@ you can use your own closure.
 
 ```swift
 let provider = MoyaProvider<MyTarget>(stubClosure: { target: MyTarget -> Moya.StubBehavior in
-	switch target {
-		/* Return something different based on the target. */
-	}
+    switch target {
+        /* Return something different based on the target. */
+    }
 })
 ```
 

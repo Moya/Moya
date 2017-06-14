@@ -1,5 +1,4 @@
-RxSwift examples
-================
+# RxSwift examples
 
 A `RxMoyaProvider` can be created much like a
 [`MoyaProvider`](../Providers.md) and can be used as follows:

@@ -1,5 +1,4 @@
-Basic Usage
-===========
+# Basic Usage
 
 So how do you use this library? Well, it's pretty easy. Just follow this
 template. First, set up an `enum` with all of your API targets. Note that you
@@ -50,11 +49,12 @@ extension MyService: TargetType {
             return ["first_name": firstName, "last_name": lastName]
         }
     }
-
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .zen, .showUser, .showAccounts, .updateUser:
-            return URLEncoding.default // Send parameters in URL
+        case .zen, .showUser, .showAccounts:
+            return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
+        case .updateUser:
+            return URLEncoding.queryString // Always sends parameters in URL, regardless of which HTTP method is used
         case .createUser:
             return JSONEncoding.default // Send parameters as JSON in request body
         }
@@ -71,8 +71,8 @@ extension MyService: TargetType {
             return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
-            guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                let data = Data(base64Encoded: path) else {
+            guard let url = Bundle.main.url(forResource: "accounts", withExtension: "json"),
+                let data = try? Data(contentsOf: url) else {
                     return Data()
             }
             return data
@@ -116,8 +116,8 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
 // POST https://api.myservice.com/users
 // Request body: 
 // { 
-//  "first_name": "James", 
-//  "last_name": "Potter" 
+//   "first_name": "James", 
+//   "last_name": "Potter" 
 // }
 
 provider.request(.updateUser(id: 123, firstName: "Harry", lastName: "Potter")) { result in
@@ -213,14 +213,14 @@ provider.request(.zen) { result in
 
         // do something in your app
     case let .failure(error):
-        // TODO: handle the error ==  best. comment. ever.
+        // TODO: handle the error == best. comment. ever.
     }
 }
 ```
 
 Take special note: a `.failure` means that the server either didn't *receive the
 request* (e.g. reachability/connectivity error) or it didn't send a response
-(e.g. the request timed out).  If you get a `.Failure`, you probably want to
+(e.g. the request timed out).  If you get a `.failure`, you probably want to
 re-send the request after a time delay or when an internet connection is
 established.
 

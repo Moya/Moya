@@ -1,5 +1,4 @@
-Endpoints
-=========
+# Endpoints
 
 An endpoint is a semi-internal data structure that Moya uses to reason about
 the network request that will ultimately be made. An endpoint stores the
@@ -41,8 +40,7 @@ further below.
 Let's take a look at an example of the flexibility mapping from a Target to
 an Endpoint can provide.
 
-From Target to Endpoint
------------------------
+## From Target to Endpoint
 
 By default, `Endpoint` instances use the `URLEncoding.default` type parameter
 encoding. You can specify how you'd like to encode parameters on a
@@ -112,8 +110,7 @@ Sample responses have one of two values:
 - `NetworkResponse`, with an `Int` status code and an `Data` returned data.
 
 
-Request Mapping
----------------
+## Request Mapping
 
 As we mentioned earlier, the purpose of this library is not really to provide a
 coding framework with which to access the network – that's Alamofire's job.

@@ -22,11 +22,11 @@ extension GitHub: TargetType {
             return "/users/\(name.urlEscaped)"
         }
     }
-    
+
     var method: Moya.Method {
         return .get
     }
-    
+
     var parameters: [String: Any]? {
         return nil
     }
@@ -38,7 +38,7 @@ extension GitHub: TargetType {
     var task: Task {
         return .request
     }
-    
+
     var sampleData: Data {
         switch self {
         case .zen:
@@ -80,7 +80,7 @@ enum HTTPBin: TargetType {
     var method: Moya.Method {
         return .get
     }
-    
+
     var parameters: [String: Any]? {
         switch self {
         default:
@@ -91,11 +91,11 @@ enum HTTPBin: TargetType {
     var parameterEncoding: ParameterEncoding {
         return URLEncoding.default
     }
-    
+
     var task: Task {
         return .request
     }
-    
+
     var sampleData: Data {
         switch self {
         case .basicAuth:
@@ -138,7 +138,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(DefaultDownloadDestination))
+            return .download(.request(defaultDownloadDestination))
         }
     }
     public var sampleData: Data {
@@ -151,15 +151,14 @@ extension GitHubUserContent: TargetType {
     public var headers: [String: String]? {
         return nil
     }
-
 }
 
-private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in
     let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
 
     if !directoryURLs.isEmpty {
         return (directoryURLs.first!.appendingPathComponent(response.suggestedFilename!), [])
     }
-    
+
     return (temporaryURL, [])
 }

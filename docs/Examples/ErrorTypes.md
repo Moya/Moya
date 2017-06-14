@@ -1,5 +1,4 @@
-Handling different error types
-==============================
+# Handling different error types
 
 In case of an error you may need to handle it:
 

@@ -11,17 +11,17 @@ class MoyaProviderSpec: QuickSpec {
         beforeEach {
             provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
         }
-        
+
         it("returns stubbed data for zen request") {
             var message: String?
-            
+
             let target: GitHub = .zen
             provider.request(target) { result in
                 if case let .success(response) = result {
                     message = String(data: response.data, encoding: .utf8)
                 }
             }
-            
+
             let sampleData = target.sampleData
             expect(message).to(equal(String(data: sampleData, encoding: .utf8)))
         }
@@ -41,21 +41,21 @@ class MoyaProviderSpec: QuickSpec {
 
         it("returns stubbed data for user profile request") {
             var message: String?
-            
+
             let target: GitHub = .userProfile("ashfurrow")
             provider.request(target) { result in
                 if case let .success(response) = result {
                     message = String(data: response.data, encoding: .utf8)
                 }
             }
-            
+
             let sampleData = target.sampleData
             expect(message).to(equal(String(data: sampleData, encoding: .utf8)))
         }
-        
+
         it("returns equivalent Endpoint instances for the same target") {
             let target: GitHub = .zen
-            
+
             let endpoint1 = provider.endpoint(target)
             let endpoint2 = provider.endpoint(target)
             expect(endpoint1.urlRequest).toNot(beNil())
@@ -76,66 +76,66 @@ class MoyaProviderSpec: QuickSpec {
 
         it("credential closure returns nil") {
             var called = false
-            let plugin = CredentialsPlugin { (target) -> URLCredential? in
+            let plugin = CredentialsPlugin { (_) -> URLCredential? in
                 called = true
                 return nil
             }
-            
+
             let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: HTTPBin = .basicAuth
             provider.request(target) { _ in  }
-            
+
             expect(called) == true
         }
-        
+
         it("credential closure returns valid username and password") {
             var called = false
-            let plugin = CredentialsPlugin { (target) -> URLCredential? in
+            let plugin = CredentialsPlugin { (_) -> URLCredential? in
                 called = true
                 return URLCredential(user: "user", password: "passwd", persistence: .none)
             }
-            
+
             let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: HTTPBin = .basicAuth
             provider.request(target) { _ in  }
-            
+
             expect(called) == true
         }
-        
+
         it("accepts a custom Alamofire.Manager") {
             let manager = Manager()
             let provider = MoyaProvider<GitHub>(manager: manager)
-            
+
             expect(provider.manager).to(beIdenticalTo(manager))
         }
-        
+
         it("notifies at the beginning of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin { (change) -> () in
+            let plugin = NetworkActivityPlugin { (change) -> Void in
                 if change == .began {
                     called = true
                 }
             }
-            
+
             let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: GitHub = .zen
             provider.request(target) { _ in  }
-            
+
             expect(called) == true
         }
-        
+
         it("notifies at the end of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin { (change) -> () in
+            let plugin = NetworkActivityPlugin { (change) -> Void in
                 if change == .ended {
                     called = true
                 }
             }
-            
+
             let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
             let target: GitHub = .zen
             provider.request(target) { _ in  }
-            
+
             expect(called) == true
         }
 
@@ -169,7 +169,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(endDate?.timeIntervalSince(startDate)) >= delay
             }
 
-            it("returns an error when request is cancelled") {
+            it("returns an error when request is canceled") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -182,11 +182,11 @@ class MoyaProviderSpec: QuickSpec {
                     }
                     token.cancel()
                 }
-                
+
                 expect(receivedError).toNot( beNil() )
             }
 
-            it("notifies plugins when request is cancelled") {
+            it("notifies plugins when request is canceled") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -198,8 +198,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 if let result = plugin.result,
-                    case let .failure(error) = result
-                {
+                    case let .failure(error) = result {
                     receivedError = error
                 }
                 expect(receivedError).toNot( beNil() )
@@ -215,7 +214,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(plugin.didPrepare).to( beTrue() )
             }
 
-            it("returns success when request is not cancelled") {
+            it("returns success when request is not canceled") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -255,7 +254,7 @@ class MoyaProviderSpec: QuickSpec {
             let afterResponse: TimeInterval = 0.3
             var provider: MoyaProvider<GitHub>!
 
-            func delay(_ delay: TimeInterval, block: @escaping () -> ()) {
+            func delay(_ delay: TimeInterval, block: @escaping () -> Void) {
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: block)
             }
 
@@ -288,7 +287,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).to( beNil() )
             }
 
-            it("calls completion if cancelled immediately") {
+            it("calls completion if canceled immediately") {
                 var receivedError: Swift.Error?
                 var calledCompletion = false
 
@@ -310,7 +309,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(calledCompletion).to( beTrue() )
             }
 
-            it("calls completion if cancelled before request is created") {
+            it("calls completion if canceled before request is created") {
                 var receivedError: Swift.Error?
                 var calledCompletion = false
 
@@ -334,7 +333,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(calledCompletion).to( beTrue() )
             }
 
-            it("receives an error if request is cancelled before response comes back") {
+            it("receives an error if request is canceled before response comes back") {
                 var receivedError: Swift.Error?
 
                 waitUntil { done in
@@ -370,11 +369,11 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
-            
+
             it("executes the endpoint resolver") {
                 let target: GitHub = .zen
                 provider.request(target) { _ in  }
-                
+
                 expect(executed).to(beTruthy())
             }
         }
@@ -437,10 +436,10 @@ class MoyaProviderSpec: QuickSpec {
                 }
             }
         }
-        
+
         describe("a provider with error in request closure") {
             var provider: MoyaProvider<GitHub>!
-            
+
             beforeEach {
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
@@ -448,7 +447,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
-            
+
             it("returns failure for any given request") {
                 let target: GitHub = .zen
                 var receivedError: MoyaError?
@@ -457,17 +456,17 @@ class MoyaProviderSpec: QuickSpec {
                         receivedError = error
                     }
                 }
-                
+
                 expect(receivedError).toEventuallyNot(beNil())
             }
         }
-        
+
         describe("with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
                 provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
-            
+
             it("returns stubbed data for zen request") {
                 var errored = false
                 let target: GitHub = .zen
@@ -480,11 +479,11 @@ class MoyaProviderSpec: QuickSpec {
                         done()
                     }
                 }
-                
+
                 let _ = target.sampleData
                 expect(errored) == true
             }
-            
+
             it("returns stubbed data for user profile request") {
                 var errored = false
 
@@ -497,21 +496,21 @@ class MoyaProviderSpec: QuickSpec {
                         done()
                     }
                 }
-                
+
                 let _ = target.sampleData
                 expect(errored) == true
             }
-            
+
             it("returns stubbed error data when present") {
                 var receivedError: MoyaError?
-                
+
                 let target: GitHub = .userProfile("ashfurrow")
                 provider.request(target) { result in
                     if case let .failure(error) = result {
                         receivedError = error
                     }
                 }
-                
+
                 switch receivedError {
                 case .some(.underlying(let error, _)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
@@ -654,7 +653,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(endpoint.url) == "http://example.com/123/somepath?X-ABC-Asd=123"
             }
         }
-        
+
         describe("an inflight-tracking provider") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
@@ -663,13 +662,13 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
-            
+
             it("returns identical response for inflight requests") {
                 let target: GitHub = .zen
                 var receivedResponse: Moya.Response!
-                
+
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
-                
+
                 provider.request(target) { result in
                     if case let .success(response) = result {
                         receivedResponse = response
@@ -686,17 +685,17 @@ class MoyaProviderSpec: QuickSpec {
 
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually( equal(0) )
-                
+
             }
         }
-        
+
         describe("the cancellable token") {
             var provider: MoyaProvider<GitHub>!
-            beforeEach{
+            beforeEach {
                 provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(0.5))
             }
-            
-            it("invokes completion and returns .Failure if cancelled immediately") {
+
+            it("invokes completion and returns. Failure if canceled immediately") {
                 var error: MoyaError?
                 waitUntil { done in
                     let cancellable = provider.request(.zen, completion: { (result) in
@@ -707,60 +706,60 @@ class MoyaProviderSpec: QuickSpec {
                     })
                     cancellable.cancel()
                 }
-                
+
                 expect(error).toNot(beNil())
-                
+
                 let underlyingIsCancelled: Bool
                 if let error = error, case .underlying(let err, _) = error {
                     underlyingIsCancelled = (err as NSError).code == NSURLErrorCancelled
                 } else {
                     underlyingIsCancelled = false
                 }
-                
+
                 expect(underlyingIsCancelled).to(beTrue())
             }
         }
-        
+
         describe("a provider with progress tracking") {
             var provider: MoyaProvider<GitHubUserContent>!
             beforeEach {
-                
+
                 //delete downloaded filed before each test
                 let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
                 let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
                 try? FileManager.default.removeItem(at: file)
-                
+
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 }
                 provider = MoyaProvider<GitHubUserContent>()
             }
-            
+
             it("tracks progress of request") {
-                
+
                 let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
-                
+
                 var progressValues: [Double] = []
                 var completedValues: [Bool] = []
                 var error: MoyaError?
-                
+
                 waitUntil(timeout: 5.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressValues.append(progress.progress)
                         completedValues.append(progress.completed)
                     }
-                    
+
                     let progressCompletionClosure: Completion = { (result) in
                         if case .failure(let err) = result {
                             error = err
                         }
                         done()
                     }
-                    
+
                     provider.request(target, queue: nil, progress: progressClosure, completion: progressCompletionClosure)
                 }
-                
+
                 expect(error).to(beNil())
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
