@@ -1,7 +1,5 @@
 # Next
 
-- **Breaking Change** Renamed all occurrences of `queue` to `callbackQueue`.
-- Add optional callback queue parameter to reactive providers.
 - Enabled the "Allow app extension API only" flag.
 
 # 8.0.5
