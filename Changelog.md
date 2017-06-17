@@ -1,6 +1,9 @@
 # Next
 
+- Enabled the "Allow app extension API only" flag.
+
 # 8.0.5
+
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
 
 # 8.0.4
