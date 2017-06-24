@@ -13,11 +13,8 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
-    /// The parameters to be encoded in the request.
-    var parameters: [String: Any]? { get }
-
-    /// The method used for parameter encoding.
-    var parameterEncoding: ParameterEncoding { get }
+    /// The data to be passed alongside the request.
+    var requestData: RequestData? { get }
 
     /// Provides stub data for use in testing.
     var sampleData: Data { get }
@@ -33,6 +30,24 @@ public extension TargetType {
     var validate: Bool {
         return false
     }
+}
+
+/// Represents the request data type.
+public enum RequestData {
+    /// Use `JSONEncoder` using its default configuration with an `Encodable` type.
+    case json(Encodable)
+
+    /// Use `JSONEncoder` using a custom configuration with an `Encodable` type.
+    case jsonEncoder(Encodable, JSONEncoder)
+
+    /// Use `PropertyListEncoder` using its default configuration with an `Encodable` type.
+    case propertyList(Encodable)
+
+    /// Use `PropertyListEncoder` using a custom configuration with an `Encodable` type.
+    case propertyListEncoder(Encodable, PropertyListEncoder)
+
+    /// Use Alamofire's parameters with a specified encoding.
+    case parameterEncoding([String: Any], ParameterEncoding)
 }
 
 /// Represents a type of upload task.

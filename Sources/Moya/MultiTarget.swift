@@ -21,12 +21,8 @@ public enum MultiTarget: TargetType {
         return target.method
     }
 
-    public var parameters: [String: Any]? {
-        return target.parameters
-    }
-
-    public var parameterEncoding: ParameterEncoding {
-        return target.parameterEncoding
+    public var requestData: RequestData? {
+        return target.requestData
     }
 
     public var sampleData: Data {
