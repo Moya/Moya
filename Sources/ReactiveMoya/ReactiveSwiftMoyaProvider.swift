@@ -18,7 +18,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
         self.stubScheduler = stubScheduler
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
-    
+
     fileprivate init(moyaProvider: MoyaProvider<Target>) {
         self.stubScheduler = nil
         super.init(endpointClosure: moyaProvider.endpointClosure, requestClosure: moyaProvider.requestClosure, stubClosure: moyaProvider.stubClosure, manager: moyaProvider.manager, plugins: moyaProvider.plugins, trackInflights: moyaProvider.trackInflights)
@@ -105,7 +105,7 @@ public extension ReactiveSwiftMoyaProvider {
 }
 
 public extension MoyaProvider {
-    
+
     public var reactive: ReactiveSwiftMoyaProvider<Target> {
         return ReactiveSwiftMoyaProvider<Target>(moyaProvider: self)
     }

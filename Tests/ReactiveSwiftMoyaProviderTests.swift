@@ -62,10 +62,10 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
             class TestProvider<Target: TargetType>: ReactiveSwiftMoyaProvider<Target> {
                 init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                    requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                    stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                    manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                    plugins: [PluginType] = []) {
+                     requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                     stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                     manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                     plugins: [PluginType] = []) {
 
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
@@ -149,10 +149,10 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
                 class TestProvider<Target: TargetType>: ReactiveSwiftMoyaProvider<Target> {
                     init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                        requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                        stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                        manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                        plugins: [PluginType] = []) {
+                         requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                         stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                         manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                         plugins: [PluginType] = []) {
 
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }

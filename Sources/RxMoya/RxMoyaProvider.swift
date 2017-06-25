@@ -16,7 +16,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
                          trackInflights: Bool = false) {
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
-    
+
     fileprivate init(moyaProvider: MoyaProvider<Target>) {
         super.init(endpointClosure: moyaProvider.endpointClosure, requestClosure: moyaProvider.requestClosure, stubClosure: moyaProvider.stubClosure, manager: moyaProvider.manager, plugins: moyaProvider.plugins, trackInflights: moyaProvider.trackInflights)
     }
@@ -76,7 +76,7 @@ public extension RxMoyaProvider {
 }
 
 public extension MoyaProvider {
-    
+
     public var rx: RxMoyaProvider<Target> {
         return RxMoyaProvider<Target>(moyaProvider: self)
     }

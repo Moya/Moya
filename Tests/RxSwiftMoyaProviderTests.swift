@@ -163,7 +163,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         case let .next(element):
                             nextProgressValues.append(element.progress)
 
-                            if let _ = element.response { nextResponseCount += 1 }
+                            if element.response != nil { nextResponseCount += 1 }
                         case .error: errorEventsCount += 1
                         case .completed: completedEventsCount += 1
                         }
