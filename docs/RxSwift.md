@@ -5,11 +5,11 @@ Moya provides an optional `RxMoyaProvider` subclass of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `Observable`s.
 
-A `RxMoyaProvider` can be created much like a
+An `RxMoyaProvider` can be created from a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
-let provider = RxMoyaProvider<GitHub>()
+let provider = MoyaProvider<GitHub>().rx
 ```
 
 After that simple setup, you're off to the races:

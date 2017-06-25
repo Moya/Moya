@@ -6,11 +6,11 @@ calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `SignalProducer`s
 (`RACSignal`s are also available for those who need it).
 
-A `ReactiveSwiftMoyaProvider` can be created much like a
+An `ReactiveSwiftMoyaProvider` can be created from a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
-let provider = ReactiveSwiftMoyaProvider<GitHub>()
+let provider = MoyaProvider<GitHub>().reactive
 ```
 
 After that simple setup, you're off to the races:
