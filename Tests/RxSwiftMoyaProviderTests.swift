@@ -158,7 +158,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var completedEventsCount = 0
 
                 _ = provider.requestWithProgress(target)
-                    .subscribe({ event in
+                    .subscribe { event in
                         switch event {
                         case let .next(element):
                             nextProgressValues.append(element.progress)
@@ -167,7 +167,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         case .error: errorEventsCount += 1
                         case .completed: completedEventsCount += 1
                         }
-                    })
+                    }
 
                 expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
                 expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)

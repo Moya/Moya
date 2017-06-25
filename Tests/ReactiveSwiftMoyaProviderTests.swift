@@ -17,7 +17,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         describe("failing") {
             var provider: ReactiveSwiftMoyaProvider<GitHub>!
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, endpointClosure: failureEndpointClosure).reactive
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).reactive
             }
 
             it("returns the correct error message") {
@@ -187,7 +187,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             var response: Moya.Response? = nil
             beforeEach {
                 testScheduler = TestScheduler()
-                provider = MoyaProvider<GitHub>(stubScheduler: testScheduler, stubClosure: MoyaProvider.immediatelyStub).reactive
+                provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
                 provider.request(.zen).startWithResult { result in
                     if case .success(let next) = result {
                         response = next
