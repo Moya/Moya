@@ -1,6 +1,9 @@
 # Next
 
 - Enabled the "Allow app extension API only" flag.
+- `ReactiveSwiftMoyaProvider` and `RxMoyaProvider`'s `init`s have been deprecated.
+- Added a `.reactive` extension on `MoyaProvider` that returns a `ReactiveSwiftMoyaProvider`.
+- Added a `.rx` extension on `MoyaProvider` that returns a `RxMoyaProvider`.
 
 # 8.0.5
 
