@@ -15,7 +15,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
             var provider: RxMoyaProvider<GitHub>!
 
             beforeEach {
-                provider = RxMoyaProvider(stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider(stubClosure: MoyaProvider.immediatelyStub).rx
             }
 
             it("emits a Response object") {
@@ -64,7 +64,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         describe("failing") {
             var provider: RxMoyaProvider<GitHub>!
             beforeEach {
-                provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).rx
             }
 
             it("emits the correct error message") {
@@ -100,7 +100,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = RxMoyaProvider<GitHub>(trackInflights: true)
+                provider = MoyaProvider<GitHub>(trackInflights: true).rx
             }
 
             it("emits identical response for inflight requests") {
@@ -140,7 +140,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 }
-                provider = RxMoyaProvider<GitHubUserContent>()
+                provider = MoyaProvider<GitHubUserContent>().rx
             }
 
             it("tracks progress of request") {

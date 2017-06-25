@@ -11,13 +11,13 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: ReactiveSwiftMoyaProvider<GitHub>!
         beforeEach {
-            provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub).reactive
         }
 
         describe("failing") {
             var provider: ReactiveSwiftMoyaProvider<GitHub>!
             beforeEach {
-                provider = ReactiveSwiftMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).reactive
             }
 
             it("returns the correct error message") {
@@ -187,7 +187,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             var response: Moya.Response? = nil
             beforeEach {
                 testScheduler = TestScheduler()
-                provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler).reactive
                 provider.request(.zen).startWithResult { result in
                     if case .success(let next) = result {
                         response = next
@@ -213,7 +213,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = ReactiveSwiftMoyaProvider<GitHub>(trackInflights: true)
+                provider = MoyaProvider<GitHub>(trackInflights: true).reactive
             }
 
             it("returns identical signalproducers for inflight requests") {
