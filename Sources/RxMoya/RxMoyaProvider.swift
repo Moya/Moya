@@ -7,6 +7,7 @@ import Moya
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
 open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     /// Initializes a reactive provider.
+    @available(*, deprecated, message: "use MoyaProvider<>().rx instead")
     override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                          requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                          stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
@@ -14,6 +15,10 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
                          plugins: [PluginType] = [],
                          trackInflights: Bool = false) {
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+    }
+    
+    fileprivate init(moyaProvider: MoyaProvider<Target>) {
+        super.init(endpointClosure: moyaProvider.endpointClosure, requestClosure: moyaProvider.requestClosure, stubClosure: moyaProvider.stubClosure, manager: moyaProvider.manager, plugins: moyaProvider.plugins, trackInflights: moyaProvider.trackInflights)
     }
 
     /// Designated request-making method.
@@ -67,5 +72,12 @@ public extension RxMoyaProvider {
             let response = progress.response ?? last.response
             return ProgressResponse(progress: progressObject, response: response)
         }
+    }
+}
+
+public extension MoyaProvider {
+    
+    public var rx: RxMoyaProvider<Target> {
+        return RxMoyaProvider<Target>(moyaProvider: self)
     }
 }
