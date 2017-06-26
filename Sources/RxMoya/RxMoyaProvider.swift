@@ -22,7 +22,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
     }
 
     /// Designated request-making method.
-    open func request(_ token: Target) -> Observable<Response> {
+    open func request(_ token: Target) -> Single<Response> {
 
         // Creates an observable that starts a request each time it's subscribed to.
         return Observable.create { observer in
@@ -39,7 +39,7 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
             return Disposables.create {
                 cancellableToken.cancel()
             }
-        }
+        }.asSingle()
     }
 }
 

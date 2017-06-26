@@ -404,7 +404,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
-                var receivedResponse: URLResponse?
+                var receivedResponse: HTTPURLResponse?
                 provider.request(.zen) { result in
                     if case .success(let response) = result {
                         receivedResponse = response.response
@@ -429,7 +429,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                if case .some(MoyaError.underlying(let underlyingError as NSError)) = receivedError {
+                if case .some(MoyaError.underlying(let underlyingError as NSError, _)) = receivedError {
                     expect(underlyingError) == error
                 } else {
                     fail("Expected to receive error, did not.")
@@ -443,7 +443,7 @@ class MoyaProviderSpec: QuickSpec {
             beforeEach {
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
-                    done(.failure(.underlying(underyingError)))
+                    done(.failure(.underlying(underyingError, nil)))
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
@@ -512,7 +512,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 switch receivedError {
-                case .some(.underlying(let error)):
+                case .some(.underlying(let error, _)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -529,6 +529,7 @@ class MoyaProviderSpec: QuickSpec {
                 let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
+                let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
             it("uses correct URL") {
@@ -609,6 +610,27 @@ class MoyaProviderSpec: QuickSpec {
 
                 expect(dataString) == "sample data"
             }
+
+            it("uses correct headers") {
+                var headers: [String : String]?
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
+                    headers = endpoint.httpHeaderFields
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
+                    }
+                }
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+
+                waitUntil { done in
+                    provider.request(MultiTarget(StructAPI())) { _ in
+                        done()
+                    }
+                }
+
+                expect(headers) == ["headerKey": "headerValue"]
+            }
         }
 
         describe("a target with empty path") {
@@ -620,6 +642,7 @@ class MoyaProviderSpec: QuickSpec {
                 let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
+                let headers: [String: String]? = nil
             }
 
             // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases
@@ -687,7 +710,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).toNot(beNil())
 
                 let underlyingIsCancelled: Bool
-                if let error = error, case .underlying(let err) = error {
+                if let error = error, case .underlying(let err, _) = error {
                     underlyingIsCancelled = (err as NSError).code == NSURLErrorCancelled
                 } else {
                     underlyingIsCancelled = false

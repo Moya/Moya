@@ -120,7 +120,7 @@ public var sampleData: Data {
 }
 ```
 
-Finally, our `TargetType` has a `task` property that represents how you are sending / receiving data. This can be either `.request`, `.upload` or `.download`, and allows you to add data, files and streams to the request body.
+`TargetType` also has a `task` property that represents how you are sending / receiving data. This can be either `.request`, `.upload` or `.download`, and allows you to add data, files and streams to the request body.
 
 ```swift
 public var task: Task {
@@ -128,6 +128,14 @@ public var task: Task {
     case .zen, .userProfile, .userRepositories, .branches:
         return .request
     }
+}
+```
+
+Finally, the `headers` property stores header fields that should be sent on the request.
+
+```swift
+public var headers: [String: String]? {
+    return ["Content-Type": "application/json"]
 }
 ```
 
