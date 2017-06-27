@@ -185,6 +185,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         describe("provider with a TestScheduler") {
             var testScheduler: TestScheduler! = nil
             var response: Moya.Response? = nil
+            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            
             beforeEach {
                 testScheduler = TestScheduler()
                 provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
