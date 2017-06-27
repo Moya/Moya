@@ -103,10 +103,3 @@ public extension ReactiveSwiftMoyaProvider {
         }
     }
 }
-
-public extension MoyaProvider {
-
-    public var reactive: ReactiveSwiftMoyaProvider<Target> {
-        return ReactiveSwiftMoyaProvider<Target>(moyaProvider: self)
-    }
-}

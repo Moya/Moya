@@ -22,6 +22,8 @@
 		42414D9A4174BE3C8A63A2D4 /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = E6D60592E5C53FD3D5D27C40 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		446089E18837C4BF616A2C30 /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3200BB8D9E36138754A66743 /* SignalProducer+MoyaSpec.swift */; };
 		478F99F832102780F16E2EF7 /* MoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F7C28724C245632AF063AB /* MoyaError.swift */; };
+		49D1F2741F02765700F22EE7 /* MoyaProvier+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1F2731F02765700F22EE7 /* MoyaProvier+Rx.swift */; };
+		49D1F2761F02768D00F22EE7 /* MoyaProvider+ReactiveSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D1F2751F02768D00F22EE7 /* MoyaProvider+ReactiveSwift.swift */; };
 		5499B2CC2C4E5120F3839BA4 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = F719F7357604C9AF748ECCD9 /* Image.swift */; };
 		55D38822179474648606A08E /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = F15BC7A9F87281D081AA6760 /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		596E3DDB3805DD60025D6152 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C0FE7EC5C2DA4451F82A57 /* Endpoint.swift */; };
@@ -95,6 +97,8 @@
 		3200BB8D9E36138754A66743 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SignalProducer+MoyaSpec.swift"; path = "Tests/SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
 		3D59CBBD416E34FF89074091 /* MoyaProvider+Defaults.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MoyaProvider+Defaults.swift"; path = "Sources/Moya/MoyaProvider+Defaults.swift"; sourceTree = "<group>"; };
 		3EDA8304EBD76134BFF3257E /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49D1F2731F02765700F22EE7 /* MoyaProvier+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MoyaProvier+Rx.swift"; sourceTree = "<group>"; };
+		49D1F2751F02768D00F22EE7 /* MoyaProvider+ReactiveSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+ReactiveSwift.swift"; sourceTree = "<group>"; };
 		533228D9B78EC73DC4CAA3CE /* MultiTargetSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultiTargetSpec.swift; path = Tests/MultiTargetSpec.swift; sourceTree = "<group>"; };
 		5387246486578D5D627708D8 /* ErrorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ErrorTests.swift; path = Tests/ErrorTests.swift; sourceTree = "<group>"; };
 		554BABCF927FEFD3B18C9855 /* NetworkLoggerPluginSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPluginSpec.swift; path = Tests/NetworkLoggerPluginSpec.swift; sourceTree = "<group>"; };
@@ -209,6 +213,8 @@
 				3D59CBBD416E34FF89074091 /* MoyaProvider+Defaults.swift */,
 				235E60E994DBE640F8A6D948 /* MoyaProvider+Internal.swift */,
 				2A55D6DA6798BBECCD32A600 /* MoyaProvider.swift */,
+				49D1F2731F02765700F22EE7 /* MoyaProvier+Rx.swift */,
+				49D1F2751F02768D00F22EE7 /* MoyaProvider+ReactiveSwift.swift */,
 				6922A4C1997E5E5DD00EA399 /* MultipartFormData.swift */,
 				E1FB0F6C82CB0ECDF89243EB /* MultiTarget.swift */,
 				2C3A583275D1D182D18CBC91 /* Plugin.swift */,
@@ -542,7 +548,9 @@
 				B9EC462D785C88BB8A340F1F /* MoyaProvider+Internal.swift in Sources */,
 				7B28E658ED44E71DD2A1B262 /* MoyaProvider.swift in Sources */,
 				9B2D8FE22DF6FBABF63D6534 /* MultipartFormData.swift in Sources */,
+				49D1F2761F02768D00F22EE7 /* MoyaProvider+ReactiveSwift.swift in Sources */,
 				C8D5F28E5B1C313C807FCC36 /* MultiTarget.swift in Sources */,
+				49D1F2741F02765700F22EE7 /* MoyaProvier+Rx.swift in Sources */,
 				C1C16F436B195C71246AD845 /* Plugin.swift in Sources */,
 				8F60CB1A91CA6096CA7A57B1 /* AccessTokenPlugin.swift in Sources */,
 				0D7C15675C8987BDA99DBA21 /* CredentialsPlugin.swift in Sources */,

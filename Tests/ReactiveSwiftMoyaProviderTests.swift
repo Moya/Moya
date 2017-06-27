@@ -9,15 +9,15 @@ import Alamofire
 
 class ReactiveSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
-        var provider: ReactiveSwiftMoyaProvider<GitHub>!
+        var provider: Reactive<MoyaProvider<GitHub>>!
         beforeEach {
             provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub).reactive
         }
 
         describe("failing") {
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).reactive
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).reactive
             }
 
             it("returns the correct error message") {
@@ -208,12 +208,12 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("a reactive provider") {
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = MoyaProvider<GitHub>(trackInflights: true).reactive
+                provider = MoyaProvider(trackInflights: true).reactive
             }
 
             it("returns identical signalproducers for inflight requests") {

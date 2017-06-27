@@ -74,10 +74,3 @@ public extension RxMoyaProvider {
         }
     }
 }
-
-public extension MoyaProvider {
-
-    public var rx: RxMoyaProvider<Target> {
-        return RxMoyaProvider<Target>(moyaProvider: self)
-    }
-}

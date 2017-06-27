@@ -253,7 +253,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
             }
 
             describe("a reactive provider with SignalProducer") {
-                var provider: ReactiveSwiftMoyaProvider<GitHub>!
+                var provider: Reactive<MoyaProvider<GitHub>>!
                 beforeEach {
                     provider = MoyaProvider<GitHub>().reactive
                 }

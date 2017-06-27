@@ -12,7 +12,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
 
         describe("provider with Single") {
 
-            var provider: RxMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
 
             beforeEach {
                 provider = MoyaProvider(stubClosure: MoyaProvider.immediatelyStub).rx
@@ -58,9 +58,9 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("failing") {
-            var provider: RxMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).rx
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).rx
             }
 
             it("emits the correct error message") {
@@ -97,12 +97,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("a reactive provider") {
-            var provider: RxMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = MoyaProvider<GitHub>(trackInflights: true).rx
+                provider = MoyaProvider(trackInflights: true).rx
             }
 
             it("emits identical response for inflight requests") {
@@ -143,7 +143,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("a provider with progress tracking") {
-            var provider: RxMoyaProvider<GitHubUserContent>!
+            var provider: Reactive<MoyaProvider<GitHubUserContent>>!
             beforeEach {
                 //delete downloaded filed before each test
                 let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
@@ -154,7 +154,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 }
-                provider = MoyaProvider<GitHubUserContent>().rx
+                provider = MoyaProvider().rx
             }
 
             it("tracks progress of request") {
