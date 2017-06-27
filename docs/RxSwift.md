@@ -5,7 +5,7 @@ Moya provides an optional `RxSwift` implementation of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `Observable`s.
 
-An `Rx`-based `MoyaProvider` can be created from a
+An `RxSwift`-based `MoyaProvider` can be created from a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
