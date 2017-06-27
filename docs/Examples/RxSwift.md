@@ -1,10 +1,10 @@
 # RxSwift examples
 
-A `RxMoyaProvider` can be created much like a
+An `RxSwift`-based `MoyaProvider` can be created much like a
 [`MoyaProvider`](../Providers.md) and can be used as follows:
 
 ```swift
-let GitHubProvider = RxMoyaProvider<GitHub>()
+let gitHubProvider = MoyaProvider<GitHub>().rx
 ```
 
 After that simple setup, you're off to the races:

@@ -1,12 +1,12 @@
 # ReactiveSwift
 
-Moya provides an optional `ReactiveSwiftMoyaProvider` subclass of
+Moya provides an optional `ReactiveSwift` implementation of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `SignalProducer`s
 (`RACSignal`s are also available for those who need it).
 
-An `ReactiveSwiftMoyaProvider` can be created from a
+A `ReactiveSwift`-based `MoyaProvider` can be created from a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift

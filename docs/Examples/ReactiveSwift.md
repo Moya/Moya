@@ -1,10 +1,10 @@
-# ReactiveCocoa examples
+# ReactiveSwift examples
 
-A `ReactiveCocoaMoyaProvider` can be created much like a
+A `ReactiveSwift`-based `MoyaProvider` can be created much like a
 [`MoyaProvider`](../Providers.md) and can be used as follows:
 
 ```swift
-let GitHubProvider = ReactiveCocoaMoyaProvider<GitHub>()
+let gitHubProvider = MoyaProvider<GitHub>().reactive
 ```
 
 After that simple setup, you're off to the races:
