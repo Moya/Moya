@@ -170,16 +170,6 @@ private extension MoyaProvider {
                     self.append(stream: stream, length: length, bodyPart: bodyPart, to: form)
                 }
             }
-
-            if let parameters = target.parameters {
-                parameters
-                    .flatMap { key, value in multipartQueryComponents(key, value) }
-                    .forEach { key, value in
-                        if let data = value.data(using: .utf8, allowLossyConversion: false) {
-                            form.append(data, withName: key)
-                        }
-                }
-            }
         }
 
         manager.upload(multipartFormData: multipartFormData, with: request) { result in

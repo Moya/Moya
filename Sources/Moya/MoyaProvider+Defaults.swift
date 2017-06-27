@@ -8,8 +8,7 @@ public extension MoyaProvider {
             url: url(for: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,
-            parameters: target.parameters,
-            parameterEncoding: target.parameterEncoding
+            requestData: target.requestData
         )
     }
 
