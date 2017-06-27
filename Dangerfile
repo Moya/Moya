@@ -47,5 +47,11 @@ if (cartfile_updated || cartfile_resolved_updated) && !podspec_updated
   warn("The `Cartfile` or `Cartfile.resolved` was updated, but there were no changes in the `podspec`. Did you forget updating the `podspec`?")
 end
 
+# Warn when library files has been updated but not tests.
+tests_updated = !git.modified_files.grep(/Tests/).empty?
+if has_app_changes && !tests_updated
+  warn("The library files were changed, but the tests remained unmodified. Consider updating or adding to the tests to match the library changes.")
+end
+
 # Run SwiftLint
 swiftlint.lint_files
