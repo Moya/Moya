@@ -88,7 +88,7 @@ public extension MoyaProvider {
                     preparedRequest.httpBody = data
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
-                case let .request(RequestDataType.encoded(parameters: parameters, encoding: parameterEncoding)):
+                case let .request(.encoded(parameters: parameters, encoding: parameterEncoding)):
                     do {
                         preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
                     } catch {
@@ -96,7 +96,7 @@ public extension MoyaProvider {
                     }
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
-                case let .request(RequestDataType.compositeData(urlParameters: urlParameters, bodyData: bodyData)):
+                case let .request(.compositeData(urlParameters: urlParameters, bodyData: bodyData)):
                     do {
                         preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
                     } catch {
@@ -105,7 +105,7 @@ public extension MoyaProvider {
                     preparedRequest.httpBody = bodyData
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
-                case let .request(RequestDataType.compositeEncoded(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding)):
+                case let .request(.compositeEncoded(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding)):
                     do {
                         preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
                         preparedRequest = try bodyParameterEncoding.encode(preparedRequest, with: bodyParameters)

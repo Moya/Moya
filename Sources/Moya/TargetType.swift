@@ -58,7 +58,6 @@ public enum DownloadType {
     case encoded(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
 }
 
-
 /// Represents an HTTP task.
 public enum Task {
 
