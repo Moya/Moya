@@ -60,13 +60,14 @@ public extension MoyaProvider {
             switch requestResult {
             case .success(let urlRequest):
                 request = urlRequest
+
             case .failure(let error):
                 pluginsWithCompletion(.failure(error))
                 return
             }
 
             // Allow plugins to modify request
-            let preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
+            var preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
 
             let networkCompletion: Moya.Completion = { result in
               if self.trackInflights {
@@ -83,18 +84,57 @@ public extension MoyaProvider {
             switch stubBehavior {
             case .never:
                 switch target.task {
-                case .request:
+                case .request(.data(let data)):
+                    preparedRequest.httpBody = data
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
+
+                case let .request(RequestDataType.encoded(parameters: parameters, encoding: parameterEncoding)):
+                    do {
+                        preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
+                    } catch {
+                        // TODO: Add exception handling here
+                    }
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
+
+                case let .request(RequestDataType.compositeData(urlParameters: urlParameters, bodyData: bodyData)):
+                    do {
+                        preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
+                    } catch {
+                        // TODO: Add exception handling here
+                    }
+                    preparedRequest.httpBody = bodyData
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
+
+                case let .request(RequestDataType.compositeEncoded(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding)):
+                    do {
+                        preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
+                        preparedRequest = try bodyParameterEncoding.encode(preparedRequest, with: bodyParameters)
+                    } catch {
+                        // TODO: Add exception handling here
+                    }
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
+
                 case .upload(.file(let file)):
                     cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, callbackQueue: callbackQueue, file: file, progress: progress, completion: networkCompletion)
+
                 case .upload(.multipart(let multipartBody)):
                     guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
                     cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
-                case .download(.request(let destination)):
+
+                case .download(.destination(let destination)):
+                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
+
+                case let .download(.encoded(destination, parameters: parameters, encoding: parameterEncoding)):
+                    do {
+                        preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
+                    } catch {
+                        // TODO: Add exception handling here
+                    }
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
                 }
+
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, callbackQueue: callbackQueue, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
@@ -126,10 +166,12 @@ public extension MoyaProvider {
                 let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
                 plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
+
             case .response(let customResponse, let data):
                 let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
                 plugins.forEach { $0.didReceive(.success(response), target: target) }
                 completion(.success(response))
+
             case .networkError(let error):
                 let error = MoyaError.underlying(error, nil)
                 plugins.forEach { $0.didReceive(.failure(error), target: target) }
@@ -159,16 +201,6 @@ private extension MoyaProvider {
                     self.append(fileURL: url, bodyPart: bodyPart, to: form)
                 case .stream(let stream, let length):
                     self.append(stream: stream, length: length, bodyPart: bodyPart, to: form)
-                }
-            }
-
-            if let parameters = target.parameters {
-                parameters
-                    .flatMap { key, value in multipartQueryComponents(key, value) }
-                    .forEach { key, value in
-                        if let data = value.data(using: .utf8, allowLossyConversion: false) {
-                            form.append(data, withName: key)
-                        }
                 }
             }
         }

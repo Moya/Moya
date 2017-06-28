@@ -13,12 +13,6 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
-    /// The parameters to be encoded in the request.
-    var parameters: [String: Any]? { get }
-
-    /// The method used for parameter encoding.
-    var parameterEncoding: ParameterEncoding { get }
-
     /// Provides stub data for use in testing.
     var sampleData: Data { get }
 
@@ -52,18 +46,38 @@ public enum UploadType {
 public enum DownloadType {
 
     /// Download a file to a destination.
-    case request(DownloadDestination)
+    case destination(DownloadDestination)
+
+    /// Download a file to a destination with extra parameters using the given encoding.
+    case encoded(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
 }
+
 
 /// Represents an HTTP task.
 public enum Task {
 
     /// A basic request task.
-    case request
+    case request(RequestDataType)
 
     /// An upload task.
     case upload(UploadType)
 
     /// A download task.
     case download(DownloadType)
+}
+
+/// Represents a type of request.
+public enum RequestDataType {
+
+    /// A requests body set with data.
+    case data(Data)
+
+    /// A requests body set with parameters and encoding.
+    case encoded(parameters: [String: Any], encoding: ParameterEncoding)
+
+    /// A requests body set with data, combined with url parameters.
+    case compositeData(urlParameters: [String: Any], bodyData: Data)
+
+    /// A requests body set with parameters and encoding, combined with url parameters.
+    case compositeEncoded(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
 }
