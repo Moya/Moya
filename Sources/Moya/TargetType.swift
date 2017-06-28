@@ -31,6 +31,14 @@ public extension TargetType {
         return URLEncoding.default
     }
 
+    var defaultJsonEncoder: JSONEncoder {
+        return JSONEncoder()
+    }
+
+    var defaultPropertyListEncoder: PropertyListEncoder {
+        return PropertyListEncoder()
+    }
+
     var validate: Bool {
         return false
     }
@@ -71,15 +79,26 @@ public enum Task {
 
 /// Represents a type of request.
 public enum RequestDataType {
-
     /// A requests body set with data.
     case data(Data)
+
+    /// A request body set as JSON from an encodable type with a JSONEncoder.
+    case jsonEncodable(encodable: Encodable, encoder: JSONEncoder)
+
+    /// A request body set as Property List from an encodable type with a PropertyListEncoder.
+    case propertyListEncodable(encodable: Encodable, encoder: PropertyListEncoder)
 
     /// A requests body set with parameters and encoding.
     case encoded(parameters: [String: Any], encoding: ParameterEncoding)
 
     /// A requests body set with data, combined with url parameters.
     case compositeData(urlParameters: [String: Any], bodyData: Data)
+
+    /// A request body set as JSON from an encodable type with a JSONEncoder, combined with url parameters
+    case compositeJsonEncodable(urlParameters: [String: Any], encodable: Encodable, encoder: JSONEncoder)
+
+    /// A request body set as Property List from an encodable type with a PropertyListEncoder, combined with url parameters
+    case compositePropertyListEncodable(urlParameters: [String: Any], encodable: Encodable, encoder: PropertyListEncoder)
 
     /// A requests body set with parameters and encoding, combined with url parameters.
     case compositeEncoded(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)

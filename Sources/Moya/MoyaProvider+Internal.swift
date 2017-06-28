@@ -88,6 +88,14 @@ public extension MoyaProvider {
                     preparedRequest.httpBody = data
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
 
+                case let .request(.jsonEncodable(encodable, encoder)):
+                    preparedRequest.httpBody = encoder.encode(encodable)
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
+
+                case let .request(.propertyListEncodable(encodable, encoder)):
+                    preparedRequest.httpBody = encoder.encode(encodable)
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
+
                 case let .request(.encoded(parameters: parameters, encoding: parameterEncoding)):
                     do {
                         preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
@@ -103,6 +111,24 @@ public extension MoyaProvider {
                         // TODO: Add exception handling here
                     }
                     preparedRequest.httpBody = bodyData
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
+
+                case let .request(.compositeJsonEncodable(urlParameters: urlParameters, encodable: encodable, encoder: encoder)):
+                    do {
+                        preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
+                    } catch {
+                        // TODO: Add exception handling here
+                    }
+                    preparedRequest.httpBody = encoder.encode(encodable)
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
+
+                case let .request(.compositePropertyListEncodable(urlParameters: urlParameters, encodable: encodable, encoder: encoder)):
+                    do {
+                        preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
+                    } catch {
+                        // TODO: Add exception handling here
+                    }
+                    preparedRequest.httpBody = encoder.encode(encodable)
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, queue: queue, progress: progress, completion: networkCompletion)
 
                 case let .request(.compositeEncoded(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding)):
