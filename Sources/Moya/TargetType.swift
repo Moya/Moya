@@ -13,6 +13,9 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
+    /// The default parameterEncoding for the `.encoded` RequestDataType case.
+    var defaultParameterEncoding: ParameterEncoding { get }
+
     /// Provides stub data for use in testing.
     var sampleData: Data { get }
 
@@ -24,6 +27,10 @@ public protocol TargetType {
 }
 
 public extension TargetType {
+    var defaultParameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
+
     var validate: Bool {
         return false
     }
