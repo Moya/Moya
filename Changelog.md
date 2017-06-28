@@ -6,7 +6,13 @@
 - Updated the `RxSwift` version requirement to `3.3`.
 - **Breaking Change** Added `headers` to `TargetType`.
 
+- Enabled the "Allow app extension API only" flag.
+- `ReactiveSwiftMoyaProvider` and `RxMoyaProvider`'s `init`s have been deprecated.
+- Added a `.reactive` extension on `MoyaProvider` that returns a `ReactiveSwiftMoyaProvider`.
+- Added a `.rx` extension on `MoyaProvider` that returns a `RxMoyaProvider`.
+
 # 8.0.5
+
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
 
 # 8.0.4

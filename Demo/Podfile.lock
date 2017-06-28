@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.4.0)
+  - Alamofire (4.5.0)
   - Moya (8.0.5):
     - Moya/Core (= 8.0.5)
   - Moya/Core (8.0.5):
@@ -13,8 +13,8 @@ PODS:
     - RxSwift (~> 3.3)
   - ReactiveSwift (1.1.3):
     - Result (~> 3.2)
-  - Result (3.2.2)
-  - RxSwift (3.4.1)
+  - Result (3.2.3)
+  - RxSwift (3.5.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -29,11 +29,11 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Moya: d563900afec2af867c6379c407c2cf4900622c28
   ReactiveSwift: f54ba12c2e799003432930fa55495315ae44f32b
-  Result: 4edd39003fdccf281d418ee1b006571f70123250
-  RxSwift: 656f8fbeca5bc372121a72d9ebdd3cd3bc0ffade
+  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
+  RxSwift: 18ee9d78b45edb3b0b7e79916b47a116e6dbc842
 
 PODFILE CHECKSUM: 2566af7232bac99ae05ef21466be44b8eb453506
 

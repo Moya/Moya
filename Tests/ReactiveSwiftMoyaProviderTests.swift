@@ -9,15 +9,15 @@ import Alamofire
 
 class ReactiveSwiftMoyaProviderSpec: QuickSpec {
     override func spec() {
-        var provider: ReactiveSwiftMoyaProvider<GitHub>!
+        var provider: Reactive<MoyaProvider<GitHub>>!
         beforeEach {
-            provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub).reactive
         }
 
         describe("failing") {
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
             beforeEach {
-                provider = ReactiveSwiftMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub).reactive
             }
 
             it("returns the correct error message") {
@@ -62,10 +62,10 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
             class TestProvider<Target: TargetType>: ReactiveSwiftMoyaProvider<Target> {
                 init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                    requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                    stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                    manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                    plugins: [PluginType] = []) {
+                     requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                     stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                     manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                     plugins: [PluginType] = []) {
 
                         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                 }
@@ -149,10 +149,10 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
                 class TestProvider<Target: TargetType>: ReactiveSwiftMoyaProvider<Target> {
                     init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                        requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                        stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                        manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                        plugins: [PluginType] = []) {
+                         requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
+                         stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                         manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                         plugins: [PluginType] = []) {
 
                             super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
                     }
@@ -185,6 +185,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         describe("provider with a TestScheduler") {
             var testScheduler: TestScheduler! = nil
             var response: Moya.Response? = nil
+            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            
             beforeEach {
                 testScheduler = TestScheduler()
                 provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
@@ -208,12 +210,12 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("a reactive provider") {
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            var provider: Reactive<MoyaProvider<GitHub>>!
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = ReactiveSwiftMoyaProvider<GitHub>(trackInflights: true)
+                provider = MoyaProvider(trackInflights: true).reactive
             }
 
             it("returns identical signalproducers for inflight requests") {

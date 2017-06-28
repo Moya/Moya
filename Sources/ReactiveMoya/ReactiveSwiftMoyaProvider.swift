@@ -8,6 +8,7 @@ import Moya
 open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     private let stubScheduler: DateScheduler?
     /// Initializes a reactive provider.
+    @available(*, deprecated, message: "use MoyaProvider<>().reactive instead")
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
@@ -16,6 +17,11 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
                 trackInflights: Bool = false) {
         self.stubScheduler = stubScheduler
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+    }
+
+    fileprivate init(moyaProvider: MoyaProvider<Target>) {
+        self.stubScheduler = nil
+        super.init(endpointClosure: moyaProvider.endpointClosure, requestClosure: moyaProvider.requestClosure, stubClosure: moyaProvider.stubClosure, manager: moyaProvider.manager, plugins: moyaProvider.plugins, trackInflights: moyaProvider.trackInflights)
     }
 
     /// Designated request-making method.
