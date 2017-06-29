@@ -79,7 +79,7 @@ private extension NetworkLoggerPlugin {
         }
 
         if let body = request?.httpBody, let stringOutput = String(data: body, encoding: .utf8), isVerbose {
-            output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
+            output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput.removingPercentEncoding ?? stringOutput)]
         }
 
         return output
