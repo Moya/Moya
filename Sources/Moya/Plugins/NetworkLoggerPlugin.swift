@@ -80,9 +80,8 @@ private extension NetworkLoggerPlugin {
             output += [format(loggerId, date: date, identifier: "HTTP Request Method", message: httpMethod)]
         }
 
-        if let body = request?.httpBody, isVerbose {
-			let stringOutput = String(data: body, encoding: .utf8) ?? ""
-            output += [format(loggerId, date: date, identifier: "Request Body", message: requestDataFormatter?(body) ?? stringOutput)]
+        if let body = request?.httpBody, let stringOutput = requestDataFormatter?(body) ?? String(data: body, encoding: .utf8), isVerbose {
+            output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
         }
 
         return output
