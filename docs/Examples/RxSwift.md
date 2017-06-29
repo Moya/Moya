@@ -1,16 +1,16 @@
 # RxSwift examples
 
-A `RxMoyaProvider` can be created much like a
-[`MoyaProvider`](../Providers.md) and can be used as follows:
+RxSwift extension to Moya is added via `rx` property of `MoyaProvider. As in normal setup,
+we just need to create a provider first:
 
 ```swift
-let GitHubProvider = RxMoyaProvider<GitHub>()
+let provider = MoyaProvider<GitHub>()
 ```
 
-After that simple setup, you're off to the races:
+And after that you're off to the races:
 
 ```swift
-provider.request(.zen).subscribe { event in
+provider.rx.request(.zen).subscribe { event in
     switch event {
     case .next(let response):
         // do something with the data
@@ -25,7 +25,7 @@ provider.request(.zen).subscribe { event in
 Request with filtering successful status codes, JSON parsing and model mapping (with [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper)):
 
 ```swift
-provider.request(.allUsers)
+provider.rx.request(.allUsers)
 	.filterSuccessfulStatusCodes()
 	.mapJSON()
     .doOn { event in
@@ -77,7 +77,7 @@ Usage:
 
 ```swift
 SVProgressHUD.show()
-MyService.request(.resetPassword(email: textField.text!))
+MyService.rx.request(.resetPassword(email: textField.text!))
         .filterSuccessfulStatusCodes()
         .showErrorHUD()
         .subscribeNext { response in
