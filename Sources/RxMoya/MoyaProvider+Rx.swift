@@ -4,22 +4,24 @@ import RxSwift
 import Moya
 #endif
 
-/// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
-open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
-    /// Initializes a reactive provider.
-    override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                         requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                         stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                         manager: Manager = RxMoyaProvider<Target>.defaultAlamofireManager(),
-                         plugins: [PluginType] = [],
-                         trackInflights: Bool = false) {
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
-    }
+extension MoyaProvider: ReactiveCompatible {}
 
+public extension Reactive where Base: MoyaProviderProtocol {
+    
     /// Designated request-making method.
-    open func request(_ token: Target) -> Single<Response> {
+    public func request(_ token: Base.Target) -> Single<Response> {
+        return base.rxRequest(token)
+    }
+    
+    /// Designated request-making method with progress.
+    public func requestWithProgress(_ token: Base.Target) -> Observable<ProgressResponse> {
+        return base.rxRequestWithProgress(token)
+    }
+}
 
-        // Creates an observable that starts a request each time it's subscribed to.
+internal extension MoyaProviderProtocol {
+    
+    internal func rxRequest(_ token: Target) -> Single<Response> {
         return Observable.create { observer in
             let cancellableToken = self.request(token) { result in
                 switch result {
@@ -30,22 +32,20 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
                     observer.onError(error)
                 }
             }
-
+            
             return Disposables.create {
                 cancellableToken.cancel()
             }
         }.asSingle()
     }
-}
-
-public extension RxMoyaProvider {
-    public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
+    
+    internal func rxRequestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
         let progressBlock: (AnyObserver) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.onNext(progress)
             }
         }
-
+        
         let response: Observable<ProgressResponse> = Observable.create { observer in
             let cancellableToken = self.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
@@ -55,12 +55,12 @@ public extension RxMoyaProvider {
                     observer.onError(error)
                 }
             }
-
+            
             return Disposables.create {
                 cancellableToken.cancel()
             }
         }
-
+        
         // Accumulate all progress and combine them when the result comes
         return response.scan(ProgressResponse()) { last, progress in
             let progressObject = progress.progressObject ?? last.progressObject
