@@ -10,6 +10,8 @@
 - **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - Updated the `RxSwift` version requirement to `3.3`.
 - **Breaking Change** Added `headers` to `TargetType`.
+- **Breaking Change** Removed parameter name in `requestWithProgress` for `ReactiveSwiftMoyaProvider`.
+- **Breaking Change** Deprecated `ReactiveSwiftMoyaProvider` and `RxSwiftMoyaProvider`. Use `MoyaProvider` with reactive properties now: `provider.reactive._`, `provider.rx._`.
 
 # 8.0.5
 
