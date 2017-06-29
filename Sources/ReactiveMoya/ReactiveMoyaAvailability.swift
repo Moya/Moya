@@ -26,18 +26,18 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
         self.stubScheduler = stubScheduler
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
-    
+
     /// Designated request-making method.
     open func request(_ token: Target) -> SignalProducer<Response, MoyaError> {
         // Creates a producer that starts a request each time it's started.
         return self.reactiveRequest(token)
     }
-    
+
     /// Designated request-making method with progress.
     open func requestWithProgress(_ token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
         return self.reactiveRequestWithProgress(token: token)
     }
-    
+
     open override func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         guard let stubScheduler = self.stubScheduler else {
             return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
@@ -48,7 +48,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
             dis?.dispose()
         }
         let stub = createStubFunction(token, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
-        
+
         switch stubBehavior {
         case .immediate:
             dis = stubScheduler.schedule(stub)
