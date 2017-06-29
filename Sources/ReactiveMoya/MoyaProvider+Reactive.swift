@@ -10,9 +10,20 @@ public extension Reactive where Base: MoyaProviderProtocol {
     
     /// Designated request-making method.
     public func request(_ token: Base.Target) -> SignalProducer<Response, MoyaError> {
-        // Creates a producer that starts a request each time it's started.
-        return SignalProducer { [weak provider = self.base] observer, requestDisposable in
-            let cancellableToken = provider?.request(token) { result in
+        return base._request(token)
+    }
+    
+    /// Designated request-making method with progress.
+    public func requestWithProgress(token: Base.Target) -> SignalProducer<ProgressResponse, MoyaError> {
+        return base._requestWithProgress(token: token)
+    }
+}
+
+internal extension MoyaProviderProtocol {
+    
+    internal func _request(_ token: Target) -> SignalProducer<Response, MoyaError> {
+        return SignalProducer { [weak self] observer, requestDisposable in
+            let cancellableToken = self?.request(token) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: response)
@@ -23,21 +34,20 @@ public extension Reactive where Base: MoyaProviderProtocol {
             }
             
             requestDisposable.add {
-                // Cancel the request
                 cancellableToken?.cancel()
             }
         }
     }
     
-    public func requestWithProgress(token: Base.Target) -> SignalProducer<ProgressResponse, MoyaError> {
+    internal func _requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
         let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
             }
         }
         
-        let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak provider = self.base] observer, disposable in
-            let cancellableToken = provider?.request(token, queue: nil, progress: progressBlock(observer)) { result in
+        let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, disposable in
+            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: ProgressResponse(response: response))
@@ -59,20 +69,5 @@ public extension Reactive where Base: MoyaProviderProtocol {
             let response = progress.response ?? last.response
             return ProgressResponse(progress: progressObject, response: response)
         }
-    }
-}
-
-/// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
-open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
-
-    /// Designated request-making method.
-    open func request(_ token: Target) -> SignalProducer<Response, MoyaError> {
-
-        // Creates a producer that starts a request each time it's started.
-        return self.reactive.request(token)
-    }
-    
-    open func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
-        return reactive.requestWithProgress(token: token)
     }
 }
