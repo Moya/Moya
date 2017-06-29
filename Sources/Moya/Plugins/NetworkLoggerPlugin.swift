@@ -10,19 +10,19 @@ public final class NetworkLoggerPlugin: PluginType {
     fileprivate let terminator = "\n"
     fileprivate let cURLTerminator = "\\\n"
     fileprivate let output: (_ separator: String, _ terminator: String, _ items: Any...) -> Void
-	fileprivate let requestDataFormatter: ((Data) -> (String))?
+    fileprivate let requestDataFormatter: ((Data) -> (String))?
     fileprivate let responseDataFormatter: ((Data) -> (Data))?
 
     /// If true, also logs response body data.
     public let isVerbose: Bool
     public let cURL: Bool
 
-	public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ separator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, requestDataFormatter: ((Data) -> (String))? = nil, responseDataFormatter: ((Data) -> (Data))? = nil) {
-        self.cURL = cURL
-        self.isVerbose = verbose
-        self.output = output
-		self.requestDataFormatter = requestDataFormatter
-        self.responseDataFormatter = responseDataFormatter
+    public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ separator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, requestDataFormatter: ((Data) -> (String))? = nil, responseDataFormatter: ((Data) -> (Data))? = nil) {
+	self.cURL = cURL
+	self.isVerbose = verbose
+	self.output = output
+	self.requestDataFormatter = requestDataFormatter
+	self.responseDataFormatter = responseDataFormatter
     }
 
     public func willSend(_ request: RequestType, target: TargetType) {
