@@ -22,12 +22,12 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
                          trackInflights: Bool = false) {
         super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
-    
+
     /// Designated request-making method.
     open func request(_ token: Target) -> Single<Response> {
         return rxRequest(token)
     }
-    
+
     /// Designated request-making method with progress.
     public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
         return rxRequestWithProgress(token)
