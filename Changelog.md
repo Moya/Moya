@@ -1,6 +1,7 @@
 # Next
 
 - Enabled the "Allow app extension API only" flag.
+- Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
 
 # 8.0.5
 
