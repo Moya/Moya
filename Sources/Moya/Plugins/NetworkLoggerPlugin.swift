@@ -18,11 +18,11 @@ public final class NetworkLoggerPlugin: PluginType {
     public let cURL: Bool
 
     public init(verbose: Bool = false, cURL: Bool = false, output: @escaping (_ separator: String, _ terminator: String, _ items: Any...) -> Void = NetworkLoggerPlugin.reversedPrint, requestDataFormatter: ((Data) -> (String))? = nil, responseDataFormatter: ((Data) -> (Data))? = nil) {
-	self.cURL = cURL
-	self.isVerbose = verbose
-	self.output = output
-	self.requestDataFormatter = requestDataFormatter
-	self.responseDataFormatter = responseDataFormatter
+        self.cURL = cURL
+        self.isVerbose = verbose
+        self.output = output
+        self.requestDataFormatter = requestDataFormatter
+        self.responseDataFormatter = responseDataFormatter
     }
 
     public func willSend(_ request: RequestType, target: TargetType) {

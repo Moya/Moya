@@ -22,21 +22,21 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             log += string
         })
 		
-		let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-			//mapping the Any... from items to a string that can be compared
-			let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-			let string: String = stringArray.reduce("") { $0 + $1 + " " }
-			log += string
-		}, responseDataFormatter: { _ in
-			return "formatted request body".data(using: .utf8)!
-		})
+        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
+            //mapping the Any... from items to a string that can be compared
+            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
+            let string: String = stringArray.reduce("") { $0 + $1 + " " }
+            log += string
+        }, responseDataFormatter: { _ in
+            return "formatted request body".data(using: .utf8)!
+        })
 
         let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
-            }, responseDataFormatter: { _ in
+        }, responseDataFormatter: { _ in
                 return "formatted body".data(using: .utf8)!
         })
 
@@ -93,16 +93,16 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to( contain("formatted body") )
         }
 		
-		it("outputs the formatted request data") {
-			let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: URLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-			let result: Result<Moya.Response, MoyaError> = .success(response)
-			
-			pluginWithRequestDataFormatter.didReceive(result, target: GitHub.zen)
-			
-			expect(log).to( contain("Response:") )
-			expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-			expect(log).to( contain("formatted request body") )
-		}
+        it("outputs the formatted request data") {
+            let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: URLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
+            let result: Result<Moya.Response, MoyaError> = .success(response)
+            
+            pluginWithRequestDataFormatter.didReceive(result, target: GitHub.zen)
+            
+            expect(log).to( contain("Response:") )
+            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("formatted request body") )
+        }
 
         it("outputs an empty response message") {
             let emptyResponseError = AFError.responseSerializationFailed(reason: .inputDataNil)
