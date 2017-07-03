@@ -62,28 +62,21 @@ public enum DownloadType {
 /// Represents an HTTP task.
 public enum Task {
 
-    /// A basic request task.
-    case request(RequestDataType)
+    /// A requests body set with data.
+    case requestData(Data)
+
+    /// A requests body set with parameters and encoding.
+    case requestEncoded(parameters: [String: Any], encoding: ParameterEncoding)
+
+    /// A requests body set with data, combined with url parameters.
+    case requestCompositeData(urlParameters: [String: Any], bodyData: Data)
+
+    /// A requests body set with parameters and encoding, combined with url parameters.
+    case requestCompositeEncoded(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
 
     /// An upload task.
     case upload(UploadType)
 
     /// A download task.
     case download(DownloadType)
-}
-
-/// Represents a type of request.
-public enum RequestDataType {
-
-    /// A requests body set with data.
-    case data(Data)
-
-    /// A requests body set with parameters and encoding.
-    case encoded(parameters: [String: Any], encoding: ParameterEncoding)
-
-    /// A requests body set with data, combined with url parameters.
-    case compositeData(urlParameters: [String: Any], bodyData: Data)
-
-    /// A requests body set with parameters and encoding, combined with url parameters.
-    case compositeEncoded(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
 }
