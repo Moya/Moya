@@ -35,7 +35,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
 
     /// Designated request-making method with progress.
     open func requestWithProgress(_ token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
-        return self.reactiveRequestWithProgress(token: token)
+        return self.reactiveRequestWithProgress(token)
     }
 
     open override func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {

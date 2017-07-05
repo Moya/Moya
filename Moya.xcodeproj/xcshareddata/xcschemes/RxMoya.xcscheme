@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B6C8A4A789E22E800EEFB070'
+               BlueprintIdentifier = '528FF71D5A26E74522C484AD'
                BlueprintName = 'RxMoya'
                ReferencedContainer = 'container:Moya.xcodeproj'
                BuildableName = 'RxMoya.framework'>
@@ -35,7 +35,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D10CA15BF20EAB3DBF61DEA5'
+               BlueprintIdentifier = 'B4751E2EBB5E193D628CF4D8'
                BlueprintName = 'MoyaTests'
                ReferencedContainer = 'container:Moya.xcodeproj'
                BuildableName = 'MoyaTests.xctest'>
