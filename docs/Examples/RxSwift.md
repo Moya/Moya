@@ -1,6 +1,6 @@
 # RxSwift examples
 
-RxSwift extension to Moya is added via `rx` property of `MoyaProvider. As in normal setup,
+RxSwift extension to Moya is added via `rx` property of `MoyaProvider`. As in normal setup,
 we just need to create a provider first:
 
 ```swift

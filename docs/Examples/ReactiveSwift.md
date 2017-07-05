@@ -1,6 +1,6 @@
 # ReactiveSwift examples
 
-ReactiveSwift extension to Moya is added via `reactive` property of `MoyaProvider. As in normal setup,
+ReactiveSwift extension to Moya is added via `reactive` property of `MoyaProvider`. As in normal setup,
 we just need to create a provider first:
 
 ```swift

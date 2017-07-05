@@ -6,7 +6,7 @@ import Moya
 
 extension MoyaProvider: ReactiveExtensionsProvider {}
 
-public extension Reactive where Base: MoyaProviderProtocol {
+public extension Reactive where Base: MoyaProviderType {
 
     /// Designated request-making method.
     public func request(_ token: Base.Target) -> SignalProducer<Response, MoyaError> {
@@ -19,7 +19,7 @@ public extension Reactive where Base: MoyaProviderProtocol {
     }
 }
 
-internal extension MoyaProviderProtocol {
+internal extension MoyaProviderType {
 
     internal func reactiveRequest(_ token: Target) -> SignalProducer<Response, MoyaError> {
         return SignalProducer { [weak self] observer, requestDisposable in
