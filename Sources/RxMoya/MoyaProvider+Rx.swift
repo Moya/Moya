@@ -6,7 +6,7 @@ import Moya
 
 extension MoyaProvider: ReactiveCompatible {}
 
-public extension Reactive where Base: MoyaProviderProtocol {
+public extension Reactive where Base: MoyaProviderType {
 
     /// Designated request-making method.
     public func request(_ token: Base.Target) -> Single<Response> {
@@ -19,7 +19,7 @@ public extension Reactive where Base: MoyaProviderProtocol {
     }
 }
 
-internal extension MoyaProviderProtocol {
+internal extension MoyaProviderType {
 
     internal func rxRequest(_ token: Target) -> Single<Response> {
         return Observable.create { observer in
