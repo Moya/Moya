@@ -13,7 +13,7 @@ exemptLabels:
   - "chore"
 
 # Label to use when marking as stale
-staleLabel: "no recent activity"
+staleLabel: no recent activity
 
 # Comment to post when marking as stale. Set to `false` to disable
 markComment: >
