@@ -7,24 +7,20 @@ import Alamofire
 @testable import Moya
 @testable import ReactiveMoya
 
-class ReactiveSwiftMoyaProviderSpec: QuickSpec {
+final class MoyaProviderReactiveSpec: QuickSpec {
     override func spec() {
-        var provider: ReactiveSwiftMoyaProvider<GitHub>!
-        beforeEach {
-            provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
-        }
-
         describe("failing") {
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            var provider: MoyaProvider<GitHub>!
+            
             beforeEach {
-                provider = ReactiveSwiftMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
 
             it("returns the correct error message") {
                 var receivedError: MoyaError?
 
                 waitUntil { done in
-                    provider.request(.zen).startWithFailed { error in
+                    provider.reactive.request(.zen).startWithFailed { error in
                         receivedError = error
                         done()
                     }
@@ -42,7 +38,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var errored = false
 
                 let target: GitHub = .zen
-                provider.request(target).startWithFailed { _ in
+                provider.reactive.request(target).startWithFailed { _ in
                     errored = true
                 }
 
@@ -96,11 +92,16 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("provider with SignalProducer") {
-
+            var provider: MoyaProvider<GitHub>!
+            
+            beforeEach {
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+            }
+            
             it("returns a Response object") {
                 var called = false
 
-                provider.request(.zen).startWithResult { _ in
+                provider.reactive.request(.zen).startWithResult { _ in
                     called = true
                 }
 
@@ -111,7 +112,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var message: String?
 
                 let target: GitHub = .zen
-                provider.request(target).startWithResult { result in
+                provider.reactive.request(target).startWithResult { result in
                     if case .success(let response) = result {
                         message = String(data: response.data, encoding: .utf8)
                     }
@@ -125,7 +126,7 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
                 var receivedResponse: NSDictionary?
 
                 let target: GitHub = .userProfile("ashfurrow")
-                provider.request(target).startWithResult { result in
+                provider.reactive.request(target).startWithResult { result in
                     if case .success(let response) = result {
                         receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
                     }
@@ -185,6 +186,8 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
         describe("provider with a TestScheduler") {
             var testScheduler: TestScheduler! = nil
             var response: Moya.Response? = nil
+            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+            
             beforeEach {
                 testScheduler = TestScheduler()
                 provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
@@ -207,19 +210,19 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
             }
         }
 
-        describe("a reactive provider") {
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
+        describe("provider with inflight tracking") {
+            var provider: MoyaProvider<GitHub>!
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = ReactiveSwiftMoyaProvider<GitHub>(trackInflights: true)
+                provider = MoyaProvider<GitHub>(trackInflights: true)
             }
 
             it("returns identical signalproducers for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1: SignalProducer<Moya.Response, MoyaError> = provider.request(target)
-                let signalProducer2: SignalProducer<Moya.Response, MoyaError> = provider.request(target)
+                let signalProducer1: SignalProducer<Moya.Response, MoyaError> = provider.reactive.request(target)
+                let signalProducer2: SignalProducer<Moya.Response, MoyaError> = provider.reactive.request(target)
 
                 expect(provider.inflightRequests.keys.count).to( equal(0) )
 
@@ -242,7 +245,6 @@ class ReactiveSwiftMoyaProviderSpec: QuickSpec {
 
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually( equal(0) )
-
             }
         }
 
