@@ -24,7 +24,7 @@
 		5054F87AFF61EAC0097F88BD /* MultiTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */; };
 		53376123902C6A22A44DB88E /* Error+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */; };
 		539FD70730B00973E1778CD3 /* MethodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819334FE5D32EFB82599D482 /* MethodSpec.swift */; };
-		58F73370045D6F1FBF73FC82 /* RxSwiftMoyaProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A20CC38EB5A0221E6EA34 /* RxSwiftMoyaProviderTests.swift */; };
+		58F73370045D6F1FBF73FC82 /* MoyaProvider+RxSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */; };
 		59BC4B9B9D0D6F9C060E5620 /* MoyaProvider+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F87B4349AC772FF766904B /* MoyaProvider+Defaults.swift */; };
 		5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */; };
 		61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */; };
@@ -97,7 +97,7 @@
 		4553E5591EE96535C5310C02 /* NetworkLoggerPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkLoggerPlugin.swift; path = Sources/Moya/Plugins/NetworkLoggerPlugin.swift; sourceTree = "<group>"; };
 		461DEED329CE157E412CBCE0 /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Observable+MoyaSpec.swift"; path = "Tests/Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
 		4650771638DBA96BDE28F11B /* TestHelpers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Tests/TestHelpers.swift; sourceTree = "<group>"; };
-		4C7A20CC38EB5A0221E6EA34 /* RxSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxSwiftMoyaProviderTests.swift; path = Tests/RxSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
+		4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MoyaProvider+RxSpec.swift"; path = "Tests/MoyaProvider+RxSpec.swift"; sourceTree = "<group>"; };
 		4D3C74EB65D75BC6DFCC646E /* RxMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5365911118011A3A4FE0CD07 /* MoyaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoyaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		559D567FD0DA37D6CC98FF92 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,7 +193,7 @@
 				832781077A551E1F86E5F2D4 /* NetworkLoggerPluginSpec.swift */,
 				461DEED329CE157E412CBCE0 /* Observable+MoyaSpec.swift */,
 				C841AA621AEC61FAEA0CA019 /* ReactiveSwiftMoyaProviderTests.swift */,
-				4C7A20CC38EB5A0221E6EA34 /* RxSwiftMoyaProviderTests.swift */,
+				4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */,
 				F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */,
 				4650771638DBA96BDE28F11B /* TestHelpers.swift */,
 				DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */,
@@ -485,7 +485,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = " exec \"${SRCROOT}/scripts/copy-carthage-frameworks.sh\"";
-			showEnvVarsInLog = 1;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -551,7 +550,7 @@
 				4033070748A57EB4A0040DB1 /* NetworkLoggerPluginSpec.swift in Sources */,
 				E9B54EFE4EF4A96444BA76AA /* Observable+MoyaSpec.swift in Sources */,
 				8995DF740A59721AA79F5B43 /* ReactiveSwiftMoyaProviderTests.swift in Sources */,
-				58F73370045D6F1FBF73FC82 /* RxSwiftMoyaProviderTests.swift in Sources */,
+				58F73370045D6F1FBF73FC82 /* MoyaProvider+RxSpec.swift in Sources */,
 				DA631A5B37F36DA17E135F14 /* SignalProducer+MoyaSpec.swift in Sources */,
 				F88EC83A91FF6DE81246B01C /* TestHelpers.swift in Sources */,
 				7C32947EA657E981CB15D58C /* TestPlugin.swift in Sources */,
@@ -594,10 +593,22 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -632,10 +643,22 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -665,10 +688,22 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -742,10 +777,22 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -780,10 +827,22 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -868,10 +927,22 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -901,10 +972,22 @@
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -935,10 +1018,22 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = "$(SRCROOT)/Carthage/Build/tvOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = "$(SRCROOT)/Carthage/Build/iOS/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = "$(SRCROOT)/Carthage/Build/Mac/ $(inherited)";
-				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = "$(SRCROOT)/Carthage/Build/watchOS/ $(inherited)";
+				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
+					"$(SRCROOT)/Carthage/Build/tvOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
+					"$(SRCROOT)/Carthage/Build/Mac/",
+					"$(inherited)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
+					"$(SRCROOT)/Carthage/Build/watchOS/",
+					"$(inherited)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
