@@ -3,14 +3,6 @@
 #endif
 import ReactiveSwift
 
-@available(*, unavailable, renamed: "ReactiveSwiftMoyaProvider", message: "ReactiveCocoaMoyaProvider has been renamed to ReactiveSwiftMoyaProvider in version 8.0.0")
-public class ReactiveCocoaMoyaProvider { }
-
-extension ReactiveSwiftMoyaProvider {
-    @available(*, unavailable, renamed: "request(_:)")
-    public func request(token: Target) -> SignalProducer<Response, MoyaError> { fatalError() }
-}
-
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
 @available(*, deprecated: 9.0.0, message: "Please use MoyaProvider with reactive property: provider.reactive.request(_:).")
 open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
