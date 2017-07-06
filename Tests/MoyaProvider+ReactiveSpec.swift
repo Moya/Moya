@@ -248,5 +248,57 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             }
         }
 
+        describe("a provider with progress tracking") {
+            var provider: MoyaProvider<GitHubUserContent>!
+            
+            beforeEach {
+                //delete downloaded filed before each test
+                let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+                let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
+                try? FileManager.default.removeItem(at: file)
+                
+                //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
+                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                }
+                provider = MoyaProvider<GitHubUserContent>()
+            }
+            
+            it("tracks progress of request") {
+                let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
+                
+                let expectedNextProgressValues = [0.25, 0.5, 0.75, 1.0, 1.0]
+                let expectedNextResponseCount = 1
+                let expectedFailedEventsCount = 0
+                let expectedInterruptedEventsCount = 0
+                let expectedCompletedEventsCount = 1
+                let timeout = 5.0
+                
+                var nextProgressValues: [Double] = []
+                var nextResponseCount = 0
+                var failedEventsCount = 0
+                var interruptedEventsCount = 0
+                var completedEventsCount = 0
+                
+                _ = provider.reactive.requestWithProgress(target)
+                    .start({ event in
+                        switch event {
+                        case let .value(element):
+                            nextProgressValues.append(element.progress)
+                            
+                            if let _ = element.response { nextResponseCount += 1 }
+                        case .failed: failedEventsCount += 1
+                        case .completed: completedEventsCount += 1
+                        case .interrupted: interruptedEventsCount += 1
+                        }
+                    })
+                
+                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
+                expect(failedEventsCount).toEventually(equal(expectedFailedEventsCount), timeout: timeout)
+                expect(interruptedEventsCount).toEventually(equal(expectedInterruptedEventsCount), timeout: timeout)
+                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)
+                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)
+            }
+        }
     }
 }
