@@ -26,11 +26,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Moya:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
-  Moya: d563900afec2af867c6379c407c2cf4900622c28
+  Moya: 176333402d54951cb7e721878b8dc5adf812f1d6
   ReactiveSwift: f54ba12c2e799003432930fa55495315ae44f32b
   Result: 4edd39003fdccf281d418ee1b006571f70123250
   RxSwift: 656f8fbeca5bc372121a72d9ebdd3cd3bc0ffade

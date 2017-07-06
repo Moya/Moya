@@ -5,7 +5,7 @@
 
 ## Reactive extensions
 
-* [ReactiveCocoa](ReactiveCocoa.md)
+* [ReactiveSwift](ReactiveSwift.md)
 * [RxSwift](RxSwift.md)
 
 ## Endpoints customization
