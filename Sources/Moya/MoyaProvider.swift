@@ -107,7 +107,7 @@ open class MoyaProvider<Target: TargetType> {
             case .none:
                 stub()
             case .some(let callbackQueue):
-                callbackQueue.async(stub)
+                callbackQueue.async(execute: stub)
             }
         case .delayed(let delay):
             let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
