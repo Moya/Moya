@@ -103,12 +103,11 @@ open class MoyaProvider<Target: TargetType> {
         let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
         switch stubBehavior {
         case .immediate:
-            if let callbackQueue = callbackQueue {
-                callbackQueue.async {
-                    stub()
-                }
-            } else {
+            switch callbackQueue {
+            case .none:
                 stub()
+            case .some(let callbackQueue):
+                callbackQueue.async(stub)
             }
         case .delayed(let delay):
             let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
