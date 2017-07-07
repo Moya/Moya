@@ -95,7 +95,7 @@ public extension MoyaProvider {
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
                 }
             default:
-                cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, completion: { result in
+                cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, callbackQueue: callbackQueue, completion: { result in
                     if self.trackInflights {
                         self.inflightRequests[endpoint]?.forEach { $0(result) }
 
