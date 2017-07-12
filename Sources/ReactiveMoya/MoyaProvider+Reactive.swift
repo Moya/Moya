@@ -49,8 +49,7 @@ internal extension MoyaProviderType {
         let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, disposable in
             let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
                 switch result {
-                case let .success(response):
-                    observer.send(value: ProgressResponse(response: response))
+                case .success:
                     observer.sendCompleted()
                 case let .failure(error):
                     observer.send(error: error)
