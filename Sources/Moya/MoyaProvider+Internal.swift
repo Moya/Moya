@@ -91,7 +91,7 @@ public extension MoyaProvider {
                     guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
-                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, queue: queue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
+                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, queue: queue, multipartBody: multipartBody.appendParameters(endpoint.parameters), progress: progress, completion: networkCompletion)
                 case .download(.request(let destination)):
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, queue: queue, destination: destination, progress: progress, completion: networkCompletion)
                 }
@@ -159,16 +159,6 @@ private extension MoyaProvider {
                     self.append(fileURL: url, bodyPart: bodyPart, to: form)
                 case .stream(let stream, let length):
                     self.append(stream: stream, length: length, bodyPart: bodyPart, to: form)
-                }
-            }
-
-            if let parameters = target.parameters {
-                parameters
-                    .flatMap { key, value in multipartQueryComponents(key, value) }
-                    .forEach { key, value in
-                        if let data = value.data(using: .utf8, allowLossyConversion: false) {
-                            form.append(data, withName: key)
-                        }
                 }
             }
         }
@@ -279,6 +269,23 @@ private extension MoyaProvider {
     }
     func append(stream: InputStream, length: UInt64, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
         form.append(stream, withLength: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
+    }
+}
+
+private extension Array where Element == MultipartFormData {
+    
+    func appendParameters(_ parameters: [String:Any]?) -> [MultipartFormData] {
+        var formData = self
+        if let parameters = parameters {
+            parameters
+                .flatMap { key, value in multipartQueryComponents(key, value) }
+                .forEach { key, value in
+                    if let data = value.data(using: .utf8, allowLossyConversion: false) {
+                        formData.append(MultipartFormData.init(provider: .data(data), name: key))
+                    }
+            }
+        }
+        return formData
     }
 }
 
