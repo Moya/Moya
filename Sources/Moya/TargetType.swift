@@ -36,26 +36,6 @@ public extension TargetType {
     }
 }
 
-/// Represents a type of upload task.
-public enum UploadType {
-
-    /// Upload a file.
-    case file(URL)
-
-    /// Upload "multipart/form-data"
-    case multipart([MultipartFormData])
-}
-
-/// Represents a type of download task.
-public enum DownloadType {
-
-    /// Download a file to a destination.
-    case destination(DownloadDestination)
-
-    /// Download a file to a destination with extra parameters using the given encoding.
-    case parameters(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
-}
-
 /// Represents an HTTP task.
 public enum Task {
 
@@ -71,14 +51,20 @@ public enum Task {
     /// A requests body set with parameters and encoding, combined with url parameters.
     case requestCompositeParameters(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
 
-    /// An upload task.
-    case upload(UploadType)
+    /// A file upload task.
+    case uploadFile(URL)
 
-    /// A download task.
-    case download(DownloadType)
+    /// A "multipart/form-data" upload task.
+    case uploadMultipart([MultipartFormData])
+
+    /// A file download task to a destination.
+    case downloadDestination(DownloadDestination)
+
+    /// A file download task to a destination with extra parameters using the given encoding.
+    case downloadParameters(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
 }
 
-/// Extension to Parameter encoding to make using the `.requestEncoded` and `.requestCompositeEncoded` task types easier.
+/// Extension to Parameter encoding to make using some task types easier.
 extension ParameterEncoding {
     static var `default`: ParameterEncoding {
         return JSONEncoding.default
