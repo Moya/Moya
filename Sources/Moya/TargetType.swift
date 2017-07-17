@@ -13,9 +13,6 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
-    /// The default parameterEncoding for the `.encoded` RequestDataType case.
-    var defaultParameterEncoding: ParameterEncoding { get }
-
     /// Provides stub data for use in testing.
     var sampleData: Data { get }
 
@@ -56,7 +53,7 @@ public enum DownloadType {
     case destination(DownloadDestination)
 
     /// Download a file to a destination with extra parameters using the given encoding.
-    case encoded(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
+    case parameters(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
 }
 
 /// Represents an HTTP task.
@@ -66,17 +63,24 @@ public enum Task {
     case requestData(Data)
 
     /// A requests body set with parameters and encoding.
-    case requestEncoded(parameters: [String: Any], encoding: ParameterEncoding)
+    case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
 
     /// A requests body set with data, combined with url parameters.
     case requestCompositeData(urlParameters: [String: Any], bodyData: Data)
 
     /// A requests body set with parameters and encoding, combined with url parameters.
-    case requestCompositeEncoded(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
+    case requestCompositeParameters(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
 
     /// An upload task.
     case upload(UploadType)
 
     /// A download task.
     case download(DownloadType)
+}
+
+/// Extension to Parameter encoding to make using the `.requestEncoded` and `.requestCompositeEncoded` task types easier.
+extension ParameterEncoding {
+    static var `default`: ParameterEncoding {
+        return JSONEncoding.default
+    }
 }

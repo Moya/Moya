@@ -88,7 +88,7 @@ public extension MoyaProvider {
                     preparedRequest.httpBody = data
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
-                case let .requestEncoded(parameters: parameters, encoding: parameterEncoding):
+                case let .requestParameters(parameters: parameters, encoding: parameterEncoding):
                     do {
                         preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
                     } catch {
@@ -105,7 +105,7 @@ public extension MoyaProvider {
                     preparedRequest.httpBody = bodyData
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
-                case let .requestCompositeEncoded(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding):
+                case let .requestCompositeParameters(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding):
                     do {
                         preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
                         preparedRequest = try bodyParameterEncoding.encode(preparedRequest, with: bodyParameters)
@@ -126,7 +126,7 @@ public extension MoyaProvider {
                 case .download(.destination(let destination)):
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
 
-                case let .download(.encoded(destination, parameters: parameters, encoding: parameterEncoding)):
+                case let .download(.parameters(destination, parameters: parameters, encoding: parameterEncoding)):
                     do {
                         preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
                     } catch {
