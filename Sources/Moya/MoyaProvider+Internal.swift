@@ -114,19 +114,19 @@ public extension MoyaProvider {
                     }
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
-                case .upload(.file(let file)):
+                case .uploadFile(let file):
                     cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, callbackQueue: callbackQueue, file: file, progress: progress, completion: networkCompletion)
 
-                case .upload(.multipart(let multipartBody)):
+                case .uploadMultipart(let multipartBody):
                     guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                         fatalError("\(target) is not a multipart upload target.")
                     }
                     cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
 
-                case .download(.destination(let destination)):
+                case .downloadDestination(let destination):
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
 
-                case let .download(.parameters(destination, parameters: parameters, encoding: parameterEncoding)):
+                case let .downloadParameters(destination, parameters: parameters, encoding: parameterEncoding):
                     do {
                         preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
                     } catch {
