@@ -63,18 +63,19 @@ Nice. If some of your endpoints require POST or another method, then you can swi
 on `self` to return the appropriate value. This kind of switching technique is what
 we saw when calculating our `path` property.
 
-Our `TargetType` is shaping up, but we're not done yet. We also need a `parameters`
-computed property that returns parameters defined by the enum case. Here's an example:
+Our `TargetType` is shaping up, but we're not done yet. We also need a `task`
+computed property that returns the task type potentially including parameters.
+Here's an example:
 
 ```swift
-public var parameters: [String: Any]? {
+public var task: Task {
     switch self {
     case .userRepositories:
-        return ["sort": "pushed"]
+        return .requestParameters(parameters: ["sort": "pushed"], encoding: URLEncoding.default)
     case .branches(_, let protected):
-        return ["protected": "\(protected)"]
+        return .requestParameters(parameters: ["protected": "\(protected)"], encoding: URLEncoding.default)
     default:
-        return nil
+        return .requestPlain
     }
 }
 ```
@@ -82,25 +83,24 @@ public var parameters: [String: Any]? {
 Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we use the Swift `_` ignored-value symbol.
 Let's take a look at the `branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
 
-While we are talking about parameters, we need to indicate how we want our
+While we are talking about parameters, we needed to indicate how we want our
 parameters to be encoded into our request. We do this by returning a
-`ParameterEncoding` from a `parameterEncoding` computed property. Out of the
+`ParameterEncoding` alongside the `.requestParameters` task type. Out of the
 box, Moya has `URLEncoding`, `JSONEncoding`, and `PropertyListEncoding`. You can
 also create your own encoder that conforms to `ParameterEncoding` (e.g.
 `XMLEncoder`).
 
-```swift
-public var parameterEncoding: ParameterEncoding {
-    switch self {
-    case .zen:
-        return JSONEncoding.default
-    default:
-        return URLEncoding.default
-    }
-}
-```
+A `task` property represents how you are sending / receiving data and allows you to add data, files and streams to the request body. There are several `.request` types:
 
-Notice the `sampleData` property on the enum. This is a requirement of
+- `.requestPlain` with nothing to send at all
+- `.requestData` with which you can send `Data` (useful for `Encodable` types in Swift 4)
+- `.requestParameters` which allows you to send parameters with an encoding
+- `.requestCompositeData` & `.requestCompositeParameters` which allow you to combine url encoded parameters with another type (data / parameters)
+
+Also there are two upload types: `.uploadFile` to upload a file from a URL and `.uploadMultipart` for multipart uploads.
+And two download types: `.downloadDestination` for a plain file download and `.downloadParameters` for downloading with parameters sent alongside the request.
+
+Next, notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
 `Data` that represents a sample response. This can be used later for tests or
 for providing offline support for developers. This *should* depend on `self`.
@@ -116,17 +116,6 @@ public var sampleData: Data {
         return "[{\"name\": \"Repo Name\"}]".data(using: String.Encoding.utf8)!
     case .branches:
         return "[{\"name\": \"master\"}]".data(using: String.Encoding.utf8)!
-    }
-}
-```
-
-`TargetType` also has a `task` property that represents how you are sending / receiving data. This can be either `.request`, `.upload` or `.download`, and allows you to add data, files and streams to the request body.
-
-```swift
-public var task: Task {
-    switch self {
-    case .zen, .userProfile, .userRepositories, .branches:
-        return .request
     }
 }
 ```
