@@ -27,16 +27,8 @@ extension GitHub: TargetType {
         return .get
     }
 
-    var parameters: [String: Any]? {
-        return nil
-    }
-
-    public var parameterEncoding: ParameterEncoding {
-        return JSONEncoding.default
-    }
-
     var task: Task {
-        return .request
+        return .requestPlain
     }
 
     var sampleData: Data {
@@ -63,7 +55,7 @@ func url(_ route: TargetType) -> String {
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method)
 }
 
 enum HTTPBin: TargetType {
@@ -81,19 +73,8 @@ enum HTTPBin: TargetType {
         return .get
     }
 
-    var parameters: [String: Any]? {
-        switch self {
-        default:
-            return [:]
-        }
-    }
-
-    var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-
     var task: Task {
-        return .request
+        return .requestParameters(parameters: [:], encoding: URLEncoding.default)
     }
 
     var sampleData: Data {
@@ -138,7 +119,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(defaultDownloadDestination))
+            return .downloadDestination(defaultDownloadDestination)
         }
     }
     public var sampleData: Data {

@@ -38,6 +38,9 @@ public extension TargetType {
 /// Represents an HTTP task.
 public enum Task {
 
+    /// A request with no additional data.
+    case requestPlain
+
     /// A requests body set with data.
     case requestData(Data)
 
@@ -61,11 +64,4 @@ public enum Task {
 
     /// A file download task to a destination with extra parameters using the given encoding.
     case downloadParameters(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
-}
-
-/// Extension to Parameter encoding to make using some task types easier.
-extension ParameterEncoding {
-    static var `default`: ParameterEncoding {
-        return JSONEncoding.default
-    }
 }
