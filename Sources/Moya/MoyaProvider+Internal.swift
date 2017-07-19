@@ -84,6 +84,9 @@ public extension MoyaProvider {
             switch stubBehavior {
             case .never:
                 switch target.task {
+                case .requestPlain:
+                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
+
                 case .requestData(let data):
                     preparedRequest.httpBody = data
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
