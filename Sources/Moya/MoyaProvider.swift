@@ -53,7 +53,7 @@ open class MoyaProvider<Target: TargetType> {
 
     open internal(set) var inflightRequests: [Endpoint<Target>: [Moya.Completion]] = [:]
 
-    /// Propagated to Alamofire as callback queue. If nil - main queue will be used.
+    /// Propagated to Alamofire as callback queue. If nil - the Alamofire default (as of their API in 2017 - the main queue) will be used.
     let callbackQueue: DispatchQueue?
 
     /// Initializes a provider.
@@ -81,13 +81,11 @@ open class MoyaProvider<Target: TargetType> {
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
-    open func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable {
-        return self.request(target, callbackQueue: callbackQueue, completion: completion)
-    }
+    open func request(_ target: Target,
+                      callbackQueue: DispatchQueue? = .none,
+                      progress: ProgressBlock? = .none,
+                      completion: @escaping Completion) -> Cancellable {
 
-    /// Designated request-making method with an optional callback queue. Returns a `Cancellable` token to cancel the request later.
-    @discardableResult
-    open func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> Cancellable {
         let callbackQueue = callbackQueue ?? self.callbackQueue
         return requestNormal(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
