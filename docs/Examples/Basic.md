@@ -49,11 +49,12 @@ extension MyService: TargetType {
             return ["first_name": firstName, "last_name": lastName]
         }
     }
-
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .zen, .showUser, .showAccounts, .updateUser:
-            return URLEncoding.default // Send parameters in URL
+        case .zen, .showUser, .showAccounts:
+            return URLEncoding.default // Send parameters in URL for GET, DELETE and HEAD. For other HTTP methods, parameters will be sent in request body
+        case .updateUser:
+            return URLEncoding.queryString // Always sends parameters in URL, regardless of which HTTP method is used
         case .createUser:
             return JSONEncoding.default // Send parameters as JSON in request body
         }
@@ -70,8 +71,8 @@ extension MyService: TargetType {
             return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
         case .showAccounts:
             // Provided you have a file named accounts.json in your bundle.
-            guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-                let data = Data(base64Encoded: path) else {
+            guard let url = Bundle.main.url(forResource: "accounts", withExtension: "json"),
+                let data = try? Data(contentsOf: url) else {
                     return Data()
             }
             return data

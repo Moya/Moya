@@ -2,7 +2,11 @@
 - **Breaking Change** Renamed all occurrences of `queue` to `callbackQueue`.
 - Add optional callback queue parameter to reactive providers.
 
+- Enabled the "Allow app extension API only" flag.
+- Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
+
 # 8.0.5
+
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
 
 # 8.0.4

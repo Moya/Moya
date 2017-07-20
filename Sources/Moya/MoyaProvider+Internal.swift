@@ -68,19 +68,20 @@ public extension MoyaProvider {
             // Allow plugins to modify request
             let preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
 
+            let networkCompletion: Moya.Completion = { result in
+              if self.trackInflights {
+                self.inflightRequests[endpoint]?.forEach { $0(result) }
+
+                objc_sync_enter(self)
+                self.inflightRequests.removeValue(forKey: endpoint)
+                objc_sync_exit(self)
+              } else {
+                pluginsWithCompletion(result)
+              }
+            }
+
             switch stubBehavior {
             case .never:
-                let networkCompletion: Moya.Completion = { result in
-                    if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach { $0(result) }
-
-                        objc_sync_enter(self)
-                        self.inflightRequests.removeValue(forKey: endpoint)
-                        objc_sync_exit(self)
-                    } else {
-                        pluginsWithCompletion(result)
-                    }
-                }
                 switch target.task {
                 case .request:
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
@@ -95,17 +96,7 @@ public extension MoyaProvider {
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
                 }
             default:
-                cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, callbackQueue: callbackQueue, completion: { result in
-                    if self.trackInflights {
-                        self.inflightRequests[endpoint]?.forEach { $0(result) }
-
-                        objc_sync_enter(self)
-                        self.inflightRequests.removeValue(forKey: endpoint)
-                        objc_sync_exit(self)
-                    } else {
-                        pluginsWithCompletion(result)
-                    }
-                }, endpoint: endpoint, stubBehavior: stubBehavior)
+                cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
             }
         }
 
