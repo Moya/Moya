@@ -7,23 +7,29 @@ import Moya
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.
 open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     private let stubScheduler: DateScheduler?
+
     /// Initializes a reactive provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                callbackQueue: DispatchQueue? = nil,
                 manager: Manager = ReactiveSwiftMoyaProvider<Target>.defaultAlamofireManager(),
                 plugins: [PluginType] = [], stubScheduler: DateScheduler? = nil,
                 trackInflights: Bool = false) {
         self.stubScheduler = stubScheduler
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
-    open func request(_ token: Target) -> SignalProducer<Response, MoyaError> {
-
+    ///
+    /// - Parameters:
+    ///   - token: Entity, which provides specifications necessary for a `MoyaProvider`.
+    ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
+    /// - Returns: SignalProducer, which emits one element or error.
+    open func request(_ token: Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<Response, MoyaError> {
         // Creates a producer that starts a request each time it's started.
         return SignalProducer { [weak self] observer, requestDisposable in
-            let cancellableToken = self?.request(token) { result in
+            let cancellableToken = self?.request(token, callbackQueue: callbackQueue) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: response)
@@ -40,9 +46,9 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
         }
     }
 
-    open override func stubRequest(_ target: Target, request: URLRequest, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    open override func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         guard let stubScheduler = self.stubScheduler else {
-            return super.stubRequest(target, request: request, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            return super.stubRequest(target, request: request, callbackQueue: callbackQueue, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
         notifyPluginsOfImpendingStub(for: request, target: target)
         var dis: Disposable? = .none
@@ -65,7 +71,7 @@ open class ReactiveSwiftMoyaProvider<Target>: MoyaProvider<Target> where Target:
 }
 
 public extension ReactiveSwiftMoyaProvider {
-    public func requestWithProgress(token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
+    public func requestWithProgress(token: Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
         let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
@@ -73,7 +79,7 @@ public extension ReactiveSwiftMoyaProvider {
         }
 
         let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, disposable in
-            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
+            let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: ProgressResponse(response: response))

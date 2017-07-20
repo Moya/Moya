@@ -126,7 +126,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(defaultDownloadDestination))
+            return .download(.request(DefaultDownloadDestination))
         }
     }
     public var sampleData: Data {
@@ -138,7 +138,15 @@ extension GitHubUserContent: TargetType {
 
 }
 
-private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+// https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
+extension DispatchQueue {
+    class var currentLabel: String? {
+        return String(validatingUTF8: __dispatch_queue_get_label(nil))
+    }
+}
+
+
+private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
     let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
 
     if !directoryURLs.isEmpty {

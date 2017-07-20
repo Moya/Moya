@@ -54,14 +54,14 @@ class ViewController: UITableViewController {
     func uploadGiphy() {
         let data = animatedBirdData()
         GiphyProvider.request(.upload(gif: data),
-                              queue: DispatchQueue.main,
+                              callbackQueue: DispatchQueue.main,
                               progress: progressClosure,
                               completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
         GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
-                                          queue: DispatchQueue.main,
+                                          callbackQueue: DispatchQueue.main,
                                           progress: progressClosure,
                                           completion: progressCompletionClosure)
     }

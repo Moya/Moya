@@ -174,6 +174,109 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)
                 expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)
             }
+
+            describe("a custom callback queue") {
+                var stubDescriptor: OHHTTPStubsDescriptor!
+
+                beforeEach {
+                    stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                        return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    }
+                }
+
+                afterEach {
+                    OHHTTPStubs.removeStub(stubDescriptor)
+                }
+
+                describe("a provider with a predefined callback queue") {
+                    var provider: RxMoyaProvider<GitHub>!
+                    var callbackQueue: DispatchQueue!
+                    var disposeBag: DisposeBag!
+
+                    beforeEach {
+                        disposeBag = DisposeBag()
+
+                        callbackQueue = DispatchQueue(label: UUID().uuidString)
+                        provider = RxMoyaProvider<GitHub>(callbackQueue: callbackQueue)
+                    }
+
+                    context("the callback queue is provided with the request") {
+                        it("invokes the callback on the request queue") {
+                            let requestQueue = DispatchQueue(label: UUID().uuidString)
+                            var callbackQueueLabel: String?
+
+                            waitUntil(action: { completion in
+                                provider.request(.zen, callbackQueue: requestQueue)
+                                    .subscribe(onNext: { _ in
+                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        completion()
+                                    }).addDisposableTo(disposeBag)
+                            })
+
+                            expect(callbackQueueLabel) == requestQueue.label
+                        }
+                    }
+
+                    context("the queueless request method is invoked") {
+                        it("invokes the callback on the provider queue") {
+                            var callbackQueueLabel: String?
+
+                            waitUntil(action: { completion in
+                                provider.request(.zen)
+                                    .subscribe(onNext: { _ in
+                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        completion()
+                                    }).addDisposableTo(disposeBag)
+                            })
+
+                            expect(callbackQueueLabel) == callbackQueue.label
+                        }
+                    }
+                }
+
+                describe("a provider without a predefined queue") {
+                    var provider: RxMoyaProvider<GitHub>!
+                    var disposeBag: DisposeBag!
+
+                    beforeEach {
+                        disposeBag = DisposeBag()
+                        provider = RxMoyaProvider<GitHub>()
+                    }
+
+                    context("the queue is provided with the request") {
+                        it("invokes the callback on the specified queue") {
+                            let requestQueue = DispatchQueue(label: UUID().uuidString)
+                            var callbackQueueLabel: String?
+
+                            waitUntil(action: { completion in
+                                provider.request(.zen, callbackQueue: requestQueue)
+                                    .subscribe(onNext: { _ in
+                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        completion()
+                                    }).addDisposableTo(disposeBag)
+                            })
+
+                            expect(callbackQueueLabel) == requestQueue.label
+                        }
+                    }
+
+                    context("the queue is not provided with the request") {
+                        it("invokes the callback on the main queue") {
+                            var callbackQueueLabel: String?
+
+                            waitUntil(action: { completion in
+                                provider.request(.zen)
+                                    .subscribe(onNext: { _ in
+                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        completion()
+                                    }).addDisposableTo(disposeBag)
+                            })
+
+                            expect(callbackQueueLabel) == DispatchQueue.main.label
+                        }
+                    }
+                }
+            }
         }
     }
 }
