@@ -12,6 +12,15 @@
 - **Breaking Change** Removed parameter name in `requestWithProgress` for `ReactiveSwiftMoyaProvider`.
 - **Breaking Change** Removed deprecated in Moya 8.0.0: `Moya.Error`, `endpointByAddingParameters(parameters:)`, `endpointByAddingHttpHeaderFields(httpHeaderFields:)`, `endpointByAddingParameterEncoding(newParameterEncoding:)`, `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)`, `StructTarget`, `filterStatusCodes(range:)`, `filterStatusCode(code:)`, `willSendRequest(request:target:)`, `didReceiveResponse(result:target:)`, `ReactiveCocoaMoyaProvider`, `ReactiveSwiftMoyaProvider.request(token:)`. 
 - Added optional callback queue parameter to reactive providers.
+- Updated the `RxSwift` version requirement to `3.3`.
+- Fixed a bug where you would have two response events in `requestWithProgress` method on ReactiveSwift module.
+- Add optional callback queue parameter to reactive providers.
+
+- Bumped minimum version of ReactiveSwift to 2.0.
+- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases. Migration guide available in Readme.
+- **Breaking Change** Flattened `UploadType` and `DownloadType` into Task cases. Migration guide available in Readme.
+- Enabled the "Allow app extension API only" flag.
+- Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
 - Added public `URL(target:)` initializator that creates url from `TargetType`.
 - Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
 - Updated minimum version of `RxSwift` to `3.3`.
