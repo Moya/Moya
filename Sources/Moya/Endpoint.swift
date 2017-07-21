@@ -72,6 +72,44 @@ extension Endpoint {
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
+        switch task {
+        case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
+            break
+
+        case .requestData(let data):
+            request.httpBody = data
+
+        case let .requestParameters(parameters: parameters, encoding: parameterEncoding):
+            do {
+                request = try parameterEncoding.encode(request, with: parameters)
+            } catch {
+                return nil
+            }
+
+        case let .requestCompositeData(urlParameters: urlParameters, bodyData: bodyData):
+            do {
+                request = try URLEncoding.default.encode(request, with: urlParameters)
+            } catch {
+                return nil
+            }
+            request.httpBody = bodyData
+
+        case let .requestCompositeParameters(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding):
+            do {
+                request = try URLEncoding.default.encode(request, with: urlParameters)
+                request = try bodyParameterEncoding.encode(request, with: bodyParameters)
+            } catch {
+                return nil
+            }
+
+        case let .downloadParameters(_, parameters: parameters, encoding: parameterEncoding):
+            do {
+                request = try parameterEncoding.encode(request, with: parameters)
+            } catch {
+                return nil
+            }
+        }
+
         return request
     }
 }
