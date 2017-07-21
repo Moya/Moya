@@ -14,8 +14,8 @@ public extension Reactive where Base: MoyaProviderProtocol {
     }
     
     /// Designated request-making method with progress.
-    public func requestWithProgress(token: Base.Target) -> SignalProducer<ProgressResponse, MoyaError> {
-        return base.reactiveRequestWithProgress(token: token)
+    public func requestWithProgress(_ token: Base.Target) -> SignalProducer<ProgressResponse, MoyaError> {
+        return base.reactiveRequestWithProgress(token)
     }
 }
 
@@ -39,7 +39,7 @@ internal extension MoyaProviderProtocol {
         }
     }
     
-    internal func reactiveRequestWithProgress(token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
+    internal func reactiveRequestWithProgress(_ token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
         let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
