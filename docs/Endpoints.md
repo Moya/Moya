@@ -23,7 +23,7 @@ The first might resemble the following:
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let url = URL(target: target).absoluteString
     return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 ```
@@ -32,6 +32,8 @@ This is actually the default implementation Moya provides. If you need something
 custom, like if your API requires custom parameter mapping, or if you're
 creating a test provider that returns non-200 HTTP statuses in unit tests, this
 is where you would do it.
+
+Notice the `URL(target:)` initializer, Moya provides a convenient extension to create a `URL` from any `TargetType`.
 
 The second use is very uncommon. Moya tries to prevent you from having to worry
 about low-level details. But it's there if you need it. Its use is covered
