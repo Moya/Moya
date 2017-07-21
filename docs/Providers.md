@@ -40,7 +40,7 @@ concrete `Endpoint` instance. Let's take a look at what one might look like.
 
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
-    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+    let url = URL(target: target).absoluteString
     return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
 }
 let provider = MoyaProvider(endpointClosure: endpointClosure)
@@ -49,6 +49,8 @@ let provider = MoyaProvider(endpointClosure: endpointClosure)
 Notice that we don't have to specify the generic type in the `MoyaProvider`
 initializer anymore, since Swift will infer it from the type of our
 `endpointClosure`. Neat!
+
+You may also notice the `URL(target:)` initializer, Moya provides a convenient extension to create a `URL` from any `TargetType`.
 
 This `endpointClosure` is about as simple as you can get. It's actually the
 default implementation, too, stored in `MoyaProvider.defaultEndpointMapping`.
