@@ -67,7 +67,7 @@ public extension MoyaProvider {
             }
 
             // Allow plugins to modify request
-            var preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
+            let preparedRequest = self.plugins.reduce(request) { $1.prepare($0, target: target) }
 
             let networkCompletion: Moya.Completion = { result in
               if self.trackInflights {
@@ -84,37 +84,7 @@ public extension MoyaProvider {
             switch stubBehavior {
             case .never:
                 switch target.task {
-                case .requestPlain:
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
-
-                case .requestData(let data):
-                    preparedRequest.httpBody = data
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
-
-                case let .requestParameters(parameters: parameters, encoding: parameterEncoding):
-                    do {
-                        preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
-                    } catch {
-                        // TODO: Add exception handling here
-                    }
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
-
-                case let .requestCompositeData(urlParameters: urlParameters, bodyData: bodyData):
-                    do {
-                        preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
-                    } catch {
-                        // TODO: Add exception handling here
-                    }
-                    preparedRequest.httpBody = bodyData
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
-
-                case let .requestCompositeParameters(urlParameters: urlParameters, bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding):
-                    do {
-                        preparedRequest = try URLEncoding.default.encode(preparedRequest, with: urlParameters)
-                        preparedRequest = try bodyParameterEncoding.encode(preparedRequest, with: bodyParameters)
-                    } catch {
-                        // TODO: Add exception handling here
-                    }
+                case .requestPlain, .requestData, .requestParameters, .requestCompositeData, .requestCompositeParameters:
                     cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
                 case .uploadFile(let file):
@@ -129,12 +99,7 @@ public extension MoyaProvider {
                 case .downloadDestination(let destination):
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
 
-                case let .downloadParameters(destination, parameters: parameters, encoding: parameterEncoding):
-                    do {
-                        preparedRequest = try parameterEncoding.encode(preparedRequest, with: parameters)
-                    } catch {
-                        // TODO: Add exception handling here
-                    }
+                case let .downloadParameters(destination, parameters: _, encoding: _):
                     cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
                 }
 
