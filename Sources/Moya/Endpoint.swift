@@ -19,19 +19,22 @@ open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     open let url: String
-    open let method: Moya.Method
     open let sampleResponseClosure: SampleResponseClosure
+    open let method: Moya.Method
+    open let task: Task
     open let httpHeaderFields: [String: String]?
 
     /// Main initializer for `Endpoint`.
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method = Moya.Method.get,
+                task: Task = .requestPlain,
                 httpHeaderFields: [String: String]? = nil) {
 
         self.url = url
         self.sampleResponseClosure = sampleResponseClosure
         self.method = method
+        self.task = task
         self.httpHeaderFields = httpHeaderFields
     }
 
@@ -43,7 +46,7 @@ open class Endpoint<Target> {
     /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
     open func adding(httpHeaderFields: [String: String]? = nil)  -> Endpoint<Target> {
         let newHTTPHeaderFields = add(httpHeaderFields: httpHeaderFields)
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, httpHeaderFields: newHTTPHeaderFields)
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: newHTTPHeaderFields)
     }
 
     fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {

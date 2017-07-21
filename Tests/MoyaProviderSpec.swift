@@ -377,7 +377,7 @@ class MoyaProviderSpec: QuickSpec {
             it("returns sample data") {
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method)
+                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -395,7 +395,7 @@ class MoyaProviderSpec: QuickSpec {
                 let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method)
+                    return Endpoint(url: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, task: target.task)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -413,7 +413,7 @@ class MoyaProviderSpec: QuickSpec {
                 let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, method: target.method)
+                    return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, method: target.method, task: target.task)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
