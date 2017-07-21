@@ -41,13 +41,13 @@ public enum Task {
     /// A requests body set with data.
     case requestData(Data)
 
-    /// A requests body set with parameters and encoding.
+    /// A requests body set with encoded parameters.
     case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
 
     /// A requests body set with data, combined with url parameters.
     case requestCompositeData(urlParameters: [String: Any], bodyData: Data)
 
-    /// A requests body set with parameters and encoding, combined with url parameters.
+    /// A requests body set with encoded parameters combined with url parameters.
     case requestCompositeParameters(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
 
     /// A file upload task.
