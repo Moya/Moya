@@ -19,6 +19,9 @@
 - Bumped minimum version of ReactiveSwift to 2.0.
 - **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases. Migration guide available in Readme.
 - **Breaking Change** Flattened `UploadType` and `DownloadType` into Task cases. Migration guide available in Readme.
+- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
+- **Breaking Change** Flattened `UploadType` and `DownloadType` into Task cases.
+- Add optional callback queue parameter to reactive providers.
 - Enabled the "Allow app extension API only" flag.
 - Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
 - Added public `URL(target:)` initializator that creates url from `TargetType`.
