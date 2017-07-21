@@ -26,10 +26,6 @@ public protocol TargetType {
 }
 
 public extension TargetType {
-    var defaultParameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-
     var validate: Bool {
         return false
     }
