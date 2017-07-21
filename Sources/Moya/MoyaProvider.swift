@@ -28,8 +28,7 @@ public struct ProgressResponse {
 public protocol MoyaProviderType: class {
     associatedtype Target: TargetType
 
-    func request(_ target: Target, completion: @escaping Moya.Completion) -> Cancellable
-    func request(_ target: Target, queue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
+    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
 }
 
 /// Request provider class. Requests should be made through this class only.

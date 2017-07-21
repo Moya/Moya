@@ -203,7 +203,7 @@ final class MoyaProviderRx: QuickSpec {
                 }
 
                 describe("a provider with a predefined callback queue") {
-                    var provider: RxMoyaProvider<GitHub>!
+                    var provider: MoyaProvider<GitHub>!
                     var callbackQueue: DispatchQueue!
                     var disposeBag: DisposeBag!
 
@@ -211,7 +211,7 @@ final class MoyaProviderRx: QuickSpec {
                         disposeBag = DisposeBag()
 
                         callbackQueue = DispatchQueue(label: UUID().uuidString)
-                        provider = RxMoyaProvider<GitHub>(callbackQueue: callbackQueue)
+                        provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
                     }
 
                     context("the callback queue is provided with the request") {
@@ -220,8 +220,8 @@ final class MoyaProviderRx: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen, callbackQueue: requestQueue)
-                                    .subscribe(onNext: { _ in
+                                provider.rx.request(.zen, callbackQueue: requestQueue)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)
@@ -236,8 +236,8 @@ final class MoyaProviderRx: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen)
-                                    .subscribe(onNext: { _ in
+                                provider.rx.request(.zen)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)
@@ -249,12 +249,12 @@ final class MoyaProviderRx: QuickSpec {
                 }
 
                 describe("a provider without a predefined queue") {
-                    var provider: RxMoyaProvider<GitHub>!
+                    var provider: MoyaProvider<GitHub>!
                     var disposeBag: DisposeBag!
 
                     beforeEach {
                         disposeBag = DisposeBag()
-                        provider = RxMoyaProvider<GitHub>()
+                        provider = MoyaProvider<GitHub>()
                     }
 
                     context("the queue is provided with the request") {
@@ -263,8 +263,9 @@ final class MoyaProviderRx: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen, callbackQueue: requestQueue)
-                                    .subscribe(onNext: { _ in
+                                
+                                provider.rx.request(.zen, callbackQueue: requestQueue)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)
@@ -279,8 +280,8 @@ final class MoyaProviderRx: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen)
-                                    .subscribe(onNext: { _ in
+                                provider.rx.request(.zen)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)

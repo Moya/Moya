@@ -9,21 +9,21 @@ extension MoyaProvider: ReactiveExtensionsProvider {}
 public extension Reactive where Base: MoyaProviderType {
 
     /// Designated request-making method.
-    public func request(_ token: Base.Target) -> SignalProducer<Response, MoyaError> {
-        return base.reactiveRequest(token)
+    public func request(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<Response, MoyaError> {
+        return base.reactiveRequest(token, callbackQueue: callbackQueue)
     }
 
     /// Designated request-making method with progress.
-    public func requestWithProgress(_ token: Base.Target) -> SignalProducer<ProgressResponse, MoyaError> {
-        return base.reactiveRequestWithProgress(token)
+    public func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
+        return base.reactiveRequestWithProgress(token, callbackQueue: callbackQueue)
     }
 }
 
 internal extension MoyaProviderType {
 
-    internal func reactiveRequest(_ token: Target) -> SignalProducer<Response, MoyaError> {
+    internal func reactiveRequest(_ token: Target, callbackQueue: DispatchQueue?) -> SignalProducer<Response, MoyaError> {
         return SignalProducer { [weak self] observer, requestDisposable in
-            let cancellableToken = self?.request(token) { result in
+            let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: response)
@@ -39,7 +39,7 @@ internal extension MoyaProviderType {
         }
     }
 
-    internal func reactiveRequestWithProgress(_ token: Target) -> SignalProducer<ProgressResponse, MoyaError> {
+    internal func reactiveRequestWithProgress(_ token: Target, callbackQueue: DispatchQueue?) -> SignalProducer<ProgressResponse, MoyaError> {
         let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
@@ -47,7 +47,7 @@ internal extension MoyaProviderType {
         }
 
         let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, disposable in
-            let cancellableToken = self?.request(token, queue: nil, progress: progressBlock(observer)) { result in
+            let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
                 case .success:
                     observer.sendCompleted()

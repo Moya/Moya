@@ -17,19 +17,20 @@ open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType
     override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                          requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                          stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                         callbackQueue: DispatchQueue? = nil,
                          manager: Manager = RxMoyaProvider<Target>.defaultAlamofireManager(),
                          plugins: [PluginType] = [],
                          trackInflights: Bool = false) {
-        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, callbackQueue: callbackQueue, manager: manager, plugins: plugins, trackInflights: trackInflights)
     }
 
     /// Designated request-making method.
-    open func request(_ token: Target) -> Single<Response> {
-        return rxRequest(token)
+    open func request(_ token: Target, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
+        return rxRequest(token, callbackQueue: callbackQueue)
     }
 
     /// Designated request-making method with progress.
-    public func requestWithProgress(_ token: Target) -> Observable<ProgressResponse> {
-        return rxRequestWithProgress(token)
+    open func requestWithProgress(_ token: Target, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
+        return rxRequestWithProgress(token, callbackQueue: callbackQueue)
     }
 }
