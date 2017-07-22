@@ -57,7 +57,7 @@ final class MoyaProviderRx: QuickSpec {
 
         describe("failing") {
             var provider: MoyaProvider<GitHub>!
-            
+
             beforeEach {
                 provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
@@ -97,7 +97,7 @@ final class MoyaProviderRx: QuickSpec {
 
         describe("a reactive provider") {
             var provider: MoyaProvider<GitHub>!
-            
+
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
@@ -263,7 +263,7 @@ final class MoyaProviderRx: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                
+
                                 provider.rx.request(.zen, callbackQueue: requestQueue)
                                     .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel

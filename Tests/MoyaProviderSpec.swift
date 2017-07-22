@@ -460,7 +460,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).toEventuallyNot(beNil())
             }
         }
-        
+
         describe("a provider with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
@@ -765,95 +765,95 @@ class MoyaProviderSpec: QuickSpec {
                 expect(completedValues) == [false, false, false, false, true]
             }
         }
-        
+
         describe("using a custom callback queue") {
             var stubDescriptor: OHHTTPStubsDescriptor!
-            
+
             beforeEach {
                 stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
             }
-            
+
             afterEach {
                 OHHTTPStubs.removeStub(stubDescriptor)
             }
-            
+
             describe("a provider with a predefined callback queue") {
                 var provider: MoyaProvider<GitHub>!
                 var callbackQueue: DispatchQueue!
-                
+
                 beforeEach {
                     callbackQueue = DispatchQueue(label: UUID().uuidString)
                     provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
                 }
-                
+
                 context("a provider is given a callback queue with request") {
                     it("invokes the callback on the request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen, callbackQueue: requestQueue) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == requestQueue.label
                     }
                 }
-                
+
                 context("a provider uses the queueless request function") {
                     it("invokes the callback on the provider queue") {
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == callbackQueue.label
                     }
                 }
             }
-            
+
             describe("a provider without a predefined callback queue") {
                 var provider: MoyaProvider<GitHub>!
-                
+
                 beforeEach {
                     provider = MoyaProvider<GitHub>()
                 }
-                
+
                 context("where the callback queue is provided with request") {
                     it("invokes the callback on the request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen, callbackQueue: requestQueue) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == requestQueue.label
                     }
                 }
-                
+
                 context("where the queueless request method is invoked") {
                     it("invokes the callback on the main queue") {
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == DispatchQueue.main.label
                     }
                 }

@@ -39,7 +39,7 @@ class ErrorTests: QuickSpec {
             }
 
             it("should not handle Underlying error ") {
-                let nsError = NSError(domain: "Domain", code: 200, userInfo: ["data" : "some data"])
+                let nsError = NSError(domain: "Domain", code: 200, userInfo: ["data": "some data"])
                 let error = MoyaError.underlying(nsError, nil)
 
                 expect(error.response).to( beNil() )

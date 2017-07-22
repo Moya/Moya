@@ -160,7 +160,6 @@ extension DispatchQueue {
     }
 }
 
-
 private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
     let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
 
