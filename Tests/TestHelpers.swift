@@ -138,7 +138,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(DefaultDownloadDestination))
+            return .download(.request(defaultDownloadDestination))
         }
     }
     public var sampleData: Data {
@@ -160,7 +160,7 @@ extension DispatchQueue {
     }
 }
 
-private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in
     let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
 
     if !directoryURLs.isEmpty {

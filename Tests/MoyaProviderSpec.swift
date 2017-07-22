@@ -480,7 +480,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                let _ = target.sampleData
+                _ = target.sampleData
                 expect(errored) == true
             }
 
@@ -497,7 +497,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                let _ = target.sampleData
+                _ = target.sampleData
                 expect(errored) == true
             }
 

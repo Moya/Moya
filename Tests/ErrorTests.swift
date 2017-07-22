@@ -52,7 +52,7 @@ class ErrorTests: QuickSpec {
             it("fails on mapJSON with default parameter") {
                 var mapJSONFailed = false
                 do {
-                    let _ = try response.mapJSON()
+                    _ = try response.mapJSON()
                 } catch {
                     mapJSONFailed = true
                 }
@@ -63,7 +63,7 @@ class ErrorTests: QuickSpec {
             it("returns default non-nil value on mapJSON with overridden parameter") {
                 var succeeded = true
                 do {
-                    let _ = try response.mapJSON(failsOnEmptyData: false)
+                    _ = try response.mapJSON(failsOnEmptyData: false)
                 } catch {
                     succeeded = false
                 }
