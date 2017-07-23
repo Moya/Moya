@@ -22,7 +22,7 @@ public extension Reactive where Base: MoyaProviderType {
 internal extension MoyaProviderType {
 
     internal func reactiveRequest(_ token: Target, callbackQueue: DispatchQueue?) -> SignalProducer<Response, MoyaError> {
-        return SignalProducer { [weak self] observer, requestDisposable in
+        return SignalProducer { [weak self] observer, lifetime in
             let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                 switch result {
                 case let .success(response):
@@ -33,7 +33,7 @@ internal extension MoyaProviderType {
                 }
             }
 
-            requestDisposable.add {
+            lifetime.observeEnded {
                 cancellableToken?.cancel()
             }
         }
@@ -46,7 +46,7 @@ internal extension MoyaProviderType {
             }
         }
 
-        let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, disposable in
+        let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, lifetime in
             let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
                 case .success:
@@ -56,10 +56,9 @@ internal extension MoyaProviderType {
                 }
             }
 
-            let cleanUp = ActionDisposable {
+            lifetime.observeEnded {
                 cancellableToken?.cancel()
             }
-            disposable.add(cleanUp)
         }
 
         // Accumulate all progress and combine them when the result comes
