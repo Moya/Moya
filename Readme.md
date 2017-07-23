@@ -36,6 +36,8 @@ Some awesome features of Moya:
 - Lets you define a clear usage of different endpoints with associated enum values.
 - Treats test stubs as first-class citizens so unit testing is super-easy.
 
+You can check out more about the project direction in the [vision document](Vision.md).
+
 ## Sample Project
 
 There's a sample project in the Demo directory. To use it, run `pod install` to download the required libraries. Have fun!
