@@ -2,10 +2,10 @@
 
 - leverage the Swift compiler to prevent runtime errors associated with configuring network requests.
 - provide a Swift-first API/abstraction for making network requests.
-- provide (optional) RxSwift / ReactiveSwift extensions to the API.
+- provide an API that makes it easy to stub network requests.
 - provide basics of response decoding while exposing customization points for other libraries to help.
+- provide (optional) RxSwift / ReactiveSwift extensions to the API.
 - avoid leaky abstractions by providing thoughtful and easy-to-use extension points for customizing behaviour.
-- provide an API that it easy to stub network requests.
 - cultivate an inclusive open source community through respectful discussion.
 
 ## Project Inspiration
