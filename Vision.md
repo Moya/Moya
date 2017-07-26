@@ -6,6 +6,7 @@
 - provide basics of response decoding while exposing customization points for other libraries to help.
 - provide (optional) RxSwift / ReactiveSwift extensions to the API.
 - avoid leaky abstractions by providing thoughtful and easy-to-use extension points for customizing behaviour.
+- favour explicitly-defined behaviour over default implementations.
 - cultivate an inclusive open source community through respectful discussion.
 
 ## Project Inspiration
