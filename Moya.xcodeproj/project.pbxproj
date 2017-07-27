@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0968C9681F182A5000B5C404 /* BasicAuthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0968C9671F182A5000B5C404 /* BasicAuthPlugin.swift */; };
 		0A5523C9271A2C73FC9B8BAA /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE381F1B80067731317902BF /* SignalProducer+Response.swift */; };
 		0D7C15675C8987BDA99DBA21 /* CredentialsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FCC5560603A2B95F717FA7 /* CredentialsPlugin.swift */; };
 		14C482A52841F0D4C51A5A8E /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C09089EAE9CE725A67B34035 /* NetworkLoggerPlugin.swift */; };
@@ -84,6 +85,7 @@
 /* Begin PBXFileReference section */
 		01CD806E511E746E11F85B2A /* Observable+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Observable+MoyaSpec.swift"; path = "Tests/Observable+MoyaSpec.swift"; sourceTree = "<group>"; };
 		08F679FE3D4EA942AB32FBF2 /* ReactiveSwiftMoyaProviderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReactiveSwiftMoyaProviderTests.swift; path = Tests/ReactiveSwiftMoyaProviderTests.swift; sourceTree = "<group>"; };
+		0968C9671F182A5000B5C404 /* BasicAuthPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasicAuthPlugin.swift; path = Sources/Moya/Plugins/BasicAuthPlugin.swift; sourceTree = "<group>"; };
 		09C0AB48558992C2C34FF5D2 /* MultipartFormDataSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormDataSpec.swift; path = Tests/MultipartFormDataSpec.swift; sourceTree = "<group>"; };
 		0FC8329628CC806F57B31ACA /* ReactiveMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReactiveMoya.h; path = "Sources/Supporting Files/ReactiveMoya.h"; sourceTree = "<group>"; };
 		12D196F384CD80258C308726 /* EndpointSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EndpointSpec.swift; path = Tests/EndpointSpec.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				CBD2B53BA9EFC5B63788E3B3 /* AccessTokenPlugin.swift */,
+				0968C9671F182A5000B5C404 /* BasicAuthPlugin.swift */,
 				A0FCC5560603A2B95F717FA7 /* CredentialsPlugin.swift */,
 				A0B207216C4843FD814CD0EB /* NetworkActivityPlugin.swift */,
 				C09089EAE9CE725A67B34035 /* NetworkLoggerPlugin.swift */,
@@ -537,6 +540,7 @@
 				5499B2CC2C4E5120F3839BA4 /* Image.swift in Sources */,
 				87DED94AA5960BE694A3E83E /* Moya+Alamofire.swift in Sources */,
 				A9F17D56F74F60F61AB57F0F /* MoyaAvailability.swift in Sources */,
+				0968C9681F182A5000B5C404 /* BasicAuthPlugin.swift in Sources */,
 				478F99F832102780F16E2EF7 /* MoyaError.swift in Sources */,
 				EDAD40423B95EC5809A4AF79 /* MoyaProvider+Defaults.swift in Sources */,
 				B9EC462D785C88BB8A340F1F /* MoyaProvider+Internal.swift in Sources */,
