@@ -80,11 +80,7 @@ extension Endpoint {
             request.httpBody = data
 
         case let .requestParameters(parameters: parameters, encoding: parameterEncoding):
-            do {
-                request = try parameterEncoding.encode(request, with: parameters)
-            } catch {
-                return nil
-            }
+            return try? parameterEncoding.encode(request, with: parameters)
 
         case let .requestCompositeData(urlParameters: urlParameters, bodyData: bodyData):
             do {
@@ -103,11 +99,7 @@ extension Endpoint {
             }
 
         case let .downloadParameters(_, parameters: parameters, encoding: parameterEncoding):
-            do {
-                request = try parameterEncoding.encode(request, with: parameters)
-            } catch {
-                return nil
-            }
+            return try? parameterEncoding.encode(request, with: parameters)
         }
 
         return request
