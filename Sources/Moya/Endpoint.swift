@@ -83,11 +83,8 @@ extension Endpoint {
         case let .requestParameters(parameters, parameterEncoding):
             return try? parameterEncoding.encode(request, with: parameters)
 
-        case let .uploadFileParameters(parameters, parameterEncoding, _):
-            return try? parameterEncoding.encode(request, with: parameters)
-
-        case let .uploadMultipartParameters(parameters, parameterEncoding, _):
-            return try? parameterEncoding.encode(request, with: parameters)
+        case let .uploadCompositeMultipart(_, urlParameters):
+            return try? URLEncoding.default.encode(request, with: urlParameters)
 
         case let .downloadParameters(parameters, parameterEncoding, _):
             return try? parameterEncoding.encode(request, with: parameters)

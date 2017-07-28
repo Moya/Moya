@@ -99,10 +99,10 @@ public extension MoyaProvider {
             case .requestPlain, .requestData, .requestParameters, .requestCompositeData, .requestCompositeParameters:
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
 
-            case .uploadFile(let file), .uploadFileParameters(_, _, let file):
+            case .uploadFile(let file):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
 
-            case .uploadMultipart(let multipartBody), .uploadMultipartParameters(_, _, let multipartBody):
+            case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
                 guard !multipartBody.isEmpty && target.method.supportsMultipart else {
                     fatalError("\(target) is not a multipart upload target.")
                 }
