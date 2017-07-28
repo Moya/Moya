@@ -53,8 +53,14 @@ public enum Task {
     /// A file upload task.
     case uploadFile(URL)
 
+    /// A file upload task with extra parameters using the given encoding.
+    case uploadFileParameters(parameters: [String: Any], encoding: ParameterEncoding, URL)
+
     /// A "multipart/form-data" upload task.
     case uploadMultipart([MultipartFormData])
+
+    /// A "multipart/form-data" upload task with extra parameters using the given encoding.
+    case uploadMultipartParameters(parameters: [String: Any], encoding: ParameterEncoding, [MultipartFormData])
 
     /// A file download task to a destination.
     case downloadDestination(DownloadDestination)

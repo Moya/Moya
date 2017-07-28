@@ -56,7 +56,7 @@ extension GitHub: TargetType {
         return URLEncoding.default
     }
     public var task: Task {
-        return .request
+        return .requestPlain
     }
     public var validate: Bool {
         switch self {
