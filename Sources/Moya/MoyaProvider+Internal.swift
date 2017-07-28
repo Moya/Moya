@@ -83,7 +83,7 @@ public extension MoyaProvider {
 
             switch stubBehavior {
             case .never:
-                cancellableToken.innerCancellable = self.unstubbedRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
+                cancellableToken.innerCancellable = self.unstubbedRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
 
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, callbackQueue: callbackQueue, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
@@ -97,7 +97,7 @@ public extension MoyaProvider {
     // swiftlint:enable cyclomatic_complexity
     // swiftlint:enable function_body_length
 
-    private func unstubbedRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> Cancellable {
+    private func unstubbedRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable {
         switch target.task {
         case .requestPlain, .requestData, .requestParameters, .requestCompositeData, .requestCompositeParameters:
             return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
