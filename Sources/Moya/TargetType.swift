@@ -45,10 +45,10 @@ public enum Task {
     case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
 
     /// A requests body set with data, combined with url parameters.
-    case requestCompositeData(urlParameters: [String: Any], bodyData: Data)
+    case requestCompositeData(bodyData: Data, urlParameters: [String: Any])
 
     /// A requests body set with encoded parameters combined with url parameters.
-    case requestCompositeParameters(urlParameters: [String: Any], bodyParameters: [String: Any], bodyEncoding: ParameterEncoding)
+    case requestCompositeParameters(bodyParameters: [String: Any], bodyEncoding: ParameterEncoding, urlParameters: [String: Any])
 
     /// A file upload task.
     case uploadFile(URL)
@@ -60,5 +60,5 @@ public enum Task {
     case downloadDestination(DownloadDestination)
 
     /// A file download task to a destination with extra parameters using the given encoding.
-    case downloadParameters(DownloadDestination, parameters: [String: Any], encoding: ParameterEncoding)
+    case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, DownloadDestination)
 }
