@@ -8,8 +8,8 @@ Please follow the appropriate guide below when **upgrading to a new major versio
 
 - Move the `parameters` and `parameterEncoding` to the `task` computed property by using the case `.requestParameters(parameters:,encoding:)`
 - Replace the task type `.request` with either `.requestPlain` (if you have no parameters) or `.requestParameters(parameters:,encoding:)`
-- There's no `parameters` and `parameterEncoding` on Endpoints any more (e.g. `addingParameters()`), provide them through the `task` on your target instead
-- To send URL encoded parameters AND body parameters, you can now use the task type `.requestCompositeParameters(urlParameters:,bodyParameters:,bodyEncoding:)`
-- Simplify occurences of task type `.download(.request(destination))` to `.downloadDestination(destination)`
-- Simplify occurences of task type `.upload(.file(url))` to `.uploadFile(url)`
-- Simplify occurences of task type `.upload(.multipart(data))` to `.uploadMultipart(data)`
+- There's no `parameters` and `parameterEncoding` on Endpoints any more (e.g. `addingParameters()`), use the new `task` property instead
+- To send URL encoded parameters AND body parameters, you can now use the task type `.requestCompositeParameters(bodyParameters:,bodyEncoding:,urlParameters:)`
+- Simplify occurrences of task type `.download(.request(destination))` to `.downloadDestination(destination)`
+- Simplify occurrences of task type `.upload(.file(url))` to `.uploadFile(url)`
+- Simplify occurrences of task type `.upload(.multipart(data))` to `.uploadMultipart(data)`
