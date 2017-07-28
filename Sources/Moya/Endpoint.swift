@@ -82,20 +82,12 @@ extension Endpoint {
             return try? parameterEncoding.encode(request, with: parameters)
 
         case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
-            do {
-                request = try URLEncoding.default.encode(request, with: urlParameters)
-            } catch {
-                return nil
-            }
             request.httpBody = bodyData
+            return try? URLEncoding.default.encode(request, with: urlParameters)
 
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
-            do {
-                request = try URLEncoding.default.encode(request, with: urlParameters)
-                request = try bodyParameterEncoding.encode(request, with: bodyParameters)
-            } catch {
-                return nil
-            }
+            guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
+            return try? URLEncoding.default.encode(bodyfulRequest, with: urlParameters)
 
         case let .downloadParameters(parameters: parameters, encoding: parameterEncoding, _):
             return try? parameterEncoding.encode(request, with: parameters)
