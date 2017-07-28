@@ -73,12 +73,22 @@ extension Endpoint {
 
         switch task {
         case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
-            break
+            return request
 
         case .requestData(let data):
             request.httpBody = data
+            return request
 
-        case let .requestParameters(parameters: parameters, encoding: parameterEncoding):
+        case let .requestParameters(parameters, parameterEncoding):
+            return try? parameterEncoding.encode(request, with: parameters)
+
+        case let .uploadFileParameters(parameters, parameterEncoding, _):
+            return try? parameterEncoding.encode(request, with: parameters)
+
+        case let .uploadMultipartParameters(parameters, parameterEncoding, _):
+            return try? parameterEncoding.encode(request, with: parameters)
+
+        case let .downloadParameters(parameters, parameterEncoding, _):
             return try? parameterEncoding.encode(request, with: parameters)
 
         case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
@@ -88,12 +98,7 @@ extension Endpoint {
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
             guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
             return try? URLEncoding.default.encode(bodyfulRequest, with: urlParameters)
-
-        case let .downloadParameters(parameters: parameters, encoding: parameterEncoding, _):
-            return try? parameterEncoding.encode(request, with: parameters)
         }
-
-        return request
     }
 }
 
