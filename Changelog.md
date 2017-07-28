@@ -4,6 +4,10 @@
 # 9.0.0-alpha.1
 
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
+- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
+- **Breaking Change** Flattened `UploadType` and `DownloadType` into Task cases.
+- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
+- **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - **Breaking Change** Added `headers` to `TargetType`.
 - **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
 - **Breaking Change** Updated `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
@@ -17,10 +21,6 @@
 - Add optional callback queue parameter to reactive providers.
 
 - Bumped minimum version of ReactiveSwift to 2.0.
-- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases. Migration guide available in Readme.
-- **Breaking Change** Flattened `UploadType` and `DownloadType` into Task cases. Migration guide available in Readme.
-- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
-- **Breaking Change** Flattened `UploadType` and `DownloadType` into Task cases.
 - Add optional callback queue parameter to reactive providers.
 - Enabled the "Allow app extension API only" flag.
 - Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
