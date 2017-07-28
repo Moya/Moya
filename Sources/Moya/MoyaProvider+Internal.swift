@@ -83,25 +83,7 @@ public extension MoyaProvider {
 
             switch stubBehavior {
             case .never:
-                switch target.task {
-                case .requestPlain, .requestData, .requestParameters, .requestCompositeData, .requestCompositeParameters:
-                    cancellableToken.innerCancellable = self.sendRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion)
-
-                case .uploadFile(let file):
-                    cancellableToken.innerCancellable = self.sendUploadFile(target, request: preparedRequest, callbackQueue: callbackQueue, file: file, progress: progress, completion: networkCompletion)
-
-                case .uploadMultipart(let multipartBody):
-                    guard !multipartBody.isEmpty && target.method.supportsMultipart else {
-                        fatalError("\(target) is not a multipart upload target.")
-                    }
-                    cancellableToken.innerCancellable = self.sendUploadMultipart(target, request: preparedRequest, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: networkCompletion)
-
-                case .downloadDestination(let destination):
-                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
-
-                case let .downloadParameters(destination, parameters: _, encoding: _):
-                    cancellableToken.innerCancellable = self.sendDownloadRequest(target, request: preparedRequest, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: networkCompletion)
-                }
+                cancellableToken.innerCancellable = self.unstubbedRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
 
             default:
                 cancellableToken.innerCancellable = self.stubRequest(target, request: preparedRequest, callbackQueue: callbackQueue, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
@@ -114,6 +96,28 @@ public extension MoyaProvider {
     }
     // swiftlint:enable cyclomatic_complexity
     // swiftlint:enable function_body_length
+
+    private func unstubbedRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> Cancellable {
+        switch target.task {
+        case .requestPlain, .requestData, .requestParameters, .requestCompositeData, .requestCompositeParameters:
+            return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
+
+        case .uploadFile(let file):
+            return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
+
+        case .uploadMultipart(let multipartBody):
+            guard !multipartBody.isEmpty && target.method.supportsMultipart else {
+                fatalError("\(target) is not a multipart upload target.")
+            }
+            return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
+
+        case .downloadDestination(let destination):
+            return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
+
+        case let .downloadParameters(_, _, destination):
+            return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
+        }
+    }
 
     func cancelCompletion(_ completion: Moya.Completion, target: Target) {
         let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil), nil)
