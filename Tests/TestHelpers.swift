@@ -47,6 +47,14 @@ extension GitHub: TargetType {
             return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
         }
     }
+
+    var validate: Bool {
+        return true
+    }
+
+    var headers: [String: String]? {
+        return nil
+    }
 }
 
 func url(_ route: TargetType) -> String {
@@ -94,6 +102,10 @@ enum HTTPBin: TargetType {
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
         }
     }
+
+    var headers: [String: String]? {
+        return nil
+    }
 }
 
 public enum GitHubUserContent {
@@ -126,7 +138,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(DefaultDownloadDestination))
+            return .download(.request(defaultDownloadDestination))
         }
     }
     public var sampleData: Data {
@@ -136,6 +148,9 @@ extension GitHubUserContent: TargetType {
         }
     }
 
+    public var headers: [String: String]? {
+        return nil
+    }
 }
 
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
@@ -145,8 +160,7 @@ extension DispatchQueue {
     }
 }
 
-
-private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in
     let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
 
     if !directoryURLs.isEmpty {

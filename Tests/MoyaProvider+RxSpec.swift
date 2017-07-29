@@ -7,44 +7,38 @@ import OHHTTPStubs
 @testable import Moya
 @testable import RxMoya
 
-class RxSwiftMoyaProviderSpec: QuickSpec {
+final class MoyaProviderRx: QuickSpec {
     override func spec() {
-
-        describe("provider with Observable") {
-
-            var provider: RxMoyaProvider<GitHub>!
+        describe("provider with Single") {
+            var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = RxMoyaProvider(stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
             }
 
             it("emits a Response object") {
                 var called = false
 
-                _ = provider.request(.zen).subscribe(onNext: { _ in
-                    called = true
-                })
+                _ = provider.rx.request(.zen).subscribe { event in
+                    switch event {
+                    case .success:          called = true
+                    case .error(let error): fail("errored: \(error)")
+                    }
+                }
 
                 expect(called).to(beTrue())
-            }
-
-            it("emits complete") {
-                var complete = false
-
-                _ = provider.request(.zen).subscribe(onCompleted: { _ in
-                    complete = true
-                })
-
-                expect(complete).to(beTrue())
             }
 
             it("emits stubbed data for zen request") {
                 var responseData: Data?
 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onNext: { response in
-                    responseData = response.data
-                })
+                _ = provider.rx.request(target).subscribe { event in
+                    switch event {
+                    case .success(let response):    responseData = response.data
+                    case .error(let error):         fail("errored: \(error)")
+                    }
+                }
 
                 expect(responseData).to(equal(target.sampleData))
             }
@@ -53,7 +47,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var receivedResponse: [String: Any]?
 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.request(target).mapJSON().subscribe(onNext: { response in
+                _ = provider.rx.request(target).asObservable().mapJSON().subscribe(onNext: { response in
                     receivedResponse = response as? [String: Any]
                 })
 
@@ -62,20 +56,24 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("failing") {
-            var provider: RxMoyaProvider<GitHub>!
+            var provider: MoyaProvider<GitHub>!
+
             beforeEach {
-                provider = RxMoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
 
             it("emits the correct error message") {
                 var receivedError: MoyaError?
 
-                _ = provider.request(.zen).subscribe(onError: { error in
-                    receivedError = error as? MoyaError
-                })
+                _ = provider.rx.request(.zen).subscribe { event in
+                    switch event {
+                    case .success:          fail("should have errored")
+                    case .error(let error): receivedError = error as? MoyaError
+                    }
+                }
 
                 switch receivedError {
-                case .some(.underlying(let error)):
+                case .some(.underlying(let error, _)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -86,42 +84,58 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var errored = false
 
                 let target: GitHub = .zen
-                _ = provider.request(target).subscribe(onError: { _ in
-                    errored = true
-                })
+                _ = provider.rx.request(target).subscribe { event in
+                    switch event {
+                    case .success:  fail("we should have errored")
+                    case .error:    errored = true
+                    }
+                }
 
                 expect(errored).to(beTrue())
             }
         }
 
         describe("a reactive provider") {
-            var provider: RxMoyaProvider<GitHub>!
+            var provider: MoyaProvider<GitHub>!
+
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
-                provider = RxMoyaProvider<GitHub>(trackInflights: true)
+                provider = MoyaProvider<GitHub>(trackInflights: true)
             }
 
             it("emits identical response for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1: Observable<Moya.Response> = provider.request(target)
-                let signalProducer2: Observable<Moya.Response> = provider.request(target)
+                let signalProducer1 = provider.rx.request(target)
+                let signalProducer2 = provider.rx.request(target)
 
                 expect(provider.inflightRequests.keys.count).to(equal(0))
 
                 var receivedResponse: Moya.Response!
 
-                _ = signalProducer1.subscribe(onNext: { response in
-                    receivedResponse = response
-                    expect(provider.inflightRequests.count).to(equal(1))
-                })
+                _ = signalProducer1.subscribe { event in
+                    switch event {
+                    case .success(let response):
+                        receivedResponse = response
+                        expect(provider.inflightRequests.count).to(equal(1))
 
-                _ = signalProducer2.subscribe(onNext: { response in
-                    expect(receivedResponse).toNot(beNil())
-                    expect(receivedResponse).to(beIdenticalToResponse(response))
-                    expect(provider.inflightRequests.count).to(equal(1))
-                })
+                    case .error(let error):
+                        fail("errored: \(error)")
+                    }
+                }
+
+                _ = signalProducer2.subscribe { event in
+                    switch event {
+                    case .success(let response):
+                        expect(receivedResponse).toNot(beNil())
+                        expect(receivedResponse).to(beIdenticalToResponse(response))
+                        expect(provider.inflightRequests.count).to(equal(1))
+
+                    case .error(let error):
+                        fail("errored: \(error)")
+                    }
+                }
 
                 // Allow for network request to complete
                 expect(provider.inflightRequests.count).toEventually(equal(0))
@@ -129,7 +143,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
         }
 
         describe("a provider with progress tracking") {
-            var provider: RxMoyaProvider<GitHubUserContent>!
+            var provider: MoyaProvider<GitHubUserContent>!
             beforeEach {
                 //delete downloaded filed before each test
                 let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
@@ -140,7 +154,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 }
-                provider = RxMoyaProvider<GitHubUserContent>()
+                provider = MoyaProvider<GitHubUserContent>()
             }
 
             it("tracks progress of request") {
@@ -157,7 +171,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 var errorEventsCount = 0
                 var completedEventsCount = 0
 
-                _ = provider.requestWithProgress(target)
+                _ = provider.rx.requestWithProgress(target)
                     .subscribe({ event in
                         switch event {
                         case let .next(element):
@@ -189,7 +203,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 }
 
                 describe("a provider with a predefined callback queue") {
-                    var provider: RxMoyaProvider<GitHub>!
+                    var provider: MoyaProvider<GitHub>!
                     var callbackQueue: DispatchQueue!
                     var disposeBag: DisposeBag!
 
@@ -197,7 +211,7 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                         disposeBag = DisposeBag()
 
                         callbackQueue = DispatchQueue(label: UUID().uuidString)
-                        provider = RxMoyaProvider<GitHub>(callbackQueue: callbackQueue)
+                        provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
                     }
 
                     context("the callback queue is provided with the request") {
@@ -206,8 +220,8 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen, callbackQueue: requestQueue)
-                                    .subscribe(onNext: { _ in
+                                provider.rx.request(.zen, callbackQueue: requestQueue)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)
@@ -222,8 +236,8 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen)
-                                    .subscribe(onNext: { _ in
+                                provider.rx.request(.zen)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)
@@ -235,12 +249,12 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                 }
 
                 describe("a provider without a predefined queue") {
-                    var provider: RxMoyaProvider<GitHub>!
+                    var provider: MoyaProvider<GitHub>!
                     var disposeBag: DisposeBag!
 
                     beforeEach {
                         disposeBag = DisposeBag()
-                        provider = RxMoyaProvider<GitHub>()
+                        provider = MoyaProvider<GitHub>()
                     }
 
                     context("the queue is provided with the request") {
@@ -249,8 +263,9 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen, callbackQueue: requestQueue)
-                                    .subscribe(onNext: { _ in
+
+                                provider.rx.request(.zen, callbackQueue: requestQueue)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)
@@ -265,8 +280,8 @@ class RxSwiftMoyaProviderSpec: QuickSpec {
                             var callbackQueueLabel: String?
 
                             waitUntil(action: { completion in
-                                provider.request(.zen)
-                                    .subscribe(onNext: { _ in
+                                provider.rx.request(.zen)
+                                    .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
                                     }).addDisposableTo(disposeBag)

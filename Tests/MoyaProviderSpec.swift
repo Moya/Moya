@@ -404,7 +404,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
-                var receivedResponse: URLResponse?
+                var receivedResponse: HTTPURLResponse?
                 provider.request(.zen) { result in
                     if case .success(let response) = result {
                         receivedResponse = response.response
@@ -429,7 +429,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                if case .some(MoyaError.underlying(let underlyingError as NSError)) = receivedError {
+                if case .some(MoyaError.underlying(let underlyingError as NSError, _)) = receivedError {
                     expect(underlyingError) == error
                 } else {
                     fail("Expected to receive error, did not.")
@@ -443,7 +443,7 @@ class MoyaProviderSpec: QuickSpec {
             beforeEach {
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
-                    done(.failure(.underlying(underyingError)))
+                    done(.failure(.underlying(underyingError, nil)))
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
             }
@@ -460,7 +460,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(receivedError).toEventuallyNot(beNil())
             }
         }
-        
+
         describe("a provider with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
@@ -480,7 +480,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                let _ = target.sampleData
+                _ = target.sampleData
                 expect(errored) == true
             }
 
@@ -497,7 +497,7 @@ class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                let _ = target.sampleData
+                _ = target.sampleData
                 expect(errored) == true
             }
 
@@ -512,7 +512,7 @@ class MoyaProviderSpec: QuickSpec {
                 }
 
                 switch receivedError {
-                case .some(.underlying(let error)):
+                case .some(.underlying(let error, _)):
                     expect(error.localizedDescription) == "Houston, we have a problem"
                 default:
                     fail("expected an Underlying error that Houston has a problem")
@@ -529,6 +529,7 @@ class MoyaProviderSpec: QuickSpec {
                 let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
+                let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
             it("uses correct URL") {
@@ -609,6 +610,27 @@ class MoyaProviderSpec: QuickSpec {
 
                 expect(dataString) == "sample data"
             }
+
+            it("uses correct headers") {
+                var headers: [String : String]?
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
+                    headers = endpoint.httpHeaderFields
+                    if let urlRequest = endpoint.urlRequest {
+                        done(.success(urlRequest))
+                    } else {
+                        done(.failure(MoyaError.requestMapping(endpoint.url)))
+                    }
+                }
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+
+                waitUntil { done in
+                    provider.request(MultiTarget(StructAPI())) { _ in
+                        done()
+                    }
+                }
+
+                expect(headers) == ["headerKey": "headerValue"]
+            }
         }
 
         describe("a target with empty path") {
@@ -620,6 +642,7 @@ class MoyaProviderSpec: QuickSpec {
                 let parameterEncoding: ParameterEncoding = URLEncoding.default
                 let task = Task.request
                 let sampleData = "sample data".data(using: .utf8)!
+                let headers: [String: String]? = nil
             }
 
             // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases
@@ -687,7 +710,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).toNot(beNil())
 
                 let underlyingIsCancelled: Bool
-                if let error = error, case .underlying(let err) = error {
+                if let error = error, case .underlying(let err, _) = error {
                     underlyingIsCancelled = (err as NSError).code == NSURLErrorCancelled
                 } else {
                     underlyingIsCancelled = false
@@ -742,95 +765,95 @@ class MoyaProviderSpec: QuickSpec {
                 expect(completedValues) == [false, false, false, false, true]
             }
         }
-        
+
         describe("using a custom callback queue") {
             var stubDescriptor: OHHTTPStubsDescriptor!
-            
+
             beforeEach {
                 stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 }
             }
-            
+
             afterEach {
                 OHHTTPStubs.removeStub(stubDescriptor)
             }
-            
+
             describe("a provider with a predefined callback queue") {
                 var provider: MoyaProvider<GitHub>!
                 var callbackQueue: DispatchQueue!
-                
+
                 beforeEach {
                     callbackQueue = DispatchQueue(label: UUID().uuidString)
                     provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
                 }
-                
+
                 context("a provider is given a callback queue with request") {
                     it("invokes the callback on the request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen, callbackQueue: requestQueue) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == requestQueue.label
                     }
                 }
-                
+
                 context("a provider uses the queueless request function") {
                     it("invokes the callback on the provider queue") {
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == callbackQueue.label
                     }
                 }
             }
-            
+
             describe("a provider without a predefined callback queue") {
                 var provider: MoyaProvider<GitHub>!
-                
+
                 beforeEach {
                     provider = MoyaProvider<GitHub>()
                 }
-                
+
                 context("where the callback queue is provided with request") {
                     it("invokes the callback on the request queue") {
                         let requestQueue = DispatchQueue(label: UUID().uuidString)
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen, callbackQueue: requestQueue) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == requestQueue.label
                     }
                 }
-                
+
                 context("where the queueless request method is invoked") {
                     it("invokes the callback on the main queue") {
                         var callbackQueueLabel: String?
-                        
+
                         waitUntil(action: { completion in
                             provider.request(.zen) { _ in
                                 callbackQueueLabel = DispatchQueue.currentLabel
                                 completion()
                             }
                         })
-                        
+
                         expect(callbackQueueLabel) == DispatchQueue.main.label
                     }
                 }

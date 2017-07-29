@@ -27,6 +27,9 @@ public protocol TargetType {
 
     /// Whether or not to perform Alamofire validation. Defaults to `false`.
     var validate: Bool { get }
+
+    // The headers to be used in the request.
+    var headers: [String: String]? { get }
 }
 
 public extension TargetType {

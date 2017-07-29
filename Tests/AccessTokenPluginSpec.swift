@@ -12,6 +12,7 @@ final class AccessTokenPluginSpec: QuickSpec {
         let parameterEncoding: ParameterEncoding = URLEncoding.default
         let task = Task.request
         let sampleData = Data()
+        let headers: [String: String]? = nil
 
         let shouldAuthorize: Bool
     }

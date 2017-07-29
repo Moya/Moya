@@ -25,8 +25,14 @@ public struct ProgressResponse {
     }
 }
 
+public protocol MoyaProviderType: class {
+    associatedtype Target: TargetType
+
+    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
+}
+
 /// Request provider class. Requests should be made through this class only.
-open class MoyaProvider<Target: TargetType> {
+open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     /// Closure that defines the endpoints for the provider.
     public typealias EndpointClosure = (Target) -> Endpoint<Target>
@@ -160,11 +166,15 @@ public func convertResponseToResult(_ response: HTTPURLResponse?, request: URLRe
         case let (.some(response), data, .none):
             let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
             return .success(response)
+        case let (.some(response), _, .some(error)):
+            let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
+            let error = MoyaError.underlying(error, response)
+            return .failure(error)
         case let (_, _, .some(error)):
-            let error = MoyaError.underlying(error)
+            let error = MoyaError.underlying(error, nil)
             return .failure(error)
         default:
-            let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil))
+            let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil), nil)
             return .failure(error)
         }
 }
