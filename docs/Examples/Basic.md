@@ -59,6 +59,16 @@ extension MyService: TargetType {
             return JSONEncoding.default // Send parameters as JSON in request body
         }
     }
+    var task: Task {
+        switch self {
+        case .zen, .showUser, .showAccounts: // Send no parameters
+            return .requestPlain
+        case .createUser(let firstName, let lastName): // Send parameters in URL
+            return .requestParameters(["first_name": firstName, "last_name": lastName], URLEncoding.default)
+        case .updateUser(let firstName, let lastName): // Send parameters as JSON in request body
+            return .requestParameters(["first_name": firstName, "last_name": lastName], JSONEncoding.default)
+        }
+    }
     var sampleData: Data {
         switch self {
         case .zen:
@@ -76,12 +86,6 @@ extension MyService: TargetType {
                     return Data()
             }
             return data
-        }
-    }
-    var task: Task {
-        switch self {
-        case .zen, .showUser, .createUser, .updateUser, .showAccounts:
-            return .request
         }
     }
     var headers: [String: String]? {
@@ -102,7 +106,7 @@ private extension String {
 
 (The `String` extension is just for convenience – you don't have to use it.)
 
-You can see that the `TargetType` protocol makes sure that each value of the enum translates into a full request. Each full request is split up into the `baseURL`, the `path` specifying the subpath of the request, the `method` which defines the HTTP method and optionally `parameters` to be added to the request.
+You can see that the `TargetType` protocol makes sure that each value of the enum translates into a full request. Each full request is split up into the `baseURL`, the `path` specifying the subpath of the request, the `method` which defines the HTTP method and `task` with options to specify parameters to be added to the request.
 
 Note that at this point you have added enough information for a basic API networking layer to work. By default Moya will combine all the given parts into a full request:
 
@@ -114,10 +118,10 @@ provider.request(.createUser(firstName: "James", lastName: "Potter")) { result i
 
 // The full request will result to the following:
 // POST https://api.myservice.com/users
-// Request body: 
-// { 
-//   "first_name": "James", 
-//   "last_name": "Potter" 
+// Request body:
+// {
+//   "first_name": "James",
+//   "last_name": "Potter"
 // }
 
 provider.request(.updateUser(id: 123, firstName: "Harry", lastName: "Potter")) { result in
@@ -140,20 +144,15 @@ public func url(route: TargetType) -> String {
 }
 
 let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
-    return Endpoint<MyService>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
 }
 ```
 
 The block you provide will be invoked every time an API call is to be made. Its
 responsibility is to return an `Endpoint` instance configured for use by Moya.
-`parameters` is passed into this block to allow you to configure the `Endpoint`
-instance – these parameters are *not* automatically passed onto the network
-request, so add them to the `Endpoint` if they should be. They could be some
-data internal to the app that help configure the `Endpoint`. In this example,
-though, they're just passed right through.
 
 Most of the time, this closure is just a straight translation from target,
-method, and parameters, into an `Endpoint` instance. However, since it's a
+method and task into an `Endpoint` instance. However, since it's a
 closure, it'll be executed at each invocation of the API, so you could do
 whatever you want. Say you want to test network error conditions like timeouts, too.
 
@@ -166,7 +165,7 @@ let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
             return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint<MyService>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, parameters: target.parameters)
+    return Endpoint<MyService>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task)
 }
 ```
 
@@ -220,7 +219,7 @@ provider.request(.zen) { result in
 
 Take special note: a `.failure` means that the server either didn't *receive the
 request* (e.g. reachability/connectivity error) or it didn't send a response
-(e.g. the request timed out).  If you get a `.failure`, you probably want to
+(e.g. the request timed out). If you get a `.failure`, you probably want to
 re-send the request after a time delay or when an internet connection is
 established.
 

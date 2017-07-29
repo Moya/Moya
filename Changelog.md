@@ -18,7 +18,6 @@
 - Added optional callback queue parameter to reactive providers.
 - Updated the `RxSwift` version requirement to `3.3`.
 - Fixed a bug where you would have two response events in `requestWithProgress` method on ReactiveSwift module.
-- Add optional callback queue parameter to reactive providers.
 - Bumped minimum version of ReactiveSwift to 2.0.
 - Enabled the "Allow app extension API only" flag.
 - Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
