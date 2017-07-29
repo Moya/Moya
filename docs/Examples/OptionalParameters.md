@@ -9,14 +9,14 @@ public enum MyService {
 
 extension MyService: TargetType {
 //...
-    public var parameters: [String: Any]? {
+    public var task: Task {
         switch self {
         case .users(let limit):
             var params: [String: Any] = [:]
             params["limit"] = limit
-            return params
+            return .requestParameters(params, URLEncoding.default)
         default:
-            return nil
+            return .requestPlain
         }
     }
 //...
@@ -53,9 +53,9 @@ You **have to** add optional parameters like shown above, one per line. Optional
 	    switch self {
 	    case .users(let limit):
 	        let params: [String: Any] = ["limit": limit]
-	        return params
+	        return .requestParameters(params, URLEncoding.default)
         default:
-            return nil
+            return .requestPlain
         }
     }
 //...
