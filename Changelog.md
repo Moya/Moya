@@ -1,21 +1,20 @@
 # Next
 
-- **Breaking Change** Renamed all occurrences of `queue` to `callbackQueue`.
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
-- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
-- **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - **Breaking Change** Added `headers` to `TargetType`.
-- **Breaking Change** Removed parameter name in `requestWithProgress` for `ReactiveSwiftMoyaProvider`.
+- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
+- **Breaking Change** Updated `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
+- **Breaking Change** Renamed all occurrences of `queue` to `callbackQueue`.
 - **Breaking Change** Deprecated `ReactiveSwiftMoyaProvider` and `RxSwiftMoyaProvider`. Use `MoyaProvider` with reactive properties now: `provider.reactive._`, `provider.rx._`. In case you were subclassing reactive providers, please take a look at [this PR from Eidolon](https://github.com/artsy/eidolon/pull/669). It covers migration from subclassing given providers, to usage by composition.
+- **Breaking Change** Removed parameter name in `requestWithProgress` for `ReactiveSwiftMoyaProvider`.
 - **Breaking Change** Removed deprecated in Moya 8.0.0: `Moya.Error`, `endpointByAddingParameters(parameters:)`, `endpointByAddingHttpHeaderFields(httpHeaderFields:)`, `endpointByAddingParameterEncoding(newParameterEncoding:)`, `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)`, `StructTarget`, `filterStatusCodes(range:)`, `filterStatusCode(code:)`, `willSendRequest(request:target:)`, `didReceiveResponse(result:target:)`, `ReactiveCocoaMoyaProvider`, `ReactiveSwiftMoyaProvider.request(token:)`. 
-- Updated the `RxSwift` version requirement to `3.3`.
-- Fixed a bug where you would have two response events in `requestWithProgress` method on ReactiveSwift module.
-- Add optional callback queue parameter to reactive providers.
-
-- Bumped minimum version of ReactiveSwift to 2.0.
-- Enabled the "Allow app extension API only" flag.
-- Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
+- Added optional callback queue parameter to reactive providers.
 - Added public `URL(target:)` initializator that creates url from `TargetType`.
+- Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
+- Updated minimum version of `RxSwift` to `3.3`.
+- Updated minimum version of `ReactiveSwift` to 2.0.
+- Fixed a bug where you would have two response events in `requestWithProgress` method on `ReactiveSwift` module.
+- Enabled the "Allow app extension API only" flag.
 
 # 8.0.5
 

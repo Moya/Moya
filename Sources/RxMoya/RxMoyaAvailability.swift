@@ -1,10 +1,3 @@
-//
-//  RxMoyaAvailability.swift
-//  Moya
-//
-//  Created by Lukasz Mroz on 29.06.2017.
-//
-
 #if !COCOAPODS
     import Moya
 #endif
