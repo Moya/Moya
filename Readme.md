@@ -203,8 +203,8 @@ that you can start or bind or map or whatever you want to do. To handle errors,
 for instance, we could do the following:
 
 ```swift
-provider = MoyaProvider<GitHub>().reactive
-provider.request(.userProfile("ashfurrow")).start { event in
+provider = MoyaProvider<GitHub>()
+provider.reactive.request(.userProfile("ashfurrow")).start { event in
     switch event {
     case let .value(response):
         image = UIImage(data: response.data)
@@ -223,8 +223,8 @@ returns an `Observable` that you can subscribe to or bind or map or whatever you
 want to do. To handle errors, for instance, we could do the following:
 
 ```swift
-provider = MoyaProvider<GitHub>().rx
-provider.request(.userProfile("ashfurrow")).subscribe { event in
+provider = MoyaProvider<GitHub>()
+provider.rx.request(.userProfile("ashfurrow")).subscribe { event in
     switch event {
     case let .next(response):
         image = UIImage(data: response.data)
