@@ -1,21 +1,21 @@
 # RxSwift
 
-Moya provides an optional `RxMoyaProvider` subclass of
+Moya provides an optional `RxSwift` implementation of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `Observable`s.
 
-A `RxMoyaProvider` can be created much like a
+An `RxSwift`-based `MoyaProvider` can be created from a
 [`MoyaProvider`](Providers.md) and can be used as follows:
 
 ```swift
-let provider = RxMoyaProvider<GitHub>()
+let provider = MoyaProvider<GitHub>()
 ```
 
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.zen).subscribe { event in
+provider.rx.request(.zen).subscribe { event in
     switch event {
     case .next(let response):
         // do something with the data
