@@ -6,8 +6,8 @@ calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `SignalProducer`s
 (`RACSignal`s are also available for those who need it).
 
-A `ReactiveSwift`-based `MoyaProvider` can be created from a
-[`MoyaProvider`](Providers.md) and can be used as follows:
+To use reactive extensions you don't need any additional setup.
+Just use your `MoyaProvider` instance.
 
 ```swift
 let provider = MoyaProvider<GitHub>()

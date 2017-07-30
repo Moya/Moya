@@ -5,8 +5,8 @@ Moya provides an optional `RxSwift` implementation of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `Observable`s.
 
-An `RxSwift`-based `MoyaProvider` can be created from a
-[`MoyaProvider`](Providers.md) and can be used as follows:
+To use reactive extensions you don't need any additional setup.
+Just use your `MoyaProvider` instance.
 
 ```swift
 let provider = MoyaProvider<GitHub>()
