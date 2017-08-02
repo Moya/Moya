@@ -2,7 +2,6 @@ import Quick
 import Nimble
 import ReactiveSwift
 import OHHTTPStubs
-import Alamofire
 
 @testable import Moya
 @testable import ReactiveMoya

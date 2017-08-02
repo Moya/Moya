@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Alamofire
 import Foundation
 import OHHTTPStubs
 @testable import Moya
