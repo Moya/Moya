@@ -1,4 +1,5 @@
 # Next
+- Added Swift 4.0 support.
 
 # 9.0.0-alpha.1
 
