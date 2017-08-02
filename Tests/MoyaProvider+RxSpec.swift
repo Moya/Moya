@@ -1,7 +1,6 @@
 import Quick
 import Nimble
 import RxSwift
-import Alamofire
 import OHHTTPStubs
 
 @testable import Moya

@@ -1,5 +1,4 @@
 import Foundation
-import Alamofire
 
 /// The protocol used to define the specifications necessary for a `MoyaProvider`.
 public protocol TargetType {
