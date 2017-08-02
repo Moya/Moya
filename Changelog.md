@@ -6,8 +6,6 @@
 # 9.0.0-alpha.1
 
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
-- **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
-- **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - **Breaking Change** Added `headers` to `TargetType`.
 - **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
 - **Breaking Change** Updated `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
@@ -16,11 +14,6 @@
 - **Breaking Change** Removed parameter name in `requestWithProgress` for `ReactiveSwiftMoyaProvider`.
 - **Breaking Change** Removed deprecated in Moya 8.0.0: `Moya.Error`, `endpointByAddingParameters(parameters:)`, `endpointByAddingHttpHeaderFields(httpHeaderFields:)`, `endpointByAddingParameterEncoding(newParameterEncoding:)`, `endpointByAdding(parameters:httpHeaderFields:parameterEncoding)`, `StructTarget`, `filterStatusCodes(range:)`, `filterStatusCode(code:)`, `willSendRequest(request:target:)`, `didReceiveResponse(result:target:)`, `ReactiveCocoaMoyaProvider`, `ReactiveSwiftMoyaProvider.request(token:)`. 
 - Added optional callback queue parameter to reactive providers.
-- Updated the `RxSwift` version requirement to `3.3`.
-- Fixed a bug where you would have two response events in `requestWithProgress` method on ReactiveSwift module.
-- Bumped minimum version of ReactiveSwift to 2.0.
-- Enabled the "Allow app extension API only" flag.
-- Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
 - Added public `URL(target:)` initializator that creates url from `TargetType`.
 - Added an optional `requestDataFormatter`in `NetworkLoggerPlugin` to allow the client to interact with the request data before logging it.
 - Updated minimum version of `RxSwift` to `3.3`.
