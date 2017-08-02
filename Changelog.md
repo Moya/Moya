@@ -1,11 +1,11 @@
 # Next
 - Added Swift 4.0 support.
+- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
+- **Breaking Change** Flattened `UploadType` and `DownloadType` into `Task` cases.
 
 # 9.0.0-alpha.1
 
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
-- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
-- **Breaking Change** Flattened `UploadType` and `DownloadType` into `Task` cases.
 - **Breaking Change** Updated `RxMoyaProvider.request` to return a [`Single<Request>`](https://github.com/ReactiveX/RxSwift/pull/1123).
 - **Breaking Change** Changed `Moya.Response`'s `response`to use an `HTTPURLResponse` instead of a `URLResponse`.
 - **Breaking Change** Added `headers` to `TargetType`.
