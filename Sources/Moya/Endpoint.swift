@@ -84,18 +84,18 @@ extension Endpoint {
             return try? parameterEncoding.encode(request, with: parameters)
 
         case let .uploadCompositeMultipart(_, urlParameters):
-            return try? URLEncoding.default.encode(request, with: urlParameters)
+            return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
 
         case let .downloadParameters(parameters, parameterEncoding, _):
             return try? parameterEncoding.encode(request, with: parameters)
 
         case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
             request.httpBody = bodyData
-            return try? URLEncoding.default.encode(request, with: urlParameters)
+            return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
 
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
             guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
-            return try? URLEncoding.default.encode(bodyfulRequest, with: urlParameters)
+            return try? URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
         }
     }
 }

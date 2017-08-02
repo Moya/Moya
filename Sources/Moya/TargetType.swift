@@ -63,5 +63,5 @@ public enum Task {
     case downloadDestination(DownloadDestination)
 
     /// A file download task to a destination with extra parameters using the given encoding.
-    case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, DownloadDestination)
+    case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, destination: DownloadDestination)
 }
