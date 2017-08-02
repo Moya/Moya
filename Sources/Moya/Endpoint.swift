@@ -93,6 +93,8 @@ extension Endpoint {
             return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
 
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
+            if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
+
             guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
             return try? URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
         }
