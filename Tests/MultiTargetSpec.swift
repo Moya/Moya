@@ -34,7 +34,7 @@ class MultiTargetSpec: QuickSpec {
                     expect(parameters["key"] as? String) == "value"
                     expect(parameters.count) == 1
                 } else {
-                    fail()
+                    fail("expected task type `.requestParameters`, was \(String(describing: target.task))")
                 }
             }
 
@@ -42,7 +42,7 @@ class MultiTargetSpec: QuickSpec {
                 if case let .requestParameters(parameters: _, encoding: parameterEncoding) = target.task {
                     expect(parameterEncoding is JSONEncoding) == true
                 } else {
-                    fail()
+                    fail("expected task type `.requestParameters`, was \(String(describing: target.task))")
                 }
             }
 
