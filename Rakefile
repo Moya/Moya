@@ -63,8 +63,8 @@ end
 
 def device_os
   return {
-    ios: "10.2",
-    tvos: "10.0"
+    ios: "11.0",
+    tvos: "11.0"
   }
 end
 
