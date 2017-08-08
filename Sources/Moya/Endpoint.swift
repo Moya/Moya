@@ -75,27 +75,20 @@ extension Endpoint {
         switch task {
         case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
             return request
-
         case .requestData(let data):
             request.httpBody = data
             return request
-
         case let .requestParameters(parameters, parameterEncoding):
             return try? parameterEncoding.encode(request, with: parameters)
-
         case let .uploadCompositeMultipart(_, urlParameters):
             return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
-
         case let .downloadParameters(parameters, parameterEncoding, _):
             return try? parameterEncoding.encode(request, with: parameters)
-
         case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
             request.httpBody = bodyData
             return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
-
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
             if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
-
             guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
             return try? URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
         }
