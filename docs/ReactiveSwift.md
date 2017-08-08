@@ -1,22 +1,22 @@
 # ReactiveSwift
 
-Moya provides an optional `ReactiveSwiftMoyaProvider` subclass of
+Moya provides an optional `ReactiveSwift` implementation of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
 to be executed when the request completes, we use `SignalProducer`s
 (`RACSignal`s are also available for those who need it).
 
-A `ReactiveSwiftMoyaProvider` can be created much like a
-[`MoyaProvider`](Providers.md) and can be used as follows:
+To use reactive extensions you don't need any additional setup.
+Just use your `MoyaProvider` instance.
 
 ```swift
-let provider = ReactiveSwiftMoyaProvider<GitHub>()
+let provider = MoyaProvider<GitHub>()
 ```
 
 After that simple setup, you're off to the races:
 
 ```swift
-provider.request(.zen).start { event in
+provider.reactive.request(.zen).start { event in
     switch event {
     case let .value(response):
         // do something with the data
