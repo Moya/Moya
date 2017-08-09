@@ -21,7 +21,7 @@ public protocol AccessTokenAuthorizable {
  ```
 
  - Note: By default, requests to all `TargetType`s will receive this header. You can control this
-   behvaior by conforming to `AccessTokenAuthorizable`.
+   behavior by conforming to `AccessTokenAuthorizable`.
 */
 public struct AccessTokenPlugin: PluginType {
 
