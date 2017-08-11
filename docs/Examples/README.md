@@ -7,7 +7,6 @@
 
 ## Reactive extensions
 
-* [ReactiveSwift](ReactiveSwift.md)
 * [RxSwift](RxSwift.md)
 
 ## Endpoints customization
