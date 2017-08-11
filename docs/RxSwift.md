@@ -17,12 +17,10 @@ After that simple setup, you're off to the races:
 ```swift
 provider.rx.request(.zen).subscribe { event in
     switch event {
-    case .next(let response):
+    case .success(let response):
         // do something with the data
     case .error(let error):
         // handle the error
-    default:
-        break
     }
 }
 ```

@@ -199,7 +199,7 @@ Even cooler are the reactive extensions. Moya provides reactive extensions for
 
 [`ReactiveSwift` extension](docs/ReactiveSwift.md) provides both `reactive.request(:callbackQueue:)` and 
 `reactive.requestWithProgress(:callbackQueue:)` methods that immediately return 
-`SignalProducer`s that you can start or bind or map or whatever you want to do. 
+`SignalProducer`s that you can start, bind, map, or whatever you want to do. 
 To handle errors, for instance, we could do the following:
 
 ```swift
