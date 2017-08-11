@@ -27,6 +27,25 @@ provider.rx.request(.zen).subscribe { event in
 }
 ```
 
+You can also use `requestWithProgress` to track progress of 
+your request:
+```swift
+provider.rx.requestWithProgress(.zen).subscribe { event in
+    switch event {
+    case .next(let progressResponse):
+        if let response = progressResponse.response {
+            // do something with response
+        } else {
+            print("Progress: \(progressResponse.progress)")
+        }
+    case .error(let error):
+        // handle the error
+    default:
+        break
+    }
+}
+```
+
 For `RxMoyaProvider`, the network request is not started
 until the signal is subscribed to. If the subscription to the signal
 is disposed of before the request completes, the request is canceled.

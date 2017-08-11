@@ -28,6 +28,25 @@ provider.reactive.request(.zen).start { event in
 }
 ```
 
+You can also use `requestWithProgress` to track progress of 
+your request:
+```swift
+provider.reactive.requestWithProgress(.zen).start { event in
+    switch event {
+    case .value(let progressResponse):
+        if let response = progressResponse.response {
+            // do something with response
+        } else {
+            print("Progress: \(progressResponse.progress)")
+        }
+    case .failed(let error):
+        // handle the error
+    default:
+        break
+    }
+}
+```
+
 For `ReactiveSwiftMoyaProvider`, the network request is not started
 until the signal is subscribed to. If the subscription to the signal
 is disposed of before the request completes, the request is canceled.
