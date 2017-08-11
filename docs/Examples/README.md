@@ -5,10 +5,6 @@
 * [Setup for Assets downloading](Assets.md)
 * [Alamofire automatic validation](AlamofireValidation.md)
 
-## Reactive extensions
-
-* [RxSwift](RxSwift.md)
-
 ## Endpoints customization
 
 * [Optional request parameters](OptionalParameters.md)
