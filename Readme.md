@@ -232,12 +232,10 @@ To handle errors, for instance, we could do the following:
 provider = MoyaProvider<GitHub>()
 provider.rx.request(.userProfile("ashfurrow")).subscribe { event in
     switch event {
-    case let .next(response):
+    case let .success(response):
         image = UIImage(data: response.data)
     case let .error(error):
         print(error)
-    default:
-        break
     }
 }
 ```
