@@ -198,9 +198,9 @@ Even cooler are the reactive extensions. Moya provides reactive extensions for
 ### ReactiveSwift
 
 After `ReactiveSwift` [setup](docs/ReactiveSwift.md), `request(:)` method
-immediately returns a `SignalProducer` (`RACSignal` is also available if needed)
-that you can start or bind or map or whatever you want to do. To handle errors,
-for instance, we could do the following:
+immediately returns a `SignalProducer` that you can start or bind or map 
+or whatever you want to do. To handle errors, for instance, we could do the 
+following:
 
 ```swift
 provider = MoyaProvider<GitHub>()
