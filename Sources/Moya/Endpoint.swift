@@ -39,13 +39,12 @@ open class Endpoint<Target> {
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
     open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target> {
-        return adding(httpHeaderFields: newHTTPHeaderFields)
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
     }
 
-    /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
-    open func adding(httpHeaderFields: [String: String]? = nil)  -> Endpoint<Target> {
-        let newHTTPHeaderFields = add(httpHeaderFields: httpHeaderFields)
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: newHTTPHeaderFields)
+    /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
+    open func replacing(task: Task) -> Endpoint<Target> {
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 
     fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {
