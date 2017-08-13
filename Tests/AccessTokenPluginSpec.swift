@@ -17,7 +17,7 @@ final class AccessTokenPluginSpec: QuickSpec {
 
     override func spec() {
         let token = "eyeAm.AJsoN.weBTOKen"
-        let plugin = AccessTokenPlugin(token: token)
+        let plugin = AccessTokenPlugin(tokenClosure: token)
 
         it("doesn't add an authorization header to TargetTypes by default") {
             let target = GitHub.zen

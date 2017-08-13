@@ -34,17 +34,17 @@ public enum AuthorizationType: String {
 */
 public struct AccessTokenPlugin: PluginType {
 
-    /// The access token to be applied in the header.
-    public let token: String
+    /// A closure returning the access token to be applied in the header.
+    public let tokenClosure: () -> String
 
     /**
      Initialize a new `AccessTokenPlugin`.
 
      - parameters:
-       - token: The token to be applied in the pattern `Authorization: <AuthorizationType> <token>`
+       - tokenClosure: A closure returning the token to be applied in the pattern `Authorization: <AuthorizationType> <token>`
     */
-    public init(token: String) {
-        self.token = token
+    public init(tokenClosure: @escaping @autoclosure () -> String) {
+        self.tokenClosure = tokenClosure
     }
 
     /**
@@ -64,9 +64,9 @@ public struct AccessTokenPlugin: PluginType {
 
         switch authorizationType {
         case .basic:
-            request.addValue(authorizationType.rawValue + token, forHTTPHeaderField: "Authorization")
+            request.addValue(authorizationType.rawValue + tokenClosure(), forHTTPHeaderField: "Authorization")
         case .bearer:
-            request.addValue(authorizationType.rawValue + token, forHTTPHeaderField: "Authorization")
+            request.addValue(authorizationType.rawValue + tokenClosure(), forHTTPHeaderField: "Authorization")
         case .none:
             break
         }
