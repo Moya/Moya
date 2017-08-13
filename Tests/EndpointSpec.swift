@@ -4,40 +4,68 @@ import Nimble
 
 class EndpointSpec: QuickSpec {
     override func spec() {
-        describe("an endpoint") {
-            var endpoint: Endpoint<GitHub>!
+        var endpoint: Endpoint<GitHub>!
 
-            beforeEach {
-                let target: GitHub = .zen
-                let headerFields = ["Title": "Dominar"]
-                endpoint = Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, httpHeaderFields: headerFields)
+        beforeEach {
+            let target: GitHub = .zen
+            let headerFields = ["Title": "Dominar"]
+            endpoint = Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+        }
+
+        it("returns a new endpoint for adding(newHTTPHeaderFields:)") {
+            let agent = "Zalbinian"
+            let newEndpoint = endpoint.adding(newHTTPHeaderFields: ["User-Agent": agent])
+            let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
+
+            // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
+            expect(newEndpointAgent).to(equal(agent))
+
+            // Compare other properties to ensure they've been copied correctly
+            expect(newEndpoint.url).to(equal(endpoint.url))
+            expect(newEndpoint.method).to(equal(endpoint.method))
+        }
+
+        it("returns a nil urlRequest for an invalid URL") {
+            let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+
+            expect(badEndpoint.urlRequest).to(beNil())
+        }
+
+        describe("converting to urlRequest") {
+            context("when task is .requestPlain") {
+                var request: URLRequest?
+
+                beforeEach {
+                    endpoint = endpoint.replacing(task: .requestPlain)
+                    request = endpoint.urlRequest
+                }
+
+                it("returns a correct URL string") {
+                    expect(request!.url!.absoluteString).to(equal("https://api.github.com/zen"))
+                }
+
+                it("returns a correct title header") {
+                    expect(request?.allHTTPHeaderFields?["Title"]).to(equal("Dominar"))
+                }
             }
 
-            it("returns a new endpoint for adding(newHTTPHeaderFields:)") {
-                let agent = "Zalbinian"
-                let newEndpoint = endpoint.adding(newHTTPHeaderFields: ["User-Agent": agent])
-                let newEndpointAgent = newEndpoint.httpHeaderFields?["User-Agent"]
+            context("when task is .requestData") {
+                var data: Data!
+                var request: URLRequest?
 
-                // Make sure our closure updated the sample response, as proof that it can modify the Endpoint
-                expect(newEndpointAgent).to(equal(agent))
+                beforeEach {
+                    data = "test data".data(using: .utf8)
+                    endpoint = endpoint.replacing(task: .requestData(data))
+                    request = endpoint.urlRequest
+                }
 
-                // Compare other properties to ensure they've been copied correctly
-                expect(newEndpoint.url).to(equal(endpoint.url))
-                expect(newEndpoint.method).to(equal(endpoint.method))
-            }
+                it("returns a correct httpBody") {
+                    expect(request!.httpBody).to(equal(data))
+                }
 
-            it("returns a correct URL request") {
-                let request = endpoint.urlRequest
-                expect(request!.url!.absoluteString).to(equal("https://api.github.com/zen"))
-                let titleObject: Any? = endpoint.httpHeaderFields?["Title"]
-                let title = titleObject as? String
-                expect(title).to(equal("Dominar"))
-            }
-
-            it("returns a nil urlRequest for an invalid URL") {
-                let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
-
-                expect(badEndpoint.urlRequest).to( beNil() )
+                it("returns a correct URL string") {
+                    expect(request!.url!.absoluteString).to(equal("https://api.github.com/zen"))
+                }
             }
         }
     }
