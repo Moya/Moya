@@ -6,6 +6,12 @@
 - **Breaking Change** Replaced `token` in `AccessTokenPlugin` with `tokenClosure`.
 - **Breaking Change** `TargetTypes` no longer receive the `Authorization: Bearer <token>` header by default when using `AccessTokenPlugin`.
 - Added `AuthorizationType` to `AccessTokenAuthorizable` representing request headers of `.none`, `.basic`, and `.bearer`. 
+- Added Swift 4.0 support.
+- Added all the `filter`/`map` operators that were available for `Observable<Response>` to `Single<Response>` as well.
+- **Breaking Change** Replaced `shouldAuthorize: Bool` in `AccessTokenAuthorizable` with `authorizationType: AuthorizationType`.
+- **Breaking Change** Replaced `token` in `AccessTokenPlugin` with `tokenClosure`.
+- **Breaking Change** `TargetTypes` no longer receive the `Authorization: Bearer <token>` header by default when using `AccessTokenPlugin`.
+- Added `AuthorizationType` to `AccessTokenAuthorizable` representing request headers of `.none`, `.basic`, and `.bearer`. 
 
 # 9.0.0-alpha.1
 
