@@ -29,8 +29,6 @@ public enum AuthorizationType: String {
  Authorization: Basic <token>
  ```
 
- - Note: By default, requests to all `TargetType`s will receive this header. You can control this
-   behavior by conforming to `AccessTokenAuthorizable`.
 */
 public struct AccessTokenPlugin: PluginType {
 
