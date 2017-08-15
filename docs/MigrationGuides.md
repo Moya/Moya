@@ -6,6 +6,7 @@ Please follow the appropriate guide below when **upgrading to a new major versio
 
 ## Upgrade from 8.x to 9.x
 
+### TargetType Migration
 - Move the `parameters` and `parameterEncoding` to the `task` computed property by using the case `.requestParameters(parameters:encoding:)`
 - Replace the task type `.request` with either `.requestPlain` (if you have no parameters) or `.requestParameters(parameters:encoding:)`
 - There's no `parameters` and `parameterEncoding` on Endpoints any more (e.g. `addingParameters()`), use the new `task` property instead
@@ -13,3 +14,7 @@ Please follow the appropriate guide below when **upgrading to a new major versio
 - Simplify occurrences of task type `.download(.request(destination))` to `.downloadDestination(destination)`
 - Simplify occurrences of task type `.upload(.file(url))` to `.uploadFile(url)`
 - Simplify occurrences of task type `.upload(.multipart(data))` to `.uploadMultipart(data)`
+
+### AccessTokenPlugin Migration
+- Add `AccessTokenAuthorizable` conformance to `TargetType`'s using the `AccessTokenPlugin`.
+- Specificy an `AuthorizationType` of `.bearer` if `shouldAuthorize` is `true` or undefined..
