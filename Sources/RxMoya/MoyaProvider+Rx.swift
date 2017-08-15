@@ -27,21 +27,20 @@ public extension Reactive where Base: MoyaProviderType {
 internal extension MoyaProviderType {
 
     internal func rxRequest(_ token: Target, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
-        return Observable.create { [weak self] observer in
+        return Single.create { [weak self] single in
             let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                 switch result {
                 case let .success(response):
-                    observer.onNext(response)
-                    observer.onCompleted()
+                    single(.success(response))
                 case let .failure(error):
-                    observer.onError(error)
+                    single(.error(error))
                 }
             }
 
             return Disposables.create {
                 cancellableToken?.cancel()
             }
-        }.asSingle()
+        }
     }
 
     internal func rxRequestWithProgress(_ token: Target, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
