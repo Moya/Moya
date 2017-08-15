@@ -13,6 +13,7 @@
 		12F88B3755343FB9DD244AEC /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A53DF8B33D58E052A78E2BA /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1446FBB31F214C5200C1EFF2 /* URL+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */; };
 		148FAF0DFB395B4A64314803 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */; };
+		14FB7A3F1F3E089900308949 /* Single+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FB7A3E1F3E089900308949 /* Single+Response.swift */; };
 		15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D47F3DC51C28D950491FAAB /* MoyaError.swift */; };
 		1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553E5591EE96535C5310C02 /* NetworkLoggerPlugin.swift */; };
 		2ADDFC96D7F7912333534C46 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */; };
@@ -85,6 +86,7 @@
 /* Begin PBXFileReference section */
 		019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReactiveMoya.h; path = "Sources/Supporting Files/ReactiveMoya.h"; sourceTree = "<group>"; };
 		1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "URL+Moya.swift"; path = "Sources/Moya/URL+Moya.swift"; sourceTree = "<group>"; };
+		14FB7A3E1F3E089900308949 /* Single+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Single+Response.swift"; path = "Sources/RxMoya/Single+Response.swift"; sourceTree = "<group>"; };
 		225C397C03E17F7DFBCA2848 /* MoyaProvider+Internal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MoyaProvider+Internal.swift"; path = "Sources/Moya/MoyaProvider+Internal.swift"; sourceTree = "<group>"; };
 		269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SignalProducer+Response.swift"; path = "Sources/ReactiveMoya/SignalProducer+Response.swift"; sourceTree = "<group>"; };
 		2AD20F6A819D899E3278E903 /* NetworkActivityPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkActivityPlugin.swift; path = Sources/Moya/Plugins/NetworkActivityPlugin.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				D48555FB39336D99F8365F5E /* MoyaProvider+Rx.swift */,
 				8736BEE85376471D7CB1E0ED /* Observable+Response.swift */,
 				7056EEF728677793DAFE4E03 /* RxMoyaAvailability.swift */,
+				14FB7A3E1F3E089900308949 /* Single+Response.swift */,
 			);
 			name = RxMoya;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */,
 				A8C55515DFA147BE4159B40A /* Response.swift in Sources */,
 				A2B64B2383FB0BC3C17B3160 /* TargetType.swift in Sources */,
+				14FB7A3F1F3E089900308949 /* Single+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

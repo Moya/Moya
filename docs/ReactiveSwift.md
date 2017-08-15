@@ -3,8 +3,7 @@
 Moya provides an optional `ReactiveSwift` implementation of
 `MoyaProvider` that does a few interesting things. Instead of
 calling the `request()` method and providing a callback closure
-to be executed when the request completes, we use `SignalProducer`s
-(`RACSignal`s are also available for those who need it).
+to be executed when the request completes, we use `SignalProducer`s.
 
 To use reactive extensions you don't need any additional setup.
 Just use your `MoyaProvider` instance.
@@ -21,6 +20,25 @@ provider.reactive.request(.zen).start { event in
     case let .value(response):
         // do something with the data
     case let .failed(error):
+        // handle the error
+    default:
+        break
+    }
+}
+```
+
+You can also use `requestWithProgress` to track progress of 
+your request:
+```swift
+provider.reactive.requestWithProgress(.zen).start { event in
+    switch event {
+    case .value(let progressResponse):
+        if let response = progressResponse.response {
+            // do something with response
+        } else {
+            print("Progress: \(progressResponse.progress)")
+        }
+    case .failed(let error):
         // handle the error
     default:
         break
