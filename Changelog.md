@@ -1,4 +1,5 @@
 # Next
+- Added tests for Single+Response and refactored Shared Test Helpers.
 - **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
 - **Breaking Change** Flattened `UploadType` and `DownloadType` into `Task` cases.
 - **Breaking Change** Replaced `shouldAuthorize: Bool` in `AccessTokenAuthorizable` with `authorizationType: AuthorizationType`.
