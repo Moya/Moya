@@ -3,30 +3,6 @@ import Moya
 import RxSwift
 import Nimble
 
-#if os(iOS) || os(watchOS) || os(tvOS)
-    private func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
-        return UIImageJPEGRepresentation(image, compression)
-    }
-#elseif os(OSX)
-    private func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
-        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
-        return imageRep.representation(using: .JPEG, properties:[:])
-    }
-#endif
-
-// Necessary since Image(named:) doesn't work correctly in the test bundle
-private extension ImageType {
-
-    class TestClass { }
-
-    class func testPNGImage(named name: String) -> ImageType {
-        let bundle = Bundle(for: type(of: TestClass()))
-        let path = bundle.path(forResource: name, ofType: "png")
-        return Image(contentsOfFile: path!)!
-    }
-}
-
 class ObservableMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
