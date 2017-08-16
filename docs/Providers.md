@@ -41,7 +41,7 @@ concrete `Endpoint` instance. Let's take a look at what one might look like.
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = URL(target: target).absoluteString
-    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, parameters: target.parameters)
+    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
 }
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```

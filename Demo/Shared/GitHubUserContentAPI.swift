@@ -21,19 +21,10 @@ extension GitHubUserContent: TargetType {
             return .get
         }
     }
-    public var parameters: [String: Any]? {
-        switch self {
-        case .downloadMoyaWebContent:
-            return nil
-        }
-    }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(DefaultDownloadDestination))
+            return .downloadDestination(DefaultDownloadDestination)
         }
     }
     public var sampleData: Data {

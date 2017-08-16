@@ -1,10 +1,11 @@
 #if !COCOAPODS
     import Moya
 #endif
+import Foundation
 import RxSwift
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.
-@available(*, deprecated: 9.0.0, message: "Please use MoyaProvider with rx property: provider.rx.request(_:).")
+@available(*, deprecated: 9.0.0, message: "Please use MoyaProvider with rx property: provider.rx.request(_:callbackQueue:).")
 open class RxMoyaProvider<Target>: MoyaProvider<Target> where Target: TargetType {
     /// Initializes a reactive provider.
     override public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,

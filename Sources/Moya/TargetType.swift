@@ -12,12 +12,6 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
-    /// The parameters to be encoded in the request.
-    var parameters: [String: Any]? { get }
-
-    /// The method used for parameter encoding.
-    var parameterEncoding: ParameterEncoding { get }
-
     /// Provides stub data for use in testing.
     var sampleData: Data { get }
 
@@ -37,32 +31,36 @@ public extension TargetType {
     }
 }
 
-/// Represents a type of upload task.
-public enum UploadType {
-
-    /// Upload a file.
-    case file(URL)
-
-    /// Upload "multipart/form-data"
-    case multipart([MultipartFormData])
-}
-
-/// Represents a type of download task.
-public enum DownloadType {
-
-    /// Download a file to a destination.
-    case request(DownloadDestination)
-}
-
 /// Represents an HTTP task.
 public enum Task {
 
-    /// A basic request task.
-    case request
+    /// A request with no additional data.
+    case requestPlain
 
-    /// An upload task.
-    case upload(UploadType)
+    /// A requests body set with data.
+    case requestData(Data)
 
-    /// A download task.
-    case download(DownloadType)
+    /// A requests body set with encoded parameters.
+    case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
+
+    /// A requests body set with data, combined with url parameters.
+    case requestCompositeData(bodyData: Data, urlParameters: [String: Any])
+
+    /// A requests body set with encoded parameters combined with url parameters.
+    case requestCompositeParameters(bodyParameters: [String: Any], bodyEncoding: ParameterEncoding, urlParameters: [String: Any])
+
+    /// A file upload task.
+    case uploadFile(URL)
+
+    /// A "multipart/form-data" upload task.
+    case uploadMultipart([MultipartFormData])
+
+    /// A "multipart/form-data" upload task  combined with url parameters.
+    case uploadCompositeMultipart([MultipartFormData], urlParameters: [String: Any])
+
+    /// A file download task to a destination.
+    case downloadDestination(DownloadDestination)
+
+    /// A file download task to a destination with extra parameters using the given encoding.
+    case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, destination: DownloadDestination)
 }

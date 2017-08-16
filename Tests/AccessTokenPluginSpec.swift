@@ -8,9 +8,7 @@ final class AccessTokenPluginSpec: QuickSpec {
         let baseURL = URL(string: "http://www.api.com/")!
         let path = ""
         let method = Method.get
-        let parameters: [String: Any]? = nil
-        let parameterEncoding: ParameterEncoding = URLEncoding.default
-        let task = Task.request
+        let task = Task.requestPlain
         let sampleData = Data()
         let headers: [String: String]? = nil
 

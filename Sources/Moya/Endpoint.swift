@@ -18,31 +18,23 @@ open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     open let url: String
-    open let method: Moya.Method
     open let sampleResponseClosure: SampleResponseClosure
-    open let parameters: [String: Any]?
-    open let parameterEncoding: Moya.ParameterEncoding
+    open let method: Moya.Method
+    open let task: Task
     open let httpHeaderFields: [String: String]?
 
     /// Main initializer for `Endpoint`.
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method = Moya.Method.get,
-                parameters: [String: Any]? = nil,
-                parameterEncoding: Moya.ParameterEncoding = URLEncoding.default,
+                task: Task = .requestPlain,
                 httpHeaderFields: [String: String]? = nil) {
 
         self.url = url
         self.sampleResponseClosure = sampleResponseClosure
         self.method = method
-        self.parameters = parameters
-        self.parameterEncoding = parameterEncoding
+        self.task = task
         self.httpHeaderFields = httpHeaderFields
-    }
-
-    /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added parameters.
-    open func adding(newParameters: [String: Any]) -> Endpoint<Target> {
-        return adding(parameters: newParameters)
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
@@ -50,29 +42,10 @@ open class Endpoint<Target> {
         return adding(httpHeaderFields: newHTTPHeaderFields)
     }
 
-    /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with another parameter encoding.
-    open func adding(newParameterEncoding: Moya.ParameterEncoding) -> Endpoint<Target> {
-        return adding(parameterEncoding: newParameterEncoding)
-    }
-
     /// Convenience method for creating a new `Endpoint`, with changes only to the properties we specify as parameters
-    open func adding(parameters: [String: Any]? = nil, httpHeaderFields: [String: String]? = nil, parameterEncoding: Moya.ParameterEncoding? = nil)  -> Endpoint<Target> {
-        let newParameters = add(parameters: parameters)
+    open func adding(httpHeaderFields: [String: String]? = nil)  -> Endpoint<Target> {
         let newHTTPHeaderFields = add(httpHeaderFields: httpHeaderFields)
-        let newParameterEncoding = parameterEncoding ?? self.parameterEncoding
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, parameters: newParameters, parameterEncoding: newParameterEncoding, httpHeaderFields: newHTTPHeaderFields)
-    }
-
-    fileprivate func add(parameters: [String: Any]?) -> [String: Any]? {
-        guard let unwrappedParameters = parameters, unwrappedParameters.isEmpty == false else {
-            return self.parameters
-        }
-
-        var newParameters = self.parameters ?? [:]
-        unwrappedParameters.forEach { key, value in
-            newParameters[key] = value
-        }
-        return newParameters
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: newHTTPHeaderFields)
     }
 
     fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {
@@ -98,7 +71,26 @@ extension Endpoint {
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
-        return try? parameterEncoding.encode(request, with: parameters)
+        switch task {
+        case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
+            return request
+        case .requestData(let data):
+            request.httpBody = data
+            return request
+        case let .requestParameters(parameters, parameterEncoding):
+            return try? parameterEncoding.encode(request, with: parameters)
+        case let .uploadCompositeMultipart(_, urlParameters):
+            return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
+        case let .downloadParameters(parameters, parameterEncoding, _):
+            return try? parameterEncoding.encode(request, with: parameters)
+        case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
+            request.httpBody = bodyData
+            return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
+        case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
+            if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
+            guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
+            return try? URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
+        }
     }
 }
 

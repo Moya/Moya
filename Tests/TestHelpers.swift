@@ -1,12 +1,12 @@
 import Moya
+
+#if os(OSX)
+import AppKit
+#else
 import Foundation
+#endif
 
-extension String {
-    var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-    }
-}
-
+//MARK: - Mock Services
 enum GitHub {
     case zen
     case userProfile(String)
@@ -27,16 +27,8 @@ extension GitHub: TargetType {
         return .get
     }
 
-    var parameters: [String: Any]? {
-        return nil
-    }
-
-    public var parameterEncoding: ParameterEncoding {
-        return JSONEncoding.default
-    }
-
     var task: Task {
-        return .request
+        return .requestPlain
     }
 
     var sampleData: Data {
@@ -63,7 +55,7 @@ func url(_ route: TargetType) -> String {
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, parameters: target.parameters)
+    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task)
 }
 
 enum HTTPBin: TargetType {
@@ -81,19 +73,8 @@ enum HTTPBin: TargetType {
         return .get
     }
 
-    var parameters: [String: Any]? {
-        switch self {
-        default:
-            return [:]
-        }
-    }
-
-    var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-
     var task: Task {
-        return .request
+        return .requestParameters(parameters: [:], encoding: URLEncoding.default)
     }
 
     var sampleData: Data {
@@ -138,7 +119,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(.request(defaultDownloadDestination))
+            return .downloadDestination(defaultDownloadDestination)
         }
     }
     public var sampleData: Data {
@@ -153,6 +134,14 @@ extension GitHubUserContent: TargetType {
     }
 }
 
+// MARK: - String Helpers
+extension String {
+    var urlEscaped: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    }
+}
+
+// MARK: - DispatchQueue Test Helpers
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
 extension DispatchQueue {
     class var currentLabel: String? {
@@ -169,3 +158,28 @@ private let defaultDownloadDestination: DownloadDestination = { temporaryURL, re
 
     return (temporaryURL, [])
 }
+
+// MARK: - Image Test Helpers
+#if os(iOS) || os(watchOS) || os(tvOS)
+    func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
+        return UIImageJPEGRepresentation(image, compression)
+    }
+#elseif os(OSX)
+    func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
+        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
+        return imageRep.representation(using: .JPEG, properties:[:])
+    }
+#endif
+
+// Necessary since Image(named:) doesn't work correctly in the test bundle
+extension ImageType {
+    class TestClass { }
+
+    class func testPNGImage(named name: String) -> ImageType {
+        let bundle = Bundle(for: type(of: TestClass()))
+        let path = bundle.path(forResource: name, ofType: "png")
+        return Image(contentsOfFile: path!)!
+    }
+}
+
