@@ -17,4 +17,9 @@ Please follow the appropriate guide below when **upgrading to a new major versio
 
 ### AccessTokenPlugin Migration
 - Add `AccessTokenAuthorizable` conformance to `TargetType`'s using the `AccessTokenPlugin`.
-- Specificy an `AuthorizationType` of `.bearer` if `shouldAuthorize` is `true` or undefined..
+- Specificy an `AuthorizationType` of `.bearer` if `shouldAuthorize` is `true` or undefined.
+
+### Reactive MoyaProvider  Migration
+- Replace instances of `RxMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.rx` namespace to access the RxSwift API.
+- Replace instances of `ReactiveMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.reactive` namespace to access the ReactiveSwift API.
+- If you subclass a reactive provider, check out this pull request [Eidolon's migration to Moya 9.0.0](https://github.com/artsy/eidolon/pull/669) which covers migration from subclassing to composition. 

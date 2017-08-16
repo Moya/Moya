@@ -1,6 +1,7 @@
 #if !COCOAPODS
     import Moya
 #endif
+import Foundation
 import RxSwift
 
 /// Subclass of MoyaProvider that returns Observable instances when requests are made. Much better than using completion closures.

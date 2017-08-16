@@ -11,9 +11,9 @@
 		0AF1D218204A9E0F5CCC7340 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3C74EB65D75BC6DFCC646E /* RxMoya.framework */; };
 		0DA77DF1329D3EFD3BD295CE /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = D38525FE207BE148B17084F3 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12F88B3755343FB9DD244AEC /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A53DF8B33D58E052A78E2BA /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1425941E1F42FDED00C9E171 /* Single+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FB7A3E1F3E089900308949 /* Single+Response.swift */; };
 		1446FBB31F214C5200C1EFF2 /* URL+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */; };
 		148FAF0DFB395B4A64314803 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */; };
-		14FB7A3F1F3E089900308949 /* Single+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FB7A3E1F3E089900308949 /* Single+Response.swift */; };
 		15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D47F3DC51C28D950491FAAB /* MoyaError.swift */; };
 		1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553E5591EE96535C5310C02 /* NetworkLoggerPlugin.swift */; };
 		2ADDFC96D7F7912333534C46 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */; };
@@ -514,7 +514,6 @@
 				1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */,
 				A8C55515DFA147BE4159B40A /* Response.swift in Sources */,
 				A2B64B2383FB0BC3C17B3160 /* TargetType.swift in Sources */,
-				14FB7A3F1F3E089900308949 /* Single+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1425941E1F42FDED00C9E171 /* Single+Response.swift in Sources */,
 				62B78032862A529C4AF42061 /* MoyaProvider+Rx.swift in Sources */,
 				7B147185DCE78CD98E28D3F2 /* Observable+Response.swift in Sources */,
 				040FC36BCA68B4985713D50E /* RxMoyaAvailability.swift in Sources */,
