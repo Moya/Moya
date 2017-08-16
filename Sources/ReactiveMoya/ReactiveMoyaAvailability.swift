@@ -1,6 +1,7 @@
 #if !COCOAPODS
     import Moya
 #endif
+import Foundation
 import ReactiveSwift
 
 /// Subclass of MoyaProvider that returns SignalProducer instances when requests are made. Much better than using completion closures.

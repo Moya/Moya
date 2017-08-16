@@ -22,6 +22,7 @@ let package = Package(
         .Package(url: "https://github.com/antitypical/Result.git", majorVersion: 3)
     ],
     exclude: [
-        "Tests"
+        "Tests",
+        "Sources/Supporting Files"
     ]
 )
