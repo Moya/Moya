@@ -3,6 +3,7 @@ import Moya
 #if os(OSX)
 import AppKit
 #else
+import UIKit
 import Foundation
 #endif
 
