@@ -40,12 +40,11 @@ class EndpointSpec: QuickSpec {
                     request = endpoint.urlRequest
                 }
 
-                it("returns a correct URL string") {
-                    expect(request!.url!.absoluteString).to(equal("https://api.github.com/zen"))
-                }
-
-                it("returns a correct title header") {
-                    expect(request?.allHTTPHeaderFields?["Title"]).to(equal("Dominar"))
+                it("didn't update any of the request properties") {
+                    expect(request?.httpBody).to(beNil())
+                    expect(request?.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
                 }
             }
 
@@ -59,12 +58,36 @@ class EndpointSpec: QuickSpec {
                     request = endpoint.urlRequest
                 }
 
-                it("returns a correct httpBody") {
-                    expect(request!.httpBody).to(equal(data))
+                it("updated httpBody") {
+                    expect(request?.httpBody).to(equal(data))
                 }
 
-                it("returns a correct URL string") {
-                    expect(request!.url!.absoluteString).to(equal("https://api.github.com/zen"))
+                it("didn't update any of the other properties") {
+                    expect(request?.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
+            context("when task is .requestParameters") {
+                let parameters = ["Nemesis": "Harvey"]
+                let encoding = JSONEncoding.default
+                var request: URLRequest?
+
+                beforeEach {
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: parameters, encoding: encoding))
+                    request = endpoint.urlRequest
+                }
+
+                it("updates the request correcly") {
+                    let newEndpoint = endpoint.replacing(task: .requestPlain)
+                    let newRequest = newEndpoint.urlRequest
+                    let newEncodedRequest = try? encoding.encode(newRequest!, with: parameters)
+
+                    expect(request?.httpBody).to(equal(newEncodedRequest?.httpBody))
+                    expect(request?.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
+                    expect(request?.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
+                    expect(request?.httpMethod).to(equal(newEncodedRequest?.httpMethod))
                 }
             }
         }

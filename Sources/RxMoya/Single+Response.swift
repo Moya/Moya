@@ -12,7 +12,7 @@ extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Respo
         return flatMap { response -> Single<ElementType> in
             return Single.just(try response.filter(statusCodes: statusCodes))
         }
-    }
+    }   
 
     public func filter(statusCode: Int) -> Single<ElementType> {
         return flatMap { response -> Single<ElementType> in
