@@ -1,12 +1,12 @@
 import Moya
+
+#if os(OSX)
+import AppKit
+#else
 import Foundation
+#endif
 
-extension String {
-    var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-    }
-}
-
+//MARK: - Mock Services
 enum GitHub {
     case zen
     case userProfile(String)
@@ -134,6 +134,14 @@ extension GitHubUserContent: TargetType {
     }
 }
 
+// MARK: - String Helpers
+extension String {
+    var urlEscaped: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    }
+}
+
+// MARK: - DispatchQueue Test Helpers
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
 extension DispatchQueue {
     class var currentLabel: String? {
@@ -150,3 +158,28 @@ private let defaultDownloadDestination: DownloadDestination = { temporaryURL, re
 
     return (temporaryURL, [])
 }
+
+// MARK: - Image Test Helpers
+#if os(iOS) || os(watchOS) || os(tvOS)
+    func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
+        return UIImageJPEGRepresentation(image, compression)
+    }
+#elseif os(OSX)
+    func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
+        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
+        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
+        return imageRep.representation(using: .JPEG, properties:[:])
+    }
+#endif
+
+// Necessary since Image(named:) doesn't work correctly in the test bundle
+extension ImageType {
+    class TestClass { }
+
+    class func testPNGImage(named name: String) -> ImageType {
+        let bundle = Bundle(for: type(of: TestClass()))
+        let path = bundle.path(forResource: name, ofType: "png")
+        return Image(contentsOfFile: path!)!
+    }
+}
+

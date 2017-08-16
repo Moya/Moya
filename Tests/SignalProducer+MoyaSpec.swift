@@ -3,30 +3,6 @@ import Moya
 import ReactiveSwift
 import Nimble
 
-#if os(iOS) || os(watchOS) || os(tvOS)
-    private func ImageJPEGRepresentation(_ image: Image, _ compression: CGFloat) -> Data? {
-        return UIImageJPEGRepresentation(image, compression) as Data?
-    }
-#elseif os(OSX)
-    private func ImageJPEGRepresentation(_ image: Image, _ compression: CGFloat) -> Data? {
-        var imageRect: CGRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
-        return imageRep.representation(using: .JPEG, properties: [:])
-    }
-#endif
-
-// Necessary since Image(named:) doesn't work correctly in the test bundle
-private extension ImageType {
-
-    class TestClass { }
-
-    class func testPNGImage(named name: String) -> ImageType {
-        let bundle = Bundle(for: type(of: TestClass()))
-        let path = bundle.path(forResource: name, ofType: "png")
-        return Image(contentsOfFile: path!)!
-    }
-}
-
 private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalProducer<Response, MoyaError> {
     return SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
 }
