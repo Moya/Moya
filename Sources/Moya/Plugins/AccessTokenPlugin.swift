@@ -15,8 +15,8 @@ public protocol AccessTokenAuthorizable {
 /// An enum representing the header to use with an `AccessTokenPlugin`
 public enum AuthorizationType: String {
     case none
-    case basic = "Basic "
-    case bearer = "Bearer "
+    case basic = "Basic"
+    case bearer = "Bearer"
 }
 
 // MARK: - AccessTokenPlugin
@@ -61,10 +61,9 @@ public struct AccessTokenPlugin: PluginType {
         var request = request
 
         switch authorizationType {
-        case .basic:
-            request.addValue(authorizationType.rawValue + tokenClosure(), forHTTPHeaderField: "Authorization")
-        case .bearer:
-            request.addValue(authorizationType.rawValue + tokenClosure(), forHTTPHeaderField: "Authorization")
+        case .basic, .bearer:
+            let authValue = authorizationType.rawValue + " " + tokenClosure()
+            request.addValue(authValue, forHTTPHeaderField: "Authorization")
         case .none:
             break
         }
