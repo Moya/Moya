@@ -6,7 +6,7 @@ import AppKit
 import Foundation
 #endif
 
-//MARK: - Mock Services
+// MARK: - Mock Services
 enum GitHub {
     case zen
     case userProfile(String)
@@ -160,18 +160,6 @@ private let defaultDownloadDestination: DownloadDestination = { temporaryURL, re
 }
 
 // MARK: - Image Test Helpers
-#if os(iOS) || os(watchOS) || os(tvOS)
-    func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
-        return UIImageJPEGRepresentation(image, compression)
-    }
-#elseif os(OSX)
-    func ImageJPEGRepresentation(_ image: ImageType, _ compression: CGFloat) -> Data? {
-        var imageRect = CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height)
-        let imageRep = NSBitmapImageRep(cgImage: image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
-        return imageRep.representation(using: .JPEG, properties:[:])
-    }
-#endif
-
 // Necessary since Image(named:) doesn't work correctly in the test bundle
 extension ImageType {
     class TestClass { }
@@ -181,5 +169,16 @@ extension ImageType {
         let path = bundle.path(forResource: name, ofType: "png")
         return Image(contentsOfFile: path!)!
     }
-}
 
+    #if os(iOS) || os(watchOS) || os(tvOS)
+        func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
+            return UIImageJPEGRepresentation(self, compression)
+        }
+    #elseif os(OSX)
+        func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
+            var imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+            let imageRep = NSBitmapImageRep(cgImage: self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
+            return imageRep.representation(using: .JPEG, properties:[:])
+        }
+    #endif
+}
