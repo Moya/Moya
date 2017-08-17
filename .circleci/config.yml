@@ -9,20 +9,18 @@ jobs:
   prepare_environment:
     <<: *defaults
     steps:
-      - run:
-          command: |
-            curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
-            brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
-            brew install swiftlint
-            bundle install
+      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
+      # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
+      - run: brew update ; brew update
+      - run: brew install swiftlint
+      - run: bundle install
       - checkout    
   test:
     <<: *defaults
     steps:
-      - run: 
-          command: | 
-            scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
-            rake test
+      # Only bootstrap if we have updated dependencies since our last cache.
+      - run: scripts/bootstrap-if-needed.sh 
+      - run: rake test
   test_integration_carthage:
     <<: *defaults
     steps:
@@ -30,11 +28,10 @@ jobs:
   build_demo:
     <<: *defaults
     steps:
-      - run:
-          command: |
-            cd Demo ; bundle exec pod repo update
-            cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.  
-            rake build_demo 
+      - run: cd Demo ; bundle exec pod repo update
+      # Verbose to keep CI alive during long Specs repo setups.  
+      - run: cd Demo ; bundle exec pod install --verbose
+      - run: rake build_demo 
   danger_codecov:
     <<: *defaults
     steps:
