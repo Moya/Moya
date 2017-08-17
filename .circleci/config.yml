@@ -1,16 +1,52 @@
 version: 2
+defaults: &defaults
+  machine:
+    xcode:
+      version: 9.0
+    environment:
+      LANG: en_US.UTF-8
 jobs:
-  build:
-    machine:
-      xcode:
-        version: 9.0
-      environment:
-        LANG: en_US.UTF-8
+  prepare_environment:
+    <<: *defaults
     steps:
-      - checkout
-      - run: echo 'YOLO'
+      - run:
+          command: |
+            curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
+            brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
+            brew install swiftlint
+            bundle install
+      - checkout    
+  test:
+    <<: *defaults
+    steps:
+      - run: 
+          command: | 
+            scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
+            rake test
+  test_integration_carthage:
+    <<: *defaults
+    steps:
+      - run: rake test:carthage
+  build_demo:
+    <<: *defaults
+    steps:
+      - run:
+          command: |
+            cd Demo ; bundle exec pod repo update
+            cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.  
+            rake build_demo 
+  danger_codecov:
+    steps:
+      - run:
+          command: |
+            bundle exec danger
+            bash <(curl -s https://codecov.io/bash) -J Moya                  
 workflows:
   version: 2
-  build_and_test:
+  pr_build:
     jobs:
-      - build
+      - prepare_environment
+      - test
+      - test_integration_carthage
+      - build_demo
+      - danger_codecov
