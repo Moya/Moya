@@ -36,6 +36,7 @@ jobs:
             cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.  
             rake build_demo 
   danger_codecov:
+    <<: *defaults
     steps:
       - run:
           command: |
