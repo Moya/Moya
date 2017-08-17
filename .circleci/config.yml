@@ -8,7 +8,7 @@ jobs:
         LANG: en_US.UTF-8
     steps:
       - checkout
-      - run: `echo 'YOLO'`
+      - run: echo 'YOLO'
 workflows:
   version: 2
   build_and_test:
