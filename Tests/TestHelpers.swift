@@ -1,10 +1,11 @@
 import Moya
 
-#if os(OSX)
-import AppKit
-#else
+
+#if os(iOS) || os(watchOS) || os(tvOS)
 import UIKit
 import Foundation
+#elseif os(OSX)
+import AppKit
 #endif
 
 // MARK: - Mock Services

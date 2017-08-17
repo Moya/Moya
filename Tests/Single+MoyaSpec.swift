@@ -127,8 +127,7 @@ class SingleMoyaSpec: QuickSpec {
             it("maps data representing an image to an image") {
                 let image = Image.testPNGImage(named: "testImage")
                 guard let data = image.asJPEGRepresentation(0.75) else {
-                    fail("Failed creating Data from Image")
-                    return
+                    fatalError("Failed creating Data from Image")
                 }
 
                 let single = Response(statusCode: 200, data: data).asSingle()
@@ -165,8 +164,7 @@ class SingleMoyaSpec: QuickSpec {
             it("maps data representing some JSON to that JSON") {
                 let json = ["name": "John Crighton", "occupation": "Astronaut"]
                 guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
-                    fail("Failed creating Data from JSON dictionary")
-                    return
+                    fatalError("Failed creating Data from JSON dictionary")
                 }
 
                 let single = Response(statusCode: 200, data: data).asSingle()
@@ -185,8 +183,7 @@ class SingleMoyaSpec: QuickSpec {
             it("returns a Cocoa error domain for invalid JSON") {
                 let json = "{ \"name\": \"john }"
                 guard let data = json.data(using: .utf8) else {
-                    fail("Failed creating Data from JSON String")
-                    return
+                    fatalError("Failed creating Data from JSON String")
                 }
 
                 let single = Response(statusCode: 200, data: data).asSingle()
@@ -215,8 +212,7 @@ class SingleMoyaSpec: QuickSpec {
             it("maps data representing a string to a string") {
                 let string = "You have the rights to the remains of a silent attorney."
                 guard let data = string.data(using: .utf8) else {
-                    fail("Failed creating Data from String")
-                    return
+                    fatalError("Failed creating Data from String")
                 }
 
                 let single = Response(statusCode: 200, data: data).asSingle()
@@ -233,8 +229,7 @@ class SingleMoyaSpec: QuickSpec {
                 let string = "You have the rights to the remains of a silent attorney."
                 let json = ["words_to_live_by": string]
                 guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
-                    fail("Failed creating Data from JSON dictionary")
-                    return
+                    fatalError("Failed creating Data from JSON dictionary")
                 }
 
                 let single = Response(statusCode: 200, data: data).asSingle()
