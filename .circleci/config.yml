@@ -1,0 +1,16 @@
+version: 1
+jobs:
+  build:
+    machine:
+      xcode:
+        version: 9.0
+      environment:
+        LANG: en_US.UTF-8
+    steps:
+      - checkout
+      - run: `echo 'YOLO'`
+workflows:
+  version: 1
+  build_and_test:
+    jobs:
+      - build
