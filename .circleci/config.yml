@@ -47,16 +47,16 @@ workflows:
   pr_build:
     jobs:
       - prepare_environment
-      - test
+      - test:
         requires:
           - prepare_environment
-      - test_integration_carthage
+      - test_integration_carthage:
         requires:
           - prepare_environment      
-      - build_demo
+      - build_demo:
         requires:
           - prepare_environment      
-      - danger_codecov
+      - danger_codecov:
         requires:
           - test
           - test_integration_carthage  
