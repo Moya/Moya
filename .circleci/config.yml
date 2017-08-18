@@ -9,12 +9,12 @@ jobs:
   prepare_environment:
     <<: *defaults
     steps:
+      - checkout    
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
       # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
       - run: brew update ; brew update
       - run: brew install swiftlint
       - run: bundle install
-      - checkout    
   test:
     <<: *defaults
     steps:
