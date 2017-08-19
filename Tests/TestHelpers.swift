@@ -62,27 +62,43 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
 
 enum HTTPBin: TargetType {
     case basicAuth
+    case post
+    case upload(file: URL)
 
     var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
             return "/basic-auth/user/passwd"
+        case .post, .upload:
+            return "/post"
         }
     }
 
     var method: Moya.Method {
-        return .get
+        switch self {
+        case .basicAuth:
+            return .get
+        case .post, .upload:
+            return .post
+        }
     }
 
     var task: Task {
+        switch self {
+        case .basicAuth, .post:
         return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .upload(let fileURL):
+            return .uploadFile(fileURL)
+        }
     }
 
     var sampleData: Data {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
+        case .post, .upload:
+            return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
     }
 
