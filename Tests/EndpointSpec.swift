@@ -70,22 +70,81 @@ class EndpointSpec: QuickSpec {
             }
 
             context("when task is .requestParameters") {
-                let parameters = ["Nemesis": "Harvey"]
-                let encoding = JSONEncoding.default
+                var parameters: [String: Any]!
+                var encoding: ParameterEncoding!
                 var request: URLRequest?
 
                 beforeEach {
+                    parameters = ["Nemesis": "Harvey"]
+                    encoding = JSONEncoding.default
                     endpoint = endpoint.replacing(task: .requestParameters(parameters: parameters, encoding: encoding))
                     request = endpoint.urlRequest
                 }
 
-                it("updates the request correcly") {
+                it("updated the request correcly") {
                     let newEndpoint = endpoint.replacing(task: .requestPlain)
                     let newRequest = newEndpoint.urlRequest
                     let newEncodedRequest = try? encoding.encode(newRequest!, with: parameters)
 
                     expect(request?.httpBody).to(equal(newEncodedRequest?.httpBody))
                     expect(request?.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
+                    expect(request?.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
+                    expect(request?.httpMethod).to(equal(newEncodedRequest?.httpMethod))
+                }
+            }
+
+            context("when task is .requestCompositeData") {
+                var parameters: [String: Any]!
+                var data: Data!
+                var request: URLRequest?
+
+                beforeEach {
+                    parameters = ["Nemesis": "Harvey"]
+                    data = "test data".data(using: .utf8)
+                    endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: data, urlParameters: parameters))
+                    request = endpoint.urlRequest
+                }
+
+                it("updated url") {
+                    let expectedUrl = endpoint.url + "?Nemesis=Harvey"
+                    expect(request?.url?.absoluteString).to(equal(expectedUrl))
+                }
+
+                it("updated httpBody") {
+                    expect(request?.httpBody).to(equal(data))
+                }
+
+                it("didn't update any of the other properties") {
+                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
+            context("when task is .requestCompositeParameters") {
+                var bodyParameters: [String: Any]!
+                var urlParameters: [String: Any]!
+                var encoding: ParameterEncoding!
+                var request: URLRequest?
+
+                beforeEach {
+                    bodyParameters = ["Nemesis": "Harvey"]
+                    urlParameters = ["Harvey": "Nemesis"]
+                    encoding = JSONEncoding.default
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: encoding, urlParameters: urlParameters))
+                    request = endpoint.urlRequest
+                }
+
+                it("updated url") {
+                    let expectedUrl = endpoint.url + "?Harvey=Nemesis"
+                    expect(request?.url?.absoluteString).to(equal(expectedUrl))
+                }
+
+                it("updated the request correcly") {
+                    let newEndpoint = endpoint.replacing(task: .requestPlain)
+                    let newRequest = newEndpoint.urlRequest
+                    let newEncodedRequest = try? encoding.encode(newRequest!, with: bodyParameters)
+
+                    expect(request?.httpBody).to(equal(newEncodedRequest?.httpBody))
                     expect(request?.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
                     expect(request?.httpMethod).to(equal(newEncodedRequest?.httpMethod))
                 }
