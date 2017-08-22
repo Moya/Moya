@@ -100,9 +100,7 @@ extension GitHubUserContent: TargetType {
     public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
-        case .downloadMoyaWebContent(let contentPath):
-            return "/Moya/Moya/master/web/\(contentPath)"
-        case .requestMoyaWebContent(let contentPath):
+        case .downloadMoyaWebContent(let contentPath), .requestMoyaWebContent(let contentPath):
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
