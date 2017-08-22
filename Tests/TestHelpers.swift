@@ -93,6 +93,7 @@ enum HTTPBin: TargetType {
 
 public enum GitHubUserContent {
     case downloadMoyaWebContent(String)
+    case requestMoyaWebContent(String)
 }
 
 extension GitHubUserContent: TargetType {
@@ -101,17 +102,19 @@ extension GitHubUserContent: TargetType {
         switch self {
         case .downloadMoyaWebContent(let contentPath):
             return "/Moya/Moya/master/web/\(contentPath)"
+        case .requestMoyaWebContent(let contentPath):
+            return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
     public var method: Moya.Method {
         switch self {
-        case .downloadMoyaWebContent:
+        case .downloadMoyaWebContent, .requestMoyaWebContent:
             return .get
         }
     }
     public var parameters: [String: Any]? {
         switch self {
-        case .downloadMoyaWebContent:
+        case .downloadMoyaWebContent, .requestMoyaWebContent:
             return nil
         }
     }
@@ -122,11 +125,13 @@ extension GitHubUserContent: TargetType {
         switch self {
         case .downloadMoyaWebContent:
             return .downloadDestination(defaultDownloadDestination)
+        case .requestMoyaWebContent:
+            return .requestPlain
         }
     }
     public var sampleData: Data {
         switch self {
-        case .downloadMoyaWebContent:
+        case .downloadMoyaWebContent, .requestMoyaWebContent:
             return Data(count: 4000)
         }
     }
