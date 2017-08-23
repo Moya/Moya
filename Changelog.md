@@ -8,7 +8,7 @@
 - Added all the `filter`/`map` operators that were available for `Observable<Response>` to `Single<Response>` as well.
 - Added `AuthorizationType` to `AccessTokenAuthorizable` representing request headers of `.none`, `.basic`, and `.bearer`. 
 - Added tests for `Single<Response>` operators.
-- Be notified on progress callback also for data request.
+- Fixed a bug where you are not notified on progress callback for data request.
 
 # 9.0.0-alpha.1
 
