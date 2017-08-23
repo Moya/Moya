@@ -250,7 +250,18 @@ private extension MoyaProvider {
             let result = convertResponseToResult(response, request: request, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceive(result, target: target) }
-            progressCompletion?(ProgressResponse(response: result.value))
+            if let progressCompletion = progressCompletion {
+                switch progressAlamoRequest {
+                case let downloadRequest as DownloadRequest:
+                    progressCompletion(ProgressResponse(progress: downloadRequest.progress, response: result.value))
+                case let uploadRequest as UploadRequest:
+                    progressCompletion(ProgressResponse(progress: uploadRequest.uploadProgress, response: result.value))
+                case let dataRequest as DataRequest:
+                    progressCompletion(ProgressResponse(progress: dataRequest.progress, response: result.value))
+                default:
+                    progressCompletion(ProgressResponse(response: result.value))
+                }
+            }
             completion(result)
         }
 
