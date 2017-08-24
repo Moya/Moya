@@ -1,12 +1,14 @@
 import Moya
+
+
+#if os(iOS) || os(watchOS) || os(tvOS)
+import UIKit
 import Foundation
+#elseif os(OSX)
+import AppKit
+#endif
 
-extension String {
-    var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-    }
-}
-
+// MARK: - Mock Services
 enum GitHub {
     case zen
     case userProfile(String)
@@ -91,25 +93,26 @@ enum HTTPBin: TargetType {
 
 public enum GitHubUserContent {
     case downloadMoyaWebContent(String)
+    case requestMoyaWebContent(String)
 }
 
 extension GitHubUserContent: TargetType {
     public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
-        case .downloadMoyaWebContent(let contentPath):
+        case .downloadMoyaWebContent(let contentPath), .requestMoyaWebContent(let contentPath):
             return "/Moya/Moya/master/web/\(contentPath)"
         }
     }
     public var method: Moya.Method {
         switch self {
-        case .downloadMoyaWebContent:
+        case .downloadMoyaWebContent, .requestMoyaWebContent:
             return .get
         }
     }
     public var parameters: [String: Any]? {
         switch self {
-        case .downloadMoyaWebContent:
+        case .downloadMoyaWebContent, .requestMoyaWebContent:
             return nil
         }
     }
@@ -120,11 +123,13 @@ extension GitHubUserContent: TargetType {
         switch self {
         case .downloadMoyaWebContent:
             return .downloadDestination(defaultDownloadDestination)
+        case .requestMoyaWebContent:
+            return .requestPlain
         }
     }
     public var sampleData: Data {
         switch self {
-        case .downloadMoyaWebContent:
+        case .downloadMoyaWebContent, .requestMoyaWebContent:
             return Data(count: 4000)
         }
     }
@@ -134,6 +139,14 @@ extension GitHubUserContent: TargetType {
     }
 }
 
+// MARK: - String Helpers
+extension String {
+    var urlEscaped: String {
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+    }
+}
+
+// MARK: - DispatchQueue Test Helpers
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
 extension DispatchQueue {
     class var currentLabel: String? {
@@ -149,4 +162,28 @@ private let defaultDownloadDestination: DownloadDestination = { temporaryURL, re
     }
 
     return (temporaryURL, [])
+}
+
+// MARK: - Image Test Helpers
+// Necessary since Image(named:) doesn't work correctly in the test bundle
+extension ImageType {
+    class TestClass { }
+
+    class func testPNGImage(named name: String) -> ImageType {
+        let bundle = Bundle(for: type(of: TestClass()))
+        let path = bundle.path(forResource: name, ofType: "png")
+        return Image(contentsOfFile: path!)!
+    }
+
+    #if os(iOS) || os(watchOS) || os(tvOS)
+        func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
+            return UIImageJPEGRepresentation(self, compression)
+        }
+    #elseif os(OSX)
+        func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
+            var imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
+            let imageRep = NSBitmapImageRep(cgImage: self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
+            return imageRep.representation(using: .JPEG, properties:[:])
+        }
+    #endif
 }

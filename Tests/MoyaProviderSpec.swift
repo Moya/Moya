@@ -705,7 +705,7 @@ class MoyaProviderSpec: QuickSpec {
                 provider = MoyaProvider<GitHubUserContent>()
             }
 
-            it("tracks progress of request") {
+            it("tracks progress of download request") {
 
                 let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
 
@@ -733,6 +733,36 @@ class MoyaProviderSpec: QuickSpec {
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
             }
+
+            it("tracks progress of request") {
+
+                let target: GitHubUserContent = .requestMoyaWebContent("logo_github.png")
+
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: MoyaError?
+
+                waitUntil(timeout: 5.0) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+
+                    let progressCompletionClosure: Completion = { (result) in
+                        if case .failure(let err) = result {
+                            error = err
+                        }
+                        done()
+                    }
+
+                    provider.request(target, callbackQueue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+
+                expect(error).to(beNil())
+                expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
+                expect(completedValues) == [false, false, false, false, true]
+            }
+
         }
 
         describe("using a custom callback queue") {

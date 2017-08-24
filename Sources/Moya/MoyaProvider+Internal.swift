@@ -238,6 +238,10 @@ private extension MoyaProvider {
                 if let uploadRequest = uploadRequest.uploadProgress(closure: progressClosure) as? T {
                     progressAlamoRequest = uploadRequest
                 }
+            case let dataRequest as DataRequest:
+                if let dataRequest = dataRequest.downloadProgress(closure: progressClosure) as? T {
+                    progressAlamoRequest = dataRequest
+                }
             default: break
             }
         }
