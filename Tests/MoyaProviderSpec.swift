@@ -709,12 +709,14 @@ class MoyaProviderSpec: QuickSpec {
 
                 let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
 
+                var progressObjects: [Progress?] = []
                 var progressValues: [Double] = []
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
                 waitUntil(timeout: 5.0) { done in
                     let progressClosure: ProgressBlock = { progress in
+                        progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
                         completedValues.append(progress.completed)
                     }
@@ -732,18 +734,21 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).to(beNil())
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
+                expect(progressObjects.filter{$0 != nil}.count) == 5
             }
 
             it("tracks progress of request") {
 
                 let target: GitHubUserContent = .requestMoyaWebContent("logo_github.png")
 
+                var progressObjects: [Progress?] = []
                 var progressValues: [Double] = []
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
                 waitUntil(timeout: 5.0) { done in
                     let progressClosure: ProgressBlock = { progress in
+                        progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
                         completedValues.append(progress.completed)
                     }
@@ -761,6 +766,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).to(beNil())
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
+                expect(progressObjects.filter{$0 != nil}.count) == 5
             }
 
         }
