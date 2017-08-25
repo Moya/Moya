@@ -2,14 +2,38 @@ import Quick
 import Moya
 import Nimble
 
-class EndpointSpec: QuickSpec {
+final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
+    override static func configure(_ configuration: Configuration) {
+        sharedExamples("endpoint with no request property changed") { (context: SharedExampleContext) in
+            let task = context()["task"] as! Task
+            let oldEndpoint = context()["endpoint"] as! Endpoint<GitHub>
+            let endpoint = oldEndpoint.replacing(task: task)
+            let request = endpoint.urlRequest!
+
+            it("didn't update any of the request properties") {
+                expect(request.httpBody).to(beNil())
+                expect(request.url?.absoluteString).to(equal(endpoint.url))
+                expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+            }
+        }
+    }
+}
+
+final class EndpointSpec: QuickSpec {
+
+    private var simpleGitHubEndpoint: Endpoint<GitHub> {
+        let target: GitHub = .zen
+        let headerFields = ["Title": "Dominar"]
+        return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+    }
+
     override func spec() {
+
         var endpoint: Endpoint<GitHub>!
 
         beforeEach {
-            let target: GitHub = .zen
-            let headerFields = ["Title": "Dominar"]
-            endpoint = Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+            endpoint = self.simpleGitHubEndpoint
         }
 
         it("returns a new endpoint for adding(newHTTPHeaderFields:)") {
@@ -33,24 +57,35 @@ class EndpointSpec: QuickSpec {
 
         describe("converting to urlRequest") {
             context("when task is .requestPlain") {
-                var request: URLRequest?
-
-                beforeEach {
-                    endpoint = endpoint.replacing(task: .requestPlain)
-                    request = endpoint.urlRequest
+                itBehavesLike("endpoint with no request property changed") {
+                    return ["task": Task.requestPlain, "endpoint": self.simpleGitHubEndpoint]
                 }
+            }
 
-                it("didn't update any of the request properties") {
-                    expect(request?.httpBody).to(beNil())
-                    expect(request?.url?.absoluteString).to(equal(endpoint.url))
-                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
-                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
+            context("when task is .uploadFile") {
+                itBehavesLike("endpoint with no request property changed") {
+                    return ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
+            context("when task is .uploadMultipart") {
+                itBehavesLike("endpoint with no request property changed") {
+                    return ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
+            context("when task is .downloadDestination") {
+                itBehavesLike("endpoint with no request property changed") {
+                    let destination: DownloadDestination = { url, response in
+                        return (destinationURL: url, options: [])
+                    }
+                    return ["task": Task.downloadDestination(destination), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
             context("when task is .requestData") {
                 var data: Data!
-                var request: URLRequest?
+                var request: URLRequest!
 
                 beforeEach {
                     data = "test data".data(using: .utf8)
@@ -59,20 +94,20 @@ class EndpointSpec: QuickSpec {
                 }
 
                 it("updated httpBody") {
-                    expect(request?.httpBody).to(equal(data))
+                    expect(request.httpBody).to(equal(data))
                 }
 
                 it("didn't update any of the other properties") {
-                    expect(request?.url?.absoluteString).to(equal(endpoint.url))
-                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
-                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
+                    expect(request.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
                 }
             }
 
             context("when task is .requestParameters") {
                 var parameters: [String: Any]!
                 var encoding: ParameterEncoding!
-                var request: URLRequest?
+                var request: URLRequest!
 
                 beforeEach {
                     parameters = ["Nemesis": "Harvey"]
@@ -86,17 +121,17 @@ class EndpointSpec: QuickSpec {
                     let newRequest = newEndpoint.urlRequest
                     let newEncodedRequest = try? encoding.encode(newRequest!, with: parameters)
 
-                    expect(request?.httpBody).to(equal(newEncodedRequest?.httpBody))
-                    expect(request?.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
-                    expect(request?.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
-                    expect(request?.httpMethod).to(equal(newEncodedRequest?.httpMethod))
+                    expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
+                    expect(request.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
+                    expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
+                    expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
                 }
             }
 
             context("when task is .requestCompositeData") {
                 var parameters: [String: Any]!
                 var data: Data!
-                var request: URLRequest?
+                var request: URLRequest!
 
                 beforeEach {
                     parameters = ["Nemesis": "Harvey"]
@@ -107,11 +142,11 @@ class EndpointSpec: QuickSpec {
 
                 it("updated url") {
                     let expectedUrl = endpoint.url + "?Nemesis=Harvey"
-                    expect(request?.url?.absoluteString).to(equal(expectedUrl))
+                    expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
 
                 it("updated httpBody") {
-                    expect(request?.httpBody).to(equal(data))
+                    expect(request.httpBody).to(equal(data))
                 }
 
                 it("didn't update any of the other properties") {
@@ -124,7 +159,7 @@ class EndpointSpec: QuickSpec {
                 var bodyParameters: [String: Any]!
                 var urlParameters: [String: Any]!
                 var encoding: ParameterEncoding!
-                var request: URLRequest?
+                var request: URLRequest!
 
                 beforeEach {
                     bodyParameters = ["Nemesis": "Harvey"]
@@ -136,7 +171,7 @@ class EndpointSpec: QuickSpec {
 
                 it("updated url") {
                     let expectedUrl = endpoint.url + "?Harvey=Nemesis"
-                    expect(request?.url?.absoluteString).to(equal(expectedUrl))
+                    expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
 
                 it("updated the request correcly") {
@@ -144,9 +179,9 @@ class EndpointSpec: QuickSpec {
                     let newRequest = newEndpoint.urlRequest
                     let newEncodedRequest = try? encoding.encode(newRequest!, with: bodyParameters)
 
-                    expect(request?.httpBody).to(equal(newEncodedRequest?.httpBody))
-                    expect(request?.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
-                    expect(request?.httpMethod).to(equal(newEncodedRequest?.httpMethod))
+                    expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
+                    expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
+                    expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
                 }
             }
         }
