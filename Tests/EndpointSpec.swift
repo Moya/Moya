@@ -28,7 +28,7 @@ final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
             let endpoint = context()["endpoint"] as! Endpoint<GitHub>
             let request = endpoint.urlRequest!
 
-            it("updated the request correcly") {
+            it("updated the request correctly") {
                 let newEndpoint = endpoint.replacing(task: .requestPlain)
                 let newRequest = newEndpoint.urlRequest
                 let newEncodedRequest = try? encoding.encode(newRequest!, with: parameters)
@@ -135,11 +135,11 @@ final class EndpointSpec: QuickSpec {
                     request = endpoint.urlRequest
                 }
 
-                it("updated httpBody") {
+                it("updates httpBody") {
                     expect(request.httpBody).to(equal(data))
                 }
 
-                it("didn't update any of the other properties") {
+                it("doesn't update any of the other properties") {
                     expect(request.url?.absoluteString).to(equal(endpoint.url))
                     expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
                     expect(request.httpMethod).to(equal(endpoint.method.rawValue))
@@ -158,16 +158,16 @@ final class EndpointSpec: QuickSpec {
                     request = endpoint.urlRequest
                 }
 
-                it("updated url") {
+                it("updates url") {
                     let expectedUrl = endpoint.url + "?Nemesis=Harvey"
                     expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
 
-                it("updated httpBody") {
+                it("updates httpBody") {
                     expect(request.httpBody).to(equal(data))
                 }
 
-                it("didn't update any of the other properties") {
+                it("doesn't update any of the other properties") {
                     expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
                     expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
                 }
@@ -187,12 +187,12 @@ final class EndpointSpec: QuickSpec {
                     request = endpoint.urlRequest
                 }
 
-                it("updated url") {
+                it("updates url") {
                     let expectedUrl = endpoint.url + "?Harvey=Nemesis"
                     expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
 
-                it("updated the request correcly") {
+                it("updates the request correctly") {
                     let newEndpoint = endpoint.replacing(task: .requestPlain)
                     let newRequest = newEndpoint.urlRequest
                     let newEncodedRequest = try? encoding.encode(newRequest!, with: bodyParameters)
@@ -213,7 +213,7 @@ final class EndpointSpec: QuickSpec {
                     request = endpoint.urlRequest
                 }
 
-                it("updated url") {
+                it("updates url") {
                     let expectedUrl = endpoint.url + "?Harvey=Nemesis"
                     expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
