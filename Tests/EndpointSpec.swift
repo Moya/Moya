@@ -219,6 +219,15 @@ final class EndpointSpec: QuickSpec {
                 }
             }
         }
+
+        describe("unsuccessful converting to urlRequest") {
+            context("when task is .requestCompositeParameters") {
+                it("throws an error when bodyEncoding is an URLEncoding") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
+                    expect { _ = endpoint.urlRequest }.to(throwAssertion())
+                }
+            }
+        }
     }
 }
 
