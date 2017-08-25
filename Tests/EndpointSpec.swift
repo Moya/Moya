@@ -20,6 +20,28 @@ final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     }
 }
 
+final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
+    override static func configure(_ configuration: Configuration) {
+        sharedExamples("endpoint with encoded parameters") { (context: SharedExampleContext) in
+            let parameters = context()["parameters"] as! [String: Any]
+            let encoding = context()["encoding"] as! ParameterEncoding
+            let endpoint = context()["endpoint"] as! Endpoint<GitHub>
+            let request = endpoint.urlRequest!
+
+            it("updated the request correcly") {
+                let newEndpoint = endpoint.replacing(task: .requestPlain)
+                let newRequest = newEndpoint.urlRequest
+                let newEncodedRequest = try? encoding.encode(newRequest!, with: parameters)
+
+                expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
+                expect(request.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
+                expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
+                expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
+            }
+        }
+    }
+}
+
 final class EndpointSpec: QuickSpec {
 
     private var simpleGitHubEndpoint: Endpoint<GitHub> {
@@ -29,7 +51,6 @@ final class EndpointSpec: QuickSpec {
     }
 
     override func spec() {
-
         var endpoint: Endpoint<GitHub>!
 
         beforeEach {
@@ -55,7 +76,7 @@ final class EndpointSpec: QuickSpec {
             expect(badEndpoint.urlRequest).to(beNil())
         }
 
-        describe("converting to urlRequest") {
+        describe("successful converting to urlRequest") {
             context("when task is .requestPlain") {
                 itBehavesLike("endpoint with no request property changed") {
                     return ["task": Task.requestPlain, "endpoint": self.simpleGitHubEndpoint]
@@ -83,6 +104,27 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .requestParameters") {
+                itBehavesLike("endpoint with encoded parameters") {
+                    let parameters = ["Nemesis": "Harvey"]
+                    let encoding = JSONEncoding.default
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .requestParameters(parameters: parameters, encoding: encoding))
+                    return ["parameters": parameters, "encoding": encoding, "endpoint": endpoint]
+                }
+            }
+
+            context("when task is .downloadParameters") {
+                itBehavesLike("endpoint with encoded parameters") {
+                    let parameters = ["Nemesis": "Harvey"]
+                    let encoding = JSONEncoding.default
+                    let destination: DownloadDestination = { url, response in
+                        return (destinationURL: url, options: [])
+                    }
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .downloadParameters(parameters: parameters, encoding: encoding, destination: destination))
+                    return ["parameters": parameters, "encoding": encoding, "endpoint": endpoint]
+                }
+            }
+
             context("when task is .requestData") {
                 var data: Data!
                 var request: URLRequest!
@@ -101,30 +143,6 @@ final class EndpointSpec: QuickSpec {
                     expect(request.url?.absoluteString).to(equal(endpoint.url))
                     expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
                     expect(request.httpMethod).to(equal(endpoint.method.rawValue))
-                }
-            }
-
-            context("when task is .requestParameters") {
-                var parameters: [String: Any]!
-                var encoding: ParameterEncoding!
-                var request: URLRequest!
-
-                beforeEach {
-                    parameters = ["Nemesis": "Harvey"]
-                    encoding = JSONEncoding.default
-                    endpoint = endpoint.replacing(task: .requestParameters(parameters: parameters, encoding: encoding))
-                    request = endpoint.urlRequest
-                }
-
-                it("updated the request correcly") {
-                    let newEndpoint = endpoint.replacing(task: .requestPlain)
-                    let newRequest = newEndpoint.urlRequest
-                    let newEncodedRequest = try? encoding.encode(newRequest!, with: parameters)
-
-                    expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
-                    expect(request.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
-                    expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
-                    expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
                 }
             }
 
@@ -182,6 +200,22 @@ final class EndpointSpec: QuickSpec {
                     expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
                     expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
                     expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
+                }
+            }
+
+            context("when task is .uploadCompositeMultipart") {
+                var urlParameters: [String: Any]!
+                var request: URLRequest!
+
+                beforeEach {
+                    urlParameters = ["Harvey": "Nemesis"]
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([], urlParameters: urlParameters))
+                    request = endpoint.urlRequest
+                }
+
+                it("updated url") {
+                    let expectedUrl = endpoint.url + "?Harvey=Nemesis"
+                    expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
             }
         }
