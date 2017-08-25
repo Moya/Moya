@@ -9,6 +9,7 @@
 - Added `AuthorizationType` to `AccessTokenAuthorizable` representing request headers of `.none`, `.basic`, and `.bearer`. 
 - Added tests for `Single<Response>` operators.
 - Added `Progress` object into the response when calling progress callback on completion.
+- Added tests for creating `URLRequest` from `Task`.
 - Fixed a bug where you weren't notified on progress callback for data request.
 
 # 9.0.0-alpha.1
