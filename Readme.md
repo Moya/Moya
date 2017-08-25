@@ -58,7 +58,7 @@ your Swift version.
 | Swift version | Moya version  |
 | ------------- | ------------- |
 | 4.X           | >= 9.0        |
-| 3.X           | 8.0           |
+| 3.X           | 8.0.0 - 8.0.5 |
 
 ### Swift Package Manager
 
