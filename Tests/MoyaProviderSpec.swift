@@ -779,7 +779,7 @@ class MoyaProviderSpec: QuickSpec {
 
             it("tracks progress of request") {
 
-                let url = Bundle(for: MoyaProviderSpec.self).urlForImageResource("testImage.png")!
+                let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
                 let target: HTTPBin = .upload(file: url)
                 
                 var progressObjects: [Progress?] = []
