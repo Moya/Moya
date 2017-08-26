@@ -734,7 +734,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).to(beNil())
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
-                expect(progressObjects.filter{$0 != nil}.count) == 5
+                expect(progressObjects.filter { $0 != nil }.count) == 5
             }
 
             it("tracks progress of request") {
@@ -766,7 +766,7 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).to(beNil())
                 expect(progressValues) == [0.25, 0.5, 0.75, 1.0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
-                expect(progressObjects.filter{$0 != nil}.count) == 5
+                expect(progressObjects.filter { $0 != nil }.count) == 5
             }
 
         }
@@ -781,7 +781,7 @@ class MoyaProviderSpec: QuickSpec {
 
                 let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
                 let target: HTTPBin = .upload(file: url)
-                
+
                 var progressObjects: [Progress?] = []
                 var progressValues: [Double] = []
                 var completedValues: [Bool] = []
@@ -807,9 +807,9 @@ class MoyaProviderSpec: QuickSpec {
                 expect(error).to(beNil())
                 expect(progressValues.count) > 3
                 expect(completedValues.count) > 3
-                expect(completedValues.filter{ !$0 }.count) == completedValues.count - 1 // only false except one
+                expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
                 expect(completedValues.last) == true // the last must be true
-                expect(progressObjects.filter{$0 != nil}.count) == progressObjects.count // no nil object
+                expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
             }
         }
 
