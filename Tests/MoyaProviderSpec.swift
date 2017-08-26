@@ -811,6 +811,70 @@ class MoyaProviderSpec: QuickSpec {
                 expect(completedValues.last) == true // the last must be true
                 expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
             }
+
+            it("tracks progress of multipart request") {
+
+                let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
+                let string = "some data"
+                guard let data = string.data(using: .utf8) else { fatalError("Failed creating Data from String \(string)") }
+                let target: HTTPBin = .uploadMultipart([
+                    MultipartFormData(provider: .file(url), name: "file", fileName: "testImage"),
+                    MultipartFormData(provider: .data(data), name: "data")
+                    ], nil)
+
+                var progressObjects: [Progress?] = []
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: MoyaError?
+
+                waitUntil(timeout: 5.0) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressObjects.append(progress.progressObject)
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+
+                    let progressCompletionClosure: Completion = { (result) in
+                        switch result {
+                        case .failure(let err):
+                            error = err
+                        case .success(let response):
+                            do {
+                                let json = try response.mapJSON()
+                                if let json = json as? [String: Any] {
+                                    if let files = json["files"] as? [String: Any] {
+                                        expect(files["file"] ).toNot(beNil())
+                                    } else {
+                                        fail("No file received \(json)")
+                                    }
+                                    if let form = json["form"] as? [String: Any] {
+                                        expect(form["data"] ).toNot(beNil())
+                                        expect(form["data"] as? String) == string
+                                    } else {
+                                        fail("No form data received \(json)")
+                                    }
+                                } else {
+                                    fail("Wrong json format received \(json)")
+                                }
+                            } catch let moyaError as MoyaError {
+                                error = moyaError
+                            } catch {
+                                fail("Error must of type \(MoyaError.self): \(error):")
+                            }
+                        }
+                        done()
+                    }
+
+                    provider.request(target, callbackQueue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+
+                expect(error).to(beNil())
+                expect(progressValues.count) > 3
+                expect(completedValues.count) > 3
+                expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
+                expect(completedValues.last) == true // the last must be true
+                expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
+            }
         }
 
         describe("using a custom callback queue") {
