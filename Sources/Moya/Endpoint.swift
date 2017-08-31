@@ -63,8 +63,10 @@ open class Endpoint<Target> {
 /// Extension for converting an `Endpoint` into an optional `URLRequest`.
 extension Endpoint {
     /// Returns the `Endpoint` converted to a `URLRequest` if valid. Returns `nil` otherwise.
-    public var urlRequest: URLRequest? {
-        guard let requestURL = Foundation.URL(string: url) else { return nil }
+    public func urlRequest() throws -> URLRequest {
+        guard let requestURL = Foundation.URL(string: url) else {
+            throw MoyaError.requestMapping(url)
+        }
 
         var request = URLRequest(url: requestURL)
         request.httpMethod = method.rawValue
@@ -77,18 +79,18 @@ extension Endpoint {
             request.httpBody = data
             return request
         case let .requestParameters(parameters, parameterEncoding):
-            return try? parameterEncoding.encode(request, with: parameters)
+            return try parameterEncoding.encode(request, with: parameters)
         case let .uploadCompositeMultipart(_, urlParameters):
-            return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
+            return try URLEncoding(destination: .queryString).encode(request, with: urlParameters)
         case let .downloadParameters(parameters, parameterEncoding, _):
-            return try? parameterEncoding.encode(request, with: parameters)
+            return try parameterEncoding.encode(request, with: parameters)
         case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
             request.httpBody = bodyData
-            return try? URLEncoding(destination: .queryString).encode(request, with: urlParameters)
+            return try URLEncoding(destination: .queryString).encode(request, with: urlParameters)
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
             if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
-            guard let bodyfulRequest = try? bodyParameterEncoding.encode(request, with: bodyParameters) else { return nil }
-            return try? URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
+            let bodyfulRequest = try bodyParameterEncoding.encode(request, with: bodyParameters)
+            return try URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
         }
     }
 }
@@ -96,13 +98,16 @@ extension Endpoint {
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public var hashValue: Int {
-        return urlRequest?.hashValue ?? url.hashValue
+        let request = try? urlRequest()
+        return request?.hashValue ?? url.hashValue
     }
 
     public static func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
-        if lhs.urlRequest != nil, rhs.urlRequest == nil { return false }
-        if lhs.urlRequest == nil, rhs.urlRequest != nil { return false }
-        if lhs.urlRequest == nil, rhs.urlRequest == nil { return lhs.hashValue == rhs.hashValue }
-        return (lhs.urlRequest == rhs.urlRequest)
+        let lhsRequest = try? lhs.urlRequest()
+        let rhsRequest = try? rhs.urlRequest()
+        if lhsRequest != nil, rhsRequest == nil { return false }
+        if lhsRequest == nil, rhsRequest != nil { return false }
+        if lhsRequest == nil, rhsRequest == nil { return lhs.hashValue == rhs.hashValue }
+        return (lhsRequest == rhsRequest)
     }
 }
