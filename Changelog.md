@@ -1,4 +1,7 @@
 # Next
+- **Breaking Change** Remove all default arguments from `Endpoint` initializer.
+
+# 9.0.0-beta.1
 - **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
 - **Breaking Change** Flattened `UploadType` and `DownloadType` into `Task` cases.
 - **Breaking Change** Replaced `shouldAuthorize: Bool` in `AccessTokenAuthorizable` with `authorizationType: AuthorizationType`.
