@@ -55,11 +55,11 @@ ready for production use.
 Below is a table that shows which version of Moya you should use for
 your Swift version.
 
-| Swift version | Moya version  |
-| ------------- | ------------- |
-| 4.X           | >= 9.0        |
-| 3.X           | 8.0.0 - 8.0.5 |
-| 2.3           | 7.0.2 - 7.0.4 |
+| Swift | Moya          | RxMoya        | ReactiveMoya  |
+| ----- | ------------- |---------------|---------------|
+| 4.X   | >= 9.0        | -             | -             |
+| 3.X   | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 |
+| 2.3   | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 |
 
 ### Swift Package Manager
 
