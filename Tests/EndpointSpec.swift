@@ -47,7 +47,9 @@ final class EndpointSpec: QuickSpec {
     private var simpleGitHubEndpoint: Endpoint<GitHub> {
         let target: GitHub = .zen
         let headerFields = ["Title": "Dominar"]
-        return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+        return Endpoint<GitHub>(url: url(target),
+                                sampleResponseClosure: {.networkResponse(200, target.sampleData)},
+                                method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
     }
 
     override func spec() {
@@ -71,7 +73,9 @@ final class EndpointSpec: QuickSpec {
         }
 
         it("returns a nil urlRequest for an invalid URL") {
-            let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+            let badEndpoint = Endpoint<Empty>(url: "some invalid URL",
+                                              sampleResponseClosure: { .networkResponse(200, Data()) },
+                                              method: .get, task: .requestPlain, httpHeaderFields: nil)
 
             expect(badEndpoint.urlRequest).to(beNil())
         }
