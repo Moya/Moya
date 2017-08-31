@@ -48,6 +48,13 @@ public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError
                 default:
                     test = false
                 }
+            case .parameterEncoding:
+                switch expectedValue {
+                case .parameterEncoding:
+                    test = true
+                default:
+                    test = false
+                }
             }
         } else {
             test = false
