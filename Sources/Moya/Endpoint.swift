@@ -27,7 +27,7 @@ open class Endpoint<Target> {
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method = Moya.Method.get,
-                task: Task = .requestPlain,
+                task: Task,
                 httpHeaderFields: [String: String]? = nil) {
 
         self.url = url
