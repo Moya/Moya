@@ -28,9 +28,28 @@ extension MyService: TargetType {
             let descriptionData = MultipartFormData(provider: .data(description.data(using: .utf8)!), name: "description")
             let multipartData = [gifData, descriptionData]
 
-            return uploadMultipart(multipartData)
-        default:
-            return .requestPlain
+            return .uploadMultipart(multipartData)
+        }
+    }
+//...
+}
+```
+
+## Parameters in URL
+
+In case of parameters in URL, we can just use our new `Task` type, `uploadCompositeMultipart(_:urlParameters)`:
+
+```swift
+extension MyService: TargetType {
+//...
+    public var task: Task {
+        switch self {
+        case let .uploadGif(data, description):
+            let gifData = MultipartFormData(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")
+            let multipartData = [gifData]
+            let urlParameters = ["description": description]
+
+            return .uploadCompositeMultipart(multipartData, urlParameters: urlParameters)
         }
     }
 //...
