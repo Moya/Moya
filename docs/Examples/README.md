@@ -9,10 +9,9 @@
 
 * [Optional request parameters](OptionalParameters.md)
 
-## Subclassing and wrapping
+## Wrapping adapters
 
 * [Wrapping the **request -> result** cycle into own adapter](WrappingInAdapter.md)
-* [Subclassing Provider and refreshing session automatically](SubclassingProvider.md)
 
 ## Error handling
 
