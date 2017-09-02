@@ -8,7 +8,6 @@
 ## Endpoints customization
 
 * [Optional request parameters](OptionalParameters.md)
-* [Use Array instead of Dictionary as JSON root container](ArrayAsRootContainer.md)
 
 ## Subclassing and wrapping
 
