@@ -80,7 +80,7 @@ public var task: Task {
 }
 ```
 
-Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we use the Swift `_` ignored-value symbol.
+Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we just skip parenthesis.
 Let's take a look at the `branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
 
 While we are talking about parameters, we needed to indicate how we want our
@@ -91,14 +91,19 @@ also create your own encoder that conforms to `ParameterEncoding` (e.g.
 `XMLEncoder`).
 
 A `task` property represents how you are sending / receiving data and allows you to add data, files and streams to the request body. There are several `.request` types:
-
 - `.requestPlain` with nothing to send at all
-- `.requestData` with which you can send `Data` (useful for `Encodable` types in Swift 4)
-- `.requestParameters` which allows you to send parameters with an encoding
-- `.requestCompositeData` & `.requestCompositeParameters` which allow you to combine url encoded parameters with another type (data / parameters)
+- `.requestData(_:)` with which you can send `Data` (useful for `Encodable` types in Swift 4)
+- `.requestParameters(parameters:encoding:)` which allows you to send parameters with an encoding
+- `.requestCompositeData(bodyData:urlParameters:)` & `.requestCompositeParameters(bodyParameters:bodyEncoding:urlParameters)` which allow you to combine url encoded parameters with another type (data / parameters)
 
-Also there are two upload types: `.uploadFile` to upload a file from a URL and `.uploadMultipart` for multipart uploads.
-And two download types: `.downloadDestination` for a plain file download and `.downloadParameters` for downloading with parameters sent alongside the request.
+Also, there are three upload types: 
+- `.uploadFile(_:)` to upload a file from a URL, 
+- `.uploadMultipart(_:)` for multipart uploads
+- `.uploadCompositeMultipart(_:urlParameters:)` which allows you to pass multipart data and url parameters at once
+
+And two download types: 
+- `.downloadDestination(_:)` for a plain file download
+- `.downloadParameters(parameters:encoding:destination:)` for downloading with parameters sent alongside the request.
 
 Next, notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
