@@ -290,22 +290,3 @@ private extension MoyaProvider {
         form.append(stream, withLength: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
     }
 }
-
-/// Encode parameters for multipart/form-data
-private func multipartQueryComponents(_ key: String, _ value: Any) -> [(String, String)] {
-    var components: [(String, String)] = []
-
-    if let dictionary = value as? [String: Any] {
-        for (nestedKey, value) in dictionary {
-            components += multipartQueryComponents("\(key)[\(nestedKey)]", value)
-        }
-    } else if let array = value as? [Any] {
-        for value in array {
-            components += multipartQueryComponents("\(key)[]", value)
-        }
-    } else {
-        components.append((key, "\(value)"))
-    }
-
-    return components
-}
