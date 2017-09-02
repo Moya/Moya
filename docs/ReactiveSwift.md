@@ -46,7 +46,7 @@ provider.reactive.requestWithProgress(.zen).start { event in
 }
 ```
 
-For `ReactiveSwiftMoyaProvider`, the network request is not started
+It's important to remember that network request is not started
 until the signal is subscribed to. If the subscription to the signal
 is disposed of before the request completes, the request is canceled.
 
@@ -60,11 +60,11 @@ then it sends an error, instead. The error's `code` is the failing
 request's status code, if any, and the response data, if any.
 
 The `Moya.Response` class contains a `statusCode`, some `data`,
-and a(n optional) `URLResponse`. You can use these values however
+and a(n optional) `HTTPURLResponse`. You can use these values however
 you like in `startWithNext` or `map` calls.
 
 To make things even awesomer, Moya provides some extensions to
-`SignalProducer` (and `RACSignal`) that make dealing with `Moya.Responses`
+`SignalProducer` that make dealing with `Moya.Responses`
 really easy.
 
 - `filter(statusCodes:)` takes a range of status codes. If the
