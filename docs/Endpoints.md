@@ -7,6 +7,7 @@ following data:
 - The url.
 - The HTTP method (`GET`, `POST`, etc).
 - The HTTP request header fields.
+- `Task` to differentiate `upload`, `download` or `request`.
 - The sample response (for unit testing).
 
 [Providers](Providers.md) map [Targets](Targets.md) to Endpoints, then map
@@ -41,8 +42,9 @@ an Endpoint can provide.
 
 ## From Target to Endpoint
 
-You can add parameters or HTTP header fields in this closure. For example, we
-may wish to set our application name in the HTTP header fields for server-side
+In this closure you have absolute power over converting from `Target` to `Endpoint`.
+You can change the `task`, `method`, `url`, `headers` or `sampleResponse`.
+For example, we may wish to set our application name in the HTTP header fields for server-side
 analytics.
 
 ```swift
@@ -57,7 +59,7 @@ let provider = MoyaProvider<GitHub>(endpointClosure: endpointClosure)
 
 This also means that you can provide additional parameters to some or all of
 your endpoints. For example, say that there is an authentication token we need
-for  all values of the hypothetical `MyTarget` target, with the exception of the
+for all values of the hypothetical `MyTarget` target, with the exception of the
 target that actually does the authentication. We could construct an
 `endpointClosure` resembling the following.
 
@@ -86,10 +88,11 @@ Sample responses are a requirement of the `TargetType` protocol. However, they
 only specify the data returned. The Target-to-Endpoint mapping closure is where
 you can specify more details, which is useful for unit testing.
 
-Sample responses have one of two values:
+Sample responses have one of these values:
 
-- `NetworkError`, with an `NSError?` optional error type.
-- `NetworkResponse`, with an `Int` status code and an `Data` returned data.
+- `.networkError(NSError)` when network failed to send the request, or failed to retrieve a response (eg a timeout).
+- `.networkResponse(Int, Data)` where `Int` is a status code and `Data` is the returned data.
+- `.response(HTTPURLResponse, Data)` where `HTTPURLResponse` is the response and `Data` is the returned data. This one can be used to fully stub a response.
 
 
 ## Request Mapping
@@ -105,7 +108,7 @@ that Moya will use to reason about the network API call. At some point, that
 That's what the `requestClosure` parameter is for.
 
 The `requestClosure` is an optional, last-minute way to modify the request
-that hits the network. It has a default value of `MoyaProvider.DefaultRequestMapper`,
+that hits the network. It has a default value of `MoyaProvider.defaultRequestMapping`,
 which simply uses the `urlRequest` property of the `Endpoint` instance.
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
