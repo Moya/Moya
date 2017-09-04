@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         .Package(url: "https://github.com/Alamofire/Alamofire.git", majorVersion: 4),
         .Package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", majorVersion: 2),
-        .Package(url: "https://github.com/ReactiveX/RxSwift.git", majorVersion: 3, minor: 3),
+        .Package(url: "https://github.com/ReactiveX/RxSwift.git", Version(4, 0, 0, prereleaseIdentifiers: ["alpha", "1"])),
         .Package(url: "https://github.com/antitypical/Result.git", majorVersion: 3)
     ],
     exclude: [
