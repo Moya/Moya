@@ -158,11 +158,11 @@ private extension MoyaProvider {
             for bodyPart in multipartBody {
                 switch bodyPart.provider {
                 case .data(let data):
-                    self.append(data: data, bodyPart: bodyPart, to: form)
+                    form.append(data: data, bodyPart: bodyPart)
                 case .file(let url):
-                    self.append(fileURL: url, bodyPart: bodyPart, to: form)
+                    form.append(fileURL: url, bodyPart: bodyPart)
                 case .stream(let stream, let length):
-                    self.append(stream: stream, length: length, bodyPart: bodyPart, to: form)
+                    form.append(stream: stream, length: length, bodyPart: bodyPart)
                 }
             }
         }
@@ -263,49 +263,4 @@ private extension MoyaProvider {
 
         return CancellableToken(request: progressAlamoRequest)
     }
-}
-
-// MARK: RequestMultipartFormData appending
-
-private extension MoyaProvider {
-    func append(data: Data, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
-        if let mimeType = bodyPart.mimeType {
-            if let fileName = bodyPart.fileName {
-                form.append(data, withName: bodyPart.name, fileName: fileName, mimeType: mimeType)
-            } else {
-                form.append(data, withName: bodyPart.name, mimeType: mimeType)
-            }
-        } else {
-            form.append(data, withName: bodyPart.name)
-        }
-    }
-    func append(fileURL url: URL, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
-        if let fileName = bodyPart.fileName, let mimeType = bodyPart.mimeType {
-            form.append(url, withName: bodyPart.name, fileName: fileName, mimeType: mimeType)
-        } else {
-            form.append(url, withName: bodyPart.name)
-        }
-    }
-    func append(stream: InputStream, length: UInt64, bodyPart: MultipartFormData, to form: RequestMultipartFormData) {
-        form.append(stream, withLength: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
-    }
-}
-
-/// Encode parameters for multipart/form-data
-private func multipartQueryComponents(_ key: String, _ value: Any) -> [(String, String)] {
-    var components: [(String, String)] = []
-
-    if let dictionary = value as? [String: Any] {
-        for (nestedKey, value) in dictionary {
-            components += multipartQueryComponents("\(key)[\(nestedKey)]", value)
-        }
-    } else if let array = value as? [Any] {
-        for value in array {
-            components += multipartQueryComponents("\(key)[]", value)
-        }
-    } else {
-        components.append((key, "\(value)"))
-    }
-
-    return components
 }

@@ -30,3 +30,30 @@ public struct MultipartFormData {
     /// The MIME type
     public let mimeType: String?
 }
+
+// MARK: RequestMultipartFormData appending
+internal extension RequestMultipartFormData {
+    func append(data: Data, bodyPart: MultipartFormData) {
+        if let mimeType = bodyPart.mimeType {
+            if let fileName = bodyPart.fileName {
+                append(data, withName: bodyPart.name, fileName: fileName, mimeType: mimeType)
+            } else {
+                append(data, withName: bodyPart.name, mimeType: mimeType)
+            }
+        } else {
+            append(data, withName: bodyPart.name)
+        }
+    }
+
+    func append(fileURL url: URL, bodyPart: MultipartFormData) {
+        if let fileName = bodyPart.fileName, let mimeType = bodyPart.mimeType {
+            append(url, withName: bodyPart.name, fileName: fileName, mimeType: mimeType)
+        } else {
+            append(url, withName: bodyPart.name)
+        }
+    }
+
+    func append(stream: InputStream, length: UInt64, bodyPart: MultipartFormData) {
+        append(stream, withLength: length, name: bodyPart.name, fileName: bodyPart.fileName ?? "", mimeType: bodyPart.mimeType ?? "")
+    }
+}

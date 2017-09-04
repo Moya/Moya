@@ -13,6 +13,7 @@
 		12F88B3755343FB9DD244AEC /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A53DF8B33D58E052A78E2BA /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1425941E1F42FDED00C9E171 /* Single+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FB7A3E1F3E089900308949 /* Single+Response.swift */; };
 		1446FBB31F214C5200C1EFF2 /* URL+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */; };
+		147E26EC1F5B14B300C1F513 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147E26EB1F5B14B300C1F513 /* Task.swift */; };
 		148FAF0DFB395B4A64314803 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */; };
 		15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D47F3DC51C28D950491FAAB /* MoyaError.swift */; };
 		1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553E5591EE96535C5310C02 /* NetworkLoggerPlugin.swift */; };
@@ -88,6 +89,7 @@
 /* Begin PBXFileReference section */
 		019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ReactiveMoya.h; path = "Sources/Supporting Files/ReactiveMoya.h"; sourceTree = "<group>"; };
 		1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "URL+Moya.swift"; path = "Sources/Moya/URL+Moya.swift"; sourceTree = "<group>"; };
+		147E26EB1F5B14B300C1F513 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Task.swift; path = Sources/Moya/Task.swift; sourceTree = "<group>"; };
 		14FB7A3E1F3E089900308949 /* Single+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Single+Response.swift"; path = "Sources/RxMoya/Single+Response.swift"; sourceTree = "<group>"; };
 		225C397C03E17F7DFBCA2848 /* MoyaProvider+Internal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "MoyaProvider+Internal.swift"; path = "Sources/Moya/MoyaProvider+Internal.swift"; sourceTree = "<group>"; };
 		269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SignalProducer+Response.swift"; path = "Sources/ReactiveMoya/SignalProducer+Response.swift"; sourceTree = "<group>"; };
@@ -192,20 +194,20 @@
 				C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */,
 				7F112022D8F42844A7D5CB5C /* ErrorTests.swift */,
 				819334FE5D32EFB82599D482 /* MethodSpec.swift */,
+				C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */,
+				4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */,
 				82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */,
 				B1F68927EA26EBDB45E82C8C /* MoyaProviderSpec.swift */,
 				369649DCA3D957F2F9D8053A /* MultipartFormDataSpec.swift */,
 				7D11E4BE1D5112E6972AD09F /* MultiTargetSpec.swift */,
 				832781077A551E1F86E5F2D4 /* NetworkLoggerPluginSpec.swift */,
 				461DEED329CE157E412CBCE0 /* Observable+MoyaSpec.swift */,
-				78A2D39A1F44D45100C9E122 /* Single+MoyaSpec.swift */,
-				C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */,
-				4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */,
-				F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */,
-				4650771638DBA96BDE28F11B /* TestHelpers.swift */,
 				78A2D3981F44BACD00C9E122 /* RxTestHelpers.swift */,
-				DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */,
+				F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */,
+				78A2D39A1F44D45100C9E122 /* Single+MoyaSpec.swift */,
+				4650771638DBA96BDE28F11B /* TestHelpers.swift */,
 				CA93F1BAD55FF95EDE17EE61 /* testImage.png */,
+				DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -239,15 +241,16 @@
 				86F3C0EA472C23E786E23CE9 /* Image.swift */,
 				88D4E607168B403E754F510C /* Moya+Alamofire.swift */,
 				2D47F3DC51C28D950491FAAB /* MoyaError.swift */,
+				851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */,
 				39F87B4349AC772FF766904B /* MoyaProvider+Defaults.swift */,
 				225C397C03E17F7DFBCA2848 /* MoyaProvider+Internal.swift */,
-				851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */,
 				B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */,
 				8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */,
 				61A693AF0E88E83E91A47A99 /* Plugin.swift */,
 				536E44826931EEDF3B8DFED4 /* Plugins */,
 				7EFCB6731C60D3830DA5D2CB /* Response.swift */,
 				9C38151BF038BA0B61EF5A62 /* TargetType.swift */,
+				147E26EB1F5B14B300C1F513 /* Task.swift */,
 				1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */,
 			);
 			name = Moya;
@@ -509,6 +512,7 @@
 				15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */,
 				59BC4B9B9D0D6F9C060E5620 /* MoyaProvider+Defaults.swift in Sources */,
 				9854C1DBF14818CCA76AEC7F /* MoyaProvider+Internal.swift in Sources */,
+				147E26EC1F5B14B300C1F513 /* Task.swift in Sources */,
 				5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */,
 				61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */,
 				5054F87AFF61EAC0097F88BD /* MultiTarget.swift in Sources */,
