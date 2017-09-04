@@ -16,7 +16,7 @@ Here, our additional parameter is `description`, which is a `String`.
 
 ## Parameters in body
 
-When we want to perform multipart upload request with additional parameters in request body, we have to create a `MultiPartFormatData` for each of our parts and them return a `.uploadMultipart(_:)` in the `task` property:
+When we want to perform multipart upload request with additional parameters in request body, we have to create a `MultipartFormData` for each of our parts and them return a `.uploadMultipart(_:)` in the `task` property:
 
 ```swift
 extension MyService: TargetType {
