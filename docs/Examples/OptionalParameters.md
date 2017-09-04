@@ -14,7 +14,7 @@ extension MyService: TargetType {
         case .users(let limit):
             var params: [String: Any] = [:]
             params["limit"] = limit
-            return .requestParameters(params, URLEncoding.default)
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         default:
             return .requestPlain
         }
@@ -53,7 +53,7 @@ You **have to** add optional parameters like shown above, one per line. Optional
 	    switch self {
 	    case .users(let limit):
 	        let params: [String: Any] = ["limit": limit]
-	        return .requestParameters(params, URLEncoding.default)
+	        return .requestParameters(parameters: params, encoding: URLEncoding.default)
         default:
             return .requestPlain
         }

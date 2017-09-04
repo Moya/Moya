@@ -7,7 +7,7 @@ failures.
 
 ```swift
 struct Network {
-    static let provider = MoyaProvider(endpointClosure: endpointClosure)
+    static let provider = MoyaProvider<MyService>(endpointClosure: endpointClosure)
 
     static func request(
         target: MyService,

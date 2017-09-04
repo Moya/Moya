@@ -3,9 +3,9 @@
 Here we will show you how to achieve a simple setup for assets downloading.
 First, let's create a new `TargetType` implementation:
 ```swift
-fileprivate static let assetDir: URL = {
+fileprivate let assetDir: URL = {
   let directoryURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-  return directoryURLs.first ?? NSTemporaryDirectory()
+  return directoryURLs.first ?? URL(fileURLWithPath: NSTemporaryDirectory())
 }()
 
 enum Asset: TargetType {
@@ -34,7 +34,7 @@ enum Asset: TargetType {
   }
 
   var task: Task {
-    return .download(downloadDestination)
+    return .downloadDestination(downloadDestination)
   }
 
   /*
@@ -84,5 +84,4 @@ final class TestViewModel {
         }
     }
 }
-
 ```

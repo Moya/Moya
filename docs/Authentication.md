@@ -97,16 +97,16 @@ itself sometimes require network requests be performed _first_, so signing
 a request for Moya is an asynchronous process. Let's see an example.
 
 ```swift
-let requestClosure = { (endpoint: Endpoint<YourAPI>, done: URLRequest -> Void) in
+let requestClosure = { (endpoint: Endpoint<YourAPI>, done: MoyaProvider.RequestResultClosure) in
     let request = endpoint.urlRequest // This is the request Moya generates
     YourAwesomeOAuthProvider.signRequest(request, completion: { signedRequest in
         // The OAuth provider can make its own network calls to sign your request.
         // However, you *must* call `done()` with the signed so that Moya can
         // actually send it!
-        done(signedRequest)
+        done(.success(signedRequest))
     })
 }
-let provider = MoyaProvider(requestClosure: requestClosure)
+let provider = MoyaProvider<YourAPI>(requestClosure: requestClosure)
 ```
 
 (Note that Swift is able to infer the `YourAPI` generic – neat!)

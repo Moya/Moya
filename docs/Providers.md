@@ -19,7 +19,7 @@ provider.request(.zen) { result in
 
 That's it! The `request()` method returns a `Cancellable`, which has
 only one public function, `cancel()`, which you can use to cancel the
-request.  See [Examples](Examples) for more information about the `Result`
+request. See [Examples](Examples) for more information about the `Result`
 type.
 
 Remember, *where* you put your target and the provider, are completely up
