@@ -1,4 +1,6 @@
 # Next
+
+# 9.0.0
 - Removed default value for task from `Endpoint` initializer
 
 # 9.0.0-beta.1
