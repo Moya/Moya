@@ -1,10 +1,10 @@
 # Multipart upload
 
-Suppose we want to upload a GIF with additional parameters in one request. How to approach this problem? It depends if our parameters should be in body of the request or in the URL.
+Suppose we want to upload a GIF with additional parameters in one request. How do we approach this problem? It depends if the parameters should be part of the body (e.g. POST, PUT), or part of the URL (e.g. GET).
 
 ## Setup
 
-Let's say we have our `TargetType` already setup - it's called `MyService`:
+Let's say we have a `MyService` service conforming to `TargetType`:
 
 ```swift
 public enum MyService {
@@ -16,7 +16,7 @@ Here, our additional parameter is `description`, which is a `String`.
 
 ## Parameters in body
 
-When we want to add parameters to the body of our request, we need to append them as a `MultipartFormData` in the `task` property:
+When we want to perform multipart upload request with additional parameters in request body, we have to create a `MultiPartFormatData` for each of our parts and them return a `.uploadMultipart(_:)` in the `task` property:
 
 ```swift
 extension MyService: TargetType {
