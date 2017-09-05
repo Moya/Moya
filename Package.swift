@@ -1,28 +1,35 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "Moya",
-    targets: [
-        Target(
-            name: "Moya"
-        ),
-        Target(
-            name: "ReactiveMoya",
-            dependencies: ["Moya"]
-        ),
-        Target(
-            name: "RxMoya",
-            dependencies: ["Moya"]
-        )
+    products: [
+        .library(name: "Moya", targets: ["Moya"]),
+        .library(name: "ReactiveMoya", targets: ["ReactiveMoya"]),
+        .library(name: "RxMoya", targets: ["RxMoya"]),
     ],
     dependencies: [
-        .Package(url: "https://github.com/Alamofire/Alamofire.git", majorVersion: 4),
-        .Package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", majorVersion: 2),
-        .Package(url: "https://github.com/ReactiveX/RxSwift.git", Version(4, 0, 0, prereleaseIdentifiers: ["alpha", "1"])),
-        .Package(url: "https://github.com/antitypical/Result.git", majorVersion: 3)
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "4.1.0")),
+        .package(url: "https://github.com/antitypical/Result.git", .upToNextMajor(from: "3.2.0")),
+        .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", .upToNextMajor(from: "2.0.0")),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact(Version(4, 0, 0, prereleaseIdentifiers: ["alpha", "1"]))),
     ],
-    exclude: [
-        "Tests",
-        "Sources/Supporting Files"
-    ]
+    targets: [
+         .target(
+            name: "Moya",
+            dependencies: [
+                "Alamofire",
+                "Result"]),
+        .target(
+            name: "ReactiveMoya",
+            dependencies: [
+                "Moya",
+                "ReactiveSwift"]),
+        .target(
+            name: "RxMoya",
+            dependencies: [
+                "Moya",
+                "RxSwift"]),
+    ],
+    swiftLanguageVersions: [4]
 )
