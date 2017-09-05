@@ -56,15 +56,15 @@ extension YourAPI: TargetType, AccessTokenAuthorizable {
     case targetDoesNotNeedAuth
 
     var authorizationType: AuthorizationType {
-    switch self {
-        case targetThatNeedsBearerAuth:
-            return .bearer
-        case targetThatNeedsBasicAuth:
-            return .basic
-        case targetDoesNotNeedAuth:
-            return .none
+        switch self {
+            case .targetThatNeedsBearerAuth:
+                return .bearer
+            case .targetThatNeedsBasicAuth:
+                return .basic
+            case .targetDoesNotNeedAuth:
+                return .none
+            }
         }
-    }
 }
 ```
 
