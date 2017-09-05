@@ -67,7 +67,7 @@ you should use for your Swift version.
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.Package(url: "https://github.com/Moya/Moya.git", majorVersion: 8)
+.Package(url: "https://github.com/Moya/Moya.git", majorVersion: 9)
 ```
 
 and then specify `.Target(name: "Moya")` as a dependency of the Target in which you wish to use Moya.
@@ -79,7 +79,7 @@ import PackageDescription
 let package = Package(
     name: "MyApp",
     dependencies: [
-        .Package(url: "https://github.com/Moya/Moya.git", majorVersion: 8)
+        .Package(url: "https://github.com/Moya/Moya.git", majorVersion: 9)
     ]
 )
 ```
