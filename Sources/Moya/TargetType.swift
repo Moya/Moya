@@ -23,10 +23,22 @@ public protocol TargetType {
 
     /// The headers to be used in the request.
     var headers: [String: String]? { get }
+    
+    var cacheTimeInSecondes: Int { get }
+    
+    var ignoreCache: Bool { get }
 }
 
 public extension TargetType {
     var validate: Bool {
+        return false
+    }
+    
+    var cacheTimeInSecondes: Int {
+        return 0
+    }
+    
+    var ignoreCache: Bool {
         return false
     }
 }

@@ -6,6 +6,7 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     public let data: Data
     public let request: URLRequest?
     public let response: HTTPURLResponse?
+    public var isDataFromCache: Bool = false
 
     /// Initialize a new `Response`.
     public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: HTTPURLResponse? = nil) {
