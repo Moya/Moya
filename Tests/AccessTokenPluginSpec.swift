@@ -46,6 +46,15 @@ final class AccessTokenPluginSpec: QuickSpec {
             let preparedRequest = plugin.prepare(request, target: target)
             expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "Basic eyeAm.AJsoN.weBTOKen"]
         }
+      
+        it("adds a primitive access token as url parameter when AuthorizationType is .urlParameter") {
+          let target = TestTarget(authorizationType: .urlParameter)
+          let request = URLRequest(url: target.baseURL)
+          let preparedRequest = plugin.prepare(request, target: target)
+          let urlComponents = URLComponents(url: preparedRequest.url!, resolvingAgainstBaseURL: true)
+          expect(urlComponents!.queryItems!.first!.name) == "access_token"
+          expect(urlComponents!.queryItems!.first!.value!) == "eyeAm.AJsoN.weBTOKen"
+        }
 
     }
 }
