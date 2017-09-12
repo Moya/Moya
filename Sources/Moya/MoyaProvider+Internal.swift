@@ -196,6 +196,13 @@ private extension MoyaProvider {
     }
 
     func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
+        
+        if let response = loadCache(withTarget: target) {
+            let result = convertResponseToResult(response, request: request, data: nil, error: nil)
+            completion(result)
+            return CancellableToken(action: {})
+        }
+        
         let initialRequest = manager.request(request as URLRequestConvertible)
         let alamoRequest = target.validate ? initialRequest.validate() : initialRequest
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
@@ -239,6 +246,11 @@ private extension MoyaProvider {
         }
 
         let completionHandler: RequestableCompletion = { response, request, data, error in
+            cache_queue.async { [weak self] in
+                if let target = target, let response = response {
+                    self?.saveResponseToCache(target, response)
+                }
+            }
             let result = convertResponseToResult(response, request: request, data: data, error: error)
             // Inform all plugins about the response
             plugins.forEach { $0.didReceive(result, target: target) }
