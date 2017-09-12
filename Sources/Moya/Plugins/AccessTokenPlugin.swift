@@ -12,7 +12,7 @@ public protocol AccessTokenAuthorizable {
 
 // MARK: - AuthorizationType
 
-/// An enum representing the header and url parameter to use with an `AccessTokenPlugin`
+/// An enum representing the header or url parameter to use with an `AccessTokenPlugin`
 public enum AuthorizationType: String {
     case none
     case basic = "Basic"
@@ -68,16 +68,19 @@ public struct AccessTokenPlugin: PluginType {
             request.addValue(authValue, forHTTPHeaderField: "Authorization")
           
         case .urlParameter:
-          var existingComponents = URLComponents(url: request.url!, resolvingAgainstBaseURL: true)
+          guard let requestUrl = request.url,
+            var existingComponents = URLComponents(url: requestUrl, resolvingAgainstBaseURL: true)
+            else { return request }
+          
           let tokenQueryItem = URLQueryItem(name: authorizationType.rawValue, value: tokenClosure())
           var updatedQueryItems = [tokenQueryItem]
           
-          if let queryItems = existingComponents?.queryItems {
-            queryItems.forEach { updatedQueryItems.append($0) }
+          if let currentQueryItems = existingComponents.queryItems {
+            updatedQueryItems.append(contentsOf: currentQueryItems)
           }
           
-          existingComponents?.queryItems = updatedQueryItems
-          request.url = existingComponents?.url
+          existingComponents.queryItems = updatedQueryItems
+          request.url = existingComponents.url
           
         case .none:
             break
