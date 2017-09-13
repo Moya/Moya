@@ -1,6 +1,34 @@
 import Foundation
 import Result
 
+public class MoyaCacheMetadata: NSObject, NSSecureCoding {
+    let response: HTTPURLResponse
+    let data: Data
+    let modifyDate: Date
+    
+    init(response: HTTPURLResponse, data: Data) {
+        self.response = response
+        self.data = data
+        self.modifyDate = Date()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        self.response = aDecoder.decodeObject(forKey: "response") as! HTTPURLResponse
+        self.data = aDecoder.decodeObject(forKey: "data") as! Data
+        self.modifyDate = aDecoder.decodeObject(forKey: "modifyDate") as! Date
+    }
+    
+    public func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.response, forKey: "response")
+        aCoder.encode(self.data, forKey: "data")
+        aCoder.encode(self.modifyDate, forKey: "modifyDate")
+    }
+    
+    public static var supportsSecureCoding: Bool {
+        return true
+    }
+}
+
 // MARK: - Method
 
 extension Method {
@@ -197,13 +225,20 @@ private extension MoyaProvider {
 
     func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         
-        if let response = loadCache(withTarget: target) {
-            let result = convertResponseToResult(response, request: request, data: nil, error: nil)
+        let initialRequest = manager.request(request as URLRequestConvertible)
+        if let metadata = loadCache(withTarget: target) {
+            
+            let plugins = self.plugins
+            plugins.forEach { $0.willSend(initialRequest, target: target) }
+            
+            let result = convertResponseToResult(metadata.response, request: request, data: metadata.data, error: nil)
+            result.value?.isDataFromCache = true
+            
+            plugins.forEach { $0.didReceive(result, target: target) }
             completion(result)
             return CancellableToken(action: {})
         }
         
-        let initialRequest = manager.request(request as URLRequestConvertible)
         let alamoRequest = target.validate ? initialRequest.validate() : initialRequest
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
@@ -248,7 +283,7 @@ private extension MoyaProvider {
         let completionHandler: RequestableCompletion = { response, request, data, error in
             cache_queue.async { [weak self] in
                 if let target = target, let response = response {
-                    self?.saveResponseToCache(target, response)
+                    self?.saveResponseToCache(target, MoyaCacheMetadata(response: response, data: data))
                 }
             }
             let result = convertResponseToResult(response, request: request, data: data, error: error)
@@ -280,10 +315,8 @@ private extension MoyaProvider {
 
 public extension MoyaProvider {
     
-    let cache_queue: DispatchQueue = DispatchQueue(label: "moya_cache", attributes: .concurrent)
-    
-    func saveResponseToCache( _ target: TargetType, _ response: HTTPURLResponse) {
-        guard target.cacheTimeInSecondes > 0 && response.statusCode == 200 else { return }
+    func saveResponseToCache( _ target: TargetType, _ metadata: MoyaCacheMetadata) {
+        guard target.cacheTimeInSecondes > 0 && metadata.response.statusCode == 200 else { return }
         switch target.task {
         case .requestParameters(_):
             break
@@ -291,12 +324,14 @@ public extension MoyaProvider {
             return
         }
         let filePath = cacheFilePath(target: target)
-        if !NSKeyedArchiver.archiveRootObject(response, toFile: filePath) {
+        
+        if !NSKeyedArchiver.archiveRootObject(metadata, toFile: filePath) {
             print("Moya Error: Cache request:\(target.path) failed")
         }
     }
     
-    func loadCache(withTarget target: TargetType) -> HTTPURLResponse? {
+    func loadCache(withTarget target: TargetType) -> MoyaCacheMetadata? {
+        guard !target.ignoreCache else { return nil }
         let filePath = cacheFilePath(target: target)
         guard FileManager.default.fileExists(atPath: filePath, isDirectory: nil) else { return nil }
         switch target.task {
@@ -305,14 +340,17 @@ public extension MoyaProvider {
         default:
             return nil
         }
-        guard validateCache(target: target) else {
+        
+        guard let metadata = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? MoyaCacheMetadata else { return nil }
+        
+        guard let metadata = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? MoyaCacheMetadata else { return nil }
+        guard fabs(metadata.modifyDate.timeIntervalSinceNow) < TimeInterval(target.cacheTimeInSecondes) else {
+            print("\(target.path) cache data expired")
             removeFile(atPath: filePath)
             return nil
         }
         
-        let response = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? HTTPURLResponse
-        
-        return response
+        return metadata
     }
     
     func removeFile(atPath path: String) {
@@ -323,19 +361,9 @@ public extension MoyaProvider {
         }
     }
     
-    func validateCache(target: TargetType) -> Bool {
-        let resourcesKeys = [URLResourceKey.contentModificationDateKey]
-        let filePath = cacheFilePath(target: target)
-        let fileEnumrator = FileManager.default.enumerator(at: URL(fileURLWithPath: filePath), includingPropertiesForKeys: resourcesKeys)
-        
-        let expirationDate = Date.init(timeIntervalSinceNow: Double(target.cacheTimeInSecondes))
-        guard let modifiyDate = fileEnumrator?.fileAttributes?[FileAttributeKey.modificationDate] as? Date else { return false }
-        return expirationDate.timeIntervalSince1970 > modifiyDate.timeIntervalSince1970
-    }
-    
     func cacheBasePath() -> String {
         let pathOfCache = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first!
-        let path = pathOfCache.appending("MoayNetworkCache")
+        let path = pathOfCache.appending("/MoayNetworkCache")
         createDirectoryIfNeed(path: path)
         return path
     }
@@ -353,15 +381,17 @@ public extension MoyaProvider {
     }
     
     func createDirectory(atPath path: String) {
-        if !FileManager.default.createFile(atPath: path, contents: nil, attributes: nil) {
-            print("Moya Error: createDirectory Ffailed")
+        do {
+            try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: false, attributes: nil)
+        } catch {
+            print("Moya Error: createDirectory failed")
         }
     }
     
     func cacheFilePath(target: TargetType) -> String {
         let fileName = cacheFileName(target: target)
         let basePath = cacheBasePath()
-        return basePath + "\\\(fileName)"
+        return basePath + "/\(fileName)"
     }
     
     func cacheFileName(target: TargetType) -> String {
@@ -373,7 +403,7 @@ public extension MoyaProvider {
             paramsString = ""
         }
         let requestInfo: String = target.baseURL.absoluteString + target.path + target.method.rawValue + paramsString
-        let fileName = requestInfo.md5() ?? ""
+        let fileName = requestInfo.md5 ?? ""
         return fileName
     }
 }
