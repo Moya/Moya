@@ -30,8 +30,6 @@
 		58F73370045D6F1FBF73FC82 /* MoyaProvider+RxSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */; };
 		59BC4B9B9D0D6F9C060E5620 /* MoyaProvider+Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F87B4349AC772FF766904B /* MoyaProvider+Defaults.swift */; };
 		5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */; };
-		5E4721031F67BD590079E451 /* MoyaCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4721021F67BD590079E451 /* MoyaCache.swift */; };
-		5E4721051F67BE0F0079E451 /* String+md5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4721041F67BE0F0079E451 /* String+md5.swift */; };
 		61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */; };
 		62B78032862A529C4AF42061 /* MoyaProvider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48555FB39336D99F8365F5E /* MoyaProvider+Rx.swift */; };
 		78A2D3991F44BACD00C9E122 /* RxTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A2D3981F44BACD00C9E122 /* RxTestHelpers.swift */; };
@@ -111,8 +109,6 @@
 		5365911118011A3A4FE0CD07 /* MoyaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoyaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		559D567FD0DA37D6CC98FF92 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C2B20158E599EDBE51D7AB2 /* Cancellable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cancellable.swift; path = Sources/Moya/Cancellable.swift; sourceTree = "<group>"; };
-		5E4721021F67BD590079E451 /* MoyaCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaCache.swift; sourceTree = "<group>"; };
-		5E4721041F67BE0F0079E451 /* String+md5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+md5.swift"; sourceTree = "<group>"; };
 		61A693AF0E88E83E91A47A99 /* Plugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Plugin.swift; path = Sources/Moya/Plugin.swift; sourceTree = "<group>"; };
 		62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7056EEF728677793DAFE4E03 /* RxMoyaAvailability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RxMoyaAvailability.swift; path = Sources/RxMoya/RxMoyaAvailability.swift; sourceTree = "<group>"; };
@@ -250,14 +246,12 @@
 				225C397C03E17F7DFBCA2848 /* MoyaProvider+Internal.swift */,
 				B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */,
 				8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */,
-				5E4721021F67BD590079E451 /* MoyaCache.swift */,
 				61A693AF0E88E83E91A47A99 /* Plugin.swift */,
 				536E44826931EEDF3B8DFED4 /* Plugins */,
 				7EFCB6731C60D3830DA5D2CB /* Response.swift */,
 				9C38151BF038BA0B61EF5A62 /* TargetType.swift */,
 				147E26EB1F5B14B300C1F513 /* Task.swift */,
 				1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */,
-				5E4721041F67BE0F0079E451 /* String+md5.swift */,
 			);
 			name = Moya;
 			sourceTree = "<group>";
@@ -515,11 +509,9 @@
 				49C61E884A595E94758B5643 /* Endpoint.swift in Sources */,
 				FB223B5C3B7D4AA5261E25EA /* Image.swift in Sources */,
 				EDBA10DB0D0E35C1474AAB4D /* Moya+Alamofire.swift in Sources */,
-				5E4721031F67BD590079E451 /* MoyaCache.swift in Sources */,
 				15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */,
 				59BC4B9B9D0D6F9C060E5620 /* MoyaProvider+Defaults.swift in Sources */,
 				9854C1DBF14818CCA76AEC7F /* MoyaProvider+Internal.swift in Sources */,
-				5E4721051F67BE0F0079E451 /* String+md5.swift in Sources */,
 				147E26EC1F5B14B300C1F513 /* Task.swift in Sources */,
 				5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */,
 				61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */,
