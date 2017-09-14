@@ -282,7 +282,7 @@ private extension MoyaProvider {
 
         let completionHandler: RequestableCompletion = { response, request, data, error in
             DispatchQueue.global().async { [weak self] in
-                if let target = target, let response = response {
+                if let response = response, let data = data {
                     self?.saveResponseToCache(target, MoyaCacheMetadata(response: response, data: data))
                 }
             }
