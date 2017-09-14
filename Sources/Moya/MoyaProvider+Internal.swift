@@ -281,7 +281,7 @@ private extension MoyaProvider {
         }
 
         let completionHandler: RequestableCompletion = { response, request, data, error in
-            cache_queue.async { [weak self] in
+            DispatchQueue.global().async { [weak self] in
                 if let target = target, let response = response {
                     self?.saveResponseToCache(target, MoyaCacheMetadata(response: response, data: data))
                 }
@@ -340,8 +340,6 @@ public extension MoyaProvider {
         default:
             return nil
         }
-        
-        guard let metadata = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? MoyaCacheMetadata else { return nil }
         
         guard let metadata = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? MoyaCacheMetadata else { return nil }
         guard fabs(metadata.modifyDate.timeIntervalSinceNow) < TimeInterval(target.cacheTimeInSecondes) else {
