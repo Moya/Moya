@@ -25,7 +25,7 @@ end
 def targets
   return [
     # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
-    # :tvos, # Note: tvos simulator is currently not in the newest Xcode9b6 on CircleCI.
+    :tvos, # Note: tvos simulator is currently not in the newest Xcode9b6 on CircleCI.
     :ios
   ]
 end
