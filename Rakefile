@@ -24,7 +24,7 @@ end
 
 def targets
   return [
-    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
+    :macos,
     :tvos,
     :ios
   ]
