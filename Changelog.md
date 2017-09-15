@@ -1,4 +1,6 @@
 # Next
+### Changed
+- **Breaking Change** `Endpoint.init` so now it doesn't have any default arguments (removing default argument `.get` for `method` parameter and `nil` for  `httpHeaderFields` parameter) - [@sunshinejr](https://github.com/sunshinejr) (#NNNN).
 
 # 9.0.0
 - Removed default value for task from `Endpoint` initializer
