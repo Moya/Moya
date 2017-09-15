@@ -24,7 +24,7 @@ public protocol TargetType {
     /// The headers to be used in the request.
     var headers: [String: String]? { get }
     
-    var cacheTimeInSecondes: Int { get }
+    var cacheTimeInSeconds: Int { get }
     
     var ignoreCache: Bool { get }
 }
@@ -34,7 +34,7 @@ public extension TargetType {
         return false
     }
     
-    var cacheTimeInSecondes: Int {
+    var cacheTimeInSeconds: Int {
         return 0
     }
     

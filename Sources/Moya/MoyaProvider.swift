@@ -125,6 +125,11 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
         return cancellableToken
     }
+    
+    open func clearAllCache(target: TargetType) {
+        let path = cacheBasePath()
+        removeFile(atPath: path)
+    }
 }
 
 /// Mark: Stubbing

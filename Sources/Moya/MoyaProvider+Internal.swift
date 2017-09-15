@@ -316,7 +316,7 @@ private extension MoyaProvider {
 public extension MoyaProvider {
     
     func saveResponseToCache( _ target: TargetType, _ metadata: MoyaCacheMetadata) {
-        guard target.cacheTimeInSecondes > 0 && metadata.response.statusCode == 200 else { return }
+        guard target.cacheTimeInSeconds > 0 && metadata.response.statusCode == 200 else { return }
         switch target.task {
         case .requestParameters(_):
             break
@@ -342,7 +342,7 @@ public extension MoyaProvider {
         }
         
         guard let metadata = NSKeyedUnarchiver.unarchiveObject(withFile: filePath) as? MoyaCacheMetadata else { return nil }
-        guard fabs(metadata.modifyDate.timeIntervalSinceNow) < TimeInterval(target.cacheTimeInSecondes) else {
+        guard fabs(metadata.modifyDate.timeIntervalSinceNow) < TimeInterval(target.cacheTimeInSeconds) else {
             print("\(target.path) cache data expired")
             removeFile(atPath: filePath)
             return nil
