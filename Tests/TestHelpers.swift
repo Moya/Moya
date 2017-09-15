@@ -50,6 +50,17 @@ extension GitHub: TargetType {
     }
 }
 
+extension GitHub: Equatable {
+
+    static func ==(lhs: GitHub, rhs: GitHub) -> Bool {
+        switch (lhs, rhs) {
+        case (.zen, .zen): return true
+        case let (.userProfile(username1), .userProfile(username2)): return username1 == username2
+        default: return false
+        }
+    }
+}
+
 func url(_ route: TargetType) -> String {
     return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
