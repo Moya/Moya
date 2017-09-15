@@ -1,4 +1,6 @@
 # Next
+### Changed
+- **Breaking Change** `NetworkActivityPlugin` so its `networkActivityClosure` has now `target: TargetType` argument in addition to `change: NetworkActivityChangeType`. [#1290](https://github.com/Moya/Moya/pull/1290) by [@sunshinejr](https://github.com/sunshinejr).
 
 # 9.0.0
 - Removed default value for task from `Endpoint` initializer
