@@ -110,9 +110,12 @@ class MoyaProviderSpec: QuickSpec {
 
         it("notifies at the beginning of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin { (change) -> Void in
+            var calledTarget: TargetType?
+
+            let plugin = NetworkActivityPlugin { change, target in
                 if change == .began {
                     called = true
+                    calledTarget = target
                 }
             }
 
@@ -121,13 +124,17 @@ class MoyaProviderSpec: QuickSpec {
             provider.request(target) { _ in  }
 
             expect(called) == true
+            expect(calledTarget).toNot(beNil())
         }
 
         it("notifies at the end of network requests") {
             var called = false
-            let plugin = NetworkActivityPlugin { (change) -> Void in
+            var calledTarget: TargetType?
+
+            let plugin = NetworkActivityPlugin { change, target in
                 if change == .ended {
                     called = true
+                    calledTarget = target
                 }
             }
 
@@ -136,6 +143,7 @@ class MoyaProviderSpec: QuickSpec {
             provider.request(target) { _ in  }
 
             expect(called) == true
+            expect(calledTarget).toNot(beNil())
         }
 
         describe("a provider with delayed stubs") {
