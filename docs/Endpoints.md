@@ -23,7 +23,7 @@ The first might resemble the following:
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = URL(target: target).absoluteString
-    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
+    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 

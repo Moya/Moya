@@ -82,7 +82,7 @@ To make things even awesomer, Moya provides some extensions to
 - `mapString(atKeyPath:)` tries to map a response data key path to a string and
   errors if unsuccessful.
 
-In the error cases, the error's `domain` is `MoyaErrorDomain`. The code
+In the error cases, the error's `domain` is `Moya.MoyaError`. The code
 is one of `MoyaErrorCode`'s `rawValue`s, where appropriate. Wherever
 possible, underlying errors are provided and the original response
 data is included in the `NSError`'s `userInfo` dictionary using the

@@ -41,7 +41,7 @@ concrete `Endpoint` instance. Let's take a look at what one might look like.
 ```swift
 let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
     let url = URL(target: target).absoluteString
-    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
+    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
@@ -147,29 +147,29 @@ For example you can enable the logger plugin by simply passing `[NetworkLoggerPl
 ```swift
 public final class NetworkActivityPlugin: PluginType {
 
-    public typealias NetworkActivityClosure = (change: NetworkActivityChangeType) -> ()
+    public typealias NetworkActivityClosure = (_ change: NetworkActivityChangeType, _ target: TargetType) -> Void
     let networkActivityClosure: NetworkActivityClosure
 
-    public init(networkActivityClosure: NetworkActivityClosure) {
+    public init(networkActivityClosure: @escaping NetworkActivityClosure) {
         self.networkActivityClosure = networkActivityClosure
     }
 
     // MARK: Plugin
 
     /// Called by the provider as soon as the request is about to start
-    public func willSend(request: RequestType, target: TargetType) {
-        networkActivityClosure(change: .began)
+    public func willSend(_ request: RequestType, target: TargetType) {
+        networkActivityClosure(.began, target)
     }
 
-    /// Called by the provider as soon as a response arrives
-    public func didReceive(data: Data?, statusCode: Int?, response: URLResponse?, error: ErrorType?, target: TargetType) {
-        networkActivityClosure(change: .ended)
+    /// Called by the provider as soon as a response arrives, even if the request is canceled.
+    public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+        networkActivityClosure(.ended, target)
     }
 }
 ```
 
 The `networkActivityClosure` is a closure that you can provide to be notified whenever a network request begins or
 ends. This is useful for working with the [network activity indicator](https://github.com/thoughtbot/BOTNetworkActivityIndicator).
-Note that signature of this closure is `(change: NetworkActivityChangeType) -> ()`,
-so you will only be notified when a request has `.began` or `.ended` –
+Note that signature of this closure is `(_ change: NetworkActivityChangeType, _ target: TargetType) -> Void`,
+so you will only be notified when a request has `.began`/`.ended` and for which `target` –
 you aren't provided any other details about the request itself.

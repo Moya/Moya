@@ -24,8 +24,8 @@ end
 
 def targets
   return [
-    # :macos, # Note: we're experiencing macOS build problems on circle, commenting out.
-    # :tvos, # Note: tvos simulator is currently not in the newest Xcode9b6 on CircleCI.
+    :macos,
+    :tvos,
     :ios
   ]
 end
@@ -57,7 +57,7 @@ end
 def device_names
   return {
     ios: "iPhone 6s",
-    tvos: "Apple TV 1080p"
+    tvos: "Apple TV 4K (at 1080p)"
   }
 end
 

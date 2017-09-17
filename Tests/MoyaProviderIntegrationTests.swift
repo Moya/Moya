@@ -188,34 +188,44 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider with network activity plugin") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        let plugin = NetworkActivityPlugin { change in
+                        var calledTarget: GitHub?
+
+                        let plugin = NetworkActivityPlugin { change, target in
                             if change == .began {
                                 called = true
+                                calledTarget = target as? GitHub
                             }
                         }
 
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        let target: GitHub = .zen
                         waitUntil { done in
-                            provider.request(.zen) { _ in done() }
+                            provider.request(target) { _ in done() }
                         }
 
                         expect(called) == true
+                        expect(calledTarget) == target
                     }
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        let plugin = NetworkActivityPlugin { change in
+                        var calledTarget: GitHub?
+
+                        let plugin = NetworkActivityPlugin { change, target in
                             if change == .ended {
                                 called = true
+                                calledTarget = target as? GitHub
                             }
                         }
 
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        let target: GitHub = .zen
                         waitUntil { done in
-                            provider.request(.zen) { _ in done() }
+                            provider.request(target) { _ in done() }
                         }
 
                         expect(called) == true
+                        expect(calledTarget) == target
                     }
                 }
 
