@@ -100,7 +100,7 @@ let package = Package(
 )
 ```
 
-Note that as of Moya 10, SPM only works with Swift 4 and greater.
+Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 
 ### CocoaPods
 
