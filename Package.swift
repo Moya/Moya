@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "4.1.0")),
-        .package(url: "https://github.com/antitypical/Result.git", .upToNextMajor(from: "3.2.0")),
+        .package(url: "https://github.com/antitypical/Result.git", .upToNextMajor(from: "3.0.0")),
         .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", .upToNextMajor(from: "2.0.0")),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .exact(Version(4, 0, 0, prereleaseIdentifiers: ["alpha", "1"]))),
     ],
