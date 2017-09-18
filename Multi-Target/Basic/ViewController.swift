@@ -4,7 +4,7 @@ import Moya
 class ViewController: UITableViewController {
     var progressView = UIView()
     var repos = NSArray()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -14,7 +14,7 @@ class ViewController: UITableViewController {
         
         downloadRepositories("ashfurrow")
     }
-
+    
     fileprivate func showAlert(_ title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -23,7 +23,7 @@ class ViewController: UITableViewController {
     }
     
     // MARK: - API Stuff
-
+    
     func downloadRepositories(_ username: String) {
         GitHubProvider.request(.userRepositories(username)) { result in
             do {
@@ -38,7 +38,7 @@ class ViewController: UITableViewController {
             }
         }
     }
-
+    
     func downloadZen() {
         GitHubProvider.request(.zen) { result in
             var message = "Couldn't access API"
@@ -46,7 +46,7 @@ class ViewController: UITableViewController {
                 let jsonString = try? response.mapString()
                 message = jsonString ?? message
             }
-    
+            
             self.showAlert("Zen", message: message)
         }
     }
@@ -89,27 +89,27 @@ class ViewController: UITableViewController {
         }
         
         UIView.animate(withDuration: 0.3, delay: 1, options: [],
-            animations: {
-                self.progressView.alpha = 0
-            },
-            completion: { _ in
-                self.progressView.backgroundColor = .blue
-                self.progressView.frame.size.width = 0
-                self.progressView.alpha = 1
-            }
+                       animations: {
+                        self.progressView.alpha = 0
+        },
+                       completion: { _ in
+                        self.progressView.backgroundColor = .blue
+                        self.progressView.frame.size.width = 0
+                        self.progressView.alpha = 1
+        }
         )
         
     }
-
+    
     // MARK: - User Interaction
-
+    
     @IBAction func giphyWasPressed(_ sender: UIBarButtonItem) {
         uploadGiphy()
     }
     
     @IBAction func searchWasPressed(_ sender: UIBarButtonItem) {
         var usernameTextField: UITextField?
-
+        
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default) { action in
             if let username = usernameTextField?.text {
@@ -122,21 +122,21 @@ class ViewController: UITableViewController {
         }
         present(promptController, animated: true, completion: nil)
     }
-
+    
     @IBAction func zenWasPressed(_ sender: UIBarButtonItem) {
         downloadZen()
     }
-
+    
     @IBAction func downloadWasPressed(_ sender: UIBarButtonItem) {
         downloadMoyaLogo()
     }
     
     // MARK: - Table View
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repos.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
         let repo = repos[indexPath.row] as? NSDictionary
