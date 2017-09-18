@@ -31,5 +31,5 @@ let package = Package(
                 "Moya",
                 "RxSwift"]),
     ],
-    swiftLanguageVersions: [4]
+    swiftLanguageVersions: [3, 4]
 )
