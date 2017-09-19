@@ -9,8 +9,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout    
-      # Downloading CocoaPods repo wasn't working without python2.7-dev
-      - run: sudo apt-get install python2.7-dev 
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
       # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
       - run: brew update ; brew update
