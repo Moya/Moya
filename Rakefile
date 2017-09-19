@@ -82,17 +82,15 @@ def xcodebuild(tasks, platform, xcprety_args: '')
   safe_sh "set -o pipefail && xcodebuild -project '#{moya_project}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
 end
 
-def xcodebuild_demo(tasks, xcprety_args: '')
+def xcodebuild_example(tasks, xcprety_args: '')
   platform = :ios
   sdk = sdks[platform]
   destination = devices[platform]
-  demo_workspace = 'Demo.xcworkspace'
-  demo_scheme = 'Demo'
+  demo_project = 'Moya.xcodeproj'
+  demo_scheme = 'Basic'
 
-  Dir.chdir('Demo') do
-    open_simulator_and_sleep(platform)
-    safe_sh "set -o pipefail && xcodebuild -workspace '#{demo_workspace}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
-  end
+  open_simulator_and_sleep(platform)
+  safe_sh "set -o pipefail && xcodebuild -project '#{demo_project}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
 end
 
 desc 'Build Moya.'
@@ -101,8 +99,8 @@ task :build do
 end
 
 desc 'Build the Demo app.'
-task :build_demo do
-  xcodebuild_demo 'build'
+task :build_example do
+  xcodebuild_example 'build'
 end
 
 desc 'Clean build directory.'
@@ -166,11 +164,9 @@ task :release, :version do |task, args|
   contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+(-\w+\.\d)?"/, "s.version      = \"#{version}\"")
   File.open(filename, 'w') { |file| file.puts contents }
 
-  puts "Updating Demo project."
-  Dir.chdir('Demo') do
-    ENV['COCOAPODS_DISABLE_DETERMINISTIC_UUIDS'] = 'true'
-    sh "bundle exec pod update Moya --verbose"
-  end
+  puts "Updating Example Targets."
+  ENV['COCOAPODS_DISABLE_DETERMINISTIC_UUIDS'] = 'true'
+  sh "bundle exec pod update Moya --verbose"
 
   puts "Updating changelog."
   changelog_filename = "CHANGELOG.md"
