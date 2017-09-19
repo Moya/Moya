@@ -1,0 +1,27 @@
+version: 2
+jobs:
+  build:
+    macos:
+      xcode: "9.0"
+    environment:
+      LANG: en_US.UTF-8
+    steps:
+      - run:
+          name: Update CocoaPods
+          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
+      - run:
+          name: Install Swiftlint
+          # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
+          command: |
+            brew update ; brew update
+            brew install swiftlint
+      - run: bundle install
+      - run: scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
+      - run: cd Demo ; bundle exec pod repo update
+      - run: cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.
+      # TODO - set up carthage caching
+      #cache_directories:
+      #  - "Carthage" # Cache carthage to speed up builds.
+      - run: rake test && rake test:carthage && rake build_demo
+      - run: bundle exec danger
+      - run: - bash <(curl -s https://codecov.io/bash) -J Moya
