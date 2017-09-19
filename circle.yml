@@ -18,7 +18,7 @@ dependencies:
 test:
   pre:
   override:
-  - rake test && rake test:carthage && rake build_demo
+  - rake test && rake test:carthage && rake build_example
   post:
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash) -J Moya
