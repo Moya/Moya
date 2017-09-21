@@ -835,32 +835,8 @@ class MoyaProviderSpec: QuickSpec {
                     }
 
                     let progressCompletionClosure: Completion = { (result) in
-                        switch result {
-                        case .failure(let err):
+                        if case .failure(let err) = result {
                             error = err
-                        case .success(let response):
-                            do {
-                                let json = try response.mapJSON()
-                                if let json = json as? [String: Any] {
-                                    if let files = json["files"] as? [String: Any] {
-                                        expect(files["file"] ).toNot(beNil())
-                                    } else {
-                                        fail("No file received \(json)")
-                                    }
-                                    if let form = json["form"] as? [String: Any] {
-                                        expect(form["data"] ).toNot(beNil())
-                                        expect(form["data"] as? String) == string
-                                    } else {
-                                        fail("No form data received \(json)")
-                                    }
-                                } else {
-                                    fail("Wrong json format received \(json)")
-                                }
-                            } catch let moyaError as MoyaError {
-                                error = moyaError
-                            } catch {
-                                fail("Error must of type \(MoyaError.self): \(error):")
-                            }
                         }
                         done()
                     }
