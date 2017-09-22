@@ -71,7 +71,7 @@ final class EndpointSpec: QuickSpec {
         }
 
         it("returns a nil urlRequest for an invalid URL") {
-            let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) })
+            let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
             let urlRequest = try? badEndpoint.urlRequest()
             expect(urlRequest).to(beNil())
         }
