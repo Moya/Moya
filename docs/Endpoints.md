@@ -109,7 +109,12 @@ That's what the `requestClosure` parameter is for.
 
 The `requestClosure` is an optional, last-minute way to modify the request
 that hits the network. It has a default value of `MoyaProvider.defaultRequestMapping`,
-which simply uses the `urlRequest` property of the `Endpoint` instance.
+which uses the `urlRequest()` method of the `Endpoint` instance. The `urlRequest()` 
+method throws two possible errors: `MoyaError.requestMapping(String)` error in the 
+case that an `URLRequest` could not be created for the given path and a `Swift.Error`
+in the case of an error related to the encoding of the parameters for a request. 
+This `Swift.Error` is wrapped up as a `MoyaError.parameterEncoding(Swift.Error)` by the 
+`MoyaProvider.defaultRequestMapping` closure. 
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
 its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, MoyaError> -> Void`) with a request that represents the Endpoint.
@@ -119,11 +124,14 @@ Instead of modifying the request, you could simply log it, instead.
 
 ```swift
 let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
-    var request = endpoint.urlRequest
+    do {
+        var request = try endpoint.urlRequest()
+        // Modify the request however you like.
+        done(.success(request))
+    } catch {
+	done(.failure(MoyaError.underlying(error)))
+    }
 
-    // Modify the request however you like.
-
-    done(.success(request))
 }
 let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 ```
@@ -136,9 +144,13 @@ all cookies on requests:
 
 ```swift
 { (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
-    var request: URLRequest = endpoint.urlRequest
-    request.httpShouldHandleCookies = false
-    done(.success(request))
+    do {
+    	var request: URLRequest = try endpoint.urlRequest
+    	request.httpShouldHandleCookies = false
+   	done(.success(request))
+    } catch {
+    	done(.failure(MoyaError.underlying(error)))
+    }
 }
 ```
 
