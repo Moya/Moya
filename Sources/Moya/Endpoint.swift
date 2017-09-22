@@ -60,9 +60,9 @@ open class Endpoint<Target> {
     }
 }
 
-/// Extension for converting an `Endpoint` into an optional `URLRequest`.
+/// Extension for converting an `Endpoint` into a `URLRequest`.
 extension Endpoint {
-    /// Returns the `Endpoint` converted to a `URLRequest` if valid. Returns `nil` otherwise.
+    /// Returns the `Endpoint` converted to a `URLRequest` if valid. Throws an error otherwise.
     public func urlRequest() throws -> URLRequest {
         guard let requestURL = Foundation.URL(string: url) else {
             throw MoyaError.requestMapping(url)
