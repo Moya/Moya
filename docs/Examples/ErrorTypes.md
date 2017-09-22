@@ -42,7 +42,9 @@ case .underlying(let nsError as NSError, let response):
 case .underlying(let error, let response):
     print(error)
     print(response)
-case .requestMapping:
-    print("nil")
+case .requestMapping(let url):
+    print(url)
+case .parameterEncoding(let error):
+    print(error)
 }
 ```
