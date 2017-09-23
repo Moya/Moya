@@ -67,11 +67,7 @@ your Swift version.
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-<<<<<<< HEAD
-.Package(url: "https://github.com/Moya/Moya.git", majorVersion: 9)
-=======
 .package(url: "https://github.com/Moya/Moya.git", .branch("10.0.0-dev"))
->>>>>>> Update SPM guide to V4 API
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
