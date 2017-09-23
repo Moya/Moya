@@ -74,13 +74,14 @@ enum HTTPBin: TargetType {
     case basicAuth
     case post
     case upload(file: URL)
+    case uploadMultipart([MultipartFormData], [String: Any]?)
 
     var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
             return "/basic-auth/user/passwd"
-        case .post, .upload:
+        case .post, .upload, .uploadMultipart:
             return "/post"
         }
     }
@@ -89,7 +90,7 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return .get
-        case .post, .upload:
+        case .post, .upload, .uploadMultipart:
             return .post
         }
     }
@@ -100,6 +101,12 @@ enum HTTPBin: TargetType {
         return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
+        case .uploadMultipart(let data, let urlParameters):
+            if let urlParameters = urlParameters {
+                return .uploadCompositeMultipart(data, urlParameters: urlParameters)
+            } else {
+                return .uploadMultipart(data)
+            }
         }
     }
 
@@ -107,7 +114,7 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
-        case .post, .upload:
+        case .post, .upload, .uploadMultipart:
             return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
     }
