@@ -1,7 +1,6 @@
 import Quick
 import Moya
 import Nimble
-import enum Alamofire.AFError
 
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
