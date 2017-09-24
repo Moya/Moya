@@ -1,6 +1,7 @@
 import Quick
 import Moya
 import Nimble
+import enum Alamofire.AFError
 
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
@@ -221,6 +222,42 @@ final class EndpointSpec: QuickSpec {
         }
 
         describe("unsuccessful converting to urlRequest") {
+            context("when url String is invalid") {
+                it("throws a .requestMapping error") {
+                    let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+                    let expectedError = MoyaError.requestMapping("some invalid URL")
+                    var recievedError: MoyaError?
+                    do {
+                        _ = try badEndpoint.urlRequest()
+                    } catch {
+                        recievedError = error as? MoyaError
+                    }
+                    expect(recievedError).toNot(beNil())
+                    expect(recievedError).to(beOfSameErrorType(expectedError))
+                }
+            }
+
+            context("when parameter encoding is unsuccessful") {
+                it("throws a .parameterEncoding error") {
+
+                    // Non-serializable type to cause serialization error
+                    class InvalidParameter {}
+
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["":InvalidParameter()], encoding: PropertyListEncoding.default))
+                    let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription":"Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
+                    let expectedError = MoyaError.parameterEncoding(cocoaError)
+                    var recievedError: MoyaError?
+
+                    do {
+                        _ = try endpoint.urlRequest()
+                    } catch {
+                        recievedError = error as? MoyaError
+                    }
+                    expect(recievedError).toNot(beNil())
+                    expect(recievedError).to(beOfSameErrorType(expectedError))
+                }
+            }
+
             context("when task is .requestCompositeParameters") {
                 it("throws an error when bodyEncoding is an URLEncoding") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
