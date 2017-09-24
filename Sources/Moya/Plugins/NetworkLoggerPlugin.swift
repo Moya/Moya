@@ -104,8 +104,8 @@ private extension NetworkLoggerPlugin {
     }
 }
 
-fileprivate extension NetworkLoggerPlugin {
-    static func reversedPrint(_ separator: String, terminator: String, items: Any...) {
+extension NetworkLoggerPlugin {
+    public static func reversedPrint(_ separator: String, terminator: String, items: Any...) {
         for item in items {
             print(item, separator: separator, terminator: terminator)
         }
