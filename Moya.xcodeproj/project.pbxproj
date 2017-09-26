@@ -264,7 +264,9 @@
 				9A58CD622B8FBB54907843BE /* Sources */,
 				1952C4A00E2EF89FFE965603 /* Tests */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		536E44826931EEDF3B8DFED4 /* Plugins */ = {
 			isa = PBXGroup;
