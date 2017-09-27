@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040FC36BCA68B4985713D50E /* RxMoyaAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7056EEF728677793DAFE4E03 /* RxMoyaAvailability.swift */; };
 		0AF1D218204A9E0F5CCC7340 /* RxMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3C74EB65D75BC6DFCC646E /* RxMoya.framework */; };
 		0DA77DF1329D3EFD3BD295CE /* Moya.h in Headers */ = {isa = PBXBuildFile; fileRef = D38525FE207BE148B17084F3 /* Moya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		12F88B3755343FB9DD244AEC /* RxMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 8A53DF8B33D58E052A78E2BA /* RxMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,7 +64,6 @@
 		B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */; };
 		B5A7124CF285D8EC7F89C1AD /* CredentialsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884642F58B074C95261DCA86 /* CredentialsPlugin.swift */; };
 		B950CAA84C0656EB11E316FB /* MultiTargetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D11E4BE1D5112E6972AD09F /* MultiTargetSpec.swift */; };
-		B9EE5D0AE58281F151DC9C1C /* ReactiveMoyaAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78153B9374C34309A9F5666 /* ReactiveMoyaAvailability.swift */; };
 		BA5EFFB8EE468F6BCA15480C /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		BAFB3C28D3BF17C52FDA8FE4 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = CA93F1BAD55FF95EDE17EE61 /* testImage.png */; };
 		BEAA605B30BE7651BA5C61A4 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A693AF0E88E83E91A47A99 /* Plugin.swift */; };
@@ -143,7 +141,6 @@
 		5C2B20158E599EDBE51D7AB2 /* Cancellable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		61A693AF0E88E83E91A47A99 /* Plugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
 		62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7056EEF728677793DAFE4E03 /* RxMoyaAvailability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RxMoyaAvailability.swift; sourceTree = "<group>"; };
 		78A2D3981F44BACD00C9E122 /* RxTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTestHelpers.swift; sourceTree = "<group>"; };
 		78A2D39A1F44D45100C9E122 /* Single+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Single+MoyaSpec.swift"; sourceTree = "<group>"; };
 		7D11E4BE1D5112E6972AD09F /* MultiTargetSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiTargetSpec.swift; sourceTree = "<group>"; };
@@ -160,7 +157,6 @@
 		8A53DF8B33D58E052A78E2BA /* RxMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RxMoya.h; sourceTree = "<group>"; };
 		8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		9C38151BF038BA0B61EF5A62 /* TargetType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
-		A78153B9374C34309A9F5666 /* ReactiveMoyaAvailability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReactiveMoyaAvailability.swift; sourceTree = "<group>"; };
 		B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		B1F68927EA26EBDB45E82C8C /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
 		C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Error+MoyaSpec.swift"; sourceTree = "<group>"; };
@@ -172,6 +168,7 @@
 		DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		E825A32256FC030B8BA2684D /* EndpointSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
 		F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SignalProducer+MoyaSpec.swift"; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,7 +272,6 @@
 			isa = PBXGroup;
 			children = (
 				371C174EF53873DE04BB159E /* MoyaProvider+Reactive.swift */,
-				A78153B9374C34309A9F5666 /* ReactiveMoyaAvailability.swift */,
 				269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */,
 			);
 			path = ReactiveMoya;
@@ -376,7 +372,6 @@
 			children = (
 				D48555FB39336D99F8365F5E /* MoyaProvider+Rx.swift */,
 				8736BEE85376471D7CB1E0ED /* Observable+Response.swift */,
-				7056EEF728677793DAFE4E03 /* RxMoyaAvailability.swift */,
 				14FB7A3E1F3E089900308949 /* Single+Response.swift */,
 			);
 			path = RxMoya;
@@ -697,7 +692,6 @@
 				1425941E1F42FDED00C9E171 /* Single+Response.swift in Sources */,
 				62B78032862A529C4AF42061 /* MoyaProvider+Rx.swift in Sources */,
 				7B147185DCE78CD98E28D3F2 /* Observable+Response.swift in Sources */,
-				040FC36BCA68B4985713D50E /* RxMoyaAvailability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,7 +700,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB5048DC5042B016964EE958 /* MoyaProvider+Reactive.swift in Sources */,
-				B9EE5D0AE58281F151DC9C1C /* ReactiveMoyaAvailability.swift in Sources */,
 				2ADDFC96D7F7912333534C46 /* SignalProducer+Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

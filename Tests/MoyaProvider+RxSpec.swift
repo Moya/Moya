@@ -6,7 +6,7 @@ import OHHTTPStubs
 @testable import Moya
 @testable import RxMoya
 
-final class MoyaProviderRx: QuickSpec {
+final class MoyaProviderRxSpec: QuickSpec {
     override func spec() {
         describe("provider with Single") {
             var provider: MoyaProvider<GitHub>!
