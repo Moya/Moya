@@ -12,7 +12,7 @@ Everyone comes in with their own perspective on what a project could/should look
 
 #### Why do we give out push access?
 
-It can be overwhelming to be offered the chance to wipe the source code for a project. Don't worry, we don't let you push to master. All code is peer-reviewed, and we have the convention that someone other than the submitter should merge non-trivial pull requests.
+It can be overwhelming to offered the chance to wipe the source code for a project. Don't worry, we don't let you push to master. All code is peer-reviewed, and we have the convention that someone other than the submitter should merge non-trivial pull requests.
 
 As an organization contributor, you can merge other people's pull requests, or other contributors can merge yours. You won't be assigned a pull request, but you're welcome to jump in and take a code review on topics that interest you.
 
@@ -44,9 +44,8 @@ If someone submits a pull request that's not perfect, and you are reviewing, it'
 
 #### What about if you have problems that cannot be discussed in a public issue?
 
-[ This is an example version, please delete this and replace with your own version ]
-Both [Jane Bloggs](https://github.com/jane_b) and [Taylor Webb](https://github.com/twebb) have contactable emails on their GitHub profiles, and are happy to talk about any problems.
+Both [Ash Furrow](https://github.com/ashfurrow) and [Orta Therox](https://github.com/orta) have contactable emails on their GitHub profiles, and are happy to talk about any problems.
 
 #### Where can I get more info about this document?
 
-The original source of this document can be found at https://github.com/moya/contributors.
+The original source of this document can be found at [https://github.com/moya/contributors](https://github.com/moya/contributors).
