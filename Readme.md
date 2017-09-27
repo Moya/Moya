@@ -5,9 +5,16 @@
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
 
+
 <p align="center">
   <img height="160" src="web/logo_github.png" />
 </p>
+
+## Documentation in Chinese
+
+**All docs in "docs_CN". [Go](Readme_CN.md)**
+
+
 
 You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
 `URLSession` and all those nasty details you don't really care about. But then,
