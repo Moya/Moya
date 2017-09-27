@@ -182,7 +182,7 @@ provider.request(.userProfile("ashfurrow")) { result in
 
 URLs不在有书写错误.参数值不在有缺失. 混乱的参数编码也不在有.
 
-更多示例，查看 [documentation](docs/Examples).
+更多示例，查看 [documentation](docs_CN/Examples).
 
 ## Reactive 扩展
 
