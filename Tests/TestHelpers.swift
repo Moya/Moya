@@ -220,3 +220,9 @@ extension ImageType {
         }
     #endif
 }
+
+// A fixture for testing Decodable mapping
+struct Issue: Codable {
+    let title: String
+    let createdAt: Date
+}
