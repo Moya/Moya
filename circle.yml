@@ -4,10 +4,6 @@ machine:
   environment:
     LANG: en_US.UTF-8
 
-checkout:
-  post:
-    - scripts/check-non-trivial-changes.sh # only continue if there are non-trivial changes
-
 dependencies:
   pre:
     - curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
@@ -23,8 +19,9 @@ dependencies:
 
 test:
   pre:
+    - scripts/check-non-trivial-changes.sh # only continue if there are non-trivial changes
   override:
-  - rake test && rake test:carthage && rake build_demo
+    - rake test && rake test:carthage && rake build_demo
   post:
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash) -J Moya
