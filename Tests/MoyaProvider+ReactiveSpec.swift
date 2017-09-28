@@ -170,7 +170,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                         case let .value(element):
                             nextProgressValues.append(element.progress)
 
-                            if let _ = element.response { nextResponseCount += 1 }
+                            if element.response != nil { nextResponseCount += 1 }
                         case .failed: failedEventsCount += 1
                         case .completed: completedEventsCount += 1
                         case .interrupted: interruptedEventsCount += 1
