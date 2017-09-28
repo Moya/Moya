@@ -116,4 +116,29 @@ public extension Response {
             return string
         }
     }
+
+    /// Maps data received from the signal into a Decodable object.
+    ///
+    /// - parameter atKeyPath: Optional key path at which to parse object.
+    /// - parameter using: A `JSONDecoder` instance which is used to decode data to an object.
+    func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder()) throws -> D {
+        let jsonData: Data
+        if let keyPath = keyPath {
+            guard let jsonDictionary = (try mapJSON() as? NSDictionary)?.value(forKeyPath: keyPath) as? [String: Any] else {
+                throw MoyaError.jsonMapping(self)
+            }
+            do {
+                jsonData = try JSONSerialization.data(withJSONObject: jsonDictionary, options: [])
+            } catch {
+                throw MoyaError.jsonMapping(self)
+            }
+        } else {
+            jsonData = data
+        }
+        do {
+            return try decoder.decode(D.self, from: jsonData)
+        } catch let error {
+            throw MoyaError.objectMapping(error, self)
+        }
+    }
 }
