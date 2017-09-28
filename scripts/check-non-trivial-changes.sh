@@ -1,3 +1,5 @@
+#!/bin/sh
+
 CHANGED_FILES=$(git show --name-only --pretty="" $CIRCLE_SHA1)
 
 # Temporary printing for testing purposes
