@@ -1,6 +1,6 @@
 CHANGED_FILES=$(git show --name-only --pretty="" $CIRCLE_SHA1)
 
-# Temporary printing for testing purposes
+# Temporary printing for testing purposes (bump)
 echo $CIRCLE_SHA1
 echo $CHANGED_FILES
 
