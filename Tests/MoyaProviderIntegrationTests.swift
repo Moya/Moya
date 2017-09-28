@@ -262,16 +262,16 @@ class MoyaProviderIntegrationTests: QuickSpec {
             }
 
             describe("a reactive provider with SignalProducer") {
-                var provider: ReactiveSwiftMoyaProvider<GitHub>!
+                var provider: MoyaProvider<GitHub>!
                 beforeEach {
-                    provider = ReactiveSwiftMoyaProvider<GitHub>()
+                    provider = MoyaProvider<GitHub>()
                 }
 
                 it("returns some data for zen request") {
                     var message: String?
 
                     waitUntil { done in
-                        provider.request(.zen).startWithResult { result in
+                        provider.reactive.request(.zen).startWithResult { result in
                             if case .success(let response) = result {
                                 message = String(data: response.data, encoding: String.Encoding.utf8)
                                 done()
@@ -287,7 +287,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     waitUntil { done in
                         let target: GitHub = .userProfile("ashfurrow")
-                        provider.request(target).startWithResult { result in
+                        provider.reactive.request(target).startWithResult { result in
                             if case .success(let response) = result {
                                 message = String(data: response.data, encoding: String.Encoding.utf8)
                                 done()
