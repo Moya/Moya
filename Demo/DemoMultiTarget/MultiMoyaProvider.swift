@@ -36,7 +36,11 @@ final class MultiMoyaProvider: MoyaProvider<MultiTarget> {
         return request(MultiTarget(target)) { result in
             switch result {
             case .success(let response):
-                if let parsed = T.ResultType.parse(try! response.mapJSON()) {
+                guard let responseJSON = try? response.mapJSON() else {
+                    completion(.failure(.jsonMapping(response)))
+                    break
+                }
+                if let parsed = T.ResultType.parse(responseJSON) {
                     completion(.success(parsed))
                 } else {
                     completion(.failure(.jsonMapping(response)))
