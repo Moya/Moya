@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
   macos:
-    xcode: "9.0"
+    xcode: "9.1"
     environment:
       LANG: en_US.UTF-8
 jobs:
@@ -46,6 +46,7 @@ jobs:
   danger_codecov:
     <<: *defaults
     steps:
+      - checkout
       - run: brew install swiftlint
       - run: bundle install
       - run:
