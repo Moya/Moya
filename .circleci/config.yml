@@ -5,28 +5,34 @@ defaults: &defaults
     environment:
       LANG: en_US.UTF-8
 jobs:
-  # prepare_environment:
-  #   <<: *defaults
-  #   steps:
-  #     - checkout    
-  #     - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
-  #     # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
-  #     - run: brew update ; brew update
-  #     - run: brew install swiftlint
-  #     - run: bundle install
   test:
     <<: *defaults
     steps:
       - checkout      
       - run: bundle install
       # Only bootstrap if we have updated dependencies since our last cache.
-      - run: pwd ; ls -all; scripts/bootstrap-if-needed.sh 
+      - restore_cache:
+          keys:
+            - carthage_cache
+      - run: scripts/bootstrap-if-needed.sh 
       - run: rake test
+      - save_cache:
+          key: carthage_cache
+          paths: 
+            - Carthage
   test_integration_carthage:
     <<: *defaults
     steps:
       - checkout  
-      - run: pwd ; ls -all; rake test:carthage
+      - restore_cache:
+          keys:
+            - carthage_cache      
+      - run: scripts/bootstrap-if-needed.sh 
+      - run: rake test:carthage
+      - save_cache:
+          key: carthage_cache
+          paths: 
+            - Carthage      
   build_demo:
     <<: *defaults
     steps:
