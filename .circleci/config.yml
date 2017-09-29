@@ -18,18 +18,21 @@ jobs:
     <<: *defaults
     steps:
       - checkout      
+      - run: bundle install
       # Only bootstrap if we have updated dependencies since our last cache.
       - run: pwd ; ls -all; scripts/bootstrap-if-needed.sh 
       - run: rake test
   test_integration_carthage:
     <<: *defaults
     steps:
+      - checkout  
       - run: pwd ; ls -all; rake test:carthage
   build_demo:
     <<: *defaults
     steps:
-      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
-      - checkout      
+      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash           
+      - checkout     
+      - run: bundle install
       - run: pwd ; ls -all; cd Demo ; bundle exec pod repo update
       # Verbose to keep CI alive during long Specs repo setups.  
       - run: cd Demo ; bundle exec pod install --verbose
