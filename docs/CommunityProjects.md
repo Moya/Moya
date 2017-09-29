@@ -15,7 +15,6 @@ We appreciate all the work being done by the community around Moya. If you would
 - [MoyaSugar](https://github.com/devxoul/MoyaSugar) – Syntactic sugar for Moya
 - [Moya-EVReflection](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya) - EVReflection bindings for Moya for easier JSON serialization (including subspecs for [RxSwift](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/RxSwift) and [ReactiveCocoa](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/ReactiveCocoa))
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Marshal bindings for Moya for easier JSON serialization
-- [Moya-Decodable](https://github.com/xiaoyaogaojian/Moya-Decodable) - Decodable bindings for Moya for easier JSON serialization
 
 ## Libraries
 
