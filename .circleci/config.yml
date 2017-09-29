@@ -47,9 +47,9 @@ workflows:
   version: 2
   pr_build:
     jobs:
-      - test:
-      - test_integration_carthage:
-      - build_demo:     
+      - test
+      - test_integration_carthage
+      - build_demo     
       - danger_codecov:
           requires:
             - test
