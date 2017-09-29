@@ -5,18 +5,19 @@ defaults: &defaults
     environment:
       LANG: en_US.UTF-8
 jobs:
-  prepare_environment:
-    <<: *defaults
-    steps:
-      - checkout    
-      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
-      # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
-      - run: brew update ; brew update
-      - run: brew install swiftlint
-      - run: bundle install
+  # prepare_environment:
+  #   <<: *defaults
+  #   steps:
+  #     - checkout    
+  #     - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
+  #     # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
+  #     - run: brew update ; brew update
+  #     - run: brew install swiftlint
+  #     - run: bundle install
   test:
     <<: *defaults
     steps:
+      - checkout      
       # Only bootstrap if we have updated dependencies since our last cache.
       - run: pwd ; ls -all; scripts/bootstrap-if-needed.sh 
       - run: rake test
@@ -27,6 +28,8 @@ jobs:
   build_demo:
     <<: *defaults
     steps:
+      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash  
+      - checkout      
       - run: pwd ; ls -all; cd Demo ; bundle exec pod repo update
       # Verbose to keep CI alive during long Specs repo setups.  
       - run: cd Demo ; bundle exec pod install --verbose
@@ -34,6 +37,8 @@ jobs:
   danger_codecov:
     <<: *defaults
     steps:
+      - run: brew install swiftlint
+      - run: bundle install
       - run:
           command: |
             bundle exec danger
@@ -42,16 +47,9 @@ workflows:
   version: 2
   pr_build:
     jobs:
-      - prepare_environment
       - test:
-          requires:
-            - prepare_environment
       - test_integration_carthage:
-          requires:
-            - prepare_environment      
-      - build_demo:
-          requires:
-            - prepare_environment      
+      - build_demo:     
       - danger_codecov:
           requires:
             - test
