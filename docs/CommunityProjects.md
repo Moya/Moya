@@ -16,6 +16,7 @@ We appreciate all the work being done by the community around Moya. If you would
 - [Moya-EVReflection](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya) - EVReflection bindings for Moya for easier JSON serialization (including subspecs for [RxSwift](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/RxSwift) and [ReactiveCocoa](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/ReactiveCocoa))
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Marshal bindings for Moya for easier JSON serialization
 - [Moya-Decodable](https://github.com/xiaoyaogaojian/Moya-Decodable) - Decodable bindings for Moya for easier JSON serialization
+- [Moya-Paw](https://github.com/narlei/SwiftMoyaCodeGenerator) - Extension for [Paw Mac App](https://paw.cloud) to generate Moya files based in rest documentation.
 
 ## Libraries
 
