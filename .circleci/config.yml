@@ -18,16 +18,16 @@ jobs:
     <<: *defaults
     steps:
       # Only bootstrap if we have updated dependencies since our last cache.
-      - run: scripts/bootstrap-if-needed.sh 
+      - run: pwd ; ls -all; scripts/bootstrap-if-needed.sh 
       - run: rake test
   test_integration_carthage:
     <<: *defaults
     steps:
-      - run: rake test:carthage
+      - run: pwd ; ls -all; rake test:carthage
   build_demo:
     <<: *defaults
     steps:
-      - run: cd Demo ; bundle exec pod repo update
+      - run: pwd ; ls -all; cd Demo ; bundle exec pod repo update
       # Verbose to keep CI alive during long Specs repo setups.  
       - run: cd Demo ; bundle exec pod install --verbose
       - run: rake build_demo 
