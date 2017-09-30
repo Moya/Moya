@@ -27,26 +27,27 @@ jobs:
           paths: 
             - Carthage
   test_swift_4:
-    <<: *defaults
-      - checkout      
-      - run: brew install kylef/formulae/swiftenv
-      - run: swiftenv version; swift --version; swift package --version;      
-      - run: echo "4.0" > .swift-version
-      - run: swiftenv version; swift --version; swift package --version;      
-      - run: swiftenv local 4.0
-      - run: swiftenv version; swift --version; swift package --version;      
-      - run: bundle install
-      # Only bootstrap if we have updated dependencies since our last cache.
-      - restore_cache:
-          keys:
-            - carthage_cache
-      - run: scripts/bootstrap-if-needed.sh 
-      - run: rake test
-      - run: rm .swift-version
-      - save_cache:
-          key: carthage_cache
-          paths: 
-            - Carthage    
+      <<: *defaults
+      steps:
+        - checkout      
+        - run: brew install kylef/formulae/swiftenv
+        - run: swiftenv version; swift --version; swift package --version;      
+        - run: echo "4.0" > .swift-version
+        - run: swiftenv version; swift --version; swift package --version;      
+        - run: swiftenv local 4.0
+        - run: swiftenv version; swift --version; swift package --version;      
+        - run: bundle install
+        # Only bootstrap if we have updated dependencies since our last cache.
+        - restore_cache:
+            keys:
+              - carthage_cache
+        - run: scripts/bootstrap-if-needed.sh 
+        - run: rake test
+        - run: rm .swift-version
+        - save_cache:
+            key: carthage_cache
+            paths: 
+              - Carthage    
 
   test_integration_carthage:
     <<: *defaults
