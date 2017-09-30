@@ -15,12 +15,11 @@ jobs:
       # Only bootstrap if we have updated dependencies since our last cache.
       - restore_cache:
           keys:
-            - carthage_cache
+            - carthage_cache_swift_3
       - run: scripts/bootstrap-if-needed.sh 
       - run: rake test
-      - run: rm .swift-version
       - save_cache:
-          key: carthage_cache
+          key: carthage_cache_swift_3
           paths: 
             - Carthage
   test_swift_4:
@@ -33,12 +32,11 @@ jobs:
         # Only bootstrap if we have updated dependencies since our last cache.
         - restore_cache:
             keys:
-              - carthage_cache
+              - carthage_cache_swift_4
         - run: scripts/bootstrap-if-needed.sh 
         - run: rake test
-        - run: rm .swift-version
         - save_cache:
-            key: carthage_cache
+            key: carthage_cache_swift_4
             paths: 
               - Carthage    
 
