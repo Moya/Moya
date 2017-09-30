@@ -15,30 +15,29 @@ jobs:
       - run: bundle install
       - restore_cache:
           keys:
-            - carthage-cache-swift-3-{{ checksum "Cartfile.resolved" }}
+            - carthage_cache_swift_3_{{ checksum "Cartfile.resolved" }}
       - run: scripts/bootstrap-if-needed.sh 
-      - save_cache:
-          key: carthage-cache-swift-3-{{ checksum "Cartfile.resolved" }}
-          paths: 
-            - Carthage      
       - run: rake test
+      - save_cache:
+          key: carthage_cache_swift_3_{{ checksum "Cartfile.resolved" }}
+          paths: 
+            - Carthage            
   test_swift_4:
-      <<: *defaults
-      steps:
-        - run: brew outdated carthage || brew upgrade carthage
-        - checkout      
-        # Can we do SWIFT_VERSION change better than this one below?
-        - run: perl -pi -w -e 's{SWIFT_VERSION = 3.0}{SWIFT_VERSION = 4.0}' Moya.xcodeproj/project.pbxproj    
-        - run: bundle install
-        - restore_cache:
-            keys:
-              - carthage-cache-swift-4-{{ checksum "Cartfile.resolved" }}
-        - run: scripts/bootstrap-if-needed.sh 
-        - save_cache:
-            key: carthage-cache-swift-4-{{ checksum "Cartfile.resolved" }}
-            paths: 
-              - Carthage            
-        - run: rake test
+    <<: *defaults
+    steps:
+      - run: brew outdated carthage || brew upgrade carthage
+      - checkout
+      - run: perl -pi -w -e 's{SWIFT_VERSION = 3.0}{SWIFT_VERSION = 4.0}' Moya.xcodeproj/project.pbxproj    
+      - run: bundle install
+      - restore_cache:
+          keys:
+            - carthage_cache_swift_4_{{ checksum "Cartfile.resolved" }}
+      - run: scripts/bootstrap-if-needed.sh           
+      - run: rake test
+      - save_cache:
+          key: carthage_cache_swift_4_{{ checksum "Cartfile.resolved" }}
+          paths: 
+            - Carthage          
 
   test_integration_carthage:
     <<: *defaults
