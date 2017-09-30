@@ -216,7 +216,11 @@ extension ImageType {
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
             var imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
             let imageRep = NSBitmapImageRep(cgImage: self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
-            return imageRep.representation(using: .JPEG, properties:[:])
+            #if swift(>=4.0)
+                return imageRep.representation(using: .jpeg, properties: [:])
+            #else
+                return imageRep.representation(using: .JPEG, properties: [:])
+            #endif
         }
     #endif
 }
