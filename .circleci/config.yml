@@ -8,6 +8,7 @@ jobs:
   test_swift_3:
     <<: *defaults
     steps:
+      - brew outdated carthage || brew upgrade carthage
       - checkout      
         # Can we do SWIFT_VERSION change better than this one below?
       - run: perl -pi -w -e 's{SWIFT_VERSION = 4.0}{SWIFT_VERSION = 3.0}' Moya.xcodeproj/project.pbxproj    
@@ -25,6 +26,7 @@ jobs:
   test_swift_4:
       <<: *defaults
       steps:
+        - brew outdated carthage || brew upgrade carthage
         - checkout      
         # Can we do SWIFT_VERSION change better than this one below?
         - run: perl -pi -w -e 's{SWIFT_VERSION = 3.0}{SWIFT_VERSION = 4.0}' Moya.xcodeproj/project.pbxproj    
@@ -43,16 +45,9 @@ jobs:
   test_integration_carthage:
     <<: *defaults
     steps:
+      - brew outdated carthage || brew upgrade carthage
       - checkout  
-      - restore_cache:
-          keys:
-            - carthage_cache      
-      - run: scripts/bootstrap-if-needed.sh 
       - run: rake test:carthage
-      - save_cache:
-          key: carthage_cache
-          paths: 
-            - Carthage      
   build_demo:
     <<: *defaults
     steps:
