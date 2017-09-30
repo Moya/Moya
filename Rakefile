@@ -25,7 +25,7 @@ end
 def targets
   return [
     :macos, 
-    :tvos, # CircleCI 2.0 doesn't support tvOS yet
+    # :tvos, # CircleCI 2.0 doesn't support tvOS yet
     :ios
   ]
 end
