@@ -10,10 +10,9 @@ jobs:
     steps:
       - run: brew outdated carthage || brew upgrade carthage
       - checkout      
-        # Can we do SWIFT_VERSION change better than this one below?
+      # Can we do SWIFT_VERSION change better than this one below?
       - run: perl -pi -w -e 's{SWIFT_VERSION = 4.0}{SWIFT_VERSION = 3.0}' Moya.xcodeproj/project.pbxproj    
       - run: bundle install
-      # Only bootstrap if we have updated dependencies since our last cache.
       - restore_cache:
           keys:
             - carthage-cache-swift-3-{{ checksum "Cartfile.resolved" }}
@@ -31,7 +30,6 @@ jobs:
         # Can we do SWIFT_VERSION change better than this one below?
         - run: perl -pi -w -e 's{SWIFT_VERSION = 3.0}{SWIFT_VERSION = 4.0}' Moya.xcodeproj/project.pbxproj    
         - run: bundle install
-        # Only bootstrap if we have updated dependencies since our last cache.
         - restore_cache:
             keys:
               - carthage-cache-swift-4-{{ checksum "Cartfile.resolved" }}
@@ -54,7 +52,6 @@ jobs:
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash           
       - checkout     
       - run: bundle install
-      - run: cd Demo ; bundle exec pod repo update
       # Verbose to keep CI alive during long Specs repo setups.  
       - run: cd Demo ; bundle exec pod install --verbose
       - run: rake build_demo 
