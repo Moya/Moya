@@ -5,10 +5,15 @@ defaults: &defaults
     environment:
       LANG: en_US.UTF-8
 jobs:
-  test:
+  test_swift_3:
     <<: *defaults
     steps:
       - checkout      
+      - run: brew install kylef/formulae/swiftenv
+      - run: swiftenv version; swift --version; swift package --version;      
+      - run: echo "3.0" > .swift-version
+      - run: swiftenv version; swift --version; swift package --version;      
+      - run: swiftenv local 3.0
       - run: bundle install
       # Only bootstrap if we have updated dependencies since our last cache.
       - restore_cache:
@@ -16,10 +21,33 @@ jobs:
             - carthage_cache
       - run: scripts/bootstrap-if-needed.sh 
       - run: rake test
+      - run: rm .swift-version
       - save_cache:
           key: carthage_cache
           paths: 
             - Carthage
+  test_swift_4:
+    <<: *defaults
+      - checkout      
+      - run: brew install kylef/formulae/swiftenv
+      - run: swiftenv version; swift --version; swift package --version;      
+      - run: echo "4.0" > .swift-version
+      - run: swiftenv version; swift --version; swift package --version;      
+      - run: swiftenv local 4.0
+      - run: swiftenv version; swift --version; swift package --version;      
+      - run: bundle install
+      # Only bootstrap if we have updated dependencies since our last cache.
+      - restore_cache:
+          keys:
+            - carthage_cache
+      - run: scripts/bootstrap-if-needed.sh 
+      - run: rake test
+      - run: rm .swift-version
+      - save_cache:
+          key: carthage_cache
+          paths: 
+            - Carthage    
+
   test_integration_carthage:
     <<: *defaults
     steps:
@@ -57,11 +85,13 @@ workflows:
   version: 2
   pr_build:
     jobs:
-      - test
+      - test_swift_3
+      - test_swift_4
       - test_integration_carthage
       - build_demo     
       - danger_codecov:
           requires:
-            - test
+            - test_swift_3
+            - test_swift_4
             - test_integration_carthage  
             - build_demo
