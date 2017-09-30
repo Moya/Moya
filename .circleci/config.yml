@@ -17,11 +17,11 @@ jobs:
           keys:
             - carthage_cache_swift_3
       - run: scripts/bootstrap-if-needed.sh 
-      - run: rake test
       - save_cache:
           key: carthage_cache_swift_3
           paths: 
-            - Carthage
+            - Carthage      
+      - run: rake test
   test_swift_4:
       <<: *defaults
       steps:
@@ -32,13 +32,13 @@ jobs:
         # Only bootstrap if we have updated dependencies since our last cache.
         - restore_cache:
             keys:
-              - carthage_cache_swift_4
+              - carthage_cache_swift_4              
         - run: scripts/bootstrap-if-needed.sh 
-        - run: rake test
         - save_cache:
             key: carthage_cache_swift_4
             paths: 
-              - Carthage    
+              - Carthage            
+        - run: rake test
 
   test_integration_carthage:
     <<: *defaults
@@ -59,7 +59,7 @@ jobs:
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash           
       - checkout     
       - run: bundle install
-      - run: pwd ; ls -all; cd Demo ; bundle exec pod repo update
+      - run: cd Demo ; bundle exec pod repo update
       # Verbose to keep CI alive during long Specs repo setups.  
       - run: cd Demo ; bundle exec pod install --verbose
       - run: rake build_demo 
