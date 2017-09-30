@@ -25,7 +25,7 @@ end
 def targets
   return [
     :macos, 
-    # :tvos, # Circle CI 2.0 doesnt have TV simulators yet
+    :tvos,
     :ios
   ]
 end
