@@ -1,4 +1,4 @@
 #!/bin/sh
 
-carthage bootstrap
+carthage bootstrap --cache-builds
 cp Cartfile.resolved Carthage
