@@ -1,5 +1,7 @@
 import Foundation
 import Moya
+import Result
+import Alamofire
 
 // MARK: - Provider setup
 
@@ -44,19 +46,13 @@ extension GitHub: TargetType {
     public var method: Moya.Method {
         return .get
     }
-    public var parameters: [String: Any]? {
+    public var task: Task {
         switch self {
         case .userRepositories(_):
-            return ["sort": "pushed"]
+            return .requestParameters(parameters: ["sort": "pushed"], encoding: URLEncoding.default)
         default:
-            return nil
+            return .requestPlain
         }
-    }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
-    public var task: Task {
-        return .requestPlain
     }
     public var validate: Bool {
         switch self {
