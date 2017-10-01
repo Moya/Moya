@@ -1,8 +1,10 @@
-machine:
-  xcode:
-    version: 9.0
-  environment:
-    LANG: en_US.UTF-8
+version: 2
+jobs:
+  build:
+    xcode:
+      version: 9.0
+    environment:
+      LANG: en_US.UTF-8
 
 dependencies:
   pre:
