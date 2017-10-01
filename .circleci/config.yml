@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
   macos:
-    xcode: "9.1"
+    xcode: 9.1
     environment:
       LANG: en_US.UTF-8
 jobs:
