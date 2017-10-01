@@ -8,8 +8,9 @@ jobs:
   test_swift_3:
     <<: *defaults
     steps:
-      - run: brew outdated carthage || brew upgrade carthage
       - checkout      
+      - run: scripts/check-trivial-changes.sh && circleci step halt || true # only continue if there are non-trivial changes
+      - run: brew outdated carthage || brew upgrade carthage      
       # Can we do SWIFT_VERSION change better than this one below?
       - run: perl -pi -w -e 's{SWIFT_VERSION = 4.0}{SWIFT_VERSION = 3.0}' Moya.xcodeproj/project.pbxproj    
       - run: bundle install
@@ -25,8 +26,9 @@ jobs:
   test_swift_4:
     <<: *defaults
     steps:
-      - run: brew outdated carthage || brew upgrade carthage
       - checkout
+      - run: scripts/check-trivial-changes.sh && circleci step halt || true
+      - run: brew outdated carthage || brew upgrade carthage      
       - run: perl -pi -w -e 's{SWIFT_VERSION = 3.0}{SWIFT_VERSION = 4.0}' Moya.xcodeproj/project.pbxproj    
       - run: bundle install
       - restore_cache:
@@ -42,14 +44,16 @@ jobs:
   test_integration_carthage:
     <<: *defaults
     steps:
-      - run: brew outdated carthage || brew upgrade carthage
       - checkout  
+      - run: scripts/check-trivial-changes.sh && circleci step halt || true
+      - run: brew outdated carthage || brew upgrade carthage      
       - run: rake test:carthage
   build_demo:
     <<: *defaults
     steps:
-      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash           
       - checkout     
+      - run: scripts/check-trivial-changes.sh && circleci step halt || true
+      - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash                 
       - run: bundle install
       # Verbose to keep CI alive during long Specs repo setups.  
       - run: cd Demo ; bundle exec pod install --verbose
@@ -58,6 +62,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run: scripts/check-trivial-changes.sh && circleci step halt || true
       - run: brew install swiftlint
       - run: bundle install
       - run:
