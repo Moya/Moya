@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   pre:
-    - command: circleci step halt || true # only continue if there are non-trivial changes
+    - scripts/check-trivial-changes.sh && circleci step halt || true # only continue if there are non-trivial changes
     - curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
   override:
     - brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
