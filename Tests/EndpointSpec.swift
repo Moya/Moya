@@ -125,13 +125,15 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .requestData") {
-                var data: Data!
+            context("when task is .requestJsonEncodable") {
+                let testObject = EmptyEncodable()
+                let encoder = JSONEncoder()
+                let data = try! encoder.encode(testObject)
+                
                 var request: URLRequest!
 
                 beforeEach {
-                    data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .requestData(data))
+                    endpoint = endpoint.replacing(task: .requestJSONEncodable(AnyEncodable<Encodable>(testObject)))
                     request = endpoint.urlRequest
                 }
 
@@ -146,6 +148,27 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .requestData") {
+                var data: Data!
+                var request: URLRequest!
+                
+                beforeEach {
+                    data = "test data".data(using: .utf8)
+                    endpoint = endpoint.replacing(task: .requestData(data))
+                    request = endpoint.urlRequest
+                }
+                
+                it("updates httpBody") {
+                    expect(request.httpBody).to(equal(data))
+                }
+                
+                it("doesn't update any of the other properties") {
+                    expect(request.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+            
             context("when task is .requestCompositeData") {
                 var parameters: [String: Any]!
                 var data: Data!
@@ -244,4 +267,9 @@ extension Empty: TargetType {
     var task: Task { return .requestPlain }
     var sampleData: Data { return Data() }
     var headers: [String: String]? { return nil }
+}
+
+struct EmptyEncodable: Encodable {
+    var baseURL: URL { return URL(string: "http://example.com")! }
+    var path: String { return "" }
 }
