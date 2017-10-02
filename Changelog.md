@@ -2,6 +2,7 @@
 
 # 9.0.0
 - Removed default value for task from `Endpoint` initializer
+- Added new `requestJSONEncodable` case to `Task` enum with  [`Encodable`](https://github.com/Moya/Moya/issues/1325) associated value
 
 # 9.0.0-beta.1
 - **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
