@@ -23,6 +23,7 @@ let package = Package(
     ],
     exclude: [
         "Tests",
-        "Sources/Supporting Files"
+        "Sources/Supporting Files",
+	"Examples"
     ]
 )

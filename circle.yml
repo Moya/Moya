@@ -12,15 +12,13 @@ dependencies:
     - brew install swiftlint
     - bundle install
     - scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
-    - cd Demo ; bundle exec pod repo update
-    - cd Demo ; bundle exec pod install --verbose # Verbose to keep CI alive during long Specs repo setups.
   cache_directories:
     - "Carthage" # Cache carthage to speed up builds.
 
 test:
   pre:
   override:
-  - rake test && rake test:carthage && rake build_demo
+  - rake test && rake test:carthage && rake build_example
   post:
     - bundle exec danger
     - bash <(curl -s https://codecov.io/bash) -J Moya

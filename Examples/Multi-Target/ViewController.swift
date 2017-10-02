@@ -56,16 +56,16 @@ class ViewController: UITableViewController {
     func uploadGiphy() {
         let data = animatedBirdData()
         provider.request(MultiTarget(Giphy.upload(gif: data)),
-                                  callbackQueue: DispatchQueue.main,
-                                  progress: progressClosure,
-                                  completion: progressCompletionClosure)
+                         callbackQueue: DispatchQueue.main,
+                         progress: progressClosure,
+                         completion: progressCompletionClosure)
     }
     
     func downloadMoyaLogo() {
         provider.request(MultiTarget(GitHubUserContent.downloadMoyaWebContent("logo_github.png")),
-                                              callbackQueue: DispatchQueue.main,
-                                              progress: progressClosure,
-                                              completion: progressCompletionClosure)
+                         callbackQueue: DispatchQueue.main,
+                         progress: progressClosure,
+                         completion: progressCompletionClosure)
     }
     
     // MARK: - Progress Helpers
