@@ -292,6 +292,15 @@ Please note that this project is released with a Contributor Code of Conduct. By
 
 If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget.
 
+### Help us improve Moya documentation
+Whether you’re a core member or a user trying it out for the first time, you can make a valuable contribution to Moya by improving the documentation. Help us by:
+
+- sending us feedback about something you thought was confusing or simply missing
+- suggesting better wording or ways of explaining certain topics
+- sending us a pull request via GitHub
+- improving the [Chinese documentation](Readme_CN.md)
+
+
 ## License
 
 Moya is released under an MIT license. See [License.md](License.md) for more information.
