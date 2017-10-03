@@ -296,8 +296,9 @@ If you add or remove a source file from Moya, a corresponding change needs to be
 Whether you’re a core member or a user trying it out for the first time, you can make a valuable contribution to Moya by improving the documentation. Help us by:
 
 - sending us feedback about something you thought was confusing or simply missing
-- suggest for better wording or ways of explaining certain topics
+- suggesting better wording or ways of explaining certain topics
 - sending us a pull request via GitHub
+- improving the [Chinese documentation](Readme_CN.md)
 
 
 ## License
