@@ -1,7 +1,6 @@
 disabled_rules:
   - line_length
   - type_name
-  - valid_docs
   - force_unwrapping
   - force_cast
   - force_try
