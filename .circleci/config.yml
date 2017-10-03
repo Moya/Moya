@@ -56,8 +56,7 @@ jobs:
       - run: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash                 
       - run: bundle install
       # Verbose to keep CI alive during long Specs repo setups.  
-      - run: cd Demo ; bundle exec pod install --verbose
-      - run: rake build_demo 
+      - run: rake build_example
   danger_codecov:
     <<: *defaults
     steps:
