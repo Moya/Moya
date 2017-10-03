@@ -1,3 +1,5 @@
+// swiftlint:disable file_length type_body_length
+
 import Quick
 import Nimble
 import Foundation
@@ -583,7 +585,7 @@ class MoyaProviderSpec: QuickSpec {
             }
 
             it("uses correct headers") {
-                var headers: [String : String]?
+                var headers: [String: String]?
                 let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
                     headers = endpoint.httpHeaderFields
                     if let urlRequest = endpoint.urlRequest {
@@ -626,9 +628,9 @@ class MoyaProviderSpec: QuickSpec {
         describe("an inflight-tracking provider") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-                }
+                })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
 
@@ -699,9 +701,9 @@ class MoyaProviderSpec: QuickSpec {
                 try? FileManager.default.removeItem(at: file)
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
-                }
+                })
                 provider = MoyaProvider<GitHubUserContent>()
             }
 
@@ -817,9 +819,9 @@ class MoyaProviderSpec: QuickSpec {
             var stubDescriptor: OHHTTPStubsDescriptor!
 
             beforeEach {
-                stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-                }
+                })
             }
 
             afterEach {

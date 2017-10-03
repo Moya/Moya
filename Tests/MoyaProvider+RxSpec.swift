@@ -98,9 +98,9 @@ final class MoyaProviderRx: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-                }
+                })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
 
@@ -150,9 +150,9 @@ final class MoyaProviderRx: QuickSpec {
                 try? FileManager.default.removeItem(at: file)
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
-                }
+                })
                 provider = MoyaProvider<GitHubUserContent>()
             }
 
@@ -176,7 +176,7 @@ final class MoyaProviderRx: QuickSpec {
                         case let .next(element):
                             nextProgressValues.append(element.progress)
 
-                            if let _ = element.response { nextResponseCount += 1 }
+                            if element.response != nil { nextResponseCount += 1 }
                         case .error: errorEventsCount += 1
                         case .completed: completedEventsCount += 1
                         }
@@ -192,9 +192,9 @@ final class MoyaProviderRx: QuickSpec {
                 var stubDescriptor: OHHTTPStubsDescriptor!
 
                 beforeEach {
-                    stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                    stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
                         return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-                    }
+                    })
                 }
 
                 afterEach {

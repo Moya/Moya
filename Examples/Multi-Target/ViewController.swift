@@ -54,8 +54,7 @@ class ViewController: UITableViewController {
     }
 
     func uploadGiphy() {
-        let data = animatedBirdData()
-        provider.request(MultiTarget(Giphy.upload(gif: data)),
+        provider.request(MultiTarget(Giphy.upload(gif: Giphy.animatedBirdData)),
                          callbackQueue: DispatchQueue.main,
                          progress: progressClosure,
                          completion: progressCompletionClosure)
