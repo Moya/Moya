@@ -111,7 +111,7 @@ class ViewController: UITableViewController {
         var usernameTextField: UITextField?
 
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default) { action in
+        let ok = UIAlertAction(title: "OK", style: .default) { _ in
             if let username = usernameTextField?.text {
                 self.downloadRepositories(username)
             }

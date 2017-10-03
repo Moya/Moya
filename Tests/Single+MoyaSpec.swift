@@ -255,7 +255,7 @@ class SingleMoyaSpec: QuickSpec {
                         receivedError = error as? MoyaError
                     }
                 }
-                
+
                 expect(receivedError).toNot(beNil())
                 let expectedError = MoyaError.stringMapping(Response(statusCode: 200, data: Data(), response: nil))
                 expect(receivedError).to(beOfSameErrorType(expectedError))

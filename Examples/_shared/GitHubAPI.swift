@@ -79,7 +79,7 @@ public func url(_ route: TargetType) -> String {
     return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
-//MARK: - Response Handlers
+// MARK: - Response Handlers
 
 extension Moya.Response {
     func mapNSArray() throws -> NSArray {
@@ -90,4 +90,3 @@ extension Moya.Response {
         return array
     }
 }
-
