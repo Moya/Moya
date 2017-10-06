@@ -156,9 +156,14 @@ Great, now we're all set. Just need to create our provider.
 ```swift
 // Tuck this away somewhere where it'll be visible to anyone who wants to use it
 var provider: MoyaProvider<MyService>!
-
-// Create this instance at app launch
-let provider = MoyaProvider(endpointClosure: endpointClosure)
+```
+At app launch, you then need to instantiate your provider.
+```swift
+provider = MoyaProvider(endpointClosure: endpointClosure)
+```
+If by any chance you don't have access to a network, or your API is not ready yet, you can always simulate it by stubbing your requests.  Just make sure you have some `sampleData` in your enum set to the response you're expecting.
+```swift
+provider = MoyaProvider(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
 ```
 
 Neato. Now how do we make a request?
