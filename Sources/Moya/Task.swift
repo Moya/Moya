@@ -1,13 +1,16 @@
 import Foundation
 
 /// Represents an HTTP task.
-public enum Task {
+public enum Task<JSONEncondable: Encodable> {
 
     /// A request with no additional data.
     case requestPlain
 
     /// A requests body set with data.
     case requestData(Data)
+
+    /// A request body set with data.
+    case requestJSONEncodable(JSONEncondable)
 
     /// A requests body set with encoded parameters.
     case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
@@ -32,4 +35,13 @@ public enum Task {
 
     /// A file download task to a destination with extra parameters using the given encoding.
     case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, destination: DownloadDestination)
+
+    func encodableRequest<T: Encodable>() -> T? {
+        switch self {
+        case .requestJSONEncodable(let encodable):
+            return encodable as? T
+        default:
+            return nil
+        }
+    }
 }

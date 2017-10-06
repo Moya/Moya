@@ -3,6 +3,8 @@ import Foundation
 /// The protocol used to define the specifications necessary for a `MoyaProvider`.
 public protocol TargetType {
 
+    associatedtype JSONEncondable: Encodable
+    
     /// The target's base `URL`.
     var baseURL: URL { get }
 
@@ -16,7 +18,7 @@ public protocol TargetType {
     var sampleData: Data { get }
 
     /// The type of HTTP task to be performed.
-    var task: Task { get }
+    var task: Task<JSONEncondable> { get }
 
     /// Whether or not to perform Alamofire validation. Defaults to `false`.
     var validate: Bool { get }

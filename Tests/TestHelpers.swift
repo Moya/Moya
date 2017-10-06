@@ -220,3 +220,22 @@ extension ImageType {
         }
     #endif
 }
+
+// MARK: - Codable Test Helpers
+// Necessary to test Encodable request tasks and Decodable mapping.
+struct Issue: Codable {
+    let title: String
+    let createdAt: Date
+}
+
+struct Commit: Codable {
+    let message: String
+    let author: String
+    let timestamp: Date
+
+    init(message: String, author: String) {
+        self.message = message
+        self.author = author
+        self.timestamp = Date()
+    }
+}

@@ -146,6 +146,29 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .requestJSONEncodable") {
+                var commit: Commit!
+                var request: URLRequest!
+
+                beforeEach {
+                    commit = Commit.init(message: "Fixed Snow Crash", author: "Hiro Protagonist")
+                    endpoint = endpoint.replacing(task: .requestJSONEncodable(commit))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates httpBody") {
+                    let expectedContent = try! JSONDecoder().decode(Commit.self, from: request.httpBody ?? Data())
+                    expect(expectedContent.author).to(equal(commit.author))
+                    expect(expectedContent.message).to(equal(commit.message))
+                }
+
+                it("doesn't update any of the other properties") {
+                    expect(request.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
             context("when task is .requestCompositeData") {
                 var parameters: [String: Any]!
                 var data: Data!
