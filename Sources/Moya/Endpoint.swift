@@ -72,29 +72,30 @@ extension Endpoint {
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = httpHeaderFields
 
-        do {
-            switch task {
-            case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
-                return request
-            case .requestData(let data):
-                request.httpBody = data
-                return request
-            case let .requestParameters(parameters, parameterEncoding):
-                return try parameterEncoding.encode(request, with: parameters)
-            case let .uploadCompositeMultipart(_, urlParameters):
-                return try URLEncoding(destination: .queryString).encode(request, with: urlParameters)
-            case let .downloadParameters(parameters, parameterEncoding, _):
-                return try parameterEncoding.encode(request, with: parameters)
-            case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
-                request.httpBody = bodyData
-                return try URLEncoding(destination: .queryString).encode(request, with: urlParameters)
-            case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
-                if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
-                let bodyfulRequest = try bodyParameterEncoding.encode(request, with: bodyParameters)
-                return try URLEncoding(destination: .queryString).encode(bodyfulRequest, with: urlParameters)
-            }
-        } catch {
-            throw MoyaError.parameterEncoding(error)
+        switch task {
+        case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
+            return request
+        case .requestData(let data):
+            request.httpBody = data
+            return request
+        case let .requestJSONEncodable(encodable):
+            return try request.encoded(encodable: encodable)
+        case let .requestParameters(parameters, parameterEncoding):
+            return try request.encoded(parameters: parameters, parameterEncoding: parameterEncoding)
+        case let .uploadCompositeMultipart(_, urlParameters):
+            let parameterEncoding = URLEncoding(destination: .queryString)
+            return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
+        case let .downloadParameters(parameters, parameterEncoding, _):
+            return try request.encoded(parameters: parameters, parameterEncoding: parameterEncoding)
+        case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
+            request.httpBody = bodyData
+            let parameterEncoding = URLEncoding(destination: .queryString)
+            return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
+        case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
+            if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
+            let bodyfulRequest = try request.encoded(parameters: bodyParameters, parameterEncoding: bodyParameterEncoding)
+            let urlEncoding = URLEncoding(destination: .queryString)
+            return try bodyfulRequest.encoded(parameters: urlParameters, parameterEncoding: urlEncoding)
         }
     }
 }
