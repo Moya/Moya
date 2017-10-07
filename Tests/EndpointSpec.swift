@@ -152,7 +152,7 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     commit = Commit.init(message: "Fixed Snow Crash", author: "Hiro Protagonist")
-                    endpoint = endpoint.replacing(task: .requestJSONEncodable(commit))
+                    endpoint = endpoint.replacing(task: .requestJSONEncodable(AnyJSONEncodable(commit)))
                     request = try! endpoint.urlRequest()
                 }
 

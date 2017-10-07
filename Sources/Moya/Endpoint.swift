@@ -14,20 +14,20 @@ public enum EndpointSampleResponse {
 }
 
 /// Class for reifying a target of the `Target` enum unto a concrete `Endpoint`.
-open class Endpoint<Target, JSONEncondable: Encodable> {
+open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     open let url: String
     open let sampleResponseClosure: SampleResponseClosure
     open let method: Moya.Method
-    open let task: Task<JSONEncondable>
+    open let task: Task
     open let httpHeaderFields: [String: String]?
 
     /// Main initializer for `Endpoint`.
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method,
-                task: Task<JSONEncondable>,
+                task: Task,
                 httpHeaderFields: [String: String]?) {
 
         self.url = url
@@ -38,12 +38,12 @@ open class Endpoint<Target, JSONEncondable: Encodable> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
-    open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target, JSONEncondable> {
+    open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target> {
         return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
-    open func replacing(task: Task<JSONEncondable>) -> Endpoint<Target, JSONEncondable> {
+    open func replacing(task: Task) -> Endpoint<Target> {
         return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 
@@ -111,7 +111,7 @@ extension Endpoint: Equatable, Hashable {
 
     /// Note: If both Endpoints fail to produce a URLRequest the comparison will
     /// fall back to comparing each Endpoint's hashValue.
-    public static func == <T, E>(lhs: Endpoint<T, E>, rhs: Endpoint<T, E>) -> Bool {
+    public static func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
         let lhsRequest = try? lhs.urlRequest()
         let rhsRequest = try? rhs.urlRequest()
         if lhsRequest != nil, rhsRequest == nil { return false }

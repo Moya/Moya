@@ -2,7 +2,7 @@ import Foundation
 
 /// These functions are default mappings to `MoyaProvider`'s properties: endpoints, requests, manager, etc.
 public extension MoyaProvider {
-    public final class func defaultEndpointMapping(for target: Target) -> Endpoint<Target, E> {
+    public final class func defaultEndpointMapping(for target: Target) -> Endpoint<Target> {
         return Endpoint(
             url: URL(target: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
