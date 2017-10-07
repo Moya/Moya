@@ -109,12 +109,11 @@ That's what the `requestClosure` parameter is for.
 
 The `requestClosure` is an optional, last-minute way to modify the request
 that hits the network. It has a default value of `MoyaProvider.defaultRequestMapping`,
-which uses the `urlRequest()` method of the `Endpoint` instance. The `urlRequest()` 
-method throws two possible errors: `MoyaError.requestMapping(String)` error in the 
-case that an `URLRequest` could not be created for the given path and a `Swift.Error`
-in the case of an error related to the encoding of the parameters for a request. 
-This `Swift.Error` is wrapped up as a `MoyaError.parameterEncoding(Swift.Error)` by the 
-`MoyaProvider.defaultRequestMapping` closure. 
+which uses the `urlRequest()` method of the `Endpoint` instance. This `urlRequest()` 
+method throws three possible errors: 
+- `MoyaError.requestMapping(String)` when `URLRequest` could not be created for given path
+- `MoyaError.parameterEncoding(Swift.Error)` when parameters couldn't be encoded
+- `MoyaError.encodableMapping(Swift.Error)` when `Encodable` object couldn't be encoded into `Data`
 
 This closure receives an `Endpoint` instance and is responsible for invoking a
 its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, MoyaError> -> Void`) with a request that represents the Endpoint.
