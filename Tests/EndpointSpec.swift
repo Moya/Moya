@@ -146,6 +146,29 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .requestJSONEncodable") {
+                var issue: Issue!
+                var request: URLRequest!
+
+                beforeEach {
+                    issue = Issue(title: "Hello, Moya!", createdAt: Date())
+                    endpoint = endpoint.replacing(task: .requestJSONEncodable(issue))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates httpBody") {
+                    let expectedIssue = try! JSONDecoder().decode(Issue.self, from: request.httpBody!)
+                    expect(issue.createdAt).to(equal(expectedIssue.createdAt))
+                    expect(issue.title).to(equal(expectedIssue.title))
+                }
+
+                it("doesn't update any of the other properties") {
+                    expect(request.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
             context("when task is .requestCompositeData") {
                 var parameters: [String: Any]!
                 var data: Data!
