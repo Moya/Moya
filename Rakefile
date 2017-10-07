@@ -155,6 +155,7 @@ end
 desc 'Release a version, specified as an argument.'
 task :release, :version do |task, args|
   version = args[:version]
+  release_date = Time.now.strftime("%Y-%m-%d")
   # Needs a X.Y.Z-text format.
   abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+(-\w+\.\d+)?/).length == 0
 
@@ -171,7 +172,7 @@ task :release, :version do |task, args|
   puts "Updating changelog."
   changelog_filename = "CHANGELOG.md"
   changelog = File.read(changelog_filename)
-  changelog.gsub!(/# Next/, "# Next\n\n# #{version}")
+  changelog.gsub!(/# Next/, "# Next\n\n# [#{version}] - #{release_date}")
   File.open(changelog_filename, 'w') { |file| file.puts changelog }
 
   puts "Committing, tagging, and pushing."
