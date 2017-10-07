@@ -27,6 +27,7 @@
 		149675ED1F81340D0085EDEE /* GiphyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A06AE1F705DDD001153A0 /* GiphyAPI.swift */; };
 		149675EE1F81340F0085EDEE /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A06AD1F705DDD001153A0 /* GitHubUserContentAPI.swift */; };
 		149749431F8923EC00FA4900 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149749421F8923EC00FA4900 /* AnyEncodable.swift */; };
+		149749451F892E2F00FA4900 /* URLRequest+Encoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149749441F892E2F00FA4900 /* URLRequest+Encoding.swift */; };
 		15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D47F3DC51C28D950491FAAB /* MoyaError.swift */; };
 		1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4553E5591EE96535C5310C02 /* NetworkLoggerPlugin.swift */; };
 		2ADDFC96D7F7912333534C46 /* SignalProducer+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */; };
@@ -145,6 +146,7 @@
 		1463B8731F8A8A5B002D9C4F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		147E26EB1F5B14B300C1F513 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		149749421F8923EC00FA4900 /* AnyEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
+		149749441F892E2F00FA4900 /* URLRequest+Encoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Encoding.swift"; sourceTree = "<group>"; };
 		14FB7A3E1F3E089900308949 /* Single+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Response.swift"; sourceTree = "<group>"; };
 		225C397C03E17F7DFBCA2848 /* MoyaProvider+Internal.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Internal.swift"; sourceTree = "<group>"; };
 		269C64D1ABED61A91DD873D3 /* SignalProducer+Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "SignalProducer+Response.swift"; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				9C38151BF038BA0B61EF5A62 /* TargetType.swift */,
 				147E26EB1F5B14B300C1F513 /* Task.swift */,
 				1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */,
+				149749441F892E2F00FA4900 /* URLRequest+Encoding.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				149749431F8923EC00FA4900 /* AnyEncodable.swift in Sources */,
 				9854C1DBF14818CCA76AEC7F /* MoyaProvider+Internal.swift in Sources */,
 				147E26EC1F5B14B300C1F513 /* Task.swift in Sources */,
+				149749451F892E2F00FA4900 /* URLRequest+Encoding.swift in Sources */,
 				5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */,
 				61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */,
 				5054F87AFF61EAC0097F88BD /* MultiTarget.swift in Sources */,
