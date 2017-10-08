@@ -164,10 +164,6 @@ task :release, :version do |task, args|
   contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+(-\w+\.\d)?"/, "s.version      = \"#{version}\"")
   File.open(filename, 'w') { |file| file.puts contents }
 
-  puts "Updating Example Targets."
-  ENV['COCOAPODS_DISABLE_DETERMINISTIC_UUIDS'] = 'true'
-  sh "bundle exec pod update Moya --verbose"
-
   puts "Updating changelog."
   changelog_filename = "CHANGELOG.md"
   changelog = File.read(changelog_filename)
