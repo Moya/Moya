@@ -1,4 +1,5 @@
 # Next
+- Refactored Decodable parsing by [@0111b](https://github.com/0111b)
 
 # [10.0.0-beta.1] - 2017-10-08
 ### Added
