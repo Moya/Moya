@@ -69,7 +69,7 @@ your Swift version.
 | 2.3   | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 |
 | 2.2   | <= 7.0.1      | <= 7.0.1      | <= 7.0.1      |
 
-**Upgrading to a new major version of Moya? Check out our [migration guides](https://github.com/Moya/Moya/blob/master/docs/MigrationGuides.md).**
+**Upgrading to a new major version of Moya? Check out our [migration guides](https://github.com/Moya/Moya/blob/master/docs/MigrationGuides).**
 
 ### Swift Package Manager
 
