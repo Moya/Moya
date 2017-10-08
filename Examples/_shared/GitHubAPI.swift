@@ -1,7 +1,5 @@
 import Foundation
 import Moya
-import Result
-import Alamofire
 
 // MARK: - Provider setup
 
