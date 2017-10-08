@@ -64,7 +64,7 @@ your Swift version.
 
 | Swift | Moya          | RxMoya        | ReactiveMoya  |
 | ----- | ------------- |---------------|---------------|
-| 4.X   | >= 9.0        | -             | >= 9.0        |
+| 4.X   | >= 9.0        | >= 10.0       | >= 9.0        |
 | 3.X   | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 |
 | 2.3   | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 |
 | 2.2   | <= 7.0.1      | <= 7.0.1      | <= 7.0.1      |
@@ -76,7 +76,7 @@ your Swift version.
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .branch("10.0.0-dev"))
+.package(url: "https://github.com/Moya/Moya.git", .exact(Version(10, 0, 0, prereleaseIdentifiers: ["beta", "1"])))
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
@@ -95,7 +95,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .branch("10.0.0-dev"))
+        .package(url: "https://github.com/Moya/Moya.git", .exact(Version(10, 0, 0, prereleaseIdentifiers: ["beta", "1"])))
     ],
     targets: [
         .target(
