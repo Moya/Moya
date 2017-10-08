@@ -1,26 +1,8 @@
-# Migration Guides
+# Migration Guide
 
 This project follows [Semantic Versioning](http://semver.org).
 
-Please follow the appropriate guide below when **upgrading to a new major version** of Moya (e.g. 9.0 -> 10.0).
-
-## Upgrade from 9.x to 10.x
-
-### MoyaError Migration
-- Add `.parameterEncoding`, `.objectMapping`, `.encodableMapping`, cases to `MoyaError` or a `default` case to achieve exhaustiveness..
-
-### Task Migration
-- Add `.requestJSONEncodable` case to `Task` or default case to achieve exhaustiveness.
-
-### Endpoint Migration
-- Replace previously default `method` parameter for `Endpoint.init` with `.get`.
-- Replace previously default `httpHeaderFields` parameter for `Endpoint.init` with `nil`.
-- Replace `urlRequest` with `try? urlRequest()` or use `do/catch` syntax to handle thrown errors..
-
-### NetworkActivityPlugin Migration
-- Add `TargetType` as second argument of `NetworkActivityClosure` in `NetworkActivityPlugin` initializer.
-
-----
+Please follow the appropriate guide below when **upgrading to a new major version** of Moya (e.g. 8.0 -> 9.0).
 
 ## Upgrade from 8.x to 9.x
 
@@ -40,4 +22,5 @@ Please follow the appropriate guide below when **upgrading to a new major versio
 ### Reactive MoyaProvider  Migration
 - Replace instances of `RxMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.rx` namespace to access the RxSwift API.
 - Replace instances of `ReactiveMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.reactive` namespace to access the ReactiveSwift API.
-- If you subclass a reactive provider, check out this pull request [Eidolon's migration to Moya 9.0.0](https://github.com/artsy/eidolon/pull/669) which covers migration from subclassing to composition. 
+- If you subclass a reactive provider, check out this pull request [Eidolon's migration to Moya 9.0.0](https://github.com/artsy/eidolon/pull/669) which covers migration from subclassing to composition.
+
