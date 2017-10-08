@@ -1,4 +1,6 @@
 # Next
+
+# [10.0.0-beta.1] - 2017-10-08
 ### Added
 - **Breaking Change** `.parameterEncoding` case to `MoyaError`. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
 - **Breaking Change** `.objectMapping` case to `MoyaError`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
