@@ -5,8 +5,8 @@
 - **Breaking Change** Added a `.parameterEncoding` case to `MoyaError`. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
 - **Breaking Change** Added an `.objectMapping` case to `MoyaError`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
 - **Breaking Change** Added an`.encodableMapping` case to `MoyaError`. [#1349](https://github.com/Moya/Moya/pull/1349) by [@LeLuckyVint](https://github.com/LeLuckyVint), [@afonsograca](https://github.com/afonsograca) and [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change** Added a `Decodable` object mapping methods to `Moya.Response`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
 - **Breaking Change** Added a `.requestJSONEncodable` case to `Task`. [#1349](https://github.com/Moya/Moya/pull/1349) by [@LeLuckyVint](https://github.com/LeLuckyVint), [@afonsograca](https://github.com/afonsograca) and [@sunshinejr](https://github.com/sunshinejr).
+- Added a `Decodable` object mapping methods to `Moya.Response`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
 
 ### Changed
 - **Breaking Change** Changed `Endpoint.init` so it doesn't have any default arguments (removing default argument `.get` for `method` parameter and `nil` for  `httpHeaderFields` parameter). [#1289](https://github.com/Moya/Moya/pull/1289) by [@sunshinejr](https://github.com/sunshinejr).
