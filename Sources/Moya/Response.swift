@@ -104,7 +104,7 @@ public extension Response {
         if let keyPath = keyPath {
             // Key path was provided, try to parse string at key path
             guard let jsonDictionary = try mapJSON() as? NSDictionary,
-                let string = jsonDictionary.value(forKeyPath:keyPath) as? String else {
+                let string = jsonDictionary.value(forKeyPath: keyPath) as? String else {
                     throw MoyaError.stringMapping(self)
             }
             return string
@@ -122,12 +122,11 @@ public extension Response {
     /// - parameter atKeyPath: Optional key path at which to parse object.
     /// - parameter using: A `JSONDecoder` instance which is used to decode data to an object.
     func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder()) throws -> D {
-        let jsonData = data
         do {
             if let keyPath = keyPath {
-                return try decoder.decode(D.self, from: jsonData, keyPath: keyPath)
+                return try decoder.decode(D.self, from: data, keyPath: keyPath)
             } else {
-                return try decoder.decode(D.self, from: jsonData)
+                return try decoder.decode(D.self, from: data)
             }
         } catch let error {
             throw MoyaError.objectMapping(error, self)
