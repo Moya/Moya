@@ -1,18 +1,14 @@
 # RxSwift
 
-Moya provides an optional `RxSwift` implementation of
-`MoyaProvider` that does a few interesting things. Instead of
-calling the `request()` method and providing a callback closure
-to be executed when the request completes, we use `Observable`s.
+Moya 在`MoyaProvider`中提供了一个可选的`RxSwift`实现，它可以做些有趣的事情。我们使用 `Observable`而不使用`request()`及请求完成时的回调闭包。
 
-To use reactive extensions you don't need any additional setup.
-Just use your `MoyaProvider` instance.
+使用reactive扩展您不需要任何额外的设置。只使用您的 `MoyaProvider`实例对象 。
 
 ```swift
 let provider = MoyaProvider<GitHub>()
 ```
 
-After that simple setup, you're off to the races:
+简单设置之后, 您就可以使用了：
 
 ```swift
 provider.rx.request(.zen).subscribe { event in
@@ -25,8 +21,8 @@ provider.rx.request(.zen).subscribe { event in
 }
 ```
 
-You can also use `requestWithProgress` to track progress of 
-your request:
+您也可以使用 `requestWithProgress` 来追踪您请求的进度 :
+
 ```swift
 provider.rx.requestWithProgress(.zen).subscribe { event in
     switch event {
@@ -44,46 +40,30 @@ provider.rx.requestWithProgress(.zen).subscribe { event in
 }
 ```
 
-It's important to remember that network request is not started
-until the signal is subscribed to. If the subscription to the signal
-is disposed of before the request completes, the request is canceled.
+请务必记住直到signal被订阅之后网络请求才会开始。signal订阅者在网络请求完成前被销毁了，那么这个请求将被取消 。
 
-If the request completes normally, two things happen:
+如果请求正常完成，两件事件将会发生：
 
-1. The observable sends a value, a `Moya.Response` instance.
-2. The observable completes.
+1. 这个信号将发送一个值，即一个 `Moya.Response` 实例对象.
+2. 信号结束.
 
-If the request produces an error (typically a `URLSession` error),
-then it sends an error, instead. The error's `code` is the failing
-request's status code, if any, and the response data, if any.
+如果这个请求产生了一个错误 (通常一个 URLSession 错误),
+然后它将发送一个错误. 这个错误的 `code` 就是失败请求的状态码, if any, and the response data, if any.
 
-The `Moya.Response` class contains a `statusCode`, some `data`,
-and a(n optional) `HTTPURLResponse`. You can use these values however
-you like in `subscribe` or `map` calls.
+`Moya.Response` 类包含一个 `statusCode`, 一个 `data`,
+和 一个( 可选的) `HTTPURLResponse`. 您可以在 `subscribe ` 或 `map` 回调中随意使用这些值。
 
-To make things even awesomer, Moya provides some extensions to
-`Single` and `Observable` that make dealing with `MoyaResponses`really easy.
+为了让事情更加简便, Moya 为`Single` 和 `Observable`提供一些扩展来更容易的处理`MoyaResponses`。
 
-- `filter(statusCodes:)` takes a range of status codes. If the
-  response's status code is not within that range, an error is
-  produced.
-- `filter(statusCode:)` looks for a specific status code, and errors
-  if it finds anything else.
-- `filterSuccessfulStatusCodes()` filters status codes that
-  are in the 200-range.
-- `filterSuccessfulStatusAndRedirectCodes()` filters status codes
-  that are in the 200-300 range.
-- `mapImage()` tries to map the response data to a `UIImage` instance
-  and errors if unsuccessful.
-- `mapJSON()` tries to map the response data to a JSON object and
-  errors if unsuccessful.
-- `mapString()` tries to map the response data to a string and
-  errors if unsuccessful.
-- `mapString(atKeyPath:)` tries to map a response data key path to a string and
-  errors if unsuccessful.
+- `filter(statusCodes:)` 指定一范围的状态码。如果响应的状态代码不是这个范围内,会产生一个错误。
+- `filter(statusCode:)` 查看指定的一个状态码，如果没找到会产生一个错误。
+- `filterSuccessfulStatusCodes()` 过滤 200-范围内的状态码.
+- `filterSuccessfulStatusAndRedirectCodes()` 过滤 200-300 范围内的状态码。
+- `mapImage()` 尝试把响应数据转化为 `UIImage` 实例
+  如果不成功将产生一个错误。
+- `mapJSON()` 尝试把响应数据映射成一个JSON对象，如果不成功将产生一个错误。
+- `mapString()` 把响应数据转化成一个字符串，如果不成功将产生一个错误。
+- `mapString(atKeyPath:)` 尝试把响应数据的key Path 映射成一个字符串，如果不成功将产生一个错误。
 
-In the error cases, the error's `domain` is `Moya.MoyaError`. The code
-is one of `MoyaErrorCode`'s `rawValue`s, where appropriate. Wherever
-possible, underlying errors are provided and the original response
-data is included in the `NSError`'s `userInfo` dictionary using the
-"data" key.
+在错误的情况下, 错误的 `domain`是 `MoyaErrorDomain`。code
+的值是`MoyaErrorCode`的其中一个的`rawValue`值。 只要有可能，会提供underlying错误并且原始响应数据会被包含在`NSError`的字典类型的`userInfo`的data中

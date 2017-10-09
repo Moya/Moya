@@ -28,7 +28,7 @@ let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose: true)
 这个插件可以在 [`Sources/Moya/Plugins/NetworkActivityPlugin.swift`](../Sources/Moya/Plugins/NetworkActivityPlugin.swift)中找到
 
 ### 日志记录
-During development it can be very useful to log network activity to the console. This can be anything from the URL of a request as sent and received, to logging full headers, method, request body on each request and response.
+在开发期间，将网络活动记录到控制台是非常有用的。这可以是任何来自发送和接收请求URL的内容，来记录每个请求和响应的完整的header，方法，请求体。
 
 The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initializing the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputting data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `String.Encoding.utf8` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Demo/Shared/GitHubAPI.swift`](../Demo/Shared/GitHubAPI.swift) for an example that does exactly that)
 
