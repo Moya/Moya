@@ -2,22 +2,22 @@
 
 # [10.0.0-beta.1] - 2017-10-08
 ### Added
-- **Breaking Change** `.parameterEncoding` case to `MoyaError`. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
-- **Breaking Change** `.objectMapping` case to `MoyaError`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
-- **Breaking Change** `.encodableMapping` case to `MoyaError`. [#1349](https://github.com/Moya/Moya/pull/1349) by [@LeLuckyVint](https://github.com/LeLuckyVint), [@afonsograca](https://github.com/afonsograca) and [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change** `Decodable` object mapping methods to `Moya.Response`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
-- **Breaking Change** `.requestJSONEncodable` case to `Task`. [#1349](https://github.com/Moya/Moya/pull/1349) by [@LeLuckyVint](https://github.com/LeLuckyVint), [@afonsograca](https://github.com/afonsograca) and [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Added a `.parameterEncoding` case to `MoyaError`. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
+- **Breaking Change** Added an `.objectMapping` case to `MoyaError`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
+- **Breaking Change** Added an`.encodableMapping` case to `MoyaError`. [#1349](https://github.com/Moya/Moya/pull/1349) by [@LeLuckyVint](https://github.com/LeLuckyVint), [@afonsograca](https://github.com/afonsograca) and [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Added a `.requestJSONEncodable` case to `Task`. [#1349](https://github.com/Moya/Moya/pull/1349) by [@LeLuckyVint](https://github.com/LeLuckyVint), [@afonsograca](https://github.com/afonsograca) and [@sunshinejr](https://github.com/sunshinejr).
+- Added a `Decodable` object mapping methods to `Moya.Response`. [#1335](https://github.com/Moya/Moya/pull/1335) by [@devxoul](https://github.com/devxoul).
 
 ### Changed
-- **Breaking Change** `Endpoint.init` so it doesn't have any default arguments (removing default argument `.get` for `method` parameter and `nil` for  `httpHeaderFields` parameter). [#1289](https://github.com/Moya/Moya/pull/1289) by [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change** `NetworkActivityPlugin` so its `networkActivityClosure` has now `target: TargetType` argument in addition to `change: NetworkActivityChangeType`. [#1290](https://github.com/Moya/Moya/pull/1290) by [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change** `Endpoint`'s `urlRequest` property to `urlRequest()` a throwing method. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
+- **Breaking Change** Changed `Endpoint.init` so it doesn't have any default arguments (removing default argument `.get` for `method` parameter and `nil` for  `httpHeaderFields` parameter). [#1289](https://github.com/Moya/Moya/pull/1289) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Changed `NetworkActivityPlugin` so its `networkActivityClosure` has now `target: TargetType` argument in addition to `change: NetworkActivityChangeType`. [#1290](https://github.com/Moya/Moya/pull/1290) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Changed `Endpoint`'s `urlRequest` property to `urlRequest()` a throwing method. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
 
 ### Removed
-- **Breaking Change** `RxMoyaProvider` and `ReactiveSwiftMoyaProvider`. [#1320](https://github.com/Moya/Moya/pull/1320) by [@SD10](https://github.com/SD10)
+- **Breaking Change** Removed `RxMoyaProvider` and `ReactiveSwiftMoyaProvider`. [#1320](https://github.com/Moya/Moya/pull/1320) by [@SD10](https://github.com/SD10)
 
 ### Fixed
-- `MoyaProvider+Rx` self-retaining bug in `requestWithProgress`. [#1311](https://github.com/Moya/Moya/pull/1311) by [@AndrewSB](https://github.com/AndrewSB).
+- Fixed a `MoyaProvider+Rx` self-retaining bug in `requestWithProgress`. [#1311](https://github.com/Moya/Moya/pull/1311) by [@AndrewSB](https://github.com/AndrewSB).
 
 # 9.0.0
 - Removed default value for task from `Endpoint` initializer
