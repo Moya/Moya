@@ -16,7 +16,7 @@ provider.request(.zen) { result in
 }
 ```
 
-The result of a request is of the type: `Result<Moya.Response, Error>`.
+The result of a request is of the type: `Result<Moya.Response, MoyaError>`.
 `Result` is basically an enum with associated values.
 A simplified version is:
 
@@ -28,6 +28,7 @@ enum Result {
 ````
 
 Therefore we switch over the result.
+
 Moya comes with useful reactive bindings, both for `RxSwift` and `ReactiveSwift`, which means the above example can be done in these ways as well:
 
 Here is an example for `RxSwift`:
@@ -53,6 +54,19 @@ provider.rx.request(.zen).subscribe(
     }
 )
 ```
+
+## Basics
+
+The `Response` object contains several properties:
+
+- `data`: the data of the response as a `Data` object.
+- `statusCode`: the status code of the response as an `Int`.
+- `request`: the request that resulted in the response as a `URLRequest?`.
+- `response`: the raw response as a `HTTPURLResponse?`.
+
+The `Response` object also has `description` and `debugDescription` to help with logging and debugging.
+Furthermore it is possible to compare two `Response` objects.
+`Response` objects are equal if status codes, data, and the raw response are equal.
 
 ## Extensions
 
