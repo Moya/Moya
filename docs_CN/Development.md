@@ -1,12 +1,11 @@
-# Development
+# 开发
 
-## Testing
+## 测试
 
-To run tests locally, you will need to download Moya's dependencies.
-To do so, run `carthage update --platform iOS` and take a nap, waiting for it to
-finish. 😴
+在本地运行测试，您需要下载Moya的依赖。
+运行 `carthage update --platform iOS` 然后休息一下, 直到它完成. 😴
 
-If you don't have Carthage installed, check the [installation instructions](https://github.com/Carthage/Carthage#installing-carthage).
-And, of course, don't forget to run `carthage update --platform iOS` after.
+如果您没有安装Carthage, 查看 [installation instructions](https://github.com/Carthage/Carthage#installing-carthage).
+并且, 当然, 之后不要忘记运行 `carthage update --platform iOS`。
 
-Afer that, you can open `Moya.xcodeproj` and hit ⌘+U to start testing.
+做完之后, 您可以打开 `Moya.xcodeproj` 然后点击 ⌘+U 运行测试
