@@ -95,12 +95,12 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .exact(Version(10, 0, 0, prereleaseIdentifiers: ["beta", "1"])))
+        .package(url: "https://github.com/Moya/Moya.git", .exact("10.0.0-beta.1")
     ],
     targets: [
         .target(
             name: "MyPackage",
-            dependencies: ["Moya", "ReactiveMoya"])
+            dependencies: ["ReactiveMoya"])
     ]
 )
 ```
