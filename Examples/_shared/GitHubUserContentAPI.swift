@@ -1,14 +1,14 @@
 import Foundation
 import Moya
 
-let GitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(verbose: true)])
+let gitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(verbose: true)])
 
 public enum GitHubUserContent {
     case downloadMoyaWebContent(String)
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! } // swiftlint:disable:this force_unwrapping
     public var path: String {
         switch self {
         case .downloadMoyaWebContent(let contentPath):
@@ -24,13 +24,13 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .downloadDestination(DefaultDownloadDestination)
+            return .downloadDestination(defaultDownloadDestination)
         }
     }
     public var sampleData: Data {
         switch self {
         case .downloadMoyaWebContent:
-            return animatedBirdData() as Data
+            return Giphy.animatedBirdData
         }
     }
     public var headers: [String: String]? {
@@ -38,13 +38,15 @@ extension GitHubUserContent: TargetType {
     }
 }
 
-private let DefaultDownloadDestination: DownloadDestination = { temporaryURL, response in
+private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in
     let directoryURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    
+
     if !directoryURLs.isEmpty {
-        return (directoryURLs[0].appendingPathComponent(response.suggestedFilename!), [])
+        guard let suggestedFilename = response.suggestedFilename else {
+            fatalError("@Moya/contributor error!! We didn't anticipate this being nil")
+        }
+        return (directoryURLs[0].appendingPathComponent(suggestedFilename), [])
     }
-    
+
     return (temporaryURL, [])
 }
-

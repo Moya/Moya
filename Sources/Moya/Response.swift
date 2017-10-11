@@ -104,7 +104,7 @@ public extension Response {
         if let keyPath = keyPath {
             // Key path was provided, try to parse string at key path
             guard let jsonDictionary = try mapJSON() as? NSDictionary,
-                let string = jsonDictionary.value(forKeyPath:keyPath) as? String else {
+                let string = jsonDictionary.value(forKeyPath: keyPath) as? String else {
                     throw MoyaError.stringMapping(self)
             }
             return string
