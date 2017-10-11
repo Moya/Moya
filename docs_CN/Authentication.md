@@ -1,13 +1,11 @@
-# Authentication
+# 身份验证
 
-Authentication can be tricky. There are a few ways network requests
-can be authenticated. Let's discuss two of the common ones.
+身份验证变化多样。可以通过一些方法对网络请求进行身份验证。让我们来讨论常见的两种。
 
-## Basic HTTP Auth
+## 基本的HTTP身份验证
 
-HTTP auth is a username/password challenge built into the HTTP protocol
-itself. If you need to use HTTP auth, you can provide a `CredentialsPlugin`
-when initializing your provider.
+HTTP身份验证是一个 username/password HTTP协议内置的验证方式. 如果您需要使用 HTTP身份验证, 当初始化provider的时候可以使用一个 `CredentialsPlugin`
+。
 
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> URLCredential? in
@@ -16,8 +14,8 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> URLCrede
 ])
 ```
 
-This specific examples shows a use of HTTP that authenticates _every_ request,
-which is usually not necessary. This might be a better idea:
+这个特定的例子显示了HTTP的使用，它验证 _每个_ 请求,
+通常这是不必要的。下面的方式可能更好:
 
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> URLCredential? in
@@ -31,23 +29,24 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> URL
 ])
 ```
 
-## Access Token Auth
-Another common method of authentication is by using an access token.
-Moya provides an `AccessTokenPlugin` that supports both `Bearer` authentication
-using a [JWT](https://jwt.io/introduction/) and `Basic` authentication for API keys.
+## 访问令牌认证
+另一个常见的身份验证方法就是通过使用一个访问令牌。
+Moya提供一个 `AccessTokenPlugin` 来完成
+ [JWT](https://jwt.io/introduction/)的 `Bearer` 认证 和 `Basic` 认证 。
 
-There are two steps required to start using an `AccessTokenPlugin`.
+ 开始使用`AccessTokenPlugin`之前需要两个步骤.
 
-1. You need to add an `AccessTokenPlugin` to your `MoyaProvider` like this:
+1. 您需要把 `AccessTokenPlugin` 添加到您的`MoyaProvider`中，就像下面这样:
+
 ```Swift
 let token = "eyeAm.AJsoN.weBTOKen"
 let authPlugin = AccessTokenPlugin(tokenClosure: token)
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
-The `AccessTokenPlugin` initializer accepts a `tokenClosure` that is responsible
-for returning the token to be applied to the header of the request.
 
-2. Your `TargetType` needs to conform to the `AccessTokenAuthorizable` protocol:
+`AccessTokenPlugin` 构造器接收一个`tokenClosure`闭包来负责返回一个可以被添加到request头部的令牌 。
+
+2. 您的 `TargetType` 需要遵循`AccessTokenAuthorizable` 协议:
 
 ```Swift
 extension YourAPI: TargetType, AccessTokenAuthorizable {
@@ -68,19 +67,17 @@ extension YourAPI: TargetType, AccessTokenAuthorizable {
 }
 ```
 
-The `AccessTokenAuthorizable` protocol requires you to implement a single
-property, `authorizationType`, which is an enum representing the header to 
-use for the request.
+`AccessTokenAuthorizable` 协议需要您实现一个属性 , `authorizationType`, 是一个枚举值，代表用于请求的头
 
-**Bearer HTTP Auth**
-Bearer requests are authorized by adding a HTTP header of the following form:
+**Bearer HTTP 认证**
+Bearer 请求通过向HTTP头部添加下面的表单来获得授权:
 
 ```
 Authorization: Bearer <token>
 ```
 
-**Basic API Key Auth**
-Basic requests are authorized by adding a HTTP header of the following form:
+**Basic API Key 认证**
+Basic 请求通过向HTTP头部添加下面的表单来获得授权
 
 ```
 Authorization: Basic <token>
@@ -88,15 +85,12 @@ Authorization: Basic <token>
 
 ## OAuth
 
-OAuth is quite a bit trickier. It involves a multi step process that is often
-different between different APIs. You _really_ don't want to do OAuth yourself –
-there are other libraries to do it for you. [Heimdallr.swift](https://github.com/rheinfabrik/Heimdallr.swift),
-for example. The trick is just getting Moya and whatever you're using to talk
+OAuth 有些麻烦。 它涉及一个多步骤的过程，在不同的api之间通常是不同的。 您 _确实_ 不想自己来做OAuth –
+这儿有其他的库为您服务. [Heimdallr.swift](https://github.com/rheinfabrik/Heimdallr.swift),
+例如. The trick is just getting Moya and whatever you're using to talk
 to one another.
 
-Moya is built with OAuth in mind. "Signing" a network request with OAuth can
-itself sometimes require network requests be performed _first_, so signing
-a request for Moya is an asynchronous process. Let's see an example.
+Moya内置了OAuth思想。 使用OAuth的网络请求“签名”本身有时会要求执行网络请求，所以对Moya的请求是一个异步的过程。让我们看看一个例子。
 
 ```swift
 let requestClosure = { (endpoint: Endpoint<YourAPI>, done: MoyaProvider.RequestResultClosure) in
@@ -111,9 +105,9 @@ let requestClosure = { (endpoint: Endpoint<YourAPI>, done: MoyaProvider.RequestR
 let provider = MoyaProvider<YourAPI>(requestClosure: requestClosure)
 ```
 
-(Note that Swift is able to infer the `YourAPI` generic – neat!)
+(注意 Swift能推断出您的 `YourAPI` 类型)
 
-## Handle session refresh in your Provider subclass
+## 在您的Provider子类中处理session刷新
 
-You can take a look at example of session refreshing before each request in [Examples/SubclassingProvider](Examples/SubclassingProvider.md).
-It is based on [Artsy's networking implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/Networking.swift).
+您可以查看在每个请求前session刷新的示例[Examples/SubclassingProvider](Examples/SubclassingProvider.md).
+它是基于 [Artsy's networking implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/Networking.swift).
