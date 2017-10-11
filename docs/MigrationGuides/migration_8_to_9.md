@@ -1,10 +1,6 @@
-# Migration Guide
+# Migration Guide from 8.x to 9.x
 
 This project follows [Semantic Versioning](http://semver.org).
-
-Please follow the appropriate guide below when **upgrading to a new major version** of Moya (e.g. 8.0 -> 9.0).
-
-## Upgrade from 8.x to 9.x
 
 ### TargetType Migration
 - Move the `parameters` and `parameterEncoding` to the `task` computed property by using the case `.requestParameters(parameters:encoding:)`
