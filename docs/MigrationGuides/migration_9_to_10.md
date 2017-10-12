@@ -15,3 +15,6 @@ This project follows [Semantic Versioning](http://semver.org).
 
 ### NetworkActivityPlugin Migration
 - Add `TargetType` as second argument of `NetworkActivityClosure` in `NetworkActivityPlugin` initializer.
+
+### ReactiveCocoa subspec Migration
+- Replace `pod 'Moya/ReactiveCocoa'` with `pod 'Moya/ReactiveSwift'` in your Podfile.
