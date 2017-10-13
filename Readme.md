@@ -76,7 +76,7 @@ your Swift version.
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .exact(Version(10, 0, 0, prereleaseIdentifiers: ["beta", "1"])))
+.package(url: "https://github.com/Moya/Moya.git", .exact("10.0.0-beta.1")
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
