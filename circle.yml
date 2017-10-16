@@ -20,5 +20,8 @@ test:
   override:
   - rake test && rake test:carthage && rake build_example
   post:
-    - bundle exec danger
+    - npm install -g danger@alpha
+    - brew install danger/tap/danger-swift
+    - danger process danger-swift
+
     - bash <(curl -s https://codecov.io/bash) -J Moya

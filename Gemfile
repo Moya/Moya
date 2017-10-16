@@ -6,5 +6,5 @@ gem 'cocoapods'
 gem 'rake'
 gem 'octokit', '~> 4.3'
 
-gem 'danger'
-gem 'danger-swiftlint'
+# gem 'danger'
+# gem 'danger-swiftlint'
