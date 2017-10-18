@@ -326,6 +326,23 @@ class ObservableMoyaSpec: QuickSpec {
                 expect(receivedObject?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
             }
 
+            it("maps data representing a json array at a key path to a decodable object (#1311)") {
+                let json: [String: Any] = ["issues": [json]] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var receivedObjects: [Issue]?
+                _ = observable.map([Issue].self, atKeyPath: "issues", using: decoder).subscribe(onNext: { object in
+                    receivedObjects = object
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.count) == 1
+                expect(receivedObjects?.first?.title) == "Hello, Moya!"
+                expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+            }
+
             it("ignores invalid data") {
                 var json = json
                 json["createdAt"] = "Hahaha" // invalid date string
