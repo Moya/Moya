@@ -1,5 +1,7 @@
 # Next
 
+# [10.0.0] - 2017-10-21
+
 # [10.0.0-beta.1] - 2017-10-08
 ### Added
 - **Breaking Change** Added a `.parameterEncoding` case to `MoyaError`. [#1248](https://github.com/Moya/Moya/pull/1248) by [@SD10](https://github.com/SD10).
