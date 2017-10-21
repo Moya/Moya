@@ -1,6 +1,8 @@
 # Next
 
 # [10.0.0] - 2017-10-21
+### Fixed
+- Fix a bug that `Decodable` mapping won't decode nested JSON array in a key path [#1382](https://github.com/Moya/Moya/pull/1382) by [@devxoul](https://github.com/devxoul).
 
 # [10.0.0-beta.1] - 2017-10-08
 ### Added
