@@ -47,5 +47,30 @@ final class AccessTokenPluginSpec: QuickSpec {
             expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "Basic eyeAm.AJsoN.weBTOKen"]
         }
 
+        it("adds a custom header to AccessTokenAuthorizables when AuthorizationType is .custom") {
+            let target = TestTarget(authorizationType: .custom(headerField: "X-Access-Token", tokenPrefix: "Bearer"))
+            let request = URLRequest(url: target.baseURL)
+            let preparedRequest = plugin.prepare(request, target: target)
+            expect(preparedRequest.allHTTPHeaderFields) == ["X-Access-Token": "Bearer eyeAm.AJsoN.weBTOKen"]
+        }
+
+        describe(".custom AuthorizationType") {
+            context("when custom header is empty") {
+                it("uses the default 'Authorization' header") {
+                    let target = TestTarget(authorizationType: .custom(headerField: "", tokenPrefix: "Bearer"))
+                    let request = URLRequest(url: target.baseURL)
+                    let preparedRequest = plugin.prepare(request, target: target)
+                    expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "Bearer eyeAm.AJsoN.weBTOKen"]
+                }
+            }
+            context("when token prefix is empty") {
+                it("does not prepend anything to the token") {
+                    let target = TestTarget(authorizationType: .custom(headerField: "X-Access-Token", tokenPrefix: ""))
+                    let request = URLRequest(url: target.baseURL)
+                    let preparedRequest = plugin.prepare(request, target: target)
+                    expect(preparedRequest.allHTTPHeaderFields) == ["X-Access-Token": "eyeAm.AJsoN.weBTOKen"]
+                }
+            }
+        }
     }
 }
