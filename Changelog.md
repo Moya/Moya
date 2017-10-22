@@ -1,4 +1,6 @@
 # Next
+### Added
+- Added a `.custom` case to `AuthorizationType`. [#1393](https://github.com/Moya/Moya/pull/1393) by [ffittschen](https://github.com/ffittschen).
 
 # [10.0.0] - 2017-10-21
 ### Fixed
