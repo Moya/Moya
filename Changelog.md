@@ -23,21 +23,27 @@
 ### Fixed
 - Fixed a `MoyaProvider+Rx` self-retaining bug in `requestWithProgress`. [#1311](https://github.com/Moya/Moya/pull/1311) by [@AndrewSB](https://github.com/AndrewSB).
 
-# 9.0.0
-- Removed default value for task from `Endpoint` initializer
+# [9.0.0] - 2017-09-04
+### Removed 
+- Removed default value for task from `Endpoint` initializer. [#1289](https://github.com/Moya/Moya/pull/1289) by [@sunshinejr](https://github.com/sunshinejr).
 
-# 9.0.0-beta.1
-- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
-- **Breaking Change** Flattened `UploadType` and `DownloadType` into `Task` cases.
-- **Breaking Change** Replaced `shouldAuthorize: Bool` in `AccessTokenAuthorizable` with `authorizationType: AuthorizationType`.
-- **Breaking Change** Replaced `token` in `AccessTokenPlugin` with `tokenClosure`.
-- **Breaking Change** `TargetTypes` no longer receive the `Authorization: Bearer <token>` header by default when using `AccessTokenPlugin`.
-- Added Swift 4.0 support for Moya core (without RxSwift/ReactiveSwift extensions for now).
+# [9.0.0-beta.1] - 2017-08-26
+### Added
+- Added Swift 4.0 support for Moya core (without RxSwift/ReactiveSwift extensions for now). [#1193](https://github.com/Moya/Moya/pull/1193) by [@sunshinejr](https://github.com/sunshinejr).
 - Added all the `filter`/`map` operators that were available for `Observable<Response>` to `Single<Response>` as well.
 - Added `AuthorizationType` to `AccessTokenAuthorizable` representing request headers of `.none`, `.basic`, and `.bearer`.
 - Added tests for `Single<Response>` operators.
 - Added `Progress` object into the response when calling progress callback on completion.
 - Added tests for creating `URLRequest` from `Task`.
+
+### Changed
+- **Breaking Change** Replaced `parameters` & `parameterEncoding` in `TargetType` with extended `Task` cases.
+- **Breaking Change** Flattened `UploadType` and `DownloadType` into `Task` cases.
+- **Breaking Change** Replaced `shouldAuthorize: Bool` in `AccessTokenAuthorizable` with `authorizationType: AuthorizationType`.
+- **Breaking Change** Replaced `token` in `AccessTokenPlugin` with `tokenClosure`.
+- **Breaking Change** `TargetTypes` no longer receive the `Authorization: Bearer <token>` header by default when using `AccessTokenPlugin`.
+
+### Fixed
 - Fixed a bug where you weren't notified on progress callback for data request.
 
 # 9.0.0-alpha.1
