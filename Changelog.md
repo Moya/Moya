@@ -46,7 +46,7 @@
 ### Fixed
 - Fixed a bug where you weren't notified on progress callback for data request.
 
-# 9.0.0-alpha.1
+# [9.0.0-alpha.1] - 2017-07-29
 
 - **Breaking Change** Added support to get the response (if any) from `MoyaError`.
 - **Breaking Change** Added `headers` to `TargetType`.
@@ -64,31 +64,31 @@
 - Fixed a bug where you would have two response events in `requestWithProgress` method on `ReactiveSwift` module.
 - Enabled the "Allow app extension API only" flag.
 
-# 8.0.5
+# [8.0.5] - 2017-05-26
 
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
 
-# 8.0.4
+# 8.0.4 - 2017-05-09
 - Bumped minimum version of ReactiveSwift to 1.1.
 - Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
 - Move project to using a single target for all platforms.
 - Changed default endpoint creation to only append `path` to `baseURL` when `path` is not empty.
 
-# 8.0.3
+# [8.0.3] - 2017-03-13
 
 - Fixed `reversedPrint` arguments for output.
 - Fixed memory leak when request with stub.
 - Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
 
-# 8.0.2
+# [8.0.2] - 2017-02-01
 
 - Changed dependency pinning to rely only on major versions.
 
-# 8.0.1
+# [8.0.1] - 2017-01-21
 
 - Fixed an issue where `RxMoyaProvider` never sends `next` or errors if it's disposed before a subscription is made.
 
-# 8.0.0
+# [8.0.0] - 2017-01-04
 
 - **Breaking Change** Renamed `Moya.Error` to `MoyaError`.
 - **Breaking Change** Renamed `verbose` in the NetworkLoggerPlugin to `isVerbose`.
@@ -105,7 +105,7 @@
 - Added `AccessTokenAuthorizable` protocol for optionally controlling the authorization behavior of `TargetType`s when using `AccessTokenPlugin`.
 - Added availability tags for renamed functions included in the Swift 3 migration.
 
-# 8.0.0-beta.6
+# [8.0.0-beta.6] - 2016-12-14
 
 - **Breaking Change** Renamed `ReactiveCocoaMoyaProvider` to `ReactiveSwiftMoyaProvider`.
 - **Breaking Change** Renamed `PluginType` functions to comply with Swift 3 design guideline:
@@ -117,7 +117,7 @@
 - Renamed the `ReactiveCocoa` subspec to `ReactiveSwift`.
 - `PluginType` can now modify requests and responses through `prepare` and `process`
 
-# 8.0.0-beta.5
+# [8.0.0-beta.5] - 2016-11-29
 
 - **Breaking Change** Renamed `cancelled` in the `Cancellable` protocol to `isCancelled`.
 - **Breaking Change** Renamed `URL` in `Endpoint` to `url`.
@@ -128,14 +128,14 @@ structure and more.
 - Added _validate_ option in `TargetType`, to allow enabling Alamofire automatic validation on requests.
 - Added `mapString(atKeyPath:)` to `Response`, `SignalProducerProtocol`, and `ObservableType`
 
-# 8.0.0-beta.4
+# [8.0.0-beta.4] - 2016-11-07
 
 - **Breaking Change** Made some `class func`s [mimicking enum cases](https://github.com/Moya/Moya/blob/master/Source/Moya.swift#L117-L133) lowercased.
 - Updates for RxSwift 3.0 final release.
 - Added default empty implementation for `willSendRequest` and `didReceiveResponse` in `PluginType`.
 - Use `String(data:encoding:)` instead of `NSString(data:encoding:)` while converting `Data` to `String`.
 
-# 8.0.0-beta.3
+# [8.0.0-beta.3] - 2016-10-17
 
 - **Breaking Change** Throw dedicated `Error.jsonMapping` when `mapJSON` fails to parse JSON.
 - **Breaking Change** Renamed `endpointByAddingHTTPHeaders` to `adding(newHttpHeaderFields:)`.
@@ -151,11 +151,11 @@ structure and more.
 - Added a new case to `SampleResponseClosure` which allows mocking of the whole `URLResponse`.
 - Added a test for new `SampleResponseClosure` case.
 
-# 8.0.0-beta.2
+# [8.0.0-beta.2] - 2016-09-22
 
 - **Breaking Change** Transition from ReactiveCocoa to ReactiveSwift. ([PR](https://github.com/Moya/Moya/pull/661))
 
-# 8.0.0-beta.1
+# [8.0.0-beta.1] - 2016-09-19
 
 - **Breaking Change** Support for `Swift 3` in favor of `Swift 2.x`.
 - **Breaking Change** `fileName` and `mimeType` are now optional properties on a MultipartFormData object.
@@ -170,19 +170,19 @@ structure and more.
 - Added `PATCH` and `CONNECT` to the `Method` cases which support multipart encoding.
 - Added `request` for `Response`.
 
-# 7.0.3
+# [7.0.3] - 2016-09-15
 
 - Carthage support for Swift 2.3.
 
-# 7.0.2
+# [7.0.2] - 2016-09-14
 
 - Swift 2.3 support.
 
-# 7.0.1
+# [7.0.1] - 2016-09-12
 
 - Identical to 7.0.0, see [#594](https://github.com/Moya/Moya/pull/594) for an explanation.
 
-# 7.0.0
+# [7.0.0] - 2016-07-13
 
 - **Breaking Change** Drops support for `RACSignal`.
 - **Breaking Change** Changes `Moya.Error.Underlying` to have `NSError` instead of `ErrorType`.
@@ -196,78 +196,78 @@ structure and more.
 - Fixes a xcodeproj referencing bug introduced by the new cURL-based logging plugin.
 - Calls completion even when cancellable token is canceled
 
-# 6.5.0
+# [6.5.0] - 2016-05-28
 
 - Added `queue` parameter to `request` and `sendRequest`. This open up option to use other queue instead of main queue for response callback.
 
-# 6.4.0
+# [6.4.0] - 2016-04-01
 
 - Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
 - Updates to ReactiveCocoa 4.1
 - Updates to Result 2.0
 
-# 6.3.1
+# [6.3.1] - 2016-03-25
 
 - Updates for Swift 2.2 / Xcode 7.3 compatibility.
 
-# 6.3.0
+# [6.3.0] - 2016-03-16
 
 - Fixed endpoint setup when adding `parameters` or `headers` when `parameters` or `headers` or nil.
 - Adds StructTarget for using Moya with structs.
 
-# 6.2.0
+# [6.2.0] - 2016-02-26
 
 - Adds `response` computed property to `Error` type, which yields a Response object if available.
 - Added URLEncodedInURL to ParameterEncoding.
 - Adds convenience `endpointByAdding` method.
 - Remove our own implementation of `ParameterEncoding` and make it a `public typealias` of `Alamofire.ParameterEncoding`.
 
-# 6.1.3
+# [6.1.3] - 2016-02-01
 
 - Updated to ReactiveCocoa 4.0 final.
 - Added formatter parameter to plugin for pretty-printing response data. See #392.
 
-# 6.1.2
+# [6.1.2] - 2016-01-28
 
 - Compatibility with RxSwift 2.x.
 
-# 6.1.1
+# [6.1.1] - 2016-01-27
 
 - Compatibility with RxSwift 2.1.x.
 
-# 6.1.0
+# [6.1.0] - 2016-01-26
 
 - The built-in `DefaultAlamofireManager` as parameter's default value instead of the singleton `Alamofire.Manager.sharedinstance` is now used when instantiating `ReactiveCocoaMoyaProvider` and `RxMoyaProvider` as well.
 
-# 6.0.1
+# [6.0.1] - 2016-01-25
 
 - Updates to ReactiveCocoa 4 RC 2.
 
-# 6.0.0
+# [6.0.0] - 2016-01-05
 
 - **Breaking Change** pass a built-in `DefaultAlamofireManager` as parameter's default value instead of passing the singleton `Alamofire.Manager.sharedinstance` when initialize a `provider`
 - Fixes issue that stubbed responses still call the network.
 
-# 5.3.0
+# [5.3.0] - 2016-01-02
 
 - Updates to RXSwift 2.0.0
 - Moves to use Antitypical/Result
 
-# 5.2.1
+# [5.2.1] - 2015-12-21
 
 - Update to ReactiveCocoa v4.0.0-RC.1
 - Fixes cases where underlying network errors were not properly propagated.
 - Moves to antitypical Result type
 
-# 5.2.0
+# [5.2.0]
 
 - Updated to RxSwift 2.0.0-beta.4
 
-# 5.1.0
+# [5.1.0] - 2015-12-07
 
 - Update to ReactiveCocoa v4.0.0-alpha.4
 
-# 5.0.0
+# [5.0.0] - 2015-11-30
 
 - **Breaking Change** rename `MoyaTarget` protocol to `TargetType`
 - **Breaking Change** rename `MoyaRequest` protocol to `RequestType`
@@ -283,57 +283,57 @@ structure and more.
 - **Breaking Change** Introduce `Error` type for use with reactive extensions - [@tomburns](http://github.com/tomburns)
 - **Breaking Change** Deprecate ReactiveCocoa 2 support
 
-# 4.5.0
+# [4.5.0] - 2015-11-10
 
 - Adds mapping methods to `MoyaResponse`
 
-# 4.4.0
+# [4.4.0] - 2015-11-06
 
 - Adds tvOS and watchOS support
 - Fixes carthage OS X target not having source files
 - Makes base OS X target 10.9 instead of 10.10
 
-# 4.3.1
+# [4.3.1] - 2015-11-02
 
 - Updates to latest ReactiveCocoa alpha. Again.
 
-# 4.3.0
+# [4.3.0] - 2015-11-02
 
 - Updates to latest ReactiveCocoa alpha.
 
-# 4.2.0
+# [4.2.0] - 2015-11-02 
 
 - Removed extraneous `SignalProducer` from ReactiveCocoa extension – @JRHeaton
 - Removed extraneous `deferred()` from RxSwift extension
 - Moved to new RxSwift syntax – @wouterw
 - Updated RxSwift to latest beta – @wouterw
 
-# 4.1.0
+# [4.1.0] - 2015-10-27
 
 - OS X support.
 
-# 4.0.3
+# [4.0.3] - 2015-10-23
 
 - Fixes Carthage integration problem.
 
-# 4.0.2
+# [4.0.2] - 2015-10-23
 
 - CancellableTokens can now debug print the requests cURL.
 
-# 4.0.1
+# [4.0.1] - 2015-10-13
 
 - Plugins now subclasses NSObject for custom subclasses.
 - Plugins' methods are now public, allowing custom subclasses to override.
 
-# 4.0.0
+# [4.0.0] - 2015-10-12
 
 - Updates Alamofire dependency to `~> 3.0`
 
-# 3.0.1
+# [3.0.1] - 2015-10-08
 
 - Changes `mapImage()` RxSwift function to use `UIImage!` instead of `UIImage`.
 
-# 3.0.0
+# [3.0.0] - 2015-10-05
 
 - Makes `parameters` on `MoyaTarget` an optional `[String: AnyObject]` dictionary.
 - Makes `parameters` and `httpHeaderFields` on `Endpoint` to be optionals.
@@ -369,44 +369,44 @@ structure and more.
 - ReactiveCocoa provider no longer replaces errors that contain status codes (an unlikely situation) with its own errors. It passes all errors directly through.
 - Renames `token` to `target` (it was usually `target` anyway, just made it consistent).
 
-# 2.4.1
+# [2.4.1] - 2015-09-22
 
 - Corrects problem with ignoring the specified Alamofire manager
 
-# 2.4.0
+# [2.4.0] - 2015-09-22
 
 - Adds HTTP basic auth support.
 
-# 2.3.0
+# [2.3.0] - 2015-09-21
 
 - Adds data processing functions for use with `RxMoyaProvider`
 
-# 2.2.2
+# [2.2.2] - 2015-09-15
 
 - Adds convenience `endpointByAddingParameterEncoding` method.
 
-# 2.2.1
+# [2.2.1] - 2015-09-14
 
 - Adds Moya files as members of RxMoya and ReactiveMoya frameworks.
 
-# 2.2.0
+# [2.2.0] - 2015-09-14
 
 - Add backward-compatible call from `DefaultEnpointResolution` to `DefaultEndpointResolution` on `MoyaProvider` class. `DefaultEndpointResolution` is now used internally as the default resolver. `DefaultEnpointResolution` can be removed in a future major release.
 - Carthage support.
 
-# 2.1.0
+# [2.1.0] - 2015-08-11
 
 - Add option to pass an `Alamofire.Manager` to `MoyaProvider` initializer
 
-# 2.0.2
+# [2.0.2] - 2015-08-10
 
 - Updates Demo directory's RxSwift version.
 
-# 2.0.1
+# [2.0.1] - 2015-08-06
 
 - Updates Demo directory's Moya version for `pod try` compatbility.
 
-# 2.0.0
+# [2.0.0] - 2015-08-04
 
 - **Breaking change** Combines `MoyaPath` and `MoyaTarget` protocols.
 - **Breaking change** Renames `Moya/Reactive` subspec to `Moya/ReactiveCocoa`.
@@ -419,63 +419,63 @@ structure and more.
 - Relaxes version dependency on RxSwift - [@alcarvalho](http://github.com/alcarvalho)
 - Fixes possible concurrency bugs with reactive providers - [@alcarvalho](http://github.com/alcarvalho)
 
-# 1.1.1
+# [1.1.1] - 2015-06-12
 
 - Fixes problem where `RxMoyaProvider` would not respect customized stubbing behavior (delays).
 
-# 1.1.0
+# [1.1.0] - 2015-06-07
 
 - Adds support for RxSwift – [@alcarvalho](http://github.com/alcarvalho)
 
-# 1.0.0
+# [1.0.0] - 2015-05-27
 
 - **Breaking change** Changes `EndpointSampleResponse` to require closures that return `NSData`, not `NSData` instances themselves. This prevents sample data from being loaded during the normal, non-unit test app lifecycle.
 - **Breaking change** Adds `method` to `MoyaTarget` protocol and removes `method` parameter from `request()` functions. Targets now specify GET, POST, etc on a per-target level, instead of per-request.
 - **Breaking change** Adds `parameters` to `MoyaTarget` protocol and removes ability to pass parameters into `request()` functions. Targets now specify the parameters directly on a per-target level, instead of per-request.
 - Adds a sane default implementation of the `MoyaProvider` initializer's `endpointsClosure` parameter.
 
-# 0.8.0
+# [0.8.0] - 2015-05-25
 
 - Updates to Swift 1.2.
 
-# 0.7.1
+# [0.7.1] - 2015-05-25
 
 - Adds cancellable requests -[@MichaelMcGuire](http://github.com/MichaelMcGuire)
 
-# 0.7.0
+# [0.7.0] - 2015-04-22
 
 - Adds network activity closure to provider.
 
-# 0.6.1
+# [0.6.1] - 2015-01-13
 
 - Updates podspec to refer to `3.0.0-aplha.1` of ReactiveCocoa. -[@ashfurrow](http://github.com/ashfurrow)
 
-# 0.6
+# [0.6] - 2015-01-11
 
 - First release on CocoaPods trunk.
 - Add data support for [stubbed error responses](https://github.com/ashfurrow/Moya/pull/92). – [@steam](http://github.com.steam)
 - Fixes [#66](https://github.com/AshFurrow/Moya/issues/66), a problem with outdated Alamofire dependency and it's serializer type signature. -[@garnett](http://github.com/garnett)
 - Delete note about ReactiveCocoa installation -[@garnett](http://github.com/garnett)
 
-# 0.5
+# [0.5] - 2014-10-09
 
 - Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow)](http://github.com/AshFurrow)
 - Migrate to support Xcode beta 6.1 -[@orta)](http://github.com/orta)
 - Adds the original NSURLResponse to a MoyaResponse -[@orta)](http://github.com/orta)
 - Fixes [#63](https://github.com/AshFurrow/Moya/issues/63), a problem where stale inflight requests were kept around if they error'd down the pipline (discussed [here](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1525#issuecomment-58559734)) -[@ashfurrow](http://github.com/AshFurrow)
 
-# 0.4
+# [0.4] - 2014-09-22
 
 - Implements [#46](https://github.com/AshFurrow/Moya/issues/46), the code property of the NSError sent through by ReactiveMoyaProvider will now match the failing http status code. -[@powerje](http://github.com/powerje)
 
-# 0.3
+# [0.3] - 2014-09-15
 
 - Fixes [#48](https://github.com/AshFurrow/Moya/issues/48) that modifies Moya to execute completion blocks of stubbed responses *immediately*, instead of using `dispatch_async` to defer it to the next invocation of the run loop. **This is a breaking change**. Because of this change, the ReactiveCocoa extensions had to be modified slightly to deduplicate inflight stubbed requests. Reactive providers now vend `RACSignal` instances that start the network request *when subscribed to*. -[@ashfurrow](http://github.com/AshFurrow)
 
-# 0.2
+# [0.2] - 2014-09-12
 
 - Fixes [#44](https://github.com/AshFurrow/Moya/issues/44) where status codes weren't being passed through to completion blocks. This also modified the behavior of the ReactiveCocoa extensions significantly but sending MoyaResponse objects instead of just NSData ones. —[@ashfurrow](http://github.com/AshFurrow)
 
-# 0.1
+# [0.1] - 2014-09-07
 
-- Initial release.
+Initial Release. 🎉
