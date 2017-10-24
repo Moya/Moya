@@ -4,7 +4,7 @@ not_declared_trivial = !(github.pr_title.include? "#trivial")
 has_app_changes = !git.modified_files.grep(/Sources/).empty?
 
 # Make it more obvious that a PR is a work in progress and shouldn't be merged yet
-warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
+warn("PR is classed as Work in Progress") if github.pr_title.include? "WIP"
 
 # Warn when there is a big PR
 warn("Big PR, try to keep changes smaller if you can") if git.lines_of_code > 500
