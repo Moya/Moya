@@ -440,41 +440,59 @@ structure and more.
 
 # [0.7.1] - 2015-05-25
 
-- Adds cancellable requests -[@MichaelMcGuire](http://github.com/MichaelMcGuire)
+### Added 
+- Adds cancellable requests. [#120](https://github.com/Moya/Moya/pull/120) by [@MichaelMcGuire](http://github.com/MichaelMcGuire)
 
 # [0.7.0] - 2015-04-22
 
-- Adds network activity closure to provider.
+### Added
+- Adds network activity closure to provider. [#112](https://github.com/Moya/Moya/pull/112) by [@ashfurrow](https://github.com/ashfurrow).
 
 # [0.6.1] - 2015-01-13
 
-- Updates podspec to refer to `3.0.0-aplha.1` of ReactiveCocoa. -[@ashfurrow](http://github.com/ashfurrow)
+### Changed
+- Updated podspec to refer to `3.0.0-aplha.1` of ReactiveCocoa. [#107](https://github.com/Moya/Moya/pull/107) by [@aschuch](https://github.com/aschuch)
 
 # [0.6] - 2015-01-11
 
 - First release on CocoaPods trunk.
-- Add data support for [stubbed error responses](https://github.com/ashfurrow/Moya/pull/92). – [@steam](http://github.com.steam)
-- Fixes [#66](https://github.com/AshFurrow/Moya/issues/66), a problem with outdated Alamofire dependency and it's serializer type signature. -[@garnett](http://github.com/garnett)
-- Delete note about ReactiveCocoa installation -[@garnett](http://github.com/garnett)
+
+### Added
+- Add data support for stubbed error responses. [#92](https://github.com/ashfurrow/Moya/pull/92) by [@steam](http://github.com/steam)
+
+### Fixed
+- Fixes [#66](https://github.com/AshFurrow/Moya/issues/66), a problem with outdated Alamofire dependency and it's serializer type signature. [#69](https://github.com/Moya/Moya/pull/69) by [@garnett](http://github.com/garnett)
+
+### Removed 
+- Delete note about ReactiveCocoa installation. [#69](https://github.com/Moya/Moya/pull/69) by [@garnett](http://github.com/garnett)
 
 # [0.5] - 2014-10-09
 
-- Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow)](http://github.com/AshFurrow)
-- Migrate to support Xcode beta 6.1 -[@orta)](http://github.com/orta)
-- Adds the original NSURLResponse to a MoyaResponse -[@orta)](http://github.com/orta)
+### Added
+- Adds the original NSURLResponse to a MoyaResponse. [#62](https://github.com/Moya/Moya/pull/62) by [@orta](http://github.com/orta)
+
+### Changed
+- Migrate to support Xcode beta 6.1. [#58](https://github.com/Moya/Moya/pull/58) by [@orta](http://github.com/orta)
+
+- Fixes [#52](https://github.com/AshFurrow/Moya/issues/52) to change submodules to use http instead of ssh. -[@ashfurrow](http://github.com/AshFurrow)
+
+### Fixed
 - Fixes [#63](https://github.com/AshFurrow/Moya/issues/63), a problem where stale inflight requests were kept around if they error'd down the pipline (discussed [here](https://github.com/ReactiveCocoa/ReactiveCocoa/issues/1525#issuecomment-58559734)) -[@ashfurrow](http://github.com/AshFurrow)
 
 # [0.4] - 2014-09-22
 
-- Implements [#46](https://github.com/AshFurrow/Moya/issues/46), the code property of the NSError sent through by ReactiveMoyaProvider will now match the failing http status code. -[@powerje](http://github.com/powerje)
+### Added
+- Implements [#46](https://github.com/AshFurrow/Moya/issues/46), the code property of the NSError sent through by ReactiveMoyaProvider will now match the failing http status code. [#50](https://github.com/Moya/Moya/pull/50) by [@powerje](http://github.com/powerje)
 
 # [0.3] - 2014-09-15
 
-- Fixes [#48](https://github.com/AshFurrow/Moya/issues/48) that modifies Moya to execute completion blocks of stubbed responses *immediately*, instead of using `dispatch_async` to defer it to the next invocation of the run loop. **This is a breaking change**. Because of this change, the ReactiveCocoa extensions had to be modified slightly to deduplicate inflight stubbed requests. Reactive providers now vend `RACSignal` instances that start the network request *when subscribed to*. -[@ashfurrow](http://github.com/AshFurrow)
+### Fixed
+- **Breaking Change** Fixes [#48](https://github.com/AshFurrow/Moya/issues/48) that modifies Moya to execute completion blocks of stubbed responses *immediately*, instead of using `dispatch_async` to defer it to the next invocation of the run loop. . Because of this change, the ReactiveCocoa extensions had to be modified slightly to deduplicate inflight stubbed requests. Reactive providers now vend `RACSignal` instances that start the network request *when subscribed to*. [#49](https://github.com/Moya/Moya/pull/49) by [@ashfurrow](http://github.com/AshFurrow)
 
 # [0.2] - 2014-09-12
 
-- Fixes [#44](https://github.com/AshFurrow/Moya/issues/44) where status codes weren't being passed through to completion blocks. This also modified the behavior of the ReactiveCocoa extensions significantly but sending MoyaResponse objects instead of just NSData ones. —[@ashfurrow](http://github.com/AshFurrow)
+### Fixed
+- [#44](https://github.com/AshFurrow/Moya/issues/44) Status codes weren't being passed through to completion blocks. This also modified the behavior of the ReactiveCocoa extensions significantly but sending MoyaResponse objects instead of just NSData ones. —[@ashfurrow](http://github.com/AshFurrow)
 
 # [0.1] - 2014-09-07
 
