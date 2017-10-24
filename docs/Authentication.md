@@ -34,7 +34,7 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> URL
 ## Access Token Auth
 Another common method of authentication is by using an access token.
 Moya provides an `AccessTokenPlugin` that supports both `Bearer` authentication
-using a [JWT](https://jwt.io/introduction/) and `Basic` authentication for API keys.
+using a [JWT](https://jwt.io/introduction/) and `Basic` authentication for API keys, and it also allows customization of the header field or token prefix.
 
 There are two steps required to start using an `AccessTokenPlugin`.
 
@@ -53,6 +53,7 @@ for returning the token to be applied to the header of the request.
 extension YourAPI: TargetType, AccessTokenAuthorizable {
     case targetThatNeedsBearerAuth
     case targetThatNeedsBasicAuth
+    case targetThatNeedsCustomAuth
     case targetDoesNotNeedAuth
 
     var authorizationType: AuthorizationType {
@@ -61,6 +62,8 @@ extension YourAPI: TargetType, AccessTokenAuthorizable {
                 return .bearer
             case .targetThatNeedsBasicAuth:
                 return .basic
+            case .targetThatNeedsCustomAuth:
+                return .custom(headerField: "X-Access-Token", tokenPrefix: nil)
             case .targetDoesNotNeedAuth:
                 return .none
             }
@@ -85,6 +88,22 @@ Basic requests are authorized by adding a HTTP header of the following form:
 ```
 Authorization: Basic <token>
 ```
+
+**Custom Auth**
+Requests that require a custom header field (that differs from the default `Authorization` header), or requests that require a custom prefix for the token are authorized by adding a HTTP header of the following form:
+
+```
+<headerField>: <tokenPrefix> <token>
+
+// Examples:
+// .custom(headerField: nil, tokenPrefix: "JWT")
+Authorization: JWT <token>
+
+// .custom(headerField: "X-Access-Token", tokenPrefix: nil)
+X-Access-Token: <token>
+```
+
+Note: When the `headerField` is `nil` or an empty String, the default header of `Authorization` will be used.
 
 ## OAuth
 
