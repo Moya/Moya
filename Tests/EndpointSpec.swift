@@ -162,9 +162,15 @@ final class EndpointSpec: QuickSpec {
                     expect(issue.title).to(equal(expectedIssue.title))
                 }
 
+                it("updates headers to include Content-Type: application/json") {
+                    let contentTypeHeaders = ["Content-Type": "application/json"]
+                    let initialHeaderFields = endpoint.httpHeaderFields ?? [:]
+                    let expectedHTTPHeaderFields = initialHeaderFields.merging(contentTypeHeaders) { initialValue, _ in initialValue }
+                    expect(request.allHTTPHeaderFields).to(equal(expectedHTTPHeaderFields))
+                }
+
                 it("doesn't update any of the other properties") {
                     expect(request.url?.absoluteString).to(equal(endpoint.url))
-                    expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
                     expect(request.httpMethod).to(equal(endpoint.method.rawValue))
                 }
             }
