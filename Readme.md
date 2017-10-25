@@ -293,7 +293,7 @@ following:
 - Fixing bugs/new features.
 
 If any of that sounds cool to you, send a pull request! After your first
-contribution, we will add you as a contributor to the repo so you can merge pull
+contribution, we will add you as a member to the repo so you can merge pull
 requests and help steer the ship :ship: You can read more details about that [in our contributor guidelines](https://github.com/Moya/Moya/blob/master/Contributing.md).
 
 Moya's community has a tremendous positive energy, and the maintainers are committed to keeping things awesome. Like [in the CocoaPods community](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules), always assume positive intent; even if a comment sounds mean-spirited, give the person the benefit of the doubt.
