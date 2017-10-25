@@ -343,6 +343,108 @@ class ObservableMoyaSpec: QuickSpec {
                 expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
             }
 
+            it("maps data representing an Int at a key path to an Int value") {
+                let json: [String: Any] = ["count": 1] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var count: Int?
+                _ = observable.map(Int.self, atKeyPath: "count", using: decoder).subscribe(onNext: { value in
+                    count = value
+                })
+                expect(count).notTo(beNil())
+                expect(count) == 1
+            }
+
+            it("maps data representing a Bool at a key path to a Bool value") {
+                let json: [String: Any] = ["isNew": true] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var isNew: Bool?
+                _ = observable.map(Bool.self, atKeyPath: "isNew", using: decoder).subscribe(onNext: { value in
+                    isNew = value
+                })
+                expect(isNew).notTo(beNil())
+                expect(isNew) == true
+            }
+
+            it("maps data representing an Int at a key path to a Bool value") {
+                let json: [String: Any] = ["isNew": 1] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var isNew: Bool?
+                _ = observable.map(Bool.self, atKeyPath: "isNew", using: decoder).subscribe(onNext: { value in
+                    isNew = value
+                })
+                expect(isNew).notTo(beNil())
+                expect(isNew) == true
+            }
+
+            it("maps data representing a String at a key path to a String value") {
+                let json: [String: Any] = ["description": "Something interesting"] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var description: String?
+                _ = observable.map(String.self, atKeyPath: "description", using: decoder).subscribe(onNext: { value in
+                    description = value
+                })
+                expect(description).notTo(beNil())
+                expect(description) == "Something interesting"
+            }
+
+            it("maps data representing a String at a key path should not to an Int value") {
+                let json: [String: Any] = ["test": "123"] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var test: Int?
+                _ = observable.map(Int.self, atKeyPath: "test", using: decoder).subscribe(onNext: { value in
+                    test = value
+                })
+                expect(test).to(beNil())
+            }
+
+            it("maps data representing a Array<String> at a key path should not to a String value") {
+                let json: [String: Any] = ["test": ["123", "456"]] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var test: String?
+                _ = observable.map(String.self, atKeyPath: "test", using: decoder).subscribe(onNext: { value in
+                    test = value
+                })
+                expect(test).to(beNil())
+            }
+
+            it("maps data representing a String at a key path should not to a Array<String> value") {
+                let json: [String: Any] = ["test": "123"] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var test: [String]?
+                _ = observable.map([String].self, atKeyPath: "test", using: decoder).subscribe(onNext: { value in
+                    test = value
+                })
+                expect(test).to(beNil())
+            }
+
             it("ignores invalid data") {
                 var json = json
                 json["createdAt"] = "Hahaha" // invalid date string
