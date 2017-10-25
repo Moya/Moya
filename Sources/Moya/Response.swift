@@ -127,9 +127,18 @@ public extension Response {
             guard let jsonObject = (try mapJSON() as? NSDictionary)?.value(forKeyPath: keyPath) else {
                 throw MoyaError.jsonMapping(self)
             }
-            do {
-                jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
-            } catch {
+            if let value = jsonObject as? D {
+                return value
+            }
+            let dict = jsonObject as? NSDictionary
+            let array = jsonObject as? NSArray
+            if dict != nil || array != nil {
+                do {
+                    jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
+                } catch {
+                    throw MoyaError.jsonMapping(self)
+                }
+            } else {
                 throw MoyaError.jsonMapping(self)
             }
         } else {
