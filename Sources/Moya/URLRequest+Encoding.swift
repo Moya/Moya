@@ -7,8 +7,9 @@ internal extension URLRequest {
             let encodable = AnyEncodable(encodable)
             httpBody = try JSONEncoder().encode(encodable)
 
-            if value(forHTTPHeaderField: "Content-Type") == nil {
-                setValue("application/json", forHTTPHeaderField: "Content-Type")
+            let contentTypeHeaderName = "Content-Type"
+            if value(forHTTPHeaderField: contentTypeHeaderName) == nil {
+                setValue("application/json", forHTTPHeaderField: contentTypeHeaderName)
             }
 
             return self
