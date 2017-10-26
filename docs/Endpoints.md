@@ -124,11 +124,11 @@ Instead of modifying the request, you could simply log it, instead.
 ```swift
 let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
     if var request = endpoint.urlRequest {
-	    // Modify the request however you like.
-	    done(.success(request))
+	// Modify the request however you like.
+	done(.success(request))
     }
     else {
-		done(.failure(MoyaError.requestMapping(endpoint.url)))
+	done(.failure(MoyaError.requestMapping(endpoint.url)))
     }
 }
 let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
@@ -143,9 +143,9 @@ all cookies on requests:
 ```swift
 { (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
     if var request = endpoint.urlRequest {
-	    // Modify the request however you like. 
-		request.httpShouldHandleCookies = false
-		done(.success(request))
+	// Modify the request however you like. 
+	request.httpShouldHandleCookies = false
+	done(.success(request))
     }
     else {
     	done(.failure(MoyaError.requestMapping(endpoint.url)))
