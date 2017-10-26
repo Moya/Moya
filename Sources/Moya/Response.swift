@@ -122,31 +122,38 @@ public extension Response {
     /// - parameter atKeyPath: Optional key path at which to parse object.
     /// - parameter using: A `JSONDecoder` instance which is used to decode data to an object.
     func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder()) throws -> D {
+        let serializeToData: (Any) throws -> Data? = { (jsonObject) in
+            if JSONSerialization.isValidJSONObject(jsonObject) {
+                do {
+                    return try JSONSerialization.data(withJSONObject: jsonObject)
+                } catch {
+                    throw MoyaError.jsonMapping(self)
+                }
+            } else {
+                return nil
+            }
+        }
         let jsonData: Data
         if let keyPath = keyPath {
             guard let jsonObject = (try mapJSON() as? NSDictionary)?.value(forKeyPath: keyPath) else {
                 throw MoyaError.jsonMapping(self)
             }
-            if JSONSerialization.isValidJSONObject(jsonObject) {
-                do {
-                    jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
-                } catch {
-                    throw MoyaError.jsonMapping(self)
-                }
+
+            if let data = try serializeToData(jsonObject) {
+                jsonData = data
             } else {
                 let wrappedJsonObject = ["value": jsonObject]
                 let wrappedJsonData: Data
-                if JSONSerialization.isValidJSONObject(wrappedJsonObject) {
-                    do {
-                        wrappedJsonData = try JSONSerialization.data(withJSONObject: wrappedJsonObject)
-                    } catch {
-                        throw MoyaError.jsonMapping(self)
-                    }
+                if let data = try serializeToData(wrappedJsonObject) {
+                    wrappedJsonData = data
                 } else {
                     throw MoyaError.jsonMapping(self)
                 }
-                let wrappedResult = try decoder.decode(DecodableWrapper<D>.self, from: wrappedJsonData)
-                return wrappedResult.value
+                do {
+                    return try decoder.decode(DecodableWrapper<D>.self, from: wrappedJsonData).value
+                } catch let error {
+                    throw MoyaError.objectMapping(error, self)
+                }
             }
         } else {
             jsonData = data
