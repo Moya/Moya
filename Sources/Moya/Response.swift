@@ -127,19 +127,26 @@ public extension Response {
             guard let jsonObject = (try mapJSON() as? NSDictionary)?.value(forKeyPath: keyPath) else {
                 throw MoyaError.jsonMapping(self)
             }
-            if let value = jsonObject as? D {
-                return value
-            }
-            let dict = jsonObject as? NSDictionary
-            let array = jsonObject as? NSArray
-            if dict != nil || array != nil {
+            if JSONSerialization.isValidJSONObject(jsonObject) {
                 do {
                     jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
                 } catch {
                     throw MoyaError.jsonMapping(self)
                 }
             } else {
-                throw MoyaError.jsonMapping(self)
+                let wrappedJsonObject = ["value": jsonObject]
+                let wrappedJsonData: Data
+                if JSONSerialization.isValidJSONObject(wrappedJsonObject) {
+                    do {
+                        wrappedJsonData = try JSONSerialization.data(withJSONObject: wrappedJsonObject)
+                    } catch {
+                        throw MoyaError.jsonMapping(self)
+                    }
+                } else {
+                    throw MoyaError.jsonMapping(self)
+                }
+                let wrappedResult = try decoder.decode(DecodableWrapper<D>.self, from: wrappedJsonData)
+                return wrappedResult.value
             }
         } else {
             jsonData = data
@@ -150,4 +157,8 @@ public extension Response {
             throw MoyaError.objectMapping(error, self)
         }
     }
+}
+
+private struct DecodableWrapper<T: Decodable>: Decodable {
+    let value: T
 }
