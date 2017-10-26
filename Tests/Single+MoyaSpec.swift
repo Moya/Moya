@@ -400,7 +400,7 @@ class SingleMoyaSpec: QuickSpec {
                 }
 
                 it("shouldn't map Int data to a Bool value") {
-                    let json: [String: Any] = ["isNew": 1] // nested json array
+                    let json: [String: Any] = ["isNew": 1]
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
@@ -414,7 +414,7 @@ class SingleMoyaSpec: QuickSpec {
                 }
 
                 it("shouldn't map String data to an Int value") {
-                    let json: [String: Any] = ["test": "123"] // nested json array
+                    let json: [String: Any] = ["test": "123"]
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
@@ -428,7 +428,7 @@ class SingleMoyaSpec: QuickSpec {
                 }
 
                 it("shouldn't map Array<String> data to an String value") {
-                    let json: [String: Any] = ["test": ["123", "456"]] // nested json array
+                    let json: [String: Any] = ["test": ["123", "456"]]
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
@@ -442,7 +442,7 @@ class SingleMoyaSpec: QuickSpec {
                 }
 
                 it("shouldn't map String data to an Array<String> value") {
-                    let json: [String: Any] = ["test": "123"] // nested json array
+                    let json: [String: Any] = ["test": "123"]
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
