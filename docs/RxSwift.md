@@ -12,8 +12,6 @@ Just use your `MoyaProvider` instance.
 let provider = MoyaProvider<GitHub>()
 ```
 
-*You are responsible to retain the provider for as long as you need. If you fail to do so, the object will be automatically disposed and the observable will not work properly.*
-
 After that simple setup, you're off to the races:
 
 ```swift
