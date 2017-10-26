@@ -97,11 +97,12 @@ Sample responses 有下面的这些值:
 
 ```swift
 let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
-    var request = endpoint.urlRequest
-
-    // Modify the request however you like.
-
-    done(.success(request))
+    if var urlRequest = endpoint.urlRequest {
+        // Modify the request however you like.
+        done(.success(urlRequest))
+    } else {
+        done(.failure(MoyaError.requestMapping(endpoint.url)))
+    }
 }
 let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 ```
@@ -113,9 +114,13 @@ let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 
 ```swift
 { (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
-    var request: URLRequest = endpoint.urlRequest
-    request.httpShouldHandleCookies = false
-    done(.success(request))
+    if var urlRequest = endpoint.urlRequest {
+        // Modify the request however you like.
+        urlRequest.httpShouldHandleCookies = false
+        done(.success(urlRequest))
+    } else {
+        done(.failure(MoyaError.requestMapping(endpoint.url)))
+    }
 }
 ```
 
