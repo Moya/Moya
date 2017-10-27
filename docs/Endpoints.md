@@ -144,9 +144,9 @@ all cookies on requests:
 ```swift
 { (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
     do {
-    	var request: URLRequest = try endpoint.urlRequest
+    	var request: URLRequest = try endpoint.urlRequest()
     	request.httpShouldHandleCookies = false
-   	done(.success(request))
+    	done(.success(request))
     } catch {
     	done(.failure(MoyaError.underlying(error)))
     }
