@@ -1,4 +1,6 @@
 # Next
+### Fixed
+- Fix a bug that `Decodable` mapping to object other than Array and Dictionary in a key path cause crash. [#1405](https://github.com/Moya/Moya/pull/1405) by [@ufosky](https://github.com/ufosky).
 
 # [10.0.0] - 2017-10-21
 ### Fixed
