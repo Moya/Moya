@@ -97,13 +97,14 @@ Sample responses 有下面的这些值:
 
 ```swift
 let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
-	do {
+    do {
         var request = try endpoint.urlRequest()
         // Modify the request however you like.
         done(.success(request))
     } catch {
-    	done(.failure(MoyaError.underlying(error)))
+        done(.failure(MoyaError.underlying(error)))
     }
+
 }
 let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 ```
