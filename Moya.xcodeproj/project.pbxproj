@@ -1495,7 +1495,7 @@
 		EAADE3E5CB1C697B248B6716 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
