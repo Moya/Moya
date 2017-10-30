@@ -1,6 +1,7 @@
 # Next
 ### Fixed
 - Fix a bug that `Decodable` mapping to object other than Array and Dictionary in a key path cause crash. [#1405](https://github.com/Moya/Moya/pull/1405) by [@ufosky](https://github.com/ufosky).
+- Fixed a bug with missing Content-Type header when using `.requestJSONEncodable` [#1410](https://github.com/Moya/Moya/pull/1410) by [@Vict0rS](https://github.com/Vict0rS).
 
 # [10.0.0] - 2017-10-21
 ### Fixed
