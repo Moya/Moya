@@ -45,51 +45,6 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             }
         }
 
-        describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
-            struct TestCancellable: Cancellable {
-                static var isCancelled = false
-                var isCancelled: Bool { return TestCancellable.isCancelled }
-
-                func cancel() {
-                    TestCancellable.isCancelled = true
-                }
-            }
-
-            class TestProvider<Target: TargetType>: ReactiveSwiftMoyaProvider<Target> {
-                init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                    requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                    stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                    manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                    plugins: [PluginType] = []) {
-
-                        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
-                }
-
-                override func request(_ target: Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping Completion) -> Cancellable {
-                    return TestCancellable()
-                }
-            }
-
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
-            beforeEach {
-                TestCancellable.isCancelled = false
-
-                provider = TestProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(1))
-            }
-
-            it("cancels network request when subscription is canceled") {
-                let target: GitHub = .zen
-
-                let disposable = provider.request(target).startWithCompleted {
-                    // Should never be executed
-                    fail()
-                }
-                disposable.dispose()
-
-                expect(TestCancellable.isCancelled).to( beTrue() )
-            }
-        }
-
         describe("provider with SignalProducer") {
             var provider: MoyaProvider<GitHub>!
 
@@ -137,84 +92,14 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                 expect(receivedResponse) == sampleResponse
             }
 
-            describe("a subsclassed reactive provider that tracks cancellation with delayed stubs") {
-                struct TestCancellable: Cancellable {
-                    static var isCancelled = false
-                    var isCancelled: Bool { return TestCancellable.isCancelled }
-
-                    func cancel() {
-                        TestCancellable.isCancelled = true
-                    }
-                }
-
-                class TestProvider<Target: TargetType>: ReactiveSwiftMoyaProvider<Target> {
-                    init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
-                        requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
-                        stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
-                        manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-                        plugins: [PluginType] = []) {
-
-                            super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins)
-                    }
-
-                    override func request(_ target: Target, callbackQueue: DispatchQueue?, progress: ProgressBlock?, completion: @escaping Completion) -> Cancellable {
-                        return TestCancellable()
-                    }
-                }
-
-                var provider: ReactiveSwiftMoyaProvider<GitHub>!
-                beforeEach {
-                    TestCancellable.isCancelled = false
-
-                    provider = TestProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(1))
-                }
-
-                it("cancels network request when subscription is canceled") {
-                    let target: GitHub = .zen
-
-                    let disposable = provider.request(target).startWithCompleted {
-                        // Should never be executed
-                        fail()
-                    }
-                    disposable.dispose()
-
-                    expect(TestCancellable.isCancelled).to( beTrue() )
-                }
-            }
-        }
-        describe("provider with a TestScheduler") {
-            var testScheduler: TestScheduler! = nil
-            var response: Moya.Response? = nil
-            var provider: ReactiveSwiftMoyaProvider<GitHub>!
-
-            beforeEach {
-                testScheduler = TestScheduler()
-                provider = ReactiveSwiftMoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, stubScheduler: testScheduler)
-                provider.request(.zen).startWithResult { result in
-                    if case .success(let next) = result {
-                        response = next
-                    }
-                }
-            }
-            afterEach {
-                response = nil
-            }
-
-            it("sends the stub when the test scheduler is advanced") {
-                testScheduler.run()
-                expect(response).toNot(beNil())
-            }
-            it("does not send the stub when the test scheduler is not advanced") {
-                expect(response).to(beNil())
-            }
         }
 
         describe("provider with inflight tracking") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}) { _ in
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-                }
+                })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
 
@@ -257,9 +142,9 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                 try? FileManager.default.removeItem(at: file)
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}) { _ in
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
-                }
+                })
                 provider = MoyaProvider<GitHubUserContent>()
             }
 
@@ -285,7 +170,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                         case let .value(element):
                             nextProgressValues.append(element.progress)
 
-                            if let _ = element.response { nextResponseCount += 1 }
+                            if element.response != nil { nextResponseCount += 1 }
                         case .failed: failedEventsCount += 1
                         case .completed: completedEventsCount += 1
                         case .interrupted: interruptedEventsCount += 1

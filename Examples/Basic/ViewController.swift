@@ -25,22 +25,21 @@ class ViewController: UITableViewController {
     // MARK: - API Stuff
 
     func downloadRepositories(_ username: String) {
-        GitHubProvider.request(.userRepositories(username)) { result in
+        gitHubProvider.request(.userRepositories(username)) { result in
             do {
                 let response = try result.dematerialize()
                 let value = try response.mapNSArray()
                 self.repos = value
                 self.tableView.reloadData()
             } catch {
-                let printableError = error as? CustomStringConvertible
-                let errorMessage = printableError?.description ?? "Unable to fetch from GitHub"
-                self.showAlert("GitHub Fetch", message: errorMessage)
+                let printableError = error as CustomStringConvertible
+                self.showAlert("GitHub Fetch", message: printableError.description)
             }
         }
     }
 
     func downloadZen() {
-        GitHubProvider.request(.zen) { result in
+        gitHubProvider.request(.zen) { result in
             var message = "Couldn't access API"
             if case let .success(response) = result {
                 let jsonString = try? response.mapString()
@@ -52,15 +51,14 @@ class ViewController: UITableViewController {
     }
 
     func uploadGiphy() {
-        let data = animatedBirdData()
-        GiphyProvider.request(.upload(gif: data),
+        giphyProvider.request(.upload(gif: Giphy.animatedBirdData),
                               callbackQueue: DispatchQueue.main,
                               progress: progressClosure,
                               completion: progressCompletionClosure)
     }
 
     func downloadMoyaLogo() {
-        GitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
+        gitHubUserContentProvider.request(.downloadMoyaWebContent("logo_github.png"),
                                           callbackQueue: DispatchQueue.main,
                                           progress: progressClosure,
                                           completion: progressCompletionClosure)
@@ -111,7 +109,7 @@ class ViewController: UITableViewController {
         var usernameTextField: UITextField?
 
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default) { action in
+        let ok = UIAlertAction(title: "OK", style: .default) { _ in
             if let username = usernameTextField?.text {
                 self.downloadRepositories(username)
             }

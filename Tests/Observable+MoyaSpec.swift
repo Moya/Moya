@@ -266,5 +266,109 @@ class ObservableMoyaSpec: QuickSpec {
                 expect(receivedError).to(beOfSameErrorType(expectedError))
             }
         }
+
+        describe("object mapping") {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .formatted(formatter)
+
+            let json: [String: Any] = [
+                "title": "Hello, Moya!",
+                "createdAt": "1995-01-14T12:34:56"
+            ]
+
+            it("maps data representing a json to a decodable object") {
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var receivedObject: Issue?
+                _ = observable.map(Issue.self, using: decoder).subscribe(onNext: { object in
+                    receivedObject = object
+                })
+                expect(receivedObject).notTo(beNil())
+                expect(receivedObject?.title) == "Hello, Moya!"
+                expect(receivedObject?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+            }
+
+            it("maps data representing a json array to an array of decodable objects") {
+                let jsonArray = [json, json, json]
+                guard let data = try? JSONSerialization.data(withJSONObject: jsonArray, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var receivedObjects: [Issue]?
+                _ = observable.map([Issue].self, using: decoder).subscribe(onNext: { objects in
+                    receivedObjects = objects
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.count) == 3
+                expect(receivedObjects?.map { $0.title }) == ["Hello, Moya!", "Hello, Moya!", "Hello, Moya!"]
+            }
+
+            it("maps data representing a json at a key path to a decodable object") {
+                let json: [String: Any] = ["issue": json] // nested json
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var receivedObject: Issue?
+                _ = observable.map(Issue.self, atKeyPath: "issue", using: decoder).subscribe(onNext: { object in
+                    receivedObject = object
+                })
+                expect(receivedObject).notTo(beNil())
+                expect(receivedObject?.title) == "Hello, Moya!"
+                expect(receivedObject?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+            }
+
+            it("maps data representing a json array at a key path to a decodable object (#1311)") {
+                let json: [String: Any] = ["issues": [json]] // nested json array
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var receivedObjects: [Issue]?
+                _ = observable.map([Issue].self, atKeyPath: "issues", using: decoder).subscribe(onNext: { object in
+                    receivedObjects = object
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.count) == 1
+                expect(receivedObjects?.first?.title) == "Hello, Moya!"
+                expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+            }
+
+            it("ignores invalid data") {
+                var json = json
+                json["createdAt"] = "Hahaha" // invalid date string
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    preconditionFailure("Failed creating Data from JSON dictionary")
+                }
+                let observable = Response(statusCode: 200, data: data).asObservable()
+
+                var receivedError: Error?
+                _ = observable.map(Issue.self, using: decoder).subscribe { event in
+                    switch event {
+                    case .next:
+                        fail("next called for invalid data")
+                    case .error(let error):
+                        receivedError = error
+                    default:
+                        break
+                    }
+                }
+
+                if case let MoyaError.objectMapping(nestedError, _)? = receivedError {
+                    expect(nestedError).to(beAKindOf(DecodingError.self))
+                } else {
+                    fail("expected <MoyaError.objectMapping>, got <\(String(describing: receivedError))>")
+                }
+            }
+        }
     }
 }

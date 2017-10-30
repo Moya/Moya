@@ -96,6 +96,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
         return requestNormal(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
+    // swiftlint:disable function_parameter_count
     /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
@@ -125,6 +126,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
         return cancellableToken
     }
+    // swiftlint:enable function_parameter_count
 }
 
 /// Mark: Stubbing

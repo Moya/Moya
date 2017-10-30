@@ -33,6 +33,11 @@ case .statusCode(let response):
     print(response)
 case .stringMapping(let response):
     print(response)
+case .objectMapping(let error, let response):
+    // error is DecodingError
+    print(response)
+case .encodableMapping(let error):
+    print(error)
 case .underlying(let nsError as NSError, let response):
     // now can access NSError error.code or whatever
     // e.g. NSURLErrorTimedOut or NSURLErrorNotConnectedToInternet
@@ -42,7 +47,9 @@ case .underlying(let nsError as NSError, let response):
 case .underlying(let error, let response):
     print(error)
     print(response)
-case .requestMapping:
-    print("nil")
+case .requestMapping(let url):
+    print(url)
+case .parameterEncoding(let error):
+    print(error)
 }
 ```

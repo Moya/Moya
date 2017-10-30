@@ -6,26 +6,26 @@ let provider = MoyaProvider<MultiTarget>(plugins: [NetworkLoggerPlugin(verbose: 
 class ViewController: UITableViewController {
     var progressView = UIView()
     var repos = NSArray()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         progressView.frame = CGRect(origin: .zero, size: CGSize(width: 0, height: 2))
         progressView.backgroundColor = .blue
         navigationController?.navigationBar.addSubview(progressView)
-        
+
         downloadRepositories("ashfurrow")
     }
-    
+
     fileprivate func showAlert(_ title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(ok)
         present(alertController, animated: true, completion: nil)
     }
-    
+
     // MARK: - API Stuff
-    
+
     func downloadRepositories(_ username: String) {
         provider.request(MultiTarget(GitHub.userRepositories(username))) { result in
             do {
@@ -40,7 +40,7 @@ class ViewController: UITableViewController {
             }
         }
     }
-    
+
     func downloadZen() {
         provider.request(MultiTarget(GitHub.zen)) { result in
             var message = "Couldn't access API"
@@ -48,34 +48,33 @@ class ViewController: UITableViewController {
                 let jsonString = try? response.mapString()
                 message = jsonString ?? message
             }
-            
+
             self.showAlert("Zen", message: message)
         }
     }
-    
+
     func uploadGiphy() {
-        let data = animatedBirdData()
-        provider.request(MultiTarget(Giphy.upload(gif: data)),
+        provider.request(MultiTarget(Giphy.upload(gif: Giphy.animatedBirdData)),
                          callbackQueue: DispatchQueue.main,
                          progress: progressClosure,
                          completion: progressCompletionClosure)
     }
-    
+
     func downloadMoyaLogo() {
         provider.request(MultiTarget(GitHubUserContent.downloadMoyaWebContent("logo_github.png")),
                          callbackQueue: DispatchQueue.main,
                          progress: progressClosure,
                          completion: progressCompletionClosure)
     }
-    
+
     // MARK: - Progress Helpers
-    
+
     lazy var progressClosure: ProgressBlock = { response in
         UIView.animate(withDuration: 0.3) {
             self.progressView.frame.size.width = self.view.frame.size.width * CGFloat(response.progress)
         }
     }
-    
+
     lazy var progressCompletionClosure: Completion = { result in
         let color: UIColor
         switch result {
@@ -84,12 +83,12 @@ class ViewController: UITableViewController {
         case .failure:
             color = .red
         }
-        
+
         UIView.animate(withDuration: 0.3) {
             self.progressView.backgroundColor = color
             self.progressView.frame.size.width = self.view.frame.size.width
         }
-        
+
         UIView.animate(withDuration: 0.3, delay: 1, options: [],
                        animations: {
                         self.progressView.alpha = 0
@@ -100,20 +99,20 @@ class ViewController: UITableViewController {
                         self.progressView.alpha = 1
         }
         )
-        
+
     }
-    
+
     // MARK: - User Interaction
-    
+
     @IBAction func giphyWasPressed(_ sender: UIBarButtonItem) {
         uploadGiphy()
     }
-    
+
     @IBAction func searchWasPressed(_ sender: UIBarButtonItem) {
         var usernameTextField: UITextField?
-        
+
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default) { action in
+        let ok = UIAlertAction(title: "OK", style: .default) { _ in
             if let username = usernameTextField?.text {
                 self.downloadRepositories(username)
             }
@@ -124,21 +123,21 @@ class ViewController: UITableViewController {
         }
         present(promptController, animated: true, completion: nil)
     }
-    
+
     @IBAction func zenWasPressed(_ sender: UIBarButtonItem) {
         downloadZen()
     }
-    
+
     @IBAction func downloadWasPressed(_ sender: UIBarButtonItem) {
         downloadMoyaLogo()
     }
-    
+
     // MARK: - Table View
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repos.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
         let repo = repos[indexPath.row] as? NSDictionary

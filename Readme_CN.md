@@ -1,13 +1,14 @@
+<p align="center">
+  <img height="160" src="web/logo_github.png" />
+</p>
+
+# Moya
+
 [![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya/master.svg)](https://circleci.com/gh/Moya/Moya/tree/master)
 [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
-
-
-<p align="center">
-  <img height="160" src="web/logo_github.png" />
-</p>
 
 您是个聪明的开发者. 您可能使用 [Alamofire](https://github.com/Alamofire/Alamofire) 来抽象访问
 `URLSession` ，以及所有那些您并不真正关心的糟糕细节。 但是,
@@ -50,7 +51,7 @@ new auction app](https://github.com/Artsy/eidolon). 我们认为它已经可以�
 
 | Swift | Moya          | RxMoya        | ReactiveMoya  |
 | ----- | ------------- |---------------|---------------|
-| 4.X   | >= 9.0        | -             | >= 9.0        |
+| 4.X   | >= 9.0        | >= 10.0       | >= 9.0        |
 | 3.X   | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 |
 | 2.3   | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 |
 | 2.2   | <= 7.0.1      | <= 7.0.1      | <= 7.0.1      |
@@ -62,7 +63,7 @@ new auction app](https://github.com/Artsy/eidolon). 我们认为它已经可以�
 要集成使用苹果的Swift包管理器，请将以下内容作为依赖项添加到`Package.swift`:
 
 ```swift
-.Package(url: "https://github.com/Moya/Moya.git", majorVersion: 9)
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "10.0.0"))
 ```
 
 然后指定 `.Target(name: "Moya")` 使用Moya的依赖项.
@@ -74,7 +75,7 @@ import PackageDescription
 let package = Package(
     name: "MyApp",
     dependencies: [
-        .Package(url: "https://github.com/Moya/Moya.git", majorVersion: 9)
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "10.0.0"))
     ]
 )
 ```

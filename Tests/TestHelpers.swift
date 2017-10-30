@@ -50,26 +50,38 @@ extension GitHub: TargetType {
     }
 }
 
+extension GitHub: Equatable {
+
+    static func ==(lhs: GitHub, rhs: GitHub) -> Bool {
+        switch (lhs, rhs) {
+        case (.zen, .zen): return true
+        case let (.userProfile(username1), .userProfile(username2)): return username1 == username2
+        default: return false
+        }
+    }
+}
+
 func url(_ route: TargetType) -> String {
     return route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task)
+    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 
 enum HTTPBin: TargetType {
     case basicAuth
     case post
     case upload(file: URL)
+    case uploadMultipart([MultipartFormData], [String: Any]?)
 
     var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
             return "/basic-auth/user/passwd"
-        case .post, .upload:
+        case .post, .upload, .uploadMultipart:
             return "/post"
         }
     }
@@ -78,7 +90,7 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return .get
-        case .post, .upload:
+        case .post, .upload, .uploadMultipart:
             return .post
         }
     }
@@ -89,6 +101,12 @@ enum HTTPBin: TargetType {
         return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
+        case .uploadMultipart(let data, let urlParameters):
+            if let urlParameters = urlParameters {
+                return .uploadCompositeMultipart(data, urlParameters: urlParameters)
+            } else {
+                return .uploadMultipart(data)
+            }
         }
     }
 
@@ -96,7 +114,7 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
-        case .post, .upload:
+        case .post, .upload, .uploadMultipart:
             return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
     }
@@ -198,7 +216,13 @@ extension ImageType {
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
             var imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
             let imageRep = NSBitmapImageRep(cgImage: self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
-            return imageRep.representation(using: .JPEG, properties:[:])
+            return imageRep.representation(using: .JPEG, properties: [:])
         }
     #endif
+}
+
+// A fixture for testing Decodable mapping
+struct Issue: Codable {
+    let title: String
+    let createdAt: Date
 }
