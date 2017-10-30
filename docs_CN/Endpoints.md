@@ -116,7 +116,7 @@ let provider = MoyaProvider<GitHub>(requestClosure: requestClosure)
 
 ```swift
 { (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
-	do {
+    do {
         var request: URLRequest = try endpoint.urlRequest()
         request.httpShouldHandleCookies = false
         done(.success(request))
