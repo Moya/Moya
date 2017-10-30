@@ -128,7 +128,7 @@ let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestRe
         // Modify the request however you like.
         done(.success(request))
     } catch {
-	done(.failure(MoyaError.underlying(error)))
+        done(.failure(MoyaError.underlying(error)))
     }
 
 }
@@ -144,11 +144,11 @@ all cookies on requests:
 ```swift
 { (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
     do {
-    	var request: URLRequest = try endpoint.urlRequest
-    	request.httpShouldHandleCookies = false
-   	done(.success(request))
+        var request: URLRequest = try endpoint.urlRequest()
+        request.httpShouldHandleCookies = false
+        done(.success(request))
     } catch {
-    	done(.failure(MoyaError.underlying(error)))
+        done(.failure(MoyaError.underlying(error)))
     }
 }
 ```
