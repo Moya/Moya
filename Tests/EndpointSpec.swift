@@ -175,6 +175,45 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .requestCustomJSONEncodable") {
+                var issue: Issue!
+                var request: URLRequest!
+
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+                let encoder = JSONEncoder()
+                encoder.dateEncodingStrategy = .formatted(formatter)
+
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(formatter)
+
+                beforeEach {
+                    issue = Issue(title: "Hello, Moya!", createdAt: Date())
+                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(issue, encoder: encoder))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates httpBody") {
+                    let expectedIssue = try! decoder.decode(Issue.self, from: request.httpBody!)
+                    expect(formatter.string(from: issue.createdAt)).to(equal(formatter.string(from: expectedIssue.createdAt)))
+                    expect(issue.title).to(equal(expectedIssue.title))
+                }
+
+                it("updates headers to include Content-Type: application/json") {
+                    let contentTypeHeaders = ["Content-Type": "application/json"]
+                    let initialHeaderFields = endpoint.httpHeaderFields ?? [:]
+                    let expectedHTTPHeaderFields = initialHeaderFields.merging(contentTypeHeaders) { initialValue, _ in initialValue }
+                    expect(request.allHTTPHeaderFields).to(equal(expectedHTTPHeaderFields))
+                }
+
+                it("doesn't update any of the other properties") {
+                    expect(request.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
             context("when task is .requestCompositeData") {
                 var parameters: [String: Any]!
                 var data: Data!
