@@ -1,6 +1,7 @@
 # Next
 ### Fixed
 - Fixed a bug with missing Content-Type header when using `.requestJSONEncodable` [#1410](https://github.com/Moya/Moya/pull/1410) by [@Vict0rS](https://github.com/Vict0rS).
+- Fixed carthage OS X not targeting 10.10 [#1444](https://github.com/Moya/Moya/pull/1444) by [@lucas34](https://github.com/lucas34).
 
 # [10.0.0] - 2017-10-21
 ### Fixed
