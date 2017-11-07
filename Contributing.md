@@ -18,6 +18,18 @@ As an organization contributor, you can merge other people's pull requests, or o
 
 This project is not continuously deployed, there is space for debate after review too. Offering everyone the chance to revert, or make an amending pull request. If it feels right, merge.
 
+#### Bug fixes and Release cycles
+
+We maintain two major branches: `master` and `develop`.
+
+`master` is for working on the current release, so any bug fixes or documentation spelling fixes should be merged into this branch.
+
+`develop` is where we stage work for the *next* release, i.e. breaking API changes and related documentation updates. Contributors should gently encourage new pull-requests to point to the appropriate branch, and to rebase onto that branch if necessary.
+
+When a new version is ready to be released, please create a pull request to merge `develop` into `master`, named something like "Release 10.0". Then we can have some final discussion before we merge it into `master` and push the release out to the public.
+
+Since `develop` is a *shared* branch, it is important not to ever rebase this branch onto `master`. If a bug fix is applied to `master` it can be merged into `develop` using good old simple `git checkout develop && git merge master`. Yes this will clutter the history a little bit, but it also provides important context to know how/when a patch was applied. Merge commits can be considered necessary historical data, not warts on an idealized history graph.
+
 #### How can we help you get comfortable contributing?
 
 It's normal for a first pull request to be a potential fix for a problem, and moving on from there to helping the project's direction can be difficult. We try to help contributors cross that barrier by offering good first step issues. These issues can be fixed without feeling like you're stepping on toes. Ideally, these are non-critical issues that are well defined. They will be purposely avoided by mature contributors to the project, to make space for others.
