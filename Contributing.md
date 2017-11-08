@@ -1,6 +1,29 @@
-# Community Continuity Guidelines v2.0.0
+# Community Contribution Guidelines v2.0.0
 
 As the creators, and maintainers of this project, we want to ensure that the project lives and continues to grow. Not blocked by any singular person's computer time. One of the simplest ways of doing this is by encouraging a larger set of shallow contributors. Through this, we hope to mitigate the problems of a project that needs updates but there's no-one who has the power to do so.
+
+#### Development Process
+
+We maintain two permanent, protected branches: `master` and `develop`.
+
+`master` is for working on the current release, so any bug fixes or documentation spelling fixes should be merged into this branch.
+
+`develop` is where we stage work for the *next* release, i.e. breaking API changes and related documentation updates. Contributors should gently encourage new pull-requests to point to the appropriate branch, and to rebase onto that branch if necessary.
+
+When a new version is ready to be released, please create a pull request to merge `develop` into `master`, named something like "Release 10.0". Then we can have some final discussion before we merge it into `master` and push the release out to the public.
+
+Since `develop` is a *shared* branch, it is important not to ever rebase this branch onto `master`. If a bug fix is applied to `master` it can be merged into `develop` using good old simple `git checkout develop && git merge master`. Yes this will clutter the history a little bit, but it also provides important context to know how/when a patch was applied. Merge commits can be considered necessary historical data, not warts on an idealized history graph.
+
+#### Testing
+
+To run tests locally, you will need to download Moya's dependencies.
+To do so, run `carthage update --platform iOS` and take a nap, waiting for it to
+finish. 😴
+
+If you don't have Carthage installed, check the [installation instructions](https://github.com/Carthage/Carthage#installing-carthage).
+And, of course, don't forget to run `carthage update --platform iOS` after.
+
+Afer that, you can open `Moya.xcodeproj` and hit ⌘+U to start testing.
 
 #### Ownership
 
@@ -17,18 +40,6 @@ It can be overwhelming to offered the chance to wipe the source code for a proje
 As an organization contributor, you can merge other people's pull requests, or other contributors can merge yours. You won't be assigned a pull request, but you're welcome to jump in and take a code review on topics that interest you.
 
 This project is not continuously deployed, there is space for debate after review too. Offering everyone the chance to revert, or make an amending pull request. If it feels right, merge.
-
-#### Bug fixes and Release cycles
-
-We maintain two major branches: `master` and `develop`.
-
-`master` is for working on the current release, so any bug fixes or documentation spelling fixes should be merged into this branch.
-
-`develop` is where we stage work for the *next* release, i.e. breaking API changes and related documentation updates. Contributors should gently encourage new pull-requests to point to the appropriate branch, and to rebase onto that branch if necessary.
-
-When a new version is ready to be released, please create a pull request to merge `develop` into `master`, named something like "Release 10.0". Then we can have some final discussion before we merge it into `master` and push the release out to the public.
-
-Since `develop` is a *shared* branch, it is important not to ever rebase this branch onto `master`. If a bug fix is applied to `master` it can be merged into `develop` using good old simple `git checkout develop && git merge master`. Yes this will clutter the history a little bit, but it also provides important context to know how/when a patch was applied. Merge commits can be considered necessary historical data, not warts on an idealized history graph.
 
 #### How can we help you get comfortable contributing?
 
