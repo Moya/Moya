@@ -1,4 +1,8 @@
 # Next
+
+### Changed
+- **Breaking Change** Changed `TargetType`'s `validate` into  `validationType` to allow the customization of Alamofire's validation [#1454](https://github.com/Moya/Moya/pull/1454) by [@amaurydavid](https://github.com/amaurydavid)
+
 ### Fixed
 - Fixed a bug with missing Content-Type header when using `.requestJSONEncodable` [#1410](https://github.com/Moya/Moya/pull/1410) by [@Vict0rS](https://github.com/Vict0rS).
 

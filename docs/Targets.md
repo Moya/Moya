@@ -126,6 +126,24 @@ public var sampleData: Data {
 }
 ```
 
+With the `validationType` property, Moya also allows you to use [Alamofire's response validation](https://github.com/Alamofire/Alamofire#response-validation).
+Response validation makes the request return with an error if the `Response`'s `statusCode` is not valid.
+By default, it is set to `nil` so that the Alamofire's validation is not used.
+The `.successCodes` value allows you to perform the default Alamofire's validation (i.e validating only 2xx status codes).
+Most of the time, your implementation will not depend on `self` but it might.
+
+```swift
+public var validationType: ValidationType? {
+	switch self {
+	case .zen:
+		// Imagine that for some reason, this endpoint (and only this one) is sending 404 codes that should be considered as valid.
+		return .customCodes(ValidationType.successCodes.statusCodes + [404])
+	default:
+		return .successCodes
+	}
+}
+```
+
 Finally, the `headers` property stores header fields that should be sent on the request.
 
 ```swift

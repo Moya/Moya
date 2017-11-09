@@ -181,19 +181,40 @@ private extension MoyaProvider {
 
     func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let uploadRequest = manager.upload(file, with: request)
-        let alamoRequest = target.validate ? uploadRequest.validate() : uploadRequest
-        return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+
+		let alamoRequest: UploadRequest
+		if let validationType = target.validationType {
+			alamoRequest = uploadRequest.validate(statusCode: validationType.statusCodes)
+		} else {
+			alamoRequest = uploadRequest
+		}
+
+		return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
     func sendDownloadRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let downloadRequest = manager.download(request, to: destination)
-        let alamoRequest = target.validate ? downloadRequest.validate() : downloadRequest
+
+		let alamoRequest: DownloadRequest
+		if let validationType = target.validationType {
+			alamoRequest = downloadRequest.validate(statusCode: validationType.statusCodes)
+		} else {
+			alamoRequest = downloadRequest
+		}
+
         return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
     func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         let initialRequest = manager.request(request as URLRequestConvertible)
-        let alamoRequest = target.validate ? initialRequest.validate() : initialRequest
+
+		let alamoRequest: DataRequest
+		if let validationType = target.validationType {
+			alamoRequest = initialRequest.validate(statusCode: validationType.statusCodes)
+		} else {
+			alamoRequest = initialRequest
+		}
+
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 

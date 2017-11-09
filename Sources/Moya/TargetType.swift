@@ -18,15 +18,15 @@ public protocol TargetType {
     /// The type of HTTP task to be performed.
     var task: Task { get }
 
-    /// Whether or not to perform Alamofire validation. Defaults to `false`.
-    var validate: Bool { get }
+	/// The type of Alamofire's validation to perform. If `nil`, the Alamofire's validation won't be used.
+	var validationType: ValidationType? { get }
 
     /// The headers to be used in the request.
     var headers: [String: String]? { get }
 }
 
 public extension TargetType {
-    var validate: Bool {
-        return false
-    }
+	var validationType: ValidationType? {
+		return nil
+	}
 }
