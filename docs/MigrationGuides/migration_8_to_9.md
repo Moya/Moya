@@ -1,10 +1,6 @@
-# Migration Guides
+# Migration Guide from 8.x to 9.x
 
 This project follows [Semantic Versioning](http://semver.org).
-
-Please follow the appropriate guide below when **upgrading to a new major version** of Moya (e.g. 8.0 -> 9.0).
-
-## Upgrade from 8.x to 9.x
 
 ### TargetType Migration
 - Move the `parameters` and `parameterEncoding` to the `task` computed property by using the case `.requestParameters(parameters:encoding:)`
@@ -22,4 +18,5 @@ Please follow the appropriate guide below when **upgrading to a new major versio
 ### Reactive MoyaProvider  Migration
 - Replace instances of `RxMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.rx` namespace to access the RxSwift API.
 - Replace instances of `ReactiveMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.reactive` namespace to access the ReactiveSwift API.
-- If you subclass a reactive provider, check out this pull request [Eidolon's migration to Moya 9.0.0](https://github.com/artsy/eidolon/pull/669) which covers migration from subclassing to composition. 
+- If you subclass a reactive provider, check out this pull request [Eidolon's migration to Moya 9.0.0](https://github.com/artsy/eidolon/pull/669) which covers migration from subclassing to composition.
+

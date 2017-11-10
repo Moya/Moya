@@ -32,7 +32,7 @@ public var path: String {
         return "/users/\(name.urlEscaped)"
     case .userRepositories(let name):
         return "/users/\(name.urlEscaped)/repos"
-    case .branches(let repo, _)
+    case .branches(let repo, _):
         return "/repos/\(repo.urlEscaped)/branches"
     }
 }
@@ -77,6 +77,7 @@ public var task: Task {
  
 - `.requestPlain` 没有任何东西发送
 - `.requestData(_:)` 可以发送 `Data` (useful for `Encodable` types in Swift 4)
+- `.requestJSONEncodable(_:)`
 - `.requestParameters(parameters:encoding:)` 发送指定编码的参数
 - `.requestCompositeData(bodyData:urlParameters:)` & `.requestCompositeParameters(bodyParameters:bodyEncoding:urlParameters)` which allow you to combine url encoded parameters with another type (data / parameters)
 

@@ -6,7 +6,7 @@ import OHHTTPStubs
 @testable import Moya
 @testable import RxMoya
 
-final class MoyaProviderRx: QuickSpec {
+final class MoyaProviderRxSpec: QuickSpec {
     override func spec() {
         describe("provider with Single") {
             var provider: MoyaProvider<GitHub>!
@@ -223,7 +223,7 @@ final class MoyaProviderRx: QuickSpec {
                                     .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
-                                    }).addDisposableTo(disposeBag)
+                                    }).disposed(by: disposeBag)
                             })
 
                             expect(callbackQueueLabel) == requestQueue.label
@@ -239,7 +239,7 @@ final class MoyaProviderRx: QuickSpec {
                                     .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
-                                    }).addDisposableTo(disposeBag)
+                                    }).disposed(by: disposeBag)
                             })
 
                             expect(callbackQueueLabel) == callbackQueue.label
@@ -267,7 +267,7 @@ final class MoyaProviderRx: QuickSpec {
                                     .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
-                                    }).addDisposableTo(disposeBag)
+                                    }).disposed(by: disposeBag)
                             })
 
                             expect(callbackQueueLabel) == requestQueue.label
@@ -283,7 +283,7 @@ final class MoyaProviderRx: QuickSpec {
                                     .subscribe(onSuccess: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                         completion()
-                                    }).addDisposableTo(disposeBag)
+                                    }).disposed(by: disposeBag)
                             })
 
                             expect(callbackQueueLabel) == DispatchQueue.main.label

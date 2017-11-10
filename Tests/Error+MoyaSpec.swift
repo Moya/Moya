@@ -27,6 +27,20 @@ public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError
                 default:
                     test = false
                 }
+            case .objectMapping:
+                switch expectedValue {
+                case .objectMapping:
+                    test = true
+                default:
+                    test = false
+                }
+            case .encodableMapping:
+                switch expectedValue {
+                case .objectMapping:
+                    test = true
+                default:
+                    test = false
+                }
             case .statusCode:
                 switch expectedValue {
                 case .statusCode:
@@ -44,6 +58,13 @@ public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError
             case .requestMapping:
                 switch expectedValue {
                 case .requestMapping:
+                    test = true
+                default:
+                    test = false
+                }
+            case .parameterEncoding:
+                switch expectedValue {
+                case .parameterEncoding:
                     test = true
                 default:
                     test = false

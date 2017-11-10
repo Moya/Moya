@@ -188,34 +188,44 @@ class MoyaProviderIntegrationTests: QuickSpec {
                 describe("a provider with network activity plugin") {
                     it("notifies at the beginning of network requests") {
                         var called = false
-                        let plugin = NetworkActivityPlugin { change in
+                        var calledTarget: GitHub?
+
+                        let plugin = NetworkActivityPlugin { change, target in
                             if change == .began {
                                 called = true
+                                calledTarget = target as? GitHub
                             }
                         }
 
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        let target: GitHub = .zen
                         waitUntil { done in
-                            provider.request(.zen) { _ in done() }
+                            provider.request(target) { _ in done() }
                         }
 
                         expect(called) == true
+                        expect(calledTarget) == target
                     }
 
                     it("notifies at the end of network requests") {
                         var called = false
-                        let plugin = NetworkActivityPlugin { change in
+                        var calledTarget: GitHub?
+
+                        let plugin = NetworkActivityPlugin { change, target in
                             if change == .ended {
                                 called = true
+                                calledTarget = target as? GitHub
                             }
                         }
 
                         let provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        let target: GitHub = .zen
                         waitUntil { done in
-                            provider.request(.zen) { _ in done() }
+                            provider.request(target) { _ in done() }
                         }
 
                         expect(called) == true
+                        expect(calledTarget) == target
                     }
                 }
 
@@ -252,16 +262,16 @@ class MoyaProviderIntegrationTests: QuickSpec {
             }
 
             describe("a reactive provider with SignalProducer") {
-                var provider: ReactiveSwiftMoyaProvider<GitHub>!
+                var provider: MoyaProvider<GitHub>!
                 beforeEach {
-                    provider = ReactiveSwiftMoyaProvider<GitHub>()
+                    provider = MoyaProvider<GitHub>()
                 }
 
                 it("returns some data for zen request") {
                     var message: String?
 
                     waitUntil { done in
-                        provider.request(.zen).startWithResult { result in
+                        provider.reactive.request(.zen).startWithResult { result in
                             if case .success(let response) = result {
                                 message = String(data: response.data, encoding: String.Encoding.utf8)
                                 done()
@@ -277,7 +287,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
 
                     waitUntil { done in
                         let target: GitHub = .userProfile("ashfurrow")
-                        provider.request(target).startWithResult { result in
+                        provider.reactive.request(target).startWithResult { result in
                             if case .success(let response) = result {
                                 message = String(data: response.data, encoding: String.Encoding.utf8)
                                 done()
