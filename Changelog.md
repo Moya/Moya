@@ -1,5 +1,6 @@
 # Next
 ### Fixed
+- Fix a bug that `Decodable` mapping to object other than Array and Dictionary in a key path cause crash. [#1405](https://github.com/Moya/Moya/pull/1405) by [@ufosky](https://github.com/ufosky).
 - Fixed a bug with missing Content-Type header when using `.requestJSONEncodable` [#1410](https://github.com/Moya/Moya/pull/1410) by [@Vict0rS](https://github.com/Vict0rS).
 - Fixed linker settings, enabling RxMoya and ReactiveMoya to be used in app extensions [#1417](https://github.com/Moya/Moya/pull/1417) by [@spookyvision](https://github.com/spookyvision/).
 - Fixed carthage OS X not targeting 10.10 [#1444](https://github.com/Moya/Moya/pull/1444) by [@lucas34](https://github.com/lucas34).
