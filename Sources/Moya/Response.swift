@@ -123,14 +123,13 @@ public extension Response {
     /// - parameter using: A `JSONDecoder` instance which is used to decode data to an object.
     func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder()) throws -> D {
         let serializeToData: (Any) throws -> Data? = { (jsonObject) in
-            if JSONSerialization.isValidJSONObject(jsonObject) {
-                do {
-                    return try JSONSerialization.data(withJSONObject: jsonObject)
-                } catch {
-                    throw MoyaError.jsonMapping(self)
-                }
-            } else {
+            guard JSONSerialization.isValidJSONObject(jsonObject) else {
                 return nil
+            }
+            do {
+                return try JSONSerialization.data(withJSONObject: jsonObject)
+            } catch {
+                throw MoyaError.jsonMapping(self)
             }
         }
         let jsonData: Data
