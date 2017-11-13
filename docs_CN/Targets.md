@@ -32,7 +32,7 @@ public var path: String {
         return "/users/\(name.urlEscaped)"
     case .userRepositories(let name):
         return "/users/\(name.urlEscaped)/repos"
-    case .branches(let repo, _)
+    case .branches(let repo, _):
         return "/repos/\(repo.urlEscaped)/branches"
     }
 }
