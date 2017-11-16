@@ -1,93 +1,64 @@
-# Composing Provider and refreshing session automatically
+# Composing Provider
 
-Based on [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/Networking.swift).
+You should compose provider when you need to add or customize the behavior from `MoyaProvider`.
 
-Used RxSwift.
+You can use this to do HTTP requests only when your app has internet connection or to handle session refresh automatically and more!
+
+Let's go through some code.
+
+First we will create a provider to do HTTP request when the app is online, We are going to use RxSwift.
 
 ```swift
-final class TokenProvider<Target> where Target: Moya.TargetType {
-	private let provider: MoyaProvider<Target>
+final class OnlineProvider<Target> where Target: Moya.TargetType {
+    private let provider: MoyaProvider<Target>
 
-	// init with all default values to initialize MoyaProvider
-	init(endpointClosure: @escaping MoyaProvider<Target>.EndpointClosure = MoyaProvider.defaultEndpointMapping,
-	     requestClosure: @escaping MoyaProvider<Target>.RequestClosure = MoyaProvider.defaultRequestMapping,
-	     stubClosure: @escaping MoyaProvider<Target>.StubClosure = MoyaProvider.neverStub,
-	     manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
-	     plugins: [PluginType] = [],
-	     trackInflights: Bool = false) {
+    // Observable that emmits a boolean value to indicate if we are online or offline
+    private let online: Observable<Bool>
 
-		self.provider = MoyaProvider(endpointClosure: endpointClosure,
-		                             requestClosure: requestClosure,
-		                             stubClosure: stubClosure,
-		                             manager: manager,
-		                             plugins: plugins,
-		                             trackInflights: trackInflights)
-	}
+    // initialize our custom provider with all default values from MoyaProvider
+    // and the online observable
+    init(endpointClosure: @escaping MoyaProvider<Target>.EndpointClosure = MoyaProvider.defaultEndpointMapping,
+         requestClosure: @escaping MoyaProvider<Target>.RequestClosure = MoyaProvider.defaultRequestMapping,
+         stubClosure: @escaping MoyaProvider<Target>.StubClosure = MoyaProvider.neverStub,
+         manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+         plugins: [PluginType] = [],
+         trackInflights: Bool = false,
+         online: Observable<Bool>) {
 
-	func request(_ token: Target) -> Single<Moya.Response> {
-		let actualRequest = provider.rx.request(token)
+             self.online = online
+             self.provider = MoyaProvider(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+         }
+```
 
-		return self.XAppTokenRequest().flatMap { _ in
-			actualRequest
-		}
-	}
+Now we need a method to perform the request
 
-	// Request to fetch and store new XApp token if the current token is missing or expired.
-	private func XAppTokenRequest() -> Single<String?> {
-		var appToken = UserInfo.shared.accessToken
+```swift
+func request(_ token: Taget) -> Single<Moya.Response> {
+    let actualRequest = provider.rx.request(token)
 
-		// If we have a valid token, just return it
-		if appToken.isValidAndNotExpired {
-			return Single.just(appToken.token)
-		}
-
-		// Do not attempt to refresh a session if we don't have valid credentials
-		guard let userId = UserInfo.shared.userId, let refreshToken = UserInfo.shared.accessToken.refreshToken else {
-			return Single.just(nil)
-		}
-
-		// Create actual refresh request
-		let newTokenRequest = provider.rx.request(MyService.refreshSession(userId: userId, refreshToken: refreshToken))
-			.filterSuccessfulStatusCodes()
-			.mapJSON()
-			.map { element -> (token: String?, refreshToken: String?, expiryTime: Double?) in
-				guard let dictionary = element as? NSDictionary else { return (token: nil, refreshToken: nil, expiryTime: nil) }
-
-				return (token: dictionary["auth_token"] as? String, refreshToken: dictionary["refresh_token"] as? String, expiryTime: dictionary["session_time_valid"] as? Double)
-			}
-			.do(onNext: { element in
-				UserInfo.shared.accessToken.token = element.0
-				UserInfo.shared.accessToken.refreshToken = element.1
-				UserInfo.shared.accessToken.setExpirySecondsLeft(element.2)
-			})
-			.map { (token, refreshToken, expiry) -> String? in
-				return token
-			}
-			.catchError { e -> Single<String?> in
-				guard let error = e as? MoyaError else { throw e }
-				guard case .statusCode(let response) = error else { throw e }
-
-				// If we have 401 error - delete all credentials and handle logout
-				if response.statusCode == 401 {
-					UserInfo.shared.invalidate()
-					Router.shared.popToLoginScreen()
-				}
-				throw error
-		}
-
-		return newTokenRequest
-	}
+    return online
+        .ignore(value: false) // Wait until we are online
+        .take(1) // Take 1 to make sure we only invoke the API once.
+        .flatMap { _ in // Turn the online state into a network request
+           return actualRequest
+        }
 }
 ```
 
-Create custom provider the same way as usual:
+And that's it! 
+
+You can create and use the custom provider the same way as usual:
 
 ```swift
-let myServiceProvider = TokenProvider()
+let myServiceProvider = OnlineProvider(online: onlineObservable)
+myServiceProvider.request(MyAPI.users)
 ```
 
 Also you can pass parameters there:
 
 ```swift
-let myServiceProvider = TokenProvider(endpointClosure: endpointClosure, plugins: [NetworkLogger()])
+let myServiceProvider = OnlineProvider(endpointClosure: endpointClosure, plugins: [NetworkLogger()], online: onlineObservable)
+myServiceProvider.request(MyAPI.users)
 ```
+
+For a more detailed example, you can look at [Artsy's implementation](https://github.com/artsy/eidolon/blob/master/Kiosk/App/Networking/Networking.swift).
