@@ -6,13 +6,13 @@ let package = Package(
     products: [
         .library(name: "Moya", targets: ["Moya"]),
         .library(name: "ReactiveMoya", targets: ["ReactiveMoya"]),
-        .library(name: "RxMoya", targets: ["RxMoya"]),
+        .library(name: "RxMoya", targets: ["RxMoya"])
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "4.1.0")),
         .package(url: "https://github.com/antitypical/Result.git", .upToNextMajor(from: "3.0.0")),
         .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", .upToNextMajor(from: "3.0.0")),
-        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "4.0.0")),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "4.0.0"))
     ],
     targets: [
          .target(
