@@ -219,7 +219,7 @@ Both `atKeyPath` and `using` are optional, meaning in most cases you'll use `map
 A basic example would be:
 
 ```swift
-provider.request(.user('jp')) { result in
+provider.request(.user("jp")) { result in
     switch result {
     case let .success(moyaResponse):
         do {
@@ -241,7 +241,7 @@ provider.request(.user('jp')) { result in
 In `RxSwift`:
 
 ```swift
-provider.rx.request(.user('jp'))
+provider.rx.request(.user("jp"))
     .filterSuccessfulStatusCodes()
     .map(User.self)
     .subscribe { event in
