@@ -11,7 +11,7 @@ class MultiTargetSpec: QuickSpec {
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
-                let validate = true
+                let validationType = ValidationType.successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
@@ -60,7 +60,11 @@ class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct validate") {
-                expect(target.validate) == true
+				if let type = target.validationType {
+					expect(type) == ValidationType.successCodes
+				} else {
+					expect(false).to(beTrue())
+				}
             }
 
             it("uses correct headers") {

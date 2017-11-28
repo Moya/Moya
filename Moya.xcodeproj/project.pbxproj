@@ -59,6 +59,7 @@
 		5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */; };
 		61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */; };
 		62B78032862A529C4AF42061 /* MoyaProvider+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48555FB39336D99F8365F5E /* MoyaProvider+Rx.swift */; };
+		72CF892B1FB64850000027A5 /* ValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CF892A1FB64850000027A5 /* ValidationType.swift */; };
 		78A2D3991F44BACD00C9E122 /* RxTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A2D3981F44BACD00C9E122 /* RxTestHelpers.swift */; };
 		78A2D39B1F44D45100C9E122 /* Single+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A2D39A1F44D45100C9E122 /* Single+MoyaSpec.swift */; };
 		7B147185DCE78CD98E28D3F2 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8736BEE85376471D7CB1E0ED /* Observable+Response.swift */; };
@@ -182,6 +183,7 @@
 		5C2B20158E599EDBE51D7AB2 /* Cancellable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Cancellable.swift; sourceTree = "<group>"; };
 		61A693AF0E88E83E91A47A99 /* Plugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Plugin.swift; sourceTree = "<group>"; };
 		62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ReactiveMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		72CF892A1FB64850000027A5 /* ValidationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationType.swift; sourceTree = "<group>"; };
 		78A2D3981F44BACD00C9E122 /* RxTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTestHelpers.swift; sourceTree = "<group>"; };
 		78A2D39A1F44D45100C9E122 /* Single+MoyaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Single+MoyaSpec.swift"; sourceTree = "<group>"; };
 		7D11E4BE1D5112E6972AD09F /* MultiTargetSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiTargetSpec.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				147E26EB1F5B14B300C1F513 /* Task.swift */,
 				1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */,
 				149749441F892E2F00FA4900 /* URLRequest+Encoding.swift */,
+				72CF892A1FB64850000027A5 /* ValidationType.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -815,6 +818,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72CF892B1FB64850000027A5 /* ValidationType.swift in Sources */,
 				3AF7063CBE1F9626FB32D933 /* Cancellable.swift in Sources */,
 				49C61E884A595E94758B5643 /* Endpoint.swift in Sources */,
 				FB223B5C3B7D4AA5261E25EA /* Image.swift in Sources */,
