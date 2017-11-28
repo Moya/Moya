@@ -295,39 +295,156 @@ class SignalProducerMoyaSpec: QuickSpec {
                 expect(receivedObjects?.map { $0.title }) == ["Hello, Moya!", "Hello, Moya!", "Hello, Moya!"]
             }
 
-            it("maps data representing a json at a key path to a decodable object") {
-                let json: [String: Any] = ["issue": json] // nested json
-                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
-                    preconditionFailure("Failed creating Data from JSON dictionary")
-                }
-                let signal = signalSendingData(data)
+            context("when using key path mapping") {
+                it("maps data representing a json to a decodable object") {
+                    let json: [String: Any] = ["issue": json] // nested json
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
 
-                var receivedObject: Issue?
-                _ = signal.map(Issue.self, atKeyPath: "issue", using: decoder).startWithResult { result in
-                    receivedObject = result.value
+                    var receivedObject: Issue?
+                    _ = signal.map(Issue.self, atKeyPath: "issue", using: decoder).startWithResult { result in
+                        receivedObject = result.value
+                    }
+                    expect(receivedObject).notTo(beNil())
+                    expect(receivedObject?.title) == "Hello, Moya!"
+                    expect(receivedObject?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
                 }
-                expect(receivedObject).notTo(beNil())
-                expect(receivedObject?.title) == "Hello, Moya!"
-                expect(receivedObject?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+
+                it("maps data representing a json array to a decodable object (#1311)") {
+                    let json: [String: Any] = ["issues": [json]] // nested json array
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var receivedObjects: [Issue]?
+                    _ = signal.map([Issue].self, atKeyPath: "issues", using: decoder).startWithResult { result in
+                        receivedObjects = result.value
+                    }
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.count) == 1
+                    expect(receivedObjects?.first?.title) == "Hello, Moya!"
+                    expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+                }
+
+                it("map Int data to an Int value") {
+                    let json: [String: Any] = ["count": 1]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var count: Int?
+                    _ = signal.map(Int.self, atKeyPath: "count", using: decoder).startWithResult { result in
+                        count = result.value
+                    }
+                    expect(count).notTo(beNil())
+                    expect(count) == 1
+                }
+
+                it("map Bool data to a Bool value") {
+                    let json: [String: Any] = ["isNew": true]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var isNew: Bool?
+                    _ = signal.map(Bool.self, atKeyPath: "isNew", using: decoder).startWithResult { result in
+                        isNew = result.value
+                    }
+                    expect(isNew).notTo(beNil())
+                    expect(isNew) == true
+                }
+
+                it("map String data to a String value") {
+                    let json: [String: Any] = ["description": "Something interesting"]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var description: String?
+                    _ = signal.map(String.self, atKeyPath: "description", using: decoder).startWithResult { result in
+                        description = result.value
+                    }
+                    expect(description).notTo(beNil())
+                    expect(description) == "Something interesting"
+                }
+
+                it("map String data to a URL value") {
+                    let json: [String: Any] = ["url": "http://www.example.com/test"]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var url: URL?
+                    _ = signal.map(URL.self, atKeyPath: "url", using: decoder).startWithResult { result in
+                        url = result.value
+                    }
+                    expect(url).notTo(beNil())
+                    expect(url) == URL(string: "http://www.example.com/test")
+                }
+
+                it("shouldn't map Int data to a Bool value") {
+                    let json: [String: Any] = ["isNew": 1]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var isNew: Bool?
+                    _ = signal.map(Bool.self, atKeyPath: "isNew", using: decoder).startWithResult { result in
+                        isNew = result.value
+                    }
+                    expect(isNew).to(beNil())
+                }
+
+                it("shouldn't map String data to an Int value") {
+                    let json: [String: Any] = ["test": "123"]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var test: Int?
+                    _ = signal.map(Int.self, atKeyPath: "test", using: decoder).startWithResult { result in
+                        test = result.value
+                    }
+                    expect(test).to(beNil())
+                }
+
+                it("shouldn't map Array<String> data to an String value") {
+                    let json: [String: Any] = ["test": ["123", "456"]]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var test: String?
+                    _ = signal.map(String.self, atKeyPath: "test", using: decoder).startWithResult { result in
+                        test = result.value
+                    }
+                    expect(test).to(beNil())
+                }
+
+                it("shouldn't map String data to an Array<String> value") {
+                    let json: [String: Any] = ["test": "123"]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var test: [String]?
+                    _ = signal.map([String].self, atKeyPath: "test", using: decoder).startWithResult { result in
+                        test = result.value
+                    }
+                    expect(test).to(beNil())
+                }
             }
-
-            it("maps data representing a json array at a key path to a decodable object (#1311)") {
-                let json: [String: Any] = ["issues": [json]] // nested json array
-                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
-                    preconditionFailure("Failed creating Data from JSON dictionary")
-                }
-                let signal = signalSendingData(data)
-
-                var receivedObjects: [Issue]?
-                _ = signal.map([Issue].self, atKeyPath: "issues", using: decoder).startWithResult { result in
-                    receivedObjects = result.value
-                }
-                expect(receivedObjects).notTo(beNil())
-                expect(receivedObjects?.count) == 1
-                expect(receivedObjects?.first?.title) == "Hello, Moya!"
-                expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
-            }
-
             it("ignores invalid data") {
                 var json = json
                 json["createdAt"] = "Hahaha" // invalid date string
