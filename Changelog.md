@@ -1,4 +1,6 @@
 # Next
+### Changed
+- **Breaking Change** Updated minimum version of `ReactiveSwift` to 3.0.
 
 # [10.0.1] - 2017-11-23
 ### Fixed
