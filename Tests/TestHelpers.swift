@@ -225,4 +225,11 @@ extension ImageType {
 struct Issue: Codable {
     let title: String
     let createdAt: Date
+    let rating: Float?
+
+    enum CodingKeys: String, CodingKey {
+        case title
+        case createdAt
+        case rating
+    }
 }

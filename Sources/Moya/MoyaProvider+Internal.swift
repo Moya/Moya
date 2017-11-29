@@ -90,7 +90,7 @@ public extension MoyaProvider {
         switch stubBehavior {
         case .never:
             switch target.task {
-            case .requestPlain, .requestData, .requestJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
+            case .requestPlain, .requestData, .requestJSONEncodable, .requestCustomJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .uploadFile(let file):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)

@@ -62,6 +62,7 @@ open class Endpoint<Target> {
 
 /// Extension for converting an `Endpoint` into a `URLRequest`.
 extension Endpoint {
+    // swiftlint:disable cyclomatic_complexity
     /// Returns the `Endpoint` converted to a `URLRequest` if valid. Throws an error otherwise.
     public func urlRequest() throws -> URLRequest {
         guard let requestURL = Foundation.URL(string: url) else {
@@ -80,6 +81,8 @@ extension Endpoint {
             return request
         case let .requestJSONEncodable(encodable):
             return try request.encoded(encodable: encodable)
+        case let .requestCustomJSONEncodable(encodable, encoder: encoder):
+            return try request.encoded(encodable: encodable, encoder: encoder)
         case let .requestParameters(parameters, parameterEncoding):
             return try request.encoded(parameters: parameters, parameterEncoding: parameterEncoding)
         case let .uploadCompositeMultipart(_, urlParameters):
@@ -98,6 +101,7 @@ extension Endpoint {
             return try bodyfulRequest.encoded(parameters: urlParameters, parameterEncoding: urlEncoding)
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 }
 
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
