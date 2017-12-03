@@ -4,6 +4,7 @@
 
 ### Changed
 - **Breaking Change** Updated minimum version of `ReactiveSwift` to 3.0.
+[#1470](https://github.com/Moya/Moya/pull/1470) by [@larryonoff](https://github.com/larryonoff).
 
 # [10.0.1] - 2017-11-23
 ### Fixed
