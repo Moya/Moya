@@ -12,7 +12,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure)
             }
 
             it("returns the correct error message") {
@@ -49,7 +49,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>()
             }
 
             it("returns a Response object") {

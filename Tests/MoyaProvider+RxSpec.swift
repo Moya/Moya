@@ -12,7 +12,7 @@ final class MoyaProviderRxSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>()
             }
 
             it("emits a Response object") {
@@ -58,7 +58,7 @@ final class MoyaProviderRxSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure)
             }
 
             it("emits the correct error message") {

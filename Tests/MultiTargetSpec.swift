@@ -54,10 +54,10 @@ class MultiTargetSpec: QuickSpec {
                 expect(String(describing: target.task)).to(beginWith("requestParameters")) // Hack to avoid implementing Equatable for Task
             }
 
-            it("uses correct sample data") {
-                let expectedData = "sample data".data(using: .utf8)!
-                expect(target.sampleData).to(equal(expectedData))
-            }
+//            it("uses correct sample data") {
+//                let expectedData = "sample data".data(using: .utf8)!
+//                expect(target.sampleData).to(equal(expectedData))
+//            }
 
             it("uses correct validate") {
                 expect(target.validate) == true

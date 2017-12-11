@@ -32,6 +32,17 @@ extension GitHub: TargetType {
         return .requestPlain
     }
 
+    var validate: Bool {
+        return true
+    }
+
+    var headers: [String: String]? {
+        return nil
+    }
+}
+
+extension GitHub: TestTargetType {
+
     var sampleData: Data {
         switch self {
         case .zen:
@@ -41,12 +52,12 @@ extension GitHub: TargetType {
         }
     }
 
-    var validate: Bool {
-        return true
+    var stubBehavior: Moya.StubBehavior {
+        return .immediate
     }
 
-    var headers: [String: String]? {
-        return nil
+    var sampleResponse: EndpointSampleResponse {
+        return .networkResponse(200, sampleData)
     }
 }
 
@@ -67,7 +78,7 @@ func url(_ route: TargetType) -> String {
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
     let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    return Endpoint<GitHub>(url: url(target), method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 
 enum HTTPBin: TargetType {
