@@ -18,20 +18,17 @@ open class Endpoint<Target> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     open let url: String
-    open let sampleResponseClosure: SampleResponseClosure
     open let method: Moya.Method
     open let task: Task
     open let httpHeaderFields: [String: String]?
 
     /// Main initializer for `Endpoint`.
     public init(url: String,
-                sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method,
                 task: Task,
                 httpHeaderFields: [String: String]?) {
 
         self.url = url
-        self.sampleResponseClosure = sampleResponseClosure
         self.method = method
         self.task = task
         self.httpHeaderFields = httpHeaderFields
@@ -39,12 +36,12 @@ open class Endpoint<Target> {
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
     open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target> {
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
+        return Endpoint(url: url, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
     open func replacing(task: Task) -> Endpoint<Target> {
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
+        return Endpoint(url: url, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 
     fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {

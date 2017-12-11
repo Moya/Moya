@@ -5,7 +5,6 @@ public extension MoyaProvider {
     public final class func defaultEndpointMapping(for target: Target) -> Endpoint<Target> {
         return Endpoint(
             url: URL(target: target).absoluteString,
-            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,
             task: target.task,
             httpHeaderFields: target.headers

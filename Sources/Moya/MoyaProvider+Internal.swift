@@ -21,7 +21,6 @@ public extension MoyaProvider {
     /// Performs normal requests.
     func requestNormal(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
-        let stubBehavior = self.stubClosure(target)
         let cancellableToken = CancellableWrapper()
 
         // Allow plugins to modify response
@@ -77,7 +76,7 @@ public extension MoyaProvider {
               }
             }
 
-            cancellableToken.innerCancellable = self.performRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
+            cancellableToken.innerCancellable = self.performRequest(target, request: preparedRequest, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion, endpoint: endpoint)
         }
 
         requestClosure(endpoint, performNetworking)
@@ -86,63 +85,32 @@ public extension MoyaProvider {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> Cancellable {
-        switch stubBehavior {
-        case .never:
-            switch target.task {
-            case .requestPlain, .requestData, .requestJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
-                return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
-            case .uploadFile(let file):
-                return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
-            case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
-                guard !multipartBody.isEmpty && target.method.supportsMultipart else {
-                    fatalError("\(target) is not a multipart upload target.")
-                }
-                return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
-            case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
-                return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
+    func performNormalRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>) -> Cancellable {
+
+        switch target.task {
+    case .requestPlain, .requestData, .requestJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
+            return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
+        case .uploadFile(let file):
+            return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
+        case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
+            guard !multipartBody.isEmpty && target.method.supportsMultipart else {
+                fatalError("\(target) is not a multipart upload target.")
             }
-        default:
-            return self.stubRequest(target, request: request, callbackQueue: callbackQueue, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
+        case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
+            return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
         }
+    }
+
+    // swiftlint:disable:next function_parameter_count
+    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>) -> Cancellable {
+        return self.performNormalRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion, endpoint: endpoint)
     }
 
     func cancelCompletion(_ completion: Moya.Completion, target: Target) {
         let error = MoyaError.underlying(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil), nil)
         plugins.forEach { $0.didReceive(.failure(error), target: target) }
         completion(.failure(error))
-    }
-
-    /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    public final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
-        return {
-            if token.isCancelled {
-                self.cancelCompletion(completion, target: target)
-                return
-            }
-
-            switch endpoint.sampleResponseClosure() {
-            case .networkResponse(let statusCode, let data):
-                let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
-                plugins.forEach { $0.didReceive(.success(response), target: target) }
-                completion(.success(response))
-            case .response(let customResponse, let data):
-                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
-                plugins.forEach { $0.didReceive(.success(response), target: target) }
-                completion(.success(response))
-            case .networkError(let error):
-                let error = MoyaError.underlying(error, nil)
-                plugins.forEach { $0.didReceive(.failure(error), target: target) }
-                completion(.failure(error))
-            }
-        }
-    }
-
-    /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
-    final func notifyPluginsOfImpendingStub(for request: URLRequest, target: Target) {
-        let alamoRequest = manager.request(request as URLRequestConvertible)
-        plugins.forEach { $0.willSend(alamoRequest, target: target) }
-        alamoRequest.cancel()
     }
 }
 
