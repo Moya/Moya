@@ -29,8 +29,8 @@ public enum MultiTarget: TargetType {
         return target.task
     }
 
-    public var validate: Bool {
-        return target.validate
+    public var validationType: ValidationType {
+        return target.validationType
     }
 
     public var headers: [String: String]? {
