@@ -3,7 +3,7 @@ import Moya
 import RxSwift
 import Nimble
 
-class SingleMoyaSpec: QuickSpec {
+final class SingleMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {

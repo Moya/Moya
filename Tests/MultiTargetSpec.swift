@@ -2,7 +2,7 @@ import Quick
 import Nimble
 @testable import Moya
 
-class MultiTargetSpec: QuickSpec {
+final class MultiTargetSpec: QuickSpec {
     override func spec() {
         describe("MultiTarget") {
             struct StructAPI: TargetType {
