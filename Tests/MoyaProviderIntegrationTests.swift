@@ -255,8 +255,9 @@ class MoyaProviderIntegrationTests: QuickSpec {
                         expect(log).to( contain("Request Headers: [:]") )
                         expect(log).to( contain("HTTP Request Method: GET") )
                         expect(log).to( contain("Response:") )
-                        expect(log).to( contain("{ URL: https://api.github.com/zen } { status code: 200, headers") )
-                        expect(log).to( contain("\"Content-Length\" = 43;") )
+                        expect(log).to( contain("{ URL: https://api.github.com/zen } { Status Code: 200, Headers") )
+                        expect(log).to( contain("\"Content-Length\" =") )
+                        expect(log).to( contain("43"))
                     }
                 }
             }

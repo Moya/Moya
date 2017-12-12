@@ -41,8 +41,8 @@ extension GitHub: TargetType {
         }
     }
 
-    var validate: Bool {
-        return true
+    var validationType: ValidationType {
+        return .successAndRedirectCodes
     }
 
     var headers: [String: String]? {
