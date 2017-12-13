@@ -1,4 +1,4 @@
-/// Protocol to define the opaque type returned from a request
+/// Protocol to define the opaque type returned from a request.
 public protocol Cancellable {
 
     /// A Boolean value stating whether a request is cancelled.

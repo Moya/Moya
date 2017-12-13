@@ -18,7 +18,7 @@ public typealias JSONEncoding = Alamofire.JSONEncoding
 public typealias URLEncoding = Alamofire.URLEncoding
 public typealias PropertyListEncoding = Alamofire.PropertyListEncoding
 
-/// Multipart form
+/// Multipart form.
 public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 
 /// Multipart form data encoding result.

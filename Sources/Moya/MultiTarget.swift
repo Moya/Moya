@@ -30,7 +30,7 @@ public enum MultiTarget: TargetType {
         return target.sampleData
     }
 
-    /// The `Task` of the embedded target
+    /// The `Task` of the embedded target.
     public var task: Task {
         return target.task
     }
