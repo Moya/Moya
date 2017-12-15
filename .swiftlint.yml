@@ -1,0 +1,15 @@
+disabled_rules:
+  - line_length
+  - type_name
+
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+
+included:
+  - Sources
+  - Tests
+  - Examples
+
+function_body_length:
+  warning: 50

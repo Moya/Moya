@@ -1,0 +1,11 @@
+disabled_rules:
+  - line_length
+  - type_name
+  - force_unwrapping
+  - force_cast
+  - force_try
+  - function_body_length
+  - cyclomatic_complexity
+
+opt_in_rules:
+  - empty_count

@@ -1,0 +1,5 @@
+coverage:
+  ignore:
+    - Demo
+    - Carthage
+    - Tests

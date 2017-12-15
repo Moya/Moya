@@ -1,0 +1,24 @@
+machine:
+  xcode:
+    version: 9.0
+  environment:
+    LANG: en_US.UTF-8
+
+dependencies:
+  pre:
+    - curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
+  override:
+    - brew update ; brew update # Due to a problem with Homebrew, see: https://github.com/Homebrew/brew/issues/991
+    - brew install swiftlint
+    - bundle install
+    - scripts/bootstrap-if-needed.sh # only bootstrap if we have updated dependencies since our last cache.
+  cache_directories:
+    - "Carthage" # Cache carthage to speed up builds.
+
+test:
+  pre:
+  override:
+  - rake test && rake test:carthage && rake build_example
+  post:
+    - bundle exec danger
+    - bash <(curl -s https://codecov.io/bash) -J Moya
