@@ -233,3 +233,9 @@ struct Issue: Codable {
         case rating
     }
 }
+
+// A fixture for testing optional Decodable mapping
+struct OptionalIssue: Codable {
+    let title: String?
+    let createdAt: Date?
+}

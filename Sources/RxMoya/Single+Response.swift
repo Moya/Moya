@@ -54,9 +54,9 @@ extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Respo
     }
 
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
-    public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder()) -> Single<D> {
+    public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> Single<D> {
         return flatMap { response -> Single<D> in
-            return Single.just(try response.map(type, atKeyPath: keyPath, using: decoder))
+            return Single.just(try response.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData))
         }
     }
 }
