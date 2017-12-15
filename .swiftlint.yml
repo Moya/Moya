@@ -1,7 +1,6 @@
 disabled_rules:
   - line_length
   - type_name
-  - type_body_length
 
 opt_in_rules:
   - empty_count
