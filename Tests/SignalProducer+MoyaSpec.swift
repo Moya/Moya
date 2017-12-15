@@ -294,10 +294,10 @@ class SignalProducerMoyaSpec: QuickSpec {
                 expect(receivedObjects?.count) == 3
                 expect(receivedObjects?.map { $0.title }) == ["Hello, Moya!", "Hello, Moya!", "Hello, Moya!"]
             }
-            
+
             it("maps empty data to a decodable object with optional properties") {
                 let signal = signalSendingData(Data())
-                
+
                 var receivedObjects: OptionalIssue?
                 _ = signal.map(OptionalIssue.self, using: decoder, failsOnEmptyData: false).startWithResult { result in
                     receivedObjects = result.value
@@ -306,10 +306,10 @@ class SignalProducerMoyaSpec: QuickSpec {
                 expect(receivedObjects?.title).to(beNil())
                 expect(receivedObjects?.createdAt).to(beNil())
             }
-            
+
             it("maps empty data to a decodable array with optional properties") {
                 let signal = signalSendingData(Data())
-                
+
                 var receivedObjects: [OptionalIssue]?
                 _ = signal.map([OptionalIssue].self, using: decoder, failsOnEmptyData: false).startWithResult { result in
                     receivedObjects = result.value
@@ -353,10 +353,10 @@ class SignalProducerMoyaSpec: QuickSpec {
                     expect(receivedObjects?.first?.title) == "Hello, Moya!"
                     expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
                 }
-                
+
                 it("maps empty data to a decodable object with optional properties") {
                     let signal = signalSendingData(Data())
-                    
+
                     var receivedObjects: OptionalIssue?
                     _ = signal.map(OptionalIssue.self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).startWithResult { result in
                         receivedObjects = result.value
@@ -365,10 +365,10 @@ class SignalProducerMoyaSpec: QuickSpec {
                     expect(receivedObjects?.title).to(beNil())
                     expect(receivedObjects?.createdAt).to(beNil())
                 }
-                
+
                 it("maps empty data to a decodable array with optional properties") {
                     let signal = signalSendingData(Data())
-                    
+
                     var receivedObjects: [OptionalIssue]?
                     _ = signal.map([OptionalIssue].self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).startWithResult { result in
                         receivedObjects = result.value

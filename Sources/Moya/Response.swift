@@ -162,7 +162,6 @@ public extension Response {
         } else {
             jsonData = data
         }
-        
         do {
             if jsonData.count < 1 && !failsOnEmptyData {
                 if let emptyJSONObjectData = "{}".data(using: .utf8), let emptyDecodableValue = try? decoder.decode(D.self, from: emptyJSONObjectData) {
