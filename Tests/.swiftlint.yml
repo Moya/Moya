@@ -10,3 +10,6 @@ disabled_rules:
 
 opt_in_rules:
   - empty_count
+
+file_length:
+  warning: 1000
