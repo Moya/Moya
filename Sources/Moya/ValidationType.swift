@@ -1,4 +1,3 @@
-
 import Foundation
 
 /// Represents the status codes to validate through Alamofire.
