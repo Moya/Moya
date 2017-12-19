@@ -35,7 +35,8 @@ public struct ProgressResponse {
 
 /// A protocol representing a minimal interface for a MoyaProvider.
 /// Used by the reactive provider extensions.
-public protocol MoyaProviderType: class {
+public protocol MoyaProviderType: AnyObject {
+
     associatedtype Target: TargetType
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
