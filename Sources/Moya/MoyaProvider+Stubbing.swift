@@ -31,11 +31,14 @@ extension MoyaProvider where Target: TestTargetType {
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
     open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+
         let callbackQueue = callbackQueue ?? self.callbackQueue
         let cancellableToken = CancellableToken { }
         notifyPluginsOfImpendingStub(for: request, target: target)
+
         let plugins = self.plugins
         let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
+
         switch stubBehavior {
         case .immediate:
             switch callbackQueue {
@@ -45,9 +48,7 @@ extension MoyaProvider where Target: TestTargetType {
                 callbackQueue.async(execute: stub)
             }
         case .delayed(let delay):
-            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
-            let killTime = DispatchTime.now() + Double(killTimeOffset) / Double(NSEC_PER_SEC)
-            (callbackQueue ?? DispatchQueue.main).asyncAfter(deadline: killTime) {
+            (callbackQueue ?? DispatchQueue.main).asyncAfter(deadline: .now() + delay) {
                 stub()
             }
         case .never:
@@ -61,7 +62,8 @@ extension MoyaProvider where Target: TestTargetType {
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
     public final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, plugins: [PluginType], request: URLRequest) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
         return {
-            if token.isCancelled {
+
+            guard !token.isCancelled else {
                 self.cancelCompletion(completion, target: target)
                 return
             }

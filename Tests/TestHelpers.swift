@@ -63,7 +63,7 @@ extension GitHub: TestTargetType {
 
 extension GitHub: Equatable {
 
-    static func ==(lhs: GitHub, rhs: GitHub) -> Bool {
+    static func == (lhs: GitHub, rhs: GitHub) -> Bool {
         switch (lhs, rhs) {
         case (.zen, .zen): return true
         case let (.userProfile(username1), .userProfile(username2)): return username1 == username2
