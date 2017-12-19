@@ -5,8 +5,6 @@ import Result
 
 extension Method {
     /// A Boolean value determining whether the request supports multipart.
-    /// True: .post, .put, .patch, .connect
-    /// False: .get, .delete, .head, .options, .trace
     public var supportsMultipart: Bool {
         switch self {
         case .post, .put, .patch, .connect:

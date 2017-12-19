@@ -168,17 +168,17 @@ public extension MoyaProvider {
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
     // at least add some class functions to allow easy access to common stubbing closures.
 
-    /// A class method that returns StubBehavior.never.
+    /// Do not stub.
     public final class func neverStub(_: Target) -> Moya.StubBehavior {
         return .never
     }
 
-    /// A class method that returns StubBehavior.immediate.
+    /// Return a response immediately.
     public final class func immediatelyStub(_: Target) -> Moya.StubBehavior {
         return .immediate
     }
 
-    /// A class method that returns StubBehavior.delayed(seconds: TimeInterval).
+    /// Return a response after a delay.
     public final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
         return { _ in return .delayed(seconds: seconds) }
     }

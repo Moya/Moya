@@ -32,7 +32,6 @@ open class Endpoint<Target> {
     /// The HTTP header fields for the request.
     open let httpHeaderFields: [String: String]?
 
-    /// Initializes an Endpoint.
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method,

@@ -37,7 +37,6 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
 
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
 
-
     public func cancel() {
         _ = lock.wait(timeout: DispatchTime.distantFuture)
         defer { lock.signal() }
@@ -46,7 +45,6 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
         cancelAction()
     }
 
-    /// Initializes a CancellableToken.
     public init(action: @escaping () -> Void) {
         self.cancelAction = action
         self.request = nil
@@ -58,6 +56,7 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
             request.cancel()
         }
     }
+
     /// A textual representation of this instance, suitable for debugging.
     public var debugDescription: String {
         guard let request = self.request else {

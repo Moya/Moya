@@ -15,7 +15,6 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     /// The HTTPURLResponse object.
     public let response: HTTPURLResponse?
 
-    /// Initializes a new `Response`.
     public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: HTTPURLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
