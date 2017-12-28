@@ -2,7 +2,7 @@ import Quick
 import Nimble
 @testable import Moya
 
-class MultiPartFormData: QuickSpec {
+final class MultiPartFormData: QuickSpec {
     override func spec() {
         it("initializes correctly") {
             let fileURL = URL(fileURLWithPath: "/tmp.txt")

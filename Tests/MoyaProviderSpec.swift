@@ -6,7 +6,7 @@ import Foundation
 import OHHTTPStubs
 @testable import Moya
 
-class MoyaProviderSpec: QuickSpec {
+final class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
         beforeEach {

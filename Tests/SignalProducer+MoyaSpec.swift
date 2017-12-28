@@ -7,7 +7,7 @@ private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalPro
     return SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
 }
 
-class SignalProducerMoyaSpec: QuickSpec {
+final class SignalProducerMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {
