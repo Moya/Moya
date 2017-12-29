@@ -51,8 +51,7 @@ extension GitHub: TargetType {
 }
 
 extension GitHub: Equatable {
-
-    static func ==(lhs: GitHub, rhs: GitHub) -> Bool {
+    static func == (lhs: GitHub, rhs: GitHub) -> Bool {
         switch (lhs, rhs) {
         case (.zen, .zen): return true
         case let (.userProfile(username1), .userProfile(username2)): return username1 == username2
@@ -232,4 +231,10 @@ struct Issue: Codable {
         case createdAt
         case rating
     }
+}
+
+// A fixture for testing optional Decodable mapping
+struct OptionalIssue: Codable {
+    let title: String?
+    let createdAt: Date?
 }

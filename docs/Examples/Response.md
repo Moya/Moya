@@ -214,8 +214,9 @@ struct User: Decodable {
 }
 ```
 
-Moya allows us to easily get our `User` from the response with the `map<D: Decodable>(_: D.Type, atKeyPath: String?, using: JSONDecoder)` extension.
+Moya allows us to easily get our `User` from the response with the `map<D: Decodable>(_: D.Type, atKeyPath: String?, using: JSONDecoder, failsOnEmptyData: Bool)` extension.
 Both `atKeyPath` and `using` are optional, meaning in most cases you'll use `map(_:)`.
+The `failsOnEmptyData` property (default: true), describes whether it should throw an error when data is empty or simply return `Decodable` initialized with nil (note: your object must allow optionals or you'll still get thrown an error).
 A basic example would be:
 
 ```swift
@@ -330,6 +331,73 @@ provider.rx.request(.users)
         switch event {
         case .success(let users):
             // Notice that now we do not get a Response object anymore but rather an array of User objects
+            // do something with the user
+        case .error(let error):
+            // handle the error, which can be an underlying error, a status code error, or an object mapping error
+        }
+    }
+}
+```
+
+The above assumes your backend always returns data and if it doesn't, throwns an error.
+But if you don't want to receive an error, we can set `failsOnEmptyData` to false.
+
+The data returned looks like this:
+
+```json
+{
+  "users": []
+}
+```
+
+Our updated `User` type looks like this:
+
+```swift
+struct User: Decodable {
+    let id: String?
+    let firstName: String?
+    let lastName: String?
+    let updated: Date?
+}
+```
+
+Our handling of the result now has to do slightly more:
+
+```swift
+provider.request(.user) { result in
+    switch result {
+    case let .success(moyaResponse):
+        do {
+            let filteredResponse = try moyaResponse.filterSuccessfulStatusCodes()
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .secondsSince1970
+            let users = try filteredResponse.map([User].self, atKeyPath: "users", using: decoder, failsOnEmptyData: false) // user is of type [User]
+            // Because the failsOnEmptyData is false and our user object allows optional, our array got initialized with an empty User object
+            // Do something with your users.
+        }
+        catch let error {
+            // Here we get either statusCode error or objectMapping error.
+            // TODO: handle the error == best. comment. ever.
+        }
+    case let .failure(error):
+        // TODO: handle the error == best. comment. ever.
+    }
+}
+```
+
+In `RxSwift` this could look something like:
+
+```swift
+let decoder = JSONDecoder()
+decoder.dateDecodingStrategy = .secondsSince1970
+provider.rx.request(.users)
+    .filterSuccessfulStatusCodes()
+    .map([User].self, atKeyPath: "users", using: decoder, failsOnEmptyData: false)
+    .subscribe { event in
+        switch event {
+        case .success(let users):
+            // Notice that now we do not get a Response object anymore but rather an array of User objects
+            // Because the failsOnEmptyData is false and our user object allows optional, our array got initialized with an empty User object
             // do something with the user
         case .error(let error):
             // handle the error, which can be an underlying error, a status code error, or an object mapping error

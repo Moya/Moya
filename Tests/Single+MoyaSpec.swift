@@ -305,6 +305,31 @@ final class SingleMoyaSpec: QuickSpec {
                 expect(receivedObjects?.map { $0.title }) == ["Hello, Moya!", "Hello, Moya!", "Hello, Moya!"]
             }
 
+            it("maps empty data to a decodable object with optional properties") {
+                let single = Response(statusCode: 200, data: Data()).asSingle()
+
+                var receivedObjects: OptionalIssue?
+                _ = single.map(OptionalIssue.self, using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
+                    receivedObjects = object
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.title).to(beNil())
+                expect(receivedObjects?.createdAt).to(beNil())
+            }
+
+            it("maps empty data to a decodable array with optional properties") {
+                let single = Response(statusCode: 200, data: Data()).asSingle()
+
+                var receivedObjects: [OptionalIssue]?
+                _ = single.map([OptionalIssue].self, using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
+                    receivedObjects = object
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.count) == 1
+                expect(receivedObjects?.first?.title).to(beNil())
+                expect(receivedObjects?.first?.createdAt).to(beNil())
+            }
+
             context("when using key path mapping") {
                 it("maps data representing a json to a decodable object") {
                     let json: [String: Any] = ["issue": json] // nested json
@@ -337,6 +362,31 @@ final class SingleMoyaSpec: QuickSpec {
                     expect(receivedObjects?.count) == 1
                     expect(receivedObjects?.first?.title) == "Hello, Moya!"
                     expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+                }
+
+                it("maps empty data to a decodable object with optional properties") {
+                    let single = Response(statusCode: 200, data: Data()).asSingle()
+
+                    var receivedObjects: OptionalIssue?
+                    _ = single.map(OptionalIssue.self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
+                        receivedObjects = object
+                    })
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.title).to(beNil())
+                    expect(receivedObjects?.createdAt).to(beNil())
+                }
+
+                it("maps empty data to a decodable array with optional properties") {
+                    let single = Response(statusCode: 200, data: Data()).asSingle()
+
+                    var receivedObjects: [OptionalIssue]?
+                    _ = single.map([OptionalIssue].self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
+                        receivedObjects = object
+                    })
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.count) == 1
+                    expect(receivedObjects?.first?.title).to(beNil())
+                    expect(receivedObjects?.first?.createdAt).to(beNil())
                 }
 
                 it("map Int data to an Int value") {
