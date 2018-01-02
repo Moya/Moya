@@ -21,9 +21,13 @@ let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose: true)
 ```
 
 ### Authentication
-The authentication plugin allows a user to assign an optional `URLCredential` per request. There is no action when a request is received.
+The `CredentialsPlugin` allows a user to assign an optional `URLCredential` per request. There is no action when a request is received.
 
 The plugin can be found at [`Sources/Moya/Plugins/CredentialsPlugin.swift`](../Sources/Moya/Plugins/CredentialsPlugin.swift)
+
+The `AccessTokenPlugin` allows a user to a type of access control per request, either `Bearer` or `Basic` HTTP authentication schemes, or a custom header / query parameter.
+
+The plugin can be found at [`Sources/Moya/Plugins/AccessTokenPlugin.swift`](../Sources/Moya/Plugins/AccessTokenPlugin.swift)
 
 ### Network Activity Indicator
 One very common task with iOS networking is to show a network activity indicator during network requests, and remove it when all requests have finished. The provided plugin adds callbacks which are called when a requests starts and finishes, which can be used to keep track of the number of requests in progress, and show / hide the network activity indicator accordingly.
