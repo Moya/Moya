@@ -7,6 +7,7 @@
 - **Breaking Change** Updated minimum version of `ReactiveSwift` to 3.0.
 [#1470](https://github.com/Moya/Moya/pull/1470) by [@larryonoff](https://github.com/larryonoff).
 - **Breaking Change** Changed the `validate` property of `TargetType` to use new `ValidationType` enum representing valid status codes. [#1505](https://github.com/Moya/Moya/pull/1505) by [@SD10](https://github.com/sd10), [@amaurydavid](https://github.com/amaurydavid). 
+- **Breaking Change** Changed `AccessTokenPlugin` to support custom header / query parameter authentication in addition to the current `Basic` and `Bearer` auth [#1521](https://github.com/Moya/Moya/pull/1521) by [@ffittschen](https://github.com/ffittschen).
 
 # [10.0.1] - 2017-11-23
 ### Fixed
