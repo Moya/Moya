@@ -18,14 +18,26 @@ public protocol TargetType {
     /// The type of HTTP task to be performed.
     var task: Task { get }
 
-    /// Whether or not to perform Alamofire validation. Defaults to `false`.
-    var validate: Bool { get }
+    /// The type of validation to perform on the request. Default is `.none`.
+    var validationType: ValidationType { get }
 
     /// The headers to be used in the request.
     var headers: [String: String]? { get }
 }
 
 public extension TargetType {
+
+    /// The type of validation to perform on the request. Default is `.none`.
+    var validationType: ValidationType {
+        return .none
+    }
+}
+
+// MARK: - Deprecated
+
+extension TargetType {
+    @available(*, deprecated: 11.0, message:
+    "TargetType's validate property has been deprecated in 11.0. Please use validationType: ValidationType.")
     var validate: Bool {
         return false
     }

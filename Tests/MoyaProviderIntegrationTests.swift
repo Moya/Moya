@@ -18,7 +18,7 @@ func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Res
     }
 }
 
-class MoyaProviderIntegrationTests: QuickSpec {
+final class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
         let userMessage = String(data: GitHub.userProfile("ashfurrow").sampleData, encoding: .utf8)
         let zenMessage = String(data: GitHub.zen.sampleData, encoding: .utf8)
@@ -302,7 +302,7 @@ class MoyaProviderIntegrationTests: QuickSpec {
     }
 }
 
-class StubManager: Manager {
+final class StubManager: Manager {
     var called = false
 
     override func request(_ urlRequest: URLRequestConvertible) -> DataRequest {

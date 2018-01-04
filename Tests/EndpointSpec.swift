@@ -151,7 +151,7 @@ final class EndpointSpec: QuickSpec {
                 var request: URLRequest!
 
                 beforeEach {
-                    issue = Issue(title: "Hello, Moya!", createdAt: Date())
+                    issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
                     endpoint = endpoint.replacing(task: .requestJSONEncodable(issue))
                     request = try! endpoint.urlRequest()
                 }
@@ -159,6 +159,45 @@ final class EndpointSpec: QuickSpec {
                 it("updates httpBody") {
                     let expectedIssue = try! JSONDecoder().decode(Issue.self, from: request.httpBody!)
                     expect(issue.createdAt).to(equal(expectedIssue.createdAt))
+                    expect(issue.title).to(equal(expectedIssue.title))
+                }
+
+                it("updates headers to include Content-Type: application/json") {
+                    let contentTypeHeaders = ["Content-Type": "application/json"]
+                    let initialHeaderFields = endpoint.httpHeaderFields ?? [:]
+                    let expectedHTTPHeaderFields = initialHeaderFields.merging(contentTypeHeaders) { initialValue, _ in initialValue }
+                    expect(request.allHTTPHeaderFields).to(equal(expectedHTTPHeaderFields))
+                }
+
+                it("doesn't update any of the other properties") {
+                    expect(request.url?.absoluteString).to(equal(endpoint.url))
+                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
+            context("when task is .requestCustomJSONEncodable") {
+                var issue: Issue!
+                var request: URLRequest!
+
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en_US_POSIX")
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+
+                let encoder = JSONEncoder()
+                encoder.dateEncodingStrategy = .formatted(formatter)
+
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .formatted(formatter)
+
+                beforeEach {
+                    issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
+                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(issue, encoder: encoder))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates httpBody") {
+                    let expectedIssue = try! decoder.decode(Issue.self, from: request.httpBody!)
+                    expect(formatter.string(from: issue.createdAt)).to(equal(formatter.string(from: expectedIssue.createdAt)))
                     expect(issue.title).to(equal(expectedIssue.title))
                 }
 
@@ -271,9 +310,29 @@ final class EndpointSpec: QuickSpec {
                     // Non-serializable type to cause serialization error
                     class InvalidParameter {}
 
-                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["":InvalidParameter()], encoding: PropertyListEncoding.default))
-                    let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription":"Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["": InvalidParameter()], encoding: PropertyListEncoding.default))
+                    let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription": "Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
                     let expectedError = MoyaError.parameterEncoding(cocoaError)
+                    var recievedError: MoyaError?
+
+                    do {
+                        _ = try endpoint.urlRequest()
+                    } catch {
+                        recievedError = error as? MoyaError
+                    }
+                    expect(recievedError).toNot(beNil())
+                    expect(recievedError).to(beOfSameErrorType(expectedError))
+                }
+            }
+
+            context("when JSONEncoder set with incorrect parameters") {
+                it("throws a .encodableMapping error") {
+                    let encoder = JSONEncoder()
+
+                    let issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: Float.infinity)
+                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(issue, encoder: encoder))
+
+                    let expectedError = MoyaError.encodableMapping(EncodingError.invalidValue(Float.infinity, EncodingError.Context(codingPath: [Issue.CodingKeys.rating], debugDescription: "Unable to encode Float.infinity directly in JSON. Use JSONEncoder.NonConformingFloatEncodingStrategy.convertToString to specify how the value should be encoded.", underlyingError: nil)))
                     var recievedError: MoyaError?
 
                     do {

@@ -41,8 +41,8 @@ extension GitHub: TargetType {
         }
     }
 
-    var validate: Bool {
-        return true
+    var validationType: ValidationType {
+        return .successAndRedirectCodes
     }
 
     var headers: [String: String]? {
@@ -51,8 +51,7 @@ extension GitHub: TargetType {
 }
 
 extension GitHub: Equatable {
-
-    static func ==(lhs: GitHub, rhs: GitHub) -> Bool {
+    static func == (lhs: GitHub, rhs: GitHub) -> Bool {
         switch (lhs, rhs) {
         case (.zen, .zen): return true
         case let (.userProfile(username1), .userProfile(username2)): return username1 == username2
@@ -225,4 +224,17 @@ extension ImageType {
 struct Issue: Codable {
     let title: String
     let createdAt: Date
+    let rating: Float?
+
+    enum CodingKeys: String, CodingKey {
+        case title
+        case createdAt
+        case rating
+    }
+}
+
+// A fixture for testing optional Decodable mapping
+struct OptionalIssue: Codable {
+    let title: String?
+    let createdAt: Date?
 }

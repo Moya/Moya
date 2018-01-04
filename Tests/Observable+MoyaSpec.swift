@@ -3,7 +3,7 @@ import Moya
 import RxSwift
 import Nimble
 
-class ObservableMoyaSpec: QuickSpec {
+final class ObservableMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes") {
@@ -309,6 +309,30 @@ class ObservableMoyaSpec: QuickSpec {
                 expect(receivedObjects?.count) == 3
                 expect(receivedObjects?.map { $0.title }) == ["Hello, Moya!", "Hello, Moya!", "Hello, Moya!"]
             }
+            it("maps empty data to a decodable object with optional properties") {
+                let observable = Response(statusCode: 200, data: Data()).asObservable()
+
+                var receivedObjects: OptionalIssue?
+                _ = observable.map(OptionalIssue.self, using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                    receivedObjects = object
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.title).to(beNil())
+                expect(receivedObjects?.createdAt).to(beNil())
+            }
+
+            it("maps empty data to a decodable array with optional properties") {
+                let observable = Response(statusCode: 200, data: Data()).asObservable()
+
+                var receivedObjects: [OptionalIssue]?
+                _ = observable.map([OptionalIssue].self, using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                    receivedObjects = object
+                })
+                expect(receivedObjects).notTo(beNil())
+                expect(receivedObjects?.count) == 1
+                expect(receivedObjects?.first?.title).to(beNil())
+                expect(receivedObjects?.first?.createdAt).to(beNil())
+            }
 
             context("when using key path mapping") {
                 it("maps data representing a json to a decodable object") {
@@ -342,6 +366,31 @@ class ObservableMoyaSpec: QuickSpec {
                     expect(receivedObjects?.count) == 1
                     expect(receivedObjects?.first?.title) == "Hello, Moya!"
                     expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+                }
+
+                it("maps empty data to a decodable object with optional properties") {
+                    let observable = Response(statusCode: 200, data: Data()).asObservable()
+
+                    var receivedObjects: OptionalIssue?
+                    _ = observable.map(OptionalIssue.self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                        receivedObjects = object
+                    })
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.title).to(beNil())
+                    expect(receivedObjects?.createdAt).to(beNil())
+                }
+
+                it("maps empty data to a decodable array with optional properties") {
+                    let observable = Response(statusCode: 200, data: Data()).asObservable()
+
+                    var receivedObjects: [OptionalIssue]?
+                    _ = observable.map([OptionalIssue].self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                        receivedObjects = object
+                    })
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.count) == 1
+                    expect(receivedObjects?.first?.title).to(beNil())
+                    expect(receivedObjects?.first?.createdAt).to(beNil())
                 }
 
                 it("map Int data to an Int value") {

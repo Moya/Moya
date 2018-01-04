@@ -94,6 +94,7 @@ A `task` property represents how you are sending / receiving data and allows you
 - `.requestPlain` with nothing to send at all
 - `.requestData(_:)` with which you can send `Data` 
 - `.requestJSONEncodable(_:)` with which you can send objects that conform to the `Encodable` protocol
+- `.requestCustomJSONEncodable(_:encoder:)`  which allows you to send objects conforming to `Encodable` encoded with provided custom JSONEncoder
 - `.requestParameters(parameters:encoding:)` which allows you to send parameters with an encoding
 - `.requestCompositeData(bodyData:urlParameters:)` & `.requestCompositeParameters(bodyParameters:bodyEncoding:urlParameters)` which allow you to combine url encoded parameters with another type (data / parameters)
 

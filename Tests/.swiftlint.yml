@@ -6,6 +6,10 @@ disabled_rules:
   - force_try
   - function_body_length
   - cyclomatic_complexity
+  - type_body_length
 
 opt_in_rules:
   - empty_count
+
+file_length:
+  warning: 1000
