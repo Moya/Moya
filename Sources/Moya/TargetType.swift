@@ -18,7 +18,7 @@ public protocol TargetType {
     /// The type of HTTP task to be performed.
     var task: Task { get }
 
-    /// Whether or not to perform Alamofire validation. Defaults to `false`.
+    /// A Boolean value determining whether the embedded target performs Alamofire validation. Defaults to `false`.
     var validate: Bool { get }
 
     /// The headers to be used in the request.
@@ -26,6 +26,7 @@ public protocol TargetType {
 }
 
 public extension TargetType {
+    /// Defaults to `false`.
     var validate: Bool {
         return false
     }

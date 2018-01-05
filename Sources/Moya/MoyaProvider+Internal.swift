@@ -4,6 +4,7 @@ import Result
 // MARK: - Method
 
 extension Method {
+    /// A Boolean value determining whether the request supports multipart.
     public var supportsMultipart: Bool {
         switch self {
         case .post, .put, .patch, .connect:
