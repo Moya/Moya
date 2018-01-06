@@ -14,7 +14,7 @@ public enum EndpointSampleResponse {
 }
 
 /// Class for reifying a target of the `Target` enum unto a concrete `Endpoint`.
-open class Endpoint<Target> {
+open class Endpoint {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     open let url: String
@@ -38,12 +38,12 @@ open class Endpoint<Target> {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
-    open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint<Target> {
+    open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint {
         return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
-    open func replacing(task: Task) -> Endpoint<Target> {
+    open func replacing(task: Task) -> Endpoint {
         return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 
@@ -113,7 +113,7 @@ extension Endpoint: Equatable, Hashable {
 
     /// Note: If both Endpoints fail to produce a URLRequest the comparison will
     /// fall back to comparing each Endpoint's hashValue.
-    public static func == <T>(lhs: Endpoint<T>, rhs: Endpoint<T>) -> Bool {
+    public static func == (lhs: Endpoint, rhs: Endpoint) -> Bool {
         let lhsRequest = try? lhs.urlRequest()
         let rhsRequest = try? rhs.urlRequest()
         if lhsRequest != nil, rhsRequest == nil { return false }

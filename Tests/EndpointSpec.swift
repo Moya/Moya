@@ -6,7 +6,7 @@ final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
         sharedExamples("endpoint with no request property changed") { (context: SharedExampleContext) in
             let task = context()["task"] as! Task
-            let oldEndpoint = context()["endpoint"] as! Endpoint<GitHub>
+            let oldEndpoint = context()["endpoint"] as! Endpoint
             let endpoint = oldEndpoint.replacing(task: task)
             let request = try! endpoint.urlRequest()
 
@@ -25,7 +25,7 @@ final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
         sharedExamples("endpoint with encoded parameters") { (context: SharedExampleContext) in
             let parameters = context()["parameters"] as! [String: Any]
             let encoding = context()["encoding"] as! ParameterEncoding
-            let endpoint = context()["endpoint"] as! Endpoint<GitHub>
+            let endpoint = context()["endpoint"] as! Endpoint
             let request = try! endpoint.urlRequest()
 
             it("updated the request correctly") {
@@ -44,14 +44,14 @@ final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
 
 final class EndpointSpec: QuickSpec {
 
-    private var simpleGitHubEndpoint: Endpoint<GitHub> {
+    private var simpleGitHubEndpoint: Endpoint {
         let target: GitHub = .zen
         let headerFields = ["Title": "Dominar"]
-        return Endpoint<GitHub>(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+        return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
     }
 
     override func spec() {
-        var endpoint: Endpoint<GitHub>!
+        var endpoint: Endpoint!
 
         beforeEach {
             endpoint = self.simpleGitHubEndpoint
@@ -71,7 +71,7 @@ final class EndpointSpec: QuickSpec {
         }
 
         it("returns a nil urlRequest for an invalid URL") {
-            let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+            let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
             let urlRequest = try? badEndpoint.urlRequest()
             expect(urlRequest).to(beNil())
         }
@@ -291,7 +291,7 @@ final class EndpointSpec: QuickSpec {
         describe("unsuccessful converting to urlRequest") {
             context("when url String is invalid") {
                 it("throws a .requestMapping error") {
-                    let badEndpoint = Endpoint<Empty>(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+                    let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
                     let expectedError = MoyaError.requestMapping("some invalid URL")
                     var recievedError: MoyaError?
                     do {
