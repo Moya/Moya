@@ -2,6 +2,9 @@
 
 This project follows [Semantic Versioning](http://semver.org).
 
+### ReactiveSwift Migration
+- Check the [ReactiveSwift 3.0.0 release notes](https://github.com/ReactiveCocoa/ReactiveSwift/releases/tag/3.0.0) for changes related to ReactiveSwift.
+
 ### Task Migration
 - Add `.requestCustomJSONEncodable` case to `Task` or default case to achieve exhaustiveness.
 
