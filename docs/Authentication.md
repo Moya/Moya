@@ -34,43 +34,49 @@ let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { target -> URL
 ## Access Token Auth
 Another common method of authentication is by using an access token.
 Moya provides an `AccessTokenPlugin` that supports both `Bearer` authentication
-using a [JWT](https://jwt.io/introduction/) and `Basic` authentication for API keys.
+using a [JWT](https://jwt.io/introduction/) and `Basic` authentication as defined in the [HTTP Authentication Scheme Registry](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml). For API keys, it additionally supports passing the API key via a custom header or query parameter.
 
 There are two steps required to start using an `AccessTokenPlugin`.
 
 1. You need to add an `AccessTokenPlugin` to your `MoyaProvider` like this:
 ```Swift
-let token = "eyeAm.AJsoN.weBTOKen"
-let authPlugin = AccessTokenPlugin(tokenClosure: token)
-let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
+let tokenClosure = { return "eyeAm.AJsoN.weBTOKen" }
+let accessTokenPlugin = AccessTokenPlugin(tokenClosure: tokenClosure)
+let provider = MoyaProvider<YourAPI>(plugins: [accessTokenPlugin])
 ```
 The `AccessTokenPlugin` initializer accepts a `tokenClosure` that is responsible
 for returning the token to be applied to the header of the request.
 
-2. Your `TargetType` needs to conform to the `AccessTokenAuthorizable` protocol:
+2. Your `TargetType` needs to conform to the `AccessControllable` protocol:
 
 ```Swift
-extension YourAPI: TargetType, AccessTokenAuthorizable {
+extension YourAPI: TargetType, AccessControllable {
+    case targetDoesNotNeedAuth
     case targetThatNeedsBearerAuth
     case targetThatNeedsBasicAuth
-    case targetDoesNotNeedAuth
+    case targetThatNeedsCustomParameterAuth
+    case targetThatNeedsCustomHeaderAuth
 
-    var authorizationType: AuthorizationType {
+    var accessControlType: AccessControlType {
         switch self {
-            case .targetThatNeedsBearerAuth:
-                return .bearer
-            case .targetThatNeedsBasicAuth:
-                return .basic
-            case .targetDoesNotNeedAuth:
-                return .none
-            }
+        case .targetDoesNotNeedAuth:
+            return .none
+        case .targetThatNeedsBearerAuth:
+            return .http(scheme: .bearer)
+        case .targetThatNeedsBasicAuth:
+            return .http(scheme: .basic)
+        case .targetThatNeedsCustomParameterAuth:
+            return .apiKey(name: "access_token", placement: .queryParameter)
+        case .targetThatNeedsCustomHeaderAuth:
+            return .apiKey(name: "X-Access-Token", placement: .header)
         }
+    }
 }
 ```
 
-The `AccessTokenAuthorizable` protocol requires you to implement a single
-property, `authorizationType`, which is an enum representing the header to 
-use for the request.
+The `AccessControllable` protocol requires you to implement a single
+property, `accessControlType`, which is an enum representing the type of 
+access control that should be used for the request.
 
 **Bearer HTTP Auth**
 Bearer requests are authorized by adding a HTTP header of the following form:

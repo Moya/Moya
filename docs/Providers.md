@@ -142,7 +142,7 @@ let provider = MoyaProvider<MyTarget>(manager: manager)
 Finally, you may also provide an array of `plugins` to the provider. These receive callbacks
 before a request is sent and after a response is received. There are a few plugins
 included already: one for network activity (`NetworkActivityPlugin`), one for logging
-all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).
+all network activity (`NetworkLoggerPlugin`), and another for [Authentication](Authentication.md).
 
 For example you can enable the logger plugin by simply passing `[NetworkLoggerPlugin()]` alongside the `plugins` parameter of your `Endpoint`. Note that a plugin can also be configurable, for example the already included `NetworkActivityPlugin` requires a `networkActivityClosure` parameter. The configurable plugin implementation looks like this:
 
