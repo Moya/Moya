@@ -33,18 +33,43 @@ if has_app_changes && missing_doc_changes && doc_changes_recommended && not_decl
   warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
 
-# Warn when either the podspec or Cartfile + Cartfile.resolved has been updated,
-# but not both.
+# Check for dependencies update
 podspec_updated = !git.modified_files.grep(/Moya.podspec/).empty?
+
 cartfile_updated = !git.modified_files.grep(/Cartfile/).empty?
 cartfile_resolved_updated = !git.modified_files.grep(/Cartfile.resolved/).empty?
 
-if podspec_updated && (!cartfile_updated || !cartfile_resolved_updated)
-  warn("The `podspec` was updated, but there were no changes in either the `Cartfile` nor `Cartfile.resolved`. Did you forget updating `Cartfile` or `Cartfile.resolved`?")
+spm_updated = !git.modified_files.grep(/Package.swift/).empty?
+spm_resolved_updated = !git.modified_files.grep(/Package.resolved/).empty?
+
+# Warn if Cartfile is updated but not Cartfile.resolved
+if cartfile_updated && !cartfile_resolved_updated
+  warn("The `Cartfile` has been updated but not the `Cartfile.resolved`. Did you forgot to run `carthage update` ?")
 end
 
-if (cartfile_updated || cartfile_resolved_updated) && !podspec_updated
-  warn("The `Cartfile` or `Cartfile.resolved` was updated, but there were no changes in the `podspec`. Did you forget updating the `podspec`?")
+# Warn if Package.swift is updated but not Package.resolved
+if spm_updated && !spm_resolved_updated
+  warn("The `Package.swift` has been updated but not the `Package.resolved`. Did you forgot to run `swift package update` ?")
+end
+
+# Warn if Package.resolved and cartfile.resolved are not updated at the same time
+if (cartfile_resolved_updated && !spm_resolved_updated) || (spm_resolved_updated && !cartfile_resolved_updated)
+  warn("The `Package.resolved` or `cartfile.resolved` was updated, but not both. Did you forgot to run `carthage update` or `swift package update`?")
+end
+
+# Warn if podpec has been update but not Cartfile or Package.swift
+if podspec_updated && (!cartfile_updated || !spm_updated)
+  warn("The `podspec` was updated, but there were no changes in either the `Cartfile` nor `Package.swift`. Did you forget updating `Cartfile` or `Package.swift`?")
+end
+
+# Warn if cartfile has been update but not podspec or Package.swift
+if cartfile_updated && (!podspec_updated || !spm_updated)
+  warn("The `Cartfile` was updated, but there were no changes in either the `podspec` nor `Package.swift`. Did you forget updating `podspec` or `Package.swift`?")
+end
+
+# Warn if Package.swift has been update but not podspec or Cartfile
+if spm_updated && (!podspec_updated || !cartfile_updated)
+  warn("The `Package.swift` was updated, but there were no changes in either the `podspec` nor `Cartfile`. Did you forget updating `podspec` or `Cartfile`?")
 end
 
 # Warn when library files has been updated but not tests.
