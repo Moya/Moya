@@ -35,7 +35,7 @@ public enum MultiTarget: TargetType {
         return target.task
     }
 
-    /// An enum representing the type of Alamofire validation
+    /// The `ValidationType` of the embedded target.
     public var validationType: ValidationType {
         return target.validationType
     }
