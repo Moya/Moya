@@ -18,7 +18,7 @@ public typealias JSONEncoding = Alamofire.JSONEncoding
 public typealias URLEncoding = Alamofire.URLEncoding
 public typealias PropertyListEncoding = Alamofire.PropertyListEncoding
 
-/// Multipart form
+/// Multipart form.
 public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 
 /// Multipart form data encoding result.
@@ -32,6 +32,7 @@ extension Request: RequestType { }
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
     let request: Request?
+
     public fileprivate(set) var isCancelled = false
 
     fileprivate var lock: DispatchSemaphore = DispatchSemaphore(value: 1)
@@ -56,6 +57,7 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
         }
     }
 
+    /// A textual representation of this instance, suitable for debugging.
     public var debugDescription: String {
         guard let request = self.request else {
             return "Empty Request"

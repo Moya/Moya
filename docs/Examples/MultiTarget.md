@@ -122,7 +122,7 @@ instance
 provider.requestDecoded(SessionApi.get) { result in
     switch result {
     case .success(let session):
-        // type of `user` is implicitly `SessionModel` here
+        // type of `session` is implicitly `SessionModel` here
     }
 }
 ```

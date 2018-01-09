@@ -18,8 +18,13 @@ public protocol TargetType {
     /// The type of HTTP task to be performed.
     var task: Task { get }
 
+<<<<<<< HEAD
     /// The type of validation to perform on the request. Default is `.none`.
     var validationType: ValidationType { get }
+=======
+    /// A Boolean value determining whether the embedded target performs Alamofire validation. Defaults to `false`.
+    var validate: Bool { get }
+>>>>>>> master
 
     /// The headers to be used in the request.
     var headers: [String: String]? { get }

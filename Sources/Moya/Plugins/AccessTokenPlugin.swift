@@ -14,8 +14,13 @@ public protocol AccessTokenAuthorizable {
 
 /// An enum representing the header to use with an `AccessTokenPlugin`
 public enum AuthorizationType: String {
+    /// No header.
     case none
+
+    /// The `"Basic"` header.
     case basic = "Basic"
+
+    /// The `"Bearer"` header.
     case bearer = "Bearer"
 }
 

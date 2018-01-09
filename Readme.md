@@ -43,7 +43,7 @@ You can check out more about the project direction in the [vision document](Visi
 
 ## Sample Project
 
-There's a sample project in the Demo directory. To use it, run `pod install` to download the required libraries. Have fun!
+There's a sample project in the Demo directory. To use it, run `carthage update` to download the required libraries. Have fun!
 
 ## Project Status
 
