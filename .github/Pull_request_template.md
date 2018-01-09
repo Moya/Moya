@@ -5,7 +5,7 @@ Thank you for contributing to Moya! 🙌
 Choosing a base branch:
 
   master: bug fixes, non breaking API changes, documentation fixes
-  develop: breaking changes, features for the next version
+  development: breaking changes, features for the next version
 
 
 If your pull request fixes an issue, please reference the issue.

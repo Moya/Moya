@@ -1,5 +1,6 @@
 import Foundation
 
+/// A type representing possible errors Moya can throw.
 public enum MoyaError: Swift.Error {
 
     /// Indicates a response failed to map to an image.
