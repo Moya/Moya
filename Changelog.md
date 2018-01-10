@@ -1,4 +1,6 @@
 # Next
+
+# [11.0.0-beta.1] - 2018-01-10
 ### Added
 - **Breaking Change** Added a `.requestCustomJSONEncodable` case to `Task`. [#1443](https://github.com/Moya/Moya/pull/1443) by [@evgeny-sureev](https://github.com/evgeny-sureev).
 - **Breaking Change** Added `failsOnEmptyData` boolean support for the `Decodable` map functions. [#1508](https://github.com/Moya/Moya/pull/1508) by [@jeroenbb94](https://github.com/Jeroenbb94).
