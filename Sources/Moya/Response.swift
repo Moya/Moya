@@ -2,12 +2,19 @@ import Foundation
 
 /// Represents a response to a `MoyaProvider.request`.
 public final class Response: CustomDebugStringConvertible, Equatable {
+
+    /// The status code of the response.
     public let statusCode: Int
+
+    /// The response data.
     public let data: Data
+
+    /// The original URLRequest for the response.
     public let request: URLRequest?
+
+    /// The HTTPURLResponse object.
     public let response: HTTPURLResponse?
 
-    /// Initialize a new `Response`.
     public init(statusCode: Int, data: Data, request: URLRequest? = nil, response: HTTPURLResponse? = nil) {
         self.statusCode = statusCode
         self.data = data
@@ -86,6 +93,9 @@ public extension Response {
     }
 
     /// Maps data received from the signal into a JSON object.
+    ///
+    /// - parameter failsOnEmptyData: A Boolean value determining
+    /// whether the mapping should fail if the data is empty.
     func mapJSON(failsOnEmptyData: Bool = true) throws -> Any {
         do {
             return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
