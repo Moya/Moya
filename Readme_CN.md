@@ -89,11 +89,11 @@ pod 'Moya'
 
 # or 
 
-pod 'Moya/RxSwift'
+pod 'Moya/RxSwift', '~> 10.0'
 
 # or
 
-pod 'Moya/ReactiveSwift'
+pod 'Moya/ReactiveSwift', '~> 10.0'
 ```
 
 然后运行 `pod install`.
