@@ -85,7 +85,7 @@ let package = Package(
 在您的Podfile文件中使用Moya:
 
 ```rb
-pod 'Moya'
+pod 'Moya', '~> 10.0'
 
 # or 
 

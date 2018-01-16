@@ -108,7 +108,7 @@ Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya'
+pod 'Moya', '~> 10.0'
 
 # or 
 
