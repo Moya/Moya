@@ -283,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				31BAAD7EC02607A52AD3EF1E /* AccessTokenPluginSpec.swift */,
+				1F24393220125F8200C9D813 /* EndpointClosureSpec.swift */,
 				E825A32256FC030B8BA2684D /* EndpointSpec.swift */,
 				C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */,
 				7F112022D8F42844A7D5CB5C /* ErrorTests.swift */,
@@ -301,7 +302,6 @@
 				4650771638DBA96BDE28F11B /* TestHelpers.swift */,
 				CA93F1BAD55FF95EDE17EE61 /* testImage.png */,
 				DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */,
-				1F24393220125F8200C9D813 /* EndpointClosureSpec.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";

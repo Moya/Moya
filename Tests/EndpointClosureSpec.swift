@@ -29,7 +29,7 @@ final class EndpointClosureSpec: QuickSpec {
             provider = MoyaProvider<HTTPBin>(endpointClosure: endpointClosure, manager: sessionManager)
         }
 
-        it("returns a new endpoint for adding(newHTTPHeaderFields:)") {
+        it("appends additional multipart body in endpointClosure") {
             let multipartData1 = Moya.MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test1")
             let multipartData2 = Moya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
 
