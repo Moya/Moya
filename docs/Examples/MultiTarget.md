@@ -30,9 +30,9 @@ provider.request(MultiTarget(GitHub.zen)) { result in
 and that's it! Really simple to introduce it in your app and if you have many
 endpoints that you want to split - this is the perfect solution for you. If you
 want to see this API in action, check out our
-[Demo](https://github.com/Moya/Moya/tree/master/Demo) project, which has 2
-targets: one of them is `Demo`, which uses the basic form of Moya, and the
-second one is `DemoMultiTarget`, which uses the modified version with usage of
+[Demo](../../Examples) project, which has 2
+targets: one of them is `Basic`, which uses the basic form of Moya, and the
+second one is `Multi-Target`, which uses the modified version with usage of
 `MultiTarget`.
 
 ## Multiple targets when using `associatedtype`
