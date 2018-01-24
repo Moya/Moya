@@ -35,7 +35,7 @@ Everyone comes in with their own perspective on what a project could/should look
 
 #### Why do we give out push access?
 
-It can be overwhelming to offered the chance to wipe the source code for a project. Don't worry, we don't let you push to master. All code is peer-reviewed, and we have the convention that someone other than the submitter should merge non-trivial pull requests.
+It can be overwhelming to be offered the chance to wipe the source code for a project. Don't worry, we don't let you push to master. All code is peer-reviewed, and we have the convention that someone other than the submitter should merge non-trivial pull requests.
 
 As an organization contributor, you can merge other people's pull requests, or other contributors can merge yours. You won't be assigned a pull request, but you're welcome to jump in and take a code review on topics that interest you.
 
