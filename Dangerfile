@@ -6,6 +6,11 @@ has_app_changes = !git.modified_files.grep(/Sources/).empty?
 # Make it more obvious that a PR is a work in progress and shouldn't be merged yet
 warn("PR is classed as Work in Progress") if github.pr_title.include? "WIP"
 
+# Warn, asking to update Chinese translation of docs if file(s) in `docs` is/are modified
+if !git.modified_files.grep(/docs/).empty?
+  warn("Consider **also** updating the Chinese version of the docs, if possible. Otherwise, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate.")
+end
+
 # Warn when there is a big PR
 warn("Big PR, try to keep changes smaller if you can") if git.lines_of_code > 500
 
