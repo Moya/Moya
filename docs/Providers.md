@@ -41,7 +41,7 @@ endpoints closure, which is responsible for mapping a value of your enum to a
 concrete `Endpoint` instance. Let's take a look at what one might look like.
 
 ```swift
-let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint in
     let url = URL(target: target).absoluteString
     return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }

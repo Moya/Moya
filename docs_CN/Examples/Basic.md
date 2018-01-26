@@ -117,8 +117,8 @@ JSON, images, text, 或者任何您希望从endpoint得到的.
 你也可以创建自定义的endpoint来替代默认的行为，从而来满足你的需求。比如:
 
 ```swift
-let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
-    return Endpoint<MyService>(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
+let endpointClosure = { (target: MyService) -> Endpoint in
+    return Endpoint(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
 }
 ```
 
@@ -127,7 +127,7 @@ let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
 多数情况下, 这个闭包仅仅直接从target，method和task转化为一个 `Endpoint` 实例对象. 然而, 由于它是一个闭包, 它将在每次调用API时被执行, 所以你可以做任何你想要的.  比如,您想在里面测试网络错误,如超时等.
 
 ```swift
-let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
+let failureEndpointClosure = { (target: MyService) -> Endpoint in
     let sampleResponseClosure = { () -> (EndpointSampleResponse) in
         if shouldTimeout {
             return .networkError(NSError())
@@ -135,7 +135,7 @@ let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
             return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint<MyService>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task)
+    return Endpoint(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task)
 }
 ```
 

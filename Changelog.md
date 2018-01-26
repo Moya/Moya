@@ -1,7 +1,6 @@
 # Next
 - **Breaking Change** Removed generic from `Endpoint`. See #1524 for discussion. [#1529](https://github.com/Moya/Moya/pull/1529) by @[zhongwuzw](https://github.com/zhongwuzw).
 
-
 # [11.0.0-beta.1] - 2018-01-10
 ### Added
 - **Breaking Change** Added a `.requestCustomJSONEncodable` case to `Task`. [#1443](https://github.com/Moya/Moya/pull/1443) by [@evgeny-sureev](https://github.com/evgeny-sureev).

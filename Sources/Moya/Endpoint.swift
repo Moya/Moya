@@ -14,6 +14,9 @@ public enum EndpointSampleResponse {
 }
 
 /// Class for reifying a target of the `Target` enum unto a concrete `Endpoint`.
+/// - Note: As of Moya 11.0.0 Endpoint is no longer generic.
+///   Existing code should work as is after removing the generic.
+///   See #1529 and #1524 for the discussion.
 open class Endpoint {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
