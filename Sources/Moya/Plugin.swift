@@ -8,7 +8,7 @@ import Result
 ///     - hide and show a network activity indicator
 ///     - inject additional information into a request
 public protocol PluginType {
-    /// Called to modify a request before sending
+    /// Called to modify a request before sending.
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest
 
     /// Called immediately before a request is sent over the network (or stubbed).
@@ -17,7 +17,7 @@ public protocol PluginType {
     /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType)
 
-    /// Called to modify a result before completion
+    /// Called to modify a result before completion.
     func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError>
 }
 

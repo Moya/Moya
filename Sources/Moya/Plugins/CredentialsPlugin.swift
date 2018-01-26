@@ -7,6 +7,7 @@ public final class CredentialsPlugin: PluginType {
     public typealias CredentialClosure = (TargetType) -> URLCredential?
     let credentialsClosure: CredentialClosure
 
+    /// Initializes a CredentialsPlugin.
     public init(credentialsClosure: @escaping CredentialClosure) {
         self.credentialsClosure = credentialsClosure
     }

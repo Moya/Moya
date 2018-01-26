@@ -10,7 +10,6 @@ public struct MultipartFormData {
         case stream(InputStream, UInt64)
     }
 
-    /// Initialize a new `MultipartFormData`.
     public init(provider: FormDataProvider, name: String, fileName: String? = nil, mimeType: String? = nil) {
         self.provider = provider
         self.name = name

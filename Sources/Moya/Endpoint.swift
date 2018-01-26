@@ -17,13 +17,21 @@ public enum EndpointSampleResponse {
 open class Endpoint {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
+    /// A string representation of the URL for the request.
     open let url: String
+
+    /// A closure responsible for returning an `EndpointSampleResponse`.
     open let sampleResponseClosure: SampleResponseClosure
+
+    /// The HTTP method for the request.
     open let method: Moya.Method
+
+    /// The `Task` for the request.
     open let task: Task
+
+    /// The HTTP header fields for the request.
     open let httpHeaderFields: [String: String]?
 
-    /// Main initializer for `Endpoint`.
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method,
