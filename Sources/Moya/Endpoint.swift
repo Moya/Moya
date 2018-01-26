@@ -100,7 +100,9 @@ extension Endpoint {
             let parameterEncoding = URLEncoding(destination: .queryString)
             return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
-            if bodyParameterEncoding is URLEncoding { fatalError("URLEncoding is disallowed as bodyEncoding.") }
+            if let bodyParameterEncoding = bodyParameterEncoding as? URLEncoding, bodyParameterEncoding.destination != .httpBody {
+                fatalError("Only URLEncoding that `bodyEncoding` accepts is URLEncoding.httpBody. Others like `default`, `queryString` or `methodDependent` are prohibited - if you want to use them, add your parameters to `urlParameters` instead.")
+            }
             let bodyfulRequest = try request.encoded(parameters: bodyParameters, parameterEncoding: bodyParameterEncoding)
             let urlEncoding = URLEncoding(destination: .queryString)
             return try bodyfulRequest.encoded(parameters: urlParameters, parameterEncoding: urlEncoding)

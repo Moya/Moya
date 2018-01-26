@@ -271,8 +271,8 @@ final class EndpointSpec: QuickSpec {
                     // Non-serializable type to cause serialization error
                     class InvalidParameter {}
 
-                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["":InvalidParameter()], encoding: PropertyListEncoding.default))
-                    let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription":"Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["": InvalidParameter()], encoding: PropertyListEncoding.default))
+                    let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription": "Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
                     let expectedError = MoyaError.parameterEncoding(cocoaError)
                     var recievedError: MoyaError?
 
@@ -287,9 +287,24 @@ final class EndpointSpec: QuickSpec {
             }
 
             context("when task is .requestCompositeParameters") {
-                it("throws an error when bodyEncoding is an URLEncoding") {
+                it("throws an error when bodyEncoding is an URLEncoding.queryString") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
                     expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
+                }
+
+                it("throws an error when bodyEncoding is an URLEncoding.methodDependent") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.methodDependent, urlParameters: [:]))
+                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
+                }
+
+                it("throws an error when bodyEncoding is an URLEncoding.default") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.default, urlParameters: [:]))
+                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
+                }
+
+                it("doesn't throw an error when bodyEncoding is an URLEncoding.httpBody") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.httpBody, urlParameters: [:]))
+                    expect { _ = try? endpoint.urlRequest() }.toNot(throwAssertion())
                 }
             }
         }

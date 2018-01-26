@@ -2,6 +2,7 @@
 ### Fixed
 - Fixed a bug where modifying `.uploadMultipart`, `.uploadCompositeMultipart`, `.uploadFile`, `.downloadDestination`, and `.downloadParameters` tasks through an `endpointClosure` has no effect on the final request.
 [#1550](https://github.com/Moya/Moya/pull/1550) by [@SD10](https://github.com/sd10), [@sunshinejr](https://github.com/sunshinejr).
+- Fixed a bug where `URLEncoding.httpBody` wasn't allowed as `bodyEncoding` in `Task.requestCompositeParameters()`. [#1557](https://github.com/Moya/Moya/pull/1557) by [@sunshinejr](https://github.com/sunshinejr).
 
 # [10.0.1] - 2017-11-23
 ### Fixed
