@@ -152,16 +152,7 @@ private extension MoyaProvider {
         let cancellable = CancellableWrapper()
 
         let multipartFormData: (RequestMultipartFormData) -> Void = { form in
-            for bodyPart in multipartBody {
-                switch bodyPart.provider {
-                case .data(let data):
-                    form.append(data: data, bodyPart: bodyPart)
-                case .file(let url):
-                    form.append(fileURL: url, bodyPart: bodyPart)
-                case .stream(let stream, let length):
-                    form.append(stream: stream, length: length, bodyPart: bodyPart)
-                }
-            }
+            form.applyMoyaMultipartFormData(multipartBody)
         }
 
         manager.upload(multipartFormData: multipartFormData, with: request) { result in

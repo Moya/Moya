@@ -38,7 +38,10 @@ final class EndpointClosureSpec: QuickSpec {
 
             _ = provider.request(.uploadMultipart(providedMultipartData, nil)) { _ in }
             let stringData1 = String(data: try! sessionManager.uploadMultipartFormData!.encode(), encoding: .utf8)
-            let stringData2 = String(data: try! sessionManager.convertMoyaMultipartFormDataToAlamofire(sentMultipartData).encode(), encoding: .utf8)
+
+            let requestMultipartFormData = RequestMultipartFormData()
+            requestMultipartFormData.applyMoyaMultipartFormData(sentMultipartData)
+            let stringData2 = String(data: try! requestMultipartFormData.encode(), encoding: .utf8)
 
             let formData1 = "data; name=\"test1\"\r\n\r\ntest1\r\n"
             let formData2 = "data; name=\"test2\"\r\n\r\ntest2\r\n"
@@ -63,21 +66,5 @@ final class SessionManagerMock: SessionManager {
         let uploadMultipartFormData = Alamofire.MultipartFormData()
         multipartFormData(uploadMultipartFormData)
         self.uploadMultipartFormData = uploadMultipartFormData
-    }
-
-    func convertMoyaMultipartFormDataToAlamofire(_ multipartBody: [Moya.MultipartFormData]) -> Alamofire.MultipartFormData {
-        let form = RequestMultipartFormData()
-        for bodyPart in multipartBody {
-            switch bodyPart.provider {
-            case .data(let data):
-                form.append(data: data, bodyPart: bodyPart)
-            case .file(let url):
-                form.append(fileURL: url, bodyPart: bodyPart)
-            case .stream(let stream, let length):
-                form.append(stream: stream, length: length, bodyPart: bodyPart)
-            }
-        }
-
-        return form
     }
 }
