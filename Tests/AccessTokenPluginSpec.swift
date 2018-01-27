@@ -11,7 +11,6 @@ final class AccessTokenPluginSpec: QuickSpec {
         let task = Task.requestPlain
         let sampleData = Data()
         let headers: [String: String]? = nil
-
         let authorizationType: AuthorizationType
     }
 

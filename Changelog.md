@@ -11,6 +11,12 @@
 [#1470](https://github.com/Moya/Moya/pull/1470) by [@larryonoff](https://github.com/larryonoff).
 - **Breaking Change** Changed the `validate` property of `TargetType` to use new `ValidationType` enum representing valid status codes. [#1505](https://github.com/Moya/Moya/pull/1505) by [@SD10](https://github.com/sd10), [@amaurydavid](https://github.com/amaurydavid). 
 
+# [10.0.2] - 2018-01-26
+### Fixed
+- Fixed a bug where modifying `.uploadMultipart`, `.uploadCompositeMultipart`, `.uploadFile`, `.downloadDestination`, and `.downloadParameters` tasks through an `endpointClosure` has no effect on the final request.
+[#1550](https://github.com/Moya/Moya/pull/1550) by [@SD10](https://github.com/sd10), [@sunshinejr](https://github.com/sunshinejr).
+- Fixed a bug where `URLEncoding.httpBody` wasn't allowed as `bodyEncoding` in `Task.requestCompositeParameters()`. [#1557](https://github.com/Moya/Moya/pull/1557) by [@sunshinejr](https://github.com/sunshinejr).
+
 # [10.0.1] - 2017-11-23
 ### Fixed
 - Fixed a bug that `Decodable` mapping to object other than Array and Dictionary in a key path cause crash. [#1405](https://github.com/Moya/Moya/pull/1405) by [@ufosky](https://github.com/ufosky).

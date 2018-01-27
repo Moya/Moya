@@ -346,9 +346,24 @@ final class EndpointSpec: QuickSpec {
             }
 
             context("when task is .requestCompositeParameters") {
-                it("throws an error when bodyEncoding is an URLEncoding") {
+                it("throws an error when bodyEncoding is an URLEncoding.queryString") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
                     expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
+                }
+
+                it("throws an error when bodyEncoding is an URLEncoding.methodDependent") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.methodDependent, urlParameters: [:]))
+                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
+                }
+
+                it("throws an error when bodyEncoding is an URLEncoding.default") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.default, urlParameters: [:]))
+                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
+                }
+
+                it("doesn't throw an error when bodyEncoding is an URLEncoding.httpBody") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.httpBody, urlParameters: [:]))
+                    expect { _ = try? endpoint.urlRequest() }.toNot(throwAssertion())
                 }
             }
         }
