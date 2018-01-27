@@ -1,4 +1,5 @@
 # Next
+## Changed
 - **Breaking Change** Removed generic from `Endpoint`. See #1524 for discussion. [#1529](https://github.com/Moya/Moya/pull/1529) by @[zhongwuzw](https://github.com/zhongwuzw).
 
 # [11.0.0-beta.1] - 2018-01-10
