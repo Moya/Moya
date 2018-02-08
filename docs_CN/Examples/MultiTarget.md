@@ -24,8 +24,8 @@ provider.request(MultiTarget(GitHub.zen)) { result in
 
 到此配置结束! 在您的app中采用它是相当的简单 而且如果您有很多想分割的
 endpoints - 这是一个相当完美的解决方法. 如果你想看到这个API的作用, 查看我们的
-[Demo](https://github.com/Moya/Moya/tree/master/Demo) 项目, 它里面有两个
-target: 一个是 `Demo`, 它使用的Moya的基础版； 另一个是`DemoMultiTarget`,它使用`MultiTarget`的修改版本 。
+[Demo](../../Examples) 项目, 它里面有两个
+target: 一个是 `Basic`, 它使用的Moya的基础版； 另一个是`Multi-Target`,它使用`MultiTarget`的修改版本 。
 
 ## 在多目标中使用 `关联类型`
 
