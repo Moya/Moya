@@ -10,20 +10,8 @@ public extension Reactive where Base: MoyaProviderType {
 
     /// Designated request-making method.
     public func request(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<Response, MoyaError> {
-        return base.reactiveRequest(token, callbackQueue: callbackQueue)
-    }
-
-    /// Designated request-making method with progress.
-    public func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
-        return base.reactiveRequestWithProgress(token, callbackQueue: callbackQueue)
-    }
-}
-
-internal extension MoyaProviderType {
-
-    internal func reactiveRequest(_ token: Target, callbackQueue: DispatchQueue?) -> SignalProducer<Response, MoyaError> {
-        return SignalProducer { [weak self] observer, lifetime in
-            let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
+        return SignalProducer { [weak base] observer, lifetime in
+            let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                 switch result {
                 case let .success(response):
                     observer.send(value: response)
@@ -39,15 +27,16 @@ internal extension MoyaProviderType {
         }
     }
 
-    internal func reactiveRequestWithProgress(_ token: Target, callbackQueue: DispatchQueue?) -> SignalProducer<ProgressResponse, MoyaError> {
+    /// Designated request-making method with progress.
+    public func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
         let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.send(value: progress)
             }
         }
 
-        let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak self] observer, lifetime in
-            let cancellableToken = self?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
+        let response: SignalProducer<ProgressResponse, MoyaError> = SignalProducer { [weak base] observer, lifetime in
+            let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
                 case .success:
                     observer.sendCompleted()

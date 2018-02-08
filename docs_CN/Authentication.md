@@ -93,7 +93,7 @@ to one another.
 Moya内置了OAuth思想。 使用OAuth的网络请求“签名”本身有时会要求执行网络请求，所以对Moya的请求是一个异步的过程。让我们看看一个例子。
 
 ```swift
-let requestClosure = { (endpoint: Endpoint<YourAPI>, done: MoyaProvider.RequestResultClosure) in
+let requestClosure = { (endpoint: Endpoint, done: MoyaProvider.RequestResultClosure) in
     let request = endpoint.urlRequest // This is the request Moya generates
     YourAwesomeOAuthProvider.signRequest(request, completion: { signedRequest in
         // The OAuth provider can make its own network calls to sign your request.

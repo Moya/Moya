@@ -99,7 +99,7 @@ itself sometimes require network requests be performed _first_, so signing
 a request for Moya is an asynchronous process. Let's see an example.
 
 ```swift
-let requestClosure = { (endpoint: Endpoint<YourAPI>, done: URLRequest -> Void) in
+let requestClosure = { (endpoint: Endpoint, done: URLRequest -> Void) in
     let request = try! endpoint.urlRequest() // This is the request Moya generates
 
     YourAwesomeOAuthProvider.signRequest(request, completion: { signedRequest in

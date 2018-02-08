@@ -2,7 +2,7 @@ import Quick
 import Nimble
 @testable import Moya
 
-class MultiTargetSpec: QuickSpec {
+final class MultiTargetSpec: QuickSpec {
     override func spec() {
         describe("MultiTarget") {
             struct StructAPI: TargetType {
@@ -11,7 +11,7 @@ class MultiTargetSpec: QuickSpec {
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
-                let validate = true
+                let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
@@ -59,8 +59,8 @@ class MultiTargetSpec: QuickSpec {
                 expect(target.sampleData).to(equal(expectedData))
             }
 
-            it("uses correct validate") {
-                expect(target.validate) == true
+            it("uses correct validation type") {
+                expect(target.validationType).to(equal(ValidationType.successCodes))
             }
 
             it("uses correct headers") {
