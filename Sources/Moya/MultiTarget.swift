@@ -35,10 +35,9 @@ public enum MultiTarget: TargetType {
         return target.task
     }
 
-    /// A Boolean value determining whether the embedded target performs Alamofire validation.
-    /// Defaults to `false`.
-    public var validate: Bool {
-        return target.validate
+    /// The `ValidationType` of the embedded target.
+    public var validationType: ValidationType {
+        return target.validationType
     }
 
     /// The headers of the embedded target.

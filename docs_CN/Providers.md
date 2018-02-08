@@ -31,7 +31,7 @@ provider.request(.zen) { result in
 endpoints闭包, 它负责把您的enum值映射成一个`Endpoint`实例对象。 让我们看看它是什么样子的。
 
 ```swift
-let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint in
     let url = URL(target: target).absoluteString
     return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task)
 }

@@ -3,7 +3,7 @@ import Nimble
 @testable
 import Moya
 
-class ErrorTests: QuickSpec {
+final class ErrorTests: QuickSpec {
     override func spec() {
 
         var response: Response!

@@ -36,7 +36,7 @@ public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError
                 }
             case .encodableMapping:
                 switch expectedValue {
-                case .objectMapping:
+                case .encodableMapping:
                     test = true
                 default:
                     test = false

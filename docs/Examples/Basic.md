@@ -123,8 +123,8 @@ JSON, images, text, whatever you're expecting from that endpoint.
 You can also set up custom endpoints to alter the default behavior to your needs. For example:
 
 ```swift
-let endpointClosure = { (target: MyService) -> Endpoint<MyService> in
-    return Endpoint<MyService>(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+let endpointClosure = { (target: MyService) -> Endpoint in
+    return Endpoint(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 
@@ -137,7 +137,7 @@ closure, it'll be executed at each invocation of the API, so you could do
 whatever you want. Say you want to test network error conditions like timeouts, too.
 
 ```swift
-let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
+let failureEndpointClosure = { (target: MyService) -> Endpoint in
     let sampleResponseClosure = { () -> (EndpointSampleResponse) in
         if shouldTimeout {
             return .networkError(NSError())
@@ -145,7 +145,7 @@ let failureEndpointClosure = { (target: MyService) -> Endpoint<MyService> in
             return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint<MyService>(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    return Endpoint(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 

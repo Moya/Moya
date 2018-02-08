@@ -1,5 +1,19 @@
 # Next
 
+# [11.0.0-beta.2] - 2018-01-27
+## Changed
+- **Breaking Change** Removed generic from `Endpoint`. See #1524 for discussion. [#1529](https://github.com/Moya/Moya/pull/1529) by @[zhongwuzw](https://github.com/zhongwuzw).
+
+# [11.0.0-beta.1] - 2018-01-10
+### Added
+- **Breaking Change** Added a `.requestCustomJSONEncodable` case to `Task`. [#1443](https://github.com/Moya/Moya/pull/1443) by [@evgeny-sureev](https://github.com/evgeny-sureev).
+- **Breaking Change** Added `failsOnEmptyData` boolean support for the `Decodable` map functions. [#1508](https://github.com/Moya/Moya/pull/1508) by [@jeroenbb94](https://github.com/Jeroenbb94).
+
+### Changed
+- **Breaking Change** Updated minimum version of `ReactiveSwift` to 3.0.
+[#1470](https://github.com/Moya/Moya/pull/1470) by [@larryonoff](https://github.com/larryonoff).
+- **Breaking Change** Changed the `validate` property of `TargetType` to use new `ValidationType` enum representing valid status codes. [#1505](https://github.com/Moya/Moya/pull/1505) by [@SD10](https://github.com/sd10), [@amaurydavid](https://github.com/amaurydavid). 
+
 # [10.0.2] - 2018-01-26
 ### Fixed
 - Fixed a bug where modifying `.uploadMultipart`, `.uploadCompositeMultipart`, `.uploadFile`, `.downloadDestination`, and `.downloadParameters` tasks through an `endpointClosure` has no effect on the final request.

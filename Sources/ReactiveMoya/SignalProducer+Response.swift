@@ -54,9 +54,9 @@ extension SignalProducerProtocol where Value == Response, Error == MoyaError {
     }
 
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
-    public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder()) -> SignalProducer<D, MoyaError> {
+    public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SignalProducer<D, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<D, MoyaError> in
-            return unwrapThrowable { try response.map(type, atKeyPath: keyPath, using: decoder) }
+            return unwrapThrowable { try response.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData) }
         }
     }
 }

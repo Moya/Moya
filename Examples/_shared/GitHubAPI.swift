@@ -54,12 +54,12 @@ extension GitHub: TargetType {
             return .requestPlain
         }
     }
-    public var validate: Bool {
+    public var validationType: ValidationType {
         switch self {
         case .zen:
-            return true
+            return .successCodes
         default:
-            return false
+            return .none
         }
     }
     public var sampleData: Data {

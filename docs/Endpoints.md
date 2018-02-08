@@ -21,7 +21,7 @@ There are two ways that you interact with Endpoints.
 The first might resemble the following:
 
 ```swift
-let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint in
     let url = URL(target: target).absoluteString
     return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
@@ -48,7 +48,7 @@ For example, we may wish to set our application name in the HTTP header fields f
 analytics.
 
 ```swift
-let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint in
     let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
     return defaultEndpoint.adding(newHTTPHeaderFields: ["APP_NAME": "MY_AWESOME_APP"])
 }
@@ -64,7 +64,7 @@ target that actually does the authentication. We could construct an
 `endpointClosure` resembling the following.
 
 ```swift
-let endpointClosure = { (target: MyTarget) -> Endpoint<MyTarget> in
+let endpointClosure = { (target: MyTarget) -> Endpoint in
     let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
 
     // Sign all non-authenticating requests
@@ -122,7 +122,7 @@ closure asynchronously, you can use whatever authentication library you like ([e
 Instead of modifying the request, you could simply log it, instead.
 
 ```swift
-let requestClosure = { (endpoint: Endpoint<GitHub>, done: MoyaProvider.RequestResultClosure) in
+let requestClosure = { (endpoint: Endpoint, done: MoyaProvider.RequestResultClosure) in
     do {
         var request = try endpoint.urlRequest()
         // Modify the request however you like.
@@ -142,7 +142,7 @@ This parameter is actually very useful for modifying the request object.
 all cookies on requests:
 
 ```swift
-{ (endpoint: Endpoint<ArtsyAPI>, done: MoyaProvider.RequestResultClosure) in
+{ (endpoint: Endpoint, done: MoyaProvider.RequestResultClosure) in
     do {
         var request: URLRequest = try endpoint.urlRequest()
         request.httpShouldHandleCookies = false
