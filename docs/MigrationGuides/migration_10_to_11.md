@@ -8,6 +8,9 @@ This project follows [Semantic Versioning](http://semver.org).
 ### Endpoint Migration
 - Remove the generic constraint from the `Endpoint` type. Existing code should "just work" after the removal of the generic constraint.
 
+### MoyaProvider Migration
+- Replace usage of `MoyaProvider.defaultEndpointMapping` with `MoyaProvider<YourType>.defaultEndpointMapping`, `MoyaProvider.defaultRequestMapping` with `MoyaProvider<YourType>.defaultRequestMapping` and `MoyaProvider.defaultAlamofireManager` with `MoyaProvider<YourType>.defaultAlamofireManager`.
+
 ### Task Migration
 - Add `.requestCustomJSONEncodable` case to `Task` or default case to achieve exhaustiveness.
 
