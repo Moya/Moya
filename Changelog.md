@@ -86,7 +86,7 @@
 - Fixed a bug where you would have two response events in `requestWithProgress` method on RxMoya module.
 
 # [8.0.4] - 2017-05-09
-###Changed
+### Changed
 - Bumped minimum version of ReactiveSwift to 1.1.
 - Changed use of deprecated `DateSchedulerProtocol` to `DateScheduler`.
 - Move project to using a single target for all platforms.
@@ -101,7 +101,7 @@
 - Changed `Moya.Error` to `MoyaError` in `MoyaAvailablity` for Swift 3.1 compatibility.
 
 # [8.0.2] - 2017-02-01
-### Changes
+### Changed
 - Changed dependency pinning to rely only on major versions.
 
 # [8.0.1] - 2017-01-21
@@ -121,11 +121,11 @@
 - Added `AccessTokenPlugin` for easier authorization.
 - Added `AccessTokenAuthorizable` protocol for optionally controlling the authorization behavior of `TargetType`s when using `AccessTokenPlugin`.
 - Added availability tags for renamed functions included in the Swift 3 migration.
-
-###
 - `Moya.Error` now conforms to `LocalizedError` protocol.
 - Added documentation for `TargetType` and associated data structures.
 - Re-add `MultiTarget` to project.
+
+### Changed
 - Adopted an SPM-compatible project structure.
 - Moved tests to Moya.xcodeproj.
 
@@ -247,7 +247,7 @@ structure and more.
 - Added `queue` parameter to `request` and `sendRequest`. This open up option to use other queue instead of main queue for response callback.
 
 # [6.4.0] - 2016-04-02
-
+### Changed
 - Makes `convertResponseToResult` public to make use of this method when dealing with Alamofire directly
 - Updates to ReactiveCocoa 4.1
 - Updates to Result 2.0
@@ -288,7 +288,7 @@ structure and more.
 - Compatibility with RxSwift 2.1.x.
 
 # [6.1.0] - 2016-01-26
-### 
+### Changed 
 - The built-in `DefaultAlamofireManager` as parameter's default value instead of the singleton `Alamofire.Manager.sharedinstance` is now used when instantiating `ReactiveCocoaMoyaProvider` and `RxMoyaProvider` as well.
 
 # [6.0.1] - 2016-01-26
@@ -314,7 +314,7 @@ structure and more.
 - Fixes cases where underlying network errors were not properly propagated.
 
 # [5.2.0] - 2015-12-xx
-
+### Changed
 - Updated to RxSwift 2.0.0-beta.4
 
 # [5.1.0] - 2014-12-08
