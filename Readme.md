@@ -41,9 +41,9 @@ Some awesome features of Moya:
 
 You can check out more about the project direction in the [vision document](Vision.md).
 
-## Sample Project
+## Sample Projects
 
-There's a sample project in the Demo directory. To use it, run `carthage update` to download the required libraries. Have fun!
+We have provided two sample projects in the repository. To use it download the repo, run `carthage update` to download the required libraries and  open [Moya.xcodeproj](https://github.com/Moya/Moya/tree/master/Moya.xcodeproj). You'll see two schemes: `Basic` and `Multi-Target` - select one and then build & run! Source files for these are in the `Examples` directory in project navigator. Have fun!
 
 ## Project Status
 
