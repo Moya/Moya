@@ -12,7 +12,7 @@
 - 把原有的 `MoyaProvider.defaultEndpointMapping` 更改为 `MoyaProvider<YourType>.defaultEndpointMapping`, `MoyaProvider.defaultRequestMapping` 更改为 `MoyaProvider<YourType>.defaultRequestMapping`, `MoyaProvider.defaultAlamofireManager` 更改为 `MoyaProvider<YourType>.defaultAlamofireManager`.
 
 ### Task 迁移
-- 添加 `.requestCustomJSONEncodable` case 到 `Task` 或者 默认case 以满足更多场景.
+- 添加 `.requestCustomJSONEncodable` 枚举项到 `Task` 或者作为默认枚举项以完善相应的枚举类型.
 
 ### TargetType 迁移
 - 把 `TargetType` 原有的属性 `validate` 更改为新属性 `validationType`。
