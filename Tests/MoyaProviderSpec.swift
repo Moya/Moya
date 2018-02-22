@@ -409,8 +409,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             it("returns identical sample response") {
-                // TODO: Fix this failing test
-                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
