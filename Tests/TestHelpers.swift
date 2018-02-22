@@ -185,9 +185,13 @@ extension GitHubUserContent: TargetType {
 
 extension HTTPBin {
     static func createMultipartFormData() -> [MultipartFormData] {
-        let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
+        guard let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png") else {
+            fatalError("Resource testImage.png could not be found in bundle")
+        }
         let string = "some data"
-        guard let data = string.data(using: .utf8) else { fatalError("Failed creating Data from String \(string)") }
+        guard let data = string.data(using: .utf8) else {
+            fatalError("Failed creating Data from String \(string)")
+        }
         return [
             MultipartFormData(provider: .file(url), name: "file", fileName: "testImage"),
             MultipartFormData(provider: .data(data), name: "data")
