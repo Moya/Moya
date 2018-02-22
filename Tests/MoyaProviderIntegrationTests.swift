@@ -300,6 +300,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
             }
         }
 
+        // Resolves ValidationType not working with multipart upload #1590
         describe("a provider performing a multipart upload with Alamofire validation") {
             it("only allows status code 287") {
                 let formData = HTTPBin.createMultipartFormData()
