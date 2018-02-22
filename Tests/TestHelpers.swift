@@ -74,7 +74,7 @@ enum HTTPBin: TargetType {
     case post
     case upload(file: URL)
     case uploadMultipart([MultipartFormData], [String: Any]?)
-    case validatedUploadMultipart([MultipartFormData], [String: Any]?)
+    case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
     var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
@@ -101,7 +101,7 @@ enum HTTPBin: TargetType {
         return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
-        case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters):
+        case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters, _):
             if let urlParameters = urlParameters {
                 return .uploadCompositeMultipart(data, urlParameters: urlParameters)
             } else {
@@ -125,8 +125,8 @@ enum HTTPBin: TargetType {
 
     var validationType: ValidationType {
         switch self {
-        case .validatedUploadMultipart:
-            return .customCodes([287])
+        case .validatedUploadMultipart(_, _, let codes):
+            return .customCodes(codes)
         default:
             return .none
         }
@@ -184,7 +184,7 @@ extension GitHubUserContent: TargetType {
 // MARK: - Upload Multipart Helpers
 
 extension HTTPBin {
-    static func createMultipartFormData() -> [MultipartFormData] {
+    static func createTestMultipartFormData() -> [MultipartFormData] {
         guard let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png") else {
             fatalError("Resource testImage.png could not be found in bundle")
         }

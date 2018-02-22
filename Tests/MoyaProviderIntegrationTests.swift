@@ -302,10 +302,10 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
         // Resolves ValidationType not working with multipart upload #1590
         describe("a provider performing a multipart upload with Alamofire validation") {
-            it("only allows status code 287") {
-                let formData = HTTPBin.createMultipartFormData()
-                let target = HTTPBin.validatedUploadMultipart(formData, nil)
-                let provider = MoyaProvider<HTTPBin>()
+            let provider = MoyaProvider<HTTPBin>()
+            let formData = HTTPBin.createTestMultipartFormData()
+            it("returns an error for status code different than 287") {
+                let target = HTTPBin.validatedUploadMultipart(formData, nil, [287])
                 var receievedResponse: Response?
                 var receivedError: Error?
                 waitUntil(timeout: 5.0) { done in
@@ -321,6 +321,25 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 }
                 expect(receievedResponse).to(beNil())
                 expect(receivedError).toNot(beNil())
+            }
+            it("returns a valid response for .succesCodes") {
+                let successCodes = ValidationType.successCodes.statusCodes
+                let target = HTTPBin.validatedUploadMultipart(formData, nil, successCodes)
+                var receievedResponse: Response?
+                var receivedError: Error?
+                waitUntil(timeout: 5.0) { done in
+                    provider.request(target) { result in
+                        switch result {
+                        case .success(let response):
+                            receievedResponse = response
+                        case .failure(let error):
+                            receivedError = error
+                        }
+                        done()
+                    }
+                }
+                expect(receievedResponse).toNot(beNil())
+                expect(receivedError).to(beNil())
             }
         }
     }

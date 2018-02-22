@@ -841,7 +841,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("tracks progress of multipart request") {
 
-                let formData = HTTPBin.createMultipartFormData()
+                let formData = HTTPBin.createTestMultipartFormData()
                 let target = HTTPBin.uploadMultipart(formData, nil)
 
                 var progressObjects: [Progress?] = []
