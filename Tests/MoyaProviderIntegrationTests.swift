@@ -306,21 +306,21 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 let formData = HTTPBin.createMultipartFormData()
                 let target = HTTPBin.validatedUploadMultipart(formData, nil)
                 let provider = MoyaProvider<HTTPBin>()
-                provider.request(target) { result in
-                    switch result {
-                    case .success(let response):
-                        let validCodes = target.validationType.statusCodes
-                        expect(validCodes).to(contain(response.statusCode))
-                    case .failure(let error):
-                        switch error {
-                        case .underlying(_, let response):
-                            let validCodes = target.validationType.statusCodes
-                            expect(validCodes).toNot(contain(response!.statusCode))
-                        default:
-                            fatalError("Received unexpected error")
+                var receievedResponse: Response?
+                var receivedError: Error?
+                waitUntil(timeout: 5.0) { done in
+                    provider.request(target) { result in
+                        switch result {
+                        case .success(let response):
+                            receievedResponse = response
+                        case .failure(let error):
+                            receivedError = error
                         }
+                        done()
                     }
                 }
+                expect(receievedResponse).to(beNil())
+                expect(receivedError).toNot(beNil())
             }
         }
     }
