@@ -841,13 +841,8 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("tracks progress of multipart request") {
 
-                let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
-                let string = "some data"
-                guard let data = string.data(using: .utf8) else { fatalError("Failed creating Data from String \(string)") }
-                let target: HTTPBin = .uploadMultipart([
-                    MultipartFormData(provider: .file(url), name: "file", fileName: "testImage"),
-                    MultipartFormData(provider: .data(data), name: "data")
-                    ], nil)
+                let formData = HTTPBin.createMultipartFormData()
+                let target = HTTPBin.uploadMultipart(formData, nil)
 
                 var progressObjects: [Progress?] = []
                 var progressValues: [Double] = []
