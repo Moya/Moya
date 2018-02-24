@@ -304,10 +304,12 @@ final class MoyaProviderIntegrationTests: QuickSpec {
         describe("a provider performing a multipart upload with Alamofire validation") {
             let provider = MoyaProvider<HTTPBin>()
             let formData = HTTPBin.createTestMultipartFormData()
+
             it("returns an error for status code different than 287") {
                 let target = HTTPBin.validatedUploadMultipart(formData, nil, [287])
                 var receievedResponse: Response?
                 var receivedError: Error?
+
                 waitUntil(timeout: 5.0) { done in
                     provider.request(target) { result in
                         switch result {
@@ -319,14 +321,17 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         done()
                     }
                 }
+
                 expect(receievedResponse).to(beNil())
                 expect(receivedError).toNot(beNil())
             }
+
             it("returns a valid response for .succesCodes") {
                 let successCodes = ValidationType.successCodes.statusCodes
                 let target = HTTPBin.validatedUploadMultipart(formData, nil, successCodes)
                 var receievedResponse: Response?
                 var receivedError: Error?
+
                 waitUntil(timeout: 5.0) { done in
                     provider.request(target) { result in
                         switch result {
@@ -338,6 +343,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         done()
                     }
                 }
+
                 expect(receievedResponse).toNot(beNil())
                 expect(receivedError).to(beNil())
             }
