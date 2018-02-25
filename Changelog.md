@@ -1,5 +1,9 @@
 # Next
 
+### Fixed
+- Fixes `Response` validation not being performed on stubbed requests.
+[#1593](https://github.com/Moya/Moya/pull/1593) by [@SD10](https://github.com/sd10).
+
 # [11.0.0] - 2018-02-07
 
 # [11.0.0-beta.2] - 2018-01-27

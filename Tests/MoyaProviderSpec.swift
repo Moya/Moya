@@ -973,6 +973,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
         }
 
+        // Resolves #1592 where validation is not performed on a stubbed request
         describe("a provider for stubbed requests with validation") {
             var stubbedProvider: MoyaProvider<GitHub>!
 
