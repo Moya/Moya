@@ -3,7 +3,7 @@
 ### Fixed
 - Fixed Alamofire validation not being performed on `.uploadMultipart` requests.
 [#1591](https://github.com/Moya/Moya/pull/1591) by [@SD10](https://github.com/SD10).
-- Fixed `Response` validation not being performed on stubbed requests.
+- Fixed Alamofire validation not being performed on stubbed requests.
 [#1593](https://github.com/Moya/Moya/pull/1593) by [@SD10](https://github.com/sd10).
 
 # [11.0.0] - 2018-02-07
