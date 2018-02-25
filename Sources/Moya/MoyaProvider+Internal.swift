@@ -176,7 +176,9 @@ private extension MoyaProvider {
                     self.cancelCompletion(completion, target: target)
                     return
                 }
-                cancellable.innerCancellable = self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+                let validationCodes = target.validationType.statusCodes
+                let validatedRequest = validationCodes.isEmpty ? alamoRequest : alamoRequest.validate(statusCode: validationCodes)
+                cancellable.innerCancellable = self.sendAlamofireRequest(validatedRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .failure(let error):
                 completion(.failure(MoyaError.underlying(error as NSError, nil)))
             }
