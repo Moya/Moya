@@ -977,7 +977,7 @@ final class MoyaProviderSpec: QuickSpec {
             var stubbedProvider: MoyaProvider<GitHub>!
 
             context("response contains invalid status code") {
-                it("returns a failure case") {
+                it("returns an error") {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
                         return Endpoint(
                             url: URL(target: target).absoluteString,
@@ -987,23 +987,31 @@ final class MoyaProviderSpec: QuickSpec {
                             httpHeaderFields: target.headers
                         )
                     }
+
                     stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-                    stubbedProvider.request(.zen) { result in
-                        let validStatusCodes = GitHub.zen.validationType.statusCodes
-                        switch result {
-                        case .success(let response):
-                            expect(validStatusCodes).to(contain(response.statusCode))
-                        case .failure(let error):
-                            guard case let MoyaError.underlying(_, response) = error else {
-                                fatalError("Expected MoyaError.underlying for validation failure.")
+
+                    var receivedError: Error?
+                    var receivedResponse: Response?
+
+                    waitUntil { done in
+                        stubbedProvider.request(.zen) { result in
+                            switch result {
+                            case .success(let response):
+                                receivedResponse = response
+                            case .failure(let error):
+                                receivedError = error
                             }
-                            expect(validStatusCodes).toNot(contain(response!.statusCode))
+                            done()
                         }
                     }
+
+                    expect(receivedResponse).to(beNil())
+                    expect(receivedError).toNot(beNil())
                 }
             }
+
             context("response contains valid status code") {
-                it("returns a success case") {
+                it("returns a response") {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
                         return Endpoint(
                             url: URL(target: target).absoluteString,
@@ -1013,20 +1021,27 @@ final class MoyaProviderSpec: QuickSpec {
                             httpHeaderFields: target.headers
                         )
                     }
+
                     stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-                    let validStatusCodes = GitHub.zen.validationType.statusCodes
-                    stubbedProvider.request(.zen) { result in
-                        switch result {
-                        case .success(let response):
-                            expect(validStatusCodes).toNot(beEmpty())
-                            expect(validStatusCodes).to(contain(response.statusCode))
-                        case .failure(let error):
-                            guard case let MoyaError.underlying(_, response) = error else {
-                                fatalError("Expected MoyaError.underlying for validation failure.")
+
+                    var receivedError: Error?
+                    var receivedResponse: Response?
+
+                    waitUntil { done in
+                        stubbedProvider.request(.zen) { result in
+                            switch result {
+                            case .success(let response):
+                                receivedResponse = response
+                            case .failure(let error):
+                                receivedError = error
                             }
-                            expect(validStatusCodes).toNot(contain(response!.statusCode))
+                            done()
                         }
                     }
+
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedError).to(beNil())
+                    expect(GitHub.zen.validationType.statusCodes).to(contain(receivedResponse!.statusCode))
                 }
             }
         }
