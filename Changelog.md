@@ -1,5 +1,7 @@
 # Next
 
+# [11.0.1] - 2018-02-26
+
 ### Fixed
 - Fixed Alamofire validation not being performed on `.uploadMultipart` requests.
 [#1591](https://github.com/Moya/Moya/pull/1591) by [@SD10](https://github.com/SD10).
