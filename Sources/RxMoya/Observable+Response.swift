@@ -19,18 +19,21 @@ extension ObservableType where E == Response {
         return filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
     }
 
+    /// Filters out responses that has the specified `statusCode`.
     public func filter(statusCode: Int) -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filter(statusCode: statusCode))
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 299.
     public func filterSuccessfulStatusCodes() -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filterSuccessfulStatusCodes())
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 399
     public func filterSuccessfulStatusAndRedirectCodes() -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filterSuccessfulStatusAndRedirectCodes())

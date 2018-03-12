@@ -19,18 +19,21 @@ extension SignalProducerProtocol where Value == Response, Error == MoyaError {
         return filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
     }
 
+    /// Filters out responses that have the specified `statusCode`.
     public func filter(statusCode: Int) -> SignalProducer<Value, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
             return unwrapThrowable { try response.filter(statusCode: statusCode) }
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 299.
     public func filterSuccessfulStatusCodes() -> SignalProducer<Value, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
             return unwrapThrowable { try response.filterSuccessfulStatusCodes() }
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 399
     public func filterSuccessfulStatusAndRedirectCodes() -> SignalProducer<Value, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
             return unwrapThrowable { try response.filterSuccessfulStatusAndRedirectCodes() }

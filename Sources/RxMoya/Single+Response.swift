@@ -19,18 +19,21 @@ extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Respo
         return filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
     }
 
+    /// Filters out responses that have the specified `statusCode`.
     public func filter(statusCode: Int) -> Single<ElementType> {
         return flatMap { response -> Single<ElementType> in
             return Single.just(try response.filter(statusCode: statusCode))
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 299.
     public func filterSuccessfulStatusCodes() -> Single<ElementType> {
         return flatMap { response -> Single<ElementType> in
             return Single.just(try response.filterSuccessfulStatusCodes())
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 399
     public func filterSuccessfulStatusAndRedirectCodes() -> Single<ElementType> {
         return flatMap { response -> Single<ElementType> in
             return Single.just(try response.filterSuccessfulStatusAndRedirectCodes())
