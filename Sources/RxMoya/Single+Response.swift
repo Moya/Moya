@@ -16,9 +16,7 @@ extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Respo
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filter(statusCodes: Range<Int>) -> Single<ElementType> {
-        return flatMap { response -> Single<ElementType> in
-            return Single.just(try response.filter(statusCodes: statusCodes))
-        }
+        return filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
     }
 
     public func filter(statusCode: Int) -> Single<ElementType> {

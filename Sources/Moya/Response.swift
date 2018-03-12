@@ -63,10 +63,7 @@ public extension Response {
      - throws: `MoyaError.statusCode` when others are encountered.
      */
     public func filter(statusCodes: Range<Int>) throws -> Response {
-        guard statusCodes.contains(statusCode) else {
-            throw MoyaError.statusCode(self)
-        }
-        return self
+        return try filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
     }
 
     /**

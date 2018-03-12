@@ -25,6 +25,25 @@ final class ObservableMoyaSpec: QuickSpec {
                 expect(errored).to(beTruthy())
             }
 
+            it("filters out unrequested status codes") {
+                let data = Data()
+                let observable = Response(statusCode: 10, data: data).asObservable()
+
+                var errored = false
+                _ = observable.filter(statusCodes: 0..<10).subscribe { event in
+                    switch event {
+                    case .next(let object):
+                        fail("called on non-correct status code: \(object)")
+                    case .error:
+                        errored = true
+                    default:
+                        break
+                    }
+                }
+
+                expect(errored).to(beTruthy())
+            }
+
             it("filters out non-successful status codes") {
                 let data = Data()
                 let observable = Response(statusCode: 404, data: data).asObservable()

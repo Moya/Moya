@@ -27,6 +27,23 @@ final class SignalProducerMoyaSpec: QuickSpec {
                 expect(errored).to(beTruthy())
             }
 
+            it("filters out unrequested status codes range") {
+                let data = Data()
+                let signal = signalSendingData(data, statusCode: 10)
+
+                var errored = false
+                signal.filter(statusCodes: 0..<10).startWithResult { event in
+                    switch event {
+                    case .success(let object):
+                        fail("called on non-correct status code: \(object)")
+                    case .failure:
+                        errored = true
+                    }
+                }
+
+                expect(errored).to(beTruthy())
+            }
+
             it("filters out non-successful status codes") {
                 let data = Data()
                 let signal = signalSendingData(data, statusCode: 404)
