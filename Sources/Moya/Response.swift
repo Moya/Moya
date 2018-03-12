@@ -54,7 +54,7 @@ public extension Response {
         }
         return self
     }
-    
+
     /**
      Returns the `Response` if the `statusCode` falls within the specified range.
      

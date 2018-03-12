@@ -22,11 +22,11 @@ final class SingleMoyaSpec: QuickSpec {
 
                 expect(errored).to(beTruthy())
             }
-            
+
             it("filters out unrequested status codes with range") {
                 let data = Data()
                 let single = Response(statusCode: 10, data: data).asSingle()
-                
+
                 var errored = false
                 _ = single.filter(statusCodes: 0..<10).subscribe { event in
                     switch event {
@@ -36,7 +36,7 @@ final class SingleMoyaSpec: QuickSpec {
                         errored = true
                     }
                 }
-                
+
                 expect(errored).to(beTruthy())
             }
 
