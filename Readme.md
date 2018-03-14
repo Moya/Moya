@@ -41,9 +41,9 @@ Some awesome features of Moya:
 
 You can check out more about the project direction in the [vision document](Vision.md).
 
-## Sample Project
+## Sample Projects
 
-There's a sample project in the Demo directory. To use it, run `carthage update` to download the required libraries. Have fun!
+We have provided two sample projects in the repository. To use it download the repo, run `carthage update` to download the required libraries and  open [Moya.xcodeproj](https://github.com/Moya/Moya/tree/master/Moya.xcodeproj). You'll see two schemes: `Basic` and `Multi-Target` - select one and then build & run! Source files for these are in the `Examples` directory in project navigator. Have fun!
 
 ## Project Status
 
@@ -72,7 +72,7 @@ your Swift version.
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "10.0.0"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "11.0.0"))
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
@@ -91,7 +91,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "10.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "11.0.0"))
     ],
     targets: [
         .target(
@@ -108,15 +108,15 @@ Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '~> 10.0'
+pod 'Moya', '~> 11.0'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 10.0'
+pod 'Moya/RxSwift', '~> 11.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 10.0'
+pod 'Moya/ReactiveSwift', '~> 11.0'
 ```
 
 Then run `pod install`.

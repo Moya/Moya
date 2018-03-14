@@ -122,15 +122,29 @@ public extension MoyaProvider {
                 return
             }
 
+            let validate = { (response: Moya.Response) -> Result<Moya.Response, MoyaError> in
+                let validCodes = target.validationType.statusCodes
+                guard !validCodes.isEmpty else { return .success(response) }
+                if validCodes.contains(response.statusCode) {
+                    return .success(response)
+                } else {
+                    let statusError = MoyaError.statusCode(response)
+                    let error = MoyaError.underlying(statusError, response)
+                    return .failure(error)
+                }
+            }
+
             switch endpoint.sampleResponseClosure() {
             case .networkResponse(let statusCode, let data):
                 let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
-                plugins.forEach { $0.didReceive(.success(response), target: target) }
-                completion(.success(response))
+                let result = validate(response)
+                plugins.forEach { $0.didReceive(result, target: target) }
+                completion(result)
             case .response(let customResponse, let data):
                 let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
-                plugins.forEach { $0.didReceive(.success(response), target: target) }
-                completion(.success(response))
+                let result = validate(response)
+                plugins.forEach { $0.didReceive(result, target: target) }
+                completion(result)
             case .networkError(let error):
                 let error = MoyaError.underlying(error, nil)
                 plugins.forEach { $0.didReceive(.failure(error), target: target) }
@@ -162,7 +176,9 @@ private extension MoyaProvider {
                     self.cancelCompletion(completion, target: target)
                     return
                 }
-                cancellable.innerCancellable = self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+                let validationCodes = target.validationType.statusCodes
+                let validatedRequest = validationCodes.isEmpty ? alamoRequest : alamoRequest.validate(statusCode: validationCodes)
+                cancellable.innerCancellable = self.sendAlamofireRequest(validatedRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .failure(let error):
                 completion(.failure(MoyaError.underlying(error as NSError, nil)))
             }

@@ -13,6 +13,13 @@ if en_docs_modified ^ cn_docs_modified
   warn("Consider **also** updating the #{ en_docs_modified ? "English" : "Chinese" } docs. For Chinese translations, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate, if you can't do so yourself.")
 end
 
+# Warn, asking to update Chinese README if only English README are updated and vice-versa
+en_readme_modified = !git.modified_files.grep(%r{Readme.md}).empty?
+cn_readme_modified = !git.modified_files.grep(%r{Readme_CN.md}).empty?
+if en_readme_modified ^ cn_readme_modified
+  warn("Consider **also** updating the #{ en_readme_modified ? "Chinese" : "English" } README. For Chinese translations, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate, if you can't do so yourself.")
+end
+
 # Warn when there is a big PR
 warn("Big PR, try to keep changes smaller if you can") if git.lines_of_code > 500
 

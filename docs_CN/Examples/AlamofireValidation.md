@@ -1,8 +1,7 @@
 # Alamofire 自动验证
 
-有时候, 您希望为某些请求使用 [Alamofire automatic validation](https://github.com/Alamofire/Alamofire#automatic-validation) .
-当请求被配置了Alamofire 验证, Moya会在相关联的`DataRequest`上，内部调用Alamofire的 `validate()` 方法。
-
+有时候, 您希望为某些请求使用 [Alamofire自动化验证](https://github.com/Alamofire/Alamofire#automatic-validation) .
+当你对请求配置了Alamofire 验证的时候, Moya会在相关联的`DataRequest`上，内部调用Alamofire的 `validate()` 方法。
 
 ```swift
 // MARK: - TargetType Protocol Implementation
@@ -36,9 +35,19 @@ extension MyService: TargetType {
     }
 }
 ```
-Alamofire 非常有用, 例如，如果你想使用 [Alamofire's `RequestRetrier` 和 `RequestAdapter`](https://github.com/Alamofire/Alamofire#requestretrier)——为OAuth2 准备的Moya客户端.
+Moya允许你通过`ValidationType`枚举配置Alamofire验证功能。
 
-同样, 如果验证失败, 你会从返回的`MoyaError`中获取一个响应。
+你可以使用以下四个枚举项:
+- `.none` 不会进行任何验证
+- `.successCodes` 会对状态码 200 - 299 的请求进行验证.
+- `.successAndRedirectCodes` 会对状态码 200 - 399 的请求进行验证.
+- `.customCodes([Int])` 只会对配置的状态码相匹配的请求进行验证.
+
+所有请求的默认配置都是`ValidationType.none`。
+
+如果你想在一个支持OAuth 2的Moya客户端中使用 [Alamofire的 `RequestRetrier` 和 `RequestAdapter`](https://github.com/Alamofire/Alamofire#requestretrier)，Alamofire自动化验证会发挥非常大的作用。
+
+同样地, 如果验证失败, 你会从返回的`MoyaError`中获取到一个响应。
 
 ```swift
 provider.request(target) { result in

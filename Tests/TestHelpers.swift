@@ -74,13 +74,14 @@ enum HTTPBin: TargetType {
     case post
     case upload(file: URL)
     case uploadMultipart([MultipartFormData], [String: Any]?)
+    case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
     var baseURL: URL { return URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
             return "/basic-auth/user/passwd"
-        case .post, .upload, .uploadMultipart:
+        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return "/post"
         }
     }
@@ -89,7 +90,7 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return .get
-        case .post, .upload, .uploadMultipart:
+        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return .post
         }
     }
@@ -100,7 +101,7 @@ enum HTTPBin: TargetType {
         return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
-        case .uploadMultipart(let data, let urlParameters):
+        case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters, _):
             if let urlParameters = urlParameters {
                 return .uploadCompositeMultipart(data, urlParameters: urlParameters)
             } else {
@@ -113,13 +114,22 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
-        case .post, .upload, .uploadMultipart:
+        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
     }
 
     var headers: [String: String]? {
         return nil
+    }
+
+    var validationType: ValidationType {
+        switch self {
+        case .validatedUploadMultipart(_, _, let codes):
+            return .customCodes(codes)
+        default:
+            return .none
+        }
     }
 }
 
@@ -168,6 +178,24 @@ extension GitHubUserContent: TargetType {
 
     public var headers: [String: String]? {
         return nil
+    }
+}
+
+// MARK: - Upload Multipart Helpers
+
+extension HTTPBin {
+    static func createTestMultipartFormData() -> [MultipartFormData] {
+        guard let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png") else {
+            fatalError("Resource testImage.png could not be found in bundle")
+        }
+        let string = "some data"
+        guard let data = string.data(using: .utf8) else {
+            fatalError("Failed creating Data from String \(string)")
+        }
+        return [
+            MultipartFormData(provider: .file(url), name: "file", fileName: "testImage"),
+            MultipartFormData(provider: .data(data), name: "data")
+        ]
     }
 }
 

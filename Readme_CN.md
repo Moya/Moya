@@ -63,7 +63,7 @@ new auction app](https://github.com/Artsy/eidolon). 我们认为它已经可以�
 要集成使用苹果的Swift包管理器，请将以下内容作为依赖项添加到`Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "10.0.0"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "11.0.0"))
 ```
 
 然后指定 `.Target(name: "Moya")` 使用Moya的依赖项.
@@ -75,7 +75,7 @@ import PackageDescription
 let package = Package(
     name: "MyApp",
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "10.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "11.0.0"))
     ]
 )
 ```
@@ -85,15 +85,15 @@ let package = Package(
 在您的Podfile文件中使用Moya:
 
 ```rb
-pod 'Moya', '~> 10.0'
+pod 'Moya', '~> 11.0'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 10.0'
+pod 'Moya/RxSwift', '~> 11.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 10.0'
+pod 'Moya/ReactiveSwift', '~> 11.0'
 ```
 
 然后运行 `pod install`.

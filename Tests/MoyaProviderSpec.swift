@@ -409,10 +409,9 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             it("returns identical sample response") {
-                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: { .response(response, Data()) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
+                    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -603,7 +602,7 @@ final class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(dataString) == "sample data"
+                expect(dataString).to(equal("sample data"))
             }
 
             it("uses correct headers") {
@@ -841,13 +840,8 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("tracks progress of multipart request") {
 
-                let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
-                let string = "some data"
-                guard let data = string.data(using: .utf8) else { fatalError("Failed creating Data from String \(string)") }
-                let target: HTTPBin = .uploadMultipart([
-                    MultipartFormData(provider: .file(url), name: "file", fileName: "testImage"),
-                    MultipartFormData(provider: .data(data), name: "data")
-                    ], nil)
+                let formData = HTTPBin.createTestMultipartFormData()
+                let target = HTTPBin.uploadMultipart(formData, nil)
 
                 var progressObjects: [Progress?] = []
                 var progressValues: [Double] = []
@@ -970,6 +964,80 @@ final class MoyaProviderSpec: QuickSpec {
 
                         expect(callbackQueueLabel) == DispatchQueue.main.label
                     }
+                }
+            }
+        }
+
+        // Resolves #1592 where validation is not performed on a stubbed request
+        describe("a provider for stubbed requests with validation") {
+            var stubbedProvider: MoyaProvider<GitHub>!
+
+            context("response contains invalid status code") {
+                it("returns an error") {
+                    let endpointClosure = { (target: GitHub) -> Endpoint in
+                        return Endpoint(
+                            url: URL(target: target).absoluteString,
+                            sampleResponseClosure: { .networkResponse(400, target.sampleData) },
+                            method: target.method,
+                            task: target.task,
+                            httpHeaderFields: target.headers
+                        )
+                    }
+
+                    stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+
+                    var receivedError: Error?
+                    var receivedResponse: Response?
+
+                    waitUntil { done in
+                        stubbedProvider.request(.zen) { result in
+                            switch result {
+                            case .success(let response):
+                                receivedResponse = response
+                            case .failure(let error):
+                                receivedError = error
+                            }
+                            done()
+                        }
+                    }
+
+                    expect(receivedResponse).to(beNil())
+                    expect(receivedError).toNot(beNil())
+                }
+            }
+
+            context("response contains valid status code") {
+                it("returns a response") {
+                    let endpointClosure = { (target: GitHub) -> Endpoint in
+                        return Endpoint(
+                            url: URL(target: target).absoluteString,
+                            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+                            method: target.method,
+                            task: target.task,
+                            httpHeaderFields: target.headers
+                        )
+                    }
+
+                    stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+
+                    var receivedError: Error?
+                    var receivedResponse: Response?
+
+                    waitUntil { done in
+                        stubbedProvider.request(.zen) { result in
+                            switch result {
+                            case .success(let response):
+                                receivedResponse = response
+                            case .failure(let error):
+                                receivedError = error
+                            }
+                            done()
+                        }
+                    }
+
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedError).to(beNil())
+                    expect(GitHub.zen.validationType.statusCodes).to(contain(receivedResponse!.statusCode))
                 }
             }
         }
