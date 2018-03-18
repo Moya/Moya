@@ -16,7 +16,9 @@ extension SignalProducerProtocol where Value == Response, Error == MoyaError {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filter(statusCodes: Range<Int>) -> SignalProducer<Value, MoyaError> {
-        return filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
+        return producer.flatMap(.latest) { response -> SignalProducer<Value, Error> in
+            return unwrapThrowable { try response.filter(statusCodes: statusCodes) }
+        }
     }
 
     /// Filters out responses that have the specified `statusCode`.

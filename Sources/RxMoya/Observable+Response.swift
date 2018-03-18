@@ -16,7 +16,9 @@ extension ObservableType where E == Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filter(statusCodes: Range<Int>) -> Observable<E> {
-        return filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
+        return flatMap { response -> Observable<E> in
+            return Observable.just(try response.filter(statusCodes: statusCodes))
+        }
     }
 
     /// Filters out responses that has the specified `statusCode`.
