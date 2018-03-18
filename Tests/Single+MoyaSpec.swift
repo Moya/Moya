@@ -6,7 +6,7 @@ import Nimble
 final class SingleMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
-            it("filters out unrequested status codes closed range") {
+            it("filters out unrequested status codes closed range upperbound") {
                 let data = Data()
                 let single = Response(statusCode: 10, data: data).asSingle()
 
@@ -23,9 +23,43 @@ final class SingleMoyaSpec: QuickSpec {
                 expect(errored).to(beTruthy())
             }
 
-            it("filters out unrequested status codes with range") {
+            it("filters out unrequested status codes closed range lowerbound") {
+                let data = Data()
+                let single = Response(statusCode: -1, data: data).asSingle()
+
+                var errored = false
+                _ = single.filter(statusCodes: 0...9).subscribe { event in
+                    switch event {
+                    case .success(let object):
+                        fail("called on non-correct status code: \(object)")
+                    case .error:
+                        errored = true
+                    }
+                }
+
+                expect(errored).to(beTruthy())
+            }
+
+            it("filters out unrequested status codes with range upperbound") {
                 let data = Data()
                 let single = Response(statusCode: 10, data: data).asSingle()
+
+                var errored = false
+                _ = single.filter(statusCodes: 0..<10).subscribe { event in
+                    switch event {
+                    case .success(let object):
+                        fail("called on non-correct status code: \(object)")
+                    case .error:
+                        errored = true
+                    }
+                }
+
+                expect(errored).to(beTruthy())
+            }
+
+            it("filters out unrequested status codes with range lowerbound") {
+                let data = Data()
+                let single = Response(statusCode: -1, data: data).asSingle()
 
                 var errored = false
                 _ = single.filter(statusCodes: 0..<10).subscribe { event in
