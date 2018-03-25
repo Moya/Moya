@@ -15,7 +15,7 @@ final class AccessTokenPluginSpec: QuickSpec {
     }
 
     let token = "eyeAm.AJsoN.weBTOKen"
-    lazy var plugin = AccessTokenPlugin(tokenClosure: token)
+    lazy var plugin = AccessTokenPlugin(tokenClosure: self.token)
     
     override func spec() {
 
@@ -37,21 +37,21 @@ final class AccessTokenPluginSpec: QuickSpec {
             
             let authorizationType: AuthorizationType = .basic
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
-            expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authorizationType.value) \(token)"]
+            expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authorizationType.value) \(self.token)"]
         }
         
         it("adds a bearer authorization header to AccessTokenAuthorizables when AuthorizationType is .bearer") {
             
             let authorizationType: AuthorizationType = .bearer
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
-            expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authorizationType.value) \(token)"]
+            expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authorizationType.value) \(self.token)"]
         }
         
         it("adds a custom authorization header to AccessTokenAuthorizables when AuthorizationType is .custom") {
             
             let authorizationType: AuthorizationType = .custom("CustomAuthorizationHeader")
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
-            expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authorizationType.value) \(token)"]
+            expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authorizationType.value) \(self.token)"]
         }
     }
     
@@ -60,6 +60,6 @@ final class AccessTokenPluginSpec: QuickSpec {
         let target = TestTarget(authorizationType: type)
         let request = URLRequest(url: target.baseURL)
         let preparedRequest = plugin.prepare(request, target: target)
-        expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(type.value) \(token)"]
+        expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(type.value) \(self.token)"]
     }
 }
