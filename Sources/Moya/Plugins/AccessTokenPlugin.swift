@@ -26,11 +26,11 @@ public enum AuthorizationType {
     /// Custom header implementation.
     case custom(String)
     
-    var value: String {
+    public var value: String {
         
         switch self {
         case .none: return ""
-        case .none, .basic, .bearer: return String(describing: self).capitalized
+        case .basic, .bearer: return String(describing: self).capitalized
         case .custom(let custom): return custom
         }
     }
