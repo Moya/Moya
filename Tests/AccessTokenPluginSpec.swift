@@ -59,7 +59,7 @@ final class AccessTokenPluginSpec: QuickSpec {
         
         let target = TestTarget(authorizationType: type)
         let request = URLRequest(url: target.baseURL)
-        let preparedRequest = plugin.prepare(request, target: target)
-        expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(type.value) \(self.token)"]
+        
+        return plugin.prepare(request, target: target)
     }
 }
