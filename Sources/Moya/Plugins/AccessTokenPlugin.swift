@@ -27,7 +27,6 @@ public enum AuthorizationType {
     case custom(String)
 
     public var value: String? {
-
         switch self {
         case .none: return nil
         case .basic: return "Basic"
@@ -78,16 +77,13 @@ public struct AccessTokenPlugin: PluginType {
 
         let authorizationType = authorizable.authorizationType
         var request = request
-
+        
         switch authorizationType {
         case .basic, .bearer, .custom:
-
             if let value = authorizationType.value {
-
                 let authValue = value + " " + tokenClosure()
                 request.addValue(authValue, forHTTPHeaderField: "Authorization")
             }
-
         case .none:
             break
         }

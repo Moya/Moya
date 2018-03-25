@@ -18,7 +18,6 @@ final class AccessTokenPluginSpec: QuickSpec {
     lazy var plugin = AccessTokenPlugin { self.token }
 
     override func spec() {
-
         it("doesn't add an authorization header to TargetTypes by default") {
             let target = GitHub.zen
             let request = URLRequest(url: target.baseURL)
@@ -27,7 +26,6 @@ final class AccessTokenPluginSpec: QuickSpec {
         }
 
         it("doesn't add an authorization header to AccessTokenAuthorizables when AuthorizationType is .none") {
-
             let authorizationType: AuthorizationType = .none
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
@@ -36,7 +34,6 @@ final class AccessTokenPluginSpec: QuickSpec {
         }
 
         it("adds a basic authorization header to AccessTokenAuthorizables when AuthorizationType is .basic") {
-
             let authorizationType: AuthorizationType = .basic
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
@@ -45,7 +42,6 @@ final class AccessTokenPluginSpec: QuickSpec {
         }
 
         it("adds a bearer authorization header to AccessTokenAuthorizables when AuthorizationType is .bearer") {
-
             let authorizationType: AuthorizationType = .bearer
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
@@ -54,7 +50,6 @@ final class AccessTokenPluginSpec: QuickSpec {
         }
 
         it("adds a custom authorization header to AccessTokenAuthorizables when AuthorizationType is .custom") {
-
             let authorizationType: AuthorizationType = .custom("CustomAuthorizationHeader")
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
@@ -64,7 +59,6 @@ final class AccessTokenPluginSpec: QuickSpec {
     }
 
     private func createPreparedRequest(for type: AuthorizationType) -> URLRequest {
-
         let target = TestTarget(authorizationType: type)
         let request = URLRequest(url: target.baseURL)
 
