@@ -22,7 +22,7 @@ final class AccessTokenPluginSpec: QuickSpec {
         it("doesn't add an authorization header to TargetTypes by default") {
             let target = GitHub.zen
             let request = URLRequest(url: target.baseURL)
-            let preparedRequest = plugin.prepare(request, target: target)
+            let preparedRequest = self.plugin.prepare(request, target: target)
             expect(preparedRequest.allHTTPHeaderFields).to(beNil())
         }
 
