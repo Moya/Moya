@@ -1,12 +1,16 @@
 # Next
 
+### Added
+
+- Convenience filter by `Range<Int>` on reponses.  [#1605](https://github.com/Moya/Moya/pull/1605) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+
 # [11.0.1] - 2018-02-26
 
 ### Fixed
 - Fixed Alamofire validation not being performed on `.uploadMultipart` requests.
-[#1591](https://github.com/Moya/Moya/pull/1591) by [@SD10](https://github.com/SD10).
+  [#1591](https://github.com/Moya/Moya/pull/1591) by [@SD10](https://github.com/SD10).
 - Fixed Alamofire validation not being performed on stubbed requests.
-[#1593](https://github.com/Moya/Moya/pull/1593) by [@SD10](https://github.com/sd10).
+  [#1593](https://github.com/Moya/Moya/pull/1593) by [@SD10](https://github.com/sd10).
 
 # [11.0.0] - 2018-02-07
 - No changes
@@ -22,13 +26,13 @@
 
 ### Changed
 - **Breaking Change** Updated minimum version of `ReactiveSwift` to 3.0.
-[#1470](https://github.com/Moya/Moya/pull/1470) by [@larryonoff](https://github.com/larryonoff).
+  [#1470](https://github.com/Moya/Moya/pull/1470) by [@larryonoff](https://github.com/larryonoff).
 - **Breaking Change** Changed the `validate` property of `TargetType` to use new `ValidationType` enum representing valid status codes. [#1505](https://github.com/Moya/Moya/pull/1505) by [@SD10](https://github.com/sd10), [@amaurydavid](https://github.com/amaurydavid). 
 
 # [10.0.2] - 2018-01-26
 ### Fixed
 - Fixed a bug where modifying `.uploadMultipart`, `.uploadCompositeMultipart`, `.uploadFile`, `.downloadDestination`, and `.downloadParameters` tasks through an `endpointClosure` has no effect on the final request.
-[#1550](https://github.com/Moya/Moya/pull/1550) by [@SD10](https://github.com/sd10), [@sunshinejr](https://github.com/sunshinejr).
+  [#1550](https://github.com/Moya/Moya/pull/1550) by [@SD10](https://github.com/sd10), [@sunshinejr](https://github.com/sunshinejr).
 - Fixed a bug where `URLEncoding.httpBody` wasn't allowed as `bodyEncoding` in `Task.requestCompositeParameters()`. [#1557](https://github.com/Moya/Moya/pull/1557) by [@sunshinejr](https://github.com/sunshinejr).
 
 # [10.0.1] - 2017-11-23
@@ -172,7 +176,7 @@
 - **Breaking Change** Renamed `URL` in `Endpoint` to `url`.
 - **Breaking Change** Renamed `StructTarget` to `MultiTarget`.
 - Demo project has been updated with new DemoMultiTarget target, new project
-structure and more.
+  structure and more.
 
 ### Added
 - Readded support for iOS 8 and macOS 10.10.

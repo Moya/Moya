@@ -14,18 +14,28 @@ extension SignalProducerProtocol where Value == Response, Error == MoyaError {
         }
     }
 
+    /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
+    public func filter(statusCodes: Range<Int>) -> SignalProducer<Value, MoyaError> {
+        return producer.flatMap(.latest) { response -> SignalProducer<Value, Error> in
+            return unwrapThrowable { try response.filter(statusCodes: statusCodes) }
+        }
+    }
+
+    /// Filters out responses that have the specified `statusCode`.
     public func filter(statusCode: Int) -> SignalProducer<Value, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
             return unwrapThrowable { try response.filter(statusCode: statusCode) }
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 299.
     public func filterSuccessfulStatusCodes() -> SignalProducer<Value, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
             return unwrapThrowable { try response.filterSuccessfulStatusCodes() }
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 399
     public func filterSuccessfulStatusAndRedirectCodes() -> SignalProducer<Value, MoyaError> {
         return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
             return unwrapThrowable { try response.filterSuccessfulStatusAndRedirectCodes() }

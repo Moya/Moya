@@ -14,18 +14,28 @@ extension ObservableType where E == Response {
         }
     }
 
+    /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
+    public func filter(statusCodes: Range<Int>) -> Observable<E> {
+        return flatMap { response -> Observable<E> in
+            return Observable.just(try response.filter(statusCodes: statusCodes))
+        }
+    }
+
+    /// Filters out responses that has the specified `statusCode`.
     public func filter(statusCode: Int) -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filter(statusCode: statusCode))
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 299.
     public func filterSuccessfulStatusCodes() -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filterSuccessfulStatusCodes())
         }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 399
     public func filterSuccessfulStatusAndRedirectCodes() -> Observable<E> {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filterSuccessfulStatusAndRedirectCodes())
