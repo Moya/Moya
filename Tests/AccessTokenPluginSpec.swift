@@ -15,7 +15,7 @@ final class AccessTokenPluginSpec: QuickSpec {
     }
 
     let token = "eyeAm.AJsoN.weBTOKen"
-    lazy var plugin = AccessTokenPlugin(tokenClosure: self.token)
+    lazy var plugin = AccessTokenPlugin { self.token }
     
     override func spec() {
 
@@ -55,7 +55,7 @@ final class AccessTokenPluginSpec: QuickSpec {
         }
     }
     
-    func createPreparedRequest(for type: AuthorizationType) -> URLRequest {
+    private func createPreparedRequest(for type: AuthorizationType) -> URLRequest {
         
         let target = TestTarget(authorizationType: type)
         let request = URLRequest(url: target.baseURL)
