@@ -1,5 +1,6 @@
 # Next
-
+### Fixed
+- Fixed Carthage compatibility by removing a SwiftLint build phase for now. [#1615](https://github.com/Moya/Moya/pull/1615) by [@sunshinejr](https://github.com/sunshinejr).
 # [11.0.1] - 2018-02-26
 
 ### Fixed
