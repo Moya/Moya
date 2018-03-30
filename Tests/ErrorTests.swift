@@ -82,8 +82,8 @@ final class ErrorTests: QuickSpec {
                 switch result {
                 case let .failure(error):
                     switch error {
-                    case let .underlying(e, _):
-                        expect(e as NSError) == underlyingError
+                    case let .underlying(error, _):
+                        expect(error as NSError) == underlyingError
                     default:
                         XCTFail("expected to get underlying error")
                     }

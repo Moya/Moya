@@ -1,3 +1,5 @@
+// swiftlint:disable file_length
+
 import Quick
 import Moya
 import ReactiveSwift
@@ -169,9 +171,9 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedJSON: [String: String]?
                 signal.mapJSON().startWithResult { result in
-                    if case .success(let _json) = result,
-                        let json = _json as? [String: String] {
-                        receivedJSON = json
+                    if case .success(let json) = result,
+                        let dict = json as? [String: String] {
+                        receivedJSON = dict
                     }
                 }
 

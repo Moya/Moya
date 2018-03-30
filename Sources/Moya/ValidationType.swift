@@ -38,8 +38,8 @@ extension ValidationType: Equatable {
              (.successCodes, .successCodes),
              (.successAndRedirectCodes, .successAndRedirectCodes):
             return true
-        case (.customCodes(let c1), .customCodes(let c2)):
-            return c1 == c2
+        case (.customCodes(let code1), .customCodes(let code2)):
+            return code1 == code2
         default:
             return false
         }
