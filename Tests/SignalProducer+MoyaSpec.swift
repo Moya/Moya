@@ -169,8 +169,8 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedJSON: [String: String]?
                 signal.mapJSON().startWithResult { result in
-                    if case .success(let _json) = result,
-                        let json = _json as? [String: String] {
+                    if case .success(let response) = result,
+                        let json = response as? [String: String] {
                         receivedJSON = json
                     }
                 }

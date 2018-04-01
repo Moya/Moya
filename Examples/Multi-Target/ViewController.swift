@@ -19,8 +19,8 @@ class ViewController: UITableViewController {
 
     fileprivate func showAlert(_ title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(ok)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
 
@@ -112,12 +112,12 @@ class ViewController: UITableViewController {
         var usernameTextField: UITextField?
 
         let promptController = UIAlertController(title: "Username", message: nil, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default) { _ in
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
             if let username = usernameTextField?.text {
                 self.downloadRepositories(username)
             }
         }
-        promptController.addAction(ok)
+        promptController.addAction(okAction)
         promptController.addTextField { textField in
             usernameTextField = textField
         }

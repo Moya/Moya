@@ -127,11 +127,11 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
 private class TestStreamRequest: RequestType {
     var request: URLRequest? {
-        var r = URLRequest(url: URL(string: url(GitHub.zen))!)
-        r.allHTTPHeaderFields = ["Content-Type": "application/json"]
-        r.httpBodyStream = InputStream(data: "cool body".data(using: .utf8)!)
+        var request = URLRequest(url: URL(string: url(GitHub.zen))!)
+        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+        request.httpBodyStream = InputStream(data: "cool body".data(using: .utf8)!)
 
-        return r
+        return request
     }
 
     func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
@@ -145,11 +145,11 @@ private class TestStreamRequest: RequestType {
 
 private class TestBodyRequest: RequestType {
     var request: URLRequest? {
-        var r = URLRequest(url: URL(string: url(GitHub.zen))!)
-        r.allHTTPHeaderFields = ["Content-Type": "application/json"]
-        r.httpBody = "cool body".data(using: .utf8)
+        var request = URLRequest(url: URL(string: url(GitHub.zen))!)
+        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+        request.httpBody = "cool body".data(using: .utf8)
 
-        return r
+        return request
     }
 
     func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
@@ -163,11 +163,11 @@ private class TestBodyRequest: RequestType {
 
 private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
     var request: URLRequest? {
-        var r = URLRequest(url: URL(string: url(GitHub.zen))!)
-        r.allHTTPHeaderFields = ["Content-Type": "application/json"]
-        r.httpBody = "cool body".data(using: .utf8)
+        var request = URLRequest(url: URL(string: url(GitHub.zen))!)
+        request.allHTTPHeaderFields = ["Content-Type": "application/json"]
+        request.httpBody = "cool body".data(using: .utf8)
 
-        return r
+        return request
     }
 
     func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
