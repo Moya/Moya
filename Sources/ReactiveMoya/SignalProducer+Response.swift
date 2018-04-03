@@ -9,54 +9,54 @@ extension SignalProducerProtocol where Value == Response, Error == MoyaError {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filter(statusCodes: ClosedRange<Int>) -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<Value, Error> in
-            return unwrapThrowable { try response.filter(statusCodes: statusCodes) }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.filter(statusCodes: statusCodes) }
         }
     }
 
     public func filter(statusCode: Int) -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
-            return unwrapThrowable { try response.filter(statusCode: statusCode) }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.filter(statusCode: statusCode) }
         }
     }
 
     public func filterSuccessfulStatusCodes() -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
-            return unwrapThrowable { try response.filterSuccessfulStatusCodes() }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.filterSuccessfulStatusCodes() }
         }
     }
 
     public func filterSuccessfulStatusAndRedirectCodes() -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<Value, MoyaError> in
-            return unwrapThrowable { try response.filterSuccessfulStatusAndRedirectCodes() }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.filterSuccessfulStatusAndRedirectCodes() }
         }
     }
 
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
     public func mapImage() -> SignalProducer<Image, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<Image, MoyaError> in
-            return unwrapThrowable { try response.mapImage() }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.mapImage() }
         }
     }
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
     public func mapJSON(failsOnEmptyData: Bool = true) -> SignalProducer<Any, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<Any, MoyaError> in
-            return unwrapThrowable { try response.mapJSON(failsOnEmptyData: failsOnEmptyData) }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.mapJSON(failsOnEmptyData: failsOnEmptyData) }
         }
     }
 
     /// Maps received data at key path into a String. If the conversion fails, the signal errors.
     public func mapString(atKeyPath keyPath: String? = nil) -> SignalProducer<String, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<String, MoyaError> in
-            return unwrapThrowable { try response.mapString(atKeyPath: keyPath) }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.mapString(atKeyPath: keyPath) }
         }
     }
 
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
     public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SignalProducer<D, MoyaError> {
-        return producer.flatMap(.latest) { response -> SignalProducer<D, MoyaError> in
-            return unwrapThrowable { try response.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData) }
+        return producer.flatMap(.latest) { response in
+            unwrapThrowable { try response.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData) }
         }
     }
 }
@@ -74,3 +74,5 @@ private func unwrapThrowable<T>(throwable: () throws -> T) -> SignalProducer<T, 
         }
     }
 }
+
+
