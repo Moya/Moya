@@ -74,5 +74,3 @@ private func unwrapThrowable<T>(throwable: () throws -> T) -> SignalProducer<T, 
         }
     }
 }
-
-
