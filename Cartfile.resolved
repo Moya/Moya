@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" "4.6.0"
+github "Alamofire/Alamofire" "4.7.0"
 github "AliSoftware/OHHTTPStubs" "f90c2bb0fb882e43761ab963ca8869d349d2c6e3"
 github "Quick/Nimble" "v7.0.3"
 github "Quick/Quick" "v1.2.0"
