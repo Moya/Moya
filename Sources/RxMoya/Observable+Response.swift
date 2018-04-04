@@ -8,14 +8,7 @@ import Moya
 extension ObservableType where E == Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filter(statusCodes: ClosedRange<Int>) -> Observable<E> {
-        return flatMap { response -> Observable<E> in
-            return Observable.just(try response.filter(statusCodes: statusCodes))
-        }
-    }
-
-    /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filter(statusCodes: Range<Int>) -> Observable<E> {
+    public func filter<R: RangeExpression>(statusCodes: R) -> Observable<E> where R.Bound == Int {
         return flatMap { response -> Observable<E> in
             return Observable.just(try response.filter(statusCodes: statusCodes))
         }

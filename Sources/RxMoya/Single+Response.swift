@@ -8,14 +8,7 @@ import RxSwift
 extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Response {
 
     /// Filters out responses that don't fall within the given closed range, generating errors when others are encountered.
-    public func filter(statusCodes: ClosedRange<Int>) -> Single<ElementType> {
-        return flatMap { response -> Single<ElementType> in
-            return Single.just(try response.filter(statusCodes: statusCodes))
-        }
-    }
-
-    /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filter(statusCodes: Range<Int>) -> Single<ElementType> {
+    public func filter<R: RangeExpression>(statusCodes: R) -> Single<ElementType> where R.Bound == Int {
         return flatMap { response -> Single<ElementType> in
             return Single.just(try response.filter(statusCodes: statusCodes))
         }
