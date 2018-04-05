@@ -2,7 +2,7 @@
 
 ### Added
 
-- Convenience filter by `Range<Int>` on reponses.  [#1605](https://github.com/Moya/Moya/pull/1605) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+- **API Change** Response filter by range now receives a generic `RangeExpression` parameter that accepts any range type.  [#1624](https://github.com/Moya/Moya/pull/1624) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
 # [11.0.1] - 2018-02-26
 
