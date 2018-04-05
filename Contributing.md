@@ -75,4 +75,4 @@ The original source of this document can be found at [https://github.com/moya/co
 
 ## [No Brown M&M's](http://en.wikipedia.org/wiki/Van_Halen#Contract_riders)
 
-If you made it all the way to the end, bravo dear user, we love you. You can include this emoji in the top of your ticket to signal to us that you did in fact read this file and are trying to conform to it as best as possible:🍦 
+If you made it all the way to the end, bravo dear user, we love you. You can include the ✨ emoji in the top of your ticket to signal to us that you did in fact read this file and are trying to conform to it as best as possible: `:sparkles:`.
