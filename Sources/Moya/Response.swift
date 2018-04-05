@@ -42,7 +42,7 @@ public final class Response: CustomDebugStringConvertible, Equatable {
 public extension Response {
 
     /**
-     Returns the `Response` if the `statusCode` falls within the specified closed range.
+     Returns the `Response` if the `statusCode` falls within the specified range.
 
      - parameters:
         - statusCodes: The range of acceptable status codes.
