@@ -42,28 +42,17 @@ public final class Response: CustomDebugStringConvertible, Equatable {
 public extension Response {
 
     /**
-     Returns the `Response` if the `statusCode` falls within the specified closed range.
+     Returns the `Response` if the `statusCode` falls within the specified range.
 
      - parameters:
         - statusCodes: The range of acceptable status codes.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
-    public func filter(statusCodes: ClosedRange<Int>) throws -> Response {
+    public func filter<R: RangeExpression>(statusCodes: R) throws -> Response where R.Bound == Int {
         guard statusCodes.contains(statusCode) else {
             throw MoyaError.statusCode(self)
         }
         return self
-    }
-
-    /**
-     Returns the `Response` if the `statusCode` falls within the specified range.
-     
-     - parameters:
-     - statusCodes: The range of acceptable status codes.
-     - throws: `MoyaError.statusCode` when others are encountered.
-     */
-    public func filter(statusCodes: Range<Int>) throws -> Response {
-        return try filter(statusCodes: statusCodes.lowerBound...statusCodes.upperBound-1)
     }
 
     /**

@@ -1,8 +1,8 @@
 # Next
 
-### Added
+### Changed
 
-- Convenience filter by `Range<Int>` on reponses.  [#1605](https://github.com/Moya/Moya/pull/1605) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+- **Breaking Change** Changed `Response`s filter method parameter to use a generic `RangeExpression` that accepts any range type. [#1624](https://github.com/Moya/Moya/pull/1624) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
 # [11.0.1] - 2018-02-26
 
