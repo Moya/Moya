@@ -2,6 +2,9 @@
 
 ### Changed
 - **Breaking Change** Changed `Response`s filter method parameter to use a generic `RangeExpression` that accepts any range type. [#1624](https://github.com/Moya/Moya/pull/1624) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+# [11.0.3] - 2018-04-07
+### Added
+- Added custom authorization case to AuthorizationType inside AccessTokenPlugin. [#1611](https://github.com/Moya/Moya/pull/1611) by [@SeRG1k17](https://github.com/SeRG1k17).
 
 # [11.0.2] - 2018-04-01
 ### Fixed
