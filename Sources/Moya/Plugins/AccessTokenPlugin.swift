@@ -22,16 +22,17 @@ public enum AuthorizationType {
 
     /// The `"Bearer"` header.
     case bearer
-    
+
     /// Custom header implementation.
     case custom(String)
-    
-    public var value: String {
-        
+
+    public var value: String? {
+
         switch self {
-        case .none: return ""
-        case .basic, .bearer: return String(describing: self).capitalized
-        case .custom(let custom): return custom
+        case .none: return nil
+        case .basic: return "Basic"
+        case .bearer: return "Bearer"
+        case .custom(let customValue): return customValue
         }
     }
 }
@@ -77,12 +78,16 @@ public struct AccessTokenPlugin: PluginType {
 
         let authorizationType = authorizable.authorizationType
         var request = request
-        
+
         switch authorizationType {
         case .basic, .bearer, .custom:
-            let authValue = authorizationType.value + " " + tokenClosure()
-            request.addValue(authValue, forHTTPHeaderField: "Authorization")
-            
+
+            if let value = authorizationType.value {
+
+                let authValue = value + " " + tokenClosure()
+                request.addValue(authValue, forHTTPHeaderField: "Authorization")
+            }
+
         case .none:
             break
         }
