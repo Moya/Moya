@@ -9,55 +9,39 @@ extension ObservableType where E == Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     public func filter(statusCodes: ClosedRange<Int>) -> Observable<E> {
-        return flatMap { response -> Observable<E> in
-            return Observable.just(try response.filter(statusCodes: statusCodes))
-        }
+        return flatMap { Observable.just(try $0.filter(statusCodes: statusCodes)) }
     }
 
     public func filter(statusCode: Int) -> Observable<E> {
-        return flatMap { response -> Observable<E> in
-            return Observable.just(try response.filter(statusCode: statusCode))
-        }
+        return flatMap { Observable.just(try $0.filter(statusCode: statusCode)) }
     }
 
     public func filterSuccessfulStatusCodes() -> Observable<E> {
-        return flatMap { response -> Observable<E> in
-            return Observable.just(try response.filterSuccessfulStatusCodes())
-        }
+        return flatMap { Observable.just(try $0.filterSuccessfulStatusCodes()) }
     }
 
     public func filterSuccessfulStatusAndRedirectCodes() -> Observable<E> {
-        return flatMap { response -> Observable<E> in
-            return Observable.just(try response.filterSuccessfulStatusAndRedirectCodes())
-        }
+        return flatMap { Observable.just(try $0.filterSuccessfulStatusAndRedirectCodes()) }
     }
 
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
     public func mapImage() -> Observable<Image?> {
-        return flatMap { response -> Observable<Image?> in
-            return Observable.just(try response.mapImage())
-        }
+        return flatMap { Observable.just(try $0.mapImage()) }
     }
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
     public func mapJSON(failsOnEmptyData: Bool = true) -> Observable<Any> {
-        return flatMap { response -> Observable<Any> in
-            return Observable.just(try response.mapJSON(failsOnEmptyData: failsOnEmptyData))
-        }
+        return flatMap { Observable.just(try $0.mapJSON(failsOnEmptyData: failsOnEmptyData)) }
     }
 
     /// Maps received data at key path into a String. If the conversion fails, the signal errors.
     public func mapString(atKeyPath keyPath: String? = nil) -> Observable<String> {
-        return flatMap { response -> Observable<String> in
-            return Observable.just(try response.mapString(atKeyPath: keyPath))
-        }
+        return flatMap { Observable.just(try $0.mapString(atKeyPath: keyPath)) }
     }
 
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
     public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> Observable<D> {
-        return flatMap { response -> Observable<D> in
-            return Observable.just(try response.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData))
-        }
+        return flatMap { Observable.just(try $0.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)) }
     }
 }
 
