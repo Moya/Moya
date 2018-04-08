@@ -104,7 +104,7 @@ provider.request(.zen) { result in
 If you have specific needs there are also the more general:
 
 - `filter(statusCode: Int)` which only accepts a single status code and throws an error otherwise.
-- `filter(statusCodes: ClosedRange<Int>)` which accepts a range of status codes and throws an error if the response's status code doesn't fall within the range.
+- `filter<R: RangeExpression>(statusCodes: R)` which accepts any `RangeExpression` where the range's bound is an `Int` and throws an error if the response's status code doesn't fall within the range.
 
 A basic example is:
 
