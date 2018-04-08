@@ -4,7 +4,7 @@ Moya has been created with testing at its heart. In this document, you will find
 
 ## `sampleData`
 
-When creating your `TargetType` you are required to provide `sampleData` for your targets. All you need to do there is to provide `Data` that represents a sample response from every particular target.
+When creating your `TargetType` you are required to provide `sampleData` for your targets. All you need to do there is to provide `Data` that represents a sample response from every particular target. This can be used later for tests or just for providing offline support while developing. 
 
 For example:
 
@@ -16,8 +16,6 @@ public var sampleData: Data {
     }
 }
 ```
-
-This can be used later for tests or just for providing offline support while developing.
 
 ## `stubClosure`
 
@@ -37,21 +35,21 @@ Before you continue, it is worth mentioning that all the sample responses will b
 
 With the previous `sampleData` and `stubClosure`, we could only specify the data returned when stubbing. But you have more options.
 
-Moya offers you the opportunity to configure an [`endpointClosure`](https://github.com/Moya/Moya/blob/master/docs/Endpoints.md#from-target-to-endpoint) on your provider. In that closure, you convert from `Target` to `Endpoint`. And this `Endpoint` is where you are going to be able to specify more details for your testing. More concretely, on its `sampleResponseClosure`.
+Moya offers you the opportunity to configure an `endpointClosure` on your provider. In this closure, your `Target` needs to be mapped to an `Endpoint`. `Endpoint` is a semi-internal data structure used by Moya to reason about the request. And in this `Endpoint` is where you are going to be able to specify more details for your testing. More concretely, on its `sampleResponseClosure`.
 
-As we discussed above, the default stubbing behavior is to respond to requests with your sample data with a `200` HTTP status code. This is, because the default `endpointClosure` defines a default `sampleResponseClosure` as follows:
+As we discussed above, the default stubbing behavior is to respond to requests with your sample data with a `200` HTTP status code. This is because the default `endpointClosure` defines its `sampleResponseClosure` as follows:
 
 ```swift
 { .networkResponse(200, target.sampleData) }
 ```
 
-A `sampleResponseClosure` should return a `EndpointSampleResponse`, an it can be:
+If you need to setup your own `sampleResponseClosure`, your implementation should return a case of the `EndpointSampleResponse` enum:
 
 - A `.networkResponse(Int, Data)` where `Int` is a status code and `Data` is the returned data.
  Useful to customize either response codes or data to your own specification.
 - A `.response(HTTPURLResponse, Data)` where `HTTPURLResponse` is the response and `Data` is the returned data.
  Useful to *fully* stub your responses.
-- A `.networkError(NSError)` where `NSError` is the error occurred when sending the request or retrieving a response.
+- A `.networkError(NSError)` where `NSError` is the error that occurred when sending the request or retrieving a response.
  Useful to test for any network errors: Timeouts, reachability issues, etc.
 
 For example, the following code creates a provider to stub with *immediate* `401` responses:
