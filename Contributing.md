@@ -72,3 +72,7 @@ Both [Ash Furrow](https://github.com/ashfurrow) and [Orta Therox](https://github
 #### Where can I get more info about this document?
 
 The original source of this document can be found at [https://github.com/moya/contributors](https://github.com/moya/contributors).
+
+## [No Brown M&M's](http://en.wikipedia.org/wiki/Van_Halen#Contract_riders)
+
+If you made it all the way to the end, bravo dear user, we love you. You can include the ✨ emoji in the top of your ticket to signal to us that you did in fact read this file and are trying to conform to it as best as possible: `:sparkles:`.

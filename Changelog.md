@@ -1,11 +1,13 @@
 # Next
 
 ### Changed
-
 - **Breaking Change** Changed `Response`s filter method parameter to use a generic `RangeExpression` that accepts any range type. [#1624](https://github.com/Moya/Moya/pull/1624) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
-# [11.0.1] - 2018-02-26
+# [11.0.2] - 2018-04-01
+### Fixed
+- Fixed Carthage compatibility by disabling the SwiftLint build phase in release builds. [#1619](https://github.com/Moya/Moya/pull/1619) by [@Dschee](https://github.com/Dschee).
 
+# [11.0.1] - 2018-02-26
 ### Fixed
 - Fixed Alamofire validation not being performed on `.uploadMultipart` requests.
   [#1591](https://github.com/Moya/Moya/pull/1591) by [@SD10](https://github.com/SD10).
