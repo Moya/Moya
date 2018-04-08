@@ -4,7 +4,7 @@ Moya has been created with testing at its heart. In this document, you will find
 
 ## `sampleData`
 
-When creating your `TargetType` you have been required to provide `sampleData` for your targets. As you already know, all you want to do there is to provide `Data` that represents a sample response from every particular target.
+When creating your `TargetType` you are required to provide `sampleData` for your targets. All you need to do there is to provide `Data` that represents a sample response from every particular target.
 
 For example:
 
@@ -37,7 +37,7 @@ Before you continue, it is worth mentioning that all the sample responses will b
 
 With the previous `sampleData` and `stubClosure`, we could only specify the data returned when stubbing. But you have more options.
 
-As you may already know, Moya offers you the opportunity to configure an [`endpointClosure`](https://github.com/Moya/Moya/blob/master/docs/Endpoints.md#from-target-to-endpoint) on your provider. In that closure, you convert from `Target` to `Endpoint`. And this `Endpoint` is where you are going to be able to specify more details for your testing. More concretely, on its `sampleResponseClosure`.
+Moya offers you the opportunity to configure an [`endpointClosure`](https://github.com/Moya/Moya/blob/master/docs/Endpoints.md#from-target-to-endpoint) on your provider. In that closure, you convert from `Target` to `Endpoint`. And this `Endpoint` is where you are going to be able to specify more details for your testing. More concretely, on its `sampleResponseClosure`.
 
 As we discussed above, the default stubbing behavior is to respond to requests with your sample data with a `200` HTTP status code. This is, because the default `endpointClosure` defines a default `sampleResponseClosure` as follows:
 
@@ -54,7 +54,7 @@ A `sampleResponseClosure` should return a `EndpointSampleResponse`, an it can be
 - A `.networkError(NSError)` where `NSError` is the error occurred when sending the request or retrieving a response.
  Useful to test for any network errors: Timeouts, reachability issues, etc.
 
-For example, the following code create a provider to stub with *inmediate* `401` responses:
+For example, the following code creates a provider to stub with *immediate* `401` responses:
 
 ```swift
 let customEndpointClosure = { (target: APIService) -> Endpoint<APIService> in
