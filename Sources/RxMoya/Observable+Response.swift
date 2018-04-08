@@ -8,18 +8,21 @@ import Moya
 extension ObservableType where E == Response {
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
-    public func filter(statusCodes: ClosedRange<Int>) -> Observable<E> {
+    public func filter<R: RangeExpression>(statusCodes: R) -> Observable<E> where R.Bound == Int {
         return flatMap { Observable.just(try $0.filter(statusCodes: statusCodes)) }
     }
 
+    /// Filters out responses that has the specified `statusCode`.
     public func filter(statusCode: Int) -> Observable<E> {
         return flatMap { Observable.just(try $0.filter(statusCode: statusCode)) }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 299.
     public func filterSuccessfulStatusCodes() -> Observable<E> {
         return flatMap { Observable.just(try $0.filterSuccessfulStatusCodes()) }
     }
 
+    /// Filters out responses where `statusCode` falls within the range 200 - 399
     public func filterSuccessfulStatusAndRedirectCodes() -> Observable<E> {
         return flatMap { Observable.just(try $0.filterSuccessfulStatusAndRedirectCodes()) }
     }
