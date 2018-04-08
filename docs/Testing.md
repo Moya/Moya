@@ -19,17 +19,19 @@ public var sampleData: Data {
 
 ## `stubClosure`
 
-Sample data is not meant to be the default response for your calls. This substitution will not happen without configuring your provider for stubbing:
+The `stubClosure` property of a `MoyaProvider` is responsible for configuring whether a provider returns an actual or a stubbed response. This configuration is made in this closure by mapping a `TargetType` to a case of the `StubBehavior` enum:
+
+- `.never` to not stub responses.
+- `.immediate` to stub responses immediately.
+- `.delayed(seconds: TimeInterval)` to stub responses after a given delay (to simulate the delays the real network calls may have).
+
+For your convenience, `MoyaProvider` defines the `.immediatelyStub` and `.delayedStub(:)` closures that you can set while initializing your provider to always stub responses immediately or with a given delay. For example, in the following provider *all* your requests are going to receive *immediate* responses with your `sampleData`. 
 
 ```swift
 let stubbingProvider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
 ```
 
-With that definition, your requests are going to receive *immediate* responses with your `sampleData`.
-
-You can also use the `MoyaProvider.delayedStub(:)`. This will allow you to delay the stubbed responses to simulate the delays the real network calls may have. Further, you can also implement your own `StubClosure`. It will allow you to define the stubbing behavior target by target (and/or any condition related to the targets that you may have).
-
-Before you continue, it is worth mentioning that all the sample responses will be delivered with an HTTP status `200` by default.
+Before you continue, it is worth mentioning that all the stubbed responses will be delivered with an HTTP status `200` by default.
 
 ## `sampleResponseClosure`
 
