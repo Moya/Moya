@@ -27,3 +27,4 @@ We appreciate all the work being done by the community around Moya. If you would
 - [Drrrible](https://github.com/devxoul/Drrrible) - Dribbble for iOS using ReactorKit
 - [Eidolon](https://github.com/artsy/eidolon) - The Artsy Auction Kiosk App
 - [Insights for Instagram](https://github.com/adimango/insights-for-instagram) - A simple iOS Instagram's media insights App written in Swift 4
+- [Papr](https://github.com/jdisho/Papr/tree/papr-moya-version) - An Unsplash app for iOS.
