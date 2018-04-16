@@ -31,7 +31,7 @@ Moya的一些特色功能:
 - 让您使用关联的枚举值定义不同端点的清晰用法.
 - 把test stub作为一等公民，所以单元测试超级简单.
 
-您可以在 [愿景文档](Vision_CN.md)中查看更多关于项目方向的信息
+您可以在 [愿景文档](https://github.com/Moya/Moya/blob/master/Vision_CN.md)中查看更多关于项目方向的信息
 
 ## 示例项目
 
@@ -56,7 +56,7 @@ new auction app](https://github.com/Artsy/eidolon). 我们认为它已经可以�
 | 2.3   | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 |
 | 2.2   | <= 7.0.1      | <= 7.0.1      | <= 7.0.1      |
 
-**升级到Moya的最新主版本? 查看我们的 [迁移向导](https://github.com/Moya/Moya/blob/master/docs_CN/MigrationGuides.md).**
+**升级到Moya的最新主版本? 查看我们的 [迁移向导](https://github.com/Moya/Moya/blob/master/docs_CN/MigrationGuides).**
 
 ### Swift 包管理器
 
@@ -155,7 +155,7 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 ## 用法
 
-在 [一些设置](docs/Examples/Basic.md)之后, 使用Moya相当的简单。 您可以像下面的方式访问API:
+在 [一些设置](https://github.com/Moya/Moya/blob/master/docs_CN/Examples/Basic.md)之后, 使用Moya相当的简单。 您可以像下面的方式访问API:
 
 ```swift
 provider = MoyaProvider<GitHub>()
@@ -185,7 +185,7 @@ provider.request(.userProfile("ashfurrow")) { result in
 
 URLs不在有书写错误.参数值不在有缺失. 混乱的参数编码也不在有.
 
-更多示例，查看 [documentation](docs_CN/Examples).
+更多示例，查看 [documentation](https://github.com/Moya/Moya/blob/master/docs_CN/Examples).
 
 ## Reactive 扩展
 
@@ -195,7 +195,7 @@ URLs不在有书写错误.参数值不在有缺失. 混乱的参数编码也不�
 
 ### ReactiveSwift
 
-[`ReactiveSwift` extension](docs/ReactiveSwift.md) 提供了 `reactive.request(:callbackQueue:)` 和 
+[`ReactiveSwift` extension](https://github.com/Moya/Moya/blob/master/docs_CN/ReactiveSwift.md) 提供了 `reactive.request(:callbackQueue:)` 和
 `reactive.requestWithProgress(:callbackQueue:)` 两种立即返回  
 `SignalProducer`对象的方法 ，你可以start, bind, map, 或任何你想做的. 
 
@@ -217,7 +217,7 @@ provider.reactive.request(.userProfile("ashfurrow")).start { event in
 
 ### RxSwift
 
-[`RxSwift` extension](docs/RxSwift.md) 也提供了 `rx.request(:callbackQueue:)` 和 
+[`RxSwift` extension](https://github.com/Moya/Moya/blob/master/docs_CN/RxSwift.md) 也提供了 `rx.request(:callbackQueue:)` 和
 `rx.requestWithProgress(:callbackQueue:)` 两种方法, 但是这两个方法返回类型完全不一样. 在正常情况下 `rx.request(:callbackQueue)`, 返回类型是 `Single<Response>` ，它要么发送单个元素要么发送一个错误。而 `rx.requestWithProgress(:callbackQueue:)`, 返回类型是 `Observable<ProgressResponse>`, 因为我们可能从进度中获取多个事件和响应的最后一个事件。
 
 为了处理错误, 例如, 我们可以像下面这样处理:
@@ -238,7 +238,7 @@ provider.rx.request(.userProfile("ashfurrow")).subscribe { event in
 
 ## 社区项目
 
-[Moya有一个很棒的社区，有些人已经创建了一些非常有用的扩展。](https://github.com/Moya/Moya/blob/master/docs/CommunityProjects.md)
+[Moya有一个很棒的社区，有些人已经创建了一些非常有用的扩展。](https://github.com/Moya/Moya/blob/master/docs_CN/CommunityProjects.md)
 
 ## 贡献
 
@@ -273,9 +273,9 @@ Moya's 社区拥有巨大的正能量, 并且维护人员致力于让事情变�
  - 向我们发送有关您认为令人困惑或缺少的意见
  - 建议更好的措辞或解释某些功能的方法
  - 通过GitHub向我们发送pull requests
- - 改进[中文文档](Readme_CN.md)
+ - 改进[中文文档](https://github.com/Moya/Moya/blob/master/Readme_CN.md)
 
 
 ## 许可证
 
-Moya 是在 MIT license下发布的. 更多信息查看 [License.md](License.md) 。
+Moya 是在 MIT license下发布的. 更多信息查看 [License.md](https://github.com/Moya/Moya/blob/master/License.md) 。
