@@ -139,7 +139,33 @@ Then run `carthage update`.
 
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
-> NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ReactiveSwift`, feel free to delete that framework along with `ReactiveMoya` from the Carthage Build directory after `carthage update` completes. Or if you are using `ReactiveSwift` but not `RxSwift`, then `RxMoya`, `RxTest`, `RxCocoa`, etc. can safely be deleted.
+> NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ReactiveSwift`, feel free to delete that framework along with `ReactiveMoya` from the Carthage Build directory after `carthage update` completes. Or if you are using `ReactiveSwift` but not `RxSwift`, then `RxMoya`, `RxTest`, `RxCocoa`, etc. can safely be deleted. Read the next section for a workaround to this.
+
+#### Workaround to enhance build time (Beta)
+
+If you want Carthage to only build a specific variant of Moya with only the dependencies needed for that, we have a workaround for you that's less flexible regarding version specification but still provides you with minor and patch updates to Moya without editing the `Cartfile`.
+
+For plain Moya, use this entry instead:
+
+```
+github "Moya/Moya" "carthage/moya/11.x"
+```
+
+This will checkout the branch `carthage/moya/11.x` which only includes the plain Moya version and its dependencies leaving to a reduced build time. When a new minor or patch version of Moya is released, we will rebase that branch onto the latest release. New major releases will get their own branch.
+
+For RxMoya you would use this:
+
+```
+github "Moya/Moya" "carthage/rxmoya/11.x"
+```
+
+For ReactiveMoya, use this:
+
+```
+github "Moya/Moya" "carthage/reactivemoya/11.x"
+```
+
+NOTE: Please be aware that we don't have long-time experience with this workaround yet and might decide against it and remove it entirely. Once the solution proves to work fine with updates, we will remove the Beta status. We might also remove it once [this issue](https://github.com/Carthage/Carthage/issues/1227) on Carthage is solved.
 
 ### Manually
 
