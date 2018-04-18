@@ -43,6 +43,18 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         beforeEach {
             log = ""
         }
+        
+        it("prefixes output with logger id, date, identifier") {
+
+            plugin.willSend(TestBodyRequest(), target: GitHub.zen)
+
+            let dateFormatStringRegex = "[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+
+            expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] Request: "))
+            expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] Request Headers: "))
+            expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] HTTP Request Method: "))
+            expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] Request Body: "))
+        }
 
         it("outputs all request fields with body") {
 
