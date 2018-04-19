@@ -40,6 +40,17 @@ final class NetworkLoggerPluginSpec: QuickSpec {
                 return "formatted body".data(using: .utf8)!
         })
 
+        let pluginWithOutputFormat = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
+            //mapping the Any... from items to a string that can be compared
+            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
+            let string: String = stringArray.reduce("") { $0 + $1 + " " }
+            log += string
+        }, outputFormat: { (_, _, identifier, message) -> String in
+            return "\(identifier): \(message)"
+        })
+
+        let dateFormatStringRegex = "[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+
         beforeEach {
             log = ""
         }
@@ -48,12 +59,19 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             plugin.willSend(TestBodyRequest(), target: GitHub.zen)
 
-            let dateFormatStringRegex = "[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}"
-
             expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] Request: "))
             expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] Request Headers: "))
             expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] HTTP Request Method: "))
             expect(log).to(match("Moya_Logger: \\[\(dateFormatStringRegex)\\] Request Body: "))
+        }
+
+        it("customizes output prefix with the given format") {
+
+            pluginWithOutputFormat.willSend(TestBodyRequest(), target: GitHub.zen)
+
+            expect(log).to( beginWith("Request: https://api.github.com/zen") )
+            expect(log).notTo(contain("Moya_Logger: "))
+            expect(log).notTo(match(dateFormatStringRegex))
         }
 
         it("outputs all request fields with body") {
