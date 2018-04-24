@@ -7,52 +7,35 @@ import enum Alamofire.AFError
 final class NetworkLoggerPluginSpec: QuickSpec {
     override func spec() {
 
-        var log = ""
-        let plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        })
+        let output = TestNetworkLoggerOutput()
 
-        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { (_, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        })
+        var log: String { return output.log }
 
-        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        }, responseDataFormatter: { _ in
+        let plugin = NetworkLoggerPlugin(verbose: true, output: output)
+
+        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: output)
+
+        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true,
+                                                                 output: output,
+                                                                 responseDataFormatter: { _ in
             return "formatted request body".data(using: .utf8)!
         })
 
-        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        }, responseDataFormatter: { _ in
-                return "formatted body".data(using: .utf8)!
+        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true,
+                                                                  output: output,
+                                                                  responseDataFormatter: { _ in
+            return "formatted body".data(using: .utf8)!
         })
 
-        let pluginWithOutputFormat = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        }, outputFormat: { (_, _, identifier, message) -> String in
-            return "\(identifier): \(message)"
-        })
+        let outputWithCustomFormat = TestNetworkLoggerOutputWithCustomFormat()
+
+        let pluginWithOutputFormat = NetworkLoggerPlugin(verbose: true, output: outputWithCustomFormat)
 
         let dateFormatStringRegex = "[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}"
 
         beforeEach {
-            log = ""
+            output.log = ""
+            outputWithCustomFormat.log = ""
         }
         
         it("prefixes output with logger id, date, identifier") {
@@ -68,6 +51,8 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         it("customizes output prefix with the given format") {
 
             pluginWithOutputFormat.willSend(TestBodyRequest(), target: GitHub.zen)
+
+            let log = outputWithCustomFormat.log
 
             expect(log).to( beginWith("Request: https://api.github.com/zen") )
             expect(log).notTo(contain("Moya_Logger: "))
@@ -152,6 +137,21 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to( contain("\"https://api.github.com/zen\"") )
 
         }
+    }
+}
+
+private class TestNetworkLoggerOutputWithCustomFormat: NetworkLoggerOutput {
+    var log: String = ""
+
+    func print(_ separator: String, terminator: String, items: Any...) {
+        //mapping the Any... from items to a string that can be compared
+        let stringArray: [String] = items.map { $0 as? String }.flatMap { $0 }
+        let string: String = stringArray.reduce("") { $0 + $1 + " " }
+        log += string
+    }
+
+    func format(_ loggerId: String, date: String, identifier: String, message: String) -> String {
+        return "\(identifier): \(message)"
     }
 }
 
