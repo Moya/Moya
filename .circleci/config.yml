@@ -10,7 +10,7 @@ jobs:
       LANG: en_US.UTF-8
       BUNDLE_PATH: vendor/bundle
     macos:
-      xcode: '9.2.0'
+      xcode: '9.3.0'
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
