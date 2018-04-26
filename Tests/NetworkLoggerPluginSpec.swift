@@ -10,21 +10,21 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         var log = ""
         let plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         })
 
         let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { (_, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         })
 
         let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         }, responseDataFormatter: { _ in
@@ -33,7 +33,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.flatMap { $0 }
+            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         }, responseDataFormatter: { _ in
