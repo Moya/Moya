@@ -30,7 +30,7 @@ jobs:
           command: brew update
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds
+          command: carthage build --no-skip-current --cache-builds --verbose
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
