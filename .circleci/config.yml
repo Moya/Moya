@@ -106,7 +106,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.4
     steps:
-      - checkout
+      - *restore_repo
       - run:
           name: Run Danger
           command: bundle exec danger
