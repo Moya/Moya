@@ -7,7 +7,6 @@ references:
       xcode: '9.3.0'
 
     working_directory: ~/Moya/Moya
-    parallelism: 2
     shell: /bin/bash --login
     environment:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
