@@ -4,7 +4,7 @@ references:
 
   container_settings: &container_settings
     macos:
-      xcode: '9.2.0'
+      xcode: '9.3.0'
 
     working_directory: ~/Moya/Moya
     parallelism: 1
