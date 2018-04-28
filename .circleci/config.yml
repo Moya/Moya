@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
-      - run: 
+      - run:
           name: Fetch CocoaPods Specs
           command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
       - run:
@@ -40,7 +40,7 @@ jobs:
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
-      - run: 
+      - run:
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
       - save_cache:
@@ -48,24 +48,21 @@ jobs:
           paths:
             - vendor/bundle
             - Carthage
-      - run: 
+      - run:
           name: Test on iOS
           command: rake test:ios
-      - run: 
+      - run:
           name: Test on macOS
           command: rake test:macos
       - run:
           name: Test on tvOS
           command: rake test:tvos
-      - run: 
+      - run:
           name: Test with Carthage
           command: rake test:carthage
       - run:
           name: Build Example Project
           command: rake build_example
-      - run:
-          name: Run Danger
-          command: bundle exec danger
       - run:
           name: Send Code Coverage to Codecov.io
           command: bash <(curl -s https://codecov.io/bash) -J Moya
@@ -78,3 +75,20 @@ jobs:
           path: /tmp/circleci-artifacts
       - store_artifacts:
           path: /tmp/circleci-test-results
+
+  danger:
+    steps:
+      - checkout
+      - run:
+          name: Run Danger
+          command: bundle exec danger
+
+workflows:
+  version: 2
+  test_workflow:
+    jobs:
+      - build
+      - danger:
+          requires:
+            - build
+
