@@ -77,6 +77,8 @@ jobs:
           path: /tmp/circleci-test-results
 
   danger:
+    docker:
+      - image: circleci/ruby:2.4
     steps:
       - checkout
       - run:
