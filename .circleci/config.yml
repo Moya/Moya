@@ -1,6 +1,11 @@
 version: 2
-jobs:
-  build:
+
+references:
+
+  container_settings: &container_settings
+    macos:
+      xcode: '9.2.0'
+
     working_directory: ~/Moya/Moya
     parallelism: 1
     shell: /bin/bash --login
@@ -9,16 +14,30 @@ jobs:
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       LANG: en_US.UTF-8
       BUNDLE_PATH: vendor/bundle
-    macos:
-      xcode: '9.2.0'
+
+  restore_repo: &restore_repo
+    restore_cache:
+      keys:
+        - v1-dep-{{ .Branch }}-
+        - v1-dep-master-
+        - v1-dep-
+
+jobs:
+  checkout_code:
+    <<: *container_settings
     steps:
       - checkout
+      - *restore_repo
+      - save_cache:
+          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          paths:
+            - .
+
+  build:
+    <<: *container_settings
+    steps:
+      - *restore_repo
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-      - restore_cache:
-          keys:
-            - v1-dep-{{ .Branch }}-
-            - v1-dep-master-
-            - v1-dep-
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
@@ -76,6 +95,13 @@ jobs:
       - store_artifacts:
           path: /tmp/circleci-test-results
 
+  test_carthage:
+    <<: *container_settings
+    steps:
+      - run:
+          name: Test Carthage Build
+          command: carthage build --no-skip-current --cache-builds
+
   danger:
     docker:
       - image: circleci/ruby:2.4
@@ -89,7 +115,10 @@ workflows:
   version: 2
   test_workflow:
     jobs:
-      - build
+      - checkout_code
+      - build:
+          requires:
+            - checkout_code
       - danger:
           requires:
             - build
