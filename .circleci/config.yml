@@ -98,6 +98,7 @@ jobs:
   test_carthage:
     <<: *container_settings
     steps:
+      - *restore_repo
       - run:
           name: Test Carthage Build
           command: carthage build --no-skip-current --cache-builds
@@ -116,6 +117,9 @@ workflows:
   test_workflow:
     jobs:
       - checkout_code
+      - test_carthage:
+          requires:
+            - checkout_code
       - build:
           requires:
             - checkout_code
