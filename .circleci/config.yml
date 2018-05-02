@@ -22,15 +22,12 @@ jobs:
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
-      - run: 
-          name: Fetch CocoaPods Specs
-          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
       - run:
           name: Update Homebrew
           command: brew update
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds --verbose
+          command: carthage build --cache-builds --no-use-binaries --verbose
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
