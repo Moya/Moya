@@ -48,9 +48,6 @@ jobs:
           name: Update Homebrew
           command: brew update
       - run:
-          name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds
-      - run:
           name: Install Swiftlint
           command: brew install swiftlint
       - run:
