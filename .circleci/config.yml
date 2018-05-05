@@ -63,19 +63,13 @@ jobs:
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
-      - run:
-          name: Install Ruby Dependencies
-          command: bundle check || bundle install
-          environment:
-            BUNDLE_JOBS: 4
-            BUNDLE_RETRY: 3
+      - run: bundle --path vendor/bundle
       - run:
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
       - save_cache:
           key: v1-dep-{{ .Branch }}-{{ epoch }}
           paths:
-            - vendor/bundle
             - Carthage
       - run:
           name: Test on iOS
@@ -123,6 +117,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/moya-workflow
+      - run: bundle --path vendor/bundle
       - run:
           name: Run Danger
           command: bundle exec danger
