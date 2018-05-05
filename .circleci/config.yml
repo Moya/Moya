@@ -6,7 +6,7 @@ references:
     macos:
       xcode: '9.2.0'
 
-    working_directory: ~/Moya/Moya
+    working_directory: ~/moya-workflow
     shell: /bin/bash --login
     environment:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
@@ -22,20 +22,33 @@ references:
         - v1-dep-
 
 jobs:
-  checkout_code:
-    <<: *container_settings
+  bundle_dependencies:
+    docker:
+      - image: circleci/ruby:2.4-node
+    working_directory: ~/moya-workflow
     steps:
       - checkout
-      - *restore_repo
+      - attach_workspace:
+          at: ~/moya-workflow
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
       - save_cache:
-          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
           paths:
+            - ~/moya-workflow/vendor/bundle
+      - persist_to_workspace:
+          root: .
+          paths: vendor/bundle
             - .
 
   build:
     <<: *container_settings
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/moya-workflow
       - *restore_repo
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - run:
@@ -96,6 +109,8 @@ jobs:
     <<: *container_settings
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/moya-workflow
       - *restore_repo
       - run:
           name: Test Carthage Build
@@ -105,6 +120,9 @@ jobs:
     docker:
       - image: circleci/ruby:2.4
     steps:
+      - checkout
+      - attach_workspace:
+          at: ~/moya-workflow
       - *restore_repo
       - run:
           name: Run Danger
@@ -114,13 +132,13 @@ workflows:
   version: 2
   test_workflow:
     jobs:
-      - checkout_code
+      - bundle_dependencies
       - test_carthage:
           requires:
-            - checkout_code
+            - bundle_dependencies
       - build:
           requires:
-            - checkout_code
+            - bundle_dependencies
       - danger:
           requires:
             - build
