@@ -35,6 +35,7 @@ jobs:
   build:
     <<: *container_settings
     steps:
+      - checkout
       - *restore_repo
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - run:
@@ -97,6 +98,7 @@ jobs:
   test_carthage:
     <<: *container_settings
     steps:
+      - checkout
       - *restore_repo
       - run:
           name: Test Carthage Build
