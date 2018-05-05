@@ -117,6 +117,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/moya-workflow
+      - *restore_repo
       - run: bundle --path vendor/bundle
       - run:
           name: Run Danger
