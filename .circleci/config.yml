@@ -123,7 +123,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/moya-workflow
-      - *restore_repo
       - run:
           name: Run Danger
           command: bundle exec danger
