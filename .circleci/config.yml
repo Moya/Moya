@@ -111,8 +111,7 @@ jobs:
           command: carthage build --no-skip-current --cache-builds
 
   danger:
-    docker:
-      - image: circleci/ruby:2.4
+    <<: *container_settings
     steps:
       - checkout
       - attach_workspace:
