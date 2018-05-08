@@ -12,7 +12,6 @@ references:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       LANG: en_US.UTF-8
-      BUNDLE_PATH: vendor/bundle
 
   restore_repo: &restore_repo
     restore_cache:
@@ -129,11 +128,11 @@ workflows:
       - bundle_dependencies
       - test_carthage:
           requires:
-            - bundle_dependencies
+            - danger
       - build:
           requires:
-            - bundle_dependencies
+            - danger
       - danger:
           requires:
-            - build
+            - bundle_dependencies
 
