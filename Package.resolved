@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "bfb9f132cdfa1033bea847e4cf9cfde4fee254e3",
-          "version": "4.7.0"
+          "revision": "2fb881a1702cb1976c36192aceb54dcedab6fdc2",
+          "version": "4.7.2"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
           "branch": null,
-          "revision": "22800b0954c89344bb8c87f8ab93378076716fb7",
-          "version": "7.0.3"
+          "revision": "21f4fed2052cea480f5f1d2044d45aa25fdfb988",
+          "version": "7.1.1"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/Quick/Quick.git",
         "state": {
           "branch": null,
-          "revision": "0ff81f2c665b4381f526bd656f8708dd52a9ea2f",
-          "version": "1.2.0"
+          "revision": "3e3023569c8d4c4a0d000f58db765df53041117f",
+          "version": "1.3.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/ReactiveCocoa/ReactiveSwift.git",
         "state": {
           "branch": null,
-          "revision": "46fb4d4a8285286e54929add1d12f384675895c6",
-          "version": "3.1.0"
+          "revision": "7c25bc2e284ba54a8d81d3843a59cdd933c8f823",
+          "version": "4.0.0-rc.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/antitypical/Result.git",
         "state": {
           "branch": null,
-          "revision": "7477584259bfce2560a19e06ad9f71db441fff11",
-          "version": "3.2.4"
+          "revision": "8fc088dcf72802801efeecba76ea8fb041fb773d",
+          "version": "4.0.0"
         }
       },
       {
