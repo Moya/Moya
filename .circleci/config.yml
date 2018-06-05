@@ -1,16 +1,43 @@
 version: 2
+defaults: &defaults
+  macos:
+    xcode: '9.3.0'
+  parallelism: 1
+  shell: /bin/bash --login    
+  environment:
+    CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    LANG: en_US.UTF-8
+    BUNDLE_PATH: vendor/bundle
 jobs:
+  carthage_without_swiftlint_integration:
+    <<: *defaults
+    working_directory: ~/Moya/Moya_Carthage_1
+    steps:
+      - checkout
+      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+      - restore_cache:
+          keys:
+            - v1-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+      - run:
+          name: Set Ruby Version
+          command: echo "ruby-2.4" > ~/.ruby-version
+      - run:
+          name: Update Homebrew
+          command: brew update    
+      - run:
+          name: Carthage checkout
+          command: carthage checkout
+      - run:
+          name: Test Carthage Build before installing SwiftLint
+          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose             
+      - save_cache:
+          key: v1-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+          paths:
+            - Carthage               
   build:
+    <<: *defaults
     working_directory: ~/Moya/Moya
-    parallelism: 1
-    shell: /bin/bash --login
-    environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-      LANG: en_US.UTF-8
-      BUNDLE_PATH: vendor/bundle
-    macos:
-      xcode: '9.3.0'
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
@@ -25,9 +52,6 @@ jobs:
       - run:
           name: Update Homebrew
           command: brew update
-      - run:
-          name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
