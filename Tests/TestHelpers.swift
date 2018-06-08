@@ -3,7 +3,7 @@ import Moya
 #if os(iOS) || os(watchOS) || os(tvOS)
 import UIKit
 import Foundation
-#elseif os(OSX)
+#elseif os(macOS)
 import AppKit
 #endif
 
@@ -239,11 +239,11 @@ extension ImageType {
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
             return UIImageJPEGRepresentation(self, compression)
         }
-    #elseif os(OSX)
+    #elseif os(macOS)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
             var imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
             let imageRep = NSBitmapImageRep(cgImage: self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)
-            return imageRep.representation(using: .JPEG, properties: [:])
+            return imageRep.representation(using: .jpeg, properties: [:])
         }
     #endif
 }
