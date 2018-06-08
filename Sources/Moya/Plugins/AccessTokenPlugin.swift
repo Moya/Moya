@@ -77,7 +77,7 @@ public struct AccessTokenPlugin: PluginType {
 
         let authorizationType = authorizable.authorizationType
         var request = request
-        
+
         switch authorizationType {
         case .basic, .bearer, .custom:
             if let value = authorizationType.value {

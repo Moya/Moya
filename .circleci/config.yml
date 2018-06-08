@@ -1,36 +1,55 @@
 version: 2
+defaults: &defaults
+  macos:
+    xcode: '9.3.0'
+  parallelism: 1
+  shell: /bin/bash --login    
+  environment:
+    CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    LANG: en_US.UTF-8
+    BUNDLE_PATH: vendor/bundle
 jobs:
-  build:
-    working_directory: ~/Moya/Moya
-    parallelism: 1
-    shell: /bin/bash --login
-    environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-      LANG: en_US.UTF-8
-      BUNDLE_PATH: vendor/bundle
-    macos:
-      xcode: '9.2.0'
+  carthage_without_swiftlint_integration:
+    <<: *defaults
+    working_directory: ~/Moya/Moya_Carthage_1
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v1-dep-{{ .Branch }}-
-            - v1-dep-master-
-            - v1-dep-
+            - v1-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
-      - run: 
-          name: Fetch CocoaPods Specs
-          command: curl -sS https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash
+      - run:
+          name: Update Homebrew
+          command: brew update    
+      - run:
+          name: Carthage checkout
+          command: carthage checkout
+      - run:
+          name: Test Carthage Build before installing SwiftLint
+          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose             
+      - save_cache:
+          key: v1-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+          paths:
+            - Carthage               
+  build:
+    <<: *defaults
+    working_directory: ~/Moya/Moya
+    steps:
+      - checkout
+      - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+      - restore_cache:
+          keys:
+            - v1-dep-{{ checksum "Cartfile.resolved" }}
+      - run:
+          name: Set Ruby Version
+          command: echo "ruby-2.4" > ~/.ruby-version
       - run:
           name: Update Homebrew
           command: brew update
-      - run:
-          name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
@@ -44,7 +63,7 @@ jobs:
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
       - save_cache:
-          key: v1-dep-{{ .Branch }}-{{ epoch }}
+          key: v1-dep-{{ checksum "Cartfile.resolved" }}
           paths:
             - vendor/bundle
             - Carthage
@@ -78,3 +97,9 @@ jobs:
           path: /tmp/circleci-artifacts
       - store_artifacts:
           path: /tmp/circleci-test-results
+workflows:
+  version: 2
+  pr_build:
+    jobs:
+      - build
+      - carthage_without_swiftlint_integration
