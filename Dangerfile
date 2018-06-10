@@ -65,10 +65,10 @@ end
 
 if (cartfile_updated && !cartfile_resolved_updated)
   warn("The `Cartfile` was updated, but `Cartfile.resolved` was not. Did you forget to update `Cartfile.resolved`?" )
-
+end
 if (package_updated && !package_resolved_updated)
   warn("The `Package.swift` was updated, but `Package.resolved` was not. Did you forget to update `Package.resolved`?" )
-
+end 
 # Warn when library files has been updated but not tests.
 tests_updated = !git.modified_files.grep(/Tests/).empty?
 if has_app_changes && !tests_updated
@@ -77,3 +77,11 @@ end
 
 # Run SwiftLint
 swiftlint.lint_files
+
+# Xcode summary
+xcode_summary.ignored_results { |result|
+  result.message.start_with?('ld') # Ignore ld_warnings
+}
+xcode_summary.report 'xcodebuild-ios.json'
+xcode_summary.report 'xcodebuild-tvos.json'
+xcode_summary.report 'xcodebuild-macos.json'
