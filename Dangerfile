@@ -79,9 +79,10 @@ end
 swiftlint.lint_files
 
 # Xcode summary
-xcode_summary.ignored_results { |result|
-  result.message.start_with?('ld') # Ignore ld_warnings
-}
+# xcode_summary.ignored_results { |result|
+#   result.message.start_with?('ld') # Ignore ld_warnings
+# }
+xcode_summary.sticky_summary = true
 xcode_summary.report 'xcodebuild-ios.json'
 xcode_summary.report 'xcodebuild-tvos.json'
 xcode_summary.report 'xcodebuild-macos.json'
