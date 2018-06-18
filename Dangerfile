@@ -95,7 +95,7 @@ def label_tests_summary(label:, platform:)
   file_name = "xcodebuild-#{platform}.json"
   json = File.read(file_name)
   test_summaries = json["tests_summary_messages"]
-  json["tests_summary_messages"] = label + test_summaries
+  json["tests_summary_messages"] = test_summaries + label
 
   File.open(file_name,"w") do |f|
     f.puts JSON.pretty_generate(JSON.parse(json))
