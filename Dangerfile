@@ -79,10 +79,36 @@ end
 swiftlint.lint_files
 
 # Xcode summary
-# xcode_summary.ignored_results { |result|
-#   result.message.start_with?('ld') # Ignore ld_warnings
-# }
-xcode_summary.sticky_summary = true
-xcode_summary.report 'xcodebuild-ios.json'
-xcode_summary.report 'xcodebuild-tvos.json'
-xcode_summary.report 'xcodebuild-macos.json'
+def config_xcode_summary() 
+  xcode_summary.sticky_summary = true
+  xcode_summary.ignored_results { |result|
+    result.message.start_with?('ld') # Ignore ld_warnings
+  }
+end 
+
+def report(platform:)
+  xcode_summary.report "xcodebuild-#{platform}.json"
+end
+
+def label_tests_summary(label:, platform:) 
+  # tests_summary_messages
+  file_name = "xcodebuild-#{platform}.json"
+  json = File.read(file_name)
+  test_summaries = json["tests_summary_messages"]
+  json["tests_summary_messages"] = test_summaries.map do |summary|
+    return '\t ' + label + summary
+  end 
+
+  File.open(file_name,"w") do |f|
+    f.puts JSON.pretty_generate(JSON.parse(json))
+  end 
+end
+
+config_xcode_summary()
+label_tests_summary(label: 'iOS:', platform: ios)
+label_tests_summary(label: 'tvOS:', platform: tvos)
+label_tests_summary(label: 'macOS:', platform: macos)
+
+report(platform: ios)
+report(platform: tvos)
+report(platform: macos)
