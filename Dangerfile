@@ -95,8 +95,7 @@ def label_tests_summary(label:, platform:)
   file_name = "xcodebuild-#{platform}.json"
   json = File.read(file_name)
   test_summaries = json["tests_summary_messages"]
-  json["tests_summary_messages"] = test_summaries.map do |summary|
-    return '\t ' + label + summary[1..-1]
+  json["tests_summary_messages"] = '\t ' + label + test_summaries[1..-1]
   end 
 
   File.open(file_name,"w") do |f|
