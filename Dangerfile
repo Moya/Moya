@@ -91,14 +91,15 @@ def report(platform:)
 end
 
 def label_tests_summary(label:, platform:) 
-  # tests_summary_messages
   file_name = "xcodebuild-#{platform}.json"
   json = File.read(file_name)
-  test_summaries = json["tests_summary_messages"]
-  json["tests_summary_messages"] = test_summaries + label
-
+  data = JSON.parse(json)
+  test_summaries = data["tests_summary_messages"]
+  if !test_summaries.empty?
+    test_summaries.insert(1, label)
+  end
   File.open(file_name,"w") do |f|
-    f.puts JSON.pretty_generate(JSON.parse(json))
+    f.puts JSON.pretty_generate(data)
   end 
 end
 
