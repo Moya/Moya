@@ -96,7 +96,7 @@ def label_tests_summary(label:, platform:)
   json = File.read(file_name)
   test_summaries = json["tests_summary_messages"]
   json["tests_summary_messages"] = test_summaries.map do |summary|
-    return '\t ' + label + summary
+    return '\t ' + label + summary[1..-1]
   end 
 
   File.open(file_name,"w") do |f|
@@ -105,10 +105,10 @@ def label_tests_summary(label:, platform:)
 end
 
 config_xcode_summary()
-label_tests_summary(label: 'iOS:', platform: ios)
-label_tests_summary(label: 'tvOS:', platform: tvos)
-label_tests_summary(label: 'macOS:', platform: macos)
+label_tests_summary(label: 'iOS:', platform: 'ios')
+label_tests_summary(label: 'tvOS:', platform: 'tvos')
+label_tests_summary(label: 'macOS:', platform: 'macos')
 
-report(platform: ios)
-report(platform: tvos)
-report(platform: macos)
+report(platform: 'ios')
+report(platform: 'tvos')
+report(platform: 'macos')
