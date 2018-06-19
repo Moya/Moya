@@ -86,7 +86,7 @@ def config_xcode_summary()
   }
 end 
 
-def report(platform:)
+def summary(platform:)
   xcode_summary.report "xcodebuild-#{platform}.json"
 end
 
@@ -94,20 +94,21 @@ def label_tests_summary(label:, platform:)
   file_name = "xcodebuild-#{platform}.json"
   json = File.read(file_name)
   data = JSON.parse(json)
-  test_summaries = data["tests_summary_messages"]
-  if !test_summaries.empty?
-    test_summaries.insert(1, label)
-  end
+  data["tests_summary_messages"].each { |message| 
+    if !message.empty?
+      message.insert(1, ' ' + label + ':')
+    end
+  }
   File.open(file_name,"w") do |f|
     f.puts JSON.pretty_generate(data)
   end 
 end
 
 config_xcode_summary()
-label_tests_summary(label: 'iOS:', platform: 'ios')
-label_tests_summary(label: 'tvOS:', platform: 'tvos')
-label_tests_summary(label: 'macOS:', platform: 'macos')
+label_tests_summary(label: 'iOS', platform: 'ios')
+label_tests_summary(label: 'tvOS', platform: 'tvos')
+label_tests_summary(label: 'macOS', platform: 'macos')
 
-report(platform: 'ios')
-report(platform: 'tvos')
-report(platform: 'macos')
+summary(platform: 'ios')
+summary(platform: 'tvos')
+summary(platform: 'macos')
