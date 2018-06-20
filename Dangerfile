@@ -80,7 +80,6 @@ swiftlint.lint_files
 
 # Xcode summary
 def config_xcode_summary() 
-  xcode_summary.sticky_summary = true
   xcode_summary.ignored_results { |result|
     result.message.start_with?('ld') # Ignore ld_warnings
   }
