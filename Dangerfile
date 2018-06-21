@@ -104,6 +104,7 @@ def label_tests_summary(label:, platform:)
 end
 
 config_xcode_summary()
+
 label_tests_summary(label: 'iOS', platform: 'ios')
 label_tests_summary(label: 'tvOS', platform: 'tvos')
 label_tests_summary(label: 'macOS', platform: 'macos')
