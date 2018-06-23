@@ -81,7 +81,7 @@ swiftlint.lint_files
 # Xcode summary
 def config_xcode_summary() 
   xcode_summary.ignored_results { |result|
-    result.message.start_with?('ld') # Ignore ld_warnings
+    result.message.start_with?("ld") # Ignore ld_warnings
   }
 end 
 
@@ -95,7 +95,7 @@ def label_tests_summary(label:, platform:)
   data = JSON.parse(json)
   data["tests_summary_messages"].each { |message| 
     if !message.empty?
-      message.insert(1, ' ' + label + ':')
+      message.insert(1, " " + label + ":")
     end
   }
   File.open(file_name,"w") do |f|
@@ -105,10 +105,10 @@ end
 
 config_xcode_summary()
 
-label_tests_summary(label: 'iOS', platform: 'ios')
-label_tests_summary(label: 'tvOS', platform: 'tvos')
-label_tests_summary(label: 'macOS', platform: 'macos')
+label_tests_summary(label: "iOS", platform: "ios")
+label_tests_summary(label: "tvOS", platform: "tvos")
+label_tests_summary(label: "macOS", platform: "macos")
 
-summary(platform: 'ios')
-summary(platform: 'tvos')
-summary(platform: 'macos')
+summary(platform: "ios")
+summary(platform: "tvos")
+summary(platform: "macos")
