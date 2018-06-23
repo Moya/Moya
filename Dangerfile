@@ -65,10 +65,10 @@ end
 
 if (cartfile_updated && !cartfile_resolved_updated)
   warn("The `Cartfile` was updated, but `Cartfile.resolved` was not. Did you forget to update `Cartfile.resolved`?" )
-
+end
 if (package_updated && !package_resolved_updated)
   warn("The `Package.swift` was updated, but `Package.resolved` was not. Did you forget to update `Package.resolved`?" )
-
+end 
 # Warn when library files has been updated but not tests.
 tests_updated = !git.modified_files.grep(/Tests/).empty?
 if has_app_changes && !tests_updated
@@ -77,3 +77,38 @@ end
 
 # Run SwiftLint
 swiftlint.lint_files
+
+# Xcode summary
+def config_xcode_summary() 
+  xcode_summary.ignored_results { |result|
+    result.message.start_with?("ld") # Ignore ld_warnings
+  }
+end 
+
+def summary(platform:)
+  xcode_summary.report "xcodebuild-#{platform}.json"
+end
+
+def label_tests_summary(label:, platform:) 
+  file_name = "xcodebuild-#{platform}.json"
+  json = File.read(file_name)
+  data = JSON.parse(json)
+  data["tests_summary_messages"].each { |message| 
+    if !message.empty?
+      message.insert(1, " " + label + ":")
+    end
+  }
+  File.open(file_name,"w") do |f|
+    f.puts JSON.pretty_generate(data)
+  end 
+end
+
+config_xcode_summary()
+
+label_tests_summary(label: "iOS", platform: "ios")
+label_tests_summary(label: "tvOS", platform: "tvos")
+label_tests_summary(label: "macOS", platform: "macos")
+
+summary(platform: "ios")
+summary(platform: "tvos")
+summary(platform: "macos")
