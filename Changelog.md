@@ -4,6 +4,10 @@
 - **Breaking Change** Added `.custom(String)` authorization case to `AuthorizationType` inside `AccessTokenPlugin`. [#1611](https://github.com/Moya/Moya/pull/1611) by [@SeRG1k17](https://github.com/SeRG1k17).
 
 ### Changed
+- **Breaking Change** Minimum version of `ReactiveSwift` is now 4.0. [#1668](https://github.com/Moya/Moya/pull/1668) by [@sunshinejr](https://github.com/sunshinejr).
+
+- **Breaking Change** Minimum version of `Result` is now 4.0. [#1668](https://github.com/Moya/Moya/pull/1668) by [@sunshinejr](https://github.com/sunshinejr).
+
 - **Breaking Change** Changed `Response`s filter method parameter to use a generic `RangeExpression` that accepts any range type. [#1624](https://github.com/Moya/Moya/pull/1624) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
 - **Breaking Change** Changed `AuthorizationType`'s initializer to no longer use an `@autoclosure` for the `tokenClosure` parameter. [#1611](https://github.com/Moya/Moya/pull/1611) by [@SeRG1k17](https://github.com/SeRG1k17).
