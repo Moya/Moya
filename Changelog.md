@@ -1,5 +1,7 @@
 # Next
 
+# [12.0.0-beta.1] - 2018-08-07
+
 ### Added
 - **Breaking Change** Added `.custom(String)` authorization case to `AuthorizationType` inside `AccessTokenPlugin`. [#1611](https://github.com/Moya/Moya/pull/1611) by [@SeRG1k17](https://github.com/SeRG1k17).
 
