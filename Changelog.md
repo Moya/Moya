@@ -10,7 +10,7 @@
 
 - **Breaking Change** Changed `Response`s filter method parameter to use a generic `RangeExpression` that accepts any range type. [#1624](https://github.com/Moya/Moya/pull/1624) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
-- **Breaking Change** Changed `AuthorizationType`'s initializer to no longer use an `@autoclosure` for the `tokenClosure` parameter. [#1611](https://github.com/Moya/Moya/pull/1611) by [@SeRG1k17](https://github.com/SeRG1k17).
+- **Breaking Change** Changed `AccessTokenPlugin`'s initializer to no longer use an `@autoclosure` for the `tokenClosure` parameter. [#1611](https://github.com/Moya/Moya/pull/1611) by [@SeRG1k17](https://github.com/SeRG1k17).
 
 # [11.0.2] - 2018-04-01
 ### Fixed
