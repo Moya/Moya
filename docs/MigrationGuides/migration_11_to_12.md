@@ -9,8 +9,7 @@ This project follows [Semantic Versioning](http://semver.org).
 
 ### Response Migration
 
-- The function signature of `Response`'s filter methods has been changed to use a generic argument constrained to `RangeExpression` where the `RangeExpression.Bound` is
-  equal to `Int`, instead of providing overloads supporting both `Range` and `ClosedRange`. Account for this change if you rely on the signature explicitly.
+- The function signature of `Response`'s filter methods has been changed to use a generic argument constrained to `RangeExpression` where the `RangeExpression.Bound` is equal to `Int`, instead of providing overloads supporting both `Range` and `ClosedRange`. Account for this change if you rely on the signature explicitly.
 
 ### ReactiveSwift Migration
 
