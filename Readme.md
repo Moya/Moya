@@ -10,7 +10,7 @@
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
-*A Chinese version of this document can be found [here](Readme_CN.md).*
+*A Chinese version of this document can be found [here](https://github.com/Moya/Moya/blob/master/Readme_CN.md).*
 
 You're a smart developer. You probably use [Alamofire](https://github.com/Alamofire/Alamofire) to abstract away access to
 `URLSession` and all those nasty details you don't really care about. But then,
@@ -39,7 +39,7 @@ Some awesome features of Moya:
 - Lets you define a clear usage of different endpoints with associated enum values.
 - Treats test stubs as first-class citizens so unit testing is super-easy.
 
-You can check out more about the project direction in the [vision document](Vision.md).
+You can check out more about the project direction in the [vision document](https://github.com/Moya/Moya/blob/master/Vision.md).
 
 ## Sample Projects
 
@@ -182,7 +182,7 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 ## Usage
 
-After [some setup](docs/Examples/Basic.md), using Moya is really simple. You can access an API like this:
+After [some setup](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md), using Moya is really simple. You can access an API like this:
 
 ```swift
 provider = MoyaProvider<GitHub>()
@@ -214,7 +214,7 @@ provider.request(.userProfile("ashfurrow")) { result in
 No more typos in URLs. No more missing parameter values. No more messing with
 parameter encoding.
 
-For more examples, see the [documentation](docs/Examples).
+For more examples, see the [documentation](https://github.com/Moya/Moya/blob/master/docs/Examples).
 
 ## Reactive Extensions
 
@@ -224,9 +224,9 @@ Even cooler are the reactive extensions. Moya provides reactive extensions for
 
 ### ReactiveSwift
 
-[`ReactiveSwift` extension](docs/ReactiveSwift.md) provides both `reactive.request(:callbackQueue:)` and 
-`reactive.requestWithProgress(:callbackQueue:)` methods that immediately return 
-`SignalProducer`s that you can start, bind, map, or whatever you want to do. 
+[`ReactiveSwift` extension](https://github.com/Moya/Moya/blob/master/docs/ReactiveSwift.md) provides both `reactive.request(:callbackQueue:)` and 
+`reactive.requestWithProgress(:callbackQueue:)` methods that immediately return
+`SignalProducer`s that you can start, bind, map, or whatever you want to do.
 To handle errors, for instance, we could do the following:
 
 ```swift
@@ -245,8 +245,8 @@ provider.reactive.request(.userProfile("ashfurrow")).start { event in
 
 ### RxSwift
 
-[`RxSwift` extension](docs/RxSwift.md) also provide both `rx.request(:callbackQueue:)` and 
-`rx.requestWithProgress(:callbackQueue:)` methods, but return type is 
+[`RxSwift` extension](https://github.com/Moya/Moya/blob/master/docs/RxSwift.md) also provide both `rx.request(:callbackQueue:)` and
+`rx.requestWithProgress(:callbackQueue:)` methods, but return type is
 different for both. In case of a normal `rx.request(:callbackQueue)`, the
 return type is `Single<Response>` which emits either single element or an
 error. In case of a `rx.requestWithProgress(:callbackQueue:)`, the return 
@@ -312,9 +312,9 @@ Whether you’re a core member or a user trying it out for the first time, you c
 - sending us feedback about something you thought was confusing or simply missing
 - suggesting better wording or ways of explaining certain topics
 - sending us a pull request via GitHub
-- improving the [Chinese documentation](Readme_CN.md)
+- improving the [Chinese documentation](https://github.com/Moya/Moya/blob/master/Readme_CN.md)
 
 
 ## License
 
-Moya is released under an MIT license. See [License.md](License.md) for more information.
+Moya is released under an MIT license. See [License.md](https://github.com/Moya/Moya/blob/master/License.md) for more information.

@@ -47,18 +47,53 @@ if has_app_changes && missing_doc_changes && doc_changes_recommended && not_decl
   warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
 
-# Warn when either the podspec or Cartfile + Cartfile.resolved has been updated,
-# but not both.
-podspec_updated = !git.modified_files.grep(/Moya.podspec/).empty?
-cartfile_updated = !git.modified_files.grep(/Cartfile/).empty?
-cartfile_resolved_updated = !git.modified_files.grep(/Cartfile.resolved/).empty?
+# Wrapper for package manifest file name and update status
+PackageManifest = Struct.new(:fileName, :updated)
 
-if podspec_updated && (!cartfile_updated || !cartfile_resolved_updated)
-  warn("The `podspec` was updated, but there were no changes in either the `Cartfile` nor `Cartfile.resolved`. Did you forget updating `Cartfile` or `Cartfile.resolved`?")
+# Well formatted, comma separated list of package manifest(s)
+def format_manifests(manifests)
+    return "" if manifests.empty?
+    formatted = manifests.map { |e| "`#{e.fileName}`" }
+    return formatted.first if formatted.size == 1
+    output = formatted.join(', ')
+    output[output.rindex(',')] = ' and'
+    return output
 end
 
-if (cartfile_updated || cartfile_resolved_updated) && !podspec_updated
-  warn("The `Cartfile` or `Cartfile.resolved` was updated, but there were no changes in the `podspec`. Did you forget updating the `podspec`?")
+# Warning message for not updated package manifest(s)
+def manifests_warning_message(updated:, not_updated:)
+    return "Unable to construct warning message." if updated.empty? || not_updated.empty?
+    updated_manifests_names = format_manifests(updated)
+    not_updated_manifests_names = format_manifests(not_updated)
+    updated_article = updated.size == 1 ? "The " : ""
+    updated_verb = updated.size == 1 ? "was" : "were"
+    not_updated_article = not_updated.size == 1 ? "the " : ""
+    output = "#{updated_article}#{updated_manifests_names} #{updated_verb} updated, " \
+             "but there were no changes in #{not_updated_article}#{not_updated_manifests_names}.\n"\
+             "Did you forget to update #{not_updated_manifests_names}?"
+    return output
+end
+
+# Warn when any of the package manifest(s) updated but not others
+podspec_updated = PackageManifest.new("Moya.podspec", !git.modified_files.grep(/Moya.podspec/).empty?)
+cartfile_updated = PackageManifest.new("Cartfile", !git.modified_files.grep(/Cartfile$/).empty?)
+cartfile_resolved_updated = PackageManifest.new("Cartfile.resolved", !git.modified_files.grep(/Cartfile.resolved/).empty?)
+package_updated = PackageManifest.new("Package.swift", !git.modified_files.grep(/Package.swift/).empty?)
+package_resolved_updated = PackageManifest.new("Package.resolved", !git.modified_files.grep(/Package.resolved/).empty?)
+
+manifests = [
+    podspec_updated, 
+    cartfile_updated, 
+    cartfile_resolved_updated,
+    package_updated,
+    package_resolved_updated
+]
+
+updated_manifests = manifests.select { |e| e.updated }
+not_updated_manifests = manifests.select { |e| !e.updated }
+
+if !updated_manifests.empty? && !not_updated_manifests.empty?
+    warn(manifests_warning_message(updated: updated_manifests, not_updated: not_updated_manifests))
 end
 
 # Warn when library files has been updated but not tests.
@@ -69,3 +104,38 @@ end
 
 # Run SwiftLint
 swiftlint.lint_files
+
+# Xcode summary
+def config_xcode_summary() 
+  xcode_summary.ignored_results { |result|
+    result.message.start_with?("ld") # Ignore ld_warnings
+  }
+end 
+
+def summary(platform:)
+  xcode_summary.report "xcodebuild-#{platform}.json"
+end
+
+def label_tests_summary(label:, platform:) 
+  file_name = "xcodebuild-#{platform}.json"
+  json = File.read(file_name)
+  data = JSON.parse(json)
+  data["tests_summary_messages"].each { |message| 
+    if !message.empty?
+      message.insert(1, " " + label + ":")
+    end
+  }
+  File.open(file_name,"w") do |f|
+    f.puts JSON.pretty_generate(data)
+  end 
+end
+
+config_xcode_summary()
+
+label_tests_summary(label: "iOS", platform: "ios")
+label_tests_summary(label: "tvOS", platform: "tvos")
+label_tests_summary(label: "macOS", platform: "macos")
+
+summary(platform: "ios")
+summary(platform: "tvos")
+summary(platform: "macos")

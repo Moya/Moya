@@ -8,7 +8,7 @@ It accomplishes this with the following pipeline.
 ----------------
 
 <p align="center">
-    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveSwift.md">ReactiveSwift</a> &bull; <a href="RxSwift.md">RxSwift</a> &bull; <a href="Threading.md">Threading</a> &bull; <a href="Plugins.md">Plugins</a>
+    <a href="Targets.md">Targets</a> &bull; <a href="Endpoints.md">Endpoints</a> &bull; <a href="Providers.md">Providers</a> &bull; <a href="Authentication.md">Authentication</a> &bull; <a href="ReactiveSwift.md">ReactiveSwift</a> &bull; <a href="RxSwift.md">RxSwift</a> &bull; <a href="Threading.md">Threading</a> &bull; <a href="Plugins.md">Plugins</a> &bull; <a href="Testing.md">Testing</a>
 </p>
 
 ----------------
