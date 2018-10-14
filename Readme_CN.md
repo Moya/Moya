@@ -10,7 +10,7 @@
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 
-你是个聪明的开发者。你可能使用 [Alamofire](https://github.com/Alamofire/Alamofire) 来抽象对 `URLSession` 的访问，以及所有那些你并不真正关心的糟糕细节。但是，就像许多聪明开发者一样，你编写专有的网络抽象层，它们可能被称作 "APIManager" 或 "NetworkModel"，并且它们总是在眼泪中结束。
+你是个聪明的开发者。你可能使用 [Alamofire](https://github.com/Alamofire/Alamofire) 来抽象对 `URLSession` 的访问，以及所有那些你并不关心的糟糕细节。但是接下来，就像许多聪明开发者一样，你编写专有的网络抽象层，它们可能被称作 "APIManager" 或 "NetworkModel"，它们总是在眼泪中结束。
 
 ![Moya Overview](web/diagram.png)
 
@@ -20,21 +20,21 @@
 - 维护现有的项目很困难（「天啊，这一团糟……」）
 - 编写单元测试很困难（「我该怎么做呢？」）
 
-所以 Moya 的基本思想是，提供一些网络抽象层，它们经过充分地封装，并直接调用 Alamofire。它们应该足够简单，可以很容易地应对常见任务，也应该足够全面，应对复杂任务也同样容易。
+所以 Moya 的基本思想是，提供一些网络抽象层，它们经过充分地封装，并直接调用 Alamofire。它们应该足够简单，可以很轻松地应对常见任务，也应该足够全面，应对复杂任务也同样容易。
 
 > 如果你使用 Alamofire 来抽象 `URLSession`, 那为什么不使用某些方式来进一步抽象 URLs 和 parameters 等等的本质呢？
 
 Moya 的一些特色功能：
 
 - 编译时检查正确的 API 端点访问。
-- 允许你使用关联的枚举值定义不同端点的明确用法。
+- 允许你使用枚举关联值定义不同端点的明确用法。
 - 将 test stub 视为一等公民，所以单元测试超级简单。
 
 你可以在 [愿景文档](https://github.com/Moya/Moya/blob/master/Vision_CN.md) 中查看更多关于项目方向的信息。
 
 ## 示例项目
 
-我们在仓库中提供了两个示例项目。要使用它，请下载 repo，运行 `carthage update` 下载所需的库，然后打开 [Moya.xcodeproj]（https://github.com/Moya/Moya/tree/master/Moya.xcodeproj）。你会看到两个 scheme：`Basic` 和 `Multi-Target` ——选择一个然后构建并运行！这些源文件位于项目导航的 `Examples` 目录中。玩得开心！
+我们在仓库中提供了两个示例项目。要使用它，请下载仓库，运行 `carthage update` 下载所需的库，然后打开 [Moya.xcodeproj]（https://github.com/Moya/Moya/tree/master/Moya.xcodeproj）。你会看到两个 scheme：`Basic` 和 `Multi-Target` ——选择一个然后构建并运行！这些源文件位于项目导航的 `Examples` 目录中。玩得开心！
 
 ## 项目状态
 
@@ -55,16 +55,15 @@ Moya 的一些特色功能：
 
 **升级到 Moya 的最新主版本？查看我们的 [迁移向导](https://github.com/Moya/Moya/blob/master/docs_CN/MigrationGuides)**。
 
-### Swift 包管理器
+### Swift Package Manager
 
-要使用苹果的 Swift 包管理器集成，请将以下内容作为依赖项添加到你的 `Package.swift`：
+要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
 ```swift
 .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "11.0.0"))
 ```
 
-然后指定 `"Moya"` 为你想要使用 Moya 的 Target 的依赖项。
-这里有个 `PackageDescription` 实例：
+然后指定 `"Moya"` 为你想要使用 Moya 的 Target 的依赖。如果你想要使用响应式扩展，将 `"ReactiveMoya"` 和 `"RxMoya"` 也也作为依赖加入进来。这里是一个 `PackageDescription` 实例：
 
 ```swift
 // swift-tools-version:4.0
@@ -167,7 +166,7 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 ## 用法
 
-经过 [一些设置](https://github.com/Moya/Moya/blob/master/docs_CN/Examples/Basic.md) 后，使用 Moya 相当地简单。你可以以下边的方式访问一个 API：
+经过 [一些设置](https://github.com/Moya/Moya/blob/master/docs_CN/Examples/Basic.md) 后，使用 Moya 相当简单。你可以用下边的方式访问一个 API：
 
 ```swift
 provider = MoyaProvider<GitHub>()
@@ -197,7 +196,7 @@ provider.request(.userProfile("ashfurrow")) { result in
 
 URLs 不再有书写错误。不再会缺失参数值。也不再有混乱的参数编码。
 
-更多实例可以查看 [documentation](https://github.com/Moya/Moya/blob/master/docs_CN/Examples)。
+更多示例可以查看 [documentation](https://github.com/Moya/Moya/blob/master/docs_CN/Examples)。
 
 ## Reactive 扩展
 
@@ -225,7 +224,7 @@ provider.reactive.request(.userProfile("ashfurrow")).start { event in
 
 ### RxSwift
 
-[`RxSwift` extension](https://github.com/Moya/Moya/blob/master/docs_CN/RxSwift.md) 也提供了 `rx.request(:callbackQueue:)` 和 `rx.requestWithProgress(:callbackQueue:)` 两种方法，但是这两个方法返回类型完全不一样。在正常情况下 `rx.request(:callbackQueue)`，返回类型是 `Single<Response>`，它要么发送单个元素，要么发送一个错误。而 `rx.requestWithProgress(:callbackQueue:)` 的返回类型是 `Observable<ProgressResponse>`，因为我们可能从进度中获取多次事件以及作为响应的最后一次事件。
+[`RxSwift` extension](https://github.com/Moya/Moya/blob/master/docs_CN/RxSwift.md) 也提供了 `rx.request(:callbackQueue:)` 和 `rx.requestWithProgress(:callbackQueue:)` 两种方法，但是这两个方法返回类型不一样。`rx.request(:callbackQueue)` 的返回类型是 `Single<Response>`，它只会发送单个元素或者一个错误。`rx.requestWithProgress(:callbackQueue:)` 的返回类型是 `Observable<ProgressResponse>`，因为我们可能从进度中获取多次事件以及作为响应的最后一次事件。
 
 对于错误处理，举例来说，我们可以像下面这样处理：
 
