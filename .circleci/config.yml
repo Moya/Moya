@@ -30,7 +30,7 @@ jobs:
           command: carthage checkout
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: carthage build --no-skip-current --no-use-binaries --verbose
       - save_cache:
           key: v1-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
