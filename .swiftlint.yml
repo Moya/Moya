@@ -8,6 +8,7 @@ opt_in_rules:
 
 included:
   - Sources
+  - Tests
   - Examples
 
 function_body_length:
