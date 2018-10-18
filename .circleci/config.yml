@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
   macos:
-    xcode: '9.3.0'
+    xcode: '10.0.0'
   parallelism: 1
   shell: /bin/bash --login    
   environment:
