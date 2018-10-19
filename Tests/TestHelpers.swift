@@ -237,7 +237,7 @@ extension ImageType {
 
     #if os(iOS) || os(watchOS) || os(tvOS)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
-            return UIImageJPEGRepresentation(self, compression)
+            return jpegData(compressionQuality: compression)
         }
     #elseif os(macOS)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
