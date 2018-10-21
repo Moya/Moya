@@ -47,6 +47,23 @@ if has_app_changes && missing_doc_changes && doc_changes_recommended && not_decl
   warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
 
+# Run danger-prose to lint doc files
+proselint_installed = prose.proselint_installed?
+if proselint_installed
+  prose.lint_files "docs/*.md"
+  prose.lint_files "docs_CN/*.md"
+else
+  warn("prose lint is not installed to lint doc files")
+end
+
+# Run danger-prose to check spelling doc files
+mdspell_installed = prose.mdspell_installed?
+if mdspell_installed
+  prose.check_spelling "docs/*.md"
+else
+  warn("md spell is not installed to check spelling doc files")
+end
+
 # Wrapper for package manifest file name and update status
 PackageManifest = Struct.new(:fileName, :updated)
 
