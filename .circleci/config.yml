@@ -54,9 +54,6 @@ jobs:
           name: Install Swiftlint
           command: brew install swiftlint
       - run:
-          name: Install danger-prose
-          command: gem install danger-prose
-      - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
           environment:
