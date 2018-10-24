@@ -52,6 +52,10 @@ prose.lint_files "docs/*.md"
 prose.lint_files "docs_CN/*.md"
 
 # Run danger-prose to check spelling doc files
+prose.language = "en-us"
+prose.ignored_words = ["Auth", "auth", "Moya", "enum", "enums", "OAuth", "Artsy's", "Heimdallr.swift", "SwiftyJSONMapper", "ObjectMapper", "Argo", "ModelMapper", "ReactiveSwift", "RxSwift", "multipart", "JSONEncoder", "Alamofire", "CocoaPods", "URLSession", "plugin", "plugins", "stubClosure", "requestClosure", "endpointClosure", "Unsplash", "ReactorKit", "Dribbble", "EVReflection", "Unbox"]
+prose.ignore_acronyms = true
+prose.ignore_numbers = true
 prose.check_spelling "docs/*.md"
 
 # Wrapper for package manifest file name and update status
