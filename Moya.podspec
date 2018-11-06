@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
-  s.swift_version = '4.0'
+  s.swift_version = '4.2'
   s.cocoapods_version = '>= 1.4.0'  
 
   s.subspec "Core" do |ss|
