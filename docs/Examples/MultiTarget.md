@@ -61,7 +61,22 @@ enum UserApi: DecodableTargetType {
 
 Because of `associatedtype`, `MultiTarget` cannot be used with `DecodableTargetType`.
 Instead, we can use the `MultiMoyaProvider` variant. It does not require a
-generic argument. Thus, requests can be invoked with any instance that
+generic argument. 
+
+```swift
+final class MultiMoyaProvider: MoyaProvider<MultiTarget> {
+
+    typealias Target = MultiTarget
+
+    override init(endpointClosure: @escaping MoyaProvider<Target>.EndpointClosure, requestClosure: @escaping MoyaProvider<Target>.RequestClosure, stubClosure: @escaping MoyaProvider<Target>.StubClosure, callbackQueue: DispatchQueue?, manager: Manager, plugins: [PluginType], trackInflights: Bool) {
+
+        super.init(endpointClosure: endpointClosure, requestClosure: requestClosure, stubClosure: stubClosure, manager: manager, plugins: plugins, trackInflights: trackInflights)
+
+    }
+}
+```
+
+Thus, requests can be invoked with any instance that
 conforms to `TargetType`. Using `MultiMoyaProvider` allows you to write
 request wrappers which can make use of your `associatedtype`s.
 
