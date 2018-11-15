@@ -91,7 +91,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "11.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "12.0.0"))
     ],
     targets: [
         .target(
@@ -108,15 +108,15 @@ Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '~> 11.0'
+pod 'Moya', '~> 12.0'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 11.0'
+pod 'Moya/RxSwift', '~> 12.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 11.0'
+pod 'Moya/ReactiveSwift', '~> 12.0'
 ```
 
 Then run `pod install`.
