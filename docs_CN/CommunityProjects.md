@@ -24,3 +24,4 @@
 
 - [Drrrible](https://github.com/devxoul/Drrrible) - Dribbble for iOS using ReactorKit
 - [Eidolon](https://github.com/artsy/eidolon) - The Artsy Auction Kiosk App
+- [SwiftHub](https://github.com/khoren93/SwiftHub) - Reactive Github iOS client written in RxSwift and MVVM.
