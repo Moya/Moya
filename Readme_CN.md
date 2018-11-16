@@ -264,7 +264,7 @@ provider.rx.request(.userProfile("ashfurrow")).subscribe { event in
 
 Moya 社区拥有巨大的正能量，同时维护人员致力于让事情变得更棒。像 [CocoaPods](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules) 一样，总是提取积极的意图；即使某个评论听起来非常刻薄，它仍会让人从怀疑中受益。
 
-请注意，这个项目与 Contributor Code of Conduct 一起发布。为了参与到这个项目中来，你需要遵守它的 [条款](https://github.com/Moya/Moya/blob/master/Code%20of%20Conduct.md)。
+请注意，这个项目与 Contributor Code of Conduct 一起发布。为了参与到这个项目中来，你需要遵守它的 [条款](https://github.com/Moya/Moya/blob/master/Code%20of%20Conduct_CN.md)。
 
 ### 新增源文件
 
