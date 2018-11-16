@@ -14,6 +14,8 @@
 - [MoyaSugar](https://github.com/devxoul/MoyaSugar) –  Moya语法糖
 - [Moya-EVReflection](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya) - Moya 的EVReflection 封装，易于JSON序列化 (包括子项目  [RxSwift](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/RxSwift) 和 [ReactiveCocoa](https://github.com/evermeer/EVReflection/tree/master/Source/Alamofire/Moya/ReactiveCocoa))
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Moya 的Marshal 封装，易于JSON序列化
+- [Moya-Decodable](https://github.com/xiaoyaogaojian/Moya-Decodable) - Decodable bindings for Moya for easier JSON serialization
+- [SwiftMoyaCodeGenerator](https://github.com/narlei/SwiftMoyaCodeGenerator) - Extension for [Paw Mac App](https://paw.cloud) to generate Moya files based in rest documentation.
 
 
 ## 库
@@ -24,4 +26,6 @@
 
 - [Drrrible](https://github.com/devxoul/Drrrible) - Dribbble for iOS using ReactorKit
 - [Eidolon](https://github.com/artsy/eidolon) - The Artsy Auction Kiosk App
+- [Insights for Instagram](https://github.com/adimango/insights-for-instagram) - A simple iOS Instagram's media insights App written in Swift 4
+- [Papr](https://github.com/jdisho/Papr/tree/papr-moya-version) - An Unsplash app for iOS.
 - [SwiftHub](https://github.com/khoren93/SwiftHub) - Reactive Github iOS client written in RxSwift and MVVM.
