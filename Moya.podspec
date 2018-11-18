@@ -39,5 +39,6 @@ Pod::Spec.new do |s|
     ss.source_files = "Sources/RxMoya/"
     ss.dependency "Moya/Core"
     ss.dependency "RxSwift", "~> 4.0"
+    ss.watchos.deployment_target = '3.0'
   end
 end
