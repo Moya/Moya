@@ -16,6 +16,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
   s.tvos.deployment_target = '9.0'
+  s.watchos.deployment_target = '3.0'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
   s.swift_version = '4.2'
@@ -26,20 +27,17 @@ Pod::Spec.new do |s|
     ss.dependency "Alamofire", "~> 4.1"
     ss.dependency "Result", "~> 4.0"
     ss.framework  = "Foundation"
-    ss.watchos.deployment_target = '2.0'
   end
 
   s.subspec "ReactiveSwift" do |ss|
     ss.source_files = "Sources/ReactiveMoya/"
     ss.dependency "Moya/Core"
     ss.dependency "ReactiveSwift", "~> 4.0"
-    ss.watchos.deployment_target = '2.0'
   end
 
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Sources/RxMoya/"
     ss.dependency "Moya/Core"
     ss.dependency "RxSwift", "~> 4.0"
-    ss.watchos.deployment_target = '3.0'
   end
 end
