@@ -2,12 +2,12 @@ import Foundation
 import Alamofire
 
 public typealias Manager = Alamofire.SessionManager
-internal typealias Request = Alamofire.Request
-internal typealias DownloadRequest = Alamofire.DownloadRequest
-internal typealias UploadRequest = Alamofire.UploadRequest
-internal typealias DataRequest = Alamofire.DataRequest
+typealias Request = Alamofire.Request
+typealias DownloadRequest = Alamofire.DownloadRequest
+typealias UploadRequest = Alamofire.UploadRequest
+typealias DataRequest = Alamofire.DataRequest
 
-internal typealias URLRequestConvertible = Alamofire.URLRequestConvertible
+typealias URLRequestConvertible = Alamofire.URLRequestConvertible
 
 /// Represents an HTTP method.
 public typealias Method = Alamofire.HTTPMethod
@@ -67,14 +67,14 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
 
 }
 
-internal typealias RequestableCompletion = (HTTPURLResponse?, URLRequest?, Data?, Swift.Error?) -> Void
+typealias RequestableCompletion = (HTTPURLResponse?, URLRequest?, Data?, Swift.Error?) -> Void
 
-internal protocol Requestable {
+protocol Requestable {
     func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self
 }
 
 extension DataRequest: Requestable {
-    internal func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
+    func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
         return response(queue: callbackQueue) { handler  in
             completionHandler(handler.response, handler.request, handler.data, handler.error)
         }
@@ -82,7 +82,7 @@ extension DataRequest: Requestable {
 }
 
 extension DownloadRequest: Requestable {
-    internal func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
+    func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
         return response(queue: callbackQueue) { handler  in
             completionHandler(handler.response, handler.request, nil, handler.error)
         }

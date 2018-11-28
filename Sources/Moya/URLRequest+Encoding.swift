@@ -1,6 +1,6 @@
 import Foundation
 
-internal extension URLRequest {
+extension URLRequest {
 
     mutating func encoded(encodable: Encodable, encoder: JSONEncoder = JSONEncoder()) throws -> URLRequest {
         do {
