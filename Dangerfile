@@ -47,19 +47,23 @@ if has_app_changes && missing_doc_changes && doc_changes_recommended && not_decl
   warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 end
 
-# Run danger-prose to lint doc files if docs modified
-if en_docs_modified || cn_docs_modified
-  prose.lint_files "docs/*.md"
-  prose.lint_files "docs_CN/*.md"
+# Run danger-prose to lint Chinese docs
+added_and_modified_cn_docs = (git.added_files.grep(%r{docs_CN/*.md}) + git.modified_files.grep(%r{docs_CN/*.md}))
+if added_and_modified_cn_docs.empty?
+  prose.lint_files added_and_modified_cn_docs
 end
 
-# Run danger-prose to check spelling doc files if docs modified
-if en_docs_modified
+# Run danger-prose to lint and check spelling English docs
+added_and_modified_en_docs = (git.added_files.grep(%r{docs/*.md}) + git.modified_files.grep(%r{docs/*.md}))
+if added_and_modified_en_docs.empty?
+  prose.lint_files added_and_modified_en_docs
+
   prose.language = "en-us"
   prose.ignored_words = ["Auth", "auth", "Moya", "enum", "enums", "OAuth", "Artsy's", "Heimdallr.swift", "SwiftyJSONMapper", "ObjectMapper", "Argo", "ModelMapper", "ReactiveSwift", "RxSwift", "multipart", "JSONEncoder", "Alamofire", "CocoaPods", "URLSession", "plugin", "plugins", "stubClosure", "requestClosure", "endpointClosure", "Unsplash", "ReactorKit", "Dribbble", "EVReflection", "Unbox"]
   prose.ignore_acronyms = true
   prose.ignore_numbers = true
-  prose.check_spelling "docs/*.md"
+
+  prose.check_spelling added_and_modified_en_docs
 end
 
 # Wrapper for package manifest file name and update status
