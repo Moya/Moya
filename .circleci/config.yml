@@ -54,6 +54,9 @@ jobs:
           name: Install Swiftlint
           command: brew install swiftlint
       - run:
+          name: Add Python directory to PATH
+          command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
+      - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
           environment:
