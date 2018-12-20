@@ -70,6 +70,80 @@ final class ErrorTests: QuickSpec {
             }
         }
 
+        describe("bridged userInfo dictionary") {
+            it("should have a localized description and no underlying error for ImageMapping error") {
+                let error = MoyaError.imageMapping(response)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError).to(beNil())
+            }
+
+            it("should have a localized description and no underlying error for JSONMapping error") {
+                let error = MoyaError.jsonMapping(response)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError).to(beNil())
+            }
+
+            it("should have a localized description and no underlying error for StringMapping error") {
+                let error = MoyaError.stringMapping(response)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError).to(beNil())
+            }
+
+            it("should have a localized description and underlying error for ObjectMapping error") {
+                let error = MoyaError.objectMapping(underlyingError, response)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError) == underlyingError
+            }
+
+            it("should have a localized description and underlying error for EncodableMapping error") {
+                let error = MoyaError.encodableMapping(underlyingError)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError) == underlyingError
+            }
+
+            it("should have a localized description and no underlying error for StatusCode error") {
+                let error = MoyaError.statusCode(response)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError).to(beNil())
+            }
+
+            it("should have a localized description and underlying error for Underlying error") {
+                let error = MoyaError.underlying(underlyingError, nil)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError) == underlyingError
+            }
+
+            it("should have a localized description and no underlying error for RequestMapping error") {
+                let error = MoyaError.requestMapping("http://www.example.com")
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError).to(beNil())
+            }
+
+            it("should have a localized description and underlying error for ParameterEncoding error") {
+                let error = MoyaError.parameterEncoding(underlyingError)
+                let userInfo = (error as NSError).userInfo
+
+                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
+                expect(userInfo[NSUnderlyingErrorKey] as? NSError) == underlyingError
+            }
+        }
+
         describe("mapping a result with empty data") {
             let response = Response(statusCode: 200, data: Data())
 
