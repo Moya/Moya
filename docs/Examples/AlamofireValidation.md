@@ -1,5 +1,5 @@
 # Alamofire automatic validation
-Sometimes, you will want to use [Alamofire automatic validation](https://github.com/Alamofire/Alamofire#automatic-validation) for some requests.
+Sometimes, you will want to use [Alamofire automatic validation](https://github.com/Alamofire/Alamofire/blob/master/Documentation/Usage.md#automatic-validation) for some requests.
 When a request is configured with Alamofire validation, Moya will internally call Alamofire's  `validate()` method on the concerned `DataRequest`.
 
 ```swift
@@ -44,7 +44,7 @@ You can choose from four cases:
 
 The default validation type for all requests is `ValidationType.none`.
 
-Alamofire automatic validation can be useful, for example if you want to use the [Alamofire's `RequestRetrier` and `RequestAdapter`](https://github.com/Alamofire/Alamofire#requestretrier), for an OAuth 2 ready Moya Client.
+Alamofire automatic validation can be useful, for example if you want to use the [Alamofire's `RequestRetrier` and `RequestAdapter`](https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#requestretrier), for an OAuth 2 ready Moya Client.
 
 Also, if validation fails, you can get the response from the returned `MoyaError`.
 
