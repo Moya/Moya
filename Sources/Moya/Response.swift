@@ -48,6 +48,7 @@ public extension Response {
         - statusCodes: The range of acceptable status codes.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
+    @discardableResult
     public func filter<R: RangeExpression>(statusCodes: R) throws -> Response where R.Bound == Int {
         guard statusCodes.contains(statusCode) else {
             throw MoyaError.statusCode(self)
@@ -62,6 +63,7 @@ public extension Response {
         - statusCode: The acceptable status code.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
+    @discardableResult
     public func filter(statusCode: Int) throws -> Response {
         return try filter(statusCodes: statusCode...statusCode)
     }
@@ -71,6 +73,7 @@ public extension Response {
 
      - throws: `MoyaError.statusCode` when others are encountered.
     */
+    @discardableResult
     public func filterSuccessfulStatusCodes() throws -> Response {
         return try filter(statusCodes: 200...299)
     }
@@ -80,6 +83,7 @@ public extension Response {
 
      - throws: `MoyaError.statusCode` when others are encountered.
     */
+    @discardableResult
     public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
         return try filter(statusCodes: 200...399)
     }
