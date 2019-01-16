@@ -1,5 +1,8 @@
 # Next
 
+### Added
+- Added `@discardableResult` attribute to status code filtering methods in `Response`. [#1790](https://github.com/Moya/Moya/pull/1790) by [@alexandergmacleod](https://github.com/alexandergmacleod).
+
 # [12.0.1] - 2018-11-19
 
 # [12.0.0] - 2018-11-18
