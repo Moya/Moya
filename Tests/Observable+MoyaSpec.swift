@@ -197,7 +197,7 @@ final class ObservableMoyaSpec: QuickSpec {
 
                 var size: CGSize?
                 _ = observable.mapImage().subscribe(onNext: { image in
-                    size = image?.size
+                    size = image.size
                 })
 
                 expect(size).to(equal(image.size))
