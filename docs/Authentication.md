@@ -42,7 +42,7 @@ There are two steps required to start using an `AccessTokenPlugin`.
 1. You need to add an `AccessTokenPlugin` to your `MoyaProvider` like this:
 ```Swift
 let token = "eyeAm.AJsoN.weBTOKen"
-let authPlugin = AccessTokenPlugin(tokenClosure: token)
+let authPlugin = AccessTokenPlugin { token }
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
 The `AccessTokenPlugin` initializer accepts a `tokenClosure` that is responsible
