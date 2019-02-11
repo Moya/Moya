@@ -35,7 +35,7 @@ extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Respo
     }
 
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
-    public func mapImage() -> Single<Image?> {
+    public func mapImage() -> Single<Image> {
         return flatMap { .just(try $0.mapImage()) }
     }
 
