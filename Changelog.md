@@ -1,4 +1,5 @@
 # Next
+- **Breaking Change** `.mapImage()` extension on `Single` and `Observable` now returns non-optional image. [#1789](https://github.com/Moya/Moya/pull/1789), [#1799](https://github.com/Moya/Moya/pull/1799) by [@bjarkehs](https://github.com/bjarkehs) and [@sunshinejr](https://github.com/sunshinejr).
 
 # [12.0.1] - 2018-11-19
 

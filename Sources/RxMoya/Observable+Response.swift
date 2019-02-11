@@ -35,7 +35,7 @@ extension ObservableType where E == Response {
     }
 
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
-    public func mapImage() -> Observable<Image?> {
+    public func mapImage() -> Observable<Image> {
         return flatMap { Observable.just(try $0.mapImage()) }
     }
 
