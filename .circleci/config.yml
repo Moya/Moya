@@ -90,7 +90,7 @@ jobs:
           command: bundle exec danger
       - run:
           name: CocoaPods Spec linting
-          command: pod lib lint
+          command: bundle exec pod lib lint
       - run:
           name: Send Code Coverage to Codecov.io
           command: bash <(curl -s https://codecov.io/bash) -J Moya
