@@ -40,7 +40,7 @@ Moya提供一个 `AccessTokenPlugin` 来完成
 
 ```Swift
 let token = "eyeAm.AJsoN.weBTOKen"
-let authPlugin = AccessTokenPlugin(tokenClosure: token)
+let authPlugin = AccessTokenPlugin { token }
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
 
