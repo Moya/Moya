@@ -47,11 +47,7 @@ internal extension RequestMultipartFormData {
     }
 
     func append(fileURL url: URL, bodyPart: MultipartFormData) {
-        if let fileName = bodyPart.fileName, let mimeType = bodyPart.mimeType {
-            append(url, withName: bodyPart.name, fileName: fileName, mimeType: mimeType)
-        } else {
-            append(url, withName: bodyPart.name)
-        }
+        append(url, withName: bodyPart.name, fileName: bodyPart.fileName, mimeType: bodyPart.mimeType)
     }
 
     func append(stream: InputStream, length: UInt64, bodyPart: MultipartFormData) {
