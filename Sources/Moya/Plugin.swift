@@ -40,8 +40,8 @@ public protocol RequestType {
     var request: URLRequest? { get }
 
     /// Authenticates the request with a username and password.
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self
+    func authenticate(username: String, password: String, persistence: URLCredential.Persistence) -> Self
 
     /// Authenticates the request with an `NSURLCredential` instance.
-    func authenticate(usingCredential credential: URLCredential) -> Self
+    func authenticate(with credential: URLCredential) -> Self
 }
