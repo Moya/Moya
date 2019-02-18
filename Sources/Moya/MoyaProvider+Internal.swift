@@ -155,7 +155,7 @@ public extension MoyaProvider {
 
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     final func notifyPluginsOfImpendingStub(for request: URLRequest, target: Target) {
-        let alamoRequest = manager.request(request as URLRequestConvertible)
+        let alamoRequest = session.request(request as URLRequestConvertible)
         plugins.forEach { $0.willSend(alamoRequest, target: target) }
     }
 }
@@ -168,7 +168,7 @@ private extension MoyaProvider {
             form.applyMoyaMultipartFormData(multipartBody)
         }
 
-        manager.upload(multipartFormData: multipartFormData, with: request) { result in
+        session.upload(multipartFormData: multipartFormData, with: request) { result in
             switch result {
             case .success(let alamoRequest, _, _):
                 if cancellable.isCancelled {
@@ -187,21 +187,21 @@ private extension MoyaProvider {
     }
 
     func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
-        let uploadRequest = manager.upload(file, with: request)
+        let uploadRequest = session.upload(file, with: request)
         let validationCodes = target.validationType.statusCodes
         let alamoRequest = validationCodes.isEmpty ? uploadRequest : uploadRequest.validate(statusCode: validationCodes)
         return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
     func sendDownloadRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
-        let downloadRequest = manager.download(request, to: destination)
+        let downloadRequest = session.download(request, to: destination)
         let validationCodes = target.validationType.statusCodes
         let alamoRequest = validationCodes.isEmpty ? downloadRequest : downloadRequest.validate(statusCode: validationCodes)
         return self.sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
     func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
-        let initialRequest = manager.request(request as URLRequestConvertible)
+        let initialRequest = session.request(request as URLRequestConvertible)
         let validationCodes = target.validationType.statusCodes
         let alamoRequest = validationCodes.isEmpty ? initialRequest : initialRequest.validate(statusCode: validationCodes)
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)

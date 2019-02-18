@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-public typealias Manager = Alamofire.SessionManager
+public typealias Session = Alamofire.Session
 internal typealias Request = Alamofire.Request
 internal typealias DownloadRequest = Alamofire.DownloadRequest
 internal typealias UploadRequest = Alamofire.UploadRequest
