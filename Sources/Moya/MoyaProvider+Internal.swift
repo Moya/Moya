@@ -161,29 +161,15 @@ public extension MoyaProvider {
 }
 
 private extension MoyaProvider {
-    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableWrapper {
-        let cancellable = CancellableWrapper()
-
+    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableToken {
         let multipartFormData: (RequestMultipartFormData) -> Void = { form in
             form.applyMoyaMultipartFormData(multipartBody)
         }
 
-        session.upload(multipartFormData: multipartFormData, with: request) { result in
-            switch result {
-            case .success(let alamoRequest, _, _):
-                if cancellable.isCancelled {
-                    self.cancelCompletion(completion, target: target)
-                    return
-                }
-                let validationCodes = target.validationType.statusCodes
-                let validatedRequest = validationCodes.isEmpty ? alamoRequest : alamoRequest.validate(statusCode: validationCodes)
-                cancellable.innerCancellable = self.sendAlamofireRequest(validatedRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
-            case .failure(let error):
-                completion(.failure(MoyaError.underlying(error as NSError, nil)))
-            }
-        }
-
-        return cancellable
+        let request = session.upload(multipartFormData: multipartFormData, with: request, interceptor: nil)
+        let validationCodes = target.validationType.statusCodes
+        let validatedRequest = validationCodes.isEmpty ? request : request.validate(statusCode: validationCodes)
+        return self.sendAlamofireRequest(validatedRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
     func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
