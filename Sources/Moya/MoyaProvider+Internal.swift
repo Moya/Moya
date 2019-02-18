@@ -252,11 +252,11 @@ private extension MoyaProvider {
             if let progressCompletion = progressCompletion {
                 switch progressAlamoRequest {
                 case let downloadRequest as DownloadRequest:
-                    progressCompletion(ProgressResponse(progress: downloadRequest.progress, response: result.value))
+                    progressCompletion(ProgressResponse(progress: downloadRequest.downloadProgress, response: result.value))
                 case let uploadRequest as UploadRequest:
                     progressCompletion(ProgressResponse(progress: uploadRequest.uploadProgress, response: result.value))
                 case let dataRequest as DataRequest:
-                    progressCompletion(ProgressResponse(progress: dataRequest.progress, response: result.value))
+                    progressCompletion(ProgressResponse(progress: dataRequest.downloadProgress, response: result.value))
                 default:
                     progressCompletion(ProgressResponse(response: result.value))
                 }
