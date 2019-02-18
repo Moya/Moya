@@ -1,3 +1,4 @@
+import Foundation
 import Nimble
 import Quick
 import Alamofire
@@ -58,7 +59,7 @@ final class EndpointClosureSpec: QuickSpec {
     }
 }
 
-final class SessionManagerMock: SessionManager {
+final class SessionManagerMock: Alamofire.Session {
 
     var uploadMultipartFormData: Alamofire.MultipartFormData?
 
