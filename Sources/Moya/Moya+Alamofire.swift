@@ -26,6 +26,9 @@ public typealias DownloadDestination = Alamofire.DownloadRequest.Destination
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType { }
 
+/// Represents Request interceptor type that can can modify/act on Request
+public typealias RequestInterceptor = Alamofire.RequestInterceptor
+
 /// Internal token that can be used to cancel requests
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
