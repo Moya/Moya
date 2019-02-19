@@ -110,7 +110,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                             provider.request(.zen) { _ in done() }
                         }
 
-                        expect(manager.called) == true
+                        expect(session.called) == true
                     }
 
                     it("uses a background queue") {

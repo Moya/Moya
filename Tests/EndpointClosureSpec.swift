@@ -8,10 +8,10 @@ final class EndpointClosureSpec: QuickSpec {
 
     override func spec() {
         var provider: MoyaProvider<HTTPBin>!
-        var sessionManager: SessionManagerMock!
+        var session: SessionMock!
 
         beforeEach {
-            sessionManager = SessionManagerMock()
+            session = SessionMock()
             let endpointClosure: MoyaProvider<HTTPBin>.EndpointClosure = { target in
                 let task: Task
 
@@ -27,7 +27,7 @@ final class EndpointClosureSpec: QuickSpec {
 
                 return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: task, httpHeaderFields: target.headers)
             }
-            provider = MoyaProvider<HTTPBin>(endpointClosure: endpointClosure, manager: sessionManager)
+            provider = MoyaProvider<HTTPBin>(endpointClosure: endpointClosure, session: session)
         }
 
         it("appends additional multipart body in endpointClosure") {
@@ -38,7 +38,7 @@ final class EndpointClosureSpec: QuickSpec {
             let sentMultipartData = [multipartData1, multipartData2]
 
             _ = provider.request(.uploadMultipart(providedMultipartData, nil)) { _ in }
-            let stringData1 = String(data: try! sessionManager.uploadMultipartFormData!.encode(), encoding: .utf8)
+            let stringData1 = String(data: try! session.uploadMultipartFormData!.encode(), encoding: .utf8)
 
             let requestMultipartFormData = RequestMultipartFormData()
             requestMultipartFormData.applyMoyaMultipartFormData(sentMultipartData)
@@ -59,7 +59,7 @@ final class EndpointClosureSpec: QuickSpec {
     }
 }
 
-final class SessionManagerMock: Alamofire.Session {
+final class SessionMock: Alamofire.Session {
 
     var uploadMultipartFormData: Alamofire.MultipartFormData?
 
@@ -72,5 +72,6 @@ final class SessionManagerMock: Alamofire.Session {
         let uploadMultipartFormData = Alamofire.MultipartFormData()
         multipartFormData(uploadMultipartFormData)
         self.uploadMultipartFormData = uploadMultipartFormData
+        return super.upload(multipartFormData: multipartFormData, usingThreshold: encodingMemoryThreshold, fileManager: fileManager, with: request, interceptor: interceptor)
     }
 }

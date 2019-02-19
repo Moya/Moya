@@ -72,9 +72,9 @@ final class MoyaProviderSpec: QuickSpec {
             expect(cancellable).toNot(beNil())
         }
 
-        it("uses a custom manager by default, startRequestsImmediately should be false") {
-            expect(provider.manager).toNot(beNil())
-            expect(provider.manager.startRequestsImmediately) == false
+        it("uses a custom session by default, startRequestsImmediately should be false") {
+            expect(provider.session).toNot(beNil())
+            expect(provider.session.startRequestsImmediately) == false
         }
 
         it("credential closure returns nil") {
@@ -105,11 +105,11 @@ final class MoyaProviderSpec: QuickSpec {
             expect(called) == true
         }
 
-        it("accepts a custom Alamofire.Manager") {
-            let manager = Manager()
-            let provider = MoyaProvider<GitHub>(manager: manager)
+        it("accepts a custom Alamofire.Session") {
+            let session = Session()
+            let provider = MoyaProvider<GitHub>(session: session)
 
-            expect(provider.manager).to(beIdenticalTo(manager))
+            expect(provider.session).to(beIdenticalTo(session))
         }
 
         it("notifies at the beginning of network requests") {
