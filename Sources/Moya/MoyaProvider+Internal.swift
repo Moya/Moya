@@ -156,7 +156,8 @@ public extension MoyaProvider {
     /// Notify all plugins that a stub is about to be performed. You must call this if overriding `stubRequest`.
     final func notifyPluginsOfImpendingStub(for request: URLRequest, target: Target) {
         let alamoRequest = session.request(request)
-        plugins.forEach { $0.willSend(alamoRequest, target: target) }
+        let requestTypeWrapper = RequestTypeWrapper(request: alamoRequest, urlRequest: request)
+        plugins.forEach { $0.willSend(requestTypeWrapper, target: target) }
     }
 }
 

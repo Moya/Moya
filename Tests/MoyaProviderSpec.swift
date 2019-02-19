@@ -217,7 +217,7 @@ final class MoyaProviderSpec: QuickSpec {
                         done()
                     }
                 }
-                expect(plugin.didPrepare).to( beTrue() )
+                expect(plugin.didPrepare).to(beTrue())
             }
 
             it("returns success when request is not canceled") {

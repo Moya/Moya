@@ -45,3 +45,31 @@ public protocol RequestType {
     /// Authenticates the request with an `NSURLCredential` instance.
     func authenticate(with credential: URLCredential) -> Self
 }
+
+// Currently a workaround for new asynchronous handling of Alamofire's request
+// creation. Should probably think of updating our Plugins API as well instead,
+// but for now will do the job.
+struct RequestTypeWrapper: RequestType {
+
+    var request: URLRequest? {
+        return _urlRequest
+    }
+
+    private var _request: Request
+    private var _urlRequest: URLRequest?
+
+    init(request: Request, urlRequest: URLRequest?) {
+        self._request = request
+        self._urlRequest = urlRequest
+    }
+
+    func authenticate(username: String, password: String, persistence: URLCredential.Persistence) -> RequestTypeWrapper {
+        let newRequest = _request.authenticate(username: username, password: password, persistence: persistence)
+        return RequestTypeWrapper(request: newRequest, urlRequest: _urlRequest)
+    }
+
+    func authenticate(with credential: URLCredential) -> RequestTypeWrapper {
+        let newRequest = _request.authenticate(with: credential)
+        return RequestTypeWrapper(request: newRequest, urlRequest: _urlRequest)
+    }
+}
