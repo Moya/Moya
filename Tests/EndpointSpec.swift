@@ -310,7 +310,7 @@ final class EndpointSpec: QuickSpec {
                     // Non-serializable type to cause serialization error
                     class InvalidParameter {}
 
-                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["": InvalidParameter()], encoding: JSONEncoding.default))
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["": InvalidParameter()], encoding: PropertyListEncoding.default))
                     let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription": "Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
                     let expectedError = MoyaError.parameterEncoding(cocoaError)
                     var recievedError: MoyaError?
