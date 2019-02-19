@@ -134,11 +134,11 @@ private class TestStreamRequest: RequestType {
         return request
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 }
@@ -152,11 +152,11 @@ private class TestBodyRequest: RequestType {
         return request
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 }
@@ -170,11 +170,11 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
         return request
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 
@@ -188,11 +188,11 @@ private class TestNilRequest: RequestType {
         return nil
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 }
