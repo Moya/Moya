@@ -70,6 +70,62 @@ final class ErrorTests: QuickSpec {
             }
         }
 
+        describe("underlyingError computed variable") {
+            it("should not handle ImageMapping error") {
+                let error = MoyaError.imageMapping(response)
+
+                expect(error.underlyingError).to(beNil())
+            }
+
+            it("should not handle JSONMapping error") {
+                let error = MoyaError.jsonMapping(response)
+
+                expect(error.underlyingError).to(beNil())
+            }
+
+            it("should not handle StringMapping error") {
+                let error = MoyaError.stringMapping(response)
+
+                expect(error.underlyingError).to(beNil())
+            }
+
+            it("should handle ObjectMapping error") {
+                let error = MoyaError.objectMapping(underlyingError, response)
+
+                expect(error.underlyingError as NSError?) == underlyingError
+            }
+
+            it("should handle EncodableMapping error") {
+                let error = MoyaError.encodableMapping(underlyingError)
+
+                expect(error.underlyingError as NSError?) == underlyingError
+            }
+
+            it("should not handle StatusCode error") {
+                let error = MoyaError.statusCode(response)
+
+                expect(error.underlyingError).to(beNil())
+            }
+
+            it("should handle Underlying error") {
+                let error = MoyaError.underlying(underlyingError, response)
+
+                expect(error.underlyingError as NSError?) == underlyingError
+            }
+
+            it("should not handle RequestMapping error") {
+                let error = MoyaError.requestMapping("http://www.example.com")
+
+                expect(error.underlyingError as NSError?).to(beNil())
+            }
+
+            it("should handle ParameterEncoding error") {
+                let error = MoyaError.parameterEncoding(underlyingError)
+
+                expect(error.underlyingError as NSError?) == underlyingError
+            }
+        }
+
         describe("bridged userInfo dictionary") {
             it("should have a localized description and no underlying error for ImageMapping error") {
                 let error = MoyaError.imageMapping(response)
