@@ -7,13 +7,14 @@ final class ErrorTests: QuickSpec {
     override func spec() {
 
         var response: Response!
+        var underlyingError: NSError!
 
         beforeEach {
             response = Response(statusCode: 200, data: Data(), request: nil, response: nil)
+            underlyingError = NSError(domain: "UnderlyingDomain", code: 200, userInfo: ["data": "some data"])
         }
 
         describe("response computed variable") {
-
             it("should handle ImageMapping error") {
                 let error = MoyaError.imageMapping(response)
 
@@ -32,17 +33,40 @@ final class ErrorTests: QuickSpec {
                 expect(error.response) == response
             }
 
+            it("should handle ObjectMapping error") {
+                let error = MoyaError.objectMapping(underlyingError, response)
+
+                expect(error.response) == response
+            }
+
+            it("should not handle EncodableMapping error") {
+                let error = MoyaError.encodableMapping(underlyingError)
+
+                expect(error.response).to(beNil())
+            }
+
             it("should handle StatusCode error") {
                 let error = MoyaError.statusCode(response)
 
                 expect(error.response) == response
             }
 
-            it("should not handle Underlying error ") {
-                let nsError = NSError(domain: "Domain", code: 200, userInfo: ["data": "some data"])
-                let error = MoyaError.underlying(nsError, nil)
+            it("should handle Underlying error") {
+                let error = MoyaError.underlying(underlyingError, response)
 
-                expect(error.response).to( beNil() )
+                expect(error.response) == response
+            }
+
+            it("should not handle RequestMapping error") {
+                let error = MoyaError.requestMapping("http://www.example.com")
+
+                expect(error.response).to(beNil())
+            }
+
+            it("should not handle ParameterEncoding error") {
+                let error = MoyaError.parameterEncoding(underlyingError)
+
+                expect(error.response).to(beNil())
             }
         }
 
