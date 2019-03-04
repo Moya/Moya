@@ -49,13 +49,13 @@ end
 
 # Run danger-prose to lint Chinese docs
 added_and_modified_cn_docs = (git.added_files.grep(%r{docs_CN/*.md}) + git.modified_files.grep(%r{docs_CN/*.md}))
-if added_and_modified_cn_docs.empty?
+unless added_and_modified_cn_docs.empty?
   prose.lint_files added_and_modified_cn_docs
 end
 
 # Run danger-prose to lint and check spelling English docs
 added_and_modified_en_docs = (git.added_files.grep(%r{docs/*.md}) + git.modified_files.grep(%r{docs/*.md}))
-if added_and_modified_en_docs.empty?
+unless added_and_modified_en_docs.empty?
   prose.lint_files added_and_modified_en_docs
 
   prose.language = "en-us"
