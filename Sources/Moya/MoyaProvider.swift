@@ -29,7 +29,7 @@ public struct ProgressResponse {
 
     /// A Boolean value stating whether the request is completed.
     public var completed: Bool {
-        return progress == 1.0 && response != nil
+        return response != nil
     }
 }
 
