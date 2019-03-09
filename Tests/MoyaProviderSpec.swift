@@ -871,7 +871,7 @@ final class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(error).to(beNil())
-                expect(progressValues) == [0, 0, 0, 0, 1]
+                expect(progressValues) == [0, 0, 0, 0, 1.0]
                 expect(completedValues) == [false, false, false, false, true]
                 expect(progressObjects.filter { $0 != nil }.count) == 5
             }
