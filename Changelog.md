@@ -1,6 +1,11 @@
 # Next
+
+### Changed
 - `MoyaError` now conforms to `CustomNSError` protocol, makes underlying errors available in its user-info dictionary. [#1783](https://github.com/Moya/Moya/pull/1783) by [@dpoggi](https://github.com/dpoggi).
 - **Breaking Change** `.mapImage()` extension on `Single` and `Observable` now returns non-optional image. [#1789](https://github.com/Moya/Moya/pull/1789), [#1799](https://github.com/Moya/Moya/pull/1799) by [@bjarkehs](https://github.com/bjarkehs) and [@sunshinejr](https://github.com/sunshinejr).
+
+### Fixed
+- Fixed `Progress` object on responses that did not specify correct `Content-Length` header. Now, whenever there is no valid header, the progress will be 0.0 until the completion of the request. Also, the `completed` property is now `true` only when the response was serialized, we do not rely on progress being 1.0 anymore. [#1815](https://github.com/Moya/Moya/pull/1815) by [@sunshinejr](https://github.com/sunshinejr).
 
 # [12.0.1] - 2018-11-19
 

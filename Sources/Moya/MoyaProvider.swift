@@ -24,12 +24,20 @@ public struct ProgressResponse {
 
     /// The fraction of the overall work completed by the progress object.
     public var progress: Double {
-        return progressObject?.fractionCompleted ?? 1.0
+        if completed {
+            return 1.0
+        } else if let progressObject = progressObject, progressObject.totalUnitCount > 0 {
+            // if the Content-Length is specified we can rely on `fractionCompleted`
+            return progressObject.fractionCompleted
+        } else {
+            // if the Content-Length is not specified, return progress 0.0 until it's completed
+            return 0.0
+        }
     }
 
     /// A Boolean value stating whether the request is completed.
     public var completed: Bool {
-        return progress == 1.0 && response != nil
+        return response != nil
     }
 }
 
