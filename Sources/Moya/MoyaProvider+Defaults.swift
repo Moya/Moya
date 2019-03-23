@@ -29,6 +29,6 @@ public extension MoyaProvider {
         let configuration = URLSessionConfiguration.default
         configuration.httpHeaders = .default
 
-        return Session(startRequestsImmediately: false, configuration: configuration)
+        return Session(configuration: configuration, startRequestsImmediately: false)
     }
 }
