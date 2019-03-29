@@ -48,7 +48,7 @@ public extension Response {
         - statusCodes: The range of acceptable status codes.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
-    public func filter<R: RangeExpression>(statusCodes: R) throws -> Response where R.Bound == Int {
+    func filter<R: RangeExpression>(statusCodes: R) throws -> Response where R.Bound == Int {
         guard statusCodes.contains(statusCode) else {
             throw MoyaError.statusCode(self)
         }
@@ -62,7 +62,7 @@ public extension Response {
         - statusCode: The acceptable status code.
      - throws: `MoyaError.statusCode` when others are encountered.
     */
-    public func filter(statusCode: Int) throws -> Response {
+    func filter(statusCode: Int) throws -> Response {
         return try filter(statusCodes: statusCode...statusCode)
     }
 
@@ -71,7 +71,7 @@ public extension Response {
 
      - throws: `MoyaError.statusCode` when others are encountered.
     */
-    public func filterSuccessfulStatusCodes() throws -> Response {
+    func filterSuccessfulStatusCodes() throws -> Response {
         return try filter(statusCodes: 200...299)
     }
 
@@ -80,7 +80,7 @@ public extension Response {
 
      - throws: `MoyaError.statusCode` when others are encountered.
     */
-    public func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
+    func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
         return try filter(statusCodes: 200...399)
     }
 
@@ -110,7 +110,7 @@ public extension Response {
     /// Maps data received from the signal into a String.
     ///
     /// - parameter atKeyPath: Optional key path at which to parse string.
-    public func mapString(atKeyPath keyPath: String? = nil) throws -> String {
+    func mapString(atKeyPath keyPath: String? = nil) throws -> String {
         if let keyPath = keyPath {
             // Key path was provided, try to parse string at key path
             guard let jsonDictionary = try mapJSON() as? NSDictionary,
