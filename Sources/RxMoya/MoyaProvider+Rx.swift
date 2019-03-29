@@ -14,7 +14,7 @@ public extension Reactive where Base: MoyaProviderType {
     ///   - token: Entity, which provides specifications necessary for a `MoyaProvider`.
     ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
     /// - Returns: Single response object.
-    public func request(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
+    func request(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
         return Single.create { [weak base] single in
             let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                 switch result {
@@ -32,7 +32,7 @@ public extension Reactive where Base: MoyaProviderType {
     }
 
     /// Designated request-making method with progress.
-    public func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
+    func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
         let progressBlock: (AnyObserver) -> (ProgressResponse) -> Void = { observer in
             return { progress in
                 observer.onNext(progress)
