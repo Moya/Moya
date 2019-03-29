@@ -36,7 +36,7 @@ public extension TargetType {
 // MARK: - Deprecated
 
 extension TargetType {
-    @available(*, deprecated: 11.0, message:
+    @available(*, deprecated, message:
     "TargetType's validate property has been deprecated in 11.0. Please use validationType: ValidationType.")
     var validate: Bool {
         return false
