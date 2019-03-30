@@ -637,7 +637,7 @@
 			};
 			buildConfigurationList = CF2B188FD83B4489A8520824 /* Build configuration list for PBXProject "Moya" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
