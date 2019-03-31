@@ -1,5 +1,7 @@
 # Next
 
+# [13.0.0-beta.1] - 2019-03-31
+
 ### Changed
 - **Breaking Change** `.mapImage()` extension on `Single` and `Observable` now returns non-optional image. [#1789](https://github.com/Moya/Moya/pull/1789), [#1799](https://github.com/Moya/Moya/pull/1799) by [@bjarkehs](https://github.com/bjarkehs) and [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** Minimum version of `ReactiveSwift` is now 5.0. [#1817](https://github.com/Moya/Moya/pull/1817) by [@larryonoff](https://github.com/larryonoff).
