@@ -32,13 +32,3 @@ public extension TargetType {
         return .none
     }
 }
-
-// MARK: - Deprecated
-
-extension TargetType {
-    @available(*, deprecated, message:
-    "TargetType's validate property has been deprecated in 11.0. Please use validationType: ValidationType.")
-    var validate: Bool {
-        return false
-    }
-}
