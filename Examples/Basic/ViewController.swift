@@ -27,7 +27,7 @@ class ViewController: UITableViewController {
     func downloadRepositories(_ username: String) {
         gitHubProvider.request(.userRepositories(username)) { result in
             do {
-                let response = try result.dematerialize()
+                let response = try result.get()
                 let value = try response.mapNSArray()
                 self.repos = value
                 self.tableView.reloadData()
