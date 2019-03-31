@@ -58,12 +58,15 @@ ready for production use.
 Below is a table that shows which version of Moya you should use for
 your Swift version.
 
-| Swift | Moya          | RxMoya        | ReactiveMoya  |
-| ----- | ------------- |---------------|---------------|
-| 4.X   | >= 9.0        | >= 10.0       | >= 9.0        |
-| 3.X   | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 | 8.0.0 - 8.0.5 |
-| 2.3   | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 | 7.0.2 - 7.0.4 |
-| 2.2   | <= 7.0.1      | <= 7.0.1      | <= 7.0.1      |
+| Swift | Moya           | RxMoya          | ReactiveMoya   |
+| ----- | -------------- |---------------- |--------------- |
+| 5.X   | >= 13.0.0      | >= 13.0.0       | >= 13.0.0      |
+| 4.X   | 9.0.0 - 12.0.1 | 10.0.0 - 12.0.1 | 9.0.0 - 12.0.1 |
+| 3.X   | 8.0.0 - 8.0.5  | 8.0.0 - 8.0.5   | 8.0.0 - 8.0.5  |
+| 2.3   | 7.0.2 - 7.0.4  | 7.0.2 - 7.0.4   | 7.0.2 - 7.0.4  |
+| 2.2   | <= 7.0.1       | <= 7.0.1        | <= 7.0.1       |
+
+_Note: If you are using Swift 4.2 in your project, but you are using Xcode 10.2, Moya 13 should work correctly even though we use Swift 5.0._
 
 **Upgrading to a new major version of Moya? Check out our [migration guides](https://github.com/Moya/Moya/blob/master/docs/MigrationGuides).**
 
