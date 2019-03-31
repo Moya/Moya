@@ -61,13 +61,13 @@ Moya 的一些特色功能：
 要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "12.0.0"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0-beta.1"))
 ```
 
 然后指定 `"Moya"` 为你想要使用 Moya 的 Target 的依赖。如果你想要使用响应式扩展，将 `"ReactiveMoya"` 和 `"RxMoya"` 也也作为依赖加入进来。这里是一个 `PackageDescription` 实例：
 
 ```swift
-// swift-tools-version:4.0
+// swift-tools-version:5.0
 import PackageDescription
 
 let package = Package(
@@ -78,7 +78,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "12.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0-beta.1"))
     ],
     targets: [
         .target(
@@ -95,15 +95,15 @@ let package = Package(
 在你的 Podfile 文件中添加 Moya：
 
 ```rb
-pod 'Moya', '~> 12.0'
+pod 'Moya', '13.0.0-beta.1'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 12.0'
+pod 'Moya/RxSwift', '13.0.0-beta.1'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 12.0'
+pod 'Moya/ReactiveSwift', '13.0.0-beta.1'
 ```
 
 然后运行 `pod install`。
