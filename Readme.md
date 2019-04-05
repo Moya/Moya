@@ -107,6 +107,10 @@ let package = Package(
 
 Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 
+### Accio
+
+Accio is based on Swift Package Manager (with the addition of iOS/macOS/tvOS/watchOS support) and therefore integration of Moya is exactly the same as described above. Once your `Package.swift` file is configured, run `accio update`.
+
 ### CocoaPods
 
 For Moya, use the following entry in your Podfile:
@@ -144,28 +148,6 @@ Then run `carthage update`.
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
 > NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ReactiveSwift`, feel free to delete that framework along with `ReactiveMoya` from the Carthage Build directory after `carthage update` completes. Or if you are using `ReactiveSwift` but not `RxSwift`, then `RxMoya`, `RxTest`, `RxCocoa`, etc. can safely be deleted.
-
-### Accio
-
-Add the following to your Package.swift:
-
-```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0-beta.1")),
-```
-
-Next, choose either `Moya`, `RxMoya` or `ReactiveMoya` and add it to your App targets dependencies, for example:
-
-```swift
-.target(
-    name: "App",
-    dependencies: [
-        "Moya",
-    ]
-),
-```
-
-Then run `accio update`.
-
 
 ### Manually
 
