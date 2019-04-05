@@ -153,7 +153,7 @@ Add the following to your Package.swift:
 .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0-beta.1")),
 ```
 
-Next, choose either `Moya`, `RxMoya` or `ReactiveMoya` and add it to your App targets dependencies like so, for example:
+Next, choose either `Moya`, `RxMoya` or `ReactiveMoya` and add it to your App targets dependencies, for example:
 
 ```swift
 .target(
