@@ -109,7 +109,7 @@ Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 
 ### Accio
 
-Accio is based on Swift Package Manager (with the addition of iOS/macOS/tvOS/watchOS support) and therefore integration of Moya is exactly the same as described above. Once your `Package.swift` file is configured, run `accio update`.
+[Accio](https://github.com/JamitLabs/Accio) is a dependency manager based on SwiftPM which can build frameworks for iOS/macOS/tvOS/watchOS. Therefore the integration steps of Moya are exactly the same as described above. Once your `Package.swift` file is configured, run `accio update` instead of `swift package update`.
 
 ### CocoaPods
 
