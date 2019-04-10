@@ -185,7 +185,7 @@ final class SingleMoyaSpec: QuickSpec {
 
                 var size: CGSize?
                 _ = single.mapImage().subscribe(onSuccess: { image in
-                    size = image?.size
+                    size = image.size
                 })
 
                 expect(size).to(equal(image.size))

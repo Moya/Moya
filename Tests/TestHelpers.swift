@@ -1,10 +1,10 @@
 import Moya
 
-#if os(iOS) || os(watchOS) || os(tvOS)
-import UIKit
-import Foundation
-#elseif os(macOS)
-import AppKit
+#if canImport(UIKit)
+    import UIKit
+    import Foundation
+#elseif canImport(AppKit)
+    import AppKit
 #endif
 
 // MARK: - Mock Services
@@ -235,11 +235,11 @@ extension ImageType {
         return Image(contentsOfFile: path!)!
     }
 
-    #if os(iOS) || os(watchOS) || os(tvOS)
+    #if canImport(UIKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
             return jpegData(compressionQuality: compression)
         }
-    #elseif os(macOS)
+    #elseif canImport(AppKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
             var imageRect = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
             let imageRep = NSBitmapImageRep(cgImage: self.cgImage(forProposedRect: &imageRect, context: nil, hints: nil)!)

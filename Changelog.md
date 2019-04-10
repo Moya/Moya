@@ -1,5 +1,21 @@
 # Next
 
+# [13.0.0-beta.1] - 2019-03-31
+
+### Changed
+- **Breaking Change** `.mapImage()` extension on `Single` and `Observable` now returns non-optional image. [#1789](https://github.com/Moya/Moya/pull/1789), [#1799](https://github.com/Moya/Moya/pull/1799) by [@bjarkehs](https://github.com/bjarkehs) and [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Minimum version of `ReactiveSwift` is now 5.0. [#1817](https://github.com/Moya/Moya/pull/1817) by [@larryonoff](https://github.com/larryonoff).
+- **Breaking Change** Minimum version of `Result` is now 4.1. [#1817](https://github.com/Moya/Moya/pull/1817) by [@larryonoff](https://github.com/larryonoff).
+- **Breaking Change** Updated project to Swift 5.0. [#1827](https://github.com/Moya/Moya/pull/1827) by [@sunshinejr](https://github.com/sunshinejr).
+- Updated project to support Xcode 10.2. [#1826](https://github.com/Moya/Moya/pull/1826) by [@larsschwegmann](https://github.com/larsschwegmann).
+- `MoyaError` now conforms to `CustomNSError` protocol, makes underlying errors available in its user-info dictionary. [#1783](https://github.com/Moya/Moya/pull/1783) by [@dpoggi](https://github.com/dpoggi).
+
+### Fixed
+- Fixed `Progress` object on responses that did not specify correct `Content-Length` header. Now, whenever there is no valid header, the progress will be 0.0 until the completion of the request. Also, the `completed` property is now `true` only when the response was serialized, we do not rely on progress being 1.0 anymore. [#1815](https://github.com/Moya/Moya/pull/1815) by [@sunshinejr](https://github.com/sunshinejr).
+
+### Removed
+- **Breaking change** Removed `validate` on `TargetType`. It was deprecated in Moya 11, use `validationType` instead. [#1828](https://github.com/Moya/Moya/pull/1828) by [@sunshinejr](https://github.com/sunshinejr).
+
 # [12.0.1] - 2018-11-19
 
 # [12.0.0] - 2018-11-18

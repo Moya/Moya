@@ -474,6 +474,7 @@ final class MoyaProviderSpec: QuickSpec {
 
         describe("a provider with stubbed errors") {
             var provider: MoyaProvider<GitHub>!
+
             beforeEach {
                 provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
             }
@@ -651,6 +652,7 @@ final class MoyaProviderSpec: QuickSpec {
 
         describe("an inflight-tracking provider") {
             var provider: MoyaProvider<GitHub>!
+
             beforeEach {
                 OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
                     return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
@@ -686,6 +688,7 @@ final class MoyaProviderSpec: QuickSpec {
 
         describe("the cancellable token") {
             var provider: MoyaProvider<GitHub>!
+
             beforeEach {
                 provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(0.5))
             }
@@ -717,8 +720,8 @@ final class MoyaProviderSpec: QuickSpec {
 
         describe("a provider with progress tracking") {
             var provider: MoyaProvider<GitHubUserContent>!
-            beforeEach {
 
+            beforeEach {
                 //delete downloaded filed before each test
                 let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
                 let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
@@ -732,7 +735,6 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             it("tracks progress of download request") {
-
                 let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
 
                 var progressObjects: [Progress?] = []
@@ -763,7 +765,7 @@ final class MoyaProviderSpec: QuickSpec {
                 expect(progressObjects.filter { $0 != nil }.count) == 5
             }
 
-            it("tracks progress of request") {
+            it("tracks progress of a request") {
 
                 let target: GitHubUserContent = .requestMoyaWebContent("logo_github.png")
 
@@ -794,7 +796,85 @@ final class MoyaProviderSpec: QuickSpec {
                 expect(completedValues) == [false, false, false, false, true]
                 expect(progressObjects.filter { $0 != nil }.count) == 5
             }
+        }
 
+        describe("a provider with progress tracking and invalid content-length header") {
+            var provider: MoyaProvider<GitHubUserContent>!
+
+            beforeEach {
+                //delete downloaded filed before each test
+                let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+                let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
+                try? FileManager.default.removeItem(at: file)
+
+                //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
+                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
+                })
+                provider = MoyaProvider<GitHubUserContent>()
+            }
+
+            it("tracks progress of download request") {
+                let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
+
+                var progressObjects: [Progress?] = []
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: MoyaError?
+
+                waitUntil(timeout: 5.0) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressObjects.append(progress.progressObject)
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+
+                    let progressCompletionClosure: Completion = { (result) in
+                        if case .failure(let err) = result {
+                            error = err
+                        }
+                        done()
+                    }
+
+                    provider.request(target, callbackQueue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+
+                expect(error).to(beNil())
+                expect(progressValues) == [0, 0, 0, 0, 1.0]
+                expect(completedValues) == [false, false, false, false, true]
+                expect(progressObjects.filter { $0 != nil }.count) == 5
+            }
+
+            it("tracks progress of a request") {
+                let target: GitHubUserContent = .requestMoyaWebContent("logo_github.png")
+
+                var progressObjects: [Progress?] = []
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: MoyaError?
+
+                waitUntil(timeout: 5.0) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressObjects.append(progress.progressObject)
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+
+                    let progressCompletionClosure: Completion = { (result) in
+                        if case .failure(let err) = result {
+                            error = err
+                        }
+                        done()
+                    }
+
+                    provider.request(target, callbackQueue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+
+                expect(error).to(beNil())
+                expect(progressValues) == [0, 0, 0, 0, 1.0]
+                expect(completedValues) == [false, false, false, false, true]
+                expect(progressObjects.filter { $0 != nil }.count) == 5
+            }
         }
 
         describe("a provider with upload progress tracking") {
@@ -804,7 +884,6 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             it("tracks progress of request") {
-
                 let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
                 let target: HTTPBin = .upload(file: url)
 
