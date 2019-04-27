@@ -52,7 +52,7 @@ jobs:
           command: brew update
       - run:
           name: Install Swiftlint
-          command: brew install swiftlint
+          command: git clone git@github.com:realm/SwiftLint.git && cd SwiftLint && git submodule update --init --recursive && make install && cd ../
       - run:
           name: Add Python directory to PATH
           command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
