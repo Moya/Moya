@@ -23,9 +23,6 @@ jobs:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
       - run:
-          name: Update Homebrew
-          command: brew update    
-      - run:
           name: Carthage checkout
           command: carthage checkout
       - run:
@@ -47,9 +44,6 @@ jobs:
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
-      - run:
-          name: Update Homebrew
-          command: brew update
       - run:
           name: Install Swiftlint
           command: git clone git@github.com:realm/SwiftLint.git && cd SwiftLint && git submodule update --init --recursive && make install && cd ../
