@@ -116,15 +116,15 @@ Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '13.0.0'
+pod 'Moya', '~> 13.0'
 
 # or 
 
-pod 'Moya/RxSwift', '13.0.0'
+pod 'Moya/RxSwift', '~> 13.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '13.0.0'
+pod 'Moya/ReactiveSwift', '~> 13.0'
 ```
 
 Then run `pod install`.
@@ -140,7 +140,7 @@ generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 Make the following entry in your Cartfile:
 
 ```
-github "Moya/Moya"
+github "Moya/Moya" ~> 13.0
 ```
 
 Then run `carthage update`.
