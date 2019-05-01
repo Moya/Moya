@@ -1,5 +1,12 @@
 # Next
 
+# [13.0.1] - 2019-05-01
+
+### Fixed
+- Fixed a problem where, while using stubbed responses, Moya would generate weird cancellation errors in the console. [#1841](https://github.com/Moya/Moya/pull/1841) by [@sunshinejr](https://github.com/sunshinejr).
+
+# [13.0.0] - 2019-04-10
+
 # [13.0.0-beta.1] - 2019-03-31
 
 ### Changed

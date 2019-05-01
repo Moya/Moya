@@ -76,7 +76,7 @@ _Note: If you are using Swift 4.2 in your project, but you are using Xcode 10.2,
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.1"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0"))
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
@@ -95,7 +95,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.1"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0"))
     ],
     targets: [
         .target(
@@ -116,15 +116,15 @@ Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '13.0.1'
+pod 'Moya', '~> 13.0'
 
 # or 
 
-pod 'Moya/RxSwift', '13.0.1'
+pod 'Moya/RxSwift', '~> 13.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '13.0.1'
+pod 'Moya/ReactiveSwift', '~> 13.0'
 ```
 
 Then run `pod install`.
@@ -140,7 +140,7 @@ generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 Make the following entry in your Cartfile:
 
 ```
-github "Moya/Moya"
+github "Moya/Moya" ~> 13.0
 ```
 
 Then run `carthage update`.
