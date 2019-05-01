@@ -95,15 +95,15 @@ let package = Package(
 在你的 Podfile 文件中添加 Moya：
 
 ```rb
-pod 'Moya', '13.0.0'
+pod 'Moya', '~> 13.0'
 
 # or 
 
-pod 'Moya/RxSwift', '13.0.0'
+pod 'Moya/RxSwift', '~> 13.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '13.0.0'
+pod 'Moya/ReactiveSwift', '~> 13.0'
 ```
 
 然后运行 `pod install`。
@@ -117,7 +117,7 @@ Carthage 用户可以指向这个仓库并使用他们喜欢的生成框架，`M
 在你的 Cartfile 中添加下面的代码：
 
 ```
-github "Moya/Moya"
+github "Moya/Moya" ~> 13.0
 ```
 
 然后运行 `carthage update`。
