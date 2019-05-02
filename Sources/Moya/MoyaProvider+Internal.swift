@@ -167,7 +167,10 @@ private extension MoyaProvider {
             form.applyMoyaMultipartFormData(multipartBody)
         }
 
-        let request = session.upload(multipartFormData: multipartFormData, with: request, interceptor: nil)
+        let formData = RequestMultipartFormData(fileManager: .default)
+        multipartFormData(formData)
+
+        let request = session.upload(multipartFormData: formData, with: request, interceptor: nil)
         let validationCodes = target.validationType.statusCodes
         let validatedRequest = validationCodes.isEmpty ? request : request.validate(statusCode: validationCodes)
         return self.sendAlamofireRequest(validatedRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)

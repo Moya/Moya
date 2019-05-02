@@ -63,15 +63,9 @@ final class SessionMock: Alamofire.Session {
 
     var uploadMultipartFormData: Alamofire.MultipartFormData?
 
-    override func upload(multipartFormData: @escaping (Alamofire.MultipartFormData) -> Void,
-        usingThreshold encodingMemoryThreshold: UInt64,
-        with urlRequest: URLRequestConvertible,
-        queue: DispatchQueue?,
-        encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?) {
-            
-        let uploadMultipartFormData = Alamofire.MultipartFormData()
-        multipartFormData(uploadMultipartFormData)
-        self.uploadMultipartFormData = uploadMultipartFormData
-        return super.upload(multipartFormData: multipartFormData, usingThreshold: encodingMemoryThreshold, fileManager: fileManager, with: request, interceptor: interceptor)
+    override func upload(multipartFormData: Alamofire.MultipartFormData, usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold, with request: URLRequestConvertible, interceptor: RequestInterceptor? = nil) -> UploadRequest {
+        self.uploadMultipartFormData = multipartFormData
+
+        return super.upload(multipartFormData: multipartFormData, usingThreshold: encodingMemoryThreshold, with: request, interceptor: interceptor)
     }
 }

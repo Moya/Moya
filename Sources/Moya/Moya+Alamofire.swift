@@ -76,16 +76,28 @@ internal protocol Requestable {
 
 extension DataRequest: Requestable {
     internal func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
-        return response(queue: callbackQueue) { handler  in
-            completionHandler(handler.response, handler.request, handler.data, handler.error)
+        if let callbackQueue = callbackQueue {
+            return response(queue: callbackQueue) { handler  in
+                completionHandler(handler.response, handler.request, handler.data, handler.error)
+            }
+        } else {
+            return response { handler  in
+                completionHandler(handler.response, handler.request, handler.data, handler.error)
+            }
         }
     }
 }
 
 extension DownloadRequest: Requestable {
     internal func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
-        return response(queue: callbackQueue) { handler  in
-            completionHandler(handler.response, handler.request, nil, handler.error)
+        if let callbackQueue = callbackQueue {
+            return response(queue: callbackQueue) { handler  in
+                completionHandler(handler.response, handler.request, nil, handler.error)
+            }
+        } else {
+            return response() { handler  in
+                completionHandler(handler.response, handler.request, nil, handler.error)
+            }
         }
     }
 }

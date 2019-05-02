@@ -27,7 +27,7 @@ public extension MoyaProvider {
 
     final class func defaultAlamofireSession() -> Session {
         let configuration = URLSessionConfiguration.default
-        configuration.httpHeaders = .default
+        configuration.headers = .default
 
         return Session(configuration: configuration, startRequestsImmediately: false)
     }

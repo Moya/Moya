@@ -351,11 +351,6 @@ final class EndpointSpec: QuickSpec {
                     expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
                 }
 
-                it("throws an error when bodyEncoding is an URLEncoding.methodDependent") {
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.methodDependent, urlParameters: [:]))
-                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
-                }
-
                 it("throws an error when bodyEncoding is an URLEncoding.default") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.default, urlParameters: [:]))
                     expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
