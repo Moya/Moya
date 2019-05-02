@@ -1,5 +1,8 @@
 # Next
 
+### Changed
+- **Breaking Change** Minimum version of `RxSwift` is now 5.0. [#1846](https://github.com/Moya/Moya/pull/1846) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+
 # [13.0.1] - 2019-05-01
 
 ### Fixed
