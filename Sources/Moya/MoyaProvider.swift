@@ -1,5 +1,4 @@
 import Foundation
-import Result
 
 /// Closure to be executed when a request has completed.
 public typealias Completion = (_ result: Result<Moya.Response, MoyaError>) -> Void

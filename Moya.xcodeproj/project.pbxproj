@@ -14,15 +14,10 @@
 		1446FBB31F214C5200C1EFF2 /* URL+Moya.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */; };
 		1463B87B1F8A8A79002D9C4F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; };
 		1463B87C1F8A8A79002D9C4F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1463B87D1F8A8A79002D9C4F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8721F8A8A5A002D9C4F /* Result.framework */; };
-		1463B87E1F8A8A79002D9C4F /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8721F8A8A5A002D9C4F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1463B8801F8A8A7F002D9C4F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; };
 		1463B8811F8A8A7F002D9C4F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8731F8A8A5B002D9C4F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1463B8821F8A8A7F002D9C4F /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8721F8A8A5A002D9C4F /* Result.framework */; };
-		1463B8831F8A8A7F002D9C4F /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1463B8721F8A8A5A002D9C4F /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		147E26EC1F5B14B300C1F513 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147E26EB1F5B14B300C1F513 /* Task.swift */; };
 		148FAF0DFB395B4A64314803 /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A8C06CC9BA491AE62A431B /* ReactiveMoya.framework */; };
-		149675EB1F8133B00085EDEE /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		149675EC1F81340B0085EDEE /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A06B01F705DDE001153A0 /* GitHubAPI.swift */; };
 		149675ED1F81340D0085EDEE /* GiphyAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A06AE1F705DDD001153A0 /* GiphyAPI.swift */; };
 		149675EE1F81340F0085EDEE /* GitHubUserContentAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A06AD1F705DDD001153A0 /* GitHubUserContentAPI.swift */; };
@@ -80,6 +75,7 @@
 		BAFB3C28D3BF17C52FDA8FE4 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = CA93F1BAD55FF95EDE17EE61 /* testImage.png */; };
 		BEAA605B30BE7651BA5C61A4 /* Plugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A693AF0E88E83E91A47A99 /* Plugin.swift */; };
 		C1B5E2325B210232599B0D1A /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F112022D8F42844A7D5CB5C /* ErrorTests.swift */; };
+		CCB85FCA228B3D1800AAB253 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		D00AA2514CD6B1276B845BA7 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D6A04B657A83CA2FF80ABCF4 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		DA631A5B37F36DA17E135F14 /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */; };
@@ -122,7 +118,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1463B87C1F8A8A79002D9C4F /* Alamofire.framework in Embed Frameworks */,
-				1463B87E1F8A8A79002D9C4F /* Result.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,7 +129,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				1463B8811F8A8A7F002D9C4F /* Alamofire.framework in Embed Frameworks */,
-				1463B8831F8A8A7F002D9C4F /* Result.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,8 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1463B8821F8A8A7F002D9C4F /* Result.framework in Frameworks */,
-				149675EB1F8133B00085EDEE /* Moya.framework in Frameworks */,
+				CCB85FCA228B3D1800AAB253 /* Moya.framework in Frameworks */,
 				1463B8801F8A8A7F002D9C4F /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,7 +231,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1463B87D1F8A8A79002D9C4F /* Result.framework in Frameworks */,
 				469A06B21F705ECF001153A0 /* Moya.framework in Frameworks */,
 				1463B87B1F8A8A79002D9C4F /* Alamofire.framework in Frameworks */,
 			);
