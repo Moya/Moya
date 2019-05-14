@@ -3,7 +3,7 @@
 By default, all of your requests will be put onto a background thread by `Alamofire`, and the 
 response will be called on the main thread. If you want your response called on a different thread, you can initialize your `Provider` with a specified `callbackQueue`:
 ```swift
-provider = MoyaProvider<GitHub>(callbackQueue: DispatchQueue.global(.utility))
+provider = MoyaProvider<GitHub>(callbackQueue: DispatchQueue.global(qos: .utility))
 provider.request(.userProfile("ashfurrow")) {
     /* this is called on a utility thread */
 }
