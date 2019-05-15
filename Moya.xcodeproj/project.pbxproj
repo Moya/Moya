@@ -138,7 +138,6 @@
 /* Begin PBXFileReference section */
 		019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ReactiveMoya.h; sourceTree = "<group>"; };
 		1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Moya.swift"; sourceTree = "<group>"; };
-		1463B8721F8A8A5A002D9C4F /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		1463B8731F8A8A5B002D9C4F /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		147E26EB1F5B14B300C1F513 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		149749421F8923EC00FA4900 /* AnyEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
@@ -268,7 +267,6 @@
 			isa = PBXGroup;
 			children = (
 				1463B8731F8A8A5B002D9C4F /* Alamofire.framework */,
-				1463B8721F8A8A5A002D9C4F /* Result.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -796,7 +794,6 @@
 				Nimble.framework,
 				Quick.framework,
 				OHHTTPStubs.framework,
-				Result.framework,
 				Alamofire.framework,
 				ReactiveSwift.framework,
 				RxSwift.framework,
