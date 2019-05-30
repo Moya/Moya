@@ -95,7 +95,7 @@ extension DownloadRequest: Requestable {
                 completionHandler(handler.response, handler.request, nil, handler.error)
             }
         } else {
-            return response() { handler  in
+            return response { handler  in
                 completionHandler(handler.response, handler.request, nil, handler.error)
             }
         }
