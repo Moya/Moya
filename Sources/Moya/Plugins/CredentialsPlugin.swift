@@ -1,5 +1,4 @@
 import Foundation
-import Result
 
 /// Provides each request with optional URLCredentials.
 public final class CredentialsPlugin: PluginType {
