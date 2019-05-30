@@ -1,10 +1,3 @@
-//
-//  PropertyListEncoding.swift
-//  MoyaTests
-//
-//  Created by Łukasz Mróz on 19/02/2019.
-//
-
 import Alamofire
 
 internal struct PropertyListEncoding: ParameterEncoding {
