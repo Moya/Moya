@@ -2,7 +2,7 @@
 
 ### Changed
 - **Breaking Change** Removed `Result` depndency in favor of `Result` introduced in Swift 5. [#1858](https://github.com/Moya/Moya/pull/1858) by [@larryonoff](https://github.com/larryonoff).
-- **Breaking Change** Added TargetType in the output of NetworkLoggerPlugin to able to print logs for only particular API targets. [#1866](https://github.com/Moya/Moya/pull/1866) by [@hasankose](https://github.com/hasankose).
+- **Breaking Change** Added `TargetType` parameter in the output of `NetworkLoggerPlugin`. [#1866](https://github.com/Moya/Moya/pull/1866) by [@hasankose](https://github.com/hasankose).
 
 # [14.0.0-alpha.1] - 2019-05-14
 
