@@ -8,7 +8,7 @@ public final class NetworkLoggerPlugin: PluginType {
     fileprivate let separator = ", "
     fileprivate let terminator = "\n"
     fileprivate let cURLTerminator = "\\\n"
-    fileprivate let output: (_ separator: String, _ terminator: String, _ items: Any...) -> Void
+    fileprivate let output: (_ separator: String, _ terminator: String, _ target: TargetType, _ items: Any...) -> Void
     fileprivate let requestDataFormatter: ((Data) -> (String))?
     fileprivate let responseDataFormatter: ((Data) -> (Data))?
 
@@ -17,7 +17,7 @@ public final class NetworkLoggerPlugin: PluginType {
     public let cURL: Bool
 
     /// Initializes a NetworkLoggerPlugin.
-    public init(verbose: Bool = false, cURL: Bool = false, output: ((_ separator: String, _ terminator: String, _ items: Any...) -> Void)? = nil, requestDataFormatter: ((Data) -> (String))? = nil, responseDataFormatter: ((Data) -> (Data))? = nil) {
+    public init(verbose: Bool = false, cURL: Bool = false, output: ((_ separator: String, _ terminator: String, _ target: TargetType, _ items: Any...) -> Void)? = nil, requestDataFormatter: ((Data) -> (String))? = nil, responseDataFormatter: ((Data) -> (Data))? = nil) {
         self.cURL = cURL
         self.isVerbose = verbose
         self.output = output ?? NetworkLoggerPlugin.reversedPrint
@@ -27,25 +27,25 @@ public final class NetworkLoggerPlugin: PluginType {
 
     public func willSend(_ request: RequestType, target: TargetType) {
         if let request = request as? CustomDebugStringConvertible, cURL {
-            output(separator, terminator, request.debugDescription)
+            output(separator, terminator, target, request.debugDescription)
             return
         }
-        outputItems(logNetworkRequest(request.request as URLRequest?))
+        outputItems(logNetworkRequest(request.request as URLRequest?), target)
     }
 
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         if case .success(let response) = result {
-            outputItems(logNetworkResponse(response.response, data: response.data, target: target))
+            outputItems(logNetworkResponse(response.response, data: response.data, target: target), target)
         } else {
-            outputItems(logNetworkResponse(nil, data: nil, target: target))
+            outputItems(logNetworkResponse(nil, data: nil, target: target), target)
         }
     }
 
-    fileprivate func outputItems(_ items: [String]) {
+    fileprivate func outputItems(_ items: [String], _ target: TargetType) {
         if isVerbose {
-            items.forEach { output(separator, terminator, $0) }
+            items.forEach { output(separator, terminator, target, $0) }
         } else {
-            output(separator, terminator, items)
+            output(separator, terminator, target, items)
         }
     }
 }
@@ -105,7 +105,7 @@ private extension NetworkLoggerPlugin {
 }
 
 fileprivate extension NetworkLoggerPlugin {
-    static func reversedPrint(_ separator: String, terminator: String, items: Any...) {
+    static func reversedPrint(_ separator: String, terminator: String, target: TargetType, items: Any...) {
         for item in items {
             print(item, separator: separator, terminator: terminator)
         }

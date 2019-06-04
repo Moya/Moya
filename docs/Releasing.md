@@ -38,8 +38,13 @@ To make a release:
 1. Grab a :tea: or :coffee:.
 1. Make sure everything went smoothly.
 
-What you'll need to do manually afterwards (if you released a major version):
+## After release
 
-1. Update the Swift Package Manager instructions in the Readme to use the release you just made public.
+What you might need to do manually afterwards:
+
+1. Update the instructions for our supported package managers in the Readme to use the release you just made public (e.g. update version numbers if it was a major release).
+1. Update Swift/Moya version table if needed.
+1. Update the release description in [GitHub releases tab](https://github.com/Moya/Moya/releases/tag).
+1. Check if we need to regenerate docs for [moya.github.io](https://github.com/Moya/moya.github.io).
 
 If anything goes wrong, don't panic! Get in touch with someone else who has released, or [Ash](mailto:ash@ashfurrow.com).
