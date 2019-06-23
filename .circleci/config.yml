@@ -81,7 +81,7 @@ jobs:
           command: rake build_example
       - run:
           name: Run Danger
-          command: bundle exec danger
+          command: brew install danger/tap/danger-swift && danger-swift ci
       - run:
           name: CocoaPods Spec linting
           command: bundle exec pod lib lint
