@@ -43,7 +43,7 @@ jobs:
             - v1-dep-{{ checksum "Cartfile.resolved" }}
       - restore_cache:
           keys:
-            - v1-dep-danger-{{ checksum "Dangerfile.swift" }}
+            - v1-dep-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
