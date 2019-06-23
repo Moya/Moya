@@ -1,4 +1,5 @@
 import Danger 
+import DangerSwiftProse // package: https://github.com/f-meloni/danger-swift-prose.git
 
 let danger = Danger()
 
@@ -59,3 +60,15 @@ let docChangeRaccomanded = (danger.github.pullRequest.additions ?? 0) > 15
 if sourceChanges && missingDocChanges && docChangeRaccomanded && !isTrivial {
     warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 }
+
+// Run danger-prose to lint Chinese docs
+func isCnDocsMarkdown(_ file: String) -> Bool {
+    return file.fileType == .markdown && file.contains("docs_CN")
+}
+let addedAndModifiedCnDocsMarkdown = danger.git.createdFiles.filter(isCnDocsMarkdown) + danger.git.modifiedFiles.filter(isCnDocsMarkdown)
+if #available(OSX 10.12, *),
+    addedAndModifiedCnDocsMarkdown.count > 0 {
+    Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown)
+}
+
+
