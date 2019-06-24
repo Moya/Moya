@@ -71,4 +71,16 @@ if #available(OSX 10.12, *),
     Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown)
 }
 
+//Run danger-prose to lint and check spelling English docs
+func isEnDocsMarkdown(_ file: String) -> Bool {
+    return file.fileType == .markdown && file.contains("docs/")
+}
+let addedAndModifiedEnDocsMarkdown = danger.git.createdFiles.filter(isEnDocsMarkdown) + danger.git.modifiedFiles.filter(isEnDocsMarkdown)
+if #available(OSX 10.12, *),
+    !addedAndModifiedEnDocsMarkdown.isEmpty {
+    Proselint.performSpellCheck(files: addedAndModifiedEnDocsMarkdown)
+    
+    let ignoredWords = ["Auth", "auth", "Moya", "enum", "enums", "OAuth", "Artsy's", "Heimdallr.swift", "SwiftyJSONMapper", "ObjectMapper", "Argo", "ModelMapper", "ReactiveSwift", "RxSwift", "multipart", "JSONEncoder", "Alamofire", "CocoaPods", "URLSession", "plugin", "plugins", "stubClosure", "requestClosure", "endpointClosure", "Unsplash", "ReactorKit", "Dribbble", "EVReflection", "Unbox"]
+    Mdspell.performSpellCheck(files: addedAndModifiedEnDocsMarkdown, ignoredWords: ignoredWords, language: "en-us")
+}
 
