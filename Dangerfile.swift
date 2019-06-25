@@ -104,3 +104,9 @@ if notUpdatedManifests.count != manifests.count {
         "Did you forget to update them?")
 }
 
+// Warn when library files has been updated but not tests.
+let testsUpdated = danger.git.modifiedFiles.first { $0.hasPrefix("Tests") } != nil
+if sourceChanges && !testsUpdated {
+    warn("The library files were changed, but the tests remained unmodified. Consider updating or adding to the tests to match the library changes.")
+}
+
