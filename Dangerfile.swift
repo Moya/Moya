@@ -110,3 +110,5 @@ if sourceChanges && !testsUpdated {
     warn("The library files were changed, but the tests remained unmodified. Consider updating or adding to the tests to match the library changes.")
 }
 
+// Run Swiftlint
+SwiftLint.lint()
