@@ -71,7 +71,7 @@ if #available(OSX 10.12, *),
     Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown)
 }
 
-//Run danger-prose to lint and check spelling English docs
+// Run danger-prose to lint and check spelling English docs
 func isEnDocsMarkdown(_ file: String) -> Bool {
     return file.fileType == .markdown && file.contains("docs/")
 }
@@ -82,5 +82,25 @@ if #available(OSX 10.12, *),
     
     let ignoredWords = ["Auth", "auth", "Moya", "enum", "enums", "OAuth", "Artsy's", "Heimdallr.swift", "SwiftyJSONMapper", "ObjectMapper", "Argo", "ModelMapper", "ReactiveSwift", "RxSwift", "multipart", "JSONEncoder", "Alamofire", "CocoaPods", "URLSession", "plugin", "plugins", "stubClosure", "requestClosure", "endpointClosure", "Unsplash", "ReactorKit", "Dribbble", "EVReflection", "Unbox"]
     Mdspell.performSpellCheck(files: addedAndModifiedEnDocsMarkdown, ignoredWords: ignoredWords, language: "en-us")
+}
+
+// Warning message for not updated package manifest(s)
+let manifests = [
+    "Moya.podspec",
+    "Cartfile",
+    "Cartfile.resolved",
+    "Package.swift",
+    "Package.resolved"
+]
+let notUpdatedManifests = manifests.filter { manifest in danger.git.modifiedFiles.contains { $0.name == manifest } }
+if notUpdatedManifests.count != manifests.count {
+    let updatedManifests = manifests.filter { !notUpdatedManifests.contains($0) }
+    let updatedArticle = updatedManifests.count == 1 ? "The " : ""
+    let updatedVerb = updatedManifests.count == 1 ? "was" : "were"
+    let notUpdatedArticle = notUpdatedManifests.count == 1 ? "the " : ""
+    
+    warn("\(updatedArticle)\(updatedManifests.joined(separator: ", ")) \(updatedVerb) updated, " +
+        "but there were no changes in \(notUpdatedArticle)\(notUpdatedManifests.joined(separator: ", ")).\n" +
+        "Did you forget to update them?")
 }
 
