@@ -67,7 +67,7 @@ func isCnDocsMarkdown(_ file: String) -> Bool {
 }
 let addedAndModifiedCnDocsMarkdown = danger.git.createdFiles.filter(isCnDocsMarkdown) + danger.git.modifiedFiles.filter(isCnDocsMarkdown)
 if #available(OSX 10.12, *),
-    addedAndModifiedCnDocsMarkdown.count > 0 {
+    !addedAndModifiedCnDocsMarkdown.isEmpty {
     Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown)
 }
 
@@ -92,9 +92,9 @@ let manifests = [
     "Package.swift",
     "Package.resolved"
 ]
-let notUpdatedManifests = manifests.filter { manifest in danger.git.modifiedFiles.contains { $0.name == manifest } }
-if notUpdatedManifests.count != manifests.count {
-    let updatedManifests = manifests.filter { !notUpdatedManifests.contains($0) }
+let updatedManifests = manifests.filter { manifest in danger.git.modifiedFiles.contains { $0.name == manifest } }
+if !updatedManifests.isEmpty && updatedManifests.count != manifests.count {
+    let notUpdatedManifests = manifests.filter { !updatedManifests.contains($0) }
     let updatedArticle = updatedManifests.count == 1 ? "The " : ""
     let updatedVerb = updatedManifests.count == 1 ? "was" : "were"
     let notUpdatedArticle = notUpdatedManifests.count == 1 ? "the " : ""
