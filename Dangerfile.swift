@@ -1,5 +1,7 @@
 import Danger 
 import DangerSwiftProse // package: https://github.com/f-meloni/danger-swift-prose.git
+import DangerXCodeSummary // package: https://github.com/f-meloni/danger-swift-xcodesummary.git
+import Foundation
 
 let danger = Danger()
 
@@ -112,3 +114,27 @@ if sourceChanges && !testsUpdated {
 
 // Run Swiftlint
 SwiftLint.lint()
+
+// Xcode summary
+func filePathForPlatform(_ platform: String) -> String {
+    return "xcodebuild-\(platform).json"
+}
+func labelTestSummary(label: String, platform: String) {
+    let file = filePathForPlatform(platform)
+    let json = danger.utils.readFile(file)
+    var jsonDictionary = try! JSONSerialization.jsonObject(with: json.data(using: .utf8)!, options: .allowFragments) as! [String: Any]
+    jsonDictionary["tests_summary_messages"] = (jsonDictionary["tests_summary_messages"] as? [String])?.map { label + ": " + $0 }
+    try! String(data: JSONSerialization.data(withJSONObject: jsonDictionary, options: []), encoding: .utf8)?.write(toFile: file, atomically: false, encoding: .utf8)
+}
+func summary(platform: String) {
+    XCodeSummary(filePath: filePathForPlatform(platform)).report()
+}
+
+labelTestSummary(label: "iOS", platform: "ios")
+labelTestSummary(label: "tvOS", platform: "tvos")
+labelTestSummary(label: "macOS", platform: "macos")
+
+summary(platform: "ios")
+summary(platform: "tvos")
+summary(platform: "macos")
+
