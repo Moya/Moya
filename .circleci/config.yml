@@ -89,6 +89,7 @@ jobs:
           key: v1-dep-{{ checksum "Dangerfile.swift" }}
           paths:
             - ~/.danger-swift
+            - /usr/local/Homebrew
       - run:
           name: CocoaPods Spec linting
           command: bundle exec pod lib lint
