@@ -62,7 +62,6 @@ final class EndpointClosureSpec: QuickSpec {
 
 final class SessionMock: Alamofire.Session {
 
-    var uploadMultipartFormData: Alamofire.MultipartFormData?
     var uploadMultipartString: String?
 
     override func upload(multipartFormData: Alamofire.MultipartFormData, usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold, with request: URLRequestConvertible, interceptor: RequestInterceptor? = nil) -> UploadRequest {
