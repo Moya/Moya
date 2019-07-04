@@ -38,18 +38,19 @@ final class EndpointClosureSpec: QuickSpec {
             let sentMultipartData = [multipartData1, multipartData2]
 
             _ = provider.request(.uploadMultipart(providedMultipartData, nil)) { _ in }
-            let stringData1 = String(data: try! session.uploadMultipartFormData!.encode(), encoding: .utf8)
+            let stringData1 = session.uploadMultipartString!
 
             let requestMultipartFormData = RequestMultipartFormData()
             requestMultipartFormData.applyMoyaMultipartFormData(sentMultipartData)
-            let stringData2 = String(data: try! requestMultipartFormData.encode(), encoding: .utf8)
+            let stringData2 = String(decoding: try! requestMultipartFormData.encode(), as: UTF8.self)
 
             let formData1 = "data; name=\"test1\"\r\n\r\ntest1\r\n"
             let formData2 = "data; name=\"test2\"\r\n\r\ntest2\r\n"
 
-            let splitString1 = stringData1?.split(separator: "-").map { String($0) }
-            let splitString2 = stringData2?.split(separator: "-").map { String($0) }
+            let splitString1 = stringData1.split(separator: "-").map { String($0) }
+            let splitString2 = stringData2.split(separator: "-").map { String($0) }
 
+            // flacky tes
             expect(splitString1).to(contain(formData1))
             expect(splitString1).to(contain(formData2))
             expect(splitString2).to(contain(formData1))
@@ -62,9 +63,11 @@ final class EndpointClosureSpec: QuickSpec {
 final class SessionMock: Alamofire.Session {
 
     var uploadMultipartFormData: Alamofire.MultipartFormData?
+    var uploadMultipartString: String?
 
     override func upload(multipartFormData: Alamofire.MultipartFormData, usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold, with request: URLRequestConvertible, interceptor: RequestInterceptor? = nil) -> UploadRequest {
-        self.uploadMultipartFormData = multipartFormData
+        let data = try! multipartFormData.encode()
+        uploadMultipartString = String(decoding: data, as: UTF8.self)
 
         return super.upload(multipartFormData: multipartFormData, usingThreshold: encodingMemoryThreshold, with: request, interceptor: interceptor)
     }

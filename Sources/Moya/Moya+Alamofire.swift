@@ -101,3 +101,20 @@ extension DownloadRequest: Requestable {
         }
     }
 }
+
+final class MoyaRequestInterceptor: RequestInterceptor {
+
+    var prepare: ((URLRequest) -> URLRequest)?
+    var willSend: ((URLRequest) -> Void)?
+
+    init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
+        self.prepare = prepare
+        self.willSend = willSend
+    }
+
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+        let request = prepare?(urlRequest) ?? urlRequest
+        willSend?(request)
+        completion(.success(request))
+    }
+}
