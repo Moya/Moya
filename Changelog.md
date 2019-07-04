@@ -1,7 +1,7 @@
 # Next
 
 ### Changed
-- **Breaking Change** Minimum version of `Alamofire` is now 5.0. [#1810](https://github.com/Moya/Moya/pull/181) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-beta.6. [#1810](https://github.com/Moya/Moya/pull/181) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** Removed `Result` depndency in favor of `Result` introduced in Swift 5. [#1858](https://github.com/Moya/Moya/pull/1858) by [@larryonoff](https://github.com/larryonoff).
 
 # [14.0.0-alpha.1] - 2019-05-14
