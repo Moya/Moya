@@ -5,6 +5,10 @@ struct RequestTypeWrapper: RequestType {
         return _urlRequest
     }
 
+    var sessionHeaders: [String: String] {
+        return _request.sessionHeaders
+    }
+
     private var _request: Request
     private var _urlRequest: URLRequest?
 
