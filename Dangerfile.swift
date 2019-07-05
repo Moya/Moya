@@ -1,4 +1,4 @@
-import Danger 
+import Danger
 import DangerSwiftProse // package: https://github.com/f-meloni/danger-swift-prose.git
 import DangerXCodeSummary // package: https://github.com/f-meloni/danger-swift-xcodesummary.git
 import Foundation
@@ -81,7 +81,7 @@ let addedAndModifiedEnDocsMarkdown = danger.git.createdFiles.filter(isEnDocsMark
 if #available(OSX 10.12, *),
     !addedAndModifiedEnDocsMarkdown.isEmpty {
     Proselint.performSpellCheck(files: addedAndModifiedEnDocsMarkdown)
-    
+
     let ignoredWords = ["Auth", "auth", "Moya", "enum", "enums", "OAuth", "Artsy's", "Heimdallr.swift", "SwiftyJSONMapper", "ObjectMapper", "Argo", "ModelMapper", "ReactiveSwift", "RxSwift", "multipart", "JSONEncoder", "Alamofire", "CocoaPods", "URLSession", "plugin", "plugins", "stubClosure", "requestClosure", "endpointClosure", "Unsplash", "ReactorKit", "Dribbble", "EVReflection", "Unbox"]
     Mdspell.performSpellCheck(files: addedAndModifiedEnDocsMarkdown, ignoredWords: ignoredWords, language: "en-us")
 }
@@ -100,7 +100,7 @@ if !updatedManifests.isEmpty && updatedManifests.count != manifests.count {
     let updatedArticle = updatedManifests.count == 1 ? "The " : ""
     let updatedVerb = updatedManifests.count == 1 ? "was" : "were"
     let notUpdatedArticle = notUpdatedManifests.count == 1 ? "the " : ""
-    
+
     warn("\(updatedArticle)\(updatedManifests.joined(separator: ", ")) \(updatedVerb) updated, " +
         "but there were no changes in \(notUpdatedArticle)\(notUpdatedManifests.joined(separator: ", ")).\n" +
         "Did you forget to update them?")
@@ -122,8 +122,9 @@ func filePathForPlatform(_ platform: String) -> String {
 func labelTestSummary(label: String, platform: String) throws {
     let file = filePathForPlatform(platform)
     let json = danger.utils.readFile(file)
-    
-    guard var jsonDictionary = try JSONSerialization.jsonObject(with: json.data(using: .utf8)!, options: .allowFragments) as? [String: Any] else {
+
+    guard let data = json.data(using: .utf8),
+        var jsonDictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
         throw CocoaError(.fileReadCorruptFile)
     }
    
