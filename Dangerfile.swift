@@ -70,7 +70,7 @@ func isCnDocsMarkdown(_ file: String) -> Bool {
 let addedAndModifiedCnDocsMarkdown = danger.git.createdFiles.filter(isCnDocsMarkdown) + danger.git.modifiedFiles.filter(isCnDocsMarkdown)
 if #available(OSX 10.12, *),
     !addedAndModifiedCnDocsMarkdown.isEmpty {
-    Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown)
+    Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown, excludedRules: ["misc.scare_quotes", "typography.symbols"])
 }
 
 // Run danger-prose to lint and check spelling English docs
