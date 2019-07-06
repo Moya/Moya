@@ -11,8 +11,8 @@ let github = danger.github
 let allSourceFiles = danger.git.modifiedFiles + danger.git.createdFiles
 let changelogChanged = allSourceFiles.contains("CHANGELOG.md")
 let sourceChanges = allSourceFiles.first(where: { $0.hasPrefix("Sources") }) != nil
-let isTrivial = (danger.github != nil) && danger.github.pullRequest.title.contains("#trivial")
-if !isTrivial, !changelogChanged, sourceChanges {
+let isTrivial = danger.github.pullRequest.title.contains("#trivial")
+if !isTrivial && !changelogChanged && sourceChanges {
     danger.warn("""
          Any changes to library code should be reflected in the Changelog.
          Please consider adding a note there and adhere to the [Changelog Guidelines](https://github.com/Moya/contributors/blob/master/Changelog%20Guidelines.md).
@@ -39,7 +39,7 @@ if (enReameModified && !chReameModified) || (!enReameModified && chReameModified
 }
 
 // Warn when there is a big PR
-if danger.git.createdFiles.count + danger.git.modifiedFiles.count - danger.git.deletedFiles.count > 500 {
+if (danger.github.pullRequest.additions ?? 0) > 500 {
     warn("Big PR, try to keep changes smaller if you can")
 }
 
@@ -113,7 +113,7 @@ if sourceChanges && !testsUpdated {
 }
 
 // Run Swiftlint
-SwiftLint.lint()
+SwiftLint.lint(inline: true)
 
 // Xcode summary
 func filePathForPlatform(_ platform: String) -> String {
