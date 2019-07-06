@@ -127,7 +127,7 @@ func labelTestSummary(label: String, platform: String) throws {
         var jsonDictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
         throw CocoaError(.fileReadCorruptFile)
     }
-   
+
     jsonDictionary["tests_summary_messages"] = (jsonDictionary["tests_summary_messages"] as? [String])?.map { label + ": " + $0 }
     try String(data: JSONSerialization.data(withJSONObject: jsonDictionary, options: []), encoding: .utf8)?.write(toFile: file, atomically: false, encoding: .utf8)
 }
