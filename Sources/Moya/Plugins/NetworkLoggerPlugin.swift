@@ -34,10 +34,11 @@ public final class NetworkLoggerPlugin: PluginType {
     }
 
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
-        if case .success(let response) = result {
-            outputItems(logNetworkResponse(response.response, data: response.data, target: target), target)
-        } else {
-            outputItems(logNetworkResponse(nil, data: nil, target: target), target)
+        switch result {
+        case .success(let response):
+            outputItems(logNetworkResponse(response.response, data: response.data, target: target, isFromFailure: false), target)
+        case .failure(let error):
+            outputItems(logNetworkResponse(error.response?.response, data: error.response?.data, target: target, isFromFailure: true), target)
         }
     }
 
@@ -87,7 +88,7 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-    func logNetworkResponse(_ response: HTTPURLResponse?, data: Data?, target: TargetType) -> [String] {
+    func logNetworkResponse(_ response: HTTPURLResponse?, data: Data?, target: TargetType, isFromFailure: Bool) -> [String] {
         guard let response = response else {
            return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
         }
@@ -96,8 +97,8 @@ private extension NetworkLoggerPlugin {
 
         output += [format(loggerId, date: date, identifier: "Response", message: response.description)]
 
-        if let data = data, let stringData = String(data: responseDataFormatter?(data) ?? data, encoding: String.Encoding.utf8), isVerbose {
-            output += [stringData]
+        if let data = data, let stringData = String(data: responseDataFormatter?(data) ?? data, encoding: String.Encoding.utf8), isFromFailure || isVerbose {
+            output += ["Body: " + stringData]
         }
 
         return output
