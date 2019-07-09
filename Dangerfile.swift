@@ -10,7 +10,7 @@ let github = danger.github
 // Changelog entries are required for changes to library files.
 let allSourceFiles = danger.git.modifiedFiles + danger.git.createdFiles
 let changelogChanged = allSourceFiles.contains("CHANGELOG.md")
-let sourceChanges = allSourceFiles.first(where: { $0.hasPrefix("Sources") }) != nil
+let sourceChanges = allSourceFiles.contains { $0.hasPrefix("Sources") }
 let isTrivial = danger.github.pullRequest.title.contains("#trivial")
 if !isTrivial && !changelogChanged && sourceChanges {
     danger.warn("""
@@ -25,15 +25,15 @@ if danger.github.pullRequest.title.contains("WIP") {
 }
 
 // Warn, asking to update Chinese docs if only English docs are updated and vice-versa
-let enDocsModified = danger.git.modifiedFiles.first { $0.contains("docs/") } != nil
-let cnDocsModified = danger.git.modifiedFiles.first { $0.contains("docs_CN/") } != nil
+let enDocsModified = danger.git.modifiedFiles.contains { $0.contains("docs/") }
+let cnDocsModified = danger.git.modifiedFiles.contains { $0.contains("docs_CN/") }
 if (enDocsModified && !cnDocsModified) || (!enDocsModified && cnDocsModified) {
     warn("Consider **also** updating the \(enDocsModified ? "English" : "Chinese") docs. For Chinese translations, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate, if you can't do so yourself.")
 }
 
 // Warn, asking to update Chinese README if only English README are updated and vice-versa
-let enReameModified = danger.git.modifiedFiles.first { $0.contains("Readme.md") } != nil
-let chReameModified = danger.git.modifiedFiles.first { $0.contains("Readme_CN.md") } != nil
+let enReameModified = danger.git.modifiedFiles.contains { $0.contains("Readme.md") }
+let chReameModified = danger.git.modifiedFiles.contains { $0.contains("Readme_CN.md") }
 if (enReameModified && !chReameModified) || (!enReameModified && chReameModified) {
     warn("Consider **also** updating the \(enReameModified ? "Chinese" : "English") README. For Chinese translations, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate, if you can't do so yourself.")
 }
@@ -50,14 +50,14 @@ if danger.utils.exec("grep -r \"fit Demo/Tests/\"").count > 1 {
 
 // Added (or removed) library files need to be added (or removed) from the
 // Carthage Xcode project to avoid breaking things for our Carthage users.
-let addedSwiftLibraryFiles = danger.git.createdFiles.first { $0.fileType == .swift && $0.hasPrefix("Sources") } != nil
-let deletedSwiftLibraryFiles = danger.git.deletedFiles.first { $0.fileType == .swift && $0.hasPrefix("Sources") } != nil
-let modifiedCarthageXcodeProject = danger.git.modifiedFiles.first { $0.contains("Moya.xcodeproj") } != nil
+let addedSwiftLibraryFiles = danger.git.createdFiles.contains { $0.fileType == .swift && $0.hasPrefix("Sources") }
+let deletedSwiftLibraryFiles = danger.git.deletedFiles.contains { $0.fileType == .swift && $0.hasPrefix("Sources") }
+let modifiedCarthageXcodeProject = danger.git.modifiedFiles.contains { $0.contains("Moya.xcodeproj") }
 if (addedSwiftLibraryFiles || deletedSwiftLibraryFiles) && !modifiedCarthageXcodeProject {
     fail("Added or removed library files require the Carthage Xcode project to be updated. See the Readme")
 }
 
-let missingDocChanges = danger.git.modifiedFiles.first { $0.contains("docs") } != nil
+let missingDocChanges = danger.git.modifiedFiles.contains { $0.contains("docs") }
 let docChangeRaccomanded = (danger.github.pullRequest.additions ?? 0) > 15
 if sourceChanges && missingDocChanges && docChangeRaccomanded && !isTrivial {
     warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
@@ -107,7 +107,7 @@ if !updatedManifests.isEmpty && updatedManifests.count != manifests.count {
 }
 
 // Warn when library files has been updated but not tests.
-let testsUpdated = danger.git.modifiedFiles.first { $0.hasPrefix("Tests") } != nil
+let testsUpdated = danger.git.modifiedFiles.contains { $0.hasPrefix("Tests") }
 if sourceChanges && !testsUpdated {
     warn("The library files were changed, but the tests remained unmodified. Consider updating or adding to the tests to match the library changes.")
 }
