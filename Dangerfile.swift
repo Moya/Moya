@@ -49,7 +49,7 @@ if danger.utils.exec("grep -r \"fit Demo/Tests/\"").count > 1 {
 }
 
 // Added (or removed) library files need to be added (or removed) from the
-// Carthage Xcode project to avoid breaking things for our Carthage users.
+// Xcode project to avoid breaking things for our Carthage/manual framework.
 let addedSwiftLibraryFiles = danger.git.createdFiles.contains { $0.fileType == .swift && $0.hasPrefix("Sources") }
 let deletedSwiftLibraryFiles = danger.git.deletedFiles.contains { $0.fileType == .swift && $0.hasPrefix("Sources") }
 let modifiedCarthageXcodeProject = danger.git.modifiedFiles.contains { $0.contains("Moya.xcodeproj") }
@@ -58,8 +58,8 @@ if (addedSwiftLibraryFiles || deletedSwiftLibraryFiles) && !modifiedCarthageXcod
 }
 
 let missingDocChanges = danger.git.modifiedFiles.contains { $0.contains("docs") }
-let docChangeRaccomanded = (danger.github.pullRequest.additions ?? 0) > 15
-if sourceChanges && missingDocChanges && docChangeRaccomanded && isNotTrivial {
+let docChangeRecommended = (danger.github.pullRequest.additions ?? 0) > 15
+if sourceChanges && missingDocChanges && docChangeRecommended && isNotTrivial {
     warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 }
 
