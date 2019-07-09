@@ -64,20 +64,14 @@ if sourceChanges && missingDocChanges && docChangeRaccomanded && isNotTrivial {
 }
 
 // Run danger-prose to lint Chinese docs
-func isCnDocsMarkdown(_ file: String) -> Bool {
-    return file.fileType == .markdown && file.contains("docs_CN")
-}
-let addedAndModifiedCnDocsMarkdown = danger.git.createdFiles.filter(isCnDocsMarkdown) + danger.git.modifiedFiles.filter(isCnDocsMarkdown)
+let addedAndModifiedCnDocsMarkdown = allSourceFiles.filter { $0.fileType == .markdown && $0.contains("docs_CN") }
 if #available(OSX 10.12, *),
     !addedAndModifiedCnDocsMarkdown.isEmpty {
     Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown, excludedRules: ["misc.scare_quotes", "typography.symbols"])
 }
 
 // Run danger-prose to lint and check spelling English docs
-func isEnDocsMarkdown(_ file: String) -> Bool {
-    return file.fileType == .markdown && file.contains("docs/")
-}
-let addedAndModifiedEnDocsMarkdown = danger.git.createdFiles.filter(isEnDocsMarkdown) + danger.git.modifiedFiles.filter(isEnDocsMarkdown)
+let addedAndModifiedEnDocsMarkdown = allSourceFiles.filter { $0.fileType == .markdown && $0.contains("docs/") }
 if #available(OSX 10.12, *),
     !addedAndModifiedEnDocsMarkdown.isEmpty {
     Proselint.performSpellCheck(files: addedAndModifiedEnDocsMarkdown)
