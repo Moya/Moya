@@ -107,7 +107,7 @@ if sourceChanges && !testsUpdated {
 }
 
 // Run Swiftlint
-SwiftLint.lint(inline: true)
+SwiftLint.lint(inline: true, configFile: ".swiftlint.yml")
 
 // Xcode summary
 func filePathForPlatform(_ platform: String) -> String {
