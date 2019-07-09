@@ -9,10 +9,10 @@ let github = danger.github
 
 // Changelog entries are required for changes to library files.
 let allSourceFiles = danger.git.modifiedFiles + danger.git.createdFiles
-let changelogChanged = allSourceFiles.contains("CHANGELOG.md")
+let noChangelogEntry = allSourceFiles.contains("CHANGELOG.md")
 let sourceChanges = allSourceFiles.contains { $0.hasPrefix("Sources") }
-let isTrivial = danger.github.pullRequest.title.contains("#trivial")
-if !isTrivial && !changelogChanged && sourceChanges {
+let isNotTrivial = !danger.github.pullRequest.title.contains("#trivial")
+if isNotTrivial && noChangelogEntry && sourceChanges {
     danger.warn("""
          Any changes to library code should be reflected in the Changelog.
          Please consider adding a note there and adhere to the [Changelog Guidelines](https://github.com/Moya/contributors/blob/master/Changelog%20Guidelines.md).
@@ -59,7 +59,7 @@ if (addedSwiftLibraryFiles || deletedSwiftLibraryFiles) && !modifiedCarthageXcod
 
 let missingDocChanges = danger.git.modifiedFiles.contains { $0.contains("docs") }
 let docChangeRaccomanded = (danger.github.pullRequest.additions ?? 0) > 15
-if sourceChanges && missingDocChanges && docChangeRaccomanded && !isTrivial {
+if sourceChanges && missingDocChanges && docChangeRaccomanded && isNotTrivial {
     warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
 }
 
