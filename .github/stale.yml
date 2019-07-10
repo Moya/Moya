@@ -9,6 +9,7 @@ daysUntilClose: 7
 # Issues or Pull Requests with these labels will never be considered stale
 exemptLabels:
   - "enhancement"
+  - "bug?"
   - "confirmed bug"
   - "chore"
   - "discussion"
