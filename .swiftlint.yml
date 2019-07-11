@@ -10,6 +10,7 @@ included:
   - Sources
   - Tests
   - Examples
+  - Dangerfile.swift
 
 function_body_length:
   warning: 50
