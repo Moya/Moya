@@ -36,9 +36,9 @@ public final class NetworkLoggerPlugin: PluginType {
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         switch result {
         case .success(let response):
-            outputItems(logNetworkResponse(response.response, data: response.data, target: target, isFromFailure: false), target)
-        case .failure(let error):
-            outputItems(logNetworkResponse(error.response?.response, data: error.response?.data, target: target, isFromFailure: true), target)
+            outputItems(logNetworkResponse(response, target: target, isFromError: false))
+        case let .failure(error):
+            outputItems(logNetworkError(error, target: target))
         }
     }
 
@@ -88,21 +88,32 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-    func logNetworkResponse(_ response: HTTPURLResponse?, data: Data?, target: TargetType, isFromFailure: Bool) -> [String] {
-        guard let response = response else {
-           return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
+    func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
+        guard let httpResponse = response.response else {
+            return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
         }
 
         var output = [String]()
 
-        output += [format(loggerId, date: date, identifier: "Response", message: response.description)]
+        output += [format(loggerId, date: date, identifier: "Response", message: httpResponse.description)]
 
-        if let data = data, let stringData = String(data: responseDataFormatter?(data) ?? data, encoding: String.Encoding.utf8), isFromFailure || isVerbose {
+        if let stringData = String(data: responseDataFormatter?(response.data) ?? response.data, encoding: String.Encoding.utf8),
+            isFromError || isVerbose {
             output += ["Body: " + stringData]
         }
 
         return output
-    }
+      }
+
+      func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
+          //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
+          if let moyaResponse = error.response {
+              return logNetworkResponse(moyaResponse, target: target, isFromError: true)
+          }
+
+          //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
+          return [format(loggerId, date: date, identifier: "Error", message: "Error calling \(target) : \(error)")]
+      }
 }
 
 fileprivate extension NetworkLoggerPlugin {
