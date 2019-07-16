@@ -103,13 +103,25 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to( contain("formatted request body") )
         }
 
-        it("outputs an empty response message") {
+        it("outputs a validation error message") {
+            let response = Response(statusCode: 500, data: "Internal error".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
+            let validationResponseError = AFError.responseValidationFailed(reason: .unacceptableStatusCode(code:500))
+            let result: Result<Moya.Response, MoyaError> = .failure(.underlying(validationResponseError, response))
+
+            plugin.didReceive(result, target: GitHub.zen)
+
+            expect(log).to( contain("Response:") )
+            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
+            expect(log).to( contain("Internal error") )
+        }
+
+        it("outputs a serialization error message") {
             let emptyResponseError = AFError.responseSerializationFailed(reason: .inputDataNil)
             let result: Result<Moya.Response, MoyaError> = .failure(.underlying(emptyResponseError, nil))
 
             plugin.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response: Received empty network response for zen.") )
+            expect(log).to( contain("Error calling zen : underlying(Alamofire.AFError.responseSerializationFailed(reason: Alamofire.AFError.ResponseSerializationFailureReason.inputDataNil), nil)") )
         }
 
         it("outputs cURL representation of request") {
