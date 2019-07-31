@@ -2,7 +2,7 @@
 
 ### Changed
 - **Breaking Change** Minimum target version are now in line with Alamofire 5. iOS: 10.0, tvOS: 10.0, macOS: 10.12. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-beta.6. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-beta.7. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** Removed `Result` depndency in favor of `Result` introduced in Swift 5. [#1858](https://github.com/Moya/Moya/pull/1858) by [@larryonoff](https://github.com/larryonoff).
 
 # [14.0.0-alpha.1] - 2019-05-14
