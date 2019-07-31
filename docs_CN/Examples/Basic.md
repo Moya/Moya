@@ -185,7 +185,7 @@ provider.request(.zen) { result in
 特别需要注意的是: a一个`.failure` 意味着要么服务器没有收到请求（比如，可达性/连接错误），要么是服务器没有发送响应（比如，请求超时）. 如果您收到一个 `.failure`, 您有可能希望在一段时间后或者当网络连接可用时重新发送这个请求。
 
 
-一旦您收到一个 `.success(response)` 您可能想过滤状态码或者把响应数据转为JSON . `Moya.Response` 可以用来做此时!
+一旦您收到一个 `.success(response)` 您可能想过滤状态码或者把响应数据转为JSON . `Moya.Response` 可以用来做此事!
 
 ###### 更多查看 <https://github.com/Moya/Moya/blob/master/Sources/Moya/Response.swift>
 
