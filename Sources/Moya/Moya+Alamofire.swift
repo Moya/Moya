@@ -63,7 +63,7 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
         guard let request = self.request else {
             return "Empty Request"
         }
-        return request.debugDescription
+        return request.cURLDescription()
     }
 
 }
