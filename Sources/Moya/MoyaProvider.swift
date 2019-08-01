@@ -75,7 +75,6 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     /// of a request for a given `TargetType`.
     public let stubClosure: StubClosure
 
-    /// The session for the session.
     public let session: Session
 
     /// A list of plugins.

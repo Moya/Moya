@@ -30,7 +30,7 @@ extension Request: RequestType {
     }
 }
 
-/// Represents Request interceptor type that can can modify/act on Request
+/// Represents Request interceptor type that can modify/act on Request
 public typealias RequestInterceptor = Alamofire.RequestInterceptor
 
 /// Internal token that can be used to cancel requests
@@ -67,7 +67,7 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
         guard let request = self.request else {
             return "Empty Request"
         }
-        return request.debugDescription
+        return request.cURLDescription()
     }
 
 }

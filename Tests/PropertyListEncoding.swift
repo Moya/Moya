@@ -4,19 +4,19 @@ internal struct PropertyListEncoding: ParameterEncoding {
 
     // MARK: Properties
     /// Returns a default `PropertyListEncoding` instance.
-    public static var `default`: PropertyListEncoding { return PropertyListEncoding() }
+    static var `default`: PropertyListEncoding { return PropertyListEncoding() }
 
     /// Returns a `PropertyListEncoding` instance with xml formatting and default writing options.
-    public static var xml: PropertyListEncoding { return PropertyListEncoding(format: .xml) }
+    static var xml: PropertyListEncoding { return PropertyListEncoding(format: .xml) }
 
     /// Returns a `PropertyListEncoding` instance with binary formatting and default writing options.
-    public static var binary: PropertyListEncoding { return PropertyListEncoding(format: .binary) }
+    static var binary: PropertyListEncoding { return PropertyListEncoding(format: .binary) }
 
     /// The property list serialization format.
-    public let format: PropertyListSerialization.PropertyListFormat
+    let format: PropertyListSerialization.PropertyListFormat
 
     /// The options for writing the parameters as plist data.
-    public let options: PropertyListSerialization.WriteOptions
+    let options: PropertyListSerialization.WriteOptions
 
     // MARK: Initialization
     /// Creates a `PropertyListEncoding` instance using the specified format and options.
@@ -25,7 +25,7 @@ internal struct PropertyListEncoding: ParameterEncoding {
     /// - parameter options: The options for writing the parameters as plist data.
     ///
     /// - returns: The new `PropertyListEncoding` instance.
-    public init(
+    init(
         format: PropertyListSerialization.PropertyListFormat = .xml,
         options: PropertyListSerialization.WriteOptions = 0) {
         self.format = format
@@ -41,7 +41,7 @@ internal struct PropertyListEncoding: ParameterEncoding {
     /// - throws: An `Error` if the encoding process encounters an error.
     ///
     /// - returns: The encoded request.
-    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+    func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
         var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }

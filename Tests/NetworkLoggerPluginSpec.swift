@@ -7,21 +7,21 @@ final class NetworkLoggerPluginSpec: QuickSpec {
     override func spec() {
 
         var log = ""
-        let plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
+        let plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         })
 
-        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { (_, _, printing: Any...) in
+        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { (_, _, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
             log += string
         })
 
-        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
+        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
@@ -30,7 +30,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             return "formatted request body".data(using: .utf8)!
         })
 
-        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
+        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
             //mapping the Any... from items to a string that can be compared
             let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
             let string: String = stringArray.reduce("") { $0 + $1 + " " }
