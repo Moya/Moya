@@ -47,27 +47,31 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             plugin.willSend(TestBodyRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request: https://api.github.com/zen") )
-            expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
-            expect(log).to( contain("HTTP Request Method: GET") )
-            expect(log).to( contain("Request Body: cool body") )
+            let possibleHeaders = ["Request Headers: [\"Accept-Language\": \"en-US\", \"Content-Type\": \"application/json\"]",
+                                   "Request Headers: [\"Content-Type\": \"application/json\", \"Accept-Language\": \"en-US\"]"]
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(containOne(of: possibleHeaders))
+            expect(log).to(contain("HTTP Request Method: GET"))
+            expect(log).to(contain("Request Body: cool body"))
         }
 
         it("outputs all request fields with stream") {
 
             plugin.willSend(TestStreamRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request: https://api.github.com/zen") )
-            expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
-            expect(log).to( contain("HTTP Request Method: GET") )
-            expect(log).to( contain("Request Body Stream:") )
+            let possibleHeaders = ["Request Headers: [\"Accept-Language\": \"en-US\", \"Content-Type\": \"application/json\"]",
+                                   "Request Headers: [\"Content-Type\": \"application/json\", \"Accept-Language\": \"en-US\"]"]
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(containOne(of: possibleHeaders))
+            expect(log).to(contain("HTTP Request Method: GET"))
+            expect(log).to(contain("Request Body Stream:"))
         }
 
         it("will output invalid request when reguest is nil") {
 
             plugin.willSend(TestNilRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request: (invalid request)") )
+            expect(log).to(contain("Request: (invalid request)"))
         }
 
         it("outputs the response data") {
@@ -76,9 +80,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             plugin.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-            expect(log).to( contain("cool body") )
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("cool body"))
         }
 
         it("outputs the formatted response data") {
@@ -87,9 +91,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-            expect(log).to( contain("formatted body") )
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("formatted body"))
         }
 
         it("outputs the formatted request data") {
@@ -98,9 +102,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             pluginWithRequestDataFormatter.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-            expect(log).to( contain("formatted request body") )
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("formatted request body"))
         }
 
         it("outputs an empty response message") {
@@ -115,10 +119,10 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         it("outputs cURL representation of request") {
             pluginWithCurl.willSend(TestCurlBodyRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("$ curl -i") )
-            expect(log).to( contain("-H \"Content-Type: application/json\"") )
-            expect(log).to( contain("-d \"cool body\"") )
-            expect(log).to( contain("\"https://api.github.com/zen\"") )
+            expect(log).to(contain("$ curl -i"))
+            expect(log).to(contain("-H \"Content-Type: application/json\""))
+            expect(log).to(contain("-d \"cool body\""))
+            expect(log).to(contain("\"https://api.github.com/zen\""))
 
         }
     }
@@ -131,6 +135,10 @@ private class TestStreamRequest: RequestType {
         request.httpBodyStream = InputStream(data: "cool body".data(using: .utf8)!)
 
         return request
+    }
+
+    var sessionHeaders: [String: String] {
+        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
@@ -151,6 +159,10 @@ private class TestBodyRequest: RequestType {
         return request
     }
 
+    var sessionHeaders: [String: String] {
+        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+    }
+
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
@@ -169,6 +181,10 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
         return request
     }
 
+    var sessionHeaders: [String: String] {
+        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+    }
+
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
@@ -185,6 +201,10 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
 private class TestNilRequest: RequestType {
     var request: URLRequest? {
         return nil
+    }
+
+    var sessionHeaders: [String: String] {
+        return [:]
     }
 
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {

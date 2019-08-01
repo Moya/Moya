@@ -61,6 +61,7 @@
 		7B147185DCE78CD98E28D3F2 /* Observable+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8736BEE85376471D7CB1E0ED /* Observable+Response.swift */; };
 		7C32947EA657E981CB15D58C /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */; };
 		83B0E400A7562256224CB7FF /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC115388D44D0DB7A753E9BB /* AccessTokenPlugin.swift */; };
+		85850A4122CF5AB50089E731 /* NimbleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85850A4022CF5AB50089E731 /* NimbleHelpers.swift */; };
 		85B2DBBC221C69620098F59A /* PropertyListEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B2DBBB221C69620098F59A /* PropertyListEncoding.swift */; };
 		85F6042E22A018BB00063320 /* RequestTypeWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */; };
 		8995DF740A59721AA79F5B43 /* MoyaProvider+ReactiveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */; };
@@ -190,6 +191,7 @@
 		82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoyaProviderIntegrationTests.swift; sourceTree = "<group>"; };
 		832781077A551E1F86E5F2D4 /* NetworkLoggerPluginSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluginSpec.swift; sourceTree = "<group>"; };
 		851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoyaProvider.swift; sourceTree = "<group>"; };
+		85850A4022CF5AB50089E731 /* NimbleHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NimbleHelpers.swift; sourceTree = "<group>"; };
 		85B2DBBB221C69620098F59A /* PropertyListEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListEncoding.swift; sourceTree = "<group>"; };
 		85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypeWrapper.swift; sourceTree = "<group>"; };
 		86F3C0EA472C23E786E23CE9 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 				85B2DBBB221C69620098F59A /* PropertyListEncoding.swift */,
 				CA93F1BAD55FF95EDE17EE61 /* testImage.png */,
 				DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */,
+				85850A4022CF5AB50089E731 /* NimbleHelpers.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -905,6 +908,7 @@
 				B950CAA84C0656EB11E316FB /* MultiTargetSpec.swift in Sources */,
 				1F24393320125F8200C9D813 /* EndpointClosureSpec.swift in Sources */,
 				4033070748A57EB4A0040DB1 /* NetworkLoggerPluginSpec.swift in Sources */,
+				85850A4122CF5AB50089E731 /* NimbleHelpers.swift in Sources */,
 				E9B54EFE4EF4A96444BA76AA /* Observable+MoyaSpec.swift in Sources */,
 				8995DF740A59721AA79F5B43 /* MoyaProvider+ReactiveSpec.swift in Sources */,
 				58F73370045D6F1FBF73FC82 /* MoyaProvider+RxSpec.swift in Sources */,

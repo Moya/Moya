@@ -24,7 +24,11 @@ public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 public typealias DownloadDestination = Alamofire.DownloadRequest.Destination
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
-extension Request: RequestType { }
+extension Request: RequestType {
+    public var sessionHeaders: [String: String] {
+        return delegate?.sessionConfiguration.httpAdditionalHeaders as? [String: String] ?? [:]
+    }
+}
 
 /// Represents Request interceptor type that can modify/act on Request
 public typealias RequestInterceptor = Alamofire.RequestInterceptor

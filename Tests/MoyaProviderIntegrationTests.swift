@@ -252,7 +252,10 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect(log).to(contain("Request:"))
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-                        expect(log).to(contain("Request Headers: [:]"))
+                        expect(log).to(contain("Request Headers: "))
+                        expect(log).to(contain("User-Agent"))
+                        expect(log).to(contain("Accept-Encoding"))
+                        expect(log).to(contain("Accept-Language"))
                         expect(log).to(contain("HTTP Request Method: GET"))
                         expect(log).to(contain("Response:"))
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
