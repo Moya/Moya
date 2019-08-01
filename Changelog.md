@@ -1,5 +1,7 @@
 # Next
 
+# [14.0.0-alpha.2] - 2019-08-01
+
 ## Added
 - `RequestType` now has `sessionHeaders`! These are the headers that are added when the request is added to a session. [#1878](https://github.com/Moya/Moya/pull/1878) by [@sunshinejr](https://github.com/sunshinejr).
 
