@@ -57,7 +57,7 @@ If you need to setup your own `sampleResponseClosure`, your implementation shoul
 For example, the following code creates a provider to stub with *immediate* `401` responses:
 
 ```swift
-let customEndpointClosure = { (target: APIService) -> Endpoint<APIService> in
+let customEndpointClosure = { (target: APIService) -> Endpoint in
     return Endpoint(url: URL(target: target).absoluteString,
                     sampleResponseClosure: { .networkResponse(401 , /* data relevant to the auth error */) },
                     method: target.method,
