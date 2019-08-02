@@ -41,6 +41,9 @@ jobs:
       - restore_cache:
           keys:
             - v1-dep-{{ checksum "Cartfile.resolved" }}
+      - restore_cache:
+          keys:
+            - v1-dep-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
@@ -81,7 +84,12 @@ jobs:
           command: rake build_example
       - run:
           name: Run Danger
-          command: bundle exec danger
+          command: brew install danger/tap/danger-swift && danger-swift ci
+      - save_cache:
+          key: v1-dep-{{ checksum "Dangerfile.swift" }}
+          paths:
+            - ~/.danger-swift
+            - /usr/local/Homebrew
       - run:
           name: CocoaPods Spec linting
           command: bundle exec pod lib lint --allow-warnings
