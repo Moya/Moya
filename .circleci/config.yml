@@ -92,7 +92,7 @@ jobs:
             - /usr/local/Homebrew
       - run:
           name: CocoaPods Spec linting
-          command: bundle exec pod lib lint
+          command: bundle exec pod lib lint --alow-warnings
       - run:
           name: Send Code Coverage to Codecov.io
           command: bash <(curl -s https://codecov.io/bash) -J Moya
