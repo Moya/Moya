@@ -38,7 +38,7 @@ public final class NetworkLoggerPlugin: PluginType {
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         switch result {
         case .success(let response):
-            outputItems(logNetworkResponse(response, target: target, isFromError: false), target)
+            outputItems(logNetworkResponse(response, target: target), target)
         case let .failure(error):
             outputItems(logNetworkError(error, target: target), target)
         }
@@ -90,7 +90,7 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-    func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
+    func logNetworkResponse(_ response: Response, target: TargetType) -> [String] {
         guard let httpResponse = response.response else {
             return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
         }
@@ -109,7 +109,7 @@ private extension NetworkLoggerPlugin {
       func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
           //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
           if let moyaResponse = error.response {
-              return logNetworkResponse(moyaResponse, target: target, isFromError: true)
+              return logNetworkResponse(moyaResponse, target: target)
           }
 
           //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
