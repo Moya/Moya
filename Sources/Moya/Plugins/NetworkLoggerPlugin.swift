@@ -99,8 +99,7 @@ private extension NetworkLoggerPlugin {
 
         output += [format(loggerId, date: date, identifier: "Response", message: httpResponse.description)]
 
-        if let stringData = String(data: responseDataFormatter?(response.data) ?? response.data, encoding: String.Encoding.utf8),
-            isFromError || isVerbose {
+        if isVerbose, let stringData = String(data: responseDataFormatter?(response.data) ?? response.data, encoding: String.Encoding.utf8) {
             output += ["Body: " + stringData]
         }
 
