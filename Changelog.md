@@ -10,7 +10,8 @@
 - **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-beta.7. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** Removed `Result` depndency in favor of `Result` introduced in Swift 5. [#1858](https://github.com/Moya/Moya/pull/1858) by [@larryonoff](https://github.com/larryonoff).
 - **Breaking Change** Added `TargetType` parameter in the output of `NetworkLoggerPlugin`. [#1866](https://github.com/Moya/Moya/pull/1866) by [@hasankose](https://github.com/hasankose).
-- `NetworkoLoggerPlugin` uses the newly added `sessionHeaders` and now logs all the headers that the request will produce. [#1878](https://github.com/Moya/Moya/pull/1878) by [@sunshinejr](https://github.com/sunshinejr).
+- `NetworkLoggerPlugin` uses the newly added `sessionHeaders` and now logs all the headers that the request will produce. [#1878](https://github.com/Moya/Moya/pull/1878) by [@sunshinejr](https://github.com/sunshinejr).
+- `NetworkLoggerPlugin` now logs error when available (and the `isVerbose` flag is on). [#1880](https://github.com/Moya/Moya/pull/1880) by [@amaurydavid](https://github.com/amaurydavid).
 
 # [14.0.0-alpha.1] - 2019-05-14
 
