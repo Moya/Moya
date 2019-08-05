@@ -47,27 +47,31 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             plugin.willSend(TestBodyRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request: https://api.github.com/zen") )
-            expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
-            expect(log).to( contain("HTTP Request Method: GET") )
-            expect(log).to( contain("Request Body: cool body") )
+            let possibleHeaders = ["Request Headers: [\"Accept-Language\": \"en-US\", \"Content-Type\": \"application/json\"]",
+                                   "Request Headers: [\"Content-Type\": \"application/json\", \"Accept-Language\": \"en-US\"]"]
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(containOne(of: possibleHeaders))
+            expect(log).to(contain("HTTP Request Method: GET"))
+            expect(log).to(contain("Request Body: cool body"))
         }
 
         it("outputs all request fields with stream") {
 
             plugin.willSend(TestStreamRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request: https://api.github.com/zen") )
-            expect(log).to( contain("Request Headers: [\"Content-Type\": \"application/json\"]") )
-            expect(log).to( contain("HTTP Request Method: GET") )
-            expect(log).to( contain("Request Body Stream:") )
+            let possibleHeaders = ["Request Headers: [\"Accept-Language\": \"en-US\", \"Content-Type\": \"application/json\"]",
+                                   "Request Headers: [\"Content-Type\": \"application/json\", \"Accept-Language\": \"en-US\"]"]
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(containOne(of: possibleHeaders))
+            expect(log).to(contain("HTTP Request Method: GET"))
+            expect(log).to(contain("Request Body Stream:"))
         }
 
         it("will output invalid request when reguest is nil") {
 
             plugin.willSend(TestNilRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("Request: (invalid request)") )
+            expect(log).to(contain("Request: (invalid request)"))
         }
 
         it("outputs the response data") {
@@ -76,9 +80,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             plugin.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-            expect(log).to( contain("cool body") )
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("cool body"))
         }
 
         it("outputs the formatted response data") {
@@ -87,9 +91,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-            expect(log).to( contain("formatted body") )
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("formatted body"))
         }
 
         it("outputs the formatted request data") {
@@ -98,9 +102,9 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             pluginWithRequestDataFormatter.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Response:") )
-            expect(log).to( contain("{ URL: https://api.github.com/zen }") )
-            expect(log).to( contain("formatted request body") )
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("formatted request body"))
         }
 
         it("outputs a validation error message") {
@@ -116,21 +120,21 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         }
 
         it("outputs a serialization error message") {
-            let emptyResponseError = AFError.responseSerializationFailed(reason: .inputDataNil)
+            let emptyResponseError = AFError.responseSerializationFailed(reason: .inputFileNil)
             let result: Result<Moya.Response, MoyaError> = .failure(.underlying(emptyResponseError, nil))
 
             plugin.didReceive(result, target: GitHub.zen)
 
-            expect(log).to( contain("Error calling zen : underlying(Alamofire.AFError.responseSerializationFailed(reason: Alamofire.AFError.ResponseSerializationFailureReason.inputDataNil), nil)") )
+            expect(log).to( contain("Error calling zen : underlying(Alamofire.AFError.responseSerializationFailed(reason: Alamofire.AFError.ResponseSerializationFailureReason.inputFileNil), nil)") )
         }
 
         it("outputs cURL representation of request") {
             pluginWithCurl.willSend(TestCurlBodyRequest(), target: GitHub.zen)
 
-            expect(log).to( contain("$ curl -i") )
-            expect(log).to( contain("-H \"Content-Type: application/json\"") )
-            expect(log).to( contain("-d \"cool body\"") )
-            expect(log).to( contain("\"https://api.github.com/zen\"") )
+            expect(log).to(contain("$ curl -i"))
+            expect(log).to(contain("-H \"Content-Type: application/json\""))
+            expect(log).to(contain("-d \"cool body\""))
+            expect(log).to(contain("\"https://api.github.com/zen\""))
 
         }
     }
@@ -145,11 +149,15 @@ private class TestStreamRequest: RequestType {
         return request
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    var sessionHeaders: [String: String] {
+        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+    }
+
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 }
@@ -163,11 +171,15 @@ private class TestBodyRequest: RequestType {
         return request
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    var sessionHeaders: [String: String] {
+        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+    }
+
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 }
@@ -181,11 +193,15 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
         return request
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    var sessionHeaders: [String: String] {
+        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+    }
+
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 
@@ -199,11 +215,15 @@ private class TestNilRequest: RequestType {
         return nil
     }
 
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self {
+    var sessionHeaders: [String: String] {
+        return [:]
+    }
+
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
         return self
     }
 
-    func authenticate(usingCredential credential: URLCredential) -> Self {
+    func authenticate(with credential: URLCredential) -> Self {
         return self
     }
 }

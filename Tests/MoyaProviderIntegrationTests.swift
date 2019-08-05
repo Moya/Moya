@@ -103,14 +103,14 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
 
                     it("uses a custom Alamofire.Manager request generation") {
-                        let manager = StubManager()
-                        let provider = MoyaProvider<GitHub>(manager: manager)
+                        let session = StubSession()
+                        let provider = MoyaProvider<GitHub>(session: session)
 
                         waitUntil { done in
                             provider.request(.zen) { _ in done() }
                         }
 
-                        expect(manager.called) == true
+                        expect(session.called) == true
                     }
 
                     it("uses a background queue") {
@@ -252,7 +252,10 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect(log).to(contain("Request:"))
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-                        expect(log).to(contain("Request Headers: [:]"))
+                        expect(log).to(contain("Request Headers: "))
+                        expect(log).to(contain("User-Agent"))
+                        expect(log).to(contain("Accept-Encoding"))
+                        expect(log).to(contain("Accept-Language"))
                         expect(log).to(contain("HTTP Request Method: GET"))
                         expect(log).to(contain("Response:"))
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
@@ -354,11 +357,11 @@ final class MoyaProviderIntegrationTests: QuickSpec {
     }
 }
 
-final class StubManager: Manager {
+final class StubSession: Session {
     var called = false
 
-    override func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
+    override func request(_ convertible: URLRequestConvertible, interceptor: RequestInterceptor? = nil) -> DataRequest {
         called = true
-        return super.request(urlRequest)
+        return super.request(convertible, interceptor: interceptor)
     }
 }

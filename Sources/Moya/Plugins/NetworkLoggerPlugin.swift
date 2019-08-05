@@ -32,7 +32,8 @@ public final class NetworkLoggerPlugin: PluginType {
             output(separator, terminator, target, message)
             return
         }
-        outputItems(logNetworkRequest(request.request as URLRequest?), target)
+
+        outputItems(logNetworkRequest(request), target)
     }
 
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
@@ -65,25 +66,33 @@ private extension NetworkLoggerPlugin {
         return "\(loggerId): [\(date)] \(identifier): \(message)"
     }
 
-    func logNetworkRequest(_ request: URLRequest?) -> [String] {
+    func logNetworkRequest(_ request: RequestType) -> [String] {
 
         var output = [String]()
 
-        output += [format(loggerId, date: date, identifier: "Request", message: request?.description ?? "(invalid request)")]
+        output += [format(loggerId, date: date, identifier: "Request", message: request.request?.description ?? "(invalid request)")]
 
-        if let headers = request?.allHTTPHeaderFields {
+        var headers = request.sessionHeaders
+        if let requestHeaders = request.request?.allHTTPHeaderFields {
+            headers.merge(requestHeaders) { _, requestHeader in
+                return requestHeader
+            }
+        }
+
+        if !headers.isEmpty {
             output += [format(loggerId, date: date, identifier: "Request Headers", message: headers.description)]
         }
 
-        if let bodyStream = request?.httpBodyStream {
+        if let bodyStream = request.request?.httpBodyStream {
             output += [format(loggerId, date: date, identifier: "Request Body Stream", message: bodyStream.description)]
         }
 
-        if let httpMethod = request?.httpMethod {
+        if let httpMethod = request.request?.httpMethod {
             output += [format(loggerId, date: date, identifier: "HTTP Request Method", message: httpMethod)]
         }
 
-        if let body = request?.httpBody, let stringOutput = requestDataFormatter?(body) ?? String(data: body, encoding: .utf8), isVerbose {
+        if isVerbose, let body = request.request?.httpBody {
+            let stringOutput = requestDataFormatter?(body) ?? String(decoding: body, as: UTF8.self)
             output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
         }
 
