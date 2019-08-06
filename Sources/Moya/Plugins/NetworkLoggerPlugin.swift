@@ -26,7 +26,7 @@ public final class NetworkLoggerPlugin {
 //MARK: - PluginType
 extension NetworkLoggerPlugin: PluginType {
     public func willSend(_ request: RequestType, target: TargetType) {
-        if configuration.requestsLoggingOptions.contains(.formatAscURL),
+        if configuration.requestLoggingOptions.contains(.formatAscURL),
             let request = request as? CustomDebugStringConvertible {
             //Don't use outputItems to prevent cURL being broken with additionnal terminators insertions
             let message = newEntry(identifier: "Request", message: request.debugDescription)
@@ -40,7 +40,7 @@ extension NetworkLoggerPlugin: PluginType {
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         switch result {
         case .success(let response):
-            outputItems(logNetworkResponse(response, target: target), target)
+            outputItems(logNetworkResponse(response, target: target, isFromError: false), target)
         case let .failure(error):
             outputItems(logNetworkError(error, target: target), target)
         }
@@ -62,16 +62,14 @@ private extension NetworkLoggerPlugin {
 
         var output = [String]()
 
-        if configuration.requestsLoggingOptions.contains(.url) {
-            output.append(newEntry(identifier: "Request", message: httpRequest.description))
-        }
+        output.append(newEntry(identifier: "Request", message: httpRequest.description))
 
-        if configuration.requestsLoggingOptions.contains(.headers),
+        if configuration.requestLoggingOptions.contains(.headers),
             let headers = httpRequest.allHTTPHeaderFields {
             output.append(newEntry(identifier: "Request Headers", message: headers.description))
         }
 
-        if configuration.requestsLoggingOptions.contains(.body) {
+        if configuration.requestLoggingOptions.contains(.body) {
             if let bodyStream = httpRequest.httpBodyStream {
                 output.append(newEntry(identifier: "Request Body Stream", message: bodyStream.description))
             }
@@ -82,7 +80,7 @@ private extension NetworkLoggerPlugin {
             }
         }
 
-        if configuration.requestsLoggingOptions.contains(.method),
+        if configuration.requestLoggingOptions.contains(.method),
             let httpMethod = httpRequest.httpMethod {
             output.append(newEntry(identifier: "HTTP Request Method", message: httpMethod))
         }
@@ -90,20 +88,18 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-    func logNetworkResponse(_ response: Response, target: TargetType) -> [String] {
+    func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
         guard let httpResponse = response.response else {
             return [newEntry(identifier: "Response", message: "Received empty network response for \(target).")]
         }
 
         var output = [String]()
 
-        //TODO: check what is displayed in httpResponse's desription
-        //TODO: Use a specific option
-        if configuration.responsesLoggingOptions.contains(.url) {
-            output.append(newEntry(identifier: "Response", message: httpResponse.description))
-        }
+        output.append(newEntry(identifier: "Response", message: httpResponse.description))
 
-        if configuration.responsesLoggingOptions.contains(.body) {
+        if (isFromError && configuration.errorResponseLoggingOptions.contains(.body))
+            || configuration.successResponseLoggingOptions.contains(.body) {
+
             let stringOutput = configuration.responseDataFormatter(response.data)
             output.append(newEntry(identifier: "Body", message: stringOutput))
         }
@@ -115,7 +111,7 @@ private extension NetworkLoggerPlugin {
     func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
         //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
         if let moyaResponse = error.response {
-            return logNetworkResponse(moyaResponse, target: target)
+            return logNetworkResponse(moyaResponse, target: target, isFromError: true)
         }
 
         //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
@@ -136,23 +132,26 @@ public extension NetworkLoggerPlugin {
         fileprivate let requestDataFormatter: DataFormatterType
         //fileprivate let responseDataFormatter: ((Data) -> (Data))?
         fileprivate let responseDataFormatter: DataFormatterType
-        fileprivate let requestsLoggingOptions: LogOptions
-        fileprivate let responsesLoggingOptions: LogOptions
+        fileprivate let requestLoggingOptions: RequestLogOptions
+        fileprivate let successResponseLoggingOptions: ResponseLogOptions
+        fileprivate let errorResponseLoggingOptions: ResponseLogOptions
 
         public init(loggerId: String = "Moya_Logger",
                     dateFormatter: DateFormatter = defaultDateFormatter,
                     output: @escaping OutputType = defaultOutput,
                     requestDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
                     responseDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
-                    requestsLoggingOptions: LogOptions = .default,
-                    responsesLoggingOptions: LogOptions = .default) {
+                    requestLoggingOptions: RequestLogOptions = .default,
+                    successResponseLoggingOptions: ResponseLogOptions = .default,
+                    errorResponseLoggingOptions: ResponseLogOptions = .default) {
             self.loggerId = loggerId
             self.dateFormatter = dateFormatter
             self.output = output
             self.requestDataFormatter = requestDataFormatter
             self.responseDataFormatter = responseDataFormatter
-            self.requestsLoggingOptions = requestsLoggingOptions
-            self.responsesLoggingOptions = responsesLoggingOptions
+            self.requestLoggingOptions = requestLoggingOptions
+            self.successResponseLoggingOptions = successResponseLoggingOptions
+            self.errorResponseLoggingOptions = errorResponseLoggingOptions
         }
 
         public static var defaultDateFormatter: DateFormatter {
@@ -175,17 +174,26 @@ public extension NetworkLoggerPlugin {
 }
 
 public extension NetworkLoggerPlugin.Configuration {
-    struct LogOptions: OptionSet {
+    struct RequestLogOptions: OptionSet {
         public let rawValue: Int
         public init(rawValue: Int) { self.rawValue = rawValue }
 
-        public static let method:       LogOptions = LogOptions(rawValue: 1 << 0)
-        public static let url:          LogOptions = LogOptions(rawValue: 1 << 1)
-        public static let body:         LogOptions = LogOptions(rawValue: 1 << 2)
-        public static let headers:      LogOptions = LogOptions(rawValue: 1 << 3)
-        public static let formatAscURL: LogOptions = LogOptions(rawValue: 1 << 4)
+        public static let method:       RequestLogOptions = RequestLogOptions(rawValue: 1 << 0)
+        public static let body:         RequestLogOptions = RequestLogOptions(rawValue: 1 << 1)
+        public static let headers:      RequestLogOptions = RequestLogOptions(rawValue: 1 << 2)
+        public static let formatAscURL: RequestLogOptions = RequestLogOptions(rawValue: 1 << 3)
 
-        public static let `default`:    LogOptions = [method, url, headers]
-        public static let verbose:      LogOptions = [method, url, headers, body]
+        public static let `default`:    RequestLogOptions = [method, headers]
+        public static let verbose:      RequestLogOptions = [method, headers, body]
+    }
+
+    struct ResponseLogOptions: OptionSet {
+        public let rawValue: Int
+        public init(rawValue: Int) { self.rawValue = rawValue }
+
+        public static let body:         ResponseLogOptions = ResponseLogOptions(rawValue: 1 << 0)
+
+        public static let `default`:    ResponseLogOptions = []
+        public static let verbose:      ResponseLogOptions = [body]
     }
 }
