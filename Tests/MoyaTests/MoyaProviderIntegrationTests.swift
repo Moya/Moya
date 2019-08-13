@@ -1,7 +1,13 @@
 import Quick
 import Nimble
 import Foundation
+
+#if canImport(OHHTTPStubs)
 import OHHTTPStubs
+#elseif canImport(OHHTTPStubsSwift)
+import OHHTTPStubsCore
+import OHHTTPStubsSwift
+#endif
 
 @testable import Moya
 @testable import ReactiveMoya

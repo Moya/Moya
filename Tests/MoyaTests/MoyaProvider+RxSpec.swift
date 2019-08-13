@@ -1,7 +1,13 @@
 import Quick
 import Nimble
 import RxSwift
+
+#if canImport(OHHTTPStubs)
 import OHHTTPStubs
+#elseif canImport(OHHTTPStubsSwift)
+import OHHTTPStubsCore
+import OHHTTPStubsSwift
+#endif
 
 @testable import Moya
 @testable import RxMoya
