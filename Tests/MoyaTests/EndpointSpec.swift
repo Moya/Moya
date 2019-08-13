@@ -346,6 +346,7 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            #if !SWIFT_PACKAGE
             context("when task is .requestCompositeParameters") {
                 it("throws an error when bodyEncoding is an URLEncoding.queryString") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
@@ -362,6 +363,7 @@ final class EndpointSpec: QuickSpec {
                     expect { _ = try? endpoint.urlRequest() }.toNot(throwAssertion())
                 }
             }
+            #endif
         }
     }
 }
