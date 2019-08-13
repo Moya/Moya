@@ -1,6 +1,7 @@
 import Quick
 import Moya
 import Nimble
+import Foundation
 
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {

@@ -2,6 +2,7 @@ import Quick
 import Moya
 import RxSwift
 import Nimble
+import Foundation
 
 final class SingleMoyaSpec: QuickSpec {
     override func spec() {
