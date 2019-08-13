@@ -191,7 +191,7 @@ final class ObservableMoyaSpec: QuickSpec {
 
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = Image.testPNGImage(named: "testImage")
+                let image = Image.testImage
                 guard let data = image.asJPEGRepresentation(0.75)  else { fatalError("Failed creating Data from Image") }
 
                 let observable = Response(statusCode: 200, data: data).asObservable()
