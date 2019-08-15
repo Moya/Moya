@@ -9,45 +9,25 @@ public final class NetworkLoggerPlugin {
     public init(configuration: Configuration = Configuration()) {
         self.configuration = configuration
     }
-
-    fileprivate func outputItems(_ items: [String], _ target: TargetType) {
-        //TODO: Check why we output items one by one when verbose
-        /*
-         if isVerbose {
-         items.forEach { output(separator, terminator, target, $0) }
-         } else {
-         output(separator, terminator, target, items)
-         }
-         */
-        configuration.output(target, items)
-    }
 }
 
 //MARK: - PluginType
 extension NetworkLoggerPlugin: PluginType {
     public func willSend(_ request: RequestType, target: TargetType) {
-        if configuration.requestLoggingOptions.contains(.formatAscURL),
-            let request = request as? CustomDebugStringConvertible {
-            //Don't use outputItems to prevent cURL being broken with additionnal terminators insertions
-            let message = newEntry(identifier: "Request", message: request.debugDescription)
-            configuration.output(target, message)
-            return
-        }
-
-        outputItems(logNetworkRequest(request), target)
+        configuration.output(target, logNetworkRequest(request, target: target))
     }
 
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         switch result {
         case .success(let response):
-            outputItems(logNetworkResponse(response, target: target, isFromError: false), target)
+            configuration.output(target, logNetworkResponse(response, target: target, isFromError: false))
         case let .failure(error):
-            outputItems(logNetworkError(error, target: target), target)
+            configuration.output(target, logNetworkError(error, target: target))
         }
     }
 }
 
-//MARK: - Utils
+//MARK: - Logging
 private extension NetworkLoggerPlugin {
 
     func newEntry(identifier: String, message: String) -> String {
@@ -55,11 +35,21 @@ private extension NetworkLoggerPlugin {
         return "\(configuration.loggerId): [\(date)] \(identifier): \(message)"
     }
 
-    func logNetworkRequest(_ request: RequestType) -> [String] {
+
+    func logNetworkRequest(_ request: RequestType, target: TargetType) -> [String] {
+
+        //cURL formatting
+        if configuration.requestLoggingOptions.contains(.formatAscURL),
+            let request = request as? CustomDebugStringConvertible {
+            return [newEntry(identifier: "Request", message: request.debugDescription)]
+        }
+
+        //Request presence check
         guard let httpRequest = request.request else {
             return [newEntry(identifier: "Request", message: "(invalid request)")]
         }
 
+        // Adding log entries for each given log option
         var output = [String]()
 
         output.append(newEntry(identifier: "Request", message: httpRequest.description))
@@ -92,10 +82,13 @@ private extension NetworkLoggerPlugin {
     }
 
     func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
+
+        //Response presence check
         guard let httpResponse = response.response else {
             return [newEntry(identifier: "Response", message: "Received empty network response for \(target).")]
         }
 
+        // Adding log entries for each given log option
         var output = [String]()
 
         output.append(newEntry(identifier: "Response", message: httpResponse.description))
@@ -122,7 +115,7 @@ private extension NetworkLoggerPlugin {
     }
 }
 
-//MARK: - COnfiguration
+//MARK: - Configuration
 public extension NetworkLoggerPlugin {
     struct Configuration {
 
@@ -186,6 +179,7 @@ public extension NetworkLoggerPlugin.Configuration {
         public static let headers:      RequestLogOptions = RequestLogOptions(rawValue: 1 << 2)
         public static let formatAscURL: RequestLogOptions = RequestLogOptions(rawValue: 1 << 3)
 
+        //Aggregate options
         public static let `default`:    RequestLogOptions = [method, headers]
         public static let verbose:      RequestLogOptions = [method, headers, body]
     }
@@ -196,6 +190,7 @@ public extension NetworkLoggerPlugin.Configuration {
 
         public static let body:         ResponseLogOptions = ResponseLogOptions(rawValue: 1 << 0)
 
+        //Aggregate options
         public static let `default`:    ResponseLogOptions = []
         public static let verbose:      ResponseLogOptions = [body]
     }
