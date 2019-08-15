@@ -64,9 +64,12 @@ private extension NetworkLoggerPlugin {
 
         output.append(newEntry(identifier: "Request", message: httpRequest.description))
 
-        if configuration.requestLoggingOptions.contains(.headers),
-            let headers = httpRequest.allHTTPHeaderFields {
-            output.append(newEntry(identifier: "Request Headers", message: headers.description))
+        if configuration.requestLoggingOptions.contains(.headers) {
+            var allHeaders = request.sessionHeaders
+            if let httpRequestHeaders = httpRequest.allHTTPHeaderFields {
+                allHeaders.merge(httpRequestHeaders) { $1 }
+            }
+            output.append(newEntry(identifier: "Request Headers", message: allHeaders.description))
         }
 
         if configuration.requestLoggingOptions.contains(.body) {
