@@ -231,16 +231,17 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                 describe("a provider with network logger plugin") {
                     var log = ""
-                    var plugin: NetworkLoggerPlugin!
+                    let plugin = NetworkLoggerPlugin(configuration: .init(output: { (_, printing: [Any]) in
+                        //mapping the Any... from items to a string that can be compared
+                        let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
+                        let string: String = stringArray.reduce("") { $0 + $1 + " " }
+                        log += string
+                    },
+                                                                          requestLoggingOptions: .verbose,
+                                                                          successResponseLoggingOptions: .verbose,
+                                                                          errorResponseLoggingOptions: .verbose))
                     beforeEach {
                         log = ""
-
-                        plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
-                            //mapping the Any... from items to a string that can be compared
-                            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-                            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-                            log += string
-                        })
                     }
 
                     it("logs the request") {
@@ -250,8 +251,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                             provider.request(.zen) { _ in done() }
                         }
 
-                        expect(log).to(contain("Request:"))
-                        expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+                        expect(log).to(contain("Request: https://api.github.com/zen"))
                         expect(log).to(contain("Request Headers: "))
                         expect(log).to(contain("User-Agent"))
                         expect(log).to(contain("Accept-Encoding"))

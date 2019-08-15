@@ -97,7 +97,7 @@ private extension NetworkLoggerPlugin {
             || configuration.successResponseLoggingOptions.contains(.body) {
 
             let stringOutput = configuration.responseDataFormatter(response.data)
-            output.append(newEntry(identifier: "Body", message: stringOutput))
+            output.append(newEntry(identifier: "Response Body", message: stringOutput))
         }
 
         return output
@@ -119,7 +119,7 @@ private extension NetworkLoggerPlugin {
 public extension NetworkLoggerPlugin {
     struct Configuration {
 
-        public typealias OutputType = (_ target: TargetType, _ items: Any...) -> Void
+        public typealias OutputType = (_ target: TargetType, _ items: [Any]) -> Void
         public typealias DataFormatterType = (Data) -> (String)
 
         fileprivate let loggerId: String
@@ -157,7 +157,7 @@ public extension NetworkLoggerPlugin {
             return formatter
         }
 
-        public static func defaultOutput(target: TargetType, items: Any...) {
+        public static func defaultOutput(target: TargetType, items: [Any]) {
             for item in items {
                 print(item, separator: ",", terminator: "\n")
             }
