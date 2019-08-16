@@ -11,7 +11,7 @@ public final class NetworkLoggerPlugin {
     }
 }
 
-//MARK: - PluginType
+// MARK: - PluginType
 extension NetworkLoggerPlugin: PluginType {
     public func willSend(_ request: RequestType, target: TargetType) {
         configuration.output(target, logNetworkRequest(request, target: target))
@@ -27,14 +27,13 @@ extension NetworkLoggerPlugin: PluginType {
     }
 }
 
-//MARK: - Logging
+// MARK: - Logging
 private extension NetworkLoggerPlugin {
 
     func newEntry(identifier: String, message: String) -> String {
         let date = configuration.dateFormatter.string(from: Date())
         return "\(configuration.loggerId): [\(date)] \(identifier): \(message)"
     }
-
 
     func logNetworkRequest(_ request: RequestType, target: TargetType) -> [String] {
 
@@ -103,7 +102,6 @@ private extension NetworkLoggerPlugin {
         return output
     }
 
-
     func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
         //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
         if let moyaResponse = error.response {
@@ -115,7 +113,7 @@ private extension NetworkLoggerPlugin {
     }
 }
 
-//MARK: - Configuration
+// MARK: - Configuration
 public extension NetworkLoggerPlugin {
     struct Configuration {
 
@@ -174,24 +172,24 @@ public extension NetworkLoggerPlugin.Configuration {
         public let rawValue: Int
         public init(rawValue: Int) { self.rawValue = rawValue }
 
-        public static let method:       RequestLogOptions = RequestLogOptions(rawValue: 1 << 0)
-        public static let body:         RequestLogOptions = RequestLogOptions(rawValue: 1 << 1)
-        public static let headers:      RequestLogOptions = RequestLogOptions(rawValue: 1 << 2)
+        public static let method: RequestLogOptions = RequestLogOptions(rawValue: 1 << 0)
+        public static let body: RequestLogOptions = RequestLogOptions(rawValue: 1 << 1)
+        public static let headers: RequestLogOptions = RequestLogOptions(rawValue: 1 << 2)
         public static let formatAscURL: RequestLogOptions = RequestLogOptions(rawValue: 1 << 3)
 
         //Aggregate options
-        public static let `default`:    RequestLogOptions = [method, headers]
-        public static let verbose:      RequestLogOptions = [method, headers, body]
+        public static let `default`: RequestLogOptions = [method, headers]
+        public static let verbose: RequestLogOptions = [method, headers, body]
     }
 
     struct ResponseLogOptions: OptionSet {
         public let rawValue: Int
         public init(rawValue: Int) { self.rawValue = rawValue }
 
-        public static let body:         ResponseLogOptions = ResponseLogOptions(rawValue: 1 << 0)
+        public static let body: ResponseLogOptions = ResponseLogOptions(rawValue: 1 << 0)
 
         //Aggregate options
-        public static let `default`:    ResponseLogOptions = []
-        public static let verbose:      ResponseLogOptions = [body]
+        public static let `default`: ResponseLogOptions = []
+        public static let verbose: ResponseLogOptions = [body]
     }
 }
