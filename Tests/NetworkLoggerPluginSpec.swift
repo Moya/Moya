@@ -16,27 +16,19 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         }
 
         let plugin = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
-                                                              requestLoggingOptions: .verbose,
-                                                              successResponseLoggingOptions: .verbose,
-                                                              errorResponseLoggingOptions: .verbose))
+                                                              logOptions: .verbose))
 
 
         let pluginWithCurl = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
-                                                                      requestLoggingOptions: .formatAscURL,
-                                                                      successResponseLoggingOptions: .verbose,
-                                                                      errorResponseLoggingOptions: .verbose))
+                                                                      logOptions: [.formatRequestAscURL]))
 
         let pluginWithRequestDataFormatter = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
                                                                                       requestDataFormatter: { _ in return "formatted request body" },
-                                                                                      requestLoggingOptions: .verbose,
-                                                                                      successResponseLoggingOptions: .verbose,
-                                                                                      errorResponseLoggingOptions: .verbose))
+                                                                                      logOptions: .verbose))
 
         let pluginWithResponseDataFormatter = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
                                                                                        responseDataFormatter: { _ in return "formatted response body" },
-                                                                                       requestLoggingOptions: .verbose,
-                                                                                       successResponseLoggingOptions: .verbose,
-                                                                                       errorResponseLoggingOptions: .verbose))
+                                                                                       logOptions: .verbose))
 
         beforeEach {
             log = ""

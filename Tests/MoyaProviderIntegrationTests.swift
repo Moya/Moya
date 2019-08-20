@@ -237,9 +237,8 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         let string: String = stringArray.reduce("") { $0 + $1 + " " }
                         log += string
                     },
-                                                                          requestLoggingOptions: .verbose,
-                                                                          successResponseLoggingOptions: .verbose,
-                                                                          errorResponseLoggingOptions: .verbose))
+                                                                          logOptions: .verbose))
+
                     beforeEach {
                         log = ""
                     }

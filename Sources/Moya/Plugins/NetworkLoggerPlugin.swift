@@ -38,7 +38,7 @@ private extension NetworkLoggerPlugin {
     func logNetworkRequest(_ request: RequestType, target: TargetType) -> [String] {
 
         //cURL formatting
-        if configuration.requestLoggingOptions.contains(.formatAscURL),
+        if configuration.logOptions.contains(.formatRequestAscURL),
             let request = request as? CustomDebugStringConvertible {
             return [newEntry(identifier: "Request", message: request.debugDescription)]
         }
@@ -53,7 +53,7 @@ private extension NetworkLoggerPlugin {
 
         output.append(newEntry(identifier: "Request", message: httpRequest.description))
 
-        if configuration.requestLoggingOptions.contains(.headers) {
+        if configuration.logOptions.contains(.requestHeaders) {
             var allHeaders = request.sessionHeaders
             if let httpRequestHeaders = httpRequest.allHTTPHeaderFields {
                 allHeaders.merge(httpRequestHeaders) { $1 }
@@ -61,7 +61,7 @@ private extension NetworkLoggerPlugin {
             output.append(newEntry(identifier: "Request Headers", message: allHeaders.description))
         }
 
-        if configuration.requestLoggingOptions.contains(.body) {
+        if configuration.logOptions.contains(.requestBody) {
             if let bodyStream = httpRequest.httpBodyStream {
                 output.append(newEntry(identifier: "Request Body Stream", message: bodyStream.description))
             }
@@ -72,7 +72,7 @@ private extension NetworkLoggerPlugin {
             }
         }
 
-        if configuration.requestLoggingOptions.contains(.method),
+        if configuration.logOptions.contains(.requestMethod),
             let httpMethod = httpRequest.httpMethod {
             output.append(newEntry(identifier: "HTTP Request Method", message: httpMethod))
         }
@@ -92,8 +92,8 @@ private extension NetworkLoggerPlugin {
 
         output.append(newEntry(identifier: "Response", message: httpResponse.description))
 
-        if (isFromError && configuration.errorResponseLoggingOptions.contains(.body))
-            || configuration.successResponseLoggingOptions.contains(.body) {
+        if (isFromError && configuration.logOptions.contains(.errorResponseBody))
+            || configuration.logOptions.contains(.successResponseBody) {
 
             let stringOutput = configuration.responseDataFormatter(response.data)
             output.append(newEntry(identifier: "Response Body", message: stringOutput))
@@ -124,28 +124,21 @@ public extension NetworkLoggerPlugin {
         fileprivate let dateFormatter: DateFormatter
         fileprivate let output: OutputType
         fileprivate let requestDataFormatter: DataFormatterType
-        //fileprivate let responseDataFormatter: ((Data) -> (Data))?
         fileprivate let responseDataFormatter: DataFormatterType
-        fileprivate let requestLoggingOptions: RequestLogOptions
-        fileprivate let successResponseLoggingOptions: ResponseLogOptions
-        fileprivate let errorResponseLoggingOptions: ResponseLogOptions
+        fileprivate let logOptions: LogOptions
 
         public init(loggerId: String = "Moya_Logger",
                     dateFormatter: DateFormatter = defaultDateFormatter,
                     output: @escaping OutputType = defaultOutput,
                     requestDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
                     responseDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
-                    requestLoggingOptions: RequestLogOptions = .default,
-                    successResponseLoggingOptions: ResponseLogOptions = .default,
-                    errorResponseLoggingOptions: ResponseLogOptions = .default) {
+                    logOptions: LogOptions = .default) {
             self.loggerId = loggerId
             self.dateFormatter = dateFormatter
             self.output = output
             self.requestDataFormatter = requestDataFormatter
             self.responseDataFormatter = responseDataFormatter
-            self.requestLoggingOptions = requestLoggingOptions
-            self.successResponseLoggingOptions = successResponseLoggingOptions
-            self.errorResponseLoggingOptions = errorResponseLoggingOptions
+            self.logOptions = logOptions
         }
 
         public static var defaultDateFormatter: DateFormatter {
@@ -168,28 +161,28 @@ public extension NetworkLoggerPlugin {
 }
 
 public extension NetworkLoggerPlugin.Configuration {
-    struct RequestLogOptions: OptionSet {
+    struct LogOptions: OptionSet {
         public let rawValue: Int
         public init(rawValue: Int) { self.rawValue = rawValue }
 
-        public static let method: RequestLogOptions = RequestLogOptions(rawValue: 1 << 0)
-        public static let body: RequestLogOptions = RequestLogOptions(rawValue: 1 << 1)
-        public static let headers: RequestLogOptions = RequestLogOptions(rawValue: 1 << 2)
-        public static let formatAscURL: RequestLogOptions = RequestLogOptions(rawValue: 1 << 3)
+        /// The request's method will be logged.
+        public static let requestMethod: LogOptions = LogOptions(rawValue: 1 << 0)
+        /// The request's body will be logged.
+        public static let requestBody: LogOptions = LogOptions(rawValue: 1 << 1)
+        /// The request's headers will be logged.
+        public static let requestHeaders: LogOptions = LogOptions(rawValue: 1 << 2)
+        /// The request will be logged in the cURL format.
+        ///
+        /// If this option is used, the following options are ignored: `requestMethod`, `requestBody`, `requestsHeaders`.
+        public static let formatRequestAscURL: LogOptions = LogOptions(rawValue: 1 << 3)
+        /// The body of a response that is a success will be logged.
+        public static let successResponseBody: LogOptions = LogOptions(rawValue: 1 << 4)
+        /// The body of a response that is an error will be logged.
+        public static let errorResponseBody: LogOptions = LogOptions(rawValue: 1 << 5)
 
         //Aggregate options
-        public static let `default`: RequestLogOptions = [method, headers]
-        public static let verbose: RequestLogOptions = [method, headers, body]
-    }
-
-    struct ResponseLogOptions: OptionSet {
-        public let rawValue: Int
-        public init(rawValue: Int) { self.rawValue = rawValue }
-
-        public static let body: ResponseLogOptions = ResponseLogOptions(rawValue: 1 << 0)
-
-        //Aggregate options
-        public static let `default`: ResponseLogOptions = []
-        public static let verbose: ResponseLogOptions = [body]
+        public static let `default`: LogOptions = [requestMethod, requestHeaders]
+        public static let verbose: LogOptions = [requestMethod, requestHeaders, requestBody,
+                                                 successResponseBody, errorResponseBody]
     }
 }
