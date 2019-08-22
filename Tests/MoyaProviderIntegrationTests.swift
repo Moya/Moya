@@ -231,12 +231,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                 describe("a provider with network logger plugin") {
                     var log = ""
-                    let plugin = NetworkLoggerPlugin(configuration: .init(output: { (_, printing: [Any]) in
-                        //mapping the Any... from items to a string that can be compared
-                        let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-                        let string: String = stringArray.reduce("") { $0 + $1 + " " }
-                        log += string
-                    },
+                    let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
                                                                           logOptions: .verbose))
 
                     beforeEach {
