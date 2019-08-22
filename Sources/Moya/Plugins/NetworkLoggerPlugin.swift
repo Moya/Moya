@@ -117,7 +117,7 @@ private extension NetworkLoggerPlugin {
 public extension NetworkLoggerPlugin {
     struct Configuration {
 
-        public typealias OutputType = (_ target: TargetType, _ items: [Any]) -> Void
+        public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
         public typealias DataFormatterType = (Data) -> (String)
 
         fileprivate let loggerId: String
@@ -148,7 +148,7 @@ public extension NetworkLoggerPlugin {
             return formatter
         }
 
-        public static func defaultOutput(target: TargetType, items: [Any]) {
+        public static func defaultOutput(target: TargetType, items: [String]) {
             for item in items {
                 print(item, separator: ",", terminator: "\n")
             }

@@ -8,16 +8,10 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         var log = ""
 
-        let customLoggerOutput: NetworkLoggerPlugin.Configuration.OutputType = { (_, printing: [Any]) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        }
+        let customLoggerOutput: NetworkLoggerPlugin.Configuration.OutputType = { log += $1.joined() }
 
         let plugin = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
                                                               logOptions: .verbose))
-
 
         let pluginWithCurl = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
                                                                       logOptions: [.formatRequestAscURL]))
