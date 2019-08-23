@@ -17,7 +17,7 @@ Moya ships with some default plugins which can be used for common functions: aut
 You can use a plugin simply declaring it during the initialization of the provider:
 
 ```swift
-let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose: true)])
+let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin()])
 ```
 
 ### Authentication
