@@ -127,6 +127,19 @@ public extension NetworkLoggerPlugin {
         fileprivate let responseDataFormatter: DataFormatterType
         fileprivate let logOptions: LogOptions
 
+        /// The designated way to instanciate a Configuration.
+        ///
+        /// - Parameters:
+        ///   - loggerId: An identifier that prefixes every log entry.
+        ///   - dateFormatter: The dateFormatter to be used to display the date of every log entry.
+        ///                    The default formatter sets both `timeStyle` and `dateStyle` to `short`
+        ///   - output: A closure responsible of writing the given log entries into your log system.
+        ///                    The default value writes entries to the debug console.
+        ///   - requestDataFormatter: A closure converting HTTP request's body into a String.
+        ///                    The default value assumes the body's data is an utf8 String.
+        ///   - responseDataFormatter: A closure converting HTTP response's body into a String.
+        ///                    The default value assumes the body's data is an utf8 String.
+        ///   - logOptions: A set of options you can use to customize which request component is logged.
         public init(loggerId: String = "Moya_Logger",
                     dateFormatter: DateFormatter = defaultDateFormatter,
                     output: @escaping OutputType = defaultOutput,
@@ -173,7 +186,10 @@ public extension NetworkLoggerPlugin.Configuration {
         public static let requestHeaders: LogOptions = LogOptions(rawValue: 1 << 2)
         /// The request will be logged in the cURL format.
         ///
-        /// If this option is used, the following options are ignored: `requestMethod`, `requestBody`, `requestsHeaders`.
+        /// If this option is used, the following components will be logged regardless of their respective options being set:
+        /// - request's method
+        /// - request's headers
+        /// - request's body.
         public static let formatRequestAscURL: LogOptions = LogOptions(rawValue: 1 << 3)
         /// The body of a response that is a success will be logged.
         public static let successResponseBody: LogOptions = LogOptions(rawValue: 1 << 4)
@@ -181,7 +197,9 @@ public extension NetworkLoggerPlugin.Configuration {
         public static let errorResponseBody: LogOptions = LogOptions(rawValue: 1 << 5)
 
         //Aggregate options
+        /// Only basic components will be logged.
         public static let `default`: LogOptions = [requestMethod, requestHeaders]
+        /// All components will be logged.
         public static let verbose: LogOptions = [requestMethod, requestHeaders, requestBody,
                                                  successResponseBody, errorResponseBody]
     }
