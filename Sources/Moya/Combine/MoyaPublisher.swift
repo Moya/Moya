@@ -11,13 +11,9 @@ internal class MoyaPublisher<Output>: Publisher {
 
     private class Subscription: Combine.Subscription {
 
-        private let callback: (AnySubscriber<Output, MoyaError>) -> Cancellable?
-        private let subscriber: AnySubscriber<Output, MoyaError>
         private let cancellable: Cancellable?
 
         init(subscriber: AnySubscriber<Output, MoyaError>, callback: @escaping (AnySubscriber<Output, MoyaError>) -> Cancellable?) {
-            self.subscriber = subscriber
-            self.callback = callback
             self.cancellable = callback(subscriber)
         }
 
