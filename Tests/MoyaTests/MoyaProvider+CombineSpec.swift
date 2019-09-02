@@ -149,6 +149,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                 var receivedResponse: Moya.Response!
 
+                // If we do not name the variable, Combine's Cancellable will cancel itself
                 let cancellable1 = signalProducer1.sink(receiveCompletion: { completion in
                     switch completion {
                     case let .failure(error):
@@ -161,6 +162,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                     expect(provider.inflightRequests.count).to(equal(1))
                 })
 
+                // If we do not name the variable, Combine's Cancellable will cancel itself
                 let cancellable2 = signalProducer2.sink(receiveCompletion: { completion in
                     switch completion {
                     case let .failure(error):
@@ -178,158 +180,143 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 expect(provider.inflightRequests.count).toEventually(equal(0))
             }
         }
-//
-//        describe("a provider with progress tracking") {
-//            var provider: MoyaProvider<GitHubUserContent>!
-//            beforeEach {
-//                //delete downloaded filed before each test
-//                let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-//                let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
-//                try? FileManager.default.removeItem(at: file)
-//
-//                //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-//                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-//                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
-//                })
-//                provider = MoyaProvider<GitHubUserContent>()
-//            }
-//
-//            it("tracks progress of request") {
-//                let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
-//
-//                let expectedNextProgressValues = [0.25, 0.5, 0.75, 1.0, 1.0]
-//                let expectedNextResponseCount = 1
-//                let expectedErrorEventsCount = 0
-//                let expectedCompletedEventsCount = 1
-//                let timeout = 5.0
-//
-//                var nextProgressValues: [Double] = []
-//                var nextResponseCount = 0
-//                var errorEventsCount = 0
-//                var completedEventsCount = 0
-//
-//                _ = provider.rx.requestWithProgress(target)
-//                    .subscribe({ event in
-//                        switch event {
-//                        case let .next(element):
-//                            nextProgressValues.append(element.progress)
-//
-//                            if element.response != nil { nextResponseCount += 1 }
-//                        case .error: errorEventsCount += 1
-//                        case .completed: completedEventsCount += 1
-//                        }
-//                    })
-//
-//                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
-//                expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)
-//                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)
-//                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)
-//            }
-//
-//            describe("a custom callback queue") {
-//                var stubDescriptor: OHHTTPStubsDescriptor!
-//
-//                beforeEach {
-//                    stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-//                        return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-//                    })
-//                }
-//
-//                afterEach {
-//                    OHHTTPStubs.removeStub(stubDescriptor)
-//                }
-//
-//                describe("a provider with a predefined callback queue") {
-//                    var provider: MoyaProvider<GitHub>!
-//                    var callbackQueue: DispatchQueue!
-//                    var disposeBag: DisposeBag!
-//
-//                    beforeEach {
-//                        disposeBag = DisposeBag()
-//
-//                        callbackQueue = DispatchQueue(label: UUID().uuidString)
-//                        provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
-//                    }
-//
-//                    context("the callback queue is provided with the request") {
-//                        it("invokes the callback on the request queue") {
-//                            let requestQueue = DispatchQueue(label: UUID().uuidString)
-//                            var callbackQueueLabel: String?
-//
-//                            waitUntil(action: { completion in
-//                                provider.rx.request(.zen, callbackQueue: requestQueue)
-//                                    .subscribe(onSuccess: { _ in
-//                                        callbackQueueLabel = DispatchQueue.currentLabel
-//                                        completion()
-//                                    }).disposed(by: disposeBag)
-//                            })
-//
-//                            expect(callbackQueueLabel) == requestQueue.label
-//                        }
-//                    }
-//
-//                    context("the queueless request method is invoked") {
-//                        it("invokes the callback on the provider queue") {
-//                            var callbackQueueLabel: String?
-//
-//                            waitUntil(action: { completion in
-//                                provider.rx.request(.zen)
-//                                    .subscribe(onSuccess: { _ in
-//                                        callbackQueueLabel = DispatchQueue.currentLabel
-//                                        completion()
-//                                    }).disposed(by: disposeBag)
-//                            })
-//
-//                            expect(callbackQueueLabel) == callbackQueue.label
-//                        }
-//                    }
-//                }
-//
-//                describe("a provider without a predefined queue") {
-//                    var provider: MoyaProvider<GitHub>!
-//                    var disposeBag: DisposeBag!
-//
-//                    beforeEach {
-//                        disposeBag = DisposeBag()
-//                        provider = MoyaProvider<GitHub>()
-//                    }
-//
-//                    context("the queue is provided with the request") {
-//                        it("invokes the callback on the specified queue") {
-//                            let requestQueue = DispatchQueue(label: UUID().uuidString)
-//                            var callbackQueueLabel: String?
-//
-//                            waitUntil(action: { completion in
-//
-//                                provider.rx.request(.zen, callbackQueue: requestQueue)
-//                                    .subscribe(onSuccess: { _ in
-//                                        callbackQueueLabel = DispatchQueue.currentLabel
-//                                        completion()
-//                                    }).disposed(by: disposeBag)
-//                            })
-//
-//                            expect(callbackQueueLabel) == requestQueue.label
-//                        }
-//                    }
-//
-//                    context("the queue is not provided with the request") {
-//                        it("invokes the callback on the main queue") {
-//                            var callbackQueueLabel: String?
-//
-//                            waitUntil(action: { completion in
-//                                provider.rx.request(.zen)
-//                                    .subscribe(onSuccess: { _ in
-//                                        callbackQueueLabel = DispatchQueue.currentLabel
-//                                        completion()
-//                                    }).disposed(by: disposeBag)
-//                            })
-//
-//                            expect(callbackQueueLabel) == DispatchQueue.main.label
-//                        }
-//                    }
-//                }
-//            }
-//        }
+
+        describe("a provider with progress tracking") {
+            var provider: MoyaProvider<GitHubUserContent>!
+
+            beforeEach {
+                //delete downloaded filed before each test
+                let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+                let file = directoryURLs.first!.appendingPathComponent("logo_github.png")
+                try? FileManager.default.removeItem(at: file)
+
+                //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
+                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                })
+                provider = MoyaProvider<GitHubUserContent>()
+            }
+
+            it("tracks progress of request") {
+                let target: GitHubUserContent = .downloadMoyaWebContent("logo_github.png")
+
+                let expectedNextProgressValues = [0.25, 0.5, 0.75, 1.0, 1.0]
+                let expectedNextResponseCount = 1
+                let expectedErrorEventsCount = 0
+                let expectedCompletedEventsCount = 1
+                let timeout = 5.0
+
+                var nextProgressValues: [Double] = []
+                var nextResponseCount = 0
+                var errorEventsCount = 0
+                var completedEventsCount = 0
+
+                let cancellable = provider.combine.requestWithProgress(target)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case let .failure:
+                            errorEventsCount += 1
+                        case .finished:
+                            completedEventsCount += 1
+                        }
+                    }, receiveValue: { response in
+                        nextProgressValues.append(response.progress)
+
+                        if response.response != nil { nextResponseCount += 1 }
+                    })
+
+                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
+                expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)
+                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)
+                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)
+            }
+
+            describe("a custom callback queue") {
+                var stubDescriptor: OHHTTPStubsDescriptor!
+
+                beforeEach {
+                    stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                        return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    })
+                }
+
+                afterEach {
+                    OHHTTPStubs.removeStub(stubDescriptor)
+                }
+
+                describe("a provider with a predefined callback queue") {
+                    var provider: MoyaProvider<GitHub>!
+                    var callbackQueue: DispatchQueue!
+
+                    beforeEach {
+                        callbackQueue = DispatchQueue(label: UUID().uuidString)
+                        provider = MoyaProvider<GitHub>(callbackQueue: callbackQueue)
+                    }
+
+                    context("the callback queue is provided with the request") {
+                        it("invokes the callback on the request queue") {
+                            let requestQueue = DispatchQueue(label: UUID().uuidString)
+                            var callbackQueueLabel: String?
+
+                            let cancellable = provider.combine.request(.zen, callbackQueue: requestQueue)
+                                .sink(receiveCompletion: { _ in }, receiveValue: { _ in
+                                    callbackQueueLabel = DispatchQueue.currentLabel
+                                })
+
+                            expect(callbackQueueLabel).toEventually(equal(requestQueue.label))
+                        }
+                    }
+
+                    context("the queueless request method is invoked") {
+                        it("invokes the callback on the provider queue") {
+                            var callbackQueueLabel: String?
+
+                            let cancellable = provider.combine.request(.zen)
+                                .sink(receiveCompletion: { _ in }, receiveValue: { _ in
+                                    callbackQueueLabel = DispatchQueue.currentLabel
+                                })
+
+                            expect(callbackQueueLabel).toEventually(equal(callbackQueue.label))
+                        }
+                    }
+                }
+
+                describe("a provider without a predefined queue") {
+                    var provider: MoyaProvider<GitHub>!
+
+                    beforeEach {
+                        provider = MoyaProvider<GitHub>()
+                    }
+
+                    context("the queue is provided with the request") {
+                        it("invokes the callback on the specified queue") {
+                            let requestQueue = DispatchQueue(label: UUID().uuidString)
+                            var callbackQueueLabel: String?
+
+                            let cancellable = provider.combine.request(.zen, callbackQueue: requestQueue)
+                                .sink(receiveCompletion: { _ in }, receiveValue: { _ in
+                                    callbackQueueLabel = DispatchQueue.currentLabel
+                                })
+
+                            expect(callbackQueueLabel).toEventually(equal(requestQueue.label))
+                        }
+                    }
+
+                    context("the queue is not provided with the request") {
+                        it("invokes the callback on the main queue") {
+                            var callbackQueueLabel: String?
+
+                            let cancellable = provider.combine.request(.zen)
+                                .sink(receiveCompletion: { _ in }, receiveValue: { _ in
+                                    callbackQueueLabel = DispatchQueue.currentLabel
+                                })
+
+                            expect(callbackQueueLabel).toEventually(equal(DispatchQueue.main.label))
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 #endif
