@@ -3,10 +3,6 @@
 import Foundation
 import Combine
 
-#if !COCOAPODS
-    import Moya
-#endif
-
 #if canImport(UIKit)
     import UIKit.UIImage
 #elseif canImport(AppKit)
