@@ -59,104 +59,125 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 expect(responseData).to(equal(target.sampleData))
             }
 
-//            it("maps JSON data correctly for user profile request") {
-//                var receivedResponse: [String: Any]?
-//
-//                let target: GitHub = .userProfile("ashfurrow")
-//                _ = provider.combine.request(target).mapJSON().subscribe(onNext: { response in
-//                    receivedResponse = response as? [String: Any]
-//                })
-//
-//                expect(receivedResponse).toNot(beNil())
-//            }
+            it("maps JSON data correctly for user profile request") {
+                var receivedResponse: [String: Any]?
+
+                let target: GitHub = .userProfile("ashfurrow")
+                _ = provider.combine.request(target)
+                    .mapJSON()
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case let .failure(error):
+                            fail("errored: \(error)")
+                        default:
+                            ()
+                        }
+                    }, receiveValue: { response in
+                        receivedResponse = response as? [String: Any]
+                    })
+
+                expect(receivedResponse).toNot(beNil())
+            }
         }
 
-//        describe("failing") {
-//            var provider: MoyaProvider<GitHub>!
-//
-//            beforeEach {
-//                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
-//            }
-//
-//            it("emits the correct error message") {
-//                var receivedError: MoyaError?
-//
-//                _ = provider.rx.request(.zen).subscribe { event in
-//                    switch event {
-//                    case .success:          fail("should have errored")
-//                    case .error(let error): receivedError = error as? MoyaError
-//                    }
-//                }
-//
-//                switch receivedError {
-//                case .some(.underlying(let error, _)):
-//                    expect(error.localizedDescription) == "Houston, we have a problem"
-//                default:
-//                    fail("expected an Underlying error that Houston has a problem")
-//                }
-//            }
-//
-//            it("emits an error") {
-//                var errored = false
-//
-//                let target: GitHub = .zen
-//                _ = provider.rx.request(target).subscribe { event in
-//                    switch event {
-//                    case .success:  fail("we should have errored")
-//                    case .error:    errored = true
-//                    }
-//                }
-//
-//                expect(errored).to(beTrue())
-//            }
-//        }
-//
-//        describe("a reactive provider") {
-//            var provider: MoyaProvider<GitHub>!
-//
-//            beforeEach {
-//                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-//                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
-//                })
-//                provider = MoyaProvider<GitHub>(trackInflights: true)
-//            }
-//
-//            it("emits identical response for inflight requests") {
-//                let target: GitHub = .zen
-//                let signalProducer1 = provider.rx.request(target)
-//                let signalProducer2 = provider.rx.request(target)
-//
-//                expect(provider.inflightRequests.keys.count).to(equal(0))
-//
-//                var receivedResponse: Moya.Response!
-//
-//                _ = signalProducer1.subscribe { event in
-//                    switch event {
-//                    case .success(let response):
-//                        receivedResponse = response
-//                        expect(provider.inflightRequests.count).to(equal(1))
-//
-//                    case .error(let error):
-//                        fail("errored: \(error)")
-//                    }
-//                }
-//
-//                _ = signalProducer2.subscribe { event in
-//                    switch event {
-//                    case .success(let response):
-//                        expect(receivedResponse).toNot(beNil())
-//                        expect(receivedResponse).to(beIdenticalToResponse(response))
-//                        expect(provider.inflightRequests.count).to(equal(1))
-//
-//                    case .error(let error):
-//                        fail("errored: \(error)")
-//                    }
-//                }
-//
-//                // Allow for network request to complete
-//                expect(provider.inflightRequests.count).toEventually(equal(0))
-//            }
-//        }
+        describe("failing") {
+            var provider: MoyaProvider<GitHub>!
+
+            beforeEach {
+                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+            }
+
+            it("emits the correct error message") {
+                var receivedError: MoyaError?
+
+                _ = provider.combine.request(.zen)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case let .failure(error):
+                            receivedError = error
+                        case .finished:
+                            ()
+                        }
+                    }, receiveValue: { response in
+                        fail("should have errored")
+                    })
+
+                switch receivedError {
+                case .some(.underlying(let error, _)):
+                    expect(error.localizedDescription) == "Houston, we have a problem"
+                default:
+                    fail("expected an Underlying error that Houston has a problem")
+                }
+            }
+
+            it("emits an error") {
+                var errored = false
+
+                let target: GitHub = .zen
+                _ = provider.combine.request(target)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case let .failure(error):
+                            errored = true
+                        case .finished:
+                            ()
+                        }
+                    }, receiveValue: { response in
+                        fail("should have errored")
+                    })
+
+                expect(errored).to(beTrue())
+            }
+        }
+
+        describe("a reactive provider") {
+            var provider: MoyaProvider<GitHub>!
+
+            beforeEach {
+                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                })
+                provider = MoyaProvider<GitHub>(trackInflights: true)
+            }
+
+            it("emits identical response for inflight requests") {
+                let target: GitHub = .zen
+                let signalProducer1 = provider.combine.request(target)
+                let signalProducer2 = provider.combine.request(target)
+
+                expect(provider.inflightRequests.keys.count).to(equal(0))
+
+                var receivedResponse: Moya.Response!
+
+                let cancellable1 = signalProducer1.sink(receiveCompletion: { completion in
+                    switch completion {
+                    case let .failure(error):
+                        fail("errored: \(error)")
+                    default:
+                        ()
+                    }
+                }, receiveValue: { response in
+                    receivedResponse = response
+                    expect(provider.inflightRequests.count).to(equal(1))
+                })
+
+                let cancellable2 = signalProducer2.sink(receiveCompletion: { completion in
+                    switch completion {
+                    case let .failure(error):
+                        fail("errored: \(error)")
+                    default:
+                        ()
+                    }
+                }, receiveValue: { response in
+                    expect(receivedResponse).toNot(beNil())
+                    expect(receivedResponse).to(beIdenticalToResponse(response))
+                    expect(provider.inflightRequests.count).to(equal(1))
+                })
+
+                // Allow for network request to complete
+                expect(provider.inflightRequests.count).toEventually(equal(0))
+            }
+        }
 //
 //        describe("a provider with progress tracking") {
 //            var provider: MoyaProvider<GitHubUserContent>!
