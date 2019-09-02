@@ -67,6 +67,7 @@
 		85C98002231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */; };
 		85C98004231D414F00AAAFB2 /* CombineCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98003231D414F00AAAFB2 /* CombineCompatible.swift */; };
 		85C98006231D41E400AAAFB2 /* MoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */; };
+		85C98008231D4BE900AAAFB2 /* AnyPublisher+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */; };
 		85D5277A2302BEF30093E9C1 /* TestImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D527792302BEF30093E9C1 /* TestImage.swift */; };
 		85F6042E22A018BB00063320 /* RequestTypeWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */; };
 		8995DF740A59721AA79F5B43 /* MoyaProvider+ReactiveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */; };
@@ -201,6 +202,7 @@
 		85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+CombineSpec.swift"; sourceTree = "<group>"; };
 		85C98003231D414F00AAAFB2 /* CombineCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCompatible.swift; sourceTree = "<group>"; };
 		85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPublisher.swift; sourceTree = "<group>"; };
+		85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Response.swift"; sourceTree = "<group>"; };
 		85D527792302BEF30093E9C1 /* TestImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImage.swift; sourceTree = "<group>"; };
 		85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypeWrapper.swift; sourceTree = "<group>"; };
 		86F3C0EA472C23E786E23CE9 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 		85C97FFE231D2D2D00AAAFB2 /* Combine */ = {
 			isa = PBXGroup;
 			children = (
+				85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */,
 				85C98003231D414F00AAAFB2 /* CombineCompatible.swift */,
 				85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */,
 				85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */,
@@ -427,9 +430,9 @@
 				C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */,
 				7F112022D8F42844A7D5CB5C /* ErrorTests.swift */,
 				819334FE5D32EFB82599D482 /* MethodSpec.swift */,
+				85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */,
 				C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */,
 				4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */,
-				85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */,
 				82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */,
 				B1F68927EA26EBDB45E82C8C /* MoyaProviderSpec.swift */,
 				369649DCA3D957F2F9D8053A /* MultipartFormDataSpec.swift */,
@@ -862,6 +865,7 @@
 				9854C1DBF14818CCA76AEC7F /* MoyaProvider+Internal.swift in Sources */,
 				147E26EC1F5B14B300C1F513 /* Task.swift in Sources */,
 				149749451F892E2F00FA4900 /* URLRequest+Encoding.swift in Sources */,
+				85C98008231D4BE900AAAFB2 /* AnyPublisher+Response.swift in Sources */,
 				5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */,
 				61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */,
 				5054F87AFF61EAC0097F88BD /* MultiTarget.swift in Sources */,
