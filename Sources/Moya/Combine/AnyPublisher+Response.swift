@@ -77,34 +77,39 @@ extension AnyPublisher where Output == Response, Failure == MoyaError {
         .eraseToAnyPublisher()
     }
 }
-//
-//extension ObservableType where Element == ProgressResponse {
-//
-//    /**
-//     Filter completed progress response and maps to actual response
-//
-//     - returns: response associated with ProgressResponse object
-//     */
-//    public func filterCompleted() -> Observable<Response> {
-//        return self
-//            .filter { $0.completed }
-//            .flatMap { progress -> Observable<Response> in
-//                // Just a formatlity to satisfy the compiler (completed progresses have responses).
-//                switch progress.response {
-//                case .some(let response): return .just(response)
-//                case .none: return .empty()
-//                }
-//            }
-//    }
-//
-//    /**
-//     Filter progress events of current ProgressResponse
-//
-//     - returns: observable of progress events
-//     */
-//    public func filterProgress() -> Observable<Double> {
-//        return self.filter { !$0.completed }.map { $0.progress }
-//    }
-//}
+
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+extension AnyPublisher where Output == ProgressResponse, Failure == MoyaError {
+
+    /**
+     Filter completed progress response and maps to actual response
+
+     - returns: response associated with ProgressResponse object
+     */
+    public func filterCompleted() -> AnyPublisher<Response, MoyaError> {
+        return self
+            .filter { $0.completed }
+            .flatMap { progress -> AnyPublisher<Response, MoyaError> in
+                if let response = progress.response {
+                    return MoyaPublisher(just: { response }).eraseToAnyPublisher()
+                } else {
+                    return Empty().eraseToAnyPublisher()
+                }
+            }
+            .eraseToAnyPublisher()
+    }
+
+    /**
+     Filter progress events of current ProgressResponse
+
+     - returns: observable of progress events
+     */
+    public func filterProgress() -> AnyPublisher<Double, MoyaError> {
+        return self
+            .filter { !$0.completed }
+            .map { $0.progress }
+            .eraseToAnyPublisher()
+    }
+}
 
 #endif
