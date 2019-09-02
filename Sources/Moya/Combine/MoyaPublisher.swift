@@ -36,26 +36,6 @@ internal class MoyaPublisher<Output>: Publisher {
         self.callback = callback
     }
 
-    // We couldn't use `Just` as it's `Failure` type is `Never`, where we really want `MoyaError`.
-    // So this is a workaround for now.
-    init(just: @escaping (() throws -> Output)) {
-        self.callback = { subscriber in
-            do {
-                let output = try just()
-                _ = subscriber.receive(output)
-                subscriber.receive(completion: .finished)
-            } catch {
-                if let error = error as? MoyaError {
-                    subscriber.receive(completion: .failure(error))
-                } else {
-                    // The cast above should never fail, but just in case.
-                    subscriber.receive(completion: .failure(MoyaError.underlying(error, nil)))
-                }
-            }
-            return nil
-        }
-    }
-
     internal func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
         let subscription = Subscription(subscriber: AnySubscriber(subscriber), callback: callback)
         subscriber.receive(subscription: subscription)
