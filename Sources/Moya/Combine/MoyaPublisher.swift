@@ -3,6 +3,8 @@
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+// I really hate that we have to use our own `Publisher` implementation...
+// This really should be built into Combine.
 public class MoyaPublisher<Output>: Publisher {
 
     public typealias Failure = MoyaError
@@ -32,6 +34,25 @@ public class MoyaPublisher<Output>: Publisher {
 
     init(callback: @escaping (AnySubscriber<Output, MoyaError>) -> Cancellable?) {
         self.callback = callback
+    }
+
+    // We couldn't use `Just` as it's `Failure` type is `Never`, where we really want `MoyaError`.
+    // So this is a workaround for now.
+    init(just: @escaping (() throws -> Output)) {
+        self.callback = { subscriber in
+            do {
+                let output = try just()
+                _ = subscriber.receive(output)
+            } catch {
+                if let error = error as? MoyaError {
+                    subscriber.receive(completion: .failure(error))
+                } else {
+                    // The cast above should never fail, but just in case.
+                    subscriber.receive(completion: .failure(MoyaError.underlying(error as NSError, nil)))
+                }
+            }
+            return nil
+        }
     }
 
     public func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
