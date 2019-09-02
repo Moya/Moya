@@ -8,37 +8,22 @@ final class NetworkLoggerPluginSpec: QuickSpec {
     override func spec() {
 
         var log = ""
-        let plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        })
 
-        let pluginWithCurl = NetworkLoggerPlugin(verbose: true, cURL: true, output: { (_, _, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        })
+        let customLoggerOutput: NetworkLoggerPlugin.Configuration.OutputType = { log += $1.joined() }
 
-        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        }, responseDataFormatter: { _ in
-            return "formatted request body".data(using: .utf8)!
-        })
+        let plugin = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
+                                                              logOptions: .verbose))
 
-        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(verbose: true, output: { (_, _, _, printing: Any...) in
-            //mapping the Any... from items to a string that can be compared
-            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-            log += string
-        }, responseDataFormatter: { _ in
-                return "formatted body".data(using: .utf8)!
-        })
+        let pluginWithCurl = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
+                                                                      logOptions: [.formatRequestAscURL]))
+
+        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
+                                                                                      requestDataFormatter: { _ in return "formatted request body" },
+                                                                                      logOptions: .verbose))
+
+        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
+                                                                                       responseDataFormatter: { _ in return "formatted response body" },
+                                                                                       logOptions: .verbose))
 
         beforeEach {
             log = ""
@@ -75,6 +60,14 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to(contain("Request: (invalid request)"))
         }
 
+        it("outputs the formatted request data") {
+
+            pluginWithRequestDataFormatter.willSend(TestBodyRequest(), target: GitHub.zen)
+
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(contain("Body: formatted request body"))
+        }
+
         it("outputs the response data") {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, MoyaError> = .success(response)
@@ -83,7 +76,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             expect(log).to(contain("Response:"))
             expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).to(contain("cool body"))
+            expect(log).to(contain("Response Body: cool body"))
         }
 
         it("outputs the formatted response data") {
@@ -94,18 +87,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
             expect(log).to(contain("Response:"))
             expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).to(contain("formatted body"))
-        }
-
-        it("outputs the formatted request data") {
-            let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-            let result: Result<Moya.Response, MoyaError> = .success(response)
-
-            pluginWithRequestDataFormatter.didReceive(result, target: GitHub.zen)
-
-            expect(log).to(contain("Response:"))
-            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).to(contain("formatted request body"))
+            expect(log).to(contain("Response Body: formatted response body"))
         }
 
         it("outputs a validation error message") {

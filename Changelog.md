@@ -1,6 +1,7 @@
 # Next
 
 ### Changed
+- **Breaking Change** The NetworkLoggerPlugin have been reworked to allow more customization about the logged request's components. [#1894](https://github.com/Moya/Moya/pull/1894) by [@amaurydavid](https://github.com/amaurydavid).
 - `NetworkLoggerPlugin` now logs error when available (and the `isVerbose` flag is on). [#1880](https://github.com/Moya/Moya/pull/1880) by [@amaurydavid](https://github.com/amaurydavid).
 
 # [14.0.0-alpha.2] - 2019-08-01

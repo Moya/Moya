@@ -1,135 +1,206 @@
 import Foundation
 
 /// Logs network activity (outgoing requests and incoming responses).
-public final class NetworkLoggerPlugin: PluginType {
-    fileprivate let loggerId = "Moya_Logger"
-    fileprivate let dateFormatString = "dd/MM/yyyy HH:mm:ss"
-    fileprivate let dateFormatter = DateFormatter()
-    fileprivate let separator = ", "
-    fileprivate let terminator = "\n"
-    fileprivate let cURLTerminator = "\\\n"
-    fileprivate let output: (_ separator: String, _ terminator: String, _ target: TargetType, _ items: Any...) -> Void
-    fileprivate let requestDataFormatter: ((Data) -> (String))?
-    fileprivate let responseDataFormatter: ((Data) -> (Data))?
+public final class NetworkLoggerPlugin {
 
-    /// A Boolean value determing whether response body data should be logged.
-    public let isVerbose: Bool
-    public let cURL: Bool
+    public let configuration: Configuration
 
     /// Initializes a NetworkLoggerPlugin.
-    public init(verbose: Bool = false, cURL: Bool = false, output: ((_ separator: String, _ terminator: String, _ target: TargetType, _ items: Any...) -> Void)? = nil, requestDataFormatter: ((Data) -> (String))? = nil, responseDataFormatter: ((Data) -> (Data))? = nil) {
-        self.cURL = cURL
-        self.isVerbose = verbose
-        self.output = output ?? NetworkLoggerPlugin.reversedPrint
-        self.requestDataFormatter = requestDataFormatter
-        self.responseDataFormatter = responseDataFormatter
+    public init(configuration: Configuration = Configuration()) {
+        self.configuration = configuration
     }
+}
 
+// MARK: - PluginType
+extension NetworkLoggerPlugin: PluginType {
     public func willSend(_ request: RequestType, target: TargetType) {
-        if let request = request as? CustomDebugStringConvertible, cURL {
-            //Don't use outputItems to prevent cURL being broken with additionnal terminators insertions
-            let message = format(loggerId, date: date, identifier: "Request", message: request.debugDescription)
-            output(separator, terminator, target, message)
-            return
-        }
-
-        outputItems(logNetworkRequest(request), target)
+        configuration.output(target, logNetworkRequest(request, target: target))
     }
 
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
         switch result {
         case .success(let response):
-            outputItems(logNetworkResponse(response, target: target), target)
+            configuration.output(target, logNetworkResponse(response, target: target, isFromError: false))
         case let .failure(error):
-            outputItems(logNetworkError(error, target: target), target)
-        }
-    }
-
-    fileprivate func outputItems(_ items: [String], _ target: TargetType) {
-        if isVerbose {
-            items.forEach { output(separator, terminator, target, $0) }
-        } else {
-            output(separator, terminator, target, items)
+            configuration.output(target, logNetworkError(error, target: target))
         }
     }
 }
 
+// MARK: - Logging
 private extension NetworkLoggerPlugin {
 
-    var date: String {
-        dateFormatter.dateFormat = dateFormatString
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        return dateFormatter.string(from: Date())
+    func newEntry(identifier: String, message: String) -> String {
+        let date = configuration.dateFormatter.string(from: Date())
+        return "\(configuration.loggerId): [\(date)] \(identifier): \(message)"
     }
 
-    func format(_ loggerId: String, date: String, identifier: String, message: String) -> String {
-        return "\(loggerId): [\(date)] \(identifier): \(message)"
-    }
+    func logNetworkRequest(_ request: RequestType, target: TargetType) -> [String] {
 
-    func logNetworkRequest(_ request: RequestType) -> [String] {
+        //cURL formatting
+        if configuration.logOptions.contains(.formatRequestAscURL),
+            let request = request as? CustomDebugStringConvertible {
+            return [newEntry(identifier: "Request", message: request.debugDescription)]
+        }
 
+        //Request presence check
+        guard let httpRequest = request.request else {
+            return [newEntry(identifier: "Request", message: "(invalid request)")]
+        }
+
+        // Adding log entries for each given log option
         var output = [String]()
 
-        output += [format(loggerId, date: date, identifier: "Request", message: request.request?.description ?? "(invalid request)")]
+        output.append(newEntry(identifier: "Request", message: httpRequest.description))
 
-        var headers = request.sessionHeaders
-        if let requestHeaders = request.request?.allHTTPHeaderFields {
-            headers.merge(requestHeaders) { _, requestHeader in
-                return requestHeader
+        if configuration.logOptions.contains(.requestHeaders) {
+            var allHeaders = request.sessionHeaders
+            if let httpRequestHeaders = httpRequest.allHTTPHeaderFields {
+                allHeaders.merge(httpRequestHeaders) { $1 }
+            }
+            output.append(newEntry(identifier: "Request Headers", message: allHeaders.description))
+        }
+
+        if configuration.logOptions.contains(.requestBody) {
+            if let bodyStream = httpRequest.httpBodyStream {
+                output.append(newEntry(identifier: "Request Body Stream", message: bodyStream.description))
+            }
+
+            if let body = httpRequest.httpBody {
+                let stringOutput = configuration.requestDataFormatter(body)
+                output.append(newEntry(identifier: "Request Body", message: stringOutput))
             }
         }
 
-        if !headers.isEmpty {
-            output += [format(loggerId, date: date, identifier: "Request Headers", message: headers.description)]
-        }
-
-        if let bodyStream = request.request?.httpBodyStream {
-            output += [format(loggerId, date: date, identifier: "Request Body Stream", message: bodyStream.description)]
-        }
-
-        if let httpMethod = request.request?.httpMethod {
-            output += [format(loggerId, date: date, identifier: "HTTP Request Method", message: httpMethod)]
-        }
-
-        if isVerbose, let body = request.request?.httpBody {
-            let stringOutput = requestDataFormatter?(body) ?? String(decoding: body, as: UTF8.self)
-            output += [format(loggerId, date: date, identifier: "Request Body", message: stringOutput)]
+        if configuration.logOptions.contains(.requestMethod),
+            let httpMethod = httpRequest.httpMethod {
+            output.append(newEntry(identifier: "HTTP Request Method", message: httpMethod))
         }
 
         return output
     }
 
-    func logNetworkResponse(_ response: Response, target: TargetType) -> [String] {
+    func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
+
+        //Response presence check
         guard let httpResponse = response.response else {
-            return [format(loggerId, date: date, identifier: "Response", message: "Received empty network response for \(target).")]
+            return [newEntry(identifier: "Response", message: "Received empty network response for \(target).")]
         }
 
+        // Adding log entries for each given log option
         var output = [String]()
 
-        output += [format(loggerId, date: date, identifier: "Response", message: httpResponse.description)]
+        output.append(newEntry(identifier: "Response", message: httpResponse.description))
 
-        if isVerbose, let stringData = String(data: responseDataFormatter?(response.data) ?? response.data, encoding: String.Encoding.utf8) {
-            output += ["Body: " + stringData]
+        if (isFromError && configuration.logOptions.contains(.errorResponseBody))
+            || configuration.logOptions.contains(.successResponseBody) {
+
+            let stringOutput = configuration.responseDataFormatter(response.data)
+            output.append(newEntry(identifier: "Response Body", message: stringOutput))
         }
 
         return output
-      }
+    }
 
-      func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
-          //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
-          if let moyaResponse = error.response {
-              return logNetworkResponse(moyaResponse, target: target)
-          }
+    func logNetworkError(_ error: MoyaError, target: TargetType) -> [String] {
+        //Some errors will still have a response, like errors due to Alamofire's HTTP code validation.
+        if let moyaResponse = error.response {
+            return logNetworkResponse(moyaResponse, target: target, isFromError: true)
+        }
 
-          //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
-          return [format(loggerId, date: date, identifier: "Error", message: "Error calling \(target) : \(error)")]
-      }
+        //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
+        return [newEntry(identifier: "Error", message: "Error calling \(target) : \(error)")]
+    }
 }
 
-fileprivate extension NetworkLoggerPlugin {
-    static func reversedPrint(_ separator: String, terminator: String, target: TargetType, items: Any...) {
-        for item in items {
-            print(item, separator: separator, terminator: terminator)
+// MARK: - Configuration
+public extension NetworkLoggerPlugin {
+    struct Configuration {
+
+        public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
+        public typealias DataFormatterType = (Data) -> (String)
+
+        fileprivate let loggerId: String
+        fileprivate let dateFormatter: DateFormatter
+        fileprivate let output: OutputType
+        fileprivate let requestDataFormatter: DataFormatterType
+        fileprivate let responseDataFormatter: DataFormatterType
+        fileprivate let logOptions: LogOptions
+
+        /// The designated way to instanciate a Configuration.
+        ///
+        /// - Parameters:
+        ///   - loggerId: An identifier that prefixes every log entry.
+        ///   - dateFormatter: The dateFormatter to be used to display the date of every log entry.
+        ///                    The default formatter sets both `timeStyle` and `dateStyle` to `short`
+        ///   - output: A closure responsible of writing the given log entries into your log system.
+        ///                    The default value writes entries to the debug console.
+        ///   - requestDataFormatter: A closure converting HTTP request's body into a String.
+        ///                    The default value assumes the body's data is an utf8 String.
+        ///   - responseDataFormatter: A closure converting HTTP response's body into a String.
+        ///                    The default value assumes the body's data is an utf8 String.
+        ///   - logOptions: A set of options you can use to customize which request component is logged.
+        public init(loggerId: String = "Moya_Logger",
+                    dateFormatter: DateFormatter = defaultDateFormatter,
+                    output: @escaping OutputType = defaultOutput,
+                    requestDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
+                    responseDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
+                    logOptions: LogOptions = .default) {
+            self.loggerId = loggerId
+            self.dateFormatter = dateFormatter
+            self.output = output
+            self.requestDataFormatter = requestDataFormatter
+            self.responseDataFormatter = responseDataFormatter
+            self.logOptions = logOptions
         }
+
+        public static var defaultDateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            formatter.dateStyle = .short
+            return formatter
+        }
+
+        public static func defaultOutput(target: TargetType, items: [String]) {
+            for item in items {
+                print(item, separator: ",", terminator: "\n")
+            }
+        }
+
+        public static func defaultDataFormatter(_ data: Data) -> String {
+            return String(data: data, encoding: .utf8) ?? "## Cannot map data to String ##"
+        }
+    }
+}
+
+public extension NetworkLoggerPlugin.Configuration {
+    struct LogOptions: OptionSet {
+        public let rawValue: Int
+        public init(rawValue: Int) { self.rawValue = rawValue }
+
+        /// The request's method will be logged.
+        public static let requestMethod: LogOptions = LogOptions(rawValue: 1 << 0)
+        /// The request's body will be logged.
+        public static let requestBody: LogOptions = LogOptions(rawValue: 1 << 1)
+        /// The request's headers will be logged.
+        public static let requestHeaders: LogOptions = LogOptions(rawValue: 1 << 2)
+        /// The request will be logged in the cURL format.
+        ///
+        /// If this option is used, the following components will be logged regardless of their respective options being set:
+        /// - request's method
+        /// - request's headers
+        /// - request's body.
+        public static let formatRequestAscURL: LogOptions = LogOptions(rawValue: 1 << 3)
+        /// The body of a response that is a success will be logged.
+        public static let successResponseBody: LogOptions = LogOptions(rawValue: 1 << 4)
+        /// The body of a response that is an error will be logged.
+        public static let errorResponseBody: LogOptions = LogOptions(rawValue: 1 << 5)
+
+        //Aggregate options
+        /// Only basic components will be logged.
+        public static let `default`: LogOptions = [requestMethod, requestHeaders]
+        /// All components will be logged.
+        public static let verbose: LogOptions = [requestMethod, requestHeaders, requestBody,
+                                                 successResponseBody, errorResponseBody]
     }
 }

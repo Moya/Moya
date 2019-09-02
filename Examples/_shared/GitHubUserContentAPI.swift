@@ -1,7 +1,7 @@
 import Foundation
 import Moya
 
-let gitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(verbose: true)])
+let gitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
 
 public enum GitHubUserContent {
     case downloadMoyaWebContent(String)
