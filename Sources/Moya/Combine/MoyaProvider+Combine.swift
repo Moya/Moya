@@ -22,6 +22,7 @@ public extension Publishable where Base: MoyaProviderType {
                     switch result {
                     case let .success(response):
                         _ = subscriber.receive(response)
+                        subscriber.receive(completion: .finished)
                     case let .failure(error):
                         subscriber.receive(completion: .failure(error))
                     }

@@ -43,6 +43,7 @@ internal class MoyaPublisher<Output>: Publisher {
             do {
                 let output = try just()
                 _ = subscriber.receive(output)
+                subscriber.receive(completion: .finished)
             } catch {
                 if let error = error as? MoyaError {
                     subscriber.receive(completion: .failure(error))
