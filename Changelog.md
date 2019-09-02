@@ -1,8 +1,12 @@
 # Next
 
+## Added
+- Very raw SPM testing support! Thanks to the work on OHHTTPStubs, we can finally start using `swift test` again. [#1896](https://github.com/Moya/Moya/pull/1896) by [@sunshinejr](https://github.com/sunshinejr).
+
 ### Changed
 - **Breaking Change** The NetworkLoggerPlugin have been reworked to allow more customization about the logged request's components. [#1894](https://github.com/Moya/Moya/pull/1894) by [@amaurydavid](https://github.com/amaurydavid).
-- `NetworkLoggerPlugin` now logs error when available (and the `isVerbose` flag is on). [#1880](https://github.com/Moya/Moya/pull/1880) by [@amaurydavid](https://github.com/amaurydavid).
+- **Breaking Change** Bumped ReactiveSwift version to 6.1.0. This should only affect Carthage users, but you'll probably want to use 6.1.0 in all of your Xcode 11 projects. [#1896](https://github.com/Moya/Moya/pull/1896) by [@sunshinejr](https://github.com/sunshinejr).
+- `NetworkLoggerPlugin` now logs error when available (using `LogOptions.verbose` or specyfing `errorResponseBody` in your `LogOptions`). [#1880](https://github.com/Moya/Moya/pull/1880) by [@amaurydavid](https://github.com/amaurydavid).
 
 # [14.0.0-alpha.2] - 2019-08-01
 
