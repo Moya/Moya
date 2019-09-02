@@ -2,6 +2,7 @@
 
 ### Changed
 - **Breaking Change** The NetworkLoggerPlugin have been reworked to allow more customization about the logged request's components. [#1894](https://github.com/Moya/Moya/pull/1894) by [@amaurydavid](https://github.com/amaurydavid).
+- `NetworkLoggerPlugin` now logs error when available (and the `isVerbose` flag is on). [#1880](https://github.com/Moya/Moya/pull/1880) by [@amaurydavid](https://github.com/amaurydavid).
 
 # [14.0.0-alpha.2] - 2019-08-01
 
@@ -9,12 +10,11 @@
 - `RequestType` now has `sessionHeaders`! These are the headers that are added when the request is added to a session. [#1878](https://github.com/Moya/Moya/pull/1878) by [@sunshinejr](https://github.com/sunshinejr).
 
 ### Changed
-- **Breaking Change** Minimum target version are now in line with Alamofire 5. iOS: 10.0, tvOS: 10.0, macOS: 10.12. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** Minimum target version are now in line with Alamofire 5. iOS: 10.0, tvOS: 10.0, macOS: 10.12, watchOS: 3.0. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-beta.7. [#1810](https://github.com/Moya/Moya/pull/1810) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** Removed `Result` depndency in favor of `Result` introduced in Swift 5. [#1858](https://github.com/Moya/Moya/pull/1858) by [@larryonoff](https://github.com/larryonoff).
 - **Breaking Change** Added `TargetType` parameter in the output of `NetworkLoggerPlugin`. [#1866](https://github.com/Moya/Moya/pull/1866) by [@hasankose](https://github.com/hasankose).
 - `NetworkLoggerPlugin` uses the newly added `sessionHeaders` and now logs all the headers that the request will produce. [#1878](https://github.com/Moya/Moya/pull/1878) by [@sunshinejr](https://github.com/sunshinejr).
-- `NetworkLoggerPlugin` now logs error when available (and the `isVerbose` flag is on). [#1880](https://github.com/Moya/Moya/pull/1880) by [@amaurydavid](https://github.com/amaurydavid).
 
 # [14.0.0-alpha.1] - 2019-05-14
 
