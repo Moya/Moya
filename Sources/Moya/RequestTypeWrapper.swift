@@ -1,3 +1,5 @@
+import Foundation
+
 // Workaround for new asynchronous handling of Alamofire's request creation.
 struct RequestTypeWrapper: RequestType {
 

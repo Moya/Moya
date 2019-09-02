@@ -1,7 +1,8 @@
 import Quick
 import Nimble
-@testable
-import Moya
+import XCTest
+
+@testable import Moya
 
 final class ErrorTests: QuickSpec {
     override func spec() {

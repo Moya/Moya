@@ -2,6 +2,7 @@ import Quick
 import Moya
 import ReactiveSwift
 import Nimble
+import Foundation
 
 private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalProducer<Response, MoyaError> {
     return SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
@@ -180,7 +181,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = Image.testPNGImage(named: "testImage")
+                let image = Image.testImage
                 let data = image.asJPEGRepresentation(0.75)
                 let signal = signalSendingData(data!)
 
@@ -263,7 +264,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedString: String?
                 signal.mapString().startWithResult { result in
-                    receivedString = result.value
+                    receivedString = try? result.get()
                 }
 
                 expect(receivedString).to(equal(string))
@@ -277,7 +278,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedString: String?
                 signal.mapString(atKeyPath: "words_to_live_by").startWithResult { result in
-                    receivedString = result.value
+                    receivedString = try? result.get()
                 }
 
                 expect(receivedString).to(equal(string))
@@ -323,7 +324,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedObject: Issue?
                 _ = signal.map(Issue.self, using: decoder).startWithResult { result in
-                    receivedObject = result.value
+                    receivedObject = try? result.get()
                 }
                 expect(receivedObject).notTo(beNil())
                 expect(receivedObject?.title) == "Hello, Moya!"
@@ -339,7 +340,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedObjects: [Issue]?
                 _ = signal.map([Issue].self, using: decoder).startWithResult { result in
-                    receivedObjects = result.value
+                    receivedObjects = try? result.get()
                 }
                 expect(receivedObjects).notTo(beNil())
                 expect(receivedObjects?.count) == 3
@@ -351,7 +352,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedObjects: OptionalIssue?
                 _ = signal.map(OptionalIssue.self, using: decoder, failsOnEmptyData: false).startWithResult { result in
-                    receivedObjects = result.value
+                    receivedObjects = try? result.get()
                 }
                 expect(receivedObjects).notTo(beNil())
                 expect(receivedObjects?.title).to(beNil())
@@ -363,7 +364,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                 var receivedObjects: [OptionalIssue]?
                 _ = signal.map([OptionalIssue].self, using: decoder, failsOnEmptyData: false).startWithResult { result in
-                    receivedObjects = result.value
+                    receivedObjects = try? result.get()
                 }
                 expect(receivedObjects).notTo(beNil())
                 expect(receivedObjects?.count) == 1
@@ -381,7 +382,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var receivedObject: Issue?
                     _ = signal.map(Issue.self, atKeyPath: "issue", using: decoder).startWithResult { result in
-                        receivedObject = result.value
+                        receivedObject = try? result.get()
                     }
                     expect(receivedObject).notTo(beNil())
                     expect(receivedObject?.title) == "Hello, Moya!"
@@ -397,7 +398,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var receivedObjects: [Issue]?
                     _ = signal.map([Issue].self, atKeyPath: "issues", using: decoder).startWithResult { result in
-                        receivedObjects = result.value
+                        receivedObjects = try? result.get()
                     }
                     expect(receivedObjects).notTo(beNil())
                     expect(receivedObjects?.count) == 1
@@ -410,7 +411,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var receivedObjects: OptionalIssue?
                     _ = signal.map(OptionalIssue.self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).startWithResult { result in
-                        receivedObjects = result.value
+                        receivedObjects = try? result.get()
                     }
                     expect(receivedObjects).notTo(beNil())
                     expect(receivedObjects?.title).to(beNil())
@@ -422,7 +423,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var receivedObjects: [OptionalIssue]?
                     _ = signal.map([OptionalIssue].self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).startWithResult { result in
-                        receivedObjects = result.value
+                        receivedObjects = try? result.get()
                     }
                     expect(receivedObjects).notTo(beNil())
                     expect(receivedObjects?.count) == 1
@@ -439,7 +440,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var count: Int?
                     _ = signal.map(Int.self, atKeyPath: "count", using: decoder).startWithResult { result in
-                        count = result.value
+                        count = try? result.get()
                     }
                     expect(count).notTo(beNil())
                     expect(count) == 1
@@ -454,7 +455,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var isNew: Bool?
                     _ = signal.map(Bool.self, atKeyPath: "isNew", using: decoder).startWithResult { result in
-                        isNew = result.value
+                        isNew = try? result.get()
                     }
                     expect(isNew).notTo(beNil())
                     expect(isNew) == true
@@ -469,7 +470,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var description: String?
                     _ = signal.map(String.self, atKeyPath: "description", using: decoder).startWithResult { result in
-                        description = result.value
+                        description = try? result.get()
                     }
                     expect(description).notTo(beNil())
                     expect(description) == "Something interesting"
@@ -484,7 +485,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var url: URL?
                     _ = signal.map(URL.self, atKeyPath: "url", using: decoder).startWithResult { result in
-                        url = result.value
+                        url = try? result.get()
                     }
                     expect(url).notTo(beNil())
                     expect(url) == URL(string: "http://www.example.com/test")
@@ -499,7 +500,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var isNew: Bool?
                     _ = signal.map(Bool.self, atKeyPath: "isNew", using: decoder).startWithResult { result in
-                        isNew = result.value
+                        isNew = try? result.get()
                     }
                     expect(isNew).to(beNil())
                 }
@@ -513,7 +514,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var test: Int?
                     _ = signal.map(Int.self, atKeyPath: "test", using: decoder).startWithResult { result in
-                        test = result.value
+                        test = try? result.get()
                     }
                     expect(test).to(beNil())
                 }
@@ -527,7 +528,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var test: String?
                     _ = signal.map(String.self, atKeyPath: "test", using: decoder).startWithResult { result in
-                        test = result.value
+                        test = try? result.get()
                     }
                     expect(test).to(beNil())
                 }
@@ -541,7 +542,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
                     var test: [String]?
                     _ = signal.map([String].self, atKeyPath: "test", using: decoder).startWithResult { result in
-                        test = result.value
+                        test = try? result.get()
                     }
                     expect(test).to(beNil())
                 }

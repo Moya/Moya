@@ -1,4 +1,5 @@
 import Alamofire
+import Foundation
 
 internal struct PropertyListEncoding: ParameterEncoding {
 
