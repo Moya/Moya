@@ -55,7 +55,7 @@ internal class MoyaPublisher<Output>: Publisher {
         }
     }
 
-    internal func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
+    internal func receive<S>(subscriber: S) where S: Subscriber, Failure == S.Failure, Output == S.Input {
         let subscription = Subscription(subscriber: AnySubscriber(subscriber), callback: callback)
         subscriber.receive(subscription: subscription)
     }
