@@ -49,7 +49,7 @@ internal class MoyaPublisher<Output>: Publisher {
                     subscriber.receive(completion: .failure(error))
                 } else {
                     // The cast above should never fail, but just in case.
-                    subscriber.receive(completion: .failure(MoyaError.underlying(error as NSError, nil)))
+                    subscriber.receive(completion: .failure(MoyaError.underlying(error, nil)))
                 }
             }
             return nil

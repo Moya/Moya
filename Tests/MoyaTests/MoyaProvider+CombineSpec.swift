@@ -122,7 +122,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                         case .finished:
                             ()
                         }
-                    }, receiveValue: { response in
+                    }, receiveValue: { _ in
                         fail("should have errored")
                     })
 
