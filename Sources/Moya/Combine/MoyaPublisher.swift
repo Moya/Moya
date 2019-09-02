@@ -5,9 +5,9 @@ import Combine
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 // I really hate that we have to use our own `Publisher` implementation...
 // This really should be built into Combine.
-public class MoyaPublisher<Output>: Publisher {
+internal class MoyaPublisher<Output>: Publisher {
 
-    public typealias Failure = MoyaError
+    internal typealias Failure = MoyaError
 
     private class Subscription: Combine.Subscription {
 
@@ -55,7 +55,7 @@ public class MoyaPublisher<Output>: Publisher {
         }
     }
 
-    public func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
+    internal func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
         let subscription = Subscription(subscriber: AnySubscriber(subscriber), callback: callback)
         subscriber.receive(subscription: subscription)
     }
