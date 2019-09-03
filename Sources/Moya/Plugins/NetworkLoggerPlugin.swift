@@ -30,51 +30,46 @@ extension NetworkLoggerPlugin: PluginType {
 // MARK: - Logging
 private extension NetworkLoggerPlugin {
 
-    func newEntry(identifier: String, message: String) -> String {
-        let date = configuration.dateFormatter.string(from: Date())
-        return "\(configuration.loggerId): [\(date)] \(identifier): \(message)"
-    }
-
     func logNetworkRequest(_ request: RequestType, target: TargetType) -> [String] {
 
         //cURL formatting
         if configuration.logOptions.contains(.formatRequestAscURL),
             let request = request as? CustomDebugStringConvertible {
-            return [newEntry(identifier: "Request", message: request.debugDescription)]
+            return [configuration.formatter.entry("Request", request.debugDescription, target)]
         }
 
         //Request presence check
         guard let httpRequest = request.request else {
-            return [newEntry(identifier: "Request", message: "(invalid request)")]
+            return [configuration.formatter.entry("Request", "(invalid request)", target)]
         }
 
         // Adding log entries for each given log option
         var output = [String]()
 
-        output.append(newEntry(identifier: "Request", message: httpRequest.description))
+        output.append(configuration.formatter.entry("Request", httpRequest.description, target))
 
         if configuration.logOptions.contains(.requestHeaders) {
             var allHeaders = request.sessionHeaders
             if let httpRequestHeaders = httpRequest.allHTTPHeaderFields {
                 allHeaders.merge(httpRequestHeaders) { $1 }
             }
-            output.append(newEntry(identifier: "Request Headers", message: allHeaders.description))
+            output.append(configuration.formatter.entry("Request Headers", allHeaders.description, target))
         }
 
         if configuration.logOptions.contains(.requestBody) {
             if let bodyStream = httpRequest.httpBodyStream {
-                output.append(newEntry(identifier: "Request Body Stream", message: bodyStream.description))
+                output.append(configuration.formatter.entry("Request Body Stream", bodyStream.description, target))
             }
 
             if let body = httpRequest.httpBody {
-                let stringOutput = configuration.requestDataFormatter(body)
-                output.append(newEntry(identifier: "Request Body", message: stringOutput))
+                let stringOutput = configuration.formatter.requestData(body)
+                output.append(configuration.formatter.entry("Request Body", stringOutput, target))
             }
         }
 
         if configuration.logOptions.contains(.requestMethod),
             let httpMethod = httpRequest.httpMethod {
-            output.append(newEntry(identifier: "HTTP Request Method", message: httpMethod))
+            output.append(configuration.formatter.entry("HTTP Request Method", httpMethod, target))
         }
 
         return output
@@ -84,19 +79,19 @@ private extension NetworkLoggerPlugin {
 
         //Response presence check
         guard let httpResponse = response.response else {
-            return [newEntry(identifier: "Response", message: "Received empty network response for \(target).")]
+            return [configuration.formatter.entry("Response", "Received empty network response for \(target).", target)]
         }
 
         // Adding log entries for each given log option
         var output = [String]()
 
-        output.append(newEntry(identifier: "Response", message: httpResponse.description))
+        output.append(configuration.formatter.entry("Response", httpResponse.description, target))
 
         if (isFromError && configuration.logOptions.contains(.errorResponseBody))
             || configuration.logOptions.contains(.successResponseBody) {
 
-            let stringOutput = configuration.responseDataFormatter(response.data)
-            output.append(newEntry(identifier: "Response Body", message: stringOutput))
+            let stringOutput = configuration.formatter.responseData(response.data)
+            output.append(configuration.formatter.entry("Response Body", stringOutput, target))
         }
 
         return output
@@ -109,7 +104,7 @@ private extension NetworkLoggerPlugin {
         }
 
         //Errors without an HTTPURLResponse are those due to connectivity, time-out and such.
-        return [newEntry(identifier: "Error", message: "Error calling \(target) : \(error)")]
+        return [configuration.formatter.entry("Error", "Error calling \(target) : \(error)", target)]
     }
 }
 
@@ -117,58 +112,37 @@ private extension NetworkLoggerPlugin {
 public extension NetworkLoggerPlugin {
     struct Configuration {
 
-        public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
-        public typealias DataFormatterType = (Data) -> (String)
+        //MARK: - Typealiases
 
-        fileprivate let loggerId: String
-        fileprivate let dateFormatter: DateFormatter
+        public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
+
+        //MARK: - Properties
+
+        fileprivate let formatter: Formatter
         fileprivate let output: OutputType
-        fileprivate let requestDataFormatter: DataFormatterType
-        fileprivate let responseDataFormatter: DataFormatterType
         fileprivate let logOptions: LogOptions
 
         /// The designated way to instanciate a Configuration.
         ///
         /// - Parameters:
-        ///   - loggerId: An identifier that prefixes every log entry.
-        ///   - dateFormatter: The dateFormatter to be used to display the date of every log entry.
-        ///                    The default formatter sets both `timeStyle` and `dateStyle` to `short`
-        ///   - output: A closure responsible of writing the given log entries into your log system.
+        ///   - formatter: An object holding all formatter closures available for customization.
+        ///   - output: A closure responsible for writing the given log entries into your log system.
         ///                    The default value writes entries to the debug console.
-        ///   - requestDataFormatter: A closure converting HTTP request's body into a String.
-        ///                    The default value assumes the body's data is an utf8 String.
-        ///   - responseDataFormatter: A closure converting HTTP response's body into a String.
-        ///                    The default value assumes the body's data is an utf8 String.
         ///   - logOptions: A set of options you can use to customize which request component is logged.
-        public init(loggerId: String = "Moya_Logger",
-                    dateFormatter: DateFormatter = defaultDateFormatter,
+        public init(formatter: Formatter = Formatter(),
                     output: @escaping OutputType = defaultOutput,
-                    requestDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
-                    responseDataFormatter: @escaping DataFormatterType = defaultDataFormatter,
                     logOptions: LogOptions = .default) {
-            self.loggerId = loggerId
-            self.dateFormatter = dateFormatter
+            self.formatter = formatter
             self.output = output
-            self.requestDataFormatter = requestDataFormatter
-            self.responseDataFormatter = responseDataFormatter
             self.logOptions = logOptions
         }
 
-        public static var defaultDateFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            formatter.dateStyle = .short
-            return formatter
-        }
+        //MARK: - Defaults
 
         public static func defaultOutput(target: TargetType, items: [String]) {
             for item in items {
                 print(item, separator: ",", terminator: "\n")
             }
-        }
-
-        public static func defaultDataFormatter(_ data: Data) -> String {
-            return String(data: data, encoding: .utf8) ?? "## Cannot map data to String ##"
         }
     }
 }
@@ -202,5 +176,55 @@ public extension NetworkLoggerPlugin.Configuration {
         /// All components will be logged.
         public static let verbose: LogOptions = [requestMethod, requestHeaders, requestBody,
                                                  successResponseBody, errorResponseBody]
+    }
+}
+
+public extension NetworkLoggerPlugin.Configuration {
+    struct Formatter {
+
+        // MARK: Typealiases
+
+        public typealias DataFormatterType = (Data) -> (String)
+        public typealias EntryFormatterType = (_ identifier: String, _ message: String, _ target: TargetType) -> String
+
+        // MARK: Properties
+
+        fileprivate var entry: EntryFormatterType
+        fileprivate var requestData: DataFormatterType
+        fileprivate var responseData: DataFormatterType
+
+        /// The designated way to instanciate a Formatter.
+        ///
+        /// - Parameters:
+        ///   - entry: The closure formatting a message into a new log entry.
+        ///   - requestData: The closure converting HTTP request's body into a String.
+        ///     The default value assumes the body's data is an utf8 String.
+        ///   - responseData: The closure converting HTTP response's body into a String.
+        ///     The default value assumes the body's data is an utf8 String.
+        public init(entry: @escaping EntryFormatterType = defaultEntryFormatter,
+            requestData: @escaping DataFormatterType = defaultDataFormatter,
+            responseData: @escaping DataFormatterType = defaultDataFormatter) {
+            self.entry = entry
+            self.requestData = requestData
+            self.responseData = responseData
+        }
+
+        //MARK: Defaults
+
+        public static func defaultDataFormatter(_ data: Data) -> String {
+            return String(data: data, encoding: .utf8) ?? "## Cannot map data to String ##"
+        }
+
+        public static func defaultEntryFormatter(identifier: String, message: String, target: TargetType) -> String {
+            let date = defaultEntryDateFormatter.string(from: Date())
+            return "Moya_Logger: [\(date)] \(identifier): \(message)"
+        }
+
+        static var defaultEntryDateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            formatter.dateStyle = .short
+            return formatter
+        }()
     }
 }
