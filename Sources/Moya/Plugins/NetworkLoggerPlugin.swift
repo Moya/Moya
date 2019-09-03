@@ -3,7 +3,7 @@ import Foundation
 /// Logs network activity (outgoing requests and incoming responses).
 public final class NetworkLoggerPlugin {
 
-    public let configuration: Configuration
+    public var configuration: Configuration
 
     /// Initializes a NetworkLoggerPlugin.
     public init(configuration: Configuration = Configuration()) {
@@ -118,9 +118,9 @@ public extension NetworkLoggerPlugin {
 
         //MARK: - Properties
 
-        fileprivate let formatter: Formatter
-        fileprivate let output: OutputType
-        fileprivate let logOptions: LogOptions
+        public var formatter: Formatter
+        public var output: OutputType
+        public var logOptions: LogOptions
 
         /// The designated way to instanciate a Configuration.
         ///
@@ -189,9 +189,9 @@ public extension NetworkLoggerPlugin.Configuration {
 
         // MARK: Properties
 
-        fileprivate var entry: EntryFormatterType
-        fileprivate var requestData: DataFormatterType
-        fileprivate var responseData: DataFormatterType
+        public var entry: EntryFormatterType
+        public var requestData: DataFormatterType
+        public var responseData: DataFormatterType
 
         /// The designated way to instanciate a Formatter.
         ///
