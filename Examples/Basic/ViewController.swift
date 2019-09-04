@@ -1,9 +1,11 @@
 import UIKit
 import Moya
+import Combine
 
 class ViewController: UITableViewController {
     var progressView = UIView()
     var repos = NSArray()
+    var cancellable: AnyCancellable?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,15 +41,11 @@ class ViewController: UITableViewController {
     }
 
     func downloadZen() {
-        gitHubProvider.request(.zen) { result in
-            var message = "Couldn't access API"
-            if case let .success(response) = result {
-                let jsonString = try? response.mapString()
-                message = jsonString ?? message
-            }
-
-            self.showAlert("Zen", message: message)
-        }
+        cancellable = gitHubProvider.requestPublisher(.zen)
+            .mapString()
+            .sink(receiveCompletion: { _ in }, receiveValue: { message in
+                self.showAlert("Zen", message: message)
+            })
     }
 
     func uploadGiphy() {
