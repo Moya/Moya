@@ -4,10 +4,10 @@ import Nimble
 import Combine
 
 #if canImport(OHHTTPStubs)
-import OHHTTPStubs
+    import OHHTTPStubs
 #elseif canImport(OHHTTPStubsSwift)
-import OHHTTPStubsCore
-import OHHTTPStubsSwift
+    import OHHTTPStubsCore
+    import OHHTTPStubsSwift
 #endif
 
 @testable import Moya
@@ -98,7 +98,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                         case .finished:
                             ()
                         }
-                    }, receiveValue: { response in
+                    }, receiveValue: { _ in
                         fail("should have errored")
                     })
 

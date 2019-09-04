@@ -99,7 +99,9 @@ extension AnyPublisher where Output == ProgressResponse, Failure == MoyaError {
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension AnyPublisher where Failure == MoyaError {
-    /// Maps throwable to SignalProducer.
+
+    // Workaround for a lot of things, actually. We don't have Publishers.Once, flatMap
+    // that can throw and a lot more. So this monster was created because of that. Sorry.
     private func unwrapThrowable<T>(throwable: @escaping (Output) throws -> T) -> AnyPublisher<T, MoyaError> {
         self.tryMap { element in
             try throwable(element)

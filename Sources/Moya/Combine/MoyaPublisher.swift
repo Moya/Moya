@@ -2,9 +2,10 @@
 
 import Combine
 
+// This should be already provided in Combine, but it's not.
+// Ideally we would like to remove it, in favor of a framework-provided solution, ASAP.
+
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-// I really hate that we have to use our own `Publisher` implementation...
-// This really should be built into Combine.
 internal class MoyaPublisher<Output>: Publisher {
 
     internal typealias Failure = MoyaError
