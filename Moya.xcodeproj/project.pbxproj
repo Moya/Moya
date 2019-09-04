@@ -65,7 +65,6 @@
 		85B2DBBC221C69620098F59A /* PropertyListEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B2DBBB221C69620098F59A /* PropertyListEncoding.swift */; };
 		85C98000231D2D4000AAAFB2 /* MoyaProvider+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */; };
 		85C98002231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */; };
-		85C98004231D414F00AAAFB2 /* CombineCompatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98003231D414F00AAAFB2 /* CombineCompatible.swift */; };
 		85C98006231D41E400AAAFB2 /* MoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */; };
 		85C98008231D4BE900AAAFB2 /* AnyPublisher+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */; };
 		85D5277A2302BEF30093E9C1 /* TestImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D527792302BEF30093E9C1 /* TestImage.swift */; };
@@ -200,7 +199,6 @@
 		85B2DBBB221C69620098F59A /* PropertyListEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListEncoding.swift; sourceTree = "<group>"; };
 		85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Combine.swift"; sourceTree = "<group>"; };
 		85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+CombineSpec.swift"; sourceTree = "<group>"; };
-		85C98003231D414F00AAAFB2 /* CombineCompatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineCompatible.swift; sourceTree = "<group>"; };
 		85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPublisher.swift; sourceTree = "<group>"; };
 		85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Response.swift"; sourceTree = "<group>"; };
 		85D527792302BEF30093E9C1 /* TestImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImage.swift; sourceTree = "<group>"; };
@@ -414,7 +412,6 @@
 			isa = PBXGroup;
 			children = (
 				85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */,
-				85C98003231D414F00AAAFB2 /* CombineCompatible.swift */,
 				85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */,
 				85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */,
 			);
@@ -858,7 +855,6 @@
 				FB223B5C3B7D4AA5261E25EA /* Image.swift in Sources */,
 				EDBA10DB0D0E35C1474AAB4D /* Moya+Alamofire.swift in Sources */,
 				85C98000231D2D4000AAAFB2 /* MoyaProvider+Combine.swift in Sources */,
-				85C98004231D414F00AAAFB2 /* CombineCompatible.swift in Sources */,
 				15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */,
 				59BC4B9B9D0D6F9C060E5620 /* MoyaProvider+Defaults.swift in Sources */,
 				149749431F8923EC00FA4900 /* AnyEncodable.swift in Sources */,
@@ -1251,7 +1247,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Examples/Basic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Basic;
@@ -1292,7 +1288,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = Examples/Basic/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = Moya.Basic;
