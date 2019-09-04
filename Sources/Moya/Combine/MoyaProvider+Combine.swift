@@ -4,7 +4,7 @@ import Foundation
 import Combine
 
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public extension Publishable where Base: MoyaProviderType {
+public extension MoyaProvider {
 
     /// Designated request-making method.
     ///
@@ -12,9 +12,9 @@ public extension Publishable where Base: MoyaProviderType {
     ///   - target: Entity, which provides specifications necessary for a `MoyaProvider`.
     ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
     /// - Returns: `AnyPublisher<Response, MoyaError`
-    func request(_ target: Base.Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<Response, MoyaError> {
-        return MoyaPublisher { [weak base] subscriber in
-                return base?.request(target, callbackQueue: callbackQueue, progress: nil) { result in
+    func requestPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<Response, MoyaError> {
+        return MoyaPublisher { [weak self] subscriber in
+                return self?.request(target, callbackQueue: callbackQueue, progress: nil) { result in
                     switch result {
                     case let .success(response):
                         _ = subscriber.receive(response)
@@ -28,15 +28,15 @@ public extension Publishable where Base: MoyaProviderType {
     }
 
     /// Designated request-making method with progress.
-    func requestWithProgress(_ target: Base.Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<ProgressResponse, MoyaError> {
+    func requestWithProgressPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<ProgressResponse, MoyaError> {
         let progressBlock: (AnySubscriber<ProgressResponse, MoyaError>) -> (ProgressResponse) -> Void = { subscriber in
             return { progress in
                 _ = subscriber.receive(progress)
             }
         }
 
-        let response = MoyaPublisher<ProgressResponse> { [weak base] subscriber in
-            let cancellableToken = base?.request(target, callbackQueue: callbackQueue, progress: progressBlock(subscriber)) { result in
+        let response = MoyaPublisher<ProgressResponse> { [weak self] subscriber in
+            let cancellableToken = self?.request(target, callbackQueue: callbackQueue, progress: progressBlock(subscriber)) { result in
                 switch result {
                 case .success:
                     subscriber.receive(completion: .finished)
