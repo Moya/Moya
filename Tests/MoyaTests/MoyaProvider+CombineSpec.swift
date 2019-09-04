@@ -25,7 +25,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
             it("emits one Response object") {
                 var calls = 0
 
-                _ = provider.combine.request(.zen)
+                _ = provider.requestPublisher(.zen)
                     .sink(receiveCompletion: { completion in
                         switch completion {
                         case let .failure(error):
@@ -44,7 +44,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 var responseData: Data?
 
                 let target: GitHub = .zen
-                _ = provider.combine.request(target)
+                _ = provider.requestPublisher(target)
                     .sink(receiveCompletion: { completion in
                         switch completion {
                         case let .failure(error):
@@ -63,7 +63,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 var receivedResponse: [String: Any]?
 
                 let target: GitHub = .userProfile("ashfurrow")
-                _ = provider.combine.request(target)
+                _ = provider.requestPublisher(target)
                     .mapJSON()
                     .sink(receiveCompletion: { completion in
                         switch completion {
@@ -90,7 +90,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
             it("emits the correct error message") {
                 var receivedError: MoyaError?
 
-                _ = provider.combine.request(.zen)
+                _ = provider.requestPublisher(.zen)
                     .sink(receiveCompletion: { completion in
                         switch completion {
                         case let .failure(error):
@@ -114,7 +114,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 var errored = false
 
                 let target: GitHub = .zen
-                _ = provider.combine.request(target)
+                _ = provider.requestPublisher(target)
                     .sink(receiveCompletion: { completion in
                         switch completion {
                         case let .failure(error):
@@ -142,8 +142,8 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
             it("emits identical response for inflight requests") {
                 let target: GitHub = .zen
-                let signalProducer1 = provider.combine.request(target)
-                let signalProducer2 = provider.combine.request(target)
+                let signalProducer1 = provider.requestPublisher(target)
+                let signalProducer2 = provider.requestPublisher(target)
 
                 expect(provider.inflightRequests.keys.count).to(equal(0))
 
@@ -211,7 +211,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 var errorEventsCount = 0
                 var completedEventsCount = 0
 
-                let cancellable = provider.combine.requestWithProgress(target)
+                let cancellable = provider.requestWithProgressPublisher(target)
                     .sink(receiveCompletion: { completion in
                         switch completion {
                         case let .failure:
@@ -258,7 +258,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                             let requestQueue = DispatchQueue(label: UUID().uuidString)
                             var callbackQueueLabel: String?
 
-                            let cancellable = provider.combine.request(.zen, callbackQueue: requestQueue)
+                            let cancellable = provider.requestPublisher(.zen, callbackQueue: requestQueue)
                                 .sink(receiveCompletion: { _ in }, receiveValue: { _ in
                                     callbackQueueLabel = DispatchQueue.currentLabel
                                 })
@@ -271,7 +271,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                         it("invokes the callback on the provider queue") {
                             var callbackQueueLabel: String?
 
-                            let cancellable = provider.combine.request(.zen)
+                            let cancellable = provider.requestPublisher(.zen)
                                 .sink(receiveCompletion: { _ in }, receiveValue: { _ in
                                     callbackQueueLabel = DispatchQueue.currentLabel
                                 })
@@ -293,7 +293,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                             let requestQueue = DispatchQueue(label: UUID().uuidString)
                             var callbackQueueLabel: String?
 
-                            let cancellable = provider.combine.request(.zen, callbackQueue: requestQueue)
+                            let cancellable = provider.requestPublisher(.zen, callbackQueue: requestQueue)
                                 .sink(receiveCompletion: { _ in }, receiveValue: { _ in
                                     callbackQueueLabel = DispatchQueue.currentLabel
                                 })
@@ -306,7 +306,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                         it("invokes the callback on the main queue") {
                             var callbackQueueLabel: String?
 
-                            let cancellable = provider.combine.request(.zen)
+                            let cancellable = provider.requestPublisher(.zen)
                                 .sink(receiveCompletion: { _ in }, receiveValue: { _ in
                                     callbackQueueLabel = DispatchQueue.currentLabel
                                 })
