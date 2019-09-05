@@ -112,11 +112,12 @@ private extension NetworkLoggerPlugin {
 public extension NetworkLoggerPlugin {
     struct Configuration {
 
-        //MARK: - Typealiases
-
+        // MARK: - Typealiases
+        // swiftlint:disable nesting
         public typealias OutputType = (_ target: TargetType, _ items: [String]) -> Void
+        // swiftlint:enable nesting
 
-        //MARK: - Properties
+        // MARK: - Properties
 
         public var formatter: Formatter
         public var output: OutputType
@@ -137,7 +138,7 @@ public extension NetworkLoggerPlugin {
             self.logOptions = logOptions
         }
 
-        //MARK: - Defaults
+        // MARK: - Defaults
 
         public static func defaultOutput(target: TargetType, items: [String]) {
             for item in items {
@@ -183,9 +184,10 @@ public extension NetworkLoggerPlugin.Configuration {
     struct Formatter {
 
         // MARK: Typealiases
-
+        // swiftlint:disable nesting
         public typealias DataFormatterType = (Data) -> (String)
         public typealias EntryFormatterType = (_ identifier: String, _ message: String, _ target: TargetType) -> String
+        // swiftlint:enable nesting
 
         // MARK: Properties
 
@@ -202,14 +204,14 @@ public extension NetworkLoggerPlugin.Configuration {
         ///   - responseData: The closure converting HTTP response's body into a String.
         ///     The default value assumes the body's data is an utf8 String.
         public init(entry: @escaping EntryFormatterType = defaultEntryFormatter,
-            requestData: @escaping DataFormatterType = defaultDataFormatter,
-            responseData: @escaping DataFormatterType = defaultDataFormatter) {
+                    requestData: @escaping DataFormatterType = defaultDataFormatter,
+                    responseData: @escaping DataFormatterType = defaultDataFormatter) {
             self.entry = entry
             self.requestData = requestData
             self.responseData = responseData
         }
 
-        //MARK: Defaults
+        // MARK: Defaults
 
         public static func defaultDataFormatter(_ data: Data) -> String {
             return String(data: data, encoding: .utf8) ?? "## Cannot map data to String ##"

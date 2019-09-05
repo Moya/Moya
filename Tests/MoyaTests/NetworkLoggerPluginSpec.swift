@@ -140,7 +140,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
                 plgn.configuration.logOptions = .verbose
                 return plgn
             }()
-            
+
             pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
 
             expect(log).to(contain("Response:"))
