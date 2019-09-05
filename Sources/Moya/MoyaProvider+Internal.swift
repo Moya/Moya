@@ -2,9 +2,9 @@ import Foundation
 
 // MARK: - Method
 
-extension Method {
+public extension Method {
     /// A Boolean value determining whether the request supports multipart.
-    public var supportsMultipart: Bool {
+    var supportsMultipart: Bool {
         switch self {
         case .post, .put, .patch, .connect:
             return true
