@@ -5,6 +5,7 @@ disabled_rules:
 opt_in_rules:
   - empty_count
   - force_unwrapping
+  - extension_access_modifier
 
 included:
   - Sources
