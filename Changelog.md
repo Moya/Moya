@@ -1,5 +1,7 @@
 # Next
 
+# [14.0.0-beta.1] - 2019-09-06
+
 ## Added
 - Combine support! [#1904](https://github.com/Moya/Moya/pull/1904) by [@sunshinejr](https://github.com/sunshinejr).
 - Very raw SPM testing support! Thanks to the work on OHHTTPStubs, we can finally start using `swift test` again. [#1896](https://github.com/Moya/Moya/pull/1896) by [@sunshinejr](https://github.com/sunshinejr).
