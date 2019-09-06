@@ -8,7 +8,7 @@ public extension Method {
         switch self {
         case .post, .put, .patch, .connect:
             return true
-        case .get, .delete, .head, .options, .trace:
+        default:
             return false
         }
     }

@@ -11,19 +11,12 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         let customLoggerOutput: NetworkLoggerPlugin.Configuration.OutputType = { log += $1.joined() }
 
-        let plugin = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
-                                                              logOptions: .verbose))
-
-        let pluginWithCurl = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
-                                                                      logOptions: [.formatRequestAscURL]))
-
-        let pluginWithRequestDataFormatter = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
-                                                                                      requestDataFormatter: { _ in return "formatted request body" },
-                                                                                      logOptions: .verbose))
-
-        let pluginWithResponseDataFormatter = NetworkLoggerPlugin(configuration: .init(output: customLoggerOutput,
-                                                                                       responseDataFormatter: { _ in return "formatted response body" },
-                                                                                       logOptions: .verbose))
+        let plugin: NetworkLoggerPlugin = {
+            let plugin = NetworkLoggerPlugin()
+            plugin.configuration.output = customLoggerOutput
+            plugin.configuration.logOptions = .verbose
+            return plugin
+        }()
 
         beforeEach {
             log = ""
@@ -60,14 +53,6 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to(contain("Request: (invalid request)"))
         }
 
-        it("outputs the formatted request data") {
-
-            pluginWithRequestDataFormatter.willSend(TestBodyRequest(), target: GitHub.zen)
-
-            expect(log).to(contain("Request: https://api.github.com/zen"))
-            expect(log).to(contain("Body: formatted request body"))
-        }
-
         it("outputs the response data") {
             let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
             let result: Result<Moya.Response, MoyaError> = .success(response)
@@ -77,17 +62,6 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             expect(log).to(contain("Response:"))
             expect(log).to(contain("{ URL: https://api.github.com/zen }"))
             expect(log).to(contain("Response Body: cool body"))
-        }
-
-        it("outputs the formatted response data") {
-            let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-            let result: Result<Moya.Response, MoyaError> = .success(response)
-
-            pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
-
-            expect(log).to(contain("Response:"))
-            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-            expect(log).to(contain("Response Body: formatted response body"))
         }
 
         it("outputs a validation error message") {
@@ -112,13 +86,66 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         }
 
         it("outputs cURL representation of request") {
+            let pluginWithCurl: NetworkLoggerPlugin = {
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.logOptions = [.formatRequestAscURL]
+                return plugin
+            }()
+
             pluginWithCurl.willSend(TestCurlBodyRequest(), target: GitHub.zen)
 
             expect(log).to(contain("$ curl -i"))
             expect(log).to(contain("-H \"Content-Type: application/json\""))
             expect(log).to(contain("-d \"cool body\""))
             expect(log).to(contain("\"https://api.github.com/zen\""))
+        }
 
+        it("outputs the formatted request data") {
+            let pluginWithRequestDataFormatter: NetworkLoggerPlugin = {
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.logOptions = .verbose
+                plugin.configuration.formatter.requestData = { _ in return "formatted request body" }
+                return plugin
+            }()
+
+            pluginWithRequestDataFormatter.willSend(TestBodyRequest(), target: GitHub.zen)
+
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(contain("Body: formatted request body"))
+        }
+
+        it("outputs the customized entries") {
+            let pluginWithEntryFormatter: NetworkLoggerPlugin = {
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.formatter.entry = { _, _, _ in return "formatted log entry" }
+                return plugin
+            }()
+
+            pluginWithEntryFormatter.willSend(TestBodyRequest(), target: GitHub.zen)
+
+            expect(log).to(contain("formatted log entry"))
+        }
+
+        it("outputs the formatted response data") {
+            let response = Response(statusCode: 200, data: "cool body".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
+            let result: Result<Moya.Response, MoyaError> = .success(response)
+
+            let pluginWithResponseDataFormatter: NetworkLoggerPlugin = {
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.formatter.responseData = { _ in return "formatted response body" }
+                plugin.configuration.logOptions = .verbose
+                return plugin
+            }()
+
+            pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
+
+            expect(log).to(contain("Response:"))
+            expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+            expect(log).to(contain("Response Body: formatted response body"))
         }
     }
 }
