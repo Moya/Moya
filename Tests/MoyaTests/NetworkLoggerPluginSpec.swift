@@ -12,10 +12,10 @@ final class NetworkLoggerPluginSpec: QuickSpec {
         let customLoggerOutput: NetworkLoggerPlugin.Configuration.OutputType = { log += $1.joined() }
 
         let plugin: NetworkLoggerPlugin = {
-            let plgn = NetworkLoggerPlugin()
-            plgn.configuration.output = customLoggerOutput
-            plgn.configuration.logOptions = .verbose
-            return plgn
+            let plugin = NetworkLoggerPlugin()
+            plugin.configuration.output = customLoggerOutput
+            plugin.configuration.logOptions = .verbose
+            return plugin
         }()
 
         beforeEach {
@@ -87,10 +87,10 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs cURL representation of request") {
             let pluginWithCurl: NetworkLoggerPlugin = {
-                let plgn = NetworkLoggerPlugin()
-                plgn.configuration.output = customLoggerOutput
-                plgn.configuration.logOptions = [.formatRequestAscURL]
-                return plgn
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.logOptions = [.formatRequestAscURL]
+                return plugin
             }()
 
             pluginWithCurl.willSend(TestCurlBodyRequest(), target: GitHub.zen)
@@ -103,11 +103,11 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs the formatted request data") {
             let pluginWithRequestDataFormatter: NetworkLoggerPlugin = {
-                let plgn = NetworkLoggerPlugin()
-                plgn.configuration.output = customLoggerOutput
-                plgn.configuration.logOptions = .verbose
-                plgn.configuration.formatter.requestData = { _ in return "formatted request body" }
-                return plgn
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.logOptions = .verbose
+                plugin.configuration.formatter.requestData = { _ in return "formatted request body" }
+                return plugin
             }()
 
             pluginWithRequestDataFormatter.willSend(TestBodyRequest(), target: GitHub.zen)
@@ -118,10 +118,10 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs the customized entries") {
             let pluginWithEntryFormatter: NetworkLoggerPlugin = {
-                let plgn = NetworkLoggerPlugin()
-                plgn.configuration.output = customLoggerOutput
-                plgn.configuration.formatter.entry = { _, _, _ in return "formatted log entry" }
-                return plgn
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.formatter.entry = { _, _, _ in return "formatted log entry" }
+                return plugin
             }()
 
             pluginWithEntryFormatter.willSend(TestBodyRequest(), target: GitHub.zen)
@@ -134,11 +134,11 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             let result: Result<Moya.Response, MoyaError> = .success(response)
 
             let pluginWithResponseDataFormatter: NetworkLoggerPlugin = {
-                let plgn = NetworkLoggerPlugin()
-                plgn.configuration.output = customLoggerOutput
-                plgn.configuration.formatter.responseData = { _ in return "formatted response body" }
-                plgn.configuration.logOptions = .verbose
-                return plgn
+                let plugin = NetworkLoggerPlugin()
+                plugin.configuration.output = customLoggerOutput
+                plugin.configuration.formatter.responseData = { _ in return "formatted response body" }
+                plugin.configuration.logOptions = .verbose
+                return plugin
             }()
 
             pluginWithResponseDataFormatter.didReceive(result, target: GitHub.zen)
