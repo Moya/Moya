@@ -20,7 +20,7 @@ let package = Package(
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "2.0.0")),
         .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "8.0.0")),
-        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .branch("feature/spm-support")),
+//        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .branch("feature/spm-support")),
     ],
     targets: [
          .target(
@@ -51,7 +51,7 @@ let package = Package(
                 "ReactiveMoya",
                 "Quick",
                 "Nimble",
-                "OHHTTPStubsSwift"
+//                "OHHTTPStubsSwift"
             ]
         )
     ]
