@@ -116,7 +116,7 @@ final class MoyaRequestInterceptor: RequestInterceptor {
         self.willSend = willSend
     }
 
-    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (AFResult<URLRequest>) -> Void) {
+    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         let request = prepare?(urlRequest) ?? urlRequest
         willSend?(request)
         completion(.success(request))
