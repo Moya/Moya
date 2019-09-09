@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "RxMoya", targets: ["RxMoya"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .exact("5.0.0-rc.1")),
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .exact("5.0.0-rc.2")),
         .package(url: "https://github.com/ReactiveCocoa/ReactiveSwift.git", .upToNextMajor(from: ("6.0.0"))),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "2.0.0")),
