@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" "5.0.0-rc.1"
+github "Alamofire/Alamofire" "5.0.0-rc.2"
 github "AliSoftware/OHHTTPStubs" "8.0.0"
 github "Quick/Nimble" "v8.0.2"
 github "Quick/Quick" "v2.1.0"
