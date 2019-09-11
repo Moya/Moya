@@ -1,2 +1,12 @@
 
 OTHER_LDFLAGS[sdk=iphoneos13.0] = -weak_framework Combine
+OTHER_LDFLAGS[sdk=iphonesimulator13.0] = -weak_framework Combine
+
+OTHER_LDFLAGS[sdk=watchos6.0] = -weak_framework Combine
+OTHER_LDFLAGS[sdk=watchsimulator6.0] = -weak_framework Combine
+
+OTHER_LDFLAGS[sdk=appletvos13.0] = -weak_framework Combine
+OTHER_LDFLAGS[sdk=appletvsimulator13.0] = -weak_framework Combine
+
+OTHER_LDFLAGS[sdk=macosx10.15] = -weak_framework Combine
+OTHER_LDFLAGS[sdk=macosx10.15] = -weak_framework Combine
