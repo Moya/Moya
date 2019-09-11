@@ -9,4 +9,3 @@ OTHER_LDFLAGS[sdk=appletvos13.0] = -weak_framework Combine
 OTHER_LDFLAGS[sdk=appletvsimulator13.0] = -weak_framework Combine
 
 OTHER_LDFLAGS[sdk=macosx10.15] = -weak_framework Combine
-OTHER_LDFLAGS[sdk=macosx10.15] = -weak_framework Combine
