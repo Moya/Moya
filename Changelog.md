@@ -1,5 +1,8 @@
 # Next
 
+### Fixed
+- Fixes an issue that caused apps to crash on startup when using the latest, Combine-enabled Moya version on non-iOS 13 devices. [#1915](https://github.com/Moya/Moya/pull/1915) by [@fredpi](https://github.com/fredpi).
+
 # [14.0.0-beta.2] - 2019-09-09
 
 ### Changed
