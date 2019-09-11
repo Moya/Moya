@@ -157,6 +157,26 @@ final class MoyaProviderSpec: QuickSpec {
             expect(calledTarget) == target
         }
 
+        it("logs the request using with stubbing") {
+            var log = ""
+            let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
+                                                                  logOptions: .verbose))
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+
+            waitUntil { done in
+                provider.request(.zen) { _ in done() }
+            }
+
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(contain("Request Headers: "))
+            expect(log).to(contain("User-Agent"))
+            expect(log).to(contain("Accept-Encoding"))
+            expect(log).to(contain("Accept-Language"))
+            expect(log).to(contain("HTTP Request Method: GET"))
+            expect(log).to(contain("Response: Received empty network response for zen."))
+            expect(log).to(contain("Response Body: Half measures are as bad as nothing at all."))
+        }
+
         describe("a provider with delayed stubs") {
             var provider: MoyaProvider<GitHub>!
             var plugin: TestingPlugin!
