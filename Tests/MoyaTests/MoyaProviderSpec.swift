@@ -157,7 +157,7 @@ final class MoyaProviderSpec: QuickSpec {
             expect(calledTarget) == target
         }
 
-        it("logs the request using with stubbing") {
+        it("logs the request with stubbing") {
             var log = ""
             let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
                                                                   logOptions: .verbose))

@@ -1,5 +1,9 @@
 # Next
 
+### Fixed
+- Fixed an issue with displaying cURL-formatted request in `NetworkLoggerPlugin`. [#1916](https://github.com/Moya/Moya/pull/1916) by [@sunshinejr](https://github.com/sunshinejr).
+- Fixed an issue that wouldn't display stubbed response body in `NetworkLoggerPlugin`. [#1916](https://github.com/Moya/Moya/pull/1916) by [@sunshinejr](https://github.com/sunshinejr).
+
 # [14.0.0-beta.2] - 2019-09-09
 
 ### Changed
