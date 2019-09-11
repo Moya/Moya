@@ -28,4 +28,9 @@ struct RequestTypeWrapper: RequestType {
         let newRequest = _request.authenticate(with: credential)
         return RequestTypeWrapper(request: newRequest, urlRequest: _urlRequest)
     }
+
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> RequestTypeWrapper {
+        _request.cURLDescription(calling: handler)
+        return self
+    }
 }
