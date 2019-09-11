@@ -1,0 +1,2 @@
+
+OTHER_LDFLAGS[sdk=iphoneos13.0] = -weak_framework Combine
