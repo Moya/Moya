@@ -82,16 +82,15 @@ private extension NetworkLoggerPlugin {
     }
 
     func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
-
-        //Response presence check
-        guard let httpResponse = response.response else {
-            return [configuration.formatter.entry("Response", "Received empty network response for \(target).", target)]
-        }
-
         // Adding log entries for each given log option
         var output = [String]()
 
-        output.append(configuration.formatter.entry("Response", httpResponse.description, target))
+        //Response presence check
+        if let httpResponse = response.response {
+            output.append(configuration.formatter.entry("Response", httpResponse.description, target))
+        } else {
+            output.append(configuration.formatter.entry("Response", "Received empty network response for \(target).", target))
+        }
 
         if (isFromError && configuration.logOptions.contains(.errorResponseBody))
             || configuration.logOptions.contains(.successResponseBody) {
