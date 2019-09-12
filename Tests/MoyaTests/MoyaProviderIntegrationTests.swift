@@ -265,6 +265,25 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         expect(log.lowercased()).to(contain("{ status code: 200, headers"))
                         expect(log.lowercased()).to(contain("\"content-length\""))
                     }
+
+                    it("logs the request using curlDescription") {
+                        plugin.configuration.logOptions.insert(.formatRequestAscURL)
+
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        waitUntil { done in
+                            provider.request(.zen) { _ in done() }
+                        }
+
+                        expect(log).to(contain("$ curl -v"))
+                        expect(log).to(contain("-X GET"))
+                        expect(log).to(contain("-H \"Accept-Language:"))
+                        expect(log).to(contain("-H \"Accept-Encoding:"))
+                        expect(log).to(contain("-H \"User-Agent:"))
+                        expect(log).to(contain("\"https://api.github.com/zen\""))
+
+                        expect(log).to(contain("Response:"))
+                        expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+                    }
                 }
             }
 

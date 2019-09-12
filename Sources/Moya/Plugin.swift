@@ -46,4 +46,9 @@ public protocol RequestType {
 
     /// Authenticates the request with an `NSURLCredential` instance.
     func authenticate(with credential: URLCredential) -> Self
+
+    /// cURL representation of the instance.
+    ///
+    /// - Returns: The cURL equivalent of the instance.
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self
 }

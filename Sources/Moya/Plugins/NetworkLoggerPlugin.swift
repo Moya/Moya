@@ -14,7 +14,9 @@ public final class NetworkLoggerPlugin {
 // MARK: - PluginType
 extension NetworkLoggerPlugin: PluginType {
     public func willSend(_ request: RequestType, target: TargetType) {
-        configuration.output(target, logNetworkRequest(request, target: target))
+        logNetworkRequest(request, target: target) { [weak self] output in
+            self?.configuration.output(target, output)
+        }
     }
 
     public func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
@@ -30,17 +32,21 @@ extension NetworkLoggerPlugin: PluginType {
 // MARK: - Logging
 private extension NetworkLoggerPlugin {
 
-    func logNetworkRequest(_ request: RequestType, target: TargetType) -> [String] {
-
+    func logNetworkRequest(_ request: RequestType, target: TargetType, completion: @escaping ([String]) -> Void) {
         //cURL formatting
-        if configuration.logOptions.contains(.formatRequestAscURL),
-            let request = request as? CustomDebugStringConvertible {
-            return [configuration.formatter.entry("Request", request.debugDescription, target)]
+        if configuration.logOptions.contains(.formatRequestAscURL) {
+            _ = request.cURLDescription { [weak self] output in
+                guard let self = self else { return }
+
+                completion([self.configuration.formatter.entry("Request", output, target)])
+            }
+            return
         }
 
         //Request presence check
         guard let httpRequest = request.request else {
-            return [configuration.formatter.entry("Request", "(invalid request)", target)]
+            completion([configuration.formatter.entry("Request", "(invalid request)", target)])
+            return
         }
 
         // Adding log entries for each given log option
@@ -72,20 +78,19 @@ private extension NetworkLoggerPlugin {
             output.append(configuration.formatter.entry("HTTP Request Method", httpMethod, target))
         }
 
-        return output
+        completion(output)
     }
 
     func logNetworkResponse(_ response: Response, target: TargetType, isFromError: Bool) -> [String] {
-
-        //Response presence check
-        guard let httpResponse = response.response else {
-            return [configuration.formatter.entry("Response", "Received empty network response for \(target).", target)]
-        }
-
         // Adding log entries for each given log option
         var output = [String]()
 
-        output.append(configuration.formatter.entry("Response", httpResponse.description, target))
+        //Response presence check
+        if let httpResponse = response.response {
+            output.append(configuration.formatter.entry("Response", httpResponse.description, target))
+        } else {
+            output.append(configuration.formatter.entry("Response", "Received empty network response for \(target).", target))
+        }
 
         if (isFromError && configuration.logOptions.contains(.errorResponseBody))
             || configuration.logOptions.contains(.successResponseBody) {

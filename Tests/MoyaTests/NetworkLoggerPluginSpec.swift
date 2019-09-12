@@ -151,6 +151,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 }
 
 private class TestStreamRequest: RequestType {
+
     var request: URLRequest? {
         var request = URLRequest(url: URL(string: url(GitHub.zen))!)
         request.allHTTPHeaderFields = ["Content-Type": "application/json"]
@@ -168,6 +169,11 @@ private class TestStreamRequest: RequestType {
     }
 
     func authenticate(with credential: URLCredential) -> Self {
+        return self
+    }
+
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
+        handler("")
         return self
     }
 }
@@ -192,9 +198,14 @@ private class TestBodyRequest: RequestType {
     func authenticate(with credential: URLCredential) -> Self {
         return self
     }
+
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
+        handler("")
+        return self
+    }
 }
 
-private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
+private class TestCurlBodyRequest: RequestType {
     var request: URLRequest? {
         var request = URLRequest(url: URL(string: url(GitHub.zen))!)
         request.allHTTPHeaderFields = ["Content-Type": "application/json"]
@@ -215,8 +226,9 @@ private class TestCurlBodyRequest: RequestType, CustomDebugStringConvertible {
         return self
     }
 
-    var debugDescription: String {
-        return ["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"", "\"https://api.github.com/zen\""].joined(separator: " \\\n\t")
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
+        handler(["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"", "\"https://api.github.com/zen\""].joined(separator: " \\\n\t"))
+        return self
     }
 }
 
@@ -234,6 +246,11 @@ private class TestNilRequest: RequestType {
     }
 
     func authenticate(with credential: URLCredential) -> Self {
+        return self
+    }
+
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
+        handler("")
         return self
     }
 }
