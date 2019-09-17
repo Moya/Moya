@@ -56,7 +56,7 @@ end
 
 def device_names
   return {
-    ios: "iPhone Xs",
+    ios: "iPhone 8",
     tvos: "Apple TV 4K (at 1080p)"
   }
 end
