@@ -3,6 +3,7 @@
 ### Fixed
 - Fixed an issue with displaying cURL-formatted request in `NetworkLoggerPlugin`. [#1916](https://github.com/Moya/Moya/pull/1916) by [@sunshinejr](https://github.com/sunshinejr).
 - Fixed an issue that wouldn't display stubbed response body in `NetworkLoggerPlugin`. [#1916](https://github.com/Moya/Moya/pull/1916) by [@sunshinejr](https://github.com/sunshinejr).
+- Fixed a problem where Xcode 11/Carthage users couldn't install Moya 14. We added weak-linking for the xcodeproj so you might need additional steps for Xcode 10/Carthage/Moya 14+. [#1920](https://github.com/Moya/Moya/pull/1920) by [@fredpi](https://github.com/fredpi) and [@sunshinejr](https://github.com/sunshinejr).
 
 # [14.0.0-beta.2] - 2019-09-09
 
