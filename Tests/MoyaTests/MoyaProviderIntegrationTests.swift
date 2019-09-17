@@ -236,18 +236,19 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
 
-                describe("a provider with network logger plugin") {
+                describe("a provider with NetworkLoggerPlugin") {
+                    var plugin: NetworkLoggerPlugin!
+                    var provider: MoyaProvider<GitHub>!
                     var log = ""
-                    let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
-                                                                          logOptions: .verbose))
 
                     beforeEach {
+                        plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
+                                                                          logOptions: .verbose))
+                        provider = MoyaProvider<GitHub>(plugins: [plugin])
                         log = ""
                     }
 
                     it("logs the request") {
-
-                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         waitUntil { done in
                             provider.request(.zen) { _ in done() }
                         }
