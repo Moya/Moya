@@ -615,7 +615,6 @@
 			buildConfigurationList = 3190CB92EA23E8BF6F8407F2 /* Build configuration list for PBXNativeTarget "Moya" */;
 			buildPhases = (
 				46AE31F21F86DDC6004E4236 /* Swiftlint */,
-				85FC1969232FD89900BFD816 /* Carthage Xcode 10 support */,
 				B89AF3F53E069FA188A11C14 /* Headers */,
 				054614992B184CBD90E510ED /* Sources */,
 				E83509792249AE1FFE8EA7B7 /* Resources */,
@@ -821,24 +820,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    if which swiftlint > /dev/null; then\n        swiftlint\n    else\n        echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint to lint!\"\n    fi\nfi";
-		};
-		85FC1969232FD89900BFD816 /* Carthage Xcode 10 support */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Carthage Xcode 10 support";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/scripts/carthage-xcode10-compat.sh\"\n";
 		};
 		B33B10BA6802FCF699147E8B /* Copy Carthage Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
