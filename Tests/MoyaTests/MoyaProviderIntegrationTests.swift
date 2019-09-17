@@ -285,6 +285,34 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
                     }
                 }
+
+                describe("a provider with AccessTokenPlugin") {
+                    var token = ""
+                    var plugin: AccessTokenPlugin!
+                    var provider: MoyaProvider<HTTPBin>!
+
+                    beforeEach {
+                        token = UUID().uuidString
+                        plugin = AccessTokenPlugin { token }
+                        provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub,
+                                                         plugins: [plugin])
+                    }
+
+                    it("correctly modifies authorization header field") {
+                        var header: String?
+
+                        waitUntil { done in
+                            provider.request(.bearer) { result in
+                                if case .success(let response) = result {
+                                    header = response.request?.value(forHTTPHeaderField: "Authorization")
+                                }
+                                done()
+                            }
+                        }
+
+                        expect(header).to(equal("Bearer \(token)"))
+                    }
+                }
             }
 
             describe("a reactive provider with SignalProducer") {
