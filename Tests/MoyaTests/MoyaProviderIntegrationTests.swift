@@ -365,7 +365,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 var receievedResponse: Response?
                 var receivedError: Error?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 30.0) { done in
                     provider.request(target) { result in
                         switch result {
                         case .success(let response):
@@ -387,7 +387,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 var receievedResponse: Response?
                 var receivedError: Error?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 30.0) { done in
                     provider.request(target) { result in
                         switch result {
                         case .success(let response):
