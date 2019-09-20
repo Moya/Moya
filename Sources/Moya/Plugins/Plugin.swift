@@ -26,32 +26,3 @@ public extension PluginType {
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) { }
     func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { return result }
 }
-
-/// Request type used by `willSend` plugin function.
-public protocol RequestType {
-
-    // Note:
-    //
-    // We use this protocol instead of the Alamofire request to avoid leaking that abstraction.
-    // A plugin should not know about Alamofire at all.
-
-    /// Retrieve an `NSURLRequest` representation.
-    var request: URLRequest? { get }
-
-    /// Number of times the `RequestType` has been retried.
-    var retryCount: Int { get }
-
-    ///  Additional headers appended to the request when added to the session.
-    var sessionHeaders: [String: String] { get }
-
-    /// Authenticates the request with a username and password.
-    func authenticate(username: String, password: String, persistence: URLCredential.Persistence) -> Self
-
-    /// Authenticates the request with an `NSURLCredential` instance.
-    func authenticate(with credential: URLCredential) -> Self
-
-    /// cURL representation of the instance.
-    ///
-    /// - Returns: The cURL equivalent of the instance.
-    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self
-}
