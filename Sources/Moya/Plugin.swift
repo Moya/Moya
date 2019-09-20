@@ -38,6 +38,9 @@ public protocol RequestType {
     /// Retrieve an `NSURLRequest` representation.
     var request: URLRequest? { get }
 
+    /// Number of times the `RequestType` has been retried.
+    var retryCount: Int { get }
+
     ///  Additional headers appended to the request when added to the session.
     var sessionHeaders: [String: String] { get }
 

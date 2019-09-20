@@ -7,6 +7,10 @@ struct RequestTypeWrapper: RequestType {
         return _urlRequest
     }
 
+    var retryCount: Int {
+        return _request.retryCount
+    }
+
     var sessionHeaders: [String: String] {
         return _request.sessionHeaders
     }
