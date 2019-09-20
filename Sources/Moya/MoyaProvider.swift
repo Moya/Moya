@@ -65,11 +65,20 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = (Target) -> Moya.StubBehavior
 
+    /// ...
+    public typealias RetryResultClosure = (RetryResult) -> Void
+
+    /// ...
+    public typealias RetryClosure = (RequestType, Target, Error?, @escaping RetryResultClosure) -> Void
+
     /// A closure responsible for mapping a `TargetType` to an `EndPoint`.
     public let endpointClosure: EndpointClosure
 
     /// A closure deciding if and what request should be performed.
     public let requestClosure: RequestClosure
+
+    /// ...
+    public let retryClosure: RetryClosure
 
     /// A closure responsible for determining the stubbing behavior
     /// of a request for a given `TargetType`.
@@ -92,6 +101,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
+                retryClosure: @escaping RetryClosure = MoyaProvider.doNotRetry,
                 callbackQueue: DispatchQueue? = nil,
                 session: Session = MoyaProvider<Target>.defaultAlamofireSession(),
                 plugins: [PluginType] = [],
@@ -100,6 +110,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
         self.endpointClosure = endpointClosure
         self.requestClosure = requestClosure
         self.stubClosure = stubClosure
+        self.retryClosure = retryClosure
         self.session = session
         self.plugins = plugins
         self.trackInflights = trackInflights
@@ -188,6 +199,13 @@ public extension MoyaProvider {
     /// Return a response after a delay.
     final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
         return { _ in return .delayed(seconds: seconds) }
+    }
+}
+
+public extension MoyaProvider {
+
+    final class func doNotRetry(_: RequestType, _: Target, _: Error?, _ completion: @escaping RetryResultClosure) {
+        completion(.doNotRetry)
     }
 }
 

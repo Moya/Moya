@@ -33,6 +33,9 @@ extension Request: RequestType {
 /// Represents Request interceptor type that can modify/act on Request
 public typealias RequestInterceptor = Alamofire.RequestInterceptor
 
+/// ...
+public typealias RetryResult = Alamofire.RetryResult
+
 /// Internal token that can be used to cancel requests
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
