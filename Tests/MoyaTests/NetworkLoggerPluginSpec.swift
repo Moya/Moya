@@ -152,6 +152,8 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
 private class TestStreamRequest: RequestType {
 
+    var retryCount = 0
+
     var request: URLRequest? {
         var request = URLRequest(url: URL(string: url(GitHub.zen))!)
         request.allHTTPHeaderFields = ["Content-Type": "application/json"]
@@ -179,6 +181,9 @@ private class TestStreamRequest: RequestType {
 }
 
 private class TestBodyRequest: RequestType {
+
+    var retryCount = 0
+
     var request: URLRequest? {
         var request = URLRequest(url: URL(string: url(GitHub.zen))!)
         request.allHTTPHeaderFields = ["Content-Type": "application/json"]
@@ -206,6 +211,9 @@ private class TestBodyRequest: RequestType {
 }
 
 private class TestCurlBodyRequest: RequestType {
+
+    var retryCount = 0
+
     var request: URLRequest? {
         var request = URLRequest(url: URL(string: url(GitHub.zen))!)
         request.allHTTPHeaderFields = ["Content-Type": "application/json"]
@@ -233,6 +241,9 @@ private class TestCurlBodyRequest: RequestType {
 }
 
 private class TestNilRequest: RequestType {
+
+    var retryCount = 0
+
     var request: URLRequest? {
         return nil
     }
