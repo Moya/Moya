@@ -181,34 +181,6 @@ public enum StubBehavior {
     case delayed(seconds: TimeInterval)
 }
 
-public extension MoyaProvider {
-
-    // Swift won't let us put the StubBehavior enum inside the provider class, so we'll
-    // at least add some class functions to allow easy access to common stubbing closures.
-
-    /// Do not stub.
-    final class func neverStub(_: Target) -> Moya.StubBehavior {
-        return .never
-    }
-
-    /// Return a response immediately.
-    final class func immediatelyStub(_: Target) -> Moya.StubBehavior {
-        return .immediate
-    }
-
-    /// Return a response after a delay.
-    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
-        return { _ in return .delayed(seconds: seconds) }
-    }
-}
-
-public extension MoyaProvider {
-
-    final class func doNotRetry(_: RequestType, _: Target, _: Error?, _ completion: @escaping RetryResultClosure) {
-        completion(.doNotRetry)
-    }
-}
-
 /// A public function responsible for converting the result of a `URLRequest` to a Result<Moya.Response, MoyaError>.
 public func convertResponseToResult(_ response: HTTPURLResponse?, request: URLRequest?, data: Data?, error: Swift.Error?) ->
     Result<Moya.Response, MoyaError> {
