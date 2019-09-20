@@ -236,18 +236,19 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
 
-                describe("a provider with network logger plugin") {
+                describe("a provider with NetworkLoggerPlugin") {
+                    var plugin: NetworkLoggerPlugin!
+                    var provider: MoyaProvider<GitHub>!
                     var log = ""
-                    let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
-                                                                          logOptions: .verbose))
 
                     beforeEach {
+                        plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
+                                                                          logOptions: .verbose))
+                        provider = MoyaProvider<GitHub>(plugins: [plugin])
                         log = ""
                     }
 
                     it("logs the request") {
-
-                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         waitUntil { done in
                             provider.request(.zen) { _ in done() }
                         }
@@ -283,6 +284,34 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                         expect(log).to(contain("Response:"))
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+                    }
+                }
+
+                describe("a provider with AccessTokenPlugin") {
+                    var token = ""
+                    var plugin: AccessTokenPlugin!
+                    var provider: MoyaProvider<HTTPBin>!
+
+                    beforeEach {
+                        token = UUID().uuidString
+                        plugin = AccessTokenPlugin { token }
+                        provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub,
+                                                         plugins: [plugin])
+                    }
+
+                    it("correctly modifies authorization header field") {
+                        var header: String?
+
+                        waitUntil { done in
+                            provider.request(.bearer) { result in
+                                if case .success(let response) = result {
+                                    header = response.request?.value(forHTTPHeaderField: "Authorization")
+                                }
+                                done()
+                            }
+                        }
+
+                        expect(header).to(equal("Bearer \(token)"))
                     }
                 }
             }
