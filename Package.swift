@@ -37,7 +37,7 @@ func resolveTargets() -> [Target] {
     let baseTargets: [Target] = [
         .target(name: "Moya", dependencies: ["Alamofire"]),
         .target(name: "ReactiveMoya", dependencies: ["Moya", "ReactiveSwift"]),
-        .target(name: "RxMoya", dependencies: ["Moya", "RxSwift"]),
+        .target(name: "RxMoya", dependencies: ["Moya", "RxSwift"])
     ]
 
     if shouldTest {
