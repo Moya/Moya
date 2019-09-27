@@ -57,11 +57,11 @@
       },
       {
         "package": "ReactiveSwift",
-        "repositoryURL": "https://github.com/sunshinejr/ReactiveSwift.git",
+        "repositoryURL": "https://github.com/Moya/ReactiveSwift.git",
         "state": {
-          "branch": "feature/split_spm_testing_deps",
-          "revision": "ea63d3a3b631daef292bd1da2b513f715b93de4f",
-          "version": null
+          "branch": null,
+          "revision": "f195d82bb30e412e70446e2b4a77e1b514099e88",
+          "version": "6.1.0"
         }
       },
       {

@@ -16,7 +16,7 @@ let shouldTest = ProcessInfo.processInfo.environment["TEST"] == "1"
 func resolveDependencies() -> [Package.Dependency] {
     let baseDependencies: [Package.Dependency] = [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .exact("5.0.0-rc.2")),
-        .package(url: "https://github.com/sunshinejr/ReactiveSwift.git", .branch("feature/split_spm_testing_deps")),
+        .package(url: "https://github.com/Moya/ReactiveSwift.git", .upToNextMajor(from: "6.1.0")),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
     ]
 
