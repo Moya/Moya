@@ -17,14 +17,14 @@ func resolveDependencies() -> [Package.Dependency] {
     let baseDependencies: [Package.Dependency] = [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .exact("5.0.0-rc.2")),
         .package(url: "https://github.com/Moya/ReactiveSwift.git", .upToNextMajor(from: "6.1.0")),
-        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0"))
     ]
 
     if shouldTest {
         let testDependencies: [Package.Dependency] = [
             .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "2.0.0")),
             .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "8.0.0")),
-            .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .branch("feature/spm-support")),
+            .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .branch("feature/spm-support"))
         ]
 
         return baseDependencies + testDependencies
