@@ -118,7 +118,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                     _ = provider.requestPublisher(target)
                         .sink(receiveCompletion: { completion in
                             switch completion {
-                            case let .failure(error):
+                            case .failure:
                                 errored = true
                             case .finished:
                                 ()
@@ -177,6 +177,10 @@ final class MoyaProviderCombineSpec: QuickSpec {
                         expect(provider.inflightRequests.count).to(equal(1))
                     })
 
+                    // This is to silence the warning about unused variables
+                    _ = cancellable1
+                    _ = cancellable2
+
                     // Allow for network request to complete
                     expect(provider.inflightRequests.count).toEventually(equal(0))
                 }
@@ -215,7 +219,7 @@ final class MoyaProviderCombineSpec: QuickSpec {
                     let cancellable = provider.requestWithProgressPublisher(target)
                         .sink(receiveCompletion: { completion in
                             switch completion {
-                            case let .failure:
+                            case .failure:
                                 errorEventsCount += 1
                             case .finished:
                                 completedEventsCount += 1
@@ -225,6 +229,9 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                             if response.response != nil { nextResponseCount += 1 }
                         })
+
+                    // This is to silence the warning about unused variables
+                    _ = cancellable
 
                     expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
                     expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)
@@ -264,6 +271,9 @@ final class MoyaProviderCombineSpec: QuickSpec {
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                     })
 
+                                // This is to silence the warning about unused variables
+                                _ = cancellable
+
                                 expect(callbackQueueLabel).toEventually(equal(requestQueue.label))
                             }
                         }
@@ -276,6 +286,8 @@ final class MoyaProviderCombineSpec: QuickSpec {
                                     .sink(receiveCompletion: { _ in }, receiveValue: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                     })
+                                // This is to silence the warning about unused variables
+                                _ = cancellable
 
                                 expect(callbackQueueLabel).toEventually(equal(callbackQueue.label))
                             }
@@ -299,6 +311,9 @@ final class MoyaProviderCombineSpec: QuickSpec {
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                     })
 
+                                // This is to silence the warning about unused variables
+                                _ = cancellable
+
                                 expect(callbackQueueLabel).toEventually(equal(requestQueue.label))
                             }
                         }
@@ -311,6 +326,9 @@ final class MoyaProviderCombineSpec: QuickSpec {
                                     .sink(receiveCompletion: { _ in }, receiveValue: { _ in
                                         callbackQueueLabel = DispatchQueue.currentLabel
                                     })
+
+                                // This is to silence the warning about unused variables
+                                _ = cancellable
 
                                 expect(callbackQueueLabel).toEventually(equal(DispatchQueue.main.label))
                             }

@@ -105,7 +105,7 @@ let package = Package(
 )
 ```
 
-Note that as of Moya 10, SPM only works with Swift 4 toolchain and greater.
+Note: If you are using **ReactiveMoya**, we are using [our own fork of ReactiveSwift](https://github.com/Moya/ReactiveSwift). This fork adds 2 commits to remove testing dependencies on releases (starting 6.1.0). This is to prevent Xcode Previews on Xcode 11/11.1 to build testing dependencies (FB7316430). If you don't want to use our fork, you can just add another dependency to your SPM package list: `git@github.com:ReactiveCocoa/ReactiveSwift.git` and it should fetch the original repository.
 
 ### Accio
 
