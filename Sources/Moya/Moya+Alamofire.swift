@@ -33,6 +33,9 @@ extension Request: RequestType {
 /// Represents Request interceptor type that can modify/act on Request
 public typealias RequestInterceptor = Alamofire.RequestInterceptor
 
+/// ...
+public typealias RetryResult = Alamofire.RetryResult
+
 /// Internal token that can be used to cancel requests
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
     let cancelAction: () -> Void
@@ -103,22 +106,5 @@ extension DownloadRequest: Requestable {
                 completionHandler(handler.response, handler.request, nil, handler.error)
             }
         }
-    }
-}
-
-final class MoyaRequestInterceptor: RequestInterceptor {
-
-    var prepare: ((URLRequest) -> URLRequest)?
-    var willSend: ((URLRequest) -> Void)?
-
-    init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
-        self.prepare = prepare
-        self.willSend = willSend
-    }
-
-    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        let request = prepare?(urlRequest) ?? urlRequest
-        willSend?(request)
-        completion(.success(request))
     }
 }
