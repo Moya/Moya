@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.cocoapods_version = '>= 1.4.0'  
 
   s.subspec "Core" do |ss|
-    ss.source_files  = "Sources/Moya/", "Sources/Moya/Plugins/"
+    ss.source_files  = "Sources/Moya/", "Sources/Moya/Combine", "Sources/Moya/Plugins/"
     ss.dependency "Alamofire", "5.0.0-rc.2"
     ss.framework  = "Foundation"
   end
