@@ -22,7 +22,7 @@ let gitHubProvider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(configur
 
 private extension String {
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
@@ -33,7 +33,7 @@ public enum GitHub {
 }
 
 extension GitHub: TargetType {
-    public var baseURL: URL { return URL(string: "https://api.github.com")! }
+    public var baseURL: URL { URL(string: "https://api.github.com")! }
     public var path: String {
         switch self {
         case .zen:
@@ -45,7 +45,7 @@ extension GitHub: TargetType {
         }
     }
     public var method: Moya.Method {
-        return .get
+        .get
     }
     public var task: Task {
         switch self {
@@ -74,12 +74,12 @@ extension GitHub: TargetType {
         }
     }
     public var headers: [String: String]? {
-        return nil
+        nil
     }
 }
 
 public func url(_ route: TargetType) -> String {
-    return route.baseURL.appendingPathComponent(route.path).absoluteString
+    route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 // MARK: - Response Handlers

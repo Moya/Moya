@@ -13,8 +13,8 @@ public extension MoyaProvider {
     ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
     /// - Returns: `AnyPublisher<Response, MoyaError`
     func requestPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<Response, MoyaError> {
-        return MoyaPublisher { [weak self] subscriber in
-                return self?.request(target, callbackQueue: callbackQueue, progress: nil) { result in
+        MoyaPublisher { [weak self] subscriber in
+                self?.request(target, callbackQueue: callbackQueue, progress: nil) { result in
                     switch result {
                     case let .success(response):
                         _ = subscriber.receive(response)
@@ -30,7 +30,7 @@ public extension MoyaProvider {
     /// Designated request-making method with progress.
     func requestWithProgressPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<ProgressResponse, MoyaError> {
         let progressBlock: (AnySubscriber<ProgressResponse, MoyaError>) -> (ProgressResponse) -> Void = { subscriber in
-            return { progress in
+            { progress in
                 _ = subscriber.receive(progress)
             }
         }

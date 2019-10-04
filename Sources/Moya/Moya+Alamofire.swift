@@ -26,7 +26,7 @@ public typealias DownloadDestination = Alamofire.DownloadRequest.Destination
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType {
     public var sessionHeaders: [String: String] {
-        return delegate?.sessionConfiguration.httpAdditionalHeaders as? [String: String] ?? [:]
+        delegate?.sessionConfiguration.httpAdditionalHeaders as? [String: String] ?? [:]
     }
 }
 

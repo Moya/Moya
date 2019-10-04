@@ -8,7 +8,7 @@ public enum Giphy {
 }
 
 extension Giphy: TargetType {
-    public var baseURL: URL { return URL(string: "https://upload.giphy.com")! } // swiftlint:disable:this force_unwrapping
+    public var baseURL: URL { URL(string: "https://upload.giphy.com")! } // swiftlint:disable:this force_unwrapping
     public var path: String {
         switch self {
         case .upload:
@@ -36,7 +36,7 @@ extension Giphy: TargetType {
     }
 
     public var headers: [String: String]? {
-        return nil
+        nil
     }
 
     // swiftlint:disable:next force_unwrapping

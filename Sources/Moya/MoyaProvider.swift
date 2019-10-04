@@ -36,7 +36,7 @@ public struct ProgressResponse {
 
     /// A Boolean value stating whether the request is completed.
     public var completed: Bool {
-        return response != nil
+        response != nil
     }
 }
 
@@ -108,7 +108,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     /// Returns an `Endpoint` based on the token, method, and parameters by invoking the `endpointClosure`.
     open func endpoint(_ token: Target) -> Endpoint {
-        return endpointClosure(token)
+        endpointClosure(token)
     }
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
@@ -178,17 +178,17 @@ public extension MoyaProvider {
 
     /// Do not stub.
     final class func neverStub(_: Target) -> Moya.StubBehavior {
-        return .never
+        .never
     }
 
     /// Return a response immediately.
     final class func immediatelyStub(_: Target) -> Moya.StubBehavior {
-        return .immediate
+        .immediate
     }
 
     /// Return a response after a delay.
     final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
-        return { _ in return .delayed(seconds: seconds) }
+        { _ in .delayed(seconds: seconds) }
     }
 }
 

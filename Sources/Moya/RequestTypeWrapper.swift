@@ -4,11 +4,11 @@ import Foundation
 struct RequestTypeWrapper: RequestType {
 
     var request: URLRequest? {
-        return _urlRequest
+        _urlRequest
     }
 
     var sessionHeaders: [String: String] {
-        return _request.sessionHeaders
+        _request.sessionHeaders
     }
 
     private var _request: Request

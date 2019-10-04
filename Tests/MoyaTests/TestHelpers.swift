@@ -14,7 +14,7 @@ enum GitHub {
 }
 
 extension GitHub: TargetType {
-    var baseURL: URL { return URL(string: "https://api.github.com")! }
+    var baseURL: URL { URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
         case .zen:
@@ -25,11 +25,11 @@ extension GitHub: TargetType {
     }
 
     var method: Moya.Method {
-        return .get
+        .get
     }
 
     var task: Task {
-        return .requestPlain
+        .requestPlain
     }
 
     var sampleData: Data {
@@ -42,11 +42,11 @@ extension GitHub: TargetType {
     }
 
     var validationType: ValidationType {
-        return .successAndRedirectCodes
+        .successAndRedirectCodes
     }
 
     var headers: [String: String]? {
-        return nil
+        nil
     }
 }
 
@@ -61,7 +61,7 @@ extension GitHub: Equatable {
 }
 
 func url(_ route: TargetType) -> String {
-    return route.baseURL.appendingPathComponent(route.path).absoluteString
+    route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint in
@@ -77,7 +77,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case uploadMultipart([MultipartFormData], [String: Any]?)
     case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
-    var baseURL: URL { return URL(string: "http://httpbin.org")! }
+    var baseURL: URL { URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
@@ -125,7 +125,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     }
 
     var headers: [String: String]? {
-        return nil
+        nil
     }
 
     var validationType: ValidationType {
@@ -173,7 +173,7 @@ extension GitHubUserContent: TargetType {
         }
     }
     public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
+        URLEncoding.default
     }
     public var task: Task {
         switch self {
@@ -191,7 +191,7 @@ extension GitHubUserContent: TargetType {
     }
 
     public var headers: [String: String]? {
-        return nil
+        nil
     }
 }
 
@@ -214,7 +214,7 @@ extension HTTPBin {
 // MARK: - String Helpers
 extension String {
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
@@ -222,7 +222,7 @@ extension String {
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
 extension DispatchQueue {
     class var currentLabel: String? {
-        return String(validatingUTF8: __dispatch_queue_get_label(nil))
+        String(validatingUTF8: __dispatch_queue_get_label(nil))
     }
 }
 
@@ -250,12 +250,12 @@ extension ImageType {
     class TestClass { }
 
     static var testImage: ImageType {
-        return Image(data: testImageData)!
+        Image(data: testImageData)!
     }
 
     #if canImport(UIKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
-            return jpegData(compressionQuality: compression)
+            jpegData(compressionQuality: compression)
         }
     #elseif canImport(AppKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {

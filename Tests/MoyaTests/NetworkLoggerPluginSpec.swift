@@ -106,7 +106,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
                 let plugin = NetworkLoggerPlugin()
                 plugin.configuration.output = customLoggerOutput
                 plugin.configuration.logOptions = .verbose
-                plugin.configuration.formatter.requestData = { _ in return "formatted request body" }
+                plugin.configuration.formatter.requestData = { _ in "formatted request body" }
                 return plugin
             }()
 
@@ -120,7 +120,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             let pluginWithEntryFormatter: NetworkLoggerPlugin = {
                 let plugin = NetworkLoggerPlugin()
                 plugin.configuration.output = customLoggerOutput
-                plugin.configuration.formatter.entry = { _, _, _ in return "formatted log entry" }
+                plugin.configuration.formatter.entry = { _, _, _ in "formatted log entry" }
                 return plugin
             }()
 
@@ -136,7 +136,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             let pluginWithResponseDataFormatter: NetworkLoggerPlugin = {
                 let plugin = NetworkLoggerPlugin()
                 plugin.configuration.output = customLoggerOutput
-                plugin.configuration.formatter.responseData = { _ in return "formatted response body" }
+                plugin.configuration.formatter.responseData = { _ in "formatted response body" }
                 plugin.configuration.logOptions = .verbose
                 return plugin
             }()
@@ -161,20 +161,20 @@ private class TestStreamRequest: RequestType {
     }
 
     var sessionHeaders: [String: String] {
-        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+        ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
+        self
     }
 
     func authenticate(with credential: URLCredential) -> Self {
-        return self
+        self
     }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
-        return self
+        self
     }
 }
 
@@ -188,20 +188,20 @@ private class TestBodyRequest: RequestType {
     }
 
     var sessionHeaders: [String: String] {
-        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+        ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
+        self
     }
 
     func authenticate(with credential: URLCredential) -> Self {
-        return self
+        self
     }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
-        return self
+        self
     }
 }
 
@@ -215,15 +215,15 @@ private class TestCurlBodyRequest: RequestType {
     }
 
     var sessionHeaders: [String: String] {
-        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+        ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
+        self
     }
 
     func authenticate(with credential: URLCredential) -> Self {
-        return self
+        self
     }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
@@ -234,23 +234,23 @@ private class TestCurlBodyRequest: RequestType {
 
 private class TestNilRequest: RequestType {
     var request: URLRequest? {
-        return nil
+        nil
     }
 
     var sessionHeaders: [String: String] {
-        return [:]
+        [:]
     }
 
     func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
+        self
     }
 
     func authenticate(with credential: URLCredential) -> Self {
-        return self
+        self
     }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
-        return self
+        self
     }
 }

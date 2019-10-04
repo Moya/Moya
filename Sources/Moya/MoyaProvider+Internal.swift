@@ -112,7 +112,7 @@ public extension MoyaProvider {
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
     final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint, plugins: [PluginType], request: URLRequest) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
-        return {
+        {
             if token.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
@@ -165,8 +165,8 @@ public extension MoyaProvider {
 
 private extension MoyaProvider {
     private func interceptor(target: Target) -> MoyaRequestInterceptor {
-        return MoyaRequestInterceptor(prepare: { [weak self] urlRequest in
-            return self?.plugins.reduce(urlRequest) { $1.prepare($0, target: target) } ?? urlRequest
+        MoyaRequestInterceptor(prepare: { [weak self] urlRequest in
+            self?.plugins.reduce(urlRequest) { $1.prepare($0, target: target) } ?? urlRequest
         })
     }
 
