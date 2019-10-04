@@ -174,7 +174,7 @@ private class TestStreamRequest: RequestType {
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
-        self
+        return self
     }
 }
 
@@ -201,7 +201,7 @@ private class TestBodyRequest: RequestType {
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
-        self
+        return self
     }
 }
 
@@ -251,6 +251,6 @@ private class TestNilRequest: RequestType {
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
-        self
+        return self
     }
 }
