@@ -1,5 +1,8 @@
 # Next
 
+### Changed
+- Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+
 # [14.0.0-beta.3] - 2019-09-27
 
 ### Fixed
