@@ -9,7 +9,7 @@ private func JSONResponseDataFormatter(_ data: Data) -> String {
     do {
         let dataAsJSON = try JSONSerialization.jsonObject(with: data)
         let prettyData = try JSONSerialization.data(withJSONObject: dataAsJSON, options: .prettyPrinted)
-        return String(data: prettyData, encoding: .utf8) ?? String()
+        return String(decoding: prettyData, as: UTF8.self)
     } catch {
         return String()
     }
