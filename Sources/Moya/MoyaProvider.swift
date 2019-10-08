@@ -61,7 +61,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     public typealias RequestResultClosure = (Result<URLRequest, MoyaError>) -> Void
 
     /// Closure that resolves an `Endpoint` into a `RequestResult`.
-    public typealias RequestClosure = (Endpoint, @escaping RequestResultClosure) -> Void
+    public typealias RequestClosure = (Target, Endpoint, @escaping RequestResultClosure) -> Void
 
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = (Target) -> Moya.StubBehavior
