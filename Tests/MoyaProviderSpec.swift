@@ -365,11 +365,13 @@ final class MoyaProviderSpec: QuickSpec {
         describe("a provider with a custom endpoint resolver") {
             var provider: MoyaProvider<GitHub>!
             var executed = false
+            var requestClosureTarget: GitHub!
 
             beforeEach {
                 executed = false
                 let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { target, endpoint, done in
                     executed = true
+                    requestClosureTarget = target
                     do {
                         let urlRequest = try endpoint.urlRequest()
                         done(.success(urlRequest))
@@ -387,6 +389,13 @@ final class MoyaProviderSpec: QuickSpec {
                 provider.request(target) { _ in  }
 
                 expect(executed).to(beTruthy())
+            }
+            
+            it("has the proper internal target") {
+                let target: GitHub = .zen
+                provider.request(target) { _ in  }
+                
+                expect(requestClosureTarget) == GitHub.zen
             }
         }
 
