@@ -265,7 +265,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             beforeEach {
-                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { taget, endpoint, done in
                     delay(requestTime) {
                         do {
                             let urlRequest = try endpoint.urlRequest()
@@ -368,7 +368,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 executed = false
-                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { target, endpoint, done in
                     executed = true
                     do {
                         let urlRequest = try endpoint.urlRequest()
@@ -452,7 +452,7 @@ final class MoyaProviderSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<GitHub>.RequestClosure = { target, endpoint, done in
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
                     done(.failure(.underlying(underyingError, nil)))
                 }
@@ -544,7 +544,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("uses correct URL") {
                 var requestedURL: String?
-                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { target, endpoint, done in
                     requestedURL = endpoint.url
                     do {
                         let urlRequest = try endpoint.urlRequest()
@@ -568,7 +568,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("uses correct method") {
                 var requestMethod: Moya.Method?
-                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { taget, endpoint, done in
                     requestMethod = endpoint.method
                     do {
                         let urlRequest = try endpoint.urlRequest()
@@ -608,7 +608,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("uses correct headers") {
                 var headers: [String: String]?
-                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { endpoint, done in
+                let endpointResolution: MoyaProvider<MultiTarget>.RequestClosure = { target, endpoint, done in
                     headers = endpoint.httpHeaderFields
                     do {
                         let urlRequest = try endpoint.urlRequest()
