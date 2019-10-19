@@ -13,9 +13,9 @@ internal typealias URLRequestConvertible = Alamofire.URLRequestConvertible
 public typealias Method = Alamofire.HTTPMethod
 
 /// Choice of parameter encoding.
-public typealias ParameterEncoding = Alamofire.ParameterEncoding
-public typealias JSONEncoding = Alamofire.JSONEncoding
-public typealias URLEncoding = Alamofire.URLEncoding
+public typealias ParameterEncoder = Alamofire.ParameterEncoder
+public typealias URLEncodedFormParameterEncoder = Alamofire.URLEncodedFormParameterEncoder
+public typealias JSONParameterEncoder = Alamofire.JSONParameterEncoder
 
 /// Multipart form.
 public typealias RequestMultipartFormData = Alamofire.MultipartFormData

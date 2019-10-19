@@ -63,15 +63,15 @@ public extension MoyaProvider {
             }
 
             let networkCompletion: Moya.Completion = { result in
-              if self.trackInflights {
-                self.inflightRequests[endpoint]?.forEach { $0(result) }
+                if self.trackInflights {
+                    self.inflightRequests[endpoint]?.forEach { $0(result) }
 
-                objc_sync_enter(self)
-                self.inflightRequests.removeValue(forKey: endpoint)
-                objc_sync_exit(self)
-              } else {
-                pluginsWithCompletion(result)
-              }
+                    objc_sync_enter(self)
+                    self.inflightRequests.removeValue(forKey: endpoint)
+                    objc_sync_exit(self)
+                } else {
+                    pluginsWithCompletion(result)
+                }
             }
 
             cancellableToken.innerCancellable = self.performRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
@@ -83,24 +83,67 @@ public extension MoyaProvider {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> Cancellable {
-        switch stubBehavior {
-        case .never:
-            switch endpoint.task {
-            case .requestPlain, .requestData, .requestJSONEncodable, .requestCustomJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
-                return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
-            case .uploadFile(let file):
-                return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
-            case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
-                guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
+    private func performRequest(_ target: Target,
+                                request: URLRequest,
+                                callbackQueue: DispatchQueue?,
+                                progress: Moya.ProgressBlock?,
+                                completion: @escaping Moya.Completion,
+                                endpoint: Endpoint,
+                                stubBehavior: Moya.StubBehavior) -> Cancellable {
+
+        guard stubBehavior == .never else {
+            return self.stubRequest(target,
+                                    request: request,
+                                    callbackQueue: callbackQueue,
+                                    completion: completion,
+                                    endpoint: endpoint,
+                                    stubBehavior: stubBehavior)
+        }
+
+        switch endpoint.task {
+        case .request:
+            return self.sendRequest(target,
+                                    request: request,
+                                    callbackQueue: callbackQueue,
+                                    progress: progress,
+                                    completion: completion)
+
+        case let .uploadFile(file):
+            return self.sendUploadFile(target,
+                                       request: request,
+                                       callbackQueue: callbackQueue,
+                                       file: file,
+                                       progress: progress,
+                                       completion: completion)
+
+        case let .uploadData(data):
+            return self.sendUploadData(target,
+                                       request: request,
+                                       callbackQueue: callbackQueue,
+                                       data: data,
+                                       progress: progress,
+                                       completion: completion)
+
+        case let .uploadMultiPart(multipartBody, _):
+            guard !multipartBody.isEmpty,
+                endpoint.method.supportsMultipart
+                else {
                     fatalError("\(target) is not a multipart upload target.")
-                }
-                return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
-            case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
-                return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
-        default:
-            return self.stubRequest(target, request: request, callbackQueue: callbackQueue, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
+            return self.sendUploadMultipart(target,
+                                            request: request,
+                                            callbackQueue: callbackQueue,
+                                            multipartBody: multipartBody,
+                                            progress: progress,
+                                            completion: completion)
+
+        case .download(let destination, _):
+            return self.sendDownloadRequest(target,
+                                            request: request,
+                                            callbackQueue: callbackQueue,
+                                            destination: destination,
+                                            progress: progress,
+                                            completion: completion)
         }
     }
 
@@ -195,6 +238,16 @@ private extension MoyaProvider {
     func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
         let uploadRequest = session.upload(file, with: request, interceptor: interceptor)
+        setup(interceptor: interceptor, with: target, and: uploadRequest)
+
+        let validationCodes = target.validationType.statusCodes
+        let alamoRequest = validationCodes.isEmpty ? uploadRequest : uploadRequest.validate(statusCode: validationCodes)
+        return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    }
+
+    func sendUploadData(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, data: Data, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
+        let interceptor = self.interceptor(target: target)
+        let uploadRequest = session.upload(data, with: request, interceptor: interceptor)
         setup(interceptor: interceptor, with: target, and: uploadRequest)
 
         let validationCodes = target.validationType.statusCodes

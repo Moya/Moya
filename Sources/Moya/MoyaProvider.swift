@@ -171,6 +171,22 @@ public enum StubBehavior {
     case delayed(seconds: TimeInterval)
 }
 
+extension StubBehavior: Equatable {
+    public static func == (lhs: StubBehavior, rhs: StubBehavior) -> Bool {
+        switch (lhs, rhs) {
+        case (.never, .never),
+             (.immediate, .immediate):
+            return true
+
+        case let (.delayed(lhsSeconds), .delayed(rhsSeconds)):
+            return lhsSeconds == rhsSeconds
+
+        default:
+            return false
+        }
+    }
+}
+
 public extension MoyaProvider {
 
     // Swift won't let us put the StubBehavior enum inside the provider class, so we'll

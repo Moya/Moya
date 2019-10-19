@@ -3,39 +3,79 @@ import Foundation
 /// Represents an HTTP task.
 public enum Task {
 
-    /// A request with no additional data.
-    case requestPlain
+    public typealias TaskParameters = [(ParameterEncoder, Encodable)]
 
-    /// A requests body set with data.
-    case requestData(Data)
+    /// A task to request some data
+    case request(params: TaskParameters?)
 
-    /// A request body set with `Encodable` type
-    case requestJSONEncodable(Encodable)
+    /// A task to upload some data
+    case uploadData(Data)
 
-    /// A request body set with `Encodable` type and custom encoder
-    case requestCustomJSONEncodable(Encodable, encoder: JSONEncoder)
-
-    /// A requests body set with encoded parameters.
-    case requestParameters(parameters: [String: Any], encoding: ParameterEncoding)
-
-    /// A requests body set with data, combined with url parameters.
-    case requestCompositeData(bodyData: Data, urlParameters: [String: Any])
-
-    /// A requests body set with encoded parameters combined with url parameters.
-    case requestCompositeParameters(bodyParameters: [String: Any], bodyEncoding: ParameterEncoding, urlParameters: [String: Any])
-
-    /// A file upload task.
+    /// A task for upload a file
     case uploadFile(URL)
 
     /// A "multipart/form-data" upload task.
-    case uploadMultipart([MultipartFormData])
+    case uploadMultiPart([MultipartFormData], params: TaskParameters?)
 
-    /// A "multipart/form-data" upload task  combined with url parameters.
-    case uploadCompositeMultipart([MultipartFormData], urlParameters: [String: Any])
+    ///
+    case download(destination: DownloadDestination, params: TaskParameters?)
 
-    /// A file download task to a destination.
-    case downloadDestination(DownloadDestination)
+    // MARK: Convenience ways to get a NewTask
 
-    /// A file download task to a destination with extra parameters using the given encoding.
-    case downloadParameters(parameters: [String: Any], encoding: ParameterEncoding, destination: DownloadDestination)
+    // If the given parameters conflict (for example by providing either `httpBodyParams` and `jsonParams`),
+    // only the lastest in parameters order will be used.
+    static func request(methodDependentParams methodDependantEncodable: Encodable? = nil,
+                        httpBodyParams bodyEncodable: Encodable? = nil,
+                        queryParams queryEncodable: Encodable? = nil,
+                        jsonParams jsonEncodable: Encodable? = nil,
+                        customParams: TaskParameters? = nil) -> Task {
+        var finalParams: TaskParameters = []
+
+        if let encodable = methodDependantEncodable {
+            finalParams.append((URLEncodedFormParameterEncoder.default, encodable))
+        }
+
+        if let encodable = bodyEncodable {
+            finalParams.append((URLEncodedFormParameterEncoder(destination: .httpBody), encodable))
+        }
+
+        if let encodable = queryEncodable {
+            finalParams.append((URLEncodedFormParameterEncoder(destination: .queryString), encodable))
+        }
+
+        if let encodable = jsonEncodable {
+            finalParams.append((JSONParameterEncoder.default, encodable))
+        }
+
+        if let customParams = customParams {
+            finalParams.append(contentsOf: customParams)
+        }
+
+        //Avoid passing empty arrays
+        if finalParams.isEmpty {
+            return .request(params: nil)
+        } else {
+            return .request(params: finalParams)
+        }
+    }
+
+    static func updateMultipart(_ multiPart: [MultipartFormData],
+                                queryParamsEncoder: URLEncodedFormParameterEncoder = .default,
+                                queryParams queryEncodable: Encodable? = nil) -> Task {
+        var finalParams: TaskParameters?
+        if let encodable = queryEncodable {
+            finalParams = [(queryParamsEncoder, encodable)]
+        }
+        return .uploadMultiPart(multiPart, params: finalParams)
+    }
+
+    static func download(to destination: @escaping DownloadDestination,
+                         paramsEncoder: ParameterEncoder = URLEncodedFormParameterEncoder.default,
+                         params: Encodable? = nil) -> Task {
+        var finalParams: TaskParameters?
+        if let encodable = params {
+            finalParams = [(paramsEncoder, encodable)]
+        }
+        return .download(destination: destination, params: finalParams)
+    }
 }
