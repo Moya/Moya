@@ -40,7 +40,7 @@ final class MultiTargetSpec: QuickSpec {
                     expect(dict!["key"]) == "value"
                     expect(dict!.count) == 1
                 } else {
-                    fail("expected task type `.requestParameters`, was \(String(describing: target.task))")
+                    fail("expected task type `.request`, was \(String(describing: target.task))")
                 }
             }
 
@@ -48,7 +48,7 @@ final class MultiTargetSpec: QuickSpec {
                 if case let .request(_, taskParameters) = target.task {
                     expect(taskParameters?.first?.0 is JSONParameterEncoder) == true
                 } else {
-                    fail("expected task type `.requestParameters`, was \(String(describing: target.task))")
+                    fail("expected task type `.request`, was \(String(describing: target.task))")
                 }
             }
 
@@ -57,7 +57,7 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct task") {
-                expect(String(describing: target.task)).to(beginWith("requestParameters")) // Hack to avoid implementing Equatable for Task
+                expect(String(describing: target.task)).to(beginWith("request")) // Hack to avoid implementing Equatable for Task
             }
 
             it("uses correct sample data") {
