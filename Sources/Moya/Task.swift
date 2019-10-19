@@ -6,7 +6,7 @@ public enum Task {
     public typealias TaskParameters = [(ParameterEncoder, Encodable)]
 
     /// A task to request some data
-    case request(params: TaskParameters?)
+    case request(body: Data?, params: TaskParameters?)
 
     /// A task to upload some data
     case uploadData(Data)
@@ -24,7 +24,8 @@ public enum Task {
 
     // If the given parameters conflict (for example by providing either `httpBodyParams` and `jsonParams`),
     // only the lastest in parameters order will be used.
-    public static func request(methodDependentParams methodDependantEncodable: Encodable? = nil,
+    public static func request(bodyData: Data? = nil,
+                               methodDependentParams methodDependantEncodable: Encodable? = nil,
                                httpBodyParams bodyEncodable: Encodable? = nil,
                                queryParams queryEncodable: Encodable? = nil,
                                jsonParams jsonEncodable: Encodable? = nil,
@@ -53,9 +54,9 @@ public enum Task {
 
         //Avoid passing empty arrays
         if finalParams.isEmpty {
-            return .request(params: nil)
+            return .request(body: bodyData, params: nil)
         } else {
-            return .request(params: finalParams)
+            return .request(body: bodyData, params: finalParams)
         }
     }
 

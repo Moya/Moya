@@ -32,7 +32,7 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct parameters") {
-                if case let .request(params: parameters) = target.task {
+                if case let .request(_, parameters) = target.task {
                     let encodable = parameters?.first?.1
                     expect(encodable).toNot(beNil())
                     let dict = encodable! as? [String: String]
@@ -45,7 +45,7 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct parameter encoding.") {
-                if case let .request(taskParameters) = target.task {
+                if case let .request(_, taskParameters) = target.task {
                     expect(taskParameters?.first?.0 is JSONParameterEncoder) == true
                 } else {
                     fail("expected task type `.requestParameters`, was \(String(describing: target.task))")

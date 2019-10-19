@@ -85,8 +85,10 @@ public extension Endpoint {
 
         //Encode params
         switch task {
-        case let .request(params),
-             let .download(_, params),
+        case let .request(data, params):
+            request.httpBody = data
+            fallthrough
+        case let .download(_, params),
              let .uploadMultiPart(_, params):
             try params?.forEach { encoder, encodable in
                 request = try encoder.encode(AnyEncodable(encodable), into: request)

@@ -133,7 +133,7 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(httpBodyParams: data))
+                    endpoint = endpoint.replacing(task: .request(bodyData: data))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -225,7 +225,7 @@ final class EndpointSpec: QuickSpec {
                 beforeEach {
                     parameters = ["Nemesis": "Harvey"]
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(httpBodyParams: data, queryParams: parameters))
+                    endpoint = endpoint.replacing(task: .request(bodyData: data, queryParams: parameters))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -366,7 +366,7 @@ extension Empty: TargetType {
     var baseURL: URL { URL(string: "http://example.com")! }
     var path: String { "" }
     var method: Moya.Method { .get }
-    var task: Task { .request(params: nil) }
+    var task: Task { .request() }
     var sampleData: Data { Data() }
     var headers: [String: String]? { nil }
 }
