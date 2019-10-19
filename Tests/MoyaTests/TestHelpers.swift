@@ -29,7 +29,7 @@ extension GitHub: TargetType {
     }
 
     var task: Task {
-        .requestPlain
+        .request()
     }
 
     var sampleData: Data {
@@ -74,8 +74,8 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case bearer
     case post
     case upload(file: URL)
-    case uploadMultipart([MultipartFormData], [String: Any]?)
-    case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
+    case uploadMultipart([MultipartFormData], Encodable?)
+    case validatedUploadMultipart([MultipartFormData], Encodable?, [Int])
 
     var baseURL: URL { URL(string: "http://httpbin.org")! }
     var path: String {
@@ -101,15 +101,12 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     var task: Task {
         switch self {
         case .basicAuth, .post, .bearer:
-            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+            return .request(methodDependentParams: ["": ""])
         case .upload(let fileURL):
             return .uploadFile(fileURL)
-        case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters, _):
-            if let urlParameters = urlParameters {
-                return .uploadCompositeMultipart(data, urlParameters: urlParameters)
-            } else {
-                return .uploadMultipart(data)
-            }
+        case .uploadMultipart(let data, let urlParameters),
+             .validatedUploadMultipart(let data, let urlParameters, _):
+            return .uploadMultipart(data, queryParams: urlParameters)
         }
     }
 
@@ -166,21 +163,12 @@ extension GitHubUserContent: TargetType {
             return .get
         }
     }
-    public var parameters: [String: Any]? {
-        switch self {
-        case .downloadMoyaWebContent, .requestMoyaWebContent:
-            return nil
-        }
-    }
-    public var parameterEncoding: ParameterEncoding {
-        URLEncoding.default
-    }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .downloadDestination(defaultDownloadDestination)
+            return .download(to: defaultDownloadDestination)
         case .requestMoyaWebContent:
-            return .requestPlain
+            return .request()
         }
     }
     public var sampleData: Data {

@@ -52,7 +52,7 @@ extension GitHub: TargetType {
         case .userRepositories:
             return .requestParameters(parameters: ["sort": "pushed"], encoding: URLEncoding.default)
         default:
-            return .requestPlain
+            return .request()
         }
     }
     public var validationType: ValidationType {

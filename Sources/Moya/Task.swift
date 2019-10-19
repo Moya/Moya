@@ -24,11 +24,11 @@ public enum Task {
 
     // If the given parameters conflict (for example by providing either `httpBodyParams` and `jsonParams`),
     // only the lastest in parameters order will be used.
-    static func request(methodDependentParams methodDependantEncodable: Encodable? = nil,
-                        httpBodyParams bodyEncodable: Encodable? = nil,
-                        queryParams queryEncodable: Encodable? = nil,
-                        jsonParams jsonEncodable: Encodable? = nil,
-                        customParams: TaskParameters? = nil) -> Task {
+    public static func request(methodDependentParams methodDependantEncodable: Encodable? = nil,
+                               httpBodyParams bodyEncodable: Encodable? = nil,
+                               queryParams queryEncodable: Encodable? = nil,
+                               jsonParams jsonEncodable: Encodable? = nil,
+                               customParams: TaskParameters? = nil) -> Task {
         var finalParams: TaskParameters = []
 
         if let encodable = methodDependantEncodable {
@@ -59,9 +59,9 @@ public enum Task {
         }
     }
 
-    static func updateMultipart(_ multiPart: [MultipartFormData],
-                                queryParamsEncoder: URLEncodedFormParameterEncoder = .default,
-                                queryParams queryEncodable: Encodable? = nil) -> Task {
+    public static func uploadMultipart(_ multiPart: [MultipartFormData],
+                                       queryParamsEncoder: URLEncodedFormParameterEncoder = .default,
+                                       queryParams queryEncodable: Encodable? = nil) -> Task {
         var finalParams: TaskParameters?
         if let encodable = queryEncodable {
             finalParams = [(queryParamsEncoder, encodable)]
@@ -69,9 +69,9 @@ public enum Task {
         return .uploadMultiPart(multiPart, params: finalParams)
     }
 
-    static func download(to destination: @escaping DownloadDestination,
-                         paramsEncoder: ParameterEncoder = URLEncodedFormParameterEncoder.default,
-                         params: Encodable? = nil) -> Task {
+    public static func download(to destination: @escaping DownloadDestination,
+                                paramsEncoder: ParameterEncoder = URLEncodedFormParameterEncoder.default,
+                                params: Encodable? = nil) -> Task {
         var finalParams: TaskParameters?
         if let encodable = params {
             finalParams = [(paramsEncoder, encodable)]

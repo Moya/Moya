@@ -1,17 +1,17 @@
 import Alamofire
 import Foundation
 
-internal struct PropertyListEncoding: ParameterEncoding {
+internal struct PropertyListEncoder: ParameterEncoder {
 
     // MARK: Properties
-    /// Returns a default `PropertyListEncoding` instance.
-    static var `default`: PropertyListEncoding { PropertyListEncoding() }
+    /// Returns a default `PropertyListEncoder` instance.
+    static var `default`: PropertyListEncoder { return PropertyListEncoder() }
 
-    /// Returns a `PropertyListEncoding` instance with xml formatting and default writing options.
-    static var xml: PropertyListEncoding { PropertyListEncoding(format: .xml) }
+    /// Returns a `PropertyListEncoder` instance with xml formatting and default writing options.
+    static var xml: PropertyListEncoder { return PropertyListEncoder(format: .xml) }
 
-    /// Returns a `PropertyListEncoding` instance with binary formatting and default writing options.
-    static var binary: PropertyListEncoding { PropertyListEncoding(format: .binary) }
+    /// Returns a `PropertyListEncoder` instance with binary formatting and default writing options.
+    static var binary: PropertyListEncoder { return PropertyListEncoder(format: .binary) }
 
     /// The property list serialization format.
     let format: PropertyListSerialization.PropertyListFormat
@@ -20,12 +20,12 @@ internal struct PropertyListEncoding: ParameterEncoding {
     let options: PropertyListSerialization.WriteOptions
 
     // MARK: Initialization
-    /// Creates a `PropertyListEncoding` instance using the specified format and options.
+    /// Creates a `PropertyListEncoder` instance using the specified format and options.
     ///
     /// - parameter format:  The property list serialization format.
     /// - parameter options: The options for writing the parameters as plist data.
     ///
-    /// - returns: The new `PropertyListEncoding` instance.
+    /// - returns: The new `PropertyListEncoder` instance.
     init(
         format: PropertyListSerialization.PropertyListFormat = .xml,
         options: PropertyListSerialization.WriteOptions = 0) {
@@ -42,8 +42,9 @@ internal struct PropertyListEncoding: ParameterEncoding {
     /// - throws: An `Error` if the encoding process encounters an error.
     ///
     /// - returns: The encoded request.
-    func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
-        var urlRequest = try urlRequest.asURLRequest()
+    func encode<Parameters>(_ parameters: Parameters?, into request: URLRequest) throws -> URLRequest where Parameters : Encodable {
+
+        var urlRequest = try request.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }
 

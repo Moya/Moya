@@ -24,15 +24,15 @@ final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
 final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
         sharedExamples("endpoint with encoded parameters") { (context: SharedExampleContext) in
-            let parameters = context()["parameters"] as! [String: Any]
-            let encoding = context()["encoding"] as! ParameterEncoding
+            let parameters = context()["parameters"] as! Encodable
+            let encoder = context()["encoder"] as! ParameterEncoder
             let endpoint = context()["endpoint"] as! Endpoint
             let request = try! endpoint.urlRequest()
 
             it("updated the request correctly") {
-                let newEndpoint = endpoint.replacing(task: .requestPlain)
+                let newEndpoint = endpoint.replacing(task: .request())
                 let newRequest = try! newEndpoint.urlRequest()
-                let newEncodedRequest = try? encoding.encode(newRequest, with: parameters)
+                let newEncodedRequest = try? encoder.encode(AnyEncodable(parameters), into: newRequest)
 
                 expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
                 expect(request.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
@@ -48,7 +48,7 @@ final class EndpointSpec: QuickSpec {
     private var simpleGitHubEndpoint: Endpoint {
         let target: GitHub = .zen
         let headerFields = ["Title": "Dominar"]
-        return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+        return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .request(), httpHeaderFields: headerFields)
     }
 
     override func spec() {
@@ -72,15 +72,15 @@ final class EndpointSpec: QuickSpec {
         }
 
         it("returns a nil urlRequest for an invalid URL") {
-            let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+            let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .request(), httpHeaderFields: nil)
             let urlRequest = try? badEndpoint.urlRequest()
             expect(urlRequest).to(beNil())
         }
 
         describe("successful converting to urlRequest") {
-            context("when task is .requestPlain") {
+            context("when task is .request(params: nil)") {
                 itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.requestPlain, "endpoint": self.simpleGitHubEndpoint]
+                    ["task": Task.request(), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
@@ -96,43 +96,44 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .downloadDestination") {
+            context("when task is .download") {
                 itBehavesLike("endpoint with no request property changed") {
                     let destination: DownloadDestination = { url, response in
                         return (destinationURL: url, options: [])
                     }
-                    return ["task": Task.downloadDestination(destination), "endpoint": self.simpleGitHubEndpoint]
+                    return ["task": Task.download(to: destination), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
-            context("when task is .requestParameters") {
+            context("when task is .request with JSON encoder") {
                 itBehavesLike("endpoint with encoded parameters") {
-                    let parameters = ["Nemesis": "Harvey"]
-                    let encoding = JSONEncoding.default
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .requestParameters(parameters: parameters, encoding: encoding))
-                    return ["parameters": parameters, "encoding": encoding, "endpoint": endpoint]
+                    let parameters: Encodable = ["Nemesis": "Harvey"]
+                    let encoder = JSONParameterEncoder.default
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .request(jsonParams: parameters))
+                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
                 }
             }
 
-            context("when task is .downloadParameters") {
+            context("when task is .download with parameters") {
                 itBehavesLike("endpoint with encoded parameters") {
-                    let parameters = ["Nemesis": "Harvey"]
-                    let encoding = JSONEncoding.default
+                    let parameters: Encodable = ["Nemesis": "Harvey"]
+                    let encoder = JSONParameterEncoder.default
                     let destination: DownloadDestination = { url, response in
                         return (destinationURL: url, options: [])
                     }
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .downloadParameters(parameters: parameters, encoding: encoding, destination: destination))
-                    return ["parameters": parameters, "encoding": encoding, "endpoint": endpoint]
+                    let newTask: Task = .download(destination: destination, params: [(encoder, parameters)])
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: newTask)
+                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
                 }
             }
 
-            context("when task is .requestData") {
+            context("when task is .request with data encoded in body") {
                 var data: Data!
                 var request: URLRequest!
 
                 beforeEach {
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .requestData(data))
+                    endpoint = endpoint.replacing(task: .request(httpBodyParams: data))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -147,13 +148,13 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .requestJSONEncodable") {
+            context("when task is .request with json encoded in body") {
                 var issue: Issue!
                 var request: URLRequest!
 
                 beforeEach {
                     issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
-                    endpoint = endpoint.replacing(task: .requestJSONEncodable(issue))
+                    endpoint = endpoint.replacing(task: .request(jsonParams: issue))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -176,7 +177,7 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .requestCustomJSONEncodable") {
+            context("when task is .request with json body and a custom encoder") {
                 var issue: Issue!
                 var request: URLRequest!
 
@@ -192,7 +193,8 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
-                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(issue, encoder: encoder))
+                    let taskParameters: Task.TaskParameters = [(JSONParameterEncoder(encoder: encoder), issue)]
+                    endpoint = endpoint.replacing(task: .request(customParams: taskParameters))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -215,15 +217,15 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .requestCompositeData") {
-                var parameters: [String: Any]!
+            context("when task is .request with body data and query parameters") {
+                var parameters: Encodable!
                 var data: Data!
                 var request: URLRequest!
 
                 beforeEach {
                     parameters = ["Nemesis": "Harvey"]
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: data, urlParameters: parameters))
+                    endpoint = endpoint.replacing(task: .request(httpBodyParams: data, queryParams: parameters))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -242,17 +244,16 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .requestCompositeParameters") {
-                var bodyParameters: [String: Any]!
-                var urlParameters: [String: Any]!
-                var encoding: ParameterEncoding!
+            context("when task is .request with body and query params") {
+                var bodyParameters: Encodable!
+                var urlParameters: Encodable!
                 var request: URLRequest!
 
                 beforeEach {
                     bodyParameters = ["Nemesis": "Harvey"]
                     urlParameters = ["Harvey": "Nemesis"]
-                    encoding = JSONEncoding.default
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: encoding, urlParameters: urlParameters))
+                    endpoint = endpoint.replacing(task: .request(httpBodyParams: bodyParameters,
+                                                                 queryParams: urlParameters))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -262,9 +263,9 @@ final class EndpointSpec: QuickSpec {
                 }
 
                 it("updates the request correctly") {
-                    let newEndpoint = endpoint.replacing(task: .requestPlain)
+                    let newEndpoint = endpoint.replacing(task: .request())
                     let newRequest = try! newEndpoint.urlRequest()
-                    let newEncodedRequest = try? encoding.encode(newRequest, with: bodyParameters)
+                    let newEncodedRequest = try? JSONParameterEncoder.default.encode(AnyEncodable(bodyParameters), into: newRequest)
 
                     expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
                     expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
@@ -272,13 +273,13 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when task is .uploadCompositeMultipart") {
-                var urlParameters: [String: Any]!
+            context("when task is .uploadMultipart with params") {
+                var urlParameters: Encodable!
                 var request: URLRequest!
 
                 beforeEach {
                     urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([], urlParameters: urlParameters))
+                    endpoint = endpoint.replacing(task: .uploadMultipart([], queryParams: urlParameters))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -292,7 +293,11 @@ final class EndpointSpec: QuickSpec {
         describe("unsuccessful converting to urlRequest") {
             context("when url String is invalid") {
                 it("throws a .requestMapping error") {
-                    let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+                    let badEndpoint = Endpoint(url: "some invalid URL",
+                                               sampleResponseClosure: { .networkResponse(200, Data()) },
+                                               method: .get,
+                                               task: .request(),
+                                               httpHeaderFields: nil)
                     let expectedError = MoyaError.requestMapping("some invalid URL")
                     var recievedError: MoyaError?
                     do {
@@ -309,10 +314,15 @@ final class EndpointSpec: QuickSpec {
                 it("throws a .parameterEncoding error") {
 
                     // Non-serializable type to cause serialization error
-                    class InvalidParameter {}
+                    class InvalidParameter: Encodable {
+                        func encode(to encoder: Encoder) throws {}
+                    }
 
-                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["": InvalidParameter()], encoding: PropertyListEncoding.default))
-                    let cocoaError = NSError(domain: "NSCocoaErrorDomain", code: 3851, userInfo: ["NSDebugDescription": "Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
+                    let taskParameters: Task.TaskParameters = [(PropertyListEncoder.default, ["": InvalidParameter()] )]
+                    endpoint = endpoint.replacing(task: .request(customParams: taskParameters))
+                    let cocoaError = NSError(domain: "NSCocoaErrorDomain",
+                                             code: 3851,
+                                             userInfo: ["NSDebugDescription": "Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
                     let expectedError = MoyaError.parameterEncoding(cocoaError)
                     var recievedError: MoyaError?
 
@@ -326,12 +336,11 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
-            context("when JSONEncoder set with incorrect parameters") {
+            context("when json encodable set with incorrect parameters") {
                 it("throws a .encodableMapping error") {
-                    let encoder = JSONEncoder()
 
                     let issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: Float.infinity)
-                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(issue, encoder: encoder))
+                    endpoint = endpoint.replacing(task: .request(jsonParams: issue))
 
                     let expectedError = MoyaError.encodableMapping(EncodingError.invalidValue(Float.infinity, EncodingError.Context(codingPath: [Issue.CodingKeys.rating], debugDescription: "Unable to encode Float.infinity directly in JSON. Use JSONEncoder.NonConformingFloatEncodingStrategy.convertToString to specify how the value should be encoded.", underlyingError: nil)))
                     var recievedError: MoyaError?
@@ -345,25 +354,6 @@ final class EndpointSpec: QuickSpec {
                     expect(recievedError).to(beOfSameErrorType(expectedError))
                 }
             }
-
-            #if !SWIFT_PACKAGE
-            context("when task is .requestCompositeParameters") {
-                it("throws an error when bodyEncoding is an URLEncoding.queryString") {
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
-                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
-                }
-
-                it("throws an error when bodyEncoding is an URLEncoding.default") {
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.default, urlParameters: [:]))
-                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
-                }
-
-                it("doesn't throw an error when bodyEncoding is an URLEncoding.httpBody") {
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.httpBody, urlParameters: [:]))
-                    expect { _ = try? endpoint.urlRequest() }.toNot(throwAssertion())
-                }
-            }
-            #endif
         }
     }
 }
@@ -376,9 +366,7 @@ extension Empty: TargetType {
     var baseURL: URL { URL(string: "http://example.com")! }
     var path: String { "" }
     var method: Moya.Method { .get }
-    var parameters: [String: Any]? { nil }
-    var parameterEncoding: ParameterEncoding { URLEncoding.default }
-    var task: Task { .requestPlain }
+    var task: Task { .request(params: nil) }
     var sampleData: Data { Data() }
     var headers: [String: String]? { nil }
 }

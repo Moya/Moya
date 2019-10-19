@@ -11,7 +11,7 @@ final class MultiTargetSpec: QuickSpec {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
-                let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
+                let task = Task.request(jsonParams: ["key": "value"])
                 let sampleData = "sample data".data(using: .utf8)!
                 let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
@@ -32,17 +32,21 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct parameters") {
-                if case let .requestParameters(parameters: parameters, encoding: _) = target.task {
-                    expect(parameters["key"] as? String) == "value"
-                    expect(parameters.count) == 1
+                if case let .request(params: parameters) = target.task {
+                    let encodable = parameters?.first?.1
+                    expect(encodable).toNot(beNil())
+                    let dict = encodable! as? [String: String]
+                    expect(dict).toNot(beNil())
+                    expect(dict!["key"]) == "value"
+                    expect(dict!.count) == 1
                 } else {
                     fail("expected task type `.requestParameters`, was \(String(describing: target.task))")
                 }
             }
 
             it("uses correct parameter encoding.") {
-                if case let .requestParameters(parameters: _, encoding: parameterEncoding) = target.task {
-                    expect(parameterEncoding is JSONEncoding) == true
+                if case let .request(taskParameters) = target.task {
+                    expect(taskParameters?.first?.0 is JSONParameterEncoder) == true
                 } else {
                     fail("expected task type `.requestParameters`, was \(String(describing: target.task))")
                 }

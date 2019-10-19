@@ -16,7 +16,7 @@ final class EndpointClosureSpec: QuickSpec {
                 let task: Task
 
                 switch target.task {
-                case let .uploadMultipart(multipartFormData):
+                case let .uploadMultiPart(multipartFormData, _):
                     let additional = Moya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
                     var newMultipartFormData = multipartFormData
                     newMultipartFormData.append(additional)
