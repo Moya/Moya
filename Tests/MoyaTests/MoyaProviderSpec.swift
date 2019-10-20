@@ -300,7 +300,7 @@ final class MoyaProviderSpec: QuickSpec {
                         } catch MoyaError.requestMapping(let url) {
                             done(.failure(MoyaError.requestMapping(url)))
                         } catch {
-                            done(.failure(MoyaError.parameterEncoding(error)))
+                            done(.failure(MoyaError.underlying(error, nil)))
                         }
                     }
                 }
@@ -403,7 +403,7 @@ final class MoyaProviderSpec: QuickSpec {
                     } catch MoyaError.requestMapping(let url) {
                         done(.failure(MoyaError.requestMapping(url)))
                     } catch {
-                        done(.failure(MoyaError.parameterEncoding(error)))
+                        done(.failure(MoyaError.underlying(error, nil)))
                     }
                 }
                 provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -579,7 +579,7 @@ final class MoyaProviderSpec: QuickSpec {
                     } catch MoyaError.requestMapping(let url) {
                         done(.failure(MoyaError.requestMapping(url)))
                     } catch {
-                        done(.failure(MoyaError.parameterEncoding(error)))
+                        done(.failure(MoyaError.underlying(error, nil)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -603,7 +603,7 @@ final class MoyaProviderSpec: QuickSpec {
                     } catch MoyaError.requestMapping(let url) {
                         done(.failure(MoyaError.requestMapping(url)))
                     } catch {
-                        done(.failure(MoyaError.parameterEncoding(error)))
+                        done(.failure(MoyaError.underlying(error, nil)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -643,7 +643,7 @@ final class MoyaProviderSpec: QuickSpec {
                     } catch MoyaError.requestMapping(let url) {
                         done(.failure(MoyaError.requestMapping(url)))
                     } catch {
-                        done(.failure(MoyaError.parameterEncoding(error)))
+                        done(.failure(MoyaError.underlying(error, nil)))
                     }
                 }
                 let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)

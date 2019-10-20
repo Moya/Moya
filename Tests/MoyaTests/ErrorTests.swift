@@ -63,12 +63,6 @@ final class ErrorTests: QuickSpec {
 
                 expect(error.response).to(beNil())
             }
-
-            it("should not handle ParameterEncoding error") {
-                let error = MoyaError.parameterEncoding(underlyingError)
-
-                expect(error.response).to(beNil())
-            }
         }
 
         describe("underlyingError computed variable") {
@@ -118,12 +112,6 @@ final class ErrorTests: QuickSpec {
                 let error = MoyaError.requestMapping("http://www.example.com")
 
                 expect(error.underlyingError as NSError?).to(beNil())
-            }
-
-            it("should handle ParameterEncoding error") {
-                let error = MoyaError.parameterEncoding(underlyingError)
-
-                expect(error.underlyingError as NSError?) == underlyingError
             }
         }
 
@@ -190,14 +178,6 @@ final class ErrorTests: QuickSpec {
 
                 expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
                 expect(userInfo[NSUnderlyingErrorKey] as? NSError).to(beNil())
-            }
-
-            it("should have a localized description and underlying error for ParameterEncoding error") {
-                let error = MoyaError.parameterEncoding(underlyingError)
-                let userInfo = (error as NSError).userInfo
-
-                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
-                expect(userInfo[NSUnderlyingErrorKey] as? NSError) == underlyingError
             }
         }
 

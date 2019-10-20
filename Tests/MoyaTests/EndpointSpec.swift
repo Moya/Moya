@@ -252,8 +252,8 @@ final class EndpointSpec: QuickSpec {
                 beforeEach {
                     bodyParameters = ["Nemesis": "Harvey"]
                     urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .request(httpBodyParams: bodyParameters,
-                                                                 queryParams: urlParameters))
+                    endpoint = endpoint.replacing(task: .request(queryParams: urlParameters,
+                                                                 jsonParams: bodyParameters))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -302,32 +302,6 @@ final class EndpointSpec: QuickSpec {
                     var recievedError: MoyaError?
                     do {
                         _ = try badEndpoint.urlRequest()
-                    } catch {
-                        recievedError = error as? MoyaError
-                    }
-                    expect(recievedError).toNot(beNil())
-                    expect(recievedError).to(beOfSameErrorType(expectedError))
-                }
-            }
-
-            context("when parameter encoding is unsuccessful") {
-                it("throws a .parameterEncoding error") {
-
-                    // Non-serializable type to cause serialization error
-                    class InvalidParameter: Encodable {
-                        func encode(to encoder: Encoder) throws {}
-                    }
-
-                    let taskParameters: Task.TaskParameters = [(PropertyListEncoder.default, ["": InvalidParameter()] )]
-                    endpoint = endpoint.replacing(task: .request(customParams: taskParameters))
-                    let cocoaError = NSError(domain: "NSCocoaErrorDomain",
-                                             code: 3851,
-                                             userInfo: ["NSDebugDescription": "Property list invalid for format: 100 (property lists cannot contain objects of type 'CFType')"])
-                    let expectedError = MoyaError.parameterEncoding(cocoaError)
-                    var recievedError: MoyaError?
-
-                    do {
-                        _ = try endpoint.urlRequest()
                     } catch {
                         recievedError = error as? MoyaError
                     }

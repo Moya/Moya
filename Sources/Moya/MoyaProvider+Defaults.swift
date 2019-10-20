@@ -18,8 +18,6 @@ public extension MoyaProvider {
             closure(.success(urlRequest))
         } catch MoyaError.requestMapping(let url) {
             closure(.failure(MoyaError.requestMapping(url)))
-        } catch MoyaError.parameterEncoding(let error) {
-            closure(.failure(MoyaError.parameterEncoding(error)))
         } catch {
             closure(.failure(MoyaError.underlying(error, nil)))
         }
