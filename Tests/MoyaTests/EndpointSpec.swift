@@ -309,25 +309,6 @@ final class EndpointSpec: QuickSpec {
                     expect(recievedError).to(beOfSameErrorType(expectedError))
                 }
             }
-
-            context("when json encodable set with incorrect parameters") {
-                it("throws a .encodableMapping error") {
-
-                    let issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: Float.infinity)
-                    endpoint = endpoint.replacing(task: .request(jsonParams: issue))
-
-                    let expectedError = MoyaError.encodableMapping(EncodingError.invalidValue(Float.infinity, EncodingError.Context(codingPath: [Issue.CodingKeys.rating], debugDescription: "Unable to encode Float.infinity directly in JSON. Use JSONEncoder.NonConformingFloatEncodingStrategy.convertToString to specify how the value should be encoded.", underlyingError: nil)))
-                    var recievedError: MoyaError?
-
-                    do {
-                        _ = try endpoint.urlRequest()
-                    } catch {
-                        recievedError = error as? MoyaError
-                    }
-                    expect(recievedError).toNot(beNil())
-                    expect(recievedError).to(beOfSameErrorType(expectedError))
-                }
-            }
         }
     }
 }

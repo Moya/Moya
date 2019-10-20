@@ -40,12 +40,6 @@ final class ErrorTests: QuickSpec {
                 expect(error.response) == response
             }
 
-            it("should not handle EncodableMapping error") {
-                let error = MoyaError.encodableMapping(underlyingError)
-
-                expect(error.response).to(beNil())
-            }
-
             it("should handle StatusCode error") {
                 let error = MoyaError.statusCode(response)
 
@@ -86,12 +80,6 @@ final class ErrorTests: QuickSpec {
 
             it("should handle ObjectMapping error") {
                 let error = MoyaError.objectMapping(underlyingError, response)
-
-                expect(error.underlyingError as NSError?) == underlyingError
-            }
-
-            it("should handle EncodableMapping error") {
-                let error = MoyaError.encodableMapping(underlyingError)
 
                 expect(error.underlyingError as NSError?) == underlyingError
             }
@@ -142,14 +130,6 @@ final class ErrorTests: QuickSpec {
 
             it("should have a localized description and underlying error for ObjectMapping error") {
                 let error = MoyaError.objectMapping(underlyingError, response)
-                let userInfo = (error as NSError).userInfo
-
-                expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
-                expect(userInfo[NSUnderlyingErrorKey] as? NSError) == underlyingError
-            }
-
-            it("should have a localized description and underlying error for EncodableMapping error") {
-                let error = MoyaError.encodableMapping(underlyingError)
                 let userInfo = (error as NSError).userInfo
 
                 expect(userInfo[NSLocalizedDescriptionKey] as? String) == error.errorDescription
