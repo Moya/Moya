@@ -6,7 +6,7 @@ public enum Task {
     public typealias TaskParameters = [(ParameterEncoder, Encodable)]
 
     /// A task to request some data
-    case request(body: Data?, params: TaskParameters?)
+    case request(rawBody: Data?, params: TaskParameters?)
 
     /// A task to upload some data
     case uploadData(Data)
@@ -19,17 +19,32 @@ public enum Task {
 
     ///
     case download(destination: DownloadDestination, params: TaskParameters?)
+}
 
-    // MARK: Convenience ways to get a NewTask
+public extension Task {
+    var params: TaskParameters? {
+        switch self {
+        case let .request(_, params),
+             let .download(_, params),
+             let .uploadMultiPart(_, params):
+            return params
 
+        default:
+            return nil
+        }
+    }
+}
+
+// MARK: Convenience ways to get a NewTask
+public extension Task {
     // If the given parameters conflict (for example by providing either `httpBodyParams` and `jsonParams`),
     // only the lastest in parameters order will be used.
-    public static func request(bodyData: Data? = nil,
-                               methodDependentParams methodDependantEncodable: Encodable? = nil,
-                               httpBodyParams bodyEncodable: Encodable? = nil,
-                               queryParams queryEncodable: Encodable? = nil,
-                               jsonParams jsonEncodable: Encodable? = nil,
-                               customParams: TaskParameters? = nil) -> Task {
+    static func request(rawBody: Data? = nil,
+                        methodDependentParams methodDependantEncodable: Encodable? = nil,
+                        httpBodyParams bodyEncodable: Encodable? = nil,
+                        queryParams queryEncodable: Encodable? = nil,
+                        jsonParams jsonEncodable: Encodable? = nil,
+                        customParams: TaskParameters? = nil) -> Task {
         var finalParams: TaskParameters = []
 
         if let encodable = methodDependantEncodable {
@@ -53,16 +68,12 @@ public enum Task {
         }
 
         //Avoid passing empty arrays
-        if finalParams.isEmpty {
-            return .request(body: bodyData, params: nil)
-        } else {
-            return .request(body: bodyData, params: finalParams)
-        }
+        return .request(rawBody: rawBody, params: finalParams.isEmpty ? nil : finalParams)
     }
 
-    public static func uploadMultipart(_ multiPart: [MultipartFormData],
-                                       queryParamsEncoder: URLEncodedFormParameterEncoder = .default,
-                                       queryParams queryEncodable: Encodable? = nil) -> Task {
+    static func uploadMultipart(_ multiPart: [MultipartFormData],
+                                queryParamsEncoder: URLEncodedFormParameterEncoder = .default,
+                                queryParams queryEncodable: Encodable? = nil) -> Task {
         var finalParams: TaskParameters?
         if let encodable = queryEncodable {
             finalParams = [(queryParamsEncoder, encodable)]
@@ -70,9 +81,9 @@ public enum Task {
         return .uploadMultiPart(multiPart, params: finalParams)
     }
 
-    public static func download(to destination: @escaping DownloadDestination,
-                                paramsEncoder: ParameterEncoder = URLEncodedFormParameterEncoder.default,
-                                params: Encodable? = nil) -> Task {
+    static func download(to destination: @escaping DownloadDestination,
+                         paramsEncoder: ParameterEncoder = URLEncodedFormParameterEncoder.default,
+                         params: Encodable? = nil) -> Task {
         var finalParams: TaskParameters?
         if let encodable = params {
             finalParams = [(paramsEncoder, encodable)]

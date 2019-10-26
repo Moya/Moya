@@ -133,7 +133,7 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(bodyData: data))
+                    endpoint = endpoint.replacing(task: .request(rawBody: data))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -225,7 +225,7 @@ final class EndpointSpec: QuickSpec {
                 beforeEach {
                     parameters = ["Nemesis": "Harvey"]
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(bodyData: data, queryParams: parameters))
+                    endpoint = endpoint.replacing(task: .request(rawBody: data, queryParams: parameters))
                     request = try! endpoint.urlRequest()
                 }
 
