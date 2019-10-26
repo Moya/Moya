@@ -78,56 +78,13 @@ final class EndpointSpec: QuickSpec {
         }
 
         describe("successful converting to urlRequest") {
-            context("when task is .request(params: nil)") {
+            context("when task is .request without params") {
                 itBehavesLike("endpoint with no request property changed") {
                     ["task": Task.request(), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
-            context("when task is .uploadFile") {
-                itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
-                }
-            }
-
-            context("when task is .uploadMultipart") {
-                itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
-                }
-            }
-
-            context("when task is .download") {
-                itBehavesLike("endpoint with no request property changed") {
-                    let destination: DownloadDestination = { url, response in
-                        return (destinationURL: url, options: [])
-                    }
-                    return ["task": Task.download(to: destination), "endpoint": self.simpleGitHubEndpoint]
-                }
-            }
-
-            context("when task is .request with JSON encoder") {
-                itBehavesLike("endpoint with encoded parameters") {
-                    let parameters: Encodable = ["Nemesis": "Harvey"]
-                    let encoder = JSONParameterEncoder.default
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .request(jsonParams: parameters))
-                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
-                }
-            }
-
-            context("when task is .download with parameters") {
-                itBehavesLike("endpoint with encoded parameters") {
-                    let parameters: Encodable = ["Nemesis": "Harvey"]
-                    let encoder = JSONParameterEncoder.default
-                    let destination: DownloadDestination = { url, response in
-                        return (destinationURL: url, options: [])
-                    }
-                    let newTask: Task = .download(destination: destination, params: [(encoder, parameters)])
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: newTask)
-                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
-                }
-            }
-
-            context("when task is .request with data encoded in body") {
+            context("when task is .request with raw data in body") {
                 var data: Data!
                 var request: URLRequest!
 
@@ -145,6 +102,15 @@ final class EndpointSpec: QuickSpec {
                     expect(request.url?.absoluteString).to(equal(endpoint.url))
                     expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
                     expect(request.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
+            context("when task is .request with JSON encoder") {
+                itBehavesLike("endpoint with encoded parameters") {
+                    let parameters: Encodable = ["Nemesis": "Harvey"]
+                    let encoder = JSONParameterEncoder.default
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .request(jsonParams: parameters))
+                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
                 }
             }
 
@@ -273,6 +239,18 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .uploadFile") {
+                itBehavesLike("endpoint with no request property changed") {
+                    return ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
+            context("when task is .uploadMultipart without params") {
+                itBehavesLike("endpoint with no request property changed") {
+                    return ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
             context("when task is .uploadMultipart with params") {
                 var urlParameters: Encodable!
                 var request: URLRequest!
@@ -286,6 +264,28 @@ final class EndpointSpec: QuickSpec {
                 it("updates url") {
                     let expectedUrl = endpoint.url + "?Harvey=Nemesis"
                     expect(request.url?.absoluteString).to(equal(expectedUrl))
+                }
+            }
+
+            context("when task is .download") {
+                itBehavesLike("endpoint with no request property changed") {
+                    let destination: DownloadDestination = { url, response in
+                        return (destinationURL: url, options: [])
+                    }
+                    return ["task": Task.download(to: destination), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
+            context("when task is .download with parameters") {
+                itBehavesLike("endpoint with encoded parameters") {
+                    let parameters: Encodable = ["Nemesis": "Harvey"]
+                    let encoder = JSONParameterEncoder.default
+                    let destination: DownloadDestination = { url, response in
+                        return (destinationURL: url, options: [])
+                    }
+                    let newTask: Task = .download(destination: destination, params: [(encoder, parameters)])
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: newTask)
+                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
                 }
             }
         }
