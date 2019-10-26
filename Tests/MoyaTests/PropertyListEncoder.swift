@@ -67,3 +67,9 @@ internal struct PropertyListEncoder: ParameterEncoder {
         return urlRequest
     }
 }
+
+extension PropertyListEncoder: Equatable {
+    static func == (lhs: PropertyListEncoder, rhs: PropertyListEncoder) -> Bool {
+        return lhs.format == rhs.format && lhs.options == rhs.options
+    }
+}
