@@ -76,6 +76,7 @@
 		AAAFCD18235BB30E0049EA19 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149749421F8923EC00FA4900 /* AnyEncodable.swift */; };
 		AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */; };
 		AACB924C2366202600A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
+		AACB924D2366583A00A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AAD802B4236435EB0044EDFB /* TaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD802B3236435EB0044EDFB /* TaskSpec.swift */; };
 		AB5048DC5042B016964EE958 /* MoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C174EF53873DE04BB159E /* MoyaProvider+Reactive.swift */; };
 		B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */; };
@@ -931,6 +932,7 @@
 				A6304A7E74FA3B04C9B10B63 /* AccessTokenPluginSpec.swift in Sources */,
 				2C7132B56A7B129E12BAACAC /* EndpointSpec.swift in Sources */,
 				85C98002231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift in Sources */,
+				AACB924D2366583A00A33FB8 /* Task+Internal.swift in Sources */,
 				78A2D3991F44BACD00C9E122 /* RxTestHelpers.swift in Sources */,
 				53376123902C6A22A44DB88E /* Error+MoyaSpec.swift in Sources */,
 				78A2D39B1F44D45100C9E122 /* Single+MoyaSpec.swift in Sources */,

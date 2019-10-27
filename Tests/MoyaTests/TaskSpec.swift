@@ -11,7 +11,9 @@ final class TaskConfiguration: QuickConfiguration {
             let encodable = context()["encodable"] as! [String: String]
 
             it("uses the correct encoder and encodable") {
-                let entry = task.allParameters.first { $0.1 is URLEncodedFormParameterEncoder }
+                let allParameters = try? task.allParameters()
+                expect(allParameters).toNot(beNil())
+                let entry = allParameters!.first { $0.1 is URLEncodedFormParameterEncoder }
                 expect(entry).toNot(beNil())
                 let encoder = entry!.1 as! URLEncodedFormParameterEncoder
                 expect(encoder.destination).to(equal(expectedDestination))
@@ -25,8 +27,10 @@ final class TaskConfiguration: QuickConfiguration {
             let expectedEncodable = context()["encodable"] as! [String: String]
 
             it("uses the correct encoder and encodable") {
-                expect(task.allParameters.count).to(be(1))
-                let entry = task.allParameters.first!
+                let allParameters = try? task.allParameters()
+                expect(allParameters).toNot(beNil())
+                expect(allParameters!.count).to(be(1))
+                let entry = allParameters!.first!
                 expect(entry.1).to(be(expectedEncoder))
                 expect(entry.0 as! [String: String]).to(equal(expectedEncodable))
             }
@@ -63,7 +67,9 @@ final class TaskSpec: QuickSpec {
             context("when creating a .request with a json encodable") {
                 let task = Task.request(bodyParams: .json(encodable))
 
-                let entry = task.allParameters.first { $0.1 is JSONParameterEncoder }
+                let allParameters = try? task.allParameters()
+                expect(allParameters).toNot(beNil())
+                let entry = allParameters!.first { $0.1 is JSONParameterEncoder }
                 expect(entry).toNot(beNil())
                 expect(entry!.0 as! [String: String]).to(equal(encodable))
             }
@@ -72,7 +78,9 @@ final class TaskSpec: QuickSpec {
                 let encoder = PropertyListEncoder()
                 let task = Task.request(bodyParams: .custom(encodable, encoder))
 
-                let entry = task.allParameters.first { $0.1 is PropertyListEncoder }
+                let allParameters = try? task.allParameters()
+                expect(allParameters).toNot(beNil())
+                let entry = allParameters!.first { $0.1 is PropertyListEncoder }
                 expect(entry).toNot(beNil())
                 expect(entry!.1).to(beAKindOf(PropertyListEncoder.self))
                 expect(entry!.1 as! PropertyListEncoder).to(equal(encoder))

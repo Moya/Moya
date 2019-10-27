@@ -15,6 +15,9 @@ public enum MoyaError: Swift.Error {
     /// Indicates a response failed to map to a Decodable object.
     case objectMapping(Swift.Error, Response)
 
+    /// Indicates that Encodable couldn't be encoded into Data
+    case encodableMapping(String)
+
     /// Indicates a response failed with an invalid HTTP status code.
     case statusCode(Response)
 
@@ -29,26 +32,36 @@ public extension MoyaError {
     /// Depending on error type, returns a `Response` object.
     var response: Moya.Response? {
         switch self {
-        case .imageMapping(let response): return response
-        case .jsonMapping(let response): return response
-        case .stringMapping(let response): return response
-        case .objectMapping(_, let response): return response
-        case .statusCode(let response): return response
-        case .underlying(_, let response): return response
-        case .requestMapping: return nil
+        case let .imageMapping(response),
+             let .jsonMapping(response),
+             let .stringMapping(response),
+             let .objectMapping(_, response),
+             let .statusCode(response):
+            return response
+
+        case let .underlying (_, response):
+            return response
+
+        case .encodableMapping,
+             .requestMapping:
+            return nil
         }
     }
 
     /// Depending on error type, returns an underlying `Error`.
     internal var underlyingError: Swift.Error? {
         switch self {
-        case .imageMapping: return nil
-        case .jsonMapping: return nil
-        case .stringMapping: return nil
-        case .objectMapping(let error, _): return error
-        case .statusCode: return nil
-        case .underlying(let error, _): return error
-        case .requestMapping: return nil
+        case let .objectMapping(error, _),
+             let .underlying(error, _):
+            return error
+
+        case .imageMapping,
+             .jsonMapping,
+             .stringMapping,
+             .encodableMapping,
+             .statusCode,
+             .requestMapping:
+            return nil
         }
     }
 }
@@ -66,6 +79,8 @@ extension MoyaError: LocalizedError {
             return "Failed to map data to a String."
         case .objectMapping:
             return "Failed to map data to a Decodable object."
+        case let .encodableMapping(message):
+            return message
         case .statusCode:
             return "Status code didn't fall within the given range."
         case .underlying(let error, _):

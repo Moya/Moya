@@ -29,16 +29,3 @@ public enum Task {
     /// A task to download some data
     case download(destination: DownloadDestination, bodyParams: BodyParams? = nil, queryParams: QueryParams? = nil)
 }
-
-public extension Task {
-    typealias TaskParameters = (Encodable, ParameterEncoder)
-
-    var allParameters: [TaskParameters] {
-        switch self {
-        case let .request(bodyParams, queryParams),
-             let .upload(_, bodyParams, queryParams),
-             let .download(_, bodyParams, queryParams):
-            return [bodyParams?.taskParameters, queryParams?.taskParameters].compactMap { $0 }
-        }
-    }
-}

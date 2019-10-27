@@ -84,7 +84,7 @@ public extension Endpoint {
         request.allHTTPHeaderFields = httpHeaderFields
 
         //Encode params
-        try task.allParameters.forEach { tuple in
+        try task.allParameters().forEach { tuple in
             let encodable = tuple.0
             let encoder = tuple.1
             request = try encoder.encode(AnyEncodable(encodable), into: request)
