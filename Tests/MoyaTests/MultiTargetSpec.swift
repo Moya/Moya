@@ -11,7 +11,7 @@ final class MultiTargetSpec: QuickSpec {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
-                let task = Task.request(queryParams: .query(["key": "value"]))
+                let task = Task.request(bodyParams: .json(["key": "value"]))
                 let sampleData = "sample data".data(using: .utf8)!
                 let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
@@ -52,7 +52,7 @@ final class MultiTargetSpec: QuickSpec {
                     return
                 }
 
-                expect(task.allParameters.first?.1 is JSONParameterEncoder) == true
+                expect(task.allParameters.first?.1).to(beAKindOf(JSONParameterEncoder.self))
             }
 
             it("uses correct method") {

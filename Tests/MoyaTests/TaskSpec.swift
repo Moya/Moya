@@ -11,11 +11,11 @@ final class TaskConfiguration: QuickConfiguration {
             let encodable = context()["encodable"] as! [String: String]
 
             it("uses the correct encoder and encodable") {
-                let entry = task.allParameters.first { $0.0 is URLEncodedFormParameterEncoder }
+                let entry = task.allParameters.first { $0.1 is URLEncodedFormParameterEncoder }
                 expect(entry).toNot(beNil())
-                let encoder = entry!.0 as! URLEncodedFormParameterEncoder
+                let encoder = entry!.1 as! URLEncodedFormParameterEncoder
                 expect(encoder.destination).to(equal(expectedDestination))
-                expect(entry!.1 as! [String: String]).to(equal(encodable))
+                expect(entry!.0 as! [String: String]).to(equal(encodable))
             }
         }
 
@@ -27,8 +27,8 @@ final class TaskConfiguration: QuickConfiguration {
             it("uses the correct encoder and encodable") {
                 expect(task.allParameters.count).to(be(1))
                 let entry = task.allParameters.first!
-                expect(entry.0).to(be(expectedEncoder))
-                expect(entry.1 as! [String: String]).to(equal(expectedEncodable))
+                expect(entry.1).to(be(expectedEncoder))
+                expect(entry.0 as! [String: String]).to(equal(expectedEncodable))
             }
         }
     }
@@ -63,20 +63,20 @@ final class TaskSpec: QuickSpec {
             context("when creating a .request with a json encodable") {
                 let task = Task.request(bodyParams: .json(encodable))
 
-                let entry = task.allParameters.first { $0.0 is JSONParameterEncoder }
+                let entry = task.allParameters.first { $0.1 is JSONParameterEncoder }
                 expect(entry).toNot(beNil())
-                expect(entry!.1 as! [String: String]).to(equal(encodable))
+                expect(entry!.0 as! [String: String]).to(equal(encodable))
             }
 
             context("when creating a .request with a .custom bodyParams") {
                 let encoder = PropertyListEncoder()
                 let task = Task.request(bodyParams: .custom(encodable, encoder))
 
-                let entry = task.allParameters.first { $0.0 is PropertyListEncoder }
+                let entry = task.allParameters.first { $0.1 is PropertyListEncoder }
                 expect(entry).toNot(beNil())
-                expect(entry!.0).to(beAKindOf(PropertyListEncoder.self))
-                expect(entry!.0 as! PropertyListEncoder).to(equal(encoder))
-                expect(entry!.1 as! [String: String]).to(equal(encodable))
+                expect(entry!.1).to(beAKindOf(PropertyListEncoder.self))
+                expect(entry!.1 as! PropertyListEncoder).to(equal(encoder))
+                expect(entry!.0 as! [String: String]).to(equal(encodable))
             }
 
             context("when creating a .uploadMultiPart with a custom encoder") {

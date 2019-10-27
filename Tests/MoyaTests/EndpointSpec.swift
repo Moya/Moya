@@ -218,7 +218,7 @@ final class EndpointSpec: QuickSpec {
                 beforeEach {
                     bodyParameters = ["Nemesis": "Harvey"]
                     urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .request(bodyParams: .urlEncoded(bodyParameters),
+                    endpoint = endpoint.replacing(task: .request(bodyParams: .json(bodyParameters),
                                                                  queryParams: .query(urlParameters)))
                     request = try! endpoint.urlRequest()
                 }
