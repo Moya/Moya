@@ -84,20 +84,10 @@ public extension Endpoint {
         request.allHTTPHeaderFields = httpHeaderFields
 
         //Encode params
-        switch task {
-        case let .request(data, params):
-            request.httpBody = data
-            fallthrough
-        case let .download(_, params),
-             let .uploadMultiPart(_, params):
-            try params?.forEach { encoder, encodable in
-                request = try encoder.encode(AnyEncodable(encodable), into: request)
-            }
-            return request
-
-        case .uploadData,
-             .uploadFile:
-            break
+        try task.allParameters.forEach { tuple in
+            let encodable = tuple.0
+            let encoder = tuple.1
+            request = try encoder.encode(AnyEncodable(encodable), into: request)
         }
 
         return request

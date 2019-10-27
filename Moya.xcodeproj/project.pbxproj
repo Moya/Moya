@@ -75,6 +75,7 @@
 		A8C55515DFA147BE4159B40A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCB6731C60D3830DA5D2CB /* Response.swift */; };
 		AAAFCD18235BB30E0049EA19 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149749421F8923EC00FA4900 /* AnyEncodable.swift */; };
 		AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */; };
+		AACB924C2366202600A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AAD802B4236435EB0044EDFB /* TaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD802B3236435EB0044EDFB /* TaskSpec.swift */; };
 		AB5048DC5042B016964EE958 /* MoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C174EF53873DE04BB159E /* MoyaProvider+Reactive.swift */; };
 		B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */; };
@@ -210,6 +211,7 @@
 		8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		9C38151BF038BA0B61EF5A62 /* TargetType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListEncoder.swift; sourceTree = "<group>"; };
+		AACB924B2366202600A33FB8 /* Task+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Internal.swift"; sourceTree = "<group>"; };
 		AAD802B3236435EB0044EDFB /* TaskSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSpec.swift; sourceTree = "<group>"; };
 		B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		B1F68927EA26EBDB45E82C8C /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				7EFCB6731C60D3830DA5D2CB /* Response.swift */,
 				9C38151BF038BA0B61EF5A62 /* TargetType.swift */,
 				147E26EB1F5B14B300C1F513 /* Task.swift */,
+				AACB924B2366202600A33FB8 /* Task+Internal.swift */,
 				1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */,
 				1F8AA0BB1FE0630300C9D7B6 /* ValidationType.swift */,
 				85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */,
@@ -850,6 +853,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8AA0BC1FE0630300C9D7B6 /* ValidationType.swift in Sources */,
+				AACB924C2366202600A33FB8 /* Task+Internal.swift in Sources */,
 				3AF7063CBE1F9626FB32D933 /* Cancellable.swift in Sources */,
 				85F6042E22A018BB00063320 /* RequestTypeWrapper.swift in Sources */,
 				49C61E884A595E94758B5643 /* Endpoint.swift in Sources */,
