@@ -50,7 +50,7 @@ extension GitHub: TargetType {
     public var task: Task {
         switch self {
         case .userRepositories:
-            return .request(methodDependentParams: ["sort": "pushed"])
+            return .request(queryParams: .query(["sort": "pushed"]))
         default:
             return .request()
         }
