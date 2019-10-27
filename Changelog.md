@@ -1,5 +1,7 @@
 # Next
 
+# [14.0.0-beta.5] - 2019-10-27
+
 ### Changed
 - **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-rc.3. [#1944](https://github.com/Moya/Moya/pull/1944) by [@sunshinejr](https://github.com/sunshinejr).
 
