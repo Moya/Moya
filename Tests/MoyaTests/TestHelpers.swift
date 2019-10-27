@@ -100,13 +100,22 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
 
     var task: Task {
         switch self {
-        case .basicAuth, .post, .bearer:
-            return .request(methodDependentParams: ["": ""])
+        case .basicAuth, .bearer:
+            return .request(queryParams: .query(["": ""]))
+
+        case .post:
+            return .request(bodyParams: .urlEncoded(["": ""]))
+
         case .upload(let fileURL):
-            return .uploadFile(fileURL)
+            return .upload(source: .file(fileURL))
+
         case .uploadMultipart(let data, let urlParameters),
              .validatedUploadMultipart(let data, let urlParameters, _):
-            return .uploadMultipart(data, queryParams: urlParameters)
+            var queryParams: Task.QueryParams?
+            if let encodable = urlParameters {
+                queryParams = .query(encodable)
+            }
+            return .upload(source: .multipart(data), queryParams: queryParams)
         }
     }
 
@@ -166,7 +175,7 @@ extension GitHubUserContent: TargetType {
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
-            return .download(to: defaultDownloadDestination)
+            return .download(destination: defaultDownloadDestination)
         case .requestMoyaWebContent:
             return .request()
         }

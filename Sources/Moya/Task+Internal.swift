@@ -1,9 +1,5 @@
 import Foundation
 
-extension Task {
-    typealias TaskParameters = (Encodable, ParameterEncoder)
-}
-
 private protocol TaskParametersProvider {
     var taskParameters: Task.TaskParameters {get}
 }
@@ -30,18 +26,6 @@ extension Task.QueryParams: TaskParametersProvider {
         }
     }
 }
-
-extension Task {
-    var allParameters: [TaskParameters] {
-        switch self {
-        case let .request(bodyParams, queryParams),
-             let .upload(_, bodyParams, queryParams),
-             let .download(_, bodyParams, queryParams):
-            return [bodyParams?.taskParameters, queryParams?.taskParameters].compactMap { $0 }
-        }
-    }
-}
-
 
 /// An "encoder" that expects the given parameters to be of type `Data` and just sets the request's httpBody with it, without any additional encoding.
 struct RawDataEncoder: ParameterEncoder {

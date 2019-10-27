@@ -90,7 +90,7 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(rawBody: data))
+                    endpoint = endpoint.replacing(task: .request(bodyParams: .raw(data)))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -109,7 +109,7 @@ final class EndpointSpec: QuickSpec {
                 itBehavesLike("endpoint with encoded parameters") {
                     let parameters: Encodable = ["Nemesis": "Harvey"]
                     let encoder = JSONParameterEncoder.default
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .request(jsonParams: parameters))
+                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .request(bodyParams: .json(parameters, encoder)))
                     return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
                 }
             }
@@ -120,7 +120,7 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
-                    endpoint = endpoint.replacing(task: .request(jsonParams: issue))
+                    endpoint = endpoint.replacing(task: .request(bodyParams: .json(issue)))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -159,8 +159,8 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
-                    let taskParameters: Task.TaskParameters = [(JSONParameterEncoder(encoder: encoder), issue)]
-                    endpoint = endpoint.replacing(task: .request(customParams: taskParameters))
+                    let encoder = JSONParameterEncoder(encoder: encoder)
+                    endpoint = endpoint.replacing(task: .request(bodyParams: .json(issue, encoder)))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -191,7 +191,7 @@ final class EndpointSpec: QuickSpec {
                 beforeEach {
                     parameters = ["Nemesis": "Harvey"]
                     data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(rawBody: data, queryParams: parameters))
+                    endpoint = endpoint.replacing(task: .request(bodyParams: .raw(data), queryParams: .query(parameters)))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -218,8 +218,8 @@ final class EndpointSpec: QuickSpec {
                 beforeEach {
                     bodyParameters = ["Nemesis": "Harvey"]
                     urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .request(queryParams: urlParameters,
-                                                                 jsonParams: bodyParameters))
+                    endpoint = endpoint.replacing(task: .request(bodyParams: .urlEncoded(bodyParameters),
+                                                                 queryParams: .query(urlParameters)))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -241,13 +241,15 @@ final class EndpointSpec: QuickSpec {
 
             context("when task is .uploadFile") {
                 itBehavesLike("endpoint with no request property changed") {
-                    return ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
+                    ["task": Task.upload(source: .file(URL(string: "https://google.com")!)),
+                     "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
             context("when task is .uploadMultipart without params") {
                 itBehavesLike("endpoint with no request property changed") {
-                    return ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
+                    ["task": Task.upload(source: .multipart([])),
+                     "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
@@ -257,7 +259,8 @@ final class EndpointSpec: QuickSpec {
 
                 beforeEach {
                     urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .uploadMultipart([], queryParams: urlParameters))
+                    endpoint = endpoint.replacing(task: .upload(source: .multipart([]),
+                                                                queryParams: .query(urlParameters)))
                     request = try! endpoint.urlRequest()
                 }
 
@@ -269,10 +272,9 @@ final class EndpointSpec: QuickSpec {
 
             context("when task is .download") {
                 itBehavesLike("endpoint with no request property changed") {
-                    let destination: DownloadDestination = { url, response in
-                        return (destinationURL: url, options: [])
-                    }
-                    return ["task": Task.download(to: destination), "endpoint": self.simpleGitHubEndpoint]
+                    let destination: DownloadDestination = { url, _ in (destinationURL: url, options: []) }
+                    return ["task": Task.download(destination: destination),
+                            "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
@@ -280,12 +282,12 @@ final class EndpointSpec: QuickSpec {
                 itBehavesLike("endpoint with encoded parameters") {
                     let parameters: Encodable = ["Nemesis": "Harvey"]
                     let encoder = JSONParameterEncoder.default
-                    let destination: DownloadDestination = { url, response in
-                        return (destinationURL: url, options: [])
-                    }
-                    let newTask: Task = .download(destination: destination, params: [(encoder, parameters)])
+                    let destination: DownloadDestination = { url, _ in (destinationURL: url, options: []) }
+                    let newTask: Task = .download(destination: destination, bodyParams: .json(parameters, encoder))
                     let endpoint = self.simpleGitHubEndpoint.replacing(task: newTask)
-                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
+                    return ["parameters": parameters,
+                            "encoder": encoder,
+                            "endpoint": endpoint]
                 }
             }
         }

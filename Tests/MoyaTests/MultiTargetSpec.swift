@@ -11,7 +11,7 @@ final class MultiTargetSpec: QuickSpec {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
-                let task = Task.request(jsonParams: ["key": "value"])
+                let task = Task.request(queryParams: .query(["key": "value"]))
                 let sampleData = "sample data".data(using: .utf8)!
                 let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
@@ -32,24 +32,27 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct parameters") {
-                if case let .request(_, parameters) = target.task {
-                    let encodable = parameters?.first?.1
-                    expect(encodable).toNot(beNil())
-                    let dict = encodable! as? [String: String]
-                    expect(dict).toNot(beNil())
-                    expect(dict!["key"]) == "value"
-                    expect(dict!.count) == 1
-                } else {
+                let task = target.task
+                guard case Task.request = task else {
                     fail("expected task type `.request`, was \(String(describing: target.task))")
+                    return
                 }
+                let encodable = task.allParameters.first?.0
+                expect(encodable).toNot(beNil())
+                let dict = encodable! as? [String: String]
+                expect(dict).toNot(beNil())
+                expect(dict!["key"]) == "value"
+                expect(dict!.count) == 1
             }
 
             it("uses correct parameter encoding.") {
-                if case let .request(_, taskParameters) = target.task {
-                    expect(taskParameters?.first?.0 is JSONParameterEncoder) == true
-                } else {
+                let task = target.task
+                guard case Task.request = task else {
                     fail("expected task type `.request`, was \(String(describing: target.task))")
+                    return
                 }
+
+                expect(task.allParameters.first?.1 is JSONParameterEncoder) == true
             }
 
             it("uses correct method") {
@@ -57,7 +60,11 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct task") {
-                expect(String(describing: target.task)).to(beginWith("request")) // Hack to avoid implementing Equatable for Task
+                guard case Task.request = target.task else {
+                    fail("expected task type `.request`, was \(String(describing: target.task))")
+                    return
+                }
+                expect(true) == true
             }
 
             it("uses correct sample data") {
