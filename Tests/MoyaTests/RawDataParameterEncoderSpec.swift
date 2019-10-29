@@ -7,53 +7,47 @@ final class RawDataParameterEncoderSpec: QuickSpec {
 
     override func spec() {
 
-        var request: URLRequest!
-        var encoder: RawDataParameterEncoder!
-
-        beforeEach {
-            request = URLRequest(url: URL(string:"https://github.com/Moya/Moya")!)
-            encoder = RawDataParameterEncoder()
-        }
+        let requestURL = URL(string: "https://github.com/Moya/Moya")!
+        let request = URLRequest(url: requestURL)
+        let encoder = RawDataParameterEncoder()
 
         context("when the encodable is Data") {
-
             let data = "Some test content".data(using: .utf8)
+            let newRequest = try! encoder.encode(data, into: request)
 
             it("updates the request body") {
-                let newRequest = try! encoder.encode(data, into: request)
                 expect(newRequest.httpBody).to(equal(data))
             }
 
             it("doesn't update anything else") {
-                var newRequest = try! encoder.encode(data, into: request)
-                newRequest.httpBody = nil
-                expect(newRequest).to(equal(request))
+                expect(newRequest.url).to(equal(requestURL))
+                expect(newRequest.allHTTPHeaderFields).to(equal([:]))
             }
         }
 
         context("when the encodable is AnyEncodable") {
             let data = "Some test content".data(using: .utf8)
             let encodable = AnyEncodable(data)
+            let newRequest = try! encoder.encode(encodable, into: request)
 
             it("updates the request body") {
-                request = try! encoder.encode(encodable, into: request)
-                expect(request.httpBody).to(equal(data))
+                expect(newRequest.httpBody).to(equal(data))
             }
 
             it("doesn't update anything else") {
-                var newRequest = try! encoder.encode(data, into: request)
-                newRequest.httpBody = nil
-                expect(newRequest).to(equal(request))
+                expect(newRequest.url).to(equal(request.url))
+                expect(newRequest.allHTTPHeaderFields).to(equal([:]))
             }
         }
 
-        context("when the encodable is somthing else") {
+        context("when the encodable is something else") {
             let encodable: [String: String] = ["Encodable": "Body"]
+            let newRequest = try! encoder.encode(encodable, into: request)
 
             it("doesn't update the request") {
-                var newRequest = try! encoder.encode(encodable, into: request)
-                newRequest.httpBody = nil
-                expect(newRequest).to(equal(request))
+                expect(newRequest.url).to(equal(requestURL))
+                expect(newRequest.httpBody).to(beNil())
+                expect(newRequest.allHTTPHeaderFields).to(beNil())
             }
         }
     }
