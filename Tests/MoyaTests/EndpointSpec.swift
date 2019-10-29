@@ -34,7 +34,13 @@ final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
                 let newRequest = try! newEndpoint.urlRequest()
                 let newEncodedRequest = try? encoder.encode(AnyEncodable(parameters), into: newRequest)
 
-                expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
+                // Workaround for error `expected to equal <nil>, got <nil> (use beNil() to match nils)` when httpBody is nil
+                if let body = request.httpBody {
+                    expect(body).to(equal(newEncodedRequest?.httpBody))
+                } else {
+                    expect(newEncodedRequest?.httpBody).to(beNil())
+                }
+
                 expect(request.url?.absoluteString).to(equal(newEncodedRequest?.url?.absoluteString))
                 expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
                 expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
@@ -78,216 +84,209 @@ final class EndpointSpec: QuickSpec {
         }
 
         describe("successful converting to urlRequest") {
-            context("when task is .request without params") {
-                itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.request(), "endpoint": self.simpleGitHubEndpoint]
+            let parameters = ["Nemesis": "Harvey"]
+
+            context("when task is .request") {
+                context("without params") {
+                    itBehavesLike("endpoint with no request property changed") {
+                        return ["task": Task.request(),
+                                "endpoint": self.simpleGitHubEndpoint]
+                    }
+                }
+
+                context("with body params") {
+                    context("value is .raw") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let data = "Hello Moya".data(using: .utf8)!
+                            let task: Task = .request(bodyParams: .raw(data))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": data,
+                                    "encoder": RawDataParameterEncoder(),
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .json") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = JSONParameterEncoder.default
+                            let task: Task = .request(bodyParams: .json(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .urlEncoded") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = URLEncodedFormParameterEncoder(destination: .httpBody)
+                            let task: Task = .request(bodyParams: .urlEncoded(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .custom") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = PropertyListEncoder()
+                            let task: Task = .request(bodyParams: .custom(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+                }
+
+                context("with query params") {
+                    itBehavesLike("endpoint with encoded parameters") {
+                        let encoder = URLEncodedFormParameterEncoder(destination: .queryString)
+                        let task: Task = .request(queryParams: .query(parameters, encoder))
+                        let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                        return ["parameters": parameters,
+                                "encoder": encoder,
+                                "endpoint": endpoint]
+                    }
                 }
             }
 
-            context("when task is .request with raw data in body") {
-                var data: Data!
-                var request: URLRequest!
+            context("when task is .upload") {
 
-                beforeEach {
-                    data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(bodyParams: .raw(data)))
-                    request = try! endpoint.urlRequest()
+                let data = "Hello Moya".data(using: .utf8)!
+
+                context("without params") {
+                    itBehavesLike("endpoint with no request property changed") {
+                        return ["task": Task.upload(source: .rawData(data)),
+                                "endpoint": self.simpleGitHubEndpoint]
+                    }
                 }
 
-                it("updates httpBody") {
-                    expect(request.httpBody).to(equal(data))
+                context("with body params") {
+                    context("value is .raw") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let data = "Hello Moya".data(using: .utf8)!
+                            let task: Task = .upload(source: .rawData(data), bodyParams: .raw(data))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": data,
+                                    "encoder": RawDataParameterEncoder(),
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .json") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = JSONParameterEncoder.default
+                            let task: Task = .upload(source: .rawData(data), bodyParams: .json(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .urlEncoded") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = URLEncodedFormParameterEncoder(destination: .httpBody)
+                            let task: Task = .upload(source: .rawData(data), bodyParams: .urlEncoded(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .custom") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = PropertyListEncoder()
+                            let task: Task = .upload(source: .rawData(data), bodyParams: .custom(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
                 }
 
-                it("doesn't update any of the other properties") {
-                    expect(request.url?.absoluteString).to(equal(endpoint.url))
-                    expect(request.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
-                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
-                }
-            }
-
-            context("when task is .request with JSON encoder") {
-                itBehavesLike("endpoint with encoded parameters") {
-                    let parameters: Encodable = ["Nemesis": "Harvey"]
-                    let encoder = JSONParameterEncoder.default
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: .request(bodyParams: .json(parameters, encoder)))
-                    return ["parameters": parameters, "encoder": encoder, "endpoint": endpoint]
-                }
-            }
-
-            context("when task is .request with json encoded in body") {
-                var issue: Issue!
-                var request: URLRequest!
-
-                beforeEach {
-                    issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
-                    endpoint = endpoint.replacing(task: .request(bodyParams: .json(issue)))
-                    request = try! endpoint.urlRequest()
-                }
-
-                it("updates httpBody") {
-                    let expectedIssue = try! JSONDecoder().decode(Issue.self, from: request.httpBody!)
-                    expect(issue.createdAt).to(equal(expectedIssue.createdAt))
-                    expect(issue.title).to(equal(expectedIssue.title))
-                }
-
-                it("updates headers to include Content-Type: application/json") {
-                    let contentTypeHeaders = ["Content-Type": "application/json"]
-                    let initialHeaderFields = endpoint.httpHeaderFields ?? [:]
-                    let expectedHTTPHeaderFields = initialHeaderFields.merging(contentTypeHeaders) { initialValue, _ in initialValue }
-                    expect(request.allHTTPHeaderFields).to(equal(expectedHTTPHeaderFields))
-                }
-
-                it("doesn't update any of the other properties") {
-                    expect(request.url?.absoluteString).to(equal(endpoint.url))
-                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
-                }
-            }
-
-            context("when task is .request with json body and a custom encoder") {
-                var issue: Issue!
-                var request: URLRequest!
-
-                let formatter = DateFormatter()
-                formatter.locale = Locale(identifier: "en_US_POSIX")
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-
-                let encoder = JSONEncoder()
-                encoder.dateEncodingStrategy = .formatted(formatter)
-
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .formatted(formatter)
-
-                beforeEach {
-                    issue = Issue(title: "Hello, Moya!", createdAt: Date(), rating: 0)
-                    let encoder = JSONParameterEncoder(encoder: encoder)
-                    endpoint = endpoint.replacing(task: .request(bodyParams: .json(issue, encoder)))
-                    request = try! endpoint.urlRequest()
-                }
-
-                it("updates httpBody") {
-                    let expectedIssue = try! decoder.decode(Issue.self, from: request.httpBody!)
-                    expect(formatter.string(from: issue.createdAt)).to(equal(formatter.string(from: expectedIssue.createdAt)))
-                    expect(issue.title).to(equal(expectedIssue.title))
-                }
-
-                it("updates headers to include Content-Type: application/json") {
-                    let contentTypeHeaders = ["Content-Type": "application/json"]
-                    let initialHeaderFields = endpoint.httpHeaderFields ?? [:]
-                    let expectedHTTPHeaderFields = initialHeaderFields.merging(contentTypeHeaders) { initialValue, _ in initialValue }
-                    expect(request.allHTTPHeaderFields).to(equal(expectedHTTPHeaderFields))
-                }
-
-                it("doesn't update any of the other properties") {
-                    expect(request.url?.absoluteString).to(equal(endpoint.url))
-                    expect(request.httpMethod).to(equal(endpoint.method.rawValue))
-                }
-            }
-
-            context("when task is .request with body data and query parameters") {
-                var parameters: Encodable!
-                var data: Data!
-                var request: URLRequest!
-
-                beforeEach {
-                    parameters = ["Nemesis": "Harvey"]
-                    data = "test data".data(using: .utf8)
-                    endpoint = endpoint.replacing(task: .request(bodyParams: .raw(data), queryParams: .query(parameters)))
-                    request = try! endpoint.urlRequest()
-                }
-
-                it("updates url") {
-                    let expectedUrl = endpoint.url + "?Nemesis=Harvey"
-                    expect(request.url?.absoluteString).to(equal(expectedUrl))
-                }
-
-                it("updates httpBody") {
-                    expect(request.httpBody).to(equal(data))
-                }
-
-                it("doesn't update any of the other properties") {
-                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
-                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
-                }
-            }
-
-            context("when task is .request with body and query params") {
-                var bodyParameters: Encodable!
-                var urlParameters: Encodable!
-                var request: URLRequest!
-
-                beforeEach {
-                    bodyParameters = ["Nemesis": "Harvey"]
-                    urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .request(bodyParams: .json(bodyParameters),
-                                                                 queryParams: .query(urlParameters)))
-                    request = try! endpoint.urlRequest()
-                }
-
-                it("updates url") {
-                    let expectedUrl = endpoint.url + "?Harvey=Nemesis"
-                    expect(request.url?.absoluteString).to(equal(expectedUrl))
-                }
-
-                it("updates the request correctly") {
-                    let newEndpoint = endpoint.replacing(task: .request())
-                    let newRequest = try! newEndpoint.urlRequest()
-                    let newEncodedRequest = try? JSONParameterEncoder.default.encode(AnyEncodable(bodyParameters), into: newRequest)
-
-                    expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
-                    expect(request.allHTTPHeaderFields).to(equal(newEncodedRequest?.allHTTPHeaderFields))
-                    expect(request.httpMethod).to(equal(newEncodedRequest?.httpMethod))
-                }
-            }
-
-            context("when task is .uploadFile") {
-                itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.upload(source: .file(URL(string: "https://google.com")!)),
-                     "endpoint": self.simpleGitHubEndpoint]
-                }
-            }
-
-            context("when task is .uploadMultipart without params") {
-                itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.upload(source: .multipart([])),
-                     "endpoint": self.simpleGitHubEndpoint]
-                }
-            }
-
-            context("when task is .uploadMultipart with params") {
-                var urlParameters: Encodable!
-                var request: URLRequest!
-
-                beforeEach {
-                    urlParameters = ["Harvey": "Nemesis"]
-                    endpoint = endpoint.replacing(task: .upload(source: .multipart([]),
-                                                                queryParams: .query(urlParameters)))
-                    request = try! endpoint.urlRequest()
-                }
-
-                it("updates url") {
-                    let expectedUrl = endpoint.url + "?Harvey=Nemesis"
-                    expect(request.url?.absoluteString).to(equal(expectedUrl))
+                context("with query params") {
+                    itBehavesLike("endpoint with encoded parameters") {
+                        let encoder = URLEncodedFormParameterEncoder(destination: .queryString)
+                        let task: Task = .upload(source: .rawData(data), queryParams: .query(parameters, encoder))
+                        let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                        return ["parameters": parameters,
+                                "encoder": encoder,
+                                "endpoint": endpoint]
+                    }
                 }
             }
 
             context("when task is .download") {
-                itBehavesLike("endpoint with no request property changed") {
-                    let destination: DownloadDestination = { url, _ in (destinationURL: url, options: []) }
-                    return ["task": Task.download(destination: destination),
-                            "endpoint": self.simpleGitHubEndpoint]
-                }
-            }
 
-            context("when task is .download with parameters") {
-                itBehavesLike("endpoint with encoded parameters") {
-                    let parameters: Encodable = ["Nemesis": "Harvey"]
-                    let encoder = JSONParameterEncoder.default
-                    let destination: DownloadDestination = { url, _ in (destinationURL: url, options: []) }
-                    let newTask: Task = .download(destination: destination, bodyParams: .json(parameters, encoder))
-                    let endpoint = self.simpleGitHubEndpoint.replacing(task: newTask)
-                    return ["parameters": parameters,
-                            "encoder": encoder,
-                            "endpoint": endpoint]
+                let destination: DownloadDestination = { url, _ in (destinationURL: url, options: []) }
+
+                context("without params") {
+                    itBehavesLike("endpoint with no request property changed") {
+                        return ["task": Task.download(destination: destination),
+                                "endpoint": self.simpleGitHubEndpoint]
+                    }
+                }
+
+                context("with body params") {
+                    context("value is .raw") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let data = "Hello Moya".data(using: .utf8)!
+                            let task: Task = .download(destination: destination, bodyParams: .raw(data))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": data,
+                                    "encoder": RawDataParameterEncoder(),
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .json") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = JSONParameterEncoder.default
+                            let task: Task = .download(destination: destination, bodyParams: .json(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .urlEncoded") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = URLEncodedFormParameterEncoder(destination: .httpBody)
+                            let task: Task = .download(destination: destination, bodyParams: .urlEncoded(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+
+                    context("value is .custom") {
+                        itBehavesLike("endpoint with encoded parameters") {
+                            let encoder = PropertyListEncoder()
+                            let task: Task = .download(destination: destination, bodyParams: .custom(parameters, encoder))
+                            let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                            return ["parameters": parameters,
+                                    "encoder": encoder,
+                                    "endpoint": endpoint]
+                        }
+                    }
+                }
+
+                context("with query params") {
+                    itBehavesLike("endpoint with encoded parameters") {
+                        let encoder = URLEncodedFormParameterEncoder(destination: .queryString)
+                        let task: Task = .download(destination: destination, queryParams: .query(parameters, encoder))
+                        let endpoint = self.simpleGitHubEndpoint.replacing(task: task)
+                        return ["parameters": parameters,
+                                "encoder": encoder,
+                                "endpoint": endpoint]
+                    }
                 }
             }
         }
