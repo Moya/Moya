@@ -76,7 +76,6 @@
 		AA882A27236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */; };
 		AA882A28236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */; };
 		AA882A2B236867D60096BCA1 /* RawDataParameterEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A29236867D60096BCA1 /* RawDataParameterEncoderSpec.swift */; };
-		AAAFCD18235BB30E0049EA19 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149749421F8923EC00FA4900 /* AnyEncodable.swift */; };
 		AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */; };
 		AACB924C2366202600A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AACB924D2366583A00A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
@@ -963,7 +962,6 @@
 				F88EC83A91FF6DE81246B01C /* TestHelpers.swift in Sources */,
 				AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */,
 				AA882A28236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */,
-				AAAFCD18235BB30E0049EA19 /* AnyEncodable.swift in Sources */,
 				7C32947EA657E981CB15D58C /* TestPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

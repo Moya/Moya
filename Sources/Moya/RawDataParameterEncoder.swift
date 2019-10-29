@@ -12,7 +12,7 @@ struct RawDataParameterEncoder: ParameterEncoder {
         if let data = parameters as? Data {
             request.httpBody = data
         } else if let anyEncodable = parameters as? AnyEncodable,
-            let data = anyEncodable.encodable as? Data {
+            let data = anyEncodable.underlyingEncodable as? Data {
             request.httpBody = data
         }
 

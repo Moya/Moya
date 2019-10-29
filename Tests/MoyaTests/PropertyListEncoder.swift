@@ -1,3 +1,4 @@
+import Moya
 import Alamofire
 import Foundation
 
@@ -48,9 +49,11 @@ internal struct PropertyListEncoder: ParameterEncoder {
 
         guard let parameters = parameters else { return urlRequest }
 
+        let plistObject = (parameters as? AnyEncodable)?.underlyingEncodable ?? parameters
+
         do {
             let data = try PropertyListSerialization.data(
-                fromPropertyList: parameters,
+                fromPropertyList: plistObject,
                 format: format,
                 options: options
             )
