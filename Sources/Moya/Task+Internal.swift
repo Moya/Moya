@@ -37,7 +37,7 @@ extension Task.BodyParams: TaskParametersProvider {
             }
             return (encodable, encoder)
 
-        case let .json(encodable, encoder as ParameterEncoder):
+        case let .json(encodable, encoder):
             return (encodable, encoder)
 
         case let .raw(encodable):
