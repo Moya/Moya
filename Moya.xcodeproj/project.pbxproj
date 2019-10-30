@@ -73,6 +73,7 @@
 		A2B64B2383FB0BC3C17B3160 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C38151BF038BA0B61EF5A62 /* TargetType.swift */; };
 		A6304A7E74FA3B04C9B10B63 /* AccessTokenPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAAD7EC02607A52AD3EF1E /* AccessTokenPluginSpec.swift */; };
 		A8C55515DFA147BE4159B40A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCB6731C60D3830DA5D2CB /* Response.swift */; };
+		AA663ABA236985A1006B295B /* AnyEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA663AB9236985A1006B295B /* AnyEncodableSpec.swift */; };
 		AA882A27236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */; };
 		AA882A28236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */; };
 		AA882A2B236867D60096BCA1 /* RawDataParameterEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A29236867D60096BCA1 /* RawDataParameterEncoderSpec.swift */; };
@@ -213,6 +214,7 @@
 		8A53DF8B33D58E052A78E2BA /* RxMoya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = RxMoya.h; sourceTree = "<group>"; };
 		8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiTarget.swift; sourceTree = "<group>"; };
 		9C38151BF038BA0B61EF5A62 /* TargetType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		AA663AB9236985A1006B295B /* AnyEncodableSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncodableSpec.swift; sourceTree = "<group>"; };
 		AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataParameterEncoder.swift; sourceTree = "<group>"; };
 		AA882A29236867D60096BCA1 /* RawDataParameterEncoderSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataParameterEncoderSpec.swift; sourceTree = "<group>"; };
 		AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListEncoder.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 			isa = PBXGroup;
 			children = (
 				31BAAD7EC02607A52AD3EF1E /* AccessTokenPluginSpec.swift */,
+				AA663AB9236985A1006B295B /* AnyEncodableSpec.swift */,
 				1F24393220125F8200C9D813 /* EndpointClosureSpec.swift */,
 				E825A32256FC030B8BA2684D /* EndpointSpec.swift */,
 				C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */,
@@ -943,6 +946,7 @@
 				78A2D3991F44BACD00C9E122 /* RxTestHelpers.swift in Sources */,
 				AA882A2B236867D60096BCA1 /* RawDataParameterEncoderSpec.swift in Sources */,
 				53376123902C6A22A44DB88E /* Error+MoyaSpec.swift in Sources */,
+				AA663ABA236985A1006B295B /* AnyEncodableSpec.swift in Sources */,
 				78A2D39B1F44D45100C9E122 /* Single+MoyaSpec.swift in Sources */,
 				C1B5E2325B210232599B0D1A /* ErrorTests.swift in Sources */,
 				539FD70730B00973E1778CD3 /* MethodSpec.swift in Sources */,
