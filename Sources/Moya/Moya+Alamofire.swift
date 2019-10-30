@@ -14,6 +14,7 @@ public typealias Method = Alamofire.HTTPMethod
 
 /// Choice of parameter encoding.
 public typealias ParameterEncoder = Alamofire.ParameterEncoder
+public typealias URLEncodedFormEncoder = Alamofire.URLEncodedFormEncoder
 public typealias URLEncodedFormParameterEncoder = Alamofire.URLEncodedFormParameterEncoder
 public typealias JSONParameterEncoder = Alamofire.JSONParameterEncoder
 

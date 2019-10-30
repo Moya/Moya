@@ -9,12 +9,10 @@ public enum Task {
         case raw(Data)
 
         /// The given encodable will be json encoded in the request's body.
-        case json(Encodable, JSONParameterEncoder = .default)
+        case json(Encodable, JSONEncoder = JSONEncoder())
 
         /// The given encodable will be url encoded in the request's body.
-        ///
-        /// The provided encoder must use the `.httpBody` destination or a `MoyaError.encodableMapping` will be raised.
-        case urlEncoded(Encodable, URLEncodedFormParameterEncoder = .init(destination: .httpBody))
+        case urlEncoded(Encodable, URLEncodedFormEncoder = URLEncodedFormEncoder())
 
         /// The given encodable will be encoded in the request's body using the provided encoder.
         ///
@@ -26,9 +24,7 @@ public enum Task {
     /// All different ways to set parameters in an HTTP request's query.
     public enum QueryParams {
         /// The given encodable will be url encoded in the request's query.
-        ///
-        /// The provided encoder must use the `.queryString` destination or a `MoyaError.encodableMapping` will be raised.
-        case query(Encodable, URLEncodedFormParameterEncoder = .init(destination: .queryString))
+        case query(Encodable, URLEncodedFormEncoder = URLEncodedFormEncoder())
     }
 
     /// All sources available for use when uploading

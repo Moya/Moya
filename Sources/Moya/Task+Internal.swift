@@ -23,10 +23,7 @@ extension Task.BodyParams: TaskParametersProvider {
     func taskParameters() throws -> Task.TaskParameters {
         switch self {
         case let .urlEncoded(encodable, encoder):
-            guard encoder.destination == .httpBody else {
-                throw MoyaError.encodableMapping("The encoder defined in Task.BodyParams.urlEncoded() can only use the .httpBody destination.")
-            }
-            return (encodable, encoder)
+            return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .httpBody))
 
         case let .custom(encodable, encoder):
             guard !(encoder is JSONParameterEncoder) else {
@@ -38,7 +35,7 @@ extension Task.BodyParams: TaskParametersProvider {
             return (encodable, encoder)
 
         case let .json(encodable, encoder):
-            return (encodable, encoder)
+            return (encodable, JSONParameterEncoder(encoder: encoder))
 
         case let .raw(encodable):
             return (encodable, RawDataParameterEncoder())
@@ -50,10 +47,7 @@ extension Task.QueryParams: TaskParametersProvider {
     func taskParameters() throws -> Task.TaskParameters {
         switch self {
         case let .query(encodable, encoder):
-            guard encoder.destination == .queryString else {
-                throw MoyaError.encodableMapping("The encoder defined in Task.QueryParams.query() can only use the .queryString destination.")
-            }
-            return (encodable, encoder)
+            return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .queryString))
         }
     }
 }
