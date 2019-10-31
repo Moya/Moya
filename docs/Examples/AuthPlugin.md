@@ -56,7 +56,7 @@ struct AuthPlugin: PluginType {
 let source = TokenSource()
 let provider = MoyaProvider<Target>(
   plugins: [
-    AuthPlugin(tokenClosure: { return source.token })
+    AuthPlugin(tokenClosure: { source.token })
   ]
 )
 
