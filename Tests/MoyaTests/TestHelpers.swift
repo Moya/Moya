@@ -66,7 +66,7 @@ func url(_ route: TargetType) -> String {
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint in
     let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    return Endpoint(url: url(target), sampleResponseClosure: {.networkError(error)}, underlyingTarget: target, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 
 enum HTTPBin: TargetType, AccessTokenAuthorizable {

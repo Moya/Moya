@@ -430,7 +430,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("returns sample data") {
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, underlyingTarget: target, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -447,7 +447,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("returns identical sample response") {
                 let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
+                    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, underlyingTarget: target, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -465,7 +465,7 @@ final class MoyaProviderSpec: QuickSpec {
                 let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
                     let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
+                    return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, underlyingTarget: target, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -1093,6 +1093,7 @@ final class MoyaProviderSpec: QuickSpec {
                         return Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(400, target.sampleData) },
+                            underlyingTarget: target,
                             method: target.method,
                             task: target.task,
                             httpHeaderFields: target.headers
@@ -1127,6 +1128,7 @@ final class MoyaProviderSpec: QuickSpec {
                         return Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+                            underlyingTarget: target,
                             method: target.method,
                             task: target.task,
                             httpHeaderFields: target.headers
