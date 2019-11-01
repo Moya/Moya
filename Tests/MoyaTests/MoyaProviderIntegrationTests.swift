@@ -1,6 +1,13 @@
 import Quick
 import Nimble
+import Foundation
+
+#if canImport(OHHTTPStubs)
 import OHHTTPStubs
+#elseif canImport(OHHTTPStubsSwift)
+import OHHTTPStubsCore
+import OHHTTPStubsSwift
+#endif
 
 @testable import Moya
 @testable import ReactiveMoya
@@ -103,14 +110,14 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
 
                     it("uses a custom Alamofire.Manager request generation") {
-                        let manager = StubManager()
-                        let provider = MoyaProvider<GitHub>(manager: manager)
+                        let session = StubSession()
+                        let provider = MoyaProvider<GitHub>(session: session)
 
                         waitUntil { done in
                             provider.request(.zen) { _ in done() }
                         }
 
-                        expect(manager.called) == true
+                        expect(session.called) == true
                     }
 
                     it("uses a background queue") {
@@ -229,30 +236,28 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
                 }
 
-                describe("a provider with network logger plugin") {
-                    var log = ""
+                describe("a provider with NetworkLoggerPlugin") {
                     var plugin: NetworkLoggerPlugin!
-                    beforeEach {
-                        log = ""
+                    var provider: MoyaProvider<GitHub>!
+                    var log = ""
 
-                        plugin = NetworkLoggerPlugin(verbose: true, output: { (_, _, printing: Any...) in
-                            //mapping the Any... from items to a string that can be compared
-                            let stringArray: [String] = printing.map { $0 as? String }.compactMap { $0 }
-                            let string: String = stringArray.reduce("") { $0 + $1 + " " }
-                            log += string
-                        })
+                    beforeEach {
+                        plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
+                                                                          logOptions: .verbose))
+                        provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        log = ""
                     }
 
                     it("logs the request") {
-
-                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
                         waitUntil { done in
                             provider.request(.zen) { _ in done() }
                         }
 
-                        expect(log).to(contain("Request:"))
-                        expect(log).to(contain("{ URL: https://api.github.com/zen }"))
-                        expect(log).to(contain("Request Headers: [:]"))
+                        expect(log).to(contain("Request: https://api.github.com/zen"))
+                        expect(log).to(contain("Request Headers: "))
+                        expect(log).to(contain("User-Agent"))
+                        expect(log).to(contain("Accept-Encoding"))
+                        expect(log).to(contain("Accept-Language"))
                         expect(log).to(contain("HTTP Request Method: GET"))
                         expect(log).to(contain("Response:"))
                         expect(log).to(contain("{ URL: https://api.github.com/zen }"))
@@ -260,6 +265,53 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         // Also these have the log lowercased because of the inconsistency on the backend side
                         expect(log.lowercased()).to(contain("{ status code: 200, headers"))
                         expect(log.lowercased()).to(contain("\"content-length\""))
+                    }
+
+                    it("logs the request using curlDescription") {
+                        plugin.configuration.logOptions.insert(.formatRequestAscURL)
+
+                        let provider = MoyaProvider<GitHub>(plugins: [plugin])
+                        waitUntil { done in
+                            provider.request(.zen) { _ in done() }
+                        }
+
+                        expect(log).to(contain("$ curl -v"))
+                        expect(log).to(contain("-X GET"))
+                        expect(log).to(contain("-H \"Accept-Language:"))
+                        expect(log).to(contain("-H \"Accept-Encoding:"))
+                        expect(log).to(contain("-H \"User-Agent:"))
+                        expect(log).to(contain("\"https://api.github.com/zen\""))
+
+                        expect(log).to(contain("Response:"))
+                        expect(log).to(contain("{ URL: https://api.github.com/zen }"))
+                    }
+                }
+
+                describe("a provider with AccessTokenPlugin") {
+                    var token = ""
+                    var plugin: AccessTokenPlugin!
+                    var provider: MoyaProvider<HTTPBin>!
+
+                    beforeEach {
+                        token = UUID().uuidString
+                        plugin = AccessTokenPlugin { token }
+                        provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub,
+                                                         plugins: [plugin])
+                    }
+
+                    it("correctly modifies authorization header field") {
+                        var header: String?
+
+                        waitUntil { done in
+                            provider.request(.bearer) { result in
+                                if case .success(let response) = result {
+                                    header = response.request?.value(forHTTPHeaderField: "Authorization")
+                                }
+                                done()
+                            }
+                        }
+
+                        expect(header).to(equal("Bearer \(token)"))
                     }
                 }
             }
@@ -354,11 +406,11 @@ final class MoyaProviderIntegrationTests: QuickSpec {
     }
 }
 
-final class StubManager: Manager {
+final class StubSession: Session {
     var called = false
 
-    override func request(_ urlRequest: URLRequestConvertible) -> DataRequest {
+    override func request(_ convertible: URLRequestConvertible, interceptor: RequestInterceptor? = nil) -> DataRequest {
         called = true
-        return super.request(urlRequest)
+        return super.request(convertible, interceptor: interceptor)
     }
 }

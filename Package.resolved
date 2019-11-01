@@ -6,8 +6,26 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "75bba56748359f297a83f620d45f72cf4ebee4e7",
-          "version": "4.8.2"
+          "revision": "2cbf59935fbb1f26e352ce4db53f1cf9408d5313",
+          "version": "5.0.0-rc.3"
+        }
+      },
+      {
+        "package": "CwlCatchException",
+        "repositoryURL": "https://github.com/mattgallagher/CwlCatchException.git",
+        "state": {
+          "branch": null,
+          "revision": "7cd2f8cacc4d22f21bc0b2309c3b18acf7957b66",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "CwlPreconditionTesting",
+        "repositoryURL": "https://github.com/mattgallagher/CwlPreconditionTesting.git",
+        "state": {
+          "branch": null,
+          "revision": "c228db5d2ad1b01ebc84435e823e6cca4e3db98b",
+          "version": "1.2.0"
         }
       },
       {
@@ -15,8 +33,17 @@
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
           "branch": null,
-          "revision": "43304bf2b1579fd555f2fdd51742771c1e4f2b98",
-          "version": "8.0.1"
+          "revision": "6abeb3f5c03beba2b9e4dbe20886e773b5b629b6",
+          "version": "8.0.4"
+        }
+      },
+      {
+        "package": "OHHTTPStubs",
+        "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
+        "state": {
+          "branch": "feature/spm-support",
+          "revision": "fda9902f8c5c4170c6914d7dc845174e8c75bf92",
+          "version": null
         }
       },
       {
@@ -24,26 +51,17 @@
         "repositoryURL": "https://github.com/Quick/Quick.git",
         "state": {
           "branch": null,
-          "revision": "0b4ed6c706dd0cce923b5019a605a9bcc6b1b600",
-          "version": "2.0.0"
+          "revision": "33682c2f6230c60614861dfc61df267e11a1602f",
+          "version": "2.2.0"
         }
       },
       {
         "package": "ReactiveSwift",
-        "repositoryURL": "https://github.com/ReactiveCocoa/ReactiveSwift.git",
+        "repositoryURL": "https://github.com/Moya/ReactiveSwift.git",
         "state": {
           "branch": null,
-          "revision": "e285cea17cca8e23928d1e85a235638184e39ac9",
-          "version": "5.0.0"
-        }
-      },
-      {
-        "package": "Result",
-        "repositoryURL": "https://github.com/antitypical/Result.git",
-        "state": {
-          "branch": null,
-          "revision": "2ca499ba456795616fbc471561ff1d963e6ae160",
-          "version": "4.1.0"
+          "revision": "f195d82bb30e412e70446e2b4a77e1b514099e88",
+          "version": "6.1.0"
         }
       },
       {
@@ -51,8 +69,8 @@
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
           "branch": null,
-          "revision": "fc6030ea9fe9b8af0351fe195b4095a9f2339757",
-          "version": "4.4.2"
+          "revision": "b3e888b4972d9bc76495dd74d30a8c7fad4b9395",
+          "version": "5.0.1"
         }
       }
     ]

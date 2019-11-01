@@ -56,15 +56,15 @@ end
 
 def device_names
   return {
-    ios: "iPhone 6s",
+    ios: "iPhone 8",
     tvos: "Apple TV 4K (at 1080p)"
   }
 end
 
 def device_os
   return {
-    ios: "12.2",
-    tvos: "12.2"
+    ios: "13.0",
+    tvos: "13.0"
   }
 end
 
@@ -115,8 +115,6 @@ task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
     xcodebuild 'build test', platform, xcprety_args: '--test', xcode_summary: true
-    next unless platform == :mac
-    sh "killall Simulator"
   end
 end
 
@@ -125,7 +123,6 @@ namespace :test do
   desc 'Test on iOS.'
   task :ios do
     xcodebuild 'build test', :ios, xcprety_args: '--test', xcode_summary: true
-    sh "killall Simulator"
   end
 
   desc 'Test on macOS.'
@@ -136,7 +133,6 @@ namespace :test do
   desc 'Test on tvOS.'
   task :tvos do
     xcodebuild 'build test', :tvos, xcprety_args: '--test', xcode_summary: true
-    sh "killall Simulator"
   end
 
   desc 'Run a local copy of Carthage on this current directory.'

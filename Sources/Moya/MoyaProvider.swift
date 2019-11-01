@@ -1,5 +1,4 @@
 import Foundation
-import Result
 
 /// Closure to be executed when a request has completed.
 public typealias Completion = (_ result: Result<Moya.Response, MoyaError>) -> Void
@@ -76,8 +75,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     /// of a request for a given `TargetType`.
     public let stubClosure: StubClosure
 
-    /// The manager for the session.
-    public let manager: Manager
+    public let session: Session
 
     /// A list of plugins.
     /// e.g. for logging, network activity indicator or credentials.
@@ -95,14 +93,14 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
                 requestClosure: @escaping RequestClosure = MoyaProvider.defaultRequestMapping,
                 stubClosure: @escaping StubClosure = MoyaProvider.neverStub,
                 callbackQueue: DispatchQueue? = nil,
-                manager: Manager = MoyaProvider<Target>.defaultAlamofireManager(),
+                session: Session = MoyaProvider<Target>.defaultAlamofireSession(),
                 plugins: [PluginType] = [],
                 trackInflights: Bool = false) {
 
         self.endpointClosure = endpointClosure
         self.requestClosure = requestClosure
         self.stubClosure = stubClosure
-        self.manager = manager
+        self.session = session
         self.plugins = plugins
         self.trackInflights = trackInflights
         self.callbackQueue = callbackQueue
@@ -125,15 +123,16 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     }
 
     // swiftlint:disable function_parameter_count
-    /// When overriding this method, take care to `notifyPluginsOfImpendingStub` and to perform the stub using the `createStubFunction` method.
+    /// When overriding this method, call `notifyPluginsOfImpendingStub` to prepare your request
+    /// and then use the returned `URLRequest` in the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
     open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let callbackQueue = callbackQueue ?? self.callbackQueue
         let cancellableToken = CancellableToken { }
-        notifyPluginsOfImpendingStub(for: request, target: target)
+        let preparedRequest = notifyPluginsOfImpendingStub(for: request, target: target)
         let plugins = self.plugins
-        let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: request)
+        let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: preparedRequest)
         switch stubBehavior {
         case .immediate:
             switch callbackQueue {
