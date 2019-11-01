@@ -54,13 +54,13 @@ public protocol MoyaProviderType: AnyObject {
 open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     /// Closure that defines the endpoints for the provider.
-    public typealias EndpointClosure = (Target) -> Endpoint
+    public typealias EndpointClosure = (Target) -> Endpoint<Target>
 
     /// Closure that decides if and what request should be performed.
     public typealias RequestResultClosure = (Result<URLRequest, MoyaError>) -> Void
 
     /// Closure that resolves an `Endpoint` into a `RequestResult`.
-    public typealias RequestClosure = (Endpoint, @escaping RequestResultClosure) -> Void
+    public typealias RequestClosure = (Endpoint<Target>, @escaping RequestResultClosure) -> Void
 
     /// Closure that decides if/how a request should be stubbed.
     public typealias StubClosure = (Target) -> Moya.StubBehavior
@@ -83,7 +83,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     public let trackInflights: Bool
 
-    open internal(set) var inflightRequests: [Endpoint: [Moya.Completion]] = [:]
+    open internal(set) var inflightRequests: [Endpoint<Target>: [Moya.Completion]] = [:] as! [Endpoint<Target> : [Completion]]
 
     /// Propagated to Alamofire as callback queue. If nil - the Alamofire default (as of their API in 2017 - the main queue) will be used.
     let callbackQueue: DispatchQueue?
@@ -107,7 +107,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     }
 
     /// Returns an `Endpoint` based on the token, method, and parameters by invoking the `endpointClosure`.
-    open func endpoint(_ token: Target) -> Endpoint {
+    open func endpoint(_ token: Target) -> Endpoint<Target> {
         return endpointClosure(token)
     }
 
@@ -127,7 +127,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     /// and then use the returned `URLRequest` in the `createStubFunction` method.
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
-    open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> CancellableToken {
+    open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint<Target>, stubBehavior: Moya.StubBehavior) -> CancellableToken {
         let callbackQueue = callbackQueue ?? self.callbackQueue
         let cancellableToken = CancellableToken { }
         let preparedRequest = notifyPluginsOfImpendingStub(for: request, target: target)

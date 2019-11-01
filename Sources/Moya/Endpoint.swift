@@ -17,7 +17,7 @@ public enum EndpointSampleResponse {
 /// - Note: As of Moya 11.0.0 Endpoint is no longer generic.
 ///   Existing code should work as is after removing the generic.
 ///   See #1529 and #1524 for the discussion.
-open class Endpoint {
+open class Endpoint<Target: TargetType> {
     public typealias SampleResponseClosure = () -> EndpointSampleResponse
 
     /// A string representation of the URL for the request.
@@ -28,7 +28,7 @@ open class Endpoint {
     
     /// The underlying TargetType used to create this Endpoint
     /// See #1671 and #1932. PR # 1935
-    public let underlyingTarget: TargetType
+    public let underlyingTarget: Target
 
     /// The HTTP method for the request.
     public let method: Moya.Method
@@ -41,7 +41,7 @@ open class Endpoint {
 
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
-                underlyingTarget: TargetType,
+                underlyingTarget: Target,
                 method: Moya.Method,
                 task: Task,
                 httpHeaderFields: [String: String]?) {

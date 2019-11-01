@@ -1080,7 +1080,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             context("response contains invalid status code") {
                 it("returns an error") {
-                    let endpointClosure = { (target: GitHub) -> Endpoint in
+                    let endpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
                         return Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(400, target.sampleData) },
@@ -1115,7 +1115,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             context("response contains valid status code") {
                 it("returns a response") {
-                    let endpointClosure = { (target: GitHub) -> Endpoint in
+                    let endpointClosure = { (target: GitHub) -> Endpoint<GitHub> in
                         return Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(200, target.sampleData) },

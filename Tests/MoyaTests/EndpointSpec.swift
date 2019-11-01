@@ -7,7 +7,7 @@ final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
         sharedExamples("endpoint with no request property changed") { (context: SharedExampleContext) in
             let task = context()["task"] as! Task
-            let oldEndpoint = context()["endpoint"] as! Endpoint
+            let oldEndpoint = context()["endpoint"] as! Endpoint<GitHub>
             let endpoint = oldEndpoint.replacing(task: task)
             let request = try! endpoint.urlRequest()
 
@@ -26,7 +26,7 @@ final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
         sharedExamples("endpoint with encoded parameters") { (context: SharedExampleContext) in
             let parameters = context()["parameters"] as! [String: Any]
             let encoding = context()["encoding"] as! ParameterEncoding
-            let endpoint = context()["endpoint"] as! Endpoint
+            let endpoint = context()["endpoint"] as! Endpoint<GitHub>
             let request = try! endpoint.urlRequest()
 
             it("updated the request correctly") {
@@ -45,14 +45,14 @@ final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
 
 final class EndpointSpec: QuickSpec {
 
-    private var simpleGitHubEndpoint: Endpoint {
+    private var simpleGitHubEndpoint: Endpoint<GitHub> {
         let target: GitHub = .zen
         let headerFields = ["Title": "Dominar"]
         return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, underlyingTarget: target, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
     }
 
     override func spec() {
-        var endpoint: Endpoint!
+        var endpoint: Endpoint<GitHub>!
 
         beforeEach {
             endpoint = self.simpleGitHubEndpoint
@@ -75,6 +75,11 @@ final class EndpointSpec: QuickSpec {
             let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, underlyingTarget: GitHub.zen, method: .get, task: .requestPlain, httpHeaderFields: nil)
             let urlRequest = try? badEndpoint.urlRequest()
             expect(urlRequest).to(beNil())
+        }
+        
+        it("has the proper underlyingTarget") {
+            let endpoint = self.simpleGitHubEndpoint
+            expect(endpoint.underlyingTarget) == GitHub.zen
         }
 
         describe("successful converting to urlRequest") {
