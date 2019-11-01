@@ -77,7 +77,7 @@ public extension MoyaProvider {
             cancellableToken.innerCancellable = self.performRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: networkCompletion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
 
-        requestClosure(target, endpoint, performNetworking)
+        requestClosure(endpoint, performNetworking)
 
         return cancellableToken
     }
