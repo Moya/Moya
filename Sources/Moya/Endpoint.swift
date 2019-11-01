@@ -25,6 +25,10 @@ open class Endpoint {
 
     /// A closure responsible for returning an `EndpointSampleResponse`.
     public let sampleResponseClosure: SampleResponseClosure
+    
+    /// The underlying TargetType used to create this Endpoint
+    /// See #1671 and #1932. PR # 1935
+    public let underlyingTarget: TargetType
 
     /// The HTTP method for the request.
     public let method: Moya.Method
@@ -37,12 +41,14 @@ open class Endpoint {
 
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
+                underlyingTarget: TargetType,
                 method: Moya.Method,
                 task: Task,
                 httpHeaderFields: [String: String]?) {
 
         self.url = url
         self.sampleResponseClosure = sampleResponseClosure
+        self.underlyingTarget = underlyingTarget
         self.method = method
         self.task = task
         self.httpHeaderFields = httpHeaderFields
@@ -50,12 +56,12 @@ open class Endpoint {
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
     open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint {
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, underlyingTarget: underlyingTarget, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
     open func replacing(task: Task) -> Endpoint {
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
+        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, underlyingTarget: underlyingTarget, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 
     fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {

@@ -6,6 +6,7 @@ public extension MoyaProvider {
         return Endpoint(
             url: URL(target: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+            underlyingTarget: target,
             method: target.method,
             task: target.task,
             httpHeaderFields: target.headers
