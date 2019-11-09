@@ -6,10 +6,16 @@ extension Task {
 
     func allParameters() throws -> [TaskParameters] {
         switch self {
-        case let .request(bodyParams, queryParams),
-             let .upload(_, bodyParams, queryParams),
-             let .download(_, bodyParams, queryParams):
-            return try [bodyParams?.taskParameters(), queryParams?.taskParameters()].compactMap { $0 }
+        case let .request(bodyParams, queryParams, customParams),
+             let .upload(_, bodyParams, queryParams, customParams),
+             let .download(_, bodyParams, queryParams, customParams):
+            var providers: [TaskParametersProvider?] = [bodyParams, queryParams]
+            if let customParams = customParams {
+                providers.append(contentsOf: customParams)
+            }
+            return try providers
+                .compactMap { $0 }
+                .map { try $0.taskParameters() }
         }
     }
 }
@@ -25,15 +31,6 @@ extension Task.BodyParams: TaskParametersProvider {
         case let .urlEncoded(encodable, encoder):
             return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .httpBody))
 
-        case let .custom(encodable, encoder):
-            guard !(encoder is JSONParameterEncoder) else {
-                throw MoyaError.encodableMapping("A JSONParameterEncoder can not be used in Task.BodyParams.custom(). Use Task.BodyParams.json() instead.")
-            }
-            guard !(encoder is URLEncodedFormParameterEncoder) else {
-                throw MoyaError.encodableMapping("An URLEncodedFormParameterEncoder can not be used in Task.BodyParams.custom(). Use Task.BodyParams.urlEncoded() instead.")
-            }
-            return (encodable, encoder)
-
         case let .json(encodable, encoder):
             return (encodable, JSONParameterEncoder(encoder: encoder))
 
@@ -45,9 +42,18 @@ extension Task.BodyParams: TaskParametersProvider {
 
 extension Task.QueryParams: TaskParametersProvider {
     func taskParameters() throws -> Task.TaskParameters {
-        switch self {
-        case let .query(encodable, encoder):
-            return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .queryString))
+        return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .queryString))
+    }
+}
+
+extension Task.CustomParams: TaskParametersProvider {
+    func taskParameters() throws -> Task.TaskParameters {
+        if encoder is JSONParameterEncoder {
+            throw MoyaError.encodableMapping("A JSONParameterEncoder can not be used in Task.BodyParams.custom(). Use Task.BodyParams.json() instead.")
         }
+        if encoder is URLEncodedFormParameterEncoder {
+            throw MoyaError.encodableMapping("An URLEncodedFormParameterEncoder can not be used in Task.CustomParams. Use Task.BodyParams.urlEncoded() or Task.QueryParams instead.")
+        }
+        return (encodable, encoder)
     }
 }

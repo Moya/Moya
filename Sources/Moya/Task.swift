@@ -13,18 +13,31 @@ public enum Task {
 
         /// The given encodable will be url encoded in the request's body.
         case urlEncoded(Encodable, URLEncodedFormEncoder = URLEncodedFormEncoder())
-
-        /// The given encodable will be encoded in the request's body using the provided encoder.
-        ///
-        /// The provided encoder must not be a `URLEncodedFormParameterEncoder` (use `BodyParams.urlEncoded`instead)
-        /// or `JSONParameterEncoder`(use `BodyParams.json` instead). If this is the case, a `MoyaError.encodableMapping` will be raised.
-        case custom(Encodable, ParameterEncoder)
     }
 
-    /// All different ways to set parameters in an HTTP request's query.
-    public enum QueryParams {
-        /// The given encodable will be url encoded in the request's query.
-        case query(Encodable, URLEncodedFormEncoder = URLEncodedFormEncoder())
+    /// The given encodable will be encoded in the url's query.
+    public struct QueryParams {
+        public var encodable: Encodable
+        public var encoder: URLEncodedFormEncoder
+
+        public init(_ encodable: Encodable, encoder: URLEncodedFormEncoder = URLEncodedFormEncoder()) {
+            self.encodable = encodable
+            self.encoder = encoder
+        }
+    }
+
+    /// The given encodable will be encoded according to the given custom parameter encoder
+    ///
+    /// The provided encoder must not be a `URLEncodedFormParameterEncoder` (use `BodyParams.urlEncoded` or `QueryParams`instead)
+    /// or `JSONParameterEncoder`(use `BodyParams.json` instead). If this is the case, a `MoyaError.encodableMapping` will be raised.
+    public struct CustomParams {
+        public var encodable: Encodable
+        public var encoder: ParameterEncoder
+
+        public init(_ encodable: Encodable, encoder: ParameterEncoder) {
+            self.encodable = encodable
+            self.encoder = encoder
+        }
     }
 
     /// All sources available for use when uploading
@@ -40,11 +53,25 @@ public enum Task {
     }
 
     /// A task to request some data
-    case request(bodyParams: BodyParams? = nil, queryParams: QueryParams? = nil)
+    case request(
+        bodyParams: BodyParams? = nil,
+        queryParams: QueryParams? = nil,
+        customParams: [CustomParams]? = nil
+    )
 
     /// A task to upload some data
-    case upload(source: UploadSource, bodyParams: BodyParams? = nil, queryParams: QueryParams? = nil)
+    case upload(
+        source: UploadSource,
+        bodyParams: BodyParams? = nil,
+        queryParams: QueryParams? = nil,
+        customParams: [CustomParams]? = nil
+    )
 
     /// A task to download some data
-    case download(destination: DownloadDestination, bodyParams: BodyParams? = nil, queryParams: QueryParams? = nil)
+    case download(
+        destination: DownloadDestination,
+        bodyParams: BodyParams? = nil,
+        queryParams: QueryParams? = nil,
+        customParams: [CustomParams]? = nil
+    )
 }
