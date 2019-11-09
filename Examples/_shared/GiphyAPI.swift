@@ -26,7 +26,7 @@ extension Giphy: TargetType {
         case let .upload(data):
             let multipartFormData = [MultipartFormData(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")]
             return .upload(source: .multipart(multipartFormData),
-                           queryParams: .query(["api_key": "dc6zaTOxFJmzC", "username": "Moya"]))
+                           queryParams: .init(["api_key": "dc6zaTOxFJmzC", "username": "Moya"]))
         }
     }
     public var sampleData: Data {
