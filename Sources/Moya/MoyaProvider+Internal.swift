@@ -171,6 +171,7 @@ private extension MoyaProvider {
     }
 
     private func setup(interceptor: MoyaRequestInterceptor, with target: Target, and request: Request) {
+        interceptor.lock(); defer { interceptor.unlock() }
         interceptor.willSend = { [weak self, weak request] urlRequest in
             guard let self = self, let request = request else { return }
 
