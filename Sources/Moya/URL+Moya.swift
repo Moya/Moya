@@ -8,7 +8,6 @@ public extension URL {
         // See: https://github.com/Moya/Moya/pull/1053
         // And: https://github.com/Moya/Moya/issues/1049
         let targetPath = target.path
-        let targetBaseURL = target.baseURL
         if targetPath.isEmpty {
             self = target.baseURL
         } else {
