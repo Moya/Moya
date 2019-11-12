@@ -62,7 +62,6 @@ public enum Task {
     /// A task to upload some data
     case upload(
         source: UploadSource,
-        bodyParams: BodyParams? = nil,
         queryParams: QueryParams? = nil,
         customParams: [CustomParams]? = nil
     )

@@ -5,17 +5,44 @@ extension Task {
     typealias TaskParameters = (Encodable, ParameterEncoder)
 
     func allParameters() throws -> [TaskParameters] {
+
+        var providers: [TaskParametersProvider?] = [bodyParams, queryParams]
+        if let customProviders = customParams {
+            providers.append(contentsOf: customProviders)
+        }
+
+        return try providers
+            .compactMap { $0 }
+            .map { try $0.taskParameters() }
+
+    }
+
+    var bodyParams: BodyParams? {
         switch self {
-        case let .request(bodyParams, queryParams, customParams),
-             let .upload(_, bodyParams, queryParams, customParams),
-             let .download(_, bodyParams, queryParams, customParams):
-            var providers: [TaskParametersProvider?] = [bodyParams, queryParams]
-            if let customParams = customParams {
-                providers.append(contentsOf: customParams)
-            }
-            return try providers
-                .compactMap { $0 }
-                .map { try $0.taskParameters() }
+        case let .request(params, _, _),
+             let .download(_, params, _, _):
+            return params
+
+        case .upload:
+            return nil
+        }
+    }
+
+    var queryParams: QueryParams? {
+        switch self {
+        case let .request(_, params, _),
+             let .upload(_, params, _),
+             let .download(_, _, params, _):
+            return params
+        }
+    }
+
+    var customParams: [CustomParams]? {
+        switch self {
+        case let .request(_, _, params),
+             let .upload(_, _, params),
+             let .download(_, _, _, params):
+            return params
         }
     }
 }

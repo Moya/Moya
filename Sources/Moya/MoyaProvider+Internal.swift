@@ -108,7 +108,7 @@ public extension MoyaProvider {
                                     progress: progress,
                                     completion: completion)
 
-        case let .upload(.file(url), _, _, _):
+        case let .upload(.file(url), _, _):
             return self.sendUploadFile(target,
                                        request: request,
                                        callbackQueue: callbackQueue,
@@ -116,7 +116,7 @@ public extension MoyaProvider {
                                        progress: progress,
                                        completion: completion)
 
-        case let .upload(.rawData(data), _, _, _):
+        case let .upload(.rawData(data), _, _):
             return self.sendUploadData(target,
                                        request: request,
                                        callbackQueue: callbackQueue,
@@ -124,7 +124,7 @@ public extension MoyaProvider {
                                        progress: progress,
                                        completion: completion)
 
-        case let .upload(.multipart(multipartBody), _, _, _):
+        case let .upload(.multipart(multipartBody), _, _):
             guard !multipartBody.isEmpty,
                 endpoint.method.supportsMultipart
                 else {
