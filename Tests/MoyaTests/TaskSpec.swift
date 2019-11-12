@@ -10,12 +10,12 @@ final class TaskSpec: QuickSpec {
 
         let encodable: [String: String] = ["Hello": "Moya"]
 
-        context("QueryParams related") {
+        context("URLParams related") {
 
             it("returns the associated values in taskParameters()") {
                 let encoder = URLEncodedFormEncoder()
-                let queryParams: Task.QueryParams = .init(encodable, encoder: encoder)
-                let taskparameters = try? queryParams.taskParameters()
+                let urlParams: Task.URLParams = .init(encodable, encoder: encoder)
+                let taskparameters = try? urlParams.taskParameters()
 
                 let returnedEncodable = taskparameters?.0 as? [String: String]
                 expect(returnedEncodable).to(equal(encodable))
@@ -28,8 +28,8 @@ final class TaskSpec: QuickSpec {
             context("when value is .urlEncoded") {
                 it("returns the associated values in taskParameters()") {
                     let encoder = URLEncodedFormEncoder()
-                    let queryParams: Task.BodyParams = .urlEncoded(encodable, encoder)
-                    let taskparameters = try? queryParams.taskParameters()
+                    let urlParams: Task.BodyParams = .urlEncoded(encodable, encoder)
+                    let taskparameters = try? urlParams.taskParameters()
 
                     let returnedEncodable = taskparameters?.0 as? [String: String]
                     expect(returnedEncodable).to(equal(encodable))
@@ -41,8 +41,8 @@ final class TaskSpec: QuickSpec {
             context("when value is .json") {
                 it("returns the associated values") {
                     let encoder = JSONEncoder()
-                    let queryParams: Task.BodyParams = .json(encodable, encoder)
-                    let taskparameters = try? queryParams.taskParameters()
+                    let urlParams: Task.BodyParams = .json(encodable, encoder)
+                    let taskparameters = try? urlParams.taskParameters()
 
                     let returnedEncodable = taskparameters?.0 as? [String: String]
                     expect(returnedEncodable).to(equal(encodable))
@@ -53,8 +53,8 @@ final class TaskSpec: QuickSpec {
 
             context("when value is .raw") {
                 let data = "Hello Moya".data(using: .utf8)!
-                let queryParams: Task.BodyParams = .raw(data)
-                let taskparameters = try? queryParams.taskParameters()
+                let urlParams: Task.BodyParams = .raw(data)
+                let taskparameters = try? urlParams.taskParameters()
 
                 it("returns the associated values") {
                     let returnedEncodable = taskparameters?.0 as? Data

@@ -39,9 +39,9 @@ final class EndpointSpec: QuickSpec {
 
     it("encodes all taskParameters") {
       let jsonParams: Task.BodyParams = .json(["This is": "a JSON example"])
-      let queryParams: Task.QueryParams = .init(["This is": "a query example"])
+      let urlParams: Task.URLParams = .init(["This is": "a query example"])
 
-      let task = Task.request(bodyParams: jsonParams, queryParams: queryParams)
+      let task = Task.request(bodyParams: jsonParams, urlParams: urlParams)
       let endpointRequest = try! endpoint.replacing(task: task).urlRequest()
 
       let testRequest = URLRequest(url: URL(string: endpoint.url)!)
@@ -52,10 +52,10 @@ final class EndpointSpec: QuickSpec {
       expect(jsonEncodedRequest.httpBody).to(equal(endpointRequest.httpBody))
       expect(jsonEncodedRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(endpointRequest.allHTTPHeaderFields?["Content-Type"]))
 
-      // Checking usage of queryParams
-      let queryTaskParameters = try! queryParams.taskParameters()
-      let queryEncodedRequest = try! queryTaskParameters.1.encode(AnyEncodable(queryTaskParameters.0), into: testRequest)
-      expect(queryEncodedRequest.url?.absoluteString).to(equal(endpointRequest.url?.absoluteString))
+      // Checking usage of urlParams
+      let urlTaskParameters = try! urlParams.taskParameters()
+      let urlEncodedRequest = try! urlTaskParameters.1.encode(AnyEncodable(urlTaskParameters.0), into: testRequest)
+      expect(urlEncodedRequest.url?.absoluteString).to(equal(endpointRequest.url?.absoluteString))
     }
 
     describe("unsuccessful converting to urlRequest") {

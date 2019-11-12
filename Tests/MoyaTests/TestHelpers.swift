@@ -101,7 +101,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     var task: Task {
         switch self {
         case .basicAuth, .bearer:
-            return .request(queryParams: .init(["": ""]))
+            return .request(urlParams: .init(["": ""]))
 
         case .post:
             return .request(bodyParams: .urlEncoded(["": ""]))
@@ -111,11 +111,11 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
 
         case .uploadMultipart(let data, let urlParameters),
              .validatedUploadMultipart(let data, let urlParameters, _):
-            var queryParams: Task.QueryParams?
+            var urlParams: Task.URLParams?
             if let encodable = urlParameters {
-                queryParams = .init(encodable)
+                urlParams = .init(encodable)
             }
-            return .upload(source: .multipart(data), queryParams: queryParams)
+            return .upload(source: .multipart(data), urlParams: urlParams)
         }
     }
 

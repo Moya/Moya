@@ -16,7 +16,7 @@ public enum Task {
     }
 
     /// The given encodable will be encoded in the url's query.
-    public struct QueryParams {
+    public struct URLParams {
         public var encodable: Encodable
         public var encoder: URLEncodedFormEncoder
 
@@ -28,7 +28,7 @@ public enum Task {
 
     /// The given encodable will be encoded according to the given custom parameter encoder
     ///
-    /// The provided encoder must not be a `URLEncodedFormParameterEncoder` (use `BodyParams.urlEncoded` or `QueryParams`instead)
+    /// The provided encoder must not be a `URLEncodedFormParameterEncoder` (use `BodyParams.urlEncoded` or `URLParams`instead)
     /// or `JSONParameterEncoder`(use `BodyParams.json` instead). If this is the case, a `MoyaError.encodableMapping` will be raised.
     public struct CustomParams {
         public var encodable: Encodable
@@ -55,14 +55,14 @@ public enum Task {
     /// A task to request some data
     case request(
         bodyParams: BodyParams? = nil,
-        queryParams: QueryParams? = nil,
+        urlParams: URLParams? = nil,
         customParams: [CustomParams]? = nil
     )
 
     /// A task to upload some data
     case upload(
         source: UploadSource,
-        queryParams: QueryParams? = nil,
+        urlParams: URLParams? = nil,
         customParams: [CustomParams]? = nil
     )
 
@@ -70,7 +70,7 @@ public enum Task {
     case download(
         destination: DownloadDestination,
         bodyParams: BodyParams? = nil,
-        queryParams: QueryParams? = nil,
+        urlParam: URLParams? = nil,
         customParams: [CustomParams]? = nil
     )
 }
