@@ -84,13 +84,11 @@ public extension Endpoint {
         request.allHTTPHeaderFields = httpHeaderFields
 
         //Encode params
-        try task.allParameters().forEach { tuple in
-            let encodable = tuple.0
-            let encoder = tuple.1
-            request = try encoder.encode(AnyEncodable(encodable), into: request)
+        return try task.allParameters().reduce(request) { initialRequest, parameters in
+            let encodable = parameters.0
+            let encoder = parameters.1
+            return try encoder.encode(AnyEncodable(encodable), into: initialRequest)
         }
-
-        return request
     }
 }
 
