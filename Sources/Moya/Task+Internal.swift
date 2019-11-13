@@ -2,9 +2,9 @@ import Foundation
 import Moya
 
 extension Task {
-    typealias TaskParameters = (Encodable, ParameterEncoder)
+    typealias Parameters = (Encodable, ParameterEncoder)
 
-    func allParameters() throws -> [TaskParameters] {
+    func allParameters() throws -> [Parameters] {
 
         var providers: [TaskParametersProvider?] = [bodyParams, urlParams]
         if let customProviders = customParams {
@@ -13,7 +13,7 @@ extension Task {
 
         return try providers
             .compactMap { $0 }
-            .map { try $0.taskParameters() }
+            .map { try $0.parameters() }
 
     }
 
@@ -49,11 +49,11 @@ extension Task {
 
 // MARK: - TaskParametersProvider
 private protocol TaskParametersProvider {
-    func taskParameters() throws -> Task.TaskParameters
+    func parameters() throws -> Task.Parameters
 }
 
 extension Task.BodyParams: TaskParametersProvider {
-    func taskParameters() throws -> Task.TaskParameters {
+    func parameters() throws -> Task.Parameters {
         switch self {
         case let .urlEncoded(encodable, encoder):
             return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .httpBody))
@@ -68,13 +68,13 @@ extension Task.BodyParams: TaskParametersProvider {
 }
 
 extension Task.URLParams: TaskParametersProvider {
-    func taskParameters() throws -> Task.TaskParameters {
+    func parameters() throws -> Task.Parameters {
         return (encodable, URLEncodedFormParameterEncoder(encoder: encoder, destination: .queryString))
     }
 }
 
 extension Task.CustomParams: TaskParametersProvider {
-    func taskParameters() throws -> Task.TaskParameters {
+    func parameters() throws -> Task.Parameters {
         if encoder is JSONParameterEncoder {
             throw MoyaError.encodableMapping("A JSONParameterEncoder can not be used in Task.BodyParams.custom(). Use Task.BodyParams.json() instead.")
         }
