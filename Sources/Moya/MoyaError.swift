@@ -83,7 +83,7 @@ extension MoyaError: LocalizedError {
             return message
         case .statusCode:
             return "Status code didn't fall within the given range."
-        case .underlying(let error, _):
+        case let .underlying(error, _):
             return error.localizedDescription
         case .requestMapping:
             return "Failed to map Endpoint to a URLRequest."

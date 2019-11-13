@@ -83,46 +83,21 @@ public extension MoyaProvider {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func performRequest(_ target: Target,
-                                request: URLRequest,
-                                callbackQueue: DispatchQueue?,
-                                progress: Moya.ProgressBlock?,
-                                completion: @escaping Moya.Completion,
-                                endpoint: Endpoint,
-                                stubBehavior: Moya.StubBehavior) -> Cancellable {
+    private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> Cancellable {
 
         guard stubBehavior == .never else {
-            return self.stubRequest(target,
-                                    request: request,
-                                    callbackQueue: callbackQueue,
-                                    completion: completion,
-                                    endpoint: endpoint,
-                                    stubBehavior: stubBehavior)
+            return self.stubRequest(target, request: request, callbackQueue: callbackQueue, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }
 
         switch endpoint.task {
         case .request:
-            return self.sendRequest(target,
-                                    request: request,
-                                    callbackQueue: callbackQueue,
-                                    progress: progress,
-                                    completion: completion)
+            return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
 
         case let .upload(.file(url), _, _):
-            return self.sendUploadFile(target,
-                                       request: request,
-                                       callbackQueue: callbackQueue,
-                                       file: url,
-                                       progress: progress,
-                                       completion: completion)
+            return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: url, progress: progress, completion: completion)
 
         case let .upload(.rawData(data), _, _):
-            return self.sendUploadData(target,
-                                       request: request,
-                                       callbackQueue: callbackQueue,
-                                       data: data,
-                                       progress: progress,
-                                       completion: completion)
+            return self.sendUploadData(target, request: request, callbackQueue: callbackQueue, data: data, progress: progress, completion: completion)
 
         case let .upload(.multipart(multipartBody), _, _):
             guard !multipartBody.isEmpty,
@@ -130,20 +105,10 @@ public extension MoyaProvider {
                 else {
                     fatalError("\(target) is not a multipart upload target.")
             }
-            return self.sendUploadMultipart(target,
-                                            request: request,
-                                            callbackQueue: callbackQueue,
-                                            multipartBody: multipartBody,
-                                            progress: progress,
-                                            completion: completion)
+            return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
 
         case let .download(destination, _, _, _):
-            return self.sendDownloadRequest(target,
-                                            request: request,
-                                            callbackQueue: callbackQueue,
-                                            destination: destination,
-                                            progress: progress,
-                                            completion: completion)
+            return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
         }
     }
 

@@ -53,24 +53,11 @@ public enum Task {
     }
 
     /// A task to request some data
-    case request(
-        bodyParams: BodyParams? = nil,
-        urlParams: URLParams? = nil,
-        customParams: [CustomParams]? = nil
-    )
+    case request(bodyParams: BodyParams? = nil, urlParams: URLParams? = nil, customParams: [CustomParams]? = nil)
 
     /// A task to upload some data
-    case upload(
-        source: UploadSource,
-        urlParams: URLParams? = nil,
-        customParams: [CustomParams]? = nil
-    )
+    case upload(source: UploadSource, urlParams: URLParams? = nil, customParams: [CustomParams]? = nil)
 
     /// A task to download some data
-    case download(
-        destination: DownloadDestination,
-        bodyParams: BodyParams? = nil,
-        urlParam: URLParams? = nil,
-        customParams: [CustomParams]? = nil
-    )
+    case download(destination: DownloadDestination, bodyParams: BodyParams? = nil, urlParam: URLParams? = nil, customParams: [CustomParams]? = nil)
 }
