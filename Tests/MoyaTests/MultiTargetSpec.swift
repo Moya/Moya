@@ -68,7 +68,6 @@ final class MultiTargetSpec: QuickSpec {
                     fail("expected task type `.request`, was \(String(describing: target.task))")
                     return
                 }
-                expect(true) == true
             }
 
             it("uses correct sample data") {
