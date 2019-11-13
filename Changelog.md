@@ -2,6 +2,10 @@
 
 ### Changed
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+- **Breaking Change** The `Task` enum have been revamped to reduce its complexity and add more parameters encoding possibilities. Make sure to read our migrating guide about it. [#1936](https://github.com/Moya/Moya/pull/1936) by [@amaurydavid](https://github.com/amaurydavid).
+
+## Added
+- `Task` now allows to upload data without using a file as intermediate. [#1936](https://github.com/Moya/Moya/pull/1936) by [@amaurydavid](https://github.com/amaurydavid).
 
 # [14.0.0-beta.3] - 2019-09-27
 

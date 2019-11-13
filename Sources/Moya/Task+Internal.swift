@@ -4,6 +4,7 @@ import Moya
 extension Task {
     typealias Parameters = (Encodable, ParameterEncoder)
 
+    /// Returns the list of all pairs of encodable and encoders to use when generating the `URLRequest`.
     func allParameters() throws -> [Parameters] {
 
         var providers: [TaskParametersProvider?] = [bodyParams, urlParams]
@@ -48,6 +49,7 @@ extension Task {
 }
 
 // MARK: - TaskParametersProvider
+
 private protocol TaskParametersProvider {
     func parameters() throws -> Task.Parameters
 }
@@ -75,6 +77,9 @@ extension Task.URLParams: TaskParametersProvider {
 
 extension Task.CustomParams: TaskParametersProvider {
     func parameters() throws -> Task.Parameters {
+        // CustomParams should only be used when `URLEncodedFormParameterEncoder` and `JSONParameterEncoder`
+        // are not enough. To enforce usage of BodyParams or URLParams, let's check the type of the given encoder
+        // to make sure CustomParams is correctly used.
         if encoder is JSONParameterEncoder {
             throw MoyaError.encodableMapping("A JSONParameterEncoder can not be used in Task.BodyParams.custom(). Use Task.BodyParams.json() instead.")
         }

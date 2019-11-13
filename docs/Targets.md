@@ -65,47 +65,35 @@ we saw when calculating our `path` property.
 
 Our `TargetType` is shaping up, but we're not done yet. We also need a `task`
 computed property that returns the task type potentially including parameters.
+A `task` property represents how you are sending / receiving data and allows you to add data, files and streams to the request body.
 Here's an example:
 
 ```swift
 public var task: Task {
     switch self {
     case .userRepositories:
-        return .requestParameters(parameters: ["sort": "pushed"], encoding: URLEncoding.default)
+        return .request(urlParams: .init(["sort": "pushed"]))
     case .branches(_, let protected):
-        return .requestParameters(parameters: ["protected": "\(protected)"], encoding: URLEncoding.default)
+        let encoder = URLEncodedFormEncoder(boolEncoding: .literal)
+        return .request(urlParams: .init(["protected": protected], encoder: encoder))
     default:
-        return .requestPlain
+        return .request()
     }
 }
 ```
 
 Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we just skip parenthesis.
-Let's take a look at the `branches` case: we'll use our `Bool` associated value (`protected`) as a request parameter by assigning it to the `"protected"` key. We're parsing our `Bool` value to `String`. (Alamofire does not encode `Bool` parameters automatically, so we need to do it by our own).
 
-While we are talking about parameters, we needed to indicate how we want our
-parameters to be encoded into our request. We do this by returning a
-`ParameterEncoding` alongside the `.requestParameters` task type. Out of the
-box, Moya has `URLEncoding`, `JSONEncoding`, and `PropertyListEncoding`. You can
-also create your own encoder that conforms to `ParameterEncoding` (e.g.
-`XMLEncoder`).
+With a `Task` we can provide some additional parameters that will be encoded into the request. In the `userRespositories` case, we are adding 1 parameter "sort" to the request's query string, with the value "pushed".
+In the `branches` case, we also add 1 parameter to the query string, but with a twist: as the parameter's value is a `Bool`, we provide a custom encoder to make sure the `Bool` is converted into a literal (i.e "true" or "false") instead of an int (0 or 1) by default.
 
-A `task` property represents how you are sending / receiving data and allows you to add data, files and streams to the request body. There are several `.request` types:
-- `.requestPlain` with nothing to send at all
-- `.requestData(_:)` with which you can send `Data` 
-- `.requestJSONEncodable(_:)` with which you can send objects that conform to the `Encodable` protocol
-- `.requestCustomJSONEncodable(_:encoder:)`  which allows you to send objects conforming to `Encodable` encoded with provided custom JSONEncoder
-- `.requestParameters(parameters:encoding:)` which allows you to send parameters with an encoding
-- `.requestCompositeData(bodyData:urlParameters:)` & `.requestCompositeParameters(bodyParameters:bodyEncoding:urlParameters)` which allow you to combine url encoded parameters with another type (data / parameters)
+Alongside the `urlParams` associated value, you can provide a `bodyParams` value which works the same but encodes parameters in request's body instead of query string.
+You can also provide a `customParams` value if you want to encode your parameters in a way that is not possible with `bodyParams` or `urlParams`, if you want to encode some xml in the body for example.
 
-Also, there are three upload types: 
-- `.uploadFile(_:)` to upload a file from a URL, 
-- `.uploadMultipart(_:)` for multipart uploads
-- `.uploadCompositeMultipart(_:urlParameters:)` which allows you to pass multipart data and url parameters at once
-
-And two download types: 
-- `.downloadDestination(_:)` for a plain file download
-- `.downloadParameters(parameters:encoding:destination:)` for downloading with parameters sent alongside the request.
+When using `Task.upload`, you have acces to 3 different sources: 
+- `.file` to upload a file from a `URL`,
+- `.rawData` to upload a `Data` object,
+- `.multipart` for multipart uploads
 
 Next, notice the `sampleData` property on the enum. This is a requirement of
 the `TargetType` protocol. Any target you want to hit must provide some non-nil
