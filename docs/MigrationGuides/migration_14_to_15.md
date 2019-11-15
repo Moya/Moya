@@ -8,11 +8,11 @@ Through additions of cases to always allow more usages, `Task`  have grown a bit
 
 ### New values
 
-If the old `Task` value starts with ".request", use the new `Task.request` value.
+If the old `Task` value starts with “request”, use the new `Task.request` value.
 
-If the old `Task` value starts with ".upload", use the new `Task.upload` value.
+If the old `Task` value starts with “upload”, use the new `Task.upload` value.
 
-If the old `Task` value starts with ".download", use the new `Task.download` value.
+If the old `Task` value starts with “download”, use the new `Task.download` value.
 
 
 

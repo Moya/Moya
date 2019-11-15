@@ -3,7 +3,7 @@
 Using Moya starts with defining a target – typically some `enum` that conforms
 to the `TargetType` protocol. Then, the rest of your app deals *only* with
 those targets. Targets are some action that you want to take on the API,
-like "`favoriteTweet(tweetID: String)`".
+like “`favoriteTweet(tweetID: String)`”.
 
 Here's an example:
 
@@ -84,8 +84,8 @@ public var task: Task {
 
 Unlike our `path` property earlier, we don't actually care about the associated values of our `userRepositories` case, so we just skip parenthesis.
 
-With a `Task` we can provide some additional parameters that will be encoded into the request. In the `userRespositories` case, we are adding 1 parameter "sort" to the request's query string, with the value "pushed".
-In the `branches` case, we also add 1 parameter to the query string, but with a twist: as the parameter's value is a `Bool`, we provide a custom encoder to make sure the `Bool` is converted into a literal (i.e "true" or "false") instead of an int (0 or 1) by default.
+With a `Task` we can provide some additional parameters that will be encoded into the request. In the `userRespositories` case, we are adding 1 parameter “sort” to the request's query string, with the value “pushed”.
+In the `branches` case, we also add 1 parameter to the query string, but with a twist: as the parameter's value is a `Bool`, we provide a custom encoder to make sure the `Bool` is converted into a literal (i.e “true” or “false”) instead of an int (0 or 1) by default.
 
 Alongside the `urlParams` associated value, you can provide a `bodyParams` value which works the same but encodes parameters in request's body instead of query string.
 You can also provide a `customParams` value if you want to encode your parameters in a way that is not possible with `bodyParams` or `urlParams`, if you want to encode some xml in the body for example.
@@ -133,7 +133,7 @@ Escaping URLs
 -------------
 
 Here's an example extension that allows you to easily escape normal strings
-"like this" to URL-encoded strings "like%20this":
+“like this” to URL-encoded strings “like%20this”:
 
 ```swift
 extension String {
