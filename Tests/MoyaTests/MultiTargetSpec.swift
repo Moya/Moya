@@ -37,9 +37,8 @@ final class MultiTargetSpec: QuickSpec {
                     fail("expected task type `.request`, was \(String(describing: target.task))")
                     return
                 }
-                let allParameters = try? task.allParameters()
-                expect(allParameters).toNot(beNil())
-                let encodable = allParameters!.first?.0
+                let allParameters: [TaskParametersType] = task.allParameters()
+                let encodable = allParameters.first?.encodable
                 expect(encodable).toNot(beNil())
                 let dict = encodable! as? [String: String]
                 expect(dict).toNot(beNil())
@@ -54,9 +53,8 @@ final class MultiTargetSpec: QuickSpec {
                     return
                 }
 
-                let allParameters = try? task.allParameters()
-                expect(allParameters).toNot(beNil())
-                expect(allParameters!.first?.1).to(beAKindOf(JSONParameterEncoder.self))
+                let allParameters: [TaskParametersType] = task.allParameters()
+                expect(allParameters.first?.encoder).to(beAKindOf(JSONParameterEncoder.self))
             }
 
             it("uses correct method") {

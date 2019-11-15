@@ -15,11 +15,10 @@ final class TaskSpec: QuickSpec {
             it("returns the associated values in parameters()") {
                 let encoder = URLEncodedFormEncoder()
                 let urlParams: Task.URLParams = .init(encodable, encoder: encoder)
-                let taskparameters = try? urlParams.parameters()
 
-                let returnedEncodable = taskparameters?.0 as? [String: String]
+                let returnedEncodable = urlParams.encodable as? [String: String]
                 expect(returnedEncodable).to(equal(encodable))
-                let parameterEncoder = taskparameters?.1 as? URLEncodedFormParameterEncoder
+                let parameterEncoder = urlParams.encoder as? URLEncodedFormParameterEncoder
                 expect(parameterEncoder?.encoder).to(be(encoder))
             }
         }
@@ -28,12 +27,11 @@ final class TaskSpec: QuickSpec {
             context("when value is .urlEncoded") {
                 it("returns the associated values in parameters()") {
                     let encoder = URLEncodedFormEncoder()
-                    let urlParams: Task.BodyParams = .urlEncoded(encodable, encoder)
-                    let taskparameters = try? urlParams.parameters()
+                    let bodyParams: Task.BodyParams = .urlEncoded(encodable, encoder)
 
-                    let returnedEncodable = taskparameters?.0 as? [String: String]
+                    let returnedEncodable = bodyParams.encodable as? [String: String]
                     expect(returnedEncodable).to(equal(encodable))
-                    let parameterEncoder = taskparameters?.1 as? URLEncodedFormParameterEncoder
+                    let parameterEncoder = bodyParams.encoder as? URLEncodedFormParameterEncoder
                     expect(parameterEncoder?.encoder).to(be(encoder))
                 }
             }
@@ -41,28 +39,26 @@ final class TaskSpec: QuickSpec {
             context("when value is .json") {
                 it("returns the associated values") {
                     let encoder = JSONEncoder()
-                    let urlParams: Task.BodyParams = .json(encodable, encoder)
-                    let taskparameters = try? urlParams.parameters()
+                    let bodyParams: Task.BodyParams = .json(encodable, encoder)
 
-                    let returnedEncodable = taskparameters?.0 as? [String: String]
+                    let returnedEncodable = bodyParams.encodable as? [String: String]
                     expect(returnedEncodable).to(equal(encodable))
-                    let parameterEncoder = taskparameters?.1 as? JSONParameterEncoder
+                    let parameterEncoder = bodyParams.encoder as? JSONParameterEncoder
                     expect(parameterEncoder?.encoder).to(be(encoder))
                 }
             }
 
             context("when value is .raw") {
                 let data = "Hello Moya".data(using: .utf8)!
-                let urlParams: Task.BodyParams = .raw(data)
-                let taskparameters = try? urlParams.parameters()
+                let bodyParams: Task.BodyParams = .raw(data)
 
                 it("returns the associated values") {
-                    let returnedEncodable = taskparameters?.0 as? Data
+                    let returnedEncodable = bodyParams.encodable as? Data
                     expect(returnedEncodable).to(equal(data))
                 }
 
                 it("uses a RawDataParameterEncoder") {
-                    let returnedEncoder = taskparameters?.1 as? RawDataParameterEncoder
+                    let returnedEncoder = bodyParams.encoder as? RawDataParameterEncoder
                     expect(returnedEncoder).to(beAKindOf(RawDataParameterEncoder.self))
                 }
             }
@@ -70,23 +66,24 @@ final class TaskSpec: QuickSpec {
 
         context("CustomParams related") {
             it("forbids usage of JSONParameterEncoder") {
-                let customParams: Task.CustomParams = .init(encodable, encoder: Alamofire.JSONParameterEncoder.default)
-                expect { try customParams.parameters() }.to(throwError())
+                expect {
+                    try Task.CustomParams(encodable, encoder: Alamofire.JSONParameterEncoder.default)
+                }.to(throwError())
             }
 
             it("forbids usage of URLEncodedParameterEncoder") {
-                let customParams: Task.CustomParams = .init(encodable, encoder: Alamofire.URLEncodedFormParameterEncoder.default)
-                expect { try customParams.parameters() }.to(throwError())
+                expect {
+                    try Task.CustomParams(encodable, encoder: Alamofire.URLEncodedFormParameterEncoder.default)
+                }.to(throwError())
             }
 
             it("returns the associated values for others") {
                 let encoder = PropertyListEncoder.default
-                let customParams: Task.CustomParams = .init(encodable, encoder: encoder)
-                let taskparameters = try? customParams.parameters()
+                let customParams: Task.CustomParams? = try? .init(encodable, encoder: encoder)
 
-                let returnedEncodable = taskparameters?.0 as? [String: String]
+                let returnedEncodable = customParams?.encodable as? [String: String]
                 expect(returnedEncodable).to(equal(encodable))
-                let returnedEncoder = taskparameters?.1 as? PropertyListEncoder
+                let returnedEncoder = customParams?.encoder as? PropertyListEncoder
                 expect(returnedEncoder).to(equal(encoder))
             }
         }

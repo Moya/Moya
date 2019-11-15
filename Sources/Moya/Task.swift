@@ -15,41 +15,54 @@ public enum Task {
         case urlEncoded(Encodable, URLEncodedFormEncoder = URLEncodedFormEncoder())
     }
 
-    /// A container for some parameters to be encoded into an `URLRequest`'s url's query string using a specific encoder.
-    public struct URLParams {
-        /// The parameters to be encoded into the url's query string.
-        public var encodable: Encodable
-        /// The encoder to be used to encode `encodable` into the url's query string.
-        public var encoder: URLEncodedFormEncoder
+    /// A container for some parameters to be encoded into an `URLRequest` using a specific encoder.
+    public class Parameters {
+        /// The given encodable will be encoded according to the given custom parameter encoder
+        public let encodable: Encodable
+        /// The encoder to be used to encode `encodable` into an `URLRequest`.
+        public let encoder: ParameterEncoder
 
-        /// The designated method to initialize the `URLParams`.
-        /// - Parameters:
-        ///   - encodable: The parameters to be encoded into the url's query string.
-        ///   - encoder: The encoder to be used to encode the encodable into the url's query string.
-        public init(_ encodable: Encodable, encoder: URLEncodedFormEncoder = URLEncodedFormEncoder()) {
+        internal init(encodable: Encodable, encoder: ParameterEncoder) {
             self.encodable = encodable
             self.encoder = encoder
         }
     }
 
-    /// A container for some parameters to be encoded into an `URLRequest` using a specific encoder.
-    public struct CustomParams {
-        /// The given encodable will be encoded according to the given custom parameter encoder
-        public var encodable: Encodable
-        /// The encoder to be used to encode `encodable` into an `URLRequest`.
-        public var encoder: ParameterEncoder
+    /// A container for some parameters to be encoded into an `URLRequest`'s url's query string using a specific encoder.
+    public final class URLParams: Parameters {
 
-        /// The designated method to initialize the `CustomParams`.
+        /// The designated method to initialize the `URLParams`.
+        /// - Parameters:
+        ///   - encodable: The parameters to be encoded into the url's query string.
+        ///   - encoder: The encoder to be used to encode the encodable into the url's query string.
+        public required init(_ encodable: Encodable, encoder: URLEncodedFormEncoder = URLEncodedFormEncoder()) {
+            super.init(encodable: encodable, encoder: URLEncodedFormParameterEncoder(encoder: encoder, destination: .queryString))
+        }
+    }
+
+    /// A container for some parameters to be encoded into an `URLRequest` using a specific encoder.
+    public final class CustomParams: Parameters {
+
+        /// The designated method to initialize `CustomParams`.
         /// - Parameters:
         ///   - encodable: The parameters to be encoded into the `URLRequest`.
         ///   - encoder: The encoder to be used to encode `encodable` into an `URLRequest`.
-        ///   It must not be a `URLEncodedFormParameterEncoder` (use `BodyParams.urlEncoded`
-        ///   or `URLParams`instead) or `JSONParameterEncoder`(use `BodyParams.json` instead).
+        ///   It **must not** be a `URLEncodedFormParameterEncoder` (use `BodyParams.urlEncoded`
+        ///   or `URLParams` instead) or `JSONParameterEncoder`(use `BodyParams.json` instead).
         ///   If this is the case, a `MoyaError.encodableMapping` will be raised.
-        public init(_ encodable: Encodable, encoder: ParameterEncoder) {
-            self.encodable = encodable
-            self.encoder = encoder
+        public required init(_ encodable: Encodable, encoder: ParameterEncoder) throws {
+            // CustomParams should only be used when `URLEncodedFormParameterEncoder` and `JSONParameterEncoder`
+            // are not enough. To enforce usage of BodyParams or URLParams, let's check the type of the given encoder
+            // to make sure CustomParams is correctly used.
+            if encoder is JSONParameterEncoder {
+                throw MoyaError.encodableMapping("A JSONParameterEncoder can not be used with Task.CustomParams. Use Task.BodyParams.json() instead.")
+            }
+            if encoder is URLEncodedFormParameterEncoder {
+                throw MoyaError.encodableMapping("An URLEncodedFormParameterEncoder can not be used in Task.CustomParams. Use Task.BodyParams.urlEncoded() or Task.URLParams instead.")
+            }
+            super.init(encodable: encodable, encoder: encoder)
         }
+
     }
 
     /// All sources available for use when uploading

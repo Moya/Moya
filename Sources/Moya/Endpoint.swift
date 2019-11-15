@@ -85,9 +85,7 @@ public extension Endpoint {
 
         //Encode params
         return try task.allParameters().reduce(request) { initialRequest, parameters in
-            let encodable = parameters.0
-            let encoder = parameters.1
-            return try encoder.encode(AnyEncodable(encodable), into: initialRequest)
+            try parameters.encoder.encode(AnyEncodable(parameters.encodable), into: initialRequest)
         }
     }
 }

@@ -47,14 +47,12 @@ final class EndpointSpec: QuickSpec {
       let testRequest = URLRequest(url: URL(string: endpoint.url)!)
 
       // Checking usage of bodyParams
-      let jsonParameters = try! jsonParams.parameters()
-      let jsonEncodedRequest = try! jsonParameters.1.encode(AnyEncodable(jsonParameters.0), into: testRequest)
+      let jsonEncodedRequest = try! jsonParams.encoder.encode(AnyEncodable(jsonParams.encodable), into: testRequest)
       expect(jsonEncodedRequest.httpBody).to(equal(endpointRequest.httpBody))
       expect(jsonEncodedRequest.allHTTPHeaderFields?["Content-Type"]).to(equal(endpointRequest.allHTTPHeaderFields?["Content-Type"]))
 
       // Checking usage of urlParams
-      let urlParameters = try! urlParams.parameters()
-      let urlEncodedRequest = try! urlParameters.1.encode(AnyEncodable(urlParameters.0), into: testRequest)
+      let urlEncodedRequest = try! urlParams.encoder.encode(AnyEncodable(urlParams.encodable), into: testRequest)
       expect(urlEncodedRequest.url?.absoluteString).to(equal(endpointRequest.url?.absoluteString))
     }
 
