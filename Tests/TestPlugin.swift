@@ -11,6 +11,12 @@ final class TestingPlugin: PluginType {
         request.addValue("yes", forHTTPHeaderField: "prepared")
         return request
     }
+    
+    func prepare(_ request: URLRequest, multipartBody: [MultipartFormData], target: TargetType) -> (URLRequest, [MultipartFormData]) {
+        var request = request
+        request.addValue("yes", forHTTPHeaderField: "prepared-multipart-body")
+        return request
+    }
 
     func willSend(_ request: RequestType, target: TargetType) {
         self.request = (request, target)

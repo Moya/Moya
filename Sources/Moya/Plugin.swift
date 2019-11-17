@@ -11,6 +11,9 @@ public protocol PluginType {
     /// Called to modify a request before sending.
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest
 
+    /// Called to modify a upload request before sending.
+    func prepare(_ request: URLRequest, multipartBody: [MultipartFormData], target: TargetType) -> (URLRequest, [MultipartFormData])
+
     /// Called immediately before a request is sent over the network (or stubbed).
     func willSend(_ request: RequestType, target: TargetType)
 
@@ -23,6 +26,7 @@ public protocol PluginType {
 
 public extension PluginType {
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { return request }
+    func prepare(_ request: URLRequest, multipartBody: [MultipartFormData], target: TargetType) -> (URLRequest, [MultipartFormData]) { return (request, multipartBody) }
     func willSend(_ request: RequestType, target: TargetType) { }
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) { }
     func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { return result }

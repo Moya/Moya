@@ -99,7 +99,10 @@ public extension MoyaProvider {
                 guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
                     fatalError("\(target) is not a multipart upload target.")
                 }
-                return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
+
+                // Allow plugins to modify request
+                let preparedRequestAndMultipartBody = self.plugins.reduce((request, multipartBody)) { $1.prepare($0.0, multipartBody: $0.1, target: target) }
+                return self.sendUploadMultipart(target, request: preparedRequestAndMultipartBody.0, callbackQueue: callbackQueue, multipartBody: preparedRequestAndMultipartBody.1, progress: progress, completion: completion)
             case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
                 return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
