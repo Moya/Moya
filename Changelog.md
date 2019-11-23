@@ -2,6 +2,15 @@
 
 ### Changed
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+# [14.0.0-beta.5] - 2019-10-27
+
+### Changed
+- **Breaking Change** Minimum version of `Alamofire` is now 5.0.0-rc.3. [#1944](https://github.com/Moya/Moya/pull/1944) by [@sunshinejr](https://github.com/sunshinejr).
+
+# [14.0.0-beta.4] - 2019-10-05
+
+### Removed
+- **Breaking Change** Removed Combine extensions for now. Due to problems with weak-linking the framework, it's too difficult to support it with ease using all package managers and also without breaking backwards-compatibility. Probably gonna introduce it once we only support Xcode 11. [#1933](https://github.com/Moya/Moya/pull/1933) by [@sunshinejr](https://github.com/sunshinejr)
 
 # [14.0.0-beta.3] - 2019-09-27
 

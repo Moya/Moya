@@ -2,7 +2,7 @@
   <img height="160" src="web/logo_github.png" />
 </p>
 
-# Moya
+# Moya 14.0.0-beta.5
 
 [![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya/master.svg)](https://circleci.com/gh/Moya/Moya/tree/master)
 [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
@@ -76,7 +76,7 @@ _Note: If you are using Swift 4.2 in your project, but you are using Xcode 10.2,
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
@@ -95,7 +95,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "13.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
     ],
     targets: [
         .target(
@@ -116,15 +116,15 @@ Note: If you are using **ReactiveMoya**, we are using [our own fork of ReactiveS
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '~> 13.0'
+pod 'Moya', '~> 14.0'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 13.0'
+pod 'Moya/RxSwift', '~> 14.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 13.0'
+pod 'Moya/ReactiveSwift', '~> 14.0'
 ```
 
 Then run `pod install`.
@@ -140,7 +140,7 @@ generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
 Make the following entry in your Cartfile:
 
 ```
-github "Moya/Moya" ~> 13.0
+github "Moya/Moya" ~> 14.0
 ```
 
 Then run `carthage update`.
@@ -148,16 +148,6 @@ Then run `carthage update`.
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
 > NOTE: At this time, Carthage does not provide a way to build only specific repository submodules. All submodules and their dependencies will be built with the above command. However, you don't need to copy frameworks you aren't using into your project. For instance, if you aren't using `ReactiveSwift`, feel free to delete that framework along with `ReactiveMoya` from the Carthage Build directory after `carthage update` completes. Or if you are using `ReactiveSwift` but not `RxSwift`, then `RxMoya`, `RxTest`, `RxCocoa`, etc. can safely be deleted.
-
-#### Moya 14+, Carthage and Xcode 10
-
-If you are using this specific stack (no SPM/CocoaPods, no Xcode 11), you need to do a little bit more in order to install Moya. This is because Xcode 10 doesn't see Combine as a framework and so it cannot "weakly link it".
-Below is a script that should get you through the installation process:
-```bash
-carthage update Moya --platform iOS --no-build
-./Carthage/Checkouts/Moya/scripts/carthage-xcode10-compat.sh
-carthage build Moya --platform iOS
-```
 
 ### Manually
 
