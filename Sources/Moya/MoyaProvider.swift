@@ -156,7 +156,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     // swiftlint:enable function_parameter_count
 }
 
-/// Mark: Stubbing
+// Mark: Stubbing
 
 /// Controls how stub responses are returned.
 public enum StubBehavior {
