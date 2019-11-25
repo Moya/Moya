@@ -283,6 +283,20 @@ final class SignalProducerMoyaSpec: QuickSpec {
                 expect(receivedString).to(equal(string))
             }
 
+            it("maps data representing a string at multiple key paths to a string") {
+                let string = "이병찬"
+                let json = ["name": ["korean": string]]
+                let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                let signal = signalSendingData(data)
+
+                var receivedString: String?
+                signal.mapString(atKeyPaths: ["name", "korean"]).startWithResult { result in
+                    receivedString = result.value
+                }
+
+                expect(receivedString).to(equal(string))
+            }
+
             it("ignores invalid data") {
                 let data = Data(bytes: [0x11FFFF] as [UInt32], count: 1) //Byte exceeding UTF8
                 let signal = signalSendingData(data as Data)
@@ -488,6 +502,38 @@ final class SignalProducerMoyaSpec: QuickSpec {
                     }
                     expect(url).notTo(beNil())
                     expect(url) == URL(string: "http://www.example.com/test")
+                }
+
+                it("maps data representing a json array to a decodable object (#1311) with multiple key paths") {
+                    let json: [String: [String: Any]] = ["data": ["issues": [json]]] // nested json array
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var receivedObjects: [Issue]?
+                    _ = signal.map([Issue].self, atKeyPaths: ["data", "issues"], using: decoder).startWithResult { result in
+                        receivedObjects = result.value
+                    }
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.count) == 1
+                    expect(receivedObjects?.first?.title) == "Hello, Moya!"
+                    expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+                }
+
+                it("map String data to a String value with multiple key paths") {
+                    let json: [String: [String: Any]] = ["data": ["korean_name": "이병찬"]]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let signal = signalSendingData(data)
+
+                    var description: String?
+                    _ = signal.map(String.self, atKeyPaths: ["data", "korean_name"], using: decoder).startWithResult { result in
+                        description = result.value
+                    }
+                    expect(description).notTo(beNil())
+                    expect(description) == "이병찬"
                 }
 
                 it("shouldn't map Int data to a Bool value") {
