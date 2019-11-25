@@ -112,14 +112,31 @@ public extension Response {
     /// - parameter atKeyPath: Optional key path at which to parse string.
     func mapString(atKeyPath keyPath: String? = nil) throws -> String {
         if let keyPath = keyPath {
-            // Key path was provided, try to parse string at key path
-            guard let jsonDictionary = try mapJSON() as? NSDictionary,
-                let string = jsonDictionary.value(forKeyPath: keyPath) as? String else {
-                    throw MoyaError.stringMapping(self)
+            return try mapString(atKeyPaths: [keyPath])
+        } else {
+            return try mapString(atKeyPaths: [])
+        }
+    }
+
+    /// Maps data received from the signal into a String.
+    ///
+    /// - parameter atKeyPaths: Multiple key paths at which to parse object.
+    func mapString(atKeyPaths keyPaths: [String]) throws -> String {
+        if !keyPaths.isEmpty {
+            guard let baseJSONObject = (try mapJSON() as? NSDictionary) else {
+                throw MoyaError.stringMapping(self)
+            }
+            let jsonObject = try keyPaths.reduce(baseJSONObject) { (object: Any, keyPath: String) in
+                guard let childObject = (object as? NSDictionary)?.value(forKeyPath: keyPath) else {
+                    throw MoyaError.jsonMapping(self)
+                }
+                return childObject
+            }
+            guard let string = jsonObject as? String else {
+                throw MoyaError.stringMapping(self)
             }
             return string
         } else {
-            // Key path was not provided, parse entire response as string
             guard let string = String(data: data, encoding: .utf8) else {
                 throw MoyaError.stringMapping(self)
             }
@@ -132,6 +149,18 @@ public extension Response {
     /// - parameter atKeyPath: Optional key path at which to parse object.
     /// - parameter using: A `JSONDecoder` instance which is used to decode data to an object.
     func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) throws -> D {
+        if let keyPath = keyPath {
+            return try map(type, atKeyPaths: [keyPath], using: decoder, failsOnEmptyData: failsOnEmptyData)
+        } else {
+            return try map(type, atKeyPaths: [], using: decoder, failsOnEmptyData: failsOnEmptyData)
+        }
+    }
+
+    /// Maps data received from the signal into a Decodable object.
+    ///
+    /// - parameter atKeyPaths: Multiple key paths at which to parse object.
+    /// - parameter using: A `JSONDecoder` instance which is used to decode data to an object.
+    func map<D: Decodable>(_ type: D.Type, atKeyPaths keyPaths: [String], using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) throws -> D {
         let serializeToData: (Any) throws -> Data? = { (jsonObject) in
             guard JSONSerialization.isValidJSONObject(jsonObject) else {
                 return nil
@@ -143,8 +172,8 @@ public extension Response {
             }
         }
         let jsonData: Data
-        keyPathCheck: if let keyPath = keyPath {
-            guard let jsonObject = (try mapJSON(failsOnEmptyData: failsOnEmptyData) as? NSDictionary)?.value(forKeyPath: keyPath) else {
+        keyPathCheck: if !keyPaths.isEmpty {
+            guard let baseJSONObject = (try mapJSON(failsOnEmptyData: failsOnEmptyData) as? NSDictionary) else {
                 if failsOnEmptyData {
                     throw MoyaError.jsonMapping(self)
                 } else {
@@ -152,7 +181,12 @@ public extension Response {
                     break keyPathCheck
                 }
             }
-
+            let jsonObject = try keyPaths.reduce(baseJSONObject) { (object: Any, keyPath: String) in
+                guard let childObject = (object as? NSDictionary)?.value(forKeyPath: keyPath) else {
+                    throw MoyaError.jsonMapping(self)
+                }
+                return childObject
+            }
             if let data = try serializeToData(jsonObject) {
                 jsonData = data
             } else {
