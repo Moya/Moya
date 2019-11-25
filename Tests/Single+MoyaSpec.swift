@@ -293,6 +293,23 @@ final class SingleMoyaSpec: QuickSpec {
                 expect(receivedString).to(equal(string))
             }
 
+            it("maps data representing a string at multiple key paths to a string") {
+                let string = "이병찬"
+                let json: [String: [String: String]] = ["name": ["korean": string]]
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    fatalError("Failed creating Data from JSON dictionary")
+                }
+
+                let single = Response(statusCode: 200, data: data).asSingle()
+
+                var receivedString: String?
+                _ = single.mapString(atKeyPaths: ["name", "korean"]).subscribe(onSuccess: { string in
+                    receivedString = string
+                })
+
+                expect(receivedString).to(equal(string))
+            }
+
             it("ignores invalid data") {
                 let data = Data(bytes: [0x11FFFF] as [UInt32], count: 1) //Byte exceeding UTF8
                 let single = Response(statusCode: 200, data: data).asSingle()
@@ -500,6 +517,38 @@ final class SingleMoyaSpec: QuickSpec {
                     expect(url) == URL(string: "http://www.example.com/test")
                 }
 
+                it("maps data representing a json array to a decodable object (#1311) with multiple key paths") {
+                    let json: [String: [String: Any]] = ["data": ["issues": [json]]] // nested json array
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let single = Response(statusCode: 200, data: data).asSingle()
+
+                    var receivedObjects: [Issue]?
+                    _ = single.map([Issue].self, atKeyPaths: ["data", "issues"], using: decoder).subscribe(onSuccess: { object in
+                        receivedObjects = object
+                    })
+                    expect(receivedObjects).notTo(beNil())
+                    expect(receivedObjects?.count) == 1
+                    expect(receivedObjects?.first?.title) == "Hello, Moya!"
+                    expect(receivedObjects?.first?.createdAt) == formatter.date(from: "1995-01-14T12:34:56")!
+                }
+
+                it("map String data to a String value with multiple key paths") {
+                    let json: [String: [String: Any]] = ["name": ["korean": "이병찬"]]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let single = Response(statusCode: 200, data: data).asSingle()
+
+                    var description: String?
+                    _ = single.map(String.self, atKeyPaths: ["name", "korean"], using: decoder).subscribe(onSuccess: { value in
+                        description = value
+                    })
+                    expect(description).notTo(beNil())
+                    expect(description) == "이병찬"
+                }
+
                 it("shouldn't map Int data to a Bool value") {
                     let json: [String: Any] = ["isNew": 1]
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
@@ -551,6 +600,20 @@ final class SingleMoyaSpec: QuickSpec {
 
                     var test: [String]?
                     _ = observable.map([String].self, atKeyPath: "test", using: decoder).subscribe(onSuccess: { value in
+                        test = value
+                    })
+                    expect(test).to(beNil())
+                }
+
+                it("shouldn't map Any data to Any value with missing key path") {
+                    let json: [String: Any] = ["data": ["test": "123"]]
+                    guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                        preconditionFailure("Failed creating Data from JSON dictionary")
+                    }
+                    let single = Response(statusCode: 200, data: data).asSingle()
+
+                    var test: String?
+                    _ = single.map(String.self, atKeyPaths: ["data", "testing"], using: decoder).subscribe(onSuccess: { value in
                         test = value
                     })
                     expect(test).to(beNil())
