@@ -48,8 +48,18 @@ extension PrimitiveSequence where TraitType == SingleTrait, ElementType == Respo
         return flatMap { .just(try $0.mapString(atKeyPath: keyPath)) }
     }
 
+    /// Maps received data at multiple key paths into a String. If the conversion fails, the signal errors.
+    public func mapString(atKeyPaths keyPaths: [String]) -> Single<String> {
+        return flatMap { .just(try $0.mapString(atKeyPaths: keyPaths)) }
+    }
+
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
     public func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> Single<D> {
         return flatMap { .just(try $0.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData)) }
+    }
+
+    /// Maps received data at multiple key paths into a Decodable object. If the conversion fails, the signal errors.
+    public func map<D: Decodable>(_ type: D.Type, atKeyPaths keyPaths: [String], using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> Single<D> {
+        return flatMap { .just(try $0.map(type, atKeyPaths: keyPaths, using: decoder, failsOnEmptyData: failsOnEmptyData)) }
     }
 }
