@@ -61,10 +61,6 @@
 		7C32947EA657E981CB15D58C /* TestPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */; };
 		83B0E400A7562256224CB7FF /* AccessTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC115388D44D0DB7A753E9BB /* AccessTokenPlugin.swift */; };
 		85850A4122CF5AB50089E731 /* NimbleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85850A4022CF5AB50089E731 /* NimbleHelpers.swift */; };
-		85C98000231D2D4000AAAFB2 /* MoyaProvider+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */; };
-		85C98002231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */; };
-		85C98006231D41E400AAAFB2 /* MoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */; };
-		85C98008231D4BE900AAAFB2 /* AnyPublisher+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */; };
 		85D5277A2302BEF30093E9C1 /* TestImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D527792302BEF30093E9C1 /* TestImage.swift */; };
 		85F6042E22A018BB00063320 /* RequestTypeWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */; };
 		8995DF740A59721AA79F5B43 /* MoyaProvider+ReactiveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */; };
@@ -201,10 +197,6 @@
 		832781077A551E1F86E5F2D4 /* NetworkLoggerPluginSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluginSpec.swift; sourceTree = "<group>"; };
 		851FFE6DC58E873408D0E8E7 /* MoyaProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoyaProvider.swift; sourceTree = "<group>"; };
 		85850A4022CF5AB50089E731 /* NimbleHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NimbleHelpers.swift; sourceTree = "<group>"; };
-		85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Combine.swift"; sourceTree = "<group>"; };
-		85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+CombineSpec.swift"; sourceTree = "<group>"; };
-		85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPublisher.swift; sourceTree = "<group>"; };
-		85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Response.swift"; sourceTree = "<group>"; };
 		85D527792302BEF30093E9C1 /* TestImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImage.swift; sourceTree = "<group>"; };
 		85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypeWrapper.swift; sourceTree = "<group>"; };
 		86F3C0EA472C23E786E23CE9 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -326,7 +318,6 @@
 		331A6D3090D9773091435406 /* Moya */ = {
 			isa = PBXGroup;
 			children = (
-				85C97FFE231D2D2D00AAAFB2 /* Combine */,
 				149749421F8923EC00FA4900 /* AnyEncodable.swift */,
 				5C2B20158E599EDBE51D7AB2 /* Cancellable.swift */,
 				3FF1994427C5440527B03B31 /* Endpoint.swift */,
@@ -419,16 +410,6 @@
 			path = Plugins;
 			sourceTree = "<group>";
 		};
-		85C97FFE231D2D2D00AAAFB2 /* Combine */ = {
-			isa = PBXGroup;
-			children = (
-				85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */,
-				85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */,
-				85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */,
-			);
-			path = Combine;
-			sourceTree = "<group>";
-		};
 		85D527782302B4CC0093E9C1 /* MoyaTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,7 +420,6 @@
 				C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */,
 				7F112022D8F42844A7D5CB5C /* ErrorTests.swift */,
 				819334FE5D32EFB82599D482 /* MethodSpec.swift */,
-				85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */,
 				C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */,
 				4C7A20CC38EB5A0221E6EA34 /* MoyaProvider+RxSpec.swift */,
 				82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */,
@@ -870,20 +850,17 @@
 				AA882A27236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */,
 				FB223B5C3B7D4AA5261E25EA /* Image.swift in Sources */,
 				EDBA10DB0D0E35C1474AAB4D /* Moya+Alamofire.swift in Sources */,
-				85C98000231D2D4000AAAFB2 /* MoyaProvider+Combine.swift in Sources */,
 				15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */,
 				59BC4B9B9D0D6F9C060E5620 /* MoyaProvider+Defaults.swift in Sources */,
 				149749431F8923EC00FA4900 /* AnyEncodable.swift in Sources */,
 				9854C1DBF14818CCA76AEC7F /* MoyaProvider+Internal.swift in Sources */,
 				147E26EC1F5B14B300C1F513 /* Task.swift in Sources */,
-				85C98008231D4BE900AAAFB2 /* AnyPublisher+Response.swift in Sources */,
 				5BCAACCA268FEA0DAB07F998 /* MoyaProvider.swift in Sources */,
 				61633F6E85FB39A4707A6167 /* MultipartFormData.swift in Sources */,
 				5054F87AFF61EAC0097F88BD /* MultiTarget.swift in Sources */,
 				BEAA605B30BE7651BA5C61A4 /* Plugin.swift in Sources */,
 				83B0E400A7562256224CB7FF /* AccessTokenPlugin.swift in Sources */,
 				B5A7124CF285D8EC7F89C1AD /* CredentialsPlugin.swift in Sources */,
-				85C98006231D41E400AAAFB2 /* MoyaPublisher.swift in Sources */,
 				1446FBB31F214C5200C1EFF2 /* URL+Moya.swift in Sources */,
 				4A609CED953E8A6C59AD01A1 /* NetworkActivityPlugin.swift in Sources */,
 				1FD44D9E21CEA6B6221807EF /* NetworkLoggerPlugin.swift in Sources */,
@@ -941,8 +918,6 @@
 			files = (
 				A6304A7E74FA3B04C9B10B63 /* AccessTokenPluginSpec.swift in Sources */,
 				2C7132B56A7B129E12BAACAC /* EndpointSpec.swift in Sources */,
-				85C98002231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift in Sources */,
-				AACB924D2366583A00A33FB8 /* Task+Internal.swift in Sources */,
 				78A2D3991F44BACD00C9E122 /* RxTestHelpers.swift in Sources */,
 				AA882A2B236867D60096BCA1 /* RawDataParameterEncoderSpec.swift in Sources */,
 				53376123902C6A22A44DB88E /* Error+MoyaSpec.swift in Sources */,
@@ -1181,9 +1156,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				OTHER_LDFLAGS = $OTHER_LDFLAGS_XCODE11;
-				OTHER_LDFLAGS_XCODE10 = "";
-				OTHER_LDFLAGS_XCODE11 = "-weak_framework Combine";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
@@ -1505,9 +1477,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = $OTHER_LDFLAGS_XCODE11;
-				OTHER_LDFLAGS_XCODE10 = "";
-				OTHER_LDFLAGS_XCODE11 = "-weak_framework Combine";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;

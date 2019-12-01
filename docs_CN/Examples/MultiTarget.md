@@ -57,7 +57,7 @@ enum UserApi: DecodableTargetType {
 ```swift
 extension MultiMoyaProvider {
     func requestDecoded<T: DecodableTargetType>(_ target: T, completion: @escaping (_ result: Result<[T.ResultType], Moya.Error>) -> ()) -> Cancellable {
-        return request(target) { result in
+        request(target) { result in
             switch result {
             case .success(let response):
                 if let parsed = T.ResultType.parse(try! response.mapJSON()) {

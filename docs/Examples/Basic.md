@@ -20,7 +20,7 @@ target (at compile time). You can see that parameters needed for requests can be
 ```swift
 // MARK: - TargetType Protocol Implementation
 extension MyService: TargetType {
-    var baseURL: URL { return URL(string: "https://api.myservice.com")! }
+    var baseURL: URL { URL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
         case .zen:
@@ -77,11 +77,11 @@ extension MyService: TargetType {
 // MARK: - Helpers
 private extension String {
     var urlEscaped: String {
-        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 
     var utf8Encoded: Data {
-        return data(using: .utf8)!
+        Data(self.utf8)
     }
 }
 ```
@@ -124,7 +124,7 @@ You can also set up custom endpoints to alter the default behavior to your needs
 
 ```swift
 let endpointClosure = { (target: MyService) -> Endpoint in
-    return Endpoint(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    Endpoint(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 

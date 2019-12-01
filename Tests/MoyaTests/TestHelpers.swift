@@ -159,7 +159,7 @@ public enum GitHubUserContent {
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
         case .downloadMoyaWebContent(let contentPath), .requestMoyaWebContent(let contentPath):
