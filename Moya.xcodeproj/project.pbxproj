@@ -75,8 +75,8 @@
 		AA882A2B236867D60096BCA1 /* RawDataParameterEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A29236867D60096BCA1 /* RawDataParameterEncoderSpec.swift */; };
 		AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */; };
 		AACB924C2366202600A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
-		AACB924D2366583A00A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AAD802B4236435EB0044EDFB /* TaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD802B3236435EB0044EDFB /* TaskSpec.swift */; };
+		AAE606D6239435CD00D397F9 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AB5048DC5042B016964EE958 /* MoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C174EF53873DE04BB159E /* MoyaProvider+Reactive.swift */; };
 		B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */; };
 		B5A7124CF285D8EC7F89C1AD /* CredentialsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884642F58B074C95261DCA86 /* CredentialsPlugin.swift */; };
@@ -928,6 +928,7 @@
 				AAD802B4236435EB0044EDFB /* TaskSpec.swift in Sources */,
 				B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */,
 				9A58B120B1293AFE556915AE /* MoyaProviderSpec.swift in Sources */,
+				AAE606D6239435CD00D397F9 /* Task+Internal.swift in Sources */,
 				FA9EE63E068C40C97D7B0156 /* MultipartFormDataSpec.swift in Sources */,
 				B950CAA84C0656EB11E316FB /* MultiTargetSpec.swift in Sources */,
 				1F24393320125F8200C9D813 /* EndpointClosureSpec.swift in Sources */,
