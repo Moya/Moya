@@ -31,18 +31,18 @@ public extension MoyaProvider {
         }
 
         if trackInflights {
-            objc_sync_enter(self)
+            lock.lock()
             var inflightCompletionBlocks = self.inflightRequests[endpoint]
             inflightCompletionBlocks?.append(pluginsWithCompletion)
             self.inflightRequests[endpoint] = inflightCompletionBlocks
-            objc_sync_exit(self)
+            lock.unlock()
 
             if inflightCompletionBlocks != nil {
                 return cancellableToken
             } else {
-                objc_sync_enter(self)
+                lock.lock()
                 self.inflightRequests[endpoint] = [pluginsWithCompletion]
-                objc_sync_exit(self)
+                lock.unlock()
             }
         }
 
@@ -66,9 +66,9 @@ public extension MoyaProvider {
               if self.trackInflights {
                 self.inflightRequests[endpoint]?.forEach { $0(result) }
 
-                objc_sync_enter(self)
+                self.lock.lock()
                 self.inflightRequests.removeValue(forKey: endpoint)
-                objc_sync_exit(self)
+                self.lock.unlock()
               } else {
                 pluginsWithCompletion(result)
               }
