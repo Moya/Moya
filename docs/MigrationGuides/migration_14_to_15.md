@@ -25,7 +25,7 @@ If the old `Task` was `.requestJSONEncodable`, `.requestCompositeData`, or was u
 
 If the old `Task` was  `.requestCompositeParameters`, `.downloadParameters` or was using an `URLEncoding` associated value with a `.httpBody` destination: the new `bodyParams` associated value should be `.urlEncoded(encodable)` or `.urlEncoded(encodable, encoder: <aCustomEncoder>)` if you need to provide a custom encoder.
 
-If you are not concerned by any of the 3 points above, you don't need to provide the `bodyParams` associated value.
+If you are not concerned by any of the points above, you don't need to provide the `bodyParams` associated value.
 
 #### URL parameters
 If the old `Task` was `.requestCompositeData`, `.requestCompositeParameters`, `.uploadCompositeMultipart` or was using a `URLEncoding` associated value with a `.queryString` destination: you should provide the new `urlParams` associated value.
