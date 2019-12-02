@@ -769,7 +769,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -801,7 +801,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -849,7 +849,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -880,7 +880,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -919,7 +919,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -954,7 +954,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
