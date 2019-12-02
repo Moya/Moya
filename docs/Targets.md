@@ -90,7 +90,7 @@ In the `branches` case, we also add 1 parameter to the query string, but with a 
 Alongside the `urlParams` associated value, you can provide a `bodyParams` value which works the same but encodes parameters in request's body instead of query string.
 You can also provide a `customParams` value if you want to encode your parameters in a way that is not possible with `bodyParams` or `urlParams`, if you want to encode some xml in the body for example.
 
-When using `Task.upload`, you have acces to 3 different sources: 
+When using `Task.upload`, you have access to 3 different sources: 
 - `.file` to upload a file from a `URL`,
 - `.rawData` to upload a `Data` object,
 - `.multipart` for multipart uploads
