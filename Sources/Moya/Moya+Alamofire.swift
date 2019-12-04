@@ -106,10 +106,23 @@ extension DownloadRequest: Requestable {
     }
 }
 
-final class MoyaRequestInterceptor: NSRecursiveLock, RequestInterceptor {
+final class MoyaRequestInterceptor: RequestInterceptor {
+    private let lock: NSRecursiveLock = NSRecursiveLock()
 
     var prepare: ((URLRequest) -> URLRequest)?
-    var willSend: ((URLRequest) -> Void)?
+    private var internalWillSend: ((URLRequest) -> Void)?
+
+    var willSend: ((URLRequest) -> Void)? {
+        get {
+            lock.lock(); defer { lock.unlock() }
+            return internalWillSend
+        }
+
+        set {
+            lock.lock(); defer { lock.unlock() }
+            internalWillSend = newValue
+        }
+    }
 
     init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
         self.prepare = prepare
@@ -117,10 +130,8 @@ final class MoyaRequestInterceptor: NSRecursiveLock, RequestInterceptor {
     }
 
     func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        lock(); defer { unlock() }
-
-        let request = self.prepare?(urlRequest) ?? urlRequest
-        self.willSend?(request)
+        let request = prepare?(urlRequest) ?? urlRequest
+        willSend?(request)
         completion(.success(request))
     }
 }
