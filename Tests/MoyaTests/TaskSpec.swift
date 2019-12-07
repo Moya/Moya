@@ -68,13 +68,13 @@ final class TaskSpec: QuickSpec {
             it("forbids usage of JSONParameterEncoder") {
                 expect {
                     try Task.CustomParams(encodable, encoder: Alamofire.JSONParameterEncoder.default)
-                }.to(throwError())
+                }.to(throwError(MoyaError.taskParametersUsage(Alamofire.JSONParameterEncoder.self)))
             }
 
             it("forbids usage of URLEncodedParameterEncoder") {
                 expect {
                     try Task.CustomParams(encodable, encoder: Alamofire.URLEncodedFormParameterEncoder.default)
-                }.to(throwError())
+                }.to(throwError(MoyaError.taskParametersUsage(Alamofire.URLEncodedFormParameterEncoder.self)))
             }
 
             it("returns the associated values for others") {
