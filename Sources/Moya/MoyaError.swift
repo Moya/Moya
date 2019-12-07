@@ -16,7 +16,7 @@ public enum MoyaError: Swift.Error {
     case objectMapping(Swift.Error, Response)
 
     /// Indicates that Encodable couldn't be encoded into Data
-    case encodableMapping(String)
+    case encodableMapping(Swift.Error)
 
     /// Indicates a response failed with an invalid HTTP status code.
     case statusCode(Response)
@@ -26,6 +26,9 @@ public enum MoyaError: Swift.Error {
 
     /// Indicates that an `Endpoint` failed to map to a `URLRequest`.
     case requestMapping(String)
+
+    /// Indicates that a TaskParameter was wrongly used.
+    case taskParametersUsage(Any.Type)
 }
 
 public extension MoyaError {
@@ -43,7 +46,8 @@ public extension MoyaError {
             return response
 
         case .encodableMapping,
-             .requestMapping:
+             .requestMapping,
+             .taskParametersUsage:
             return nil
         }
     }
@@ -60,7 +64,8 @@ public extension MoyaError {
              .stringMapping,
              .encodableMapping,
              .statusCode,
-             .requestMapping:
+             .requestMapping,
+             .taskParametersUsage:
             return nil
         }
     }
@@ -79,14 +84,20 @@ extension MoyaError: LocalizedError {
             return "Failed to map data to a String."
         case .objectMapping:
             return "Failed to map data to a Decodable object."
-        case let .encodableMapping(message):
-            return message
+        case .encodableMapping:
+            return "Failed to encode Encodable object into data."
         case .statusCode:
             return "Status code didn't fall within the given range."
         case let .underlying(error, _):
             return error.localizedDescription
         case .requestMapping:
             return "Failed to map Endpoint to a URLRequest."
+        case let .taskParametersUsage(type) where type == JSONParameterEncoder.self:
+            return "A JSONParameterEncoder can not be used with Task.CustomParams. Use Task.BodyParams.json() instead."
+        case let .taskParametersUsage(type) where type == URLEncodedFormParameterEncoder.self:
+            return "An URLEncodedFormParameterEncoder can not be used in Task.CustomParams. Use Task.BodyParams.urlEncoded() or Task.URLParams instead."
+        case let .taskParametersUsage(type):
+            return "A \(type) can not be used with Task.CustomParams. Use Task.BodyParams or Task.URLParams instead."
         }
     }
 }

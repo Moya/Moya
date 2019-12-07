@@ -84,8 +84,13 @@ public extension Endpoint {
         request.allHTTPHeaderFields = httpHeaderFields
 
         //Encode params
-        return try task.allParameters().reduce(request) { initialRequest, parameters in
-            try parameters.encoder.encode(AnyEncodable(parameters.encodable), into: initialRequest)
+        do {
+            let encodedRequest = try task.allParameters().reduce(request) { initialRequest, parameters in
+                try parameters.encoder.encode(AnyEncodable(parameters.encodable), into: initialRequest)
+            }
+            return encodedRequest
+        } catch {
+            throw MoyaError.encodableMapping(error)
         }
     }
 }

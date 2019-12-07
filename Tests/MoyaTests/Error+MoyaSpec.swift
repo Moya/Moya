@@ -62,6 +62,13 @@ public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError
                 default:
                     test = false
                 }
+            case .taskParametersUsage:
+                switch expectedValue {
+                case .taskParametersUsage:
+                    test = true
+                default:
+                    test = false
+                }
             }
         } else {
             test = false

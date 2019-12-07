@@ -54,11 +54,9 @@ public enum Task {
             // CustomParams should only be used when `URLEncodedFormParameterEncoder` and `JSONParameterEncoder`
             // are not enough. To enforce usage of BodyParams or URLParams, let's check the type of the given encoder
             // to make sure CustomParams is correctly used.
-            if encoder is JSONParameterEncoder {
-                throw MoyaError.encodableMapping("A JSONParameterEncoder can not be used with Task.CustomParams. Use Task.BodyParams.json() instead.")
-            }
-            if encoder is URLEncodedFormParameterEncoder {
-                throw MoyaError.encodableMapping("An URLEncodedFormParameterEncoder can not be used in Task.CustomParams. Use Task.BodyParams.urlEncoded() or Task.URLParams instead.")
+            if encoder is JSONParameterEncoder
+            || encoder is URLEncodedFormParameterEncoder {
+                throw MoyaError.taskParametersUsage(type(of: encoder))
             }
             super.init(encodable: encodable, encoder: encoder)
         }
