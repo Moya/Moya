@@ -6,15 +6,13 @@ import Foundation
 public protocol AccessTokenAuthorizable {
 
     /// Represents the authorization header to use for requests.
-    var authorizationType: AuthorizationType { get }
+    var authorizationType: AuthorizationType? { get }
 }
 
 // MARK: - AuthorizationType
 
 /// An enum representing the header to use with an `AccessTokenPlugin`
 public enum AuthorizationType {
-    /// No header.
-    case none
 
     /// The `"Basic"` header.
     case basic
@@ -25,9 +23,8 @@ public enum AuthorizationType {
     /// Custom header implementation.
     case custom(String)
 
-    public var value: String? {
+    public var value: String {
         switch self {
-        case .none: return nil
         case .basic: return "Basic"
         case .bearer: return "Bearer"
         case .custom(let customValue): return customValue
@@ -46,7 +43,7 @@ public enum AuthorizationType {
  Authorization: <Сustom> <token>
  ```
 
-*/
+ */
 public struct AccessTokenPlugin: PluginType {
 
     /// A closure returning the access token to be applied in the header.
@@ -66,26 +63,20 @@ public struct AccessTokenPlugin: PluginType {
      Prepare a request by adding an authorization header if necessary.
 
      - parameters:
-       - request: The request to modify.
-       - target: The target of the request.
+     - request: The request to modify.
+     - target: The target of the request.
      - returns: The modified `URLRequest`.
-    */
+     */
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
 
-        guard let authorizable = target as? AccessTokenAuthorizable else { return request }
+        guard let authorizable = target as? AccessTokenAuthorizable,
+            let authorizationType = authorizable.authorizationType
+            else { return request }
 
-        let authorizationType = authorizable.authorizationType
         var request = request
 
-        switch authorizationType {
-        case .basic, .bearer, .custom:
-            if let value = authorizationType.value {
-                let authValue = value + " " + tokenClosure()
-                request.addValue(authValue, forHTTPHeaderField: "Authorization")
-            }
-        case .none:
-            break
-        }
+        let authValue = authorizationType.value + " " + tokenClosure()
+        request.addValue(authValue, forHTTPHeaderField: "Authorization")
 
         return request
     }
