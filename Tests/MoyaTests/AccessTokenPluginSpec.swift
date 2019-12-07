@@ -15,7 +15,7 @@ final class AccessTokenPluginSpec: QuickSpec {
     }
 
     let token = "eyeAm.AJsoN.weBTOKen"
-    lazy var plugin = AccessTokenPlugin { self.token }
+    lazy var plugin = AccessTokenPlugin { _ in self.token }
 
     override func spec() {
         it("doesn't add an authorization header to TargetTypes by default") {

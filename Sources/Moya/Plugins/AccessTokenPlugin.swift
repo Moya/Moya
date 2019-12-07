@@ -46,16 +46,18 @@ public enum AuthorizationType {
  */
 public struct AccessTokenPlugin: PluginType {
 
+    public typealias TokenClosure = (AuthorizationType) -> String
+
     /// A closure returning the access token to be applied in the header.
-    public let tokenClosure: () -> String
+    public let tokenClosure: TokenClosure
 
     /**
      Initialize a new `AccessTokenPlugin`.
 
      - parameters:
-       - tokenClosure: A closure returning the token to be applied in the pattern `Authorization: <AuthorizationType> <token>`
-    */
-    public init(tokenClosure: @escaping () -> String) {
+     - tokenClosure: A closure returning the token to be applied in the pattern `Authorization: <AuthorizationType> <token>`
+     */
+    public init(tokenClosure: @escaping TokenClosure) {
         self.tokenClosure = tokenClosure
     }
 
@@ -75,7 +77,7 @@ public struct AccessTokenPlugin: PluginType {
 
         var request = request
 
-        let authValue = authorizationType.value + " " + tokenClosure()
+        let authValue = authorizationType.value + " " + tokenClosure(authorizationType)
         request.addValue(authValue, forHTTPHeaderField: "Authorization")
 
         return request
