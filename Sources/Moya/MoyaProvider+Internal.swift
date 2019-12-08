@@ -205,9 +205,14 @@ private extension MoyaProvider {
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
-    func sendDownloadRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
+    func sendDownloadRequest(_ target: Target, request: URLRequest, resumeData: Data? = nil, callbackQueue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
-        let downloadRequest = session.download(request, interceptor: interceptor, to: destination)
+        let downloadRequest: DownloadRequest
+        if let resumeData = resumeData {
+            downloadRequest = session.download(resumingWith: resumeData, interceptor: interceptor, to: destination)
+        } else {
+            downloadRequest = session.download(request, interceptor: interceptor, to: destination)
+        }
         setup(interceptor: interceptor, with: target, and: downloadRequest)
 
         let validationCodes = target.validationType.statusCodes
