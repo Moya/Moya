@@ -99,6 +99,9 @@ public extension MoyaProvider {
             case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
                 return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
+            case .downloadResume(let resumeData, let destination):
+                return self.sendDownloadRequest(target, request: request, resumeData: resumeData, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
+            }
         default:
             return self.stubRequest(target, request: request, callbackQueue: callbackQueue, completion: completion, endpoint: endpoint, stubBehavior: stubBehavior)
         }

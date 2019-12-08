@@ -85,7 +85,7 @@ public extension Endpoint {
         request.allHTTPHeaderFields = httpHeaderFields
 
         switch task {
-        case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
+        case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination, .downloadResume:
             return request
         case .requestData(let data):
             request.httpBody = data
