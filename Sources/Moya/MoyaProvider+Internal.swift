@@ -98,7 +98,6 @@ public extension MoyaProvider {
                 return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
             case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
                 return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
-            }
             case .downloadResume(let resumeData, let destination):
                 return self.sendDownloadRequest(target, request: request, resumeData: resumeData, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
