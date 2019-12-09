@@ -1,5 +1,8 @@
 # Next
 
+### Changed
+- **Breaking Change** In `AccessTokenPlugin`, the token closure now takes a `AuthorizationType` as parameter and `AuthorizationType.none` has been removed in favor of using  `AuthorizationType?`. [#1969](https://github.com/Moya/Moya/pull/1969) by [@amaurydavid](https://github.com/amaurydavid).
+
 ### Fixed
 - Fixed a data race condition issue and enable TSAN on the test action and CI. [#1952](https://github.com/Moya/Moya/pull/1952) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 

@@ -294,7 +294,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                     beforeEach {
                         token = UUID().uuidString
-                        plugin = AccessTokenPlugin { token }
+                        plugin = AccessTokenPlugin { _ in token }
                         provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub,
                                                          plugins: [plugin])
                     }
