@@ -1,5 +1,8 @@
 # Next
 
+### Fixed
+- Fixed a data race condition issue and enable TSAN on the test action and CI. [#1952](https://github.com/Moya/Moya/pull/1952) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+
 # [14.0.0-beta.5] - 2019-10-27
 
 ### Changed
