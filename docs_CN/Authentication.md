@@ -40,7 +40,7 @@ Moya提供一个 `AccessTokenPlugin` 来完成
 
 ```Swift
 let token = "eyeAm.AJsoN.weBTOKen"
-let authPlugin = AccessTokenPlugin { token }
+let authPlugin = AccessTokenPlugin { _ in token }
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
 
@@ -52,17 +52,19 @@ let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 extension YourAPI: TargetType, AccessTokenAuthorizable {
     case targetThatNeedsBearerAuth
     case targetThatNeedsBasicAuth
+    case targetThatNeedsCustomAuth
     case targetDoesNotNeedAuth
 
-    var authorizationType: AuthorizationType {
+    var authorizationType: AuthorizationType? {
         switch self {
             case .targetThatNeedsBearerAuth:
                 return .bearer
             case .targetThatNeedsBasicAuth:
                 return .basic
+            case .targetThatNeedsCustomAuth:
+                return .custom("CustomAuthorizationType")
             case .targetDoesNotNeedAuth:
-                return .none
-            }
+                return nil
         }
 }
 ```
