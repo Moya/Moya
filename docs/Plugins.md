@@ -27,8 +27,8 @@ The authentication plugin allows a user to assign an optional `URLCredential` pe
 
 The plugin can be found at [`Sources/Moya/Plugins/CredentialsPlugin.swift`](../Sources/Moya/Plugins/CredentialsPlugin.swift)
 
-#### Access token
-The AccessTokenPlugin adds the `Authorization` field in the request's header if the target requires it.
+### Access Token
+The `AccessTokenPlugin` adds the `Authorization` field in the request's header if the target requires it.
 Before sending the request, the plugin will ask for a token of a specified type using its `tokenClosure`, and add the appropriate value to headers.
 
 The plugin can be found at [`Sources/Moya/Plugins/AccessTokenPlugin.swift`](../Sources/Moya/Plugins/AccessTokenPlugin.swift)
@@ -44,8 +44,6 @@ During development it can be very useful to log network activity to the console.
 The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initializing the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputting data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `String.Encoding.utf8` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Examples/_shared/GitHubAPI.swift`](../Examples/_shared/GitHubAPI.swift) for an example that does exactly that)
 
 The plugin can be found at [`Sources/Moya/Plugins/NetworkLoggerPlugin.swift`](../Sources/Moya/Plugins/NetworkLoggerPlugin.swift)
-
-### AccessTokenPlugin
 
 
 ## Custom plugins
