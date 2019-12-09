@@ -1,5 +1,8 @@
 # Next
 
+### Changed
+- **Breaking Change** In `AccessTokenPlugin`, the token closure now takes a `AuthorizationType` as parameter and `AuthorizationType.none` has been removed in favor of using  `AuthorizationType?`. [#1969](https://github.com/Moya/Moya/pull/1969) by [@amaurydavid](https://github.com/amaurydavid).
+
 # [14.0.0-beta.5] - 2019-10-27
 
 ### Changed
