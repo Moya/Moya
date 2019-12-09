@@ -10,4 +10,4 @@ This project follows [Semantic Versioning](http://semver.org).
 
 ### AccessTokenPlugin Migration
 - The token closure now takes an `AuthorizationType` as parameter.
-- The `AuthorizationType.none` value has been removed. Consequently in `AccessTokenAuthorizable` the property `AuthorizationType` is now optional. 
+- `AccessTokenAuthorizable.authorizationType` is now `AuthorizationType?`, instead of `AuthorizationType`. To skip using the plugin for given endpoint, you can still return `.none`, as previously, or `nil`.
