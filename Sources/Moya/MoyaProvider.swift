@@ -83,7 +83,10 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     public let trackInflights: Bool
 
-    open internal(set) var inflightRequests: [Endpoint: [Moya.Completion]] = [:]
+    open var inflightRequests: [Endpoint: [Moya.Completion]] { internalInflightRequests }
+
+    @Atomic
+    var internalInflightRequests: [Endpoint: [Moya.Completion]] = [:]
 
     /// Propagated to Alamofire as callback queue. If nil - the Alamofire default (as of their API in 2017 - the main queue) will be used.
     let callbackQueue: DispatchQueue?
@@ -189,8 +192,7 @@ public extension MoyaProvider {
     }
 
     /// Return a response after a delay.
-    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
-        { _ in .delayed(seconds: seconds) }
+    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior { { _ in .delayed(seconds: seconds) }
     }
 }
 

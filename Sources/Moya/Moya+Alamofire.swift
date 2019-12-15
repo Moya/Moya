@@ -107,22 +107,10 @@ extension DownloadRequest: Requestable {
 }
 
 final class MoyaRequestInterceptor: RequestInterceptor {
-    private let lock: NSRecursiveLock = NSRecursiveLock()
-
     var prepare: ((URLRequest) -> URLRequest)?
-    private var internalWillSend: ((URLRequest) -> Void)?
 
-    var willSend: ((URLRequest) -> Void)? {
-        get {
-            lock.lock(); defer { lock.unlock() }
-            return internalWillSend
-        }
-
-        set {
-            lock.lock(); defer { lock.unlock() }
-            internalWillSend = newValue
-        }
-    }
+    @Atomic
+    var willSend: ((URLRequest) -> Void)?
 
     init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
         self.prepare = prepare
