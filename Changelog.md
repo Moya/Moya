@@ -1,5 +1,9 @@
 # Next
 
+### Changed
+- **Breaking Change**  `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
+
+
 # [14.0.0-beta.6] - 2019-12-09
 
 ### Changed
