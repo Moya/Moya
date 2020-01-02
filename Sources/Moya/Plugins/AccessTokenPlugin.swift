@@ -32,6 +32,22 @@ public enum AuthorizationType {
     }
 }
 
+extension AuthorizationType: Equatable {
+    public static func == (lhs: AuthorizationType, rhs: AuthorizationType) -> Bool {
+        switch (lhs, rhs) {
+        case (.basic, .basic),
+             (.bearer, .bearer):
+            return true
+
+        case let (.custom(value1), .custom(value2)):
+            return value1 == value2
+
+        default:
+            return false
+        }
+    }
+}
+
 // MARK: - AccessTokenPlugin
 
 /**
