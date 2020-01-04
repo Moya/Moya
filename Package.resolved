@@ -29,12 +29,21 @@
         }
       },
       {
+        "package": "Logger",
+        "repositoryURL": "https://github.com/shibapm/Logger",
+        "state": {
+          "branch": null,
+          "revision": "53c3ecca5abe8cf46697e33901ee774236d94cce",
+          "version": "0.2.3"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
           "branch": null,
-          "revision": "6abeb3f5c03beba2b9e4dbe20886e773b5b629b6",
-          "version": "8.0.4"
+          "revision": "b02b00b30b6353632aa4a5fb6124f8147f7140c0",
+          "version": "8.0.5"
         }
       },
       {
@@ -42,8 +51,17 @@
         "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
         "state": {
           "branch": "feature/spm-support",
-          "revision": "fda9902f8c5c4170c6914d7dc845174e8c75bf92",
+          "revision": "4726e07728b8bff3152a8c31c34a0bb7cc2aef19",
           "version": null
+        }
+      },
+      {
+        "package": "PackageConfig",
+        "repositoryURL": "https://github.com/shibapm/PackageConfig.git",
+        "state": {
+          "branch": null,
+          "revision": "fd0829aac9851434b3d2db0890e27bc489fc973a",
+          "version": "0.12.2"
         }
       },
       {
@@ -65,12 +83,39 @@
         }
       },
       {
+        "package": "Rocket",
+        "repositoryURL": "https://github.com/shibapm/Rocket",
+        "state": {
+          "branch": null,
+          "revision": "623cb4ccf55d708d082516ccd5cfea3dac8f9032",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "RxSwift",
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
           "branch": null,
           "revision": "b3e888b4972d9bc76495dd74d30a8c7fad4b9395",
           "version": "5.0.1"
+        }
+      },
+      {
+        "package": "SwiftShell",
+        "repositoryURL": "https://github.com/kareman/SwiftShell",
+        "state": {
+          "branch": null,
+          "revision": "fb7fc2c9ad8811caf324431a508fb79e3fb74f99",
+          "version": "5.0.1"
+        }
+      },
+      {
+        "package": "Yams",
+        "repositoryURL": "https://github.com/jpsim/Yams",
+        "state": {
+          "branch": null,
+          "revision": "c947a306d2e80ecb2c0859047b35c73b8e1ca27f",
+          "version": "2.0.0"
         }
       }
     ]

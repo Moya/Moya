@@ -151,35 +151,10 @@ namespace :test do
 end
 
 desc 'Release a version, specified as an argument.'
-task :release, :version do |task, args|
-  version = args[:version]
-  release_date = Time.now.strftime("%Y-%m-%d")
-  # Needs a X.Y.Z-text format.
-  abort "You must specify a version in semver format." if version.nil? || version.scan(/\d+\.\d+\.\d+(-\w+\.\d+)?/).length == 0
-
-  puts "Updating podspec."
-  filename = "Moya.podspec"
-  contents = File.read(filename)
-  contents.gsub!(/s\.version\s*=\s"\d+\.\d+\.\d+(-\w+\.\d)?"/, "s.version      = \"#{version}\"")
-  File.open(filename, 'w') { |file| file.puts contents }
-
-  puts "Updating changelog."
-  changelog_filename = "CHANGELOG.md"
-  changelog = File.read(changelog_filename)
-  changelog.gsub!(/# Next/, "# Next\n\n# [#{version}] - #{release_date}")
-  File.open(changelog_filename, 'w') { |file| file.puts changelog }
-
-  puts "Committing, tagging, and pushing."
-  message = "Releasing version #{version}."
-  sh "git commit -am '#{message}'"
-  sh "git tag #{version} -m '#{message}'"
-  sh "git push --follow-tags"
-
-  puts "Pushing to CocoaPods trunk."
-  sh "bundle exec pod trunk push Moya.podspec --allow-warnings"
-
+task :create_release, :version do |task, args|
   puts "Pushing as a GitHub Release."
   require 'octokit'
+  version = args[:version]
   Octokit::Client.new(netrc: true).
     create_release('Moya/Moya',
                    version,
