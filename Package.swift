@@ -37,13 +37,13 @@ import PackageConfig
 
 let config = PackageConfiguration([
     "rocket": [
-        "before": [
+	"before": [
             "scripts/update_changelog.sh",
             "scripts/update_podspec.sh"
 	],
 	"after": [
             "rake create_release\\[\"$VERSION\"\\]"
-        ]
+	]
     ],
 ]).write()
 #endif
