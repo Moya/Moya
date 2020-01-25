@@ -85,7 +85,7 @@ jobs:
           command: rake build_example
       - run:
           name: Install MDSpell
-          command: npm install -g orta/node-markdown-spellcheck
+          command: sudo npm install -g orta/node-markdown-spellcheck
       - run:
           name: Run Danger
           command: brew install danger/tap/danger-swift && danger-swift ci
