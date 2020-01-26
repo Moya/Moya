@@ -72,7 +72,6 @@ jobs:
           command: rake test:ios
       - run: 
           name: Test on macOS
-          no_output_timeout: 1200
           command: rake test:macos
       - run:
           name: Test on tvOS
