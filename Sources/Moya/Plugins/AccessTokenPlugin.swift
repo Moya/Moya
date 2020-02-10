@@ -91,3 +91,15 @@ public struct AccessTokenPlugin: PluginType {
         return request
     }
 }
+
+extension MultiTarget: AccessTokenAuthorizable {
+    public var authorizationType: AuthorizationType {
+        if target is AccessTokenAuthorizable {
+            guard let authTarget = target as? AccessTokenAuthorizable else {
+                return .none
+            }
+            return authTarget.authorizationType
+        }
+        return .none
+    }
+}
