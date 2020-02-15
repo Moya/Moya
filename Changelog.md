@@ -1,5 +1,7 @@
 # Next
 
+# [14.0.0] - 2020-02-15
+
 ### Changed
 - **Breaking Change** Minimum version of `Alamofire` is now 5.0. [#1992](https://github.com/Moya/Moya/pull/1992) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change**  `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
