@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "2cbf59935fbb1f26e352ce4db53f1cf9408d5313",
-          "version": "5.0.0-rc.3"
+          "revision": "0c8cb78d05b6d067ee331c05058ff4dedcb45ffa",
+          "version": "5.0.0"
         }
       },
       {
@@ -50,9 +50,9 @@
         "package": "OHHTTPStubs",
         "repositoryURL": "https://github.com/AliSoftware/OHHTTPStubs.git",
         "state": {
-          "branch": "feature/spm-support",
-          "revision": "4726e07728b8bff3152a8c31c34a0bb7cc2aef19",
-          "version": null
+          "branch": null,
+          "revision": "e92b5a5746ef16add2a1424f1fc19529d9a75cde",
+          "version": "9.0.0"
         }
       },
       {
