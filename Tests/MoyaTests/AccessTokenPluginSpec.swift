@@ -1,7 +1,7 @@
 import Quick
 import Nimble
 import Moya
-import Result
+import Foundation
 
 final class AccessTokenPluginSpec: QuickSpec {
     struct TestTarget: TargetType, AccessTokenAuthorizable {
@@ -11,11 +11,11 @@ final class AccessTokenPluginSpec: QuickSpec {
         let task = Task.requestPlain
         let sampleData = Data()
         let headers: [String: String]? = nil
-        let authorizationType: AuthorizationType
+        let authorizationType: AuthorizationType?
     }
 
     let token = "eyeAm.AJsoN.weBTOKen"
-    lazy var plugin = AccessTokenPlugin { self.token }
+    lazy var plugin = AccessTokenPlugin { _ in self.token }
 
     override func spec() {
         it("doesn't add an authorization header to TargetTypes by default") {
@@ -25,11 +25,9 @@ final class AccessTokenPluginSpec: QuickSpec {
             expect(preparedRequest.allHTTPHeaderFields).to(beNil())
         }
 
-        it("doesn't add an authorization header to AccessTokenAuthorizables when AuthorizationType is .none") {
-            let authorizationType: AuthorizationType = .none
-            let preparedRequest = self.createPreparedRequest(for: authorizationType)
+        it("doesn't add an authorization header to AccessTokenAuthorizables when AuthorizationType is nil") {
+            let preparedRequest = self.createPreparedRequest(for: nil)
 
-            expect(authorizationType.value).to(beNil())
             expect(preparedRequest.allHTTPHeaderFields).to(beNil())
         }
 
@@ -37,7 +35,7 @@ final class AccessTokenPluginSpec: QuickSpec {
             let authorizationType: AuthorizationType = .basic
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
-            let authValue = authorizationType.value!
+            let authValue = authorizationType.value
             expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authValue) \(self.token)"]
         }
 
@@ -45,7 +43,7 @@ final class AccessTokenPluginSpec: QuickSpec {
             let authorizationType: AuthorizationType = .bearer
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
-            let authValue = authorizationType.value!
+            let authValue = authorizationType.value
             expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authValue) \(self.token)"]
         }
 
@@ -53,12 +51,12 @@ final class AccessTokenPluginSpec: QuickSpec {
             let authorizationType: AuthorizationType = .custom("CustomAuthorizationHeader")
             let preparedRequest = self.createPreparedRequest(for: authorizationType)
 
-            let authValue = authorizationType.value!
+            let authValue = authorizationType.value
             expect(preparedRequest.allHTTPHeaderFields) == ["Authorization": "\(authValue) \(self.token)"]
         }
     }
 
-    private func createPreparedRequest(for type: AuthorizationType) -> URLRequest {
+    private func createPreparedRequest(for type: AuthorizationType?) -> URLRequest {
         let target = TestTarget(authorizationType: type)
         let request = URLRequest(url: target.baseURL)
 

@@ -1,7 +1,7 @@
 version: 2
 defaults: &defaults
   macos:
-    xcode: '10.2.0'
+    xcode: 11.0.0
   parallelism: 1
   shell: /bin/bash --login    
   environment:
@@ -82,6 +82,9 @@ jobs:
       - run:
           name: Build Example Project
           command: rake build_example
+      - run:
+          name: Install MDSpell
+          command: sudo npm install -g orta/node-markdown-spellcheck
       - run:
           name: Run Danger
           command: brew install danger/tap/danger-swift && danger-swift ci

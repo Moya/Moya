@@ -1,5 +1,7 @@
 import Quick
 import Nimble
+import Foundation
+
 @testable import Moya
 
 final class MultiPartFormData: QuickSpec {

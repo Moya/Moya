@@ -2,23 +2,22 @@ import Quick
 import Moya
 import RxSwift
 import Nimble
+import Foundation
 
-final class ObservableMoyaSpec: QuickSpec {
+final class SingleMoyaSpec: QuickSpec {
     override func spec() {
         describe("status codes filtering") {
             it("filters out unrequested status codes closed range upperbound") {
                 let data = Data()
-                let observable = Response(statusCode: 10, data: data).asObservable()
+                let single = Response(statusCode: 10, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filter(statusCodes: 0...9).subscribe { event in
+                _ = single.filter(statusCodes: 0...9).subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-correct status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
@@ -27,55 +26,49 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("filters out unrequested status codes closed range lowerbound") {
                 let data = Data()
-                let observable = Response(statusCode: -1, data: data).asObservable()
+                let single = Response(statusCode: -1, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filter(statusCodes: 0...9).subscribe { event in
+                _ = single.filter(statusCodes: 0...9).subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-correct status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
                 expect(errored).to(beTruthy())
             }
 
-            it("filters out unrequested status codes range upperbound") {
+            it("filters out unrequested status codes with range upperbound") {
                 let data = Data()
-                let observable = Response(statusCode: 10, data: data).asObservable()
+                let single = Response(statusCode: 10, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filter(statusCodes: 0..<10).subscribe { event in
+                _ = single.filter(statusCodes: 0..<10).subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-correct status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
                 expect(errored).to(beTruthy())
             }
 
-            it("filters out unrequested status codes range lowerbound") {
+            it("filters out unrequested status codes with range lowerbound") {
                 let data = Data()
-                let observable = Response(statusCode: -1, data: data).asObservable()
+                let single = Response(statusCode: -1, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filter(statusCodes: 0..<10).subscribe { event in
+                _ = single.filter(statusCodes: 0..<10).subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-correct status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
@@ -84,17 +77,15 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("filters out non-successful status codes") {
                 let data = Data()
-                let observable = Response(statusCode: 404, data: data).asObservable()
+                let single = Response(statusCode: 404, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filterSuccessfulStatusCodes().subscribe { event in
+                _ = single.filterSuccessfulStatusCodes().subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-success status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
@@ -103,10 +94,10 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("passes through correct status codes") {
                 let data = Data()
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var called = false
-                _ = observable.filterSuccessfulStatusCodes().subscribe(onNext: { _ in
+                _ = single.filterSuccessfulStatusCodes().subscribe(onSuccess: { _ in
                     called = true
                 })
 
@@ -115,17 +106,15 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("filters out non-successful status and redirect codes") {
                 let data = Data()
-                let observable = Response(statusCode: 404, data: data).asObservable()
+                let single = Response(statusCode: 404, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe { event in
+                _ = single.filterSuccessfulStatusAndRedirectCodes().subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-success status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
@@ -134,10 +123,10 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("passes through correct status codes") {
                 let data = Data()
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var called = false
-                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe(onNext: { _ in
+                _ = single.filterSuccessfulStatusAndRedirectCodes().subscribe(onSuccess: { _ in
                     called = true
                 })
 
@@ -146,10 +135,10 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("passes through correct redirect codes") {
                 let data = Data()
-                let observable = Response(statusCode: 304, data: data).asObservable()
+                let single = Response(statusCode: 304, data: data).asSingle()
 
                 var called = false
-                _ = observable.filterSuccessfulStatusAndRedirectCodes().subscribe(onNext: { _ in
+                _ = single.filterSuccessfulStatusAndRedirectCodes().subscribe(onSuccess: { _ in
                     called = true
                 })
 
@@ -158,10 +147,10 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("knows how to filter individual status code") {
                 let data = Data()
-                let observable = Response(statusCode: 42, data: data).asObservable()
+                let single = Response(statusCode: 42, data: data).asSingle()
 
                 var called = false
-                _ = observable.filter(statusCode: 42).subscribe(onNext: { _ in
+                _ = single.filter(statusCode: 42).subscribe(onSuccess: { _ in
                     called = true
                 })
 
@@ -170,17 +159,15 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("filters out different individual status code") {
                 let data = Data()
-                let observable = Response(statusCode: 43, data: data).asObservable()
+                let single = Response(statusCode: 43, data: data).asSingle()
 
                 var errored = false
-                _ = observable.filter(statusCode: 42).subscribe { event in
+                _ = single.filter(statusCode: 42).subscribe { event in
                     switch event {
-                    case .next(let object):
+                    case .success(let object):
                         fail("called on non-success status code: \(object)")
                     case .error:
                         errored = true
-                    default:
-                        break
                     }
                 }
 
@@ -190,13 +177,15 @@ final class ObservableMoyaSpec: QuickSpec {
 
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = Image.testPNGImage(named: "testImage")
-                guard let data = image.asJPEGRepresentation(0.75)  else { fatalError("Failed creating Data from Image") }
+                let image = Image.testImage
+                guard let data = image.asJPEGRepresentation(0.75) else {
+                    fatalError("Failed creating Data from Image")
+                }
 
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var size: CGSize?
-                _ = observable.mapImage().subscribe(onNext: { image in
+                _ = single.mapImage().subscribe(onSuccess: { image in
                     size = image.size
                 })
 
@@ -205,17 +194,15 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("ignores invalid data") {
                 let data = Data()
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedError: MoyaError?
-                _ = observable.mapImage().subscribe { event in
+                _ = single.mapImage().subscribe { event in
                     switch event {
-                    case .next:
+                    case .success:
                         fail("next called for invalid data")
                     case .error(let error):
                         receivedError = error as? MoyaError
-                    default:
-                        break
                     }
                 }
 
@@ -228,11 +215,14 @@ final class ObservableMoyaSpec: QuickSpec {
         describe("JSON mapping") {
             it("maps data representing some JSON to that JSON") {
                 let json = ["name": "John Crighton", "occupation": "Astronaut"]
-                let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
+                    fatalError("Failed creating Data from JSON dictionary")
+                }
+
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedJSON: [String: String]?
-                _ = observable.mapJSON().subscribe(onNext: { json in
+                _ = single.mapJSON().subscribe(onSuccess: { json in
                     if let json = json as? [String: String] {
                         receivedJSON = json
                     }
@@ -244,19 +234,19 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("returns a Cocoa error domain for invalid JSON") {
                 let json = "{ \"name\": \"john }"
-                guard let data = json.data(using: .utf8) else { fatalError("Failed creating Data from JSON String") }
+                guard let data = json.data(using: .utf8) else {
+                    fatalError("Failed creating Data from JSON String")
+                }
 
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedError: MoyaError?
-                _ = observable.mapJSON().subscribe { event in
+                _ = single.mapJSON().subscribe { event in
                     switch event {
-                    case .next:
+                    case .success:
                         fail("next called for invalid data")
                     case .error(let error):
                         receivedError = error as? MoyaError
-                    default:
-                        break
                     }
                 }
 
@@ -273,12 +263,14 @@ final class ObservableMoyaSpec: QuickSpec {
         describe("string mapping") {
             it("maps data representing a string to a string") {
                 let string = "You have the rights to the remains of a silent attorney."
-                guard let data = string.data(using: .utf8) else { fatalError("Failed creating Data from String") }
+                guard let data = string.data(using: .utf8) else {
+                    fatalError("Failed creating Data from String")
+                }
 
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedString: String?
-                _ = observable.mapString().subscribe(onNext: { string in
+                _ = single.mapString().subscribe(onSuccess: { string in
                     receivedString = string
                 })
 
@@ -292,10 +284,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     fatalError("Failed creating Data from JSON dictionary")
                 }
 
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedString: String?
-                _ = observable.mapString(atKeyPath: "words_to_live_by").subscribe(onNext: { string in
+                _ = single.mapString(atKeyPath: "words_to_live_by").subscribe(onSuccess: { string in
                     receivedString = string
                 })
 
@@ -304,17 +296,15 @@ final class ObservableMoyaSpec: QuickSpec {
 
             it("ignores invalid data") {
                 let data = Data(bytes: [0x11FFFF] as [UInt32], count: 1) //Byte exceeding UTF8
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedError: MoyaError?
-                _ = observable.mapString().subscribe { event in
+                _ = single.mapString().subscribe { event in
                     switch event {
-                    case .next:
+                    case .success:
                         fail("next called for invalid data")
                     case .error(let error):
                         receivedError = error as? MoyaError
-                    default:
-                        break
                     }
                 }
 
@@ -340,10 +330,10 @@ final class ObservableMoyaSpec: QuickSpec {
                 guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                     preconditionFailure("Failed creating Data from JSON dictionary")
                 }
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedObject: Issue?
-                _ = observable.map(Issue.self, using: decoder).subscribe(onNext: { object in
+                _ = single.map(Issue.self, using: decoder).subscribe(onSuccess: { object in
                     receivedObject = object
                 })
                 expect(receivedObject).notTo(beNil())
@@ -356,21 +346,22 @@ final class ObservableMoyaSpec: QuickSpec {
                 guard let data = try? JSONSerialization.data(withJSONObject: jsonArray, options: .prettyPrinted) else {
                     preconditionFailure("Failed creating Data from JSON dictionary")
                 }
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedObjects: [Issue]?
-                _ = observable.map([Issue].self, using: decoder).subscribe(onNext: { objects in
+                _ = single.map([Issue].self, using: decoder).subscribe(onSuccess: { objects in
                     receivedObjects = objects
                 })
                 expect(receivedObjects).notTo(beNil())
                 expect(receivedObjects?.count) == 3
                 expect(receivedObjects?.map { $0.title }) == ["Hello, Moya!", "Hello, Moya!", "Hello, Moya!"]
             }
+
             it("maps empty data to a decodable object with optional properties") {
-                let observable = Response(statusCode: 200, data: Data()).asObservable()
+                let single = Response(statusCode: 200, data: Data()).asSingle()
 
                 var receivedObjects: OptionalIssue?
-                _ = observable.map(OptionalIssue.self, using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                _ = single.map(OptionalIssue.self, using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
                     receivedObjects = object
                 })
                 expect(receivedObjects).notTo(beNil())
@@ -379,10 +370,10 @@ final class ObservableMoyaSpec: QuickSpec {
             }
 
             it("maps empty data to a decodable array with optional properties") {
-                let observable = Response(statusCode: 200, data: Data()).asObservable()
+                let single = Response(statusCode: 200, data: Data()).asSingle()
 
                 var receivedObjects: [OptionalIssue]?
-                _ = observable.map([OptionalIssue].self, using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                _ = single.map([OptionalIssue].self, using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
                     receivedObjects = object
                 })
                 expect(receivedObjects).notTo(beNil())
@@ -397,10 +388,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let single = Response(statusCode: 200, data: data).asSingle()
 
                     var receivedObject: Issue?
-                    _ = observable.map(Issue.self, atKeyPath: "issue", using: decoder).subscribe(onNext: { object in
+                    _ = single.map(Issue.self, atKeyPath: "issue", using: decoder).subscribe(onSuccess: { object in
                         receivedObject = object
                     })
                     expect(receivedObject).notTo(beNil())
@@ -413,10 +404,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let single = Response(statusCode: 200, data: data).asSingle()
 
                     var receivedObjects: [Issue]?
-                    _ = observable.map([Issue].self, atKeyPath: "issues", using: decoder).subscribe(onNext: { object in
+                    _ = single.map([Issue].self, atKeyPath: "issues", using: decoder).subscribe(onSuccess: { object in
                         receivedObjects = object
                     })
                     expect(receivedObjects).notTo(beNil())
@@ -426,10 +417,10 @@ final class ObservableMoyaSpec: QuickSpec {
                 }
 
                 it("maps empty data to a decodable object with optional properties") {
-                    let observable = Response(statusCode: 200, data: Data()).asObservable()
+                    let single = Response(statusCode: 200, data: Data()).asSingle()
 
                     var receivedObjects: OptionalIssue?
-                    _ = observable.map(OptionalIssue.self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                    _ = single.map(OptionalIssue.self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
                         receivedObjects = object
                     })
                     expect(receivedObjects).notTo(beNil())
@@ -438,10 +429,10 @@ final class ObservableMoyaSpec: QuickSpec {
                 }
 
                 it("maps empty data to a decodable array with optional properties") {
-                    let observable = Response(statusCode: 200, data: Data()).asObservable()
+                    let single = Response(statusCode: 200, data: Data()).asSingle()
 
                     var receivedObjects: [OptionalIssue]?
-                    _ = observable.map([OptionalIssue].self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onNext: { object in
+                    _ = single.map([OptionalIssue].self, atKeyPath: "issue", using: decoder, failsOnEmptyData: false).subscribe(onSuccess: { object in
                         receivedObjects = object
                     })
                     expect(receivedObjects).notTo(beNil())
@@ -455,10 +446,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var count: Int?
-                    _ = observable.map(Int.self, atKeyPath: "count", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(Int.self, atKeyPath: "count", using: decoder).subscribe(onSuccess: { value in
                         count = value
                     })
                     expect(count).notTo(beNil())
@@ -470,10 +461,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var isNew: Bool?
-                    _ = observable.map(Bool.self, atKeyPath: "isNew", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(Bool.self, atKeyPath: "isNew", using: decoder).subscribe(onSuccess: { value in
                         isNew = value
                     })
                     expect(isNew).notTo(beNil())
@@ -485,10 +476,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var description: String?
-                    _ = observable.map(String.self, atKeyPath: "description", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(String.self, atKeyPath: "description", using: decoder).subscribe(onSuccess: { value in
                         description = value
                     })
                     expect(description).notTo(beNil())
@@ -500,10 +491,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var url: URL?
-                    _ = observable.map(URL.self, atKeyPath: "url", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(URL.self, atKeyPath: "url", using: decoder).subscribe(onSuccess: { value in
                         url = value
                     })
                     expect(url).notTo(beNil())
@@ -515,10 +506,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var isNew: Bool?
-                    _ = observable.map(Bool.self, atKeyPath: "isNew", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(Bool.self, atKeyPath: "isNew", using: decoder).subscribe(onSuccess: { value in
                         isNew = value
                     })
                     expect(isNew).to(beNil())
@@ -529,10 +520,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var test: Int?
-                    _ = observable.map(Int.self, atKeyPath: "test", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(Int.self, atKeyPath: "test", using: decoder).subscribe(onSuccess: { value in
                         test = value
                     })
                     expect(test).to(beNil())
@@ -543,10 +534,10 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var test: String?
-                    _ = observable.map(String.self, atKeyPath: "test", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map(String.self, atKeyPath: "test", using: decoder).subscribe(onSuccess: { value in
                         test = value
                     })
                     expect(test).to(beNil())
@@ -557,33 +548,30 @@ final class ObservableMoyaSpec: QuickSpec {
                     guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                         preconditionFailure("Failed creating Data from JSON dictionary")
                     }
-                    let observable = Response(statusCode: 200, data: data).asObservable()
+                    let observable = Response(statusCode: 200, data: data).asSingle()
 
                     var test: [String]?
-                    _ = observable.map([String].self, atKeyPath: "test", using: decoder).subscribe(onNext: { value in
+                    _ = observable.map([String].self, atKeyPath: "test", using: decoder).subscribe(onSuccess: { value in
                         test = value
                     })
                     expect(test).to(beNil())
                 }
             }
-
             it("ignores invalid data") {
                 var json = json
                 json["createdAt"] = "Hahaha" // invalid date string
                 guard let data = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) else {
                     preconditionFailure("Failed creating Data from JSON dictionary")
                 }
-                let observable = Response(statusCode: 200, data: data).asObservable()
+                let single = Response(statusCode: 200, data: data).asSingle()
 
                 var receivedError: Error?
-                _ = observable.map(Issue.self, using: decoder).subscribe { event in
+                _ = single.map(Issue.self, using: decoder).subscribe { event in
                     switch event {
-                    case .next:
-                        fail("next called for invalid data")
+                    case .success:
+                        fail("success called for invalid data")
                     case .error(let error):
                         receivedError = error
-                    default:
-                        break
                     }
                 }
 

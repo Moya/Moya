@@ -69,8 +69,9 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint in
     return Endpoint(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 
-enum HTTPBin: TargetType {
+enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case basicAuth
+    case bearer
     case post
     case upload(file: URL)
     case uploadMultipart([MultipartFormData], [String: Any]?)
@@ -81,6 +82,8 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return "/basic-auth/user/passwd"
+        case .bearer:
+            return "/bearer"
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return "/post"
         }
@@ -88,7 +91,7 @@ enum HTTPBin: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .basicAuth:
+        case .basicAuth, .bearer:
             return .get
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return .post
@@ -97,8 +100,8 @@ enum HTTPBin: TargetType {
 
     var task: Task {
         switch self {
-        case .basicAuth, .post:
-        return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .basicAuth, .post, .bearer:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
         case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters, _):
@@ -114,6 +117,8 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
+        case .bearer:
+            return "{\"authenticated\": true, \"token\": \"4D4A9C7D-F6E7-4FD7-BDBD-03880550A80D\"}".data(using: String.Encoding.utf8)!
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
@@ -129,6 +134,15 @@ enum HTTPBin: TargetType {
             return .customCodes(codes)
         default:
             return .none
+        }
+    }
+
+    var authorizationType: AuthorizationType? {
+        switch self {
+        case .bearer:
+            return  .bearer
+        default:
+            return nil
         }
     }
 }
@@ -185,9 +199,7 @@ extension GitHubUserContent: TargetType {
 
 extension HTTPBin {
     static func createTestMultipartFormData() -> [MultipartFormData] {
-        guard let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png") else {
-            fatalError("Resource testImage.png could not be found in bundle")
-        }
+        let url = testImageUrl
         let string = "some data"
         guard let data = string.data(using: .utf8) else {
             fatalError("Failed creating Data from String \(string)")
@@ -224,15 +236,21 @@ private let defaultDownloadDestination: DownloadDestination = { temporaryURL, re
     return (temporaryURL, [])
 }
 
+extension URL {
+    static func random(withExtension extension: String) -> URL {
+        let directory = FileManager.default.temporaryDirectory
+        let name = UUID().uuidString + "." + `extension`
+        return directory.appendingPathComponent(name, isDirectory: false)
+    }
+}
+
 // MARK: - Image Test Helpers
 // Necessary since Image(named:) doesn't work correctly in the test bundle
 extension ImageType {
     class TestClass { }
 
-    class func testPNGImage(named name: String) -> ImageType {
-        let bundle = Bundle(for: type(of: TestClass()))
-        let path = bundle.path(forResource: name, ofType: "png")
-        return Image(contentsOfFile: path!)!
+    static var testImage: ImageType {
+        return Image(data: testImageData)!
     }
 
     #if canImport(UIKit)

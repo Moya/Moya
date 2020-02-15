@@ -1,5 +1,4 @@
 import Foundation
-import Result
 
 /// Provides each request with optional URLCredentials.
 public final class CredentialsPlugin: PluginType {
@@ -16,7 +15,7 @@ public final class CredentialsPlugin: PluginType {
 
     public func willSend(_ request: RequestType, target: TargetType) {
         if let credentials = credentialsClosure(target) {
-            _ = request.authenticate(usingCredential: credentials)
+            _ = request.authenticate(with: credentials)
         }
     }
 }

@@ -1,6 +1,7 @@
 import Quick
 import Moya
 import Nimble
+import Foundation
 
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
@@ -345,14 +346,10 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            #if !SWIFT_PACKAGE
             context("when task is .requestCompositeParameters") {
                 it("throws an error when bodyEncoding is an URLEncoding.queryString") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
-                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
-                }
-
-                it("throws an error when bodyEncoding is an URLEncoding.methodDependent") {
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.methodDependent, urlParameters: [:]))
                     expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
                 }
 
@@ -366,6 +363,7 @@ final class EndpointSpec: QuickSpec {
                     expect { _ = try? endpoint.urlRequest() }.toNot(throwAssertion())
                 }
             }
+            #endif
         }
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import Alamofire
 
-public typealias Manager = Alamofire.SessionManager
+public typealias Session = Alamofire.Session
 internal typealias Request = Alamofire.Request
 internal typealias DownloadRequest = Alamofire.DownloadRequest
 internal typealias UploadRequest = Alamofire.UploadRequest
@@ -16,17 +16,22 @@ public typealias Method = Alamofire.HTTPMethod
 public typealias ParameterEncoding = Alamofire.ParameterEncoding
 public typealias JSONEncoding = Alamofire.JSONEncoding
 public typealias URLEncoding = Alamofire.URLEncoding
-public typealias PropertyListEncoding = Alamofire.PropertyListEncoding
 
 /// Multipart form.
 public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 
 /// Multipart form data encoding result.
-public typealias MultipartFormDataEncodingResult = Manager.MultipartFormDataEncodingResult
-public typealias DownloadDestination = Alamofire.DownloadRequest.DownloadFileDestination
+public typealias DownloadDestination = Alamofire.DownloadRequest.Destination
 
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
-extension Request: RequestType { }
+extension Request: RequestType {
+    public var sessionHeaders: [String: String] {
+        return delegate?.sessionConfiguration.httpAdditionalHeaders as? [String: String] ?? [:]
+    }
+}
+
+/// Represents Request interceptor type that can modify/act on Request
+public typealias RequestInterceptor = Alamofire.RequestInterceptor
 
 /// Internal token that can be used to cancel requests
 public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
@@ -62,7 +67,7 @@ public final class CancellableToken: Cancellable, CustomDebugStringConvertible {
         guard let request = self.request else {
             return "Empty Request"
         }
-        return request.debugDescription
+        return request.cURLDescription()
     }
 
 }
@@ -75,16 +80,58 @@ internal protocol Requestable {
 
 extension DataRequest: Requestable {
     internal func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
-        return response(queue: callbackQueue) { handler  in
-            completionHandler(handler.response, handler.request, handler.data, handler.error)
+        if let callbackQueue = callbackQueue {
+            return response(queue: callbackQueue) { handler  in
+                completionHandler(handler.response, handler.request, handler.data, handler.error)
+            }
+        } else {
+            return response { handler  in
+                completionHandler(handler.response, handler.request, handler.data, handler.error)
+            }
         }
     }
 }
 
 extension DownloadRequest: Requestable {
     internal func response(callbackQueue: DispatchQueue?, completionHandler: @escaping RequestableCompletion) -> Self {
-        return response(queue: callbackQueue) { handler  in
-            completionHandler(handler.response, handler.request, nil, handler.error)
+        if let callbackQueue = callbackQueue {
+            return response(queue: callbackQueue) { handler  in
+                completionHandler(handler.response, handler.request, nil, handler.error)
+            }
+        } else {
+            return response { handler  in
+                completionHandler(handler.response, handler.request, nil, handler.error)
+            }
         }
+    }
+}
+
+final class MoyaRequestInterceptor: RequestInterceptor {
+    private let lock: NSRecursiveLock = NSRecursiveLock()
+
+    var prepare: ((URLRequest) -> URLRequest)?
+    private var internalWillSend: ((URLRequest) -> Void)?
+
+    var willSend: ((URLRequest) -> Void)? {
+        get {
+            lock.lock(); defer { lock.unlock() }
+            return internalWillSend
+        }
+
+        set {
+            lock.lock(); defer { lock.unlock() }
+            internalWillSend = newValue
+        }
+    }
+
+    init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
+        self.prepare = prepare
+        self.willSend = willSend
+    }
+
+    func adapt(_ urlRequest: URLRequest, for session: Alamofire.Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        let request = prepare?(urlRequest) ?? urlRequest
+        willSend?(request)
+        completion(.success(request))
     }
 }

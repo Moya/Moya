@@ -4,6 +4,11 @@ import Quick
 import Nimble
 import Foundation
 import OHHTTPStubs
+
+#if canImport(OHHTTPStubsSwift)
+import OHHTTPStubsSwift
+#endif
+
 @testable import Moya
 
 final class MoyaProviderSpec: QuickSpec {
@@ -72,9 +77,9 @@ final class MoyaProviderSpec: QuickSpec {
             expect(cancellable).toNot(beNil())
         }
 
-        it("uses a custom manager by default, startRequestsImmediately should be false") {
-            expect(provider.manager).toNot(beNil())
-            expect(provider.manager.startRequestsImmediately) == false
+        it("uses a custom session by default, startRequestsImmediately should be false") {
+            expect(provider.session).toNot(beNil())
+            expect(provider.session.startRequestsImmediately) == false
         }
 
         it("credential closure returns nil") {
@@ -105,11 +110,11 @@ final class MoyaProviderSpec: QuickSpec {
             expect(called) == true
         }
 
-        it("accepts a custom Alamofire.Manager") {
-            let manager = Manager()
-            let provider = MoyaProvider<GitHub>(manager: manager)
+        it("accepts a custom Alamofire.Session") {
+            let session = Session()
+            let provider = MoyaProvider<GitHub>(session: session)
 
-            expect(provider.manager).to(beIdenticalTo(manager))
+            expect(provider.session).to(beIdenticalTo(session))
         }
 
         it("notifies at the beginning of network requests") {
@@ -148,6 +153,26 @@ final class MoyaProviderSpec: QuickSpec {
 
             expect(called) == true
             expect(calledTarget) == target
+        }
+
+        it("logs the request with stubbing") {
+            var log = ""
+            let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
+                                                                  logOptions: .verbose))
+            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+
+            waitUntil { done in
+                provider.request(.zen) { _ in done() }
+            }
+
+            expect(log).to(contain("Request: https://api.github.com/zen"))
+            expect(log).to(contain("Request Headers: "))
+            expect(log).to(contain("User-Agent"))
+            expect(log).to(contain("Accept-Encoding"))
+            expect(log).to(contain("Accept-Language"))
+            expect(log).to(contain("HTTP Request Method: GET"))
+            expect(log).to(contain("Response: Received empty network response for zen."))
+            expect(log).to(contain("Response Body: Half measures are as bad as nothing at all."))
         }
 
         describe("a provider with delayed stubs") {
@@ -217,7 +242,7 @@ final class MoyaProviderSpec: QuickSpec {
                         done()
                     }
                 }
-                expect(plugin.didPrepare).to( beTrue() )
+                expect(plugin.didPrepare).to(beTrue())
             }
 
             it("returns success when request is not canceled") {
@@ -654,8 +679,8 @@ final class MoyaProviderSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -728,8 +753,8 @@ final class MoyaProviderSpec: QuickSpec {
                 try? FileManager.default.removeItem(at: file)
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -742,7 +767,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -774,7 +799,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -808,8 +833,8 @@ final class MoyaProviderSpec: QuickSpec {
                 try? FileManager.default.removeItem(at: file)
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
+                HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -822,7 +847,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -853,7 +878,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -884,7 +909,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             it("tracks progress of request") {
-                let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png")!
+                let url = testImageUrl
                 let target: HTTPBin = .upload(file: url)
 
                 var progressObjects: [Progress?] = []
@@ -892,7 +917,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -927,7 +952,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -954,16 +979,16 @@ final class MoyaProviderSpec: QuickSpec {
         }
 
         describe("using a custom callback queue") {
-            var stubDescriptor: OHHTTPStubsDescriptor!
+            var stubDescriptor: HTTPStubsDescriptor!
 
             beforeEach {
-                stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                stubDescriptor = HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 })
             }
 
             afterEach {
-                OHHTTPStubs.removeStub(stubDescriptor)
+                HTTPStubs.removeStub(stubDescriptor)
             }
 
             describe("a provider with a predefined callback queue") {
