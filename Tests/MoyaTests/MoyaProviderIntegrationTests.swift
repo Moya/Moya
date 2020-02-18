@@ -1,11 +1,9 @@
 import Quick
 import Nimble
 import Foundation
-
-#if canImport(OHHTTPStubs)
 import OHHTTPStubs
-#elseif canImport(OHHTTPStubsSwift)
-import OHHTTPStubsCore
+
+#if canImport(OHHTTPStubsSwift)
 import OHHTTPStubsSwift
 #endif
 
@@ -31,26 +29,26 @@ final class MoyaProviderIntegrationTests: QuickSpec {
         let zenMessage = String(data: GitHub.zen.sampleData, encoding: .utf8)
 
         beforeEach {
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
             })
 
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/ashfurrow"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/ashfurrow"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             })
 
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData, statusCode: 400, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData, statusCode: 400, headers: nil)
             })
 
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
             })
 
         }
 
         afterEach {
-            OHHTTPStubs.removeAllStubs()
+            HTTPStubs.removeAllStubs()
         }
 
         describe("valid endpoints") {
