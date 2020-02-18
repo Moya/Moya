@@ -220,17 +220,17 @@ final class MoyaProviderRxSpec: QuickSpec {
                     context("the callback queue is provided with the request") {
                         it("invokes the callback on the request queue") {
                             let requestQueue = DispatchQueue(label: UUID().uuidString)
-                            var callbackQueueLabel: String?
+                            let callbackQueueLabel = Atomic<String?>(wrappedValue: nil)
 
                             waitUntil(action: { completion in
                                 provider.rx.request(.zen, callbackQueue: requestQueue)
                                     .subscribe(onSuccess: { _ in
-                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        callbackQueueLabel.wrappedValue = DispatchQueue.currentLabel
                                         completion()
                                     }).disposed(by: disposeBag)
                             })
 
-                            expect(callbackQueueLabel) == requestQueue.label
+                            expect(callbackQueueLabel.wrappedValue) == requestQueue.label
                         }
                     }
 
