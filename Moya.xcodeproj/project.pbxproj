@@ -71,12 +71,10 @@
 		A8C55515DFA147BE4159B40A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCB6731C60D3830DA5D2CB /* Response.swift */; };
 		AA663ABA236985A1006B295B /* AnyEncodableSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA663AB9236985A1006B295B /* AnyEncodableSpec.swift */; };
 		AA882A27236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */; };
-		AA882A28236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A26236867A30096BCA1 /* RawDataParameterEncoder.swift */; };
 		AA882A2B236867D60096BCA1 /* RawDataParameterEncoderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA882A29236867D60096BCA1 /* RawDataParameterEncoderSpec.swift */; };
 		AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAFCD19235BBBDC0049EA19 /* PropertyListEncoder.swift */; };
 		AACB924C2366202600A33FB8 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AAD802B4236435EB0044EDFB /* TaskSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD802B3236435EB0044EDFB /* TaskSpec.swift */; };
-		AAE606D6239435CD00D397F9 /* Task+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACB924B2366202600A33FB8 /* Task+Internal.swift */; };
 		AB5048DC5042B016964EE958 /* MoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C174EF53873DE04BB159E /* MoyaProvider+Reactive.swift */; };
 		B2CD7F4F23A6F1BA007F67AC /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD7F4E23A6F1BA007F67AC /* Atomic.swift */; };
 		B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */; };
@@ -932,7 +930,6 @@
 				AAD802B4236435EB0044EDFB /* TaskSpec.swift in Sources */,
 				B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */,
 				9A58B120B1293AFE556915AE /* MoyaProviderSpec.swift in Sources */,
-				AAE606D6239435CD00D397F9 /* Task+Internal.swift in Sources */,
 				FA9EE63E068C40C97D7B0156 /* MultipartFormDataSpec.swift in Sources */,
 				B950CAA84C0656EB11E316FB /* MultiTargetSpec.swift in Sources */,
 				1F24393320125F8200C9D813 /* EndpointClosureSpec.swift in Sources */,
@@ -945,7 +942,6 @@
 				DA631A5B37F36DA17E135F14 /* SignalProducer+MoyaSpec.swift in Sources */,
 				F88EC83A91FF6DE81246B01C /* TestHelpers.swift in Sources */,
 				AAAFCD1A235BBBDC0049EA19 /* PropertyListEncoder.swift in Sources */,
-				AA882A28236867A30096BCA1 /* RawDataParameterEncoder.swift in Sources */,
 				7C32947EA657E981CB15D58C /* TestPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

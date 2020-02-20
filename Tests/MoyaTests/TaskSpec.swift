@@ -1,5 +1,5 @@
 import Quick
-import Moya
+@testable import Moya
 import Nimble
 import Foundation
 import Alamofire

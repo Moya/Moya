@@ -1,5 +1,4 @@
 import Foundation
-import Moya
 
 /// An "encoder" that expects the given parameters to be of type `Data` and just sets the request's httpBody with it, without any additional encoding.
 struct RawDataParameterEncoder: ParameterEncoder {
