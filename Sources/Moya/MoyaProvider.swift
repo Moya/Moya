@@ -83,10 +83,15 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     public let trackInflights: Bool
 
-    open internal(set) var inflightRequests: [Endpoint: [Moya.Completion]] = [:]
+    open var inflightRequests: [Endpoint: [Moya.Completion]] { internalInflightRequests }
+
+    @Atomic
+    var internalInflightRequests: [Endpoint: [Moya.Completion]] = [:]
 
     /// Propagated to Alamofire as callback queue. If nil - the Alamofire default (as of their API in 2017 - the main queue) will be used.
     let callbackQueue: DispatchQueue?
+
+    let lock: NSRecursiveLock = NSRecursiveLock()
 
     /// Initializes a provider.
     public init(endpointClosure: @escaping EndpointClosure = MoyaProvider.defaultEndpointMapping,
@@ -156,7 +161,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     // swiftlint:enable function_parameter_count
 }
 
-// Mark: Stubbing
+// MARK: Stubbing
 
 /// Controls how stub responses are returned.
 public enum StubBehavior {
@@ -203,8 +208,7 @@ public extension MoyaProvider {
     }
 
     /// Return a response after a delay.
-    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
-        { _ in .delayed(seconds: seconds) }
+    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior { { _ in .delayed(seconds: seconds) }
     }
 }
 

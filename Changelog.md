@@ -6,6 +6,21 @@
 
 ## Added
 - `Task` now allows to upload data without using a file as intermediate. [#1936](https://github.com/Moya/Moya/pull/1936) by [@amaurydavid](https://github.com/amaurydavid).
+# [14.0.0] - 2020-02-15
+
+### Changed
+- **Breaking Change** Minimum version of `Alamofire` is now 5.0. [#1992](https://github.com/Moya/Moya/pull/1992) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change**  `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
+
+
+# [14.0.0-beta.6] - 2019-12-09
+
+### Changed
+- **Breaking Change** In `AccessTokenPlugin`, the token closure now takes a `AuthorizationType` as parameter and `AuthorizationType.none` has been removed in favor of using  `AuthorizationType?`. [#1969](https://github.com/Moya/Moya/pull/1969) by [@amaurydavid](https://github.com/amaurydavid).
+
+### Fixed
+- Fixed a data race condition issue and enable TSAN on the test action and CI. [#1952](https://github.com/Moya/Moya/pull/1952) by [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+
 # [14.0.0-beta.5] - 2019-10-27
 
 ### Changed

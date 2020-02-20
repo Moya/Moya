@@ -1,11 +1,9 @@
 import Quick
 import Nimble
 import Foundation
-
-#if canImport(OHHTTPStubs)
 import OHHTTPStubs
-#elseif canImport(OHHTTPStubsSwift)
-import OHHTTPStubsCore
+
+#if canImport(OHHTTPStubsSwift)
 import OHHTTPStubsSwift
 #endif
 
@@ -31,26 +29,26 @@ final class MoyaProviderIntegrationTests: QuickSpec {
         let zenMessage = String(data: GitHub.zen.sampleData, encoding: .utf8)
 
         beforeEach {
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
             })
 
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/ashfurrow"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/ashfurrow"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
             })
 
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData, statusCode: 400, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData, statusCode: 400, headers: nil)
             })
 
-            OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}, withStubResponse: { _ in
-                OHHTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
+            HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}, withStubResponse: { _ in
+                return HTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
             })
 
         }
 
         afterEach {
-            OHHTTPStubs.removeAllStubs()
+            HTTPStubs.removeAllStubs()
         }
 
         describe("valid endpoints") {
@@ -121,18 +119,19 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
 
                     it("uses a background queue") {
-                        var isMainThread: Bool?
+
+                        let isMainThread = Atomic<Bool?>(wrappedValue: nil)
                         let callbackQueue = DispatchQueue(label: "background_queue", attributes: .concurrent)
                         let target: GitHub = .zen
 
                         waitUntil { done in
                             provider.request(target, callbackQueue: callbackQueue) { _ in
-                                isMainThread = Thread.isMainThread
+                                isMainThread.wrappedValue = Thread.isMainThread
                                 done()
                             }
                         }
 
-                        expect(isMainThread) == false
+                        expect(isMainThread.wrappedValue) == false
                     }
 
                     it("uses the main queue") {
@@ -294,7 +293,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                     beforeEach {
                         token = UUID().uuidString
-                        plugin = AccessTokenPlugin { token }
+                        plugin = AccessTokenPlugin { _ in token }
                         provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub,
                                                          plugins: [plugin])
                     }
@@ -365,7 +364,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 var receievedResponse: Response?
                 var receivedError: Error?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     provider.request(target) { result in
                         switch result {
                         case .success(let response):
@@ -387,7 +386,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 var receievedResponse: Response?
                 var receivedError: Error?
 
-                waitUntil(timeout: 5.0) { done in
+                waitUntil(timeout: 10.0) { done in
                     provider.request(target) { result in
                         switch result {
                         case .success(let response):

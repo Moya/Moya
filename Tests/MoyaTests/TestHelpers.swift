@@ -143,12 +143,12 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         }
     }
 
-    var authorizationType: AuthorizationType {
+    var authorizationType: AuthorizationType? {
         switch self {
         case .bearer:
             return  .bearer
         default:
-            return .none
+            return nil
         }
     }
 }

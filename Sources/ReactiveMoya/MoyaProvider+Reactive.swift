@@ -29,8 +29,7 @@ public extension Reactive where Base: MoyaProviderType {
 
     /// Designated request-making method with progress.
     func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> SignalProducer<ProgressResponse, MoyaError> {
-        let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in
-            { progress in
+        let progressBlock: (Signal<ProgressResponse, MoyaError>.Observer) -> (ProgressResponse) -> Void = { observer in { progress in
                 observer.send(value: progress)
             }
         }

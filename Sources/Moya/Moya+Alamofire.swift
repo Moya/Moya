@@ -108,8 +108,9 @@ extension DownloadRequest: Requestable {
 }
 
 final class MoyaRequestInterceptor: RequestInterceptor {
-
     var prepare: ((URLRequest) -> URLRequest)?
+
+    @Atomic
     var willSend: ((URLRequest) -> Void)?
 
     init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
