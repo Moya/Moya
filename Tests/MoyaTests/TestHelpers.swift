@@ -41,13 +41,9 @@ extension GitHub: TargetType {
         }
     }
 
-    var validationType: ValidationType {
-        .successAndRedirectCodes
-    }
+    var validationType: ValidationType { .successAndRedirectCodes }
 
-    var headers: [String: String]? {
-        nil
-    }
+    var headers: [String: String]? { nil }
 }
 
 extension GitHub: Equatable {
@@ -124,9 +120,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         }
     }
 
-    var headers: [String: String]? {
-        nil
-    }
+    var headers: [String: String]? { nil }
 
     var validationType: ValidationType {
         switch self {
@@ -190,9 +184,7 @@ extension GitHubUserContent: TargetType {
         }
     }
 
-    public var headers: [String: String]? {
-        nil
-    }
+    public var headers: [String: String]? { nil }
 }
 
 // MARK: - Upload Multipart Helpers

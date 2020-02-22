@@ -28,9 +28,7 @@ public final class Response: CustomDebugStringConvertible, Equatable {
     }
 
     /// A text description of the `Response`. Suitable for debugging.
-    public var debugDescription: String {
-        description
-    }
+    public var debugDescription: String { description }
 
     public static func == (lhs: Response, rhs: Response) -> Bool {
         lhs.statusCode == rhs.statusCode

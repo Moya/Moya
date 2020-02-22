@@ -182,14 +182,10 @@ public extension MoyaProvider {
     // at least add some class functions to allow easy access to common stubbing closures.
 
     /// Do not stub.
-    final class func neverStub(_: Target) -> Moya.StubBehavior {
-        .never
-    }
+    final class func neverStub(_: Target) -> Moya.StubBehavior { .never }
 
     /// Return a response immediately.
-    final class func immediatelyStub(_: Target) -> Moya.StubBehavior {
-        .immediate
-    }
+    final class func immediatelyStub(_: Target) -> Moya.StubBehavior { .immediate }
 
     /// Return a response after a delay.
     final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior { { _ in .delayed(seconds: seconds) }
