@@ -163,7 +163,7 @@ var provider: MoyaProvider<MyService>!
 let provider = MoyaProvider(endpointClosure: endpointClosure)
 ```
 
-Neato. Now how do we make a request?
+Neat. Now how do we make a request?
 
 ```swift
 provider.request(.zen) { result in

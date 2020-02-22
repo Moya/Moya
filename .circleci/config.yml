@@ -61,7 +61,7 @@ jobs:
             BUNDLE_RETRY: 3
       - run: 
           name: Bootstrap Carthage
-          command: scripts/bootstrap-if-needed.sh
+          command: scripts/bootstrap.sh
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-dep-{{ checksum "Cartfile.resolved" }}
           paths:
