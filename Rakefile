@@ -155,6 +155,8 @@ task :create_release, :version do |task, args|
   puts "Pushing as a GitHub Release."
   require 'octokit'
   version = args[:version]
+  changelog_filename = "CHANGELOG.md"	
+  changelog = File.read(changelog_filename)
   Octokit::Client.new(netrc: true).
     create_release('Moya/Moya',
                    version,
