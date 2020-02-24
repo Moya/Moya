@@ -42,7 +42,8 @@ let config = PackageConfiguration([
             "scripts/update_podspec.sh"
 	],
 	"after": [
-            "rake create_release\\[\"$VERSION\"\\]"
+            "rake create_release\\[\"$VERSION\"\\]",
+            "scripts/update_docs_website.sh"
 	]
     ]
 ]).write()
