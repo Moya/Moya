@@ -35,9 +35,7 @@ public struct ProgressResponse {
     }
 
     /// A Boolean value stating whether the request is completed.
-    public var completed: Bool {
-        response != nil
-    }
+    public var completed: Bool { response != nil }
 }
 
 /// A protocol representing a minimal interface for a MoyaProvider.

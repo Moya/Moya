@@ -158,9 +158,9 @@ public extension MoyaProvider {
 
 private extension MoyaProvider {
     private func interceptor(target: Target) -> MoyaRequestInterceptor {
-        MoyaRequestInterceptor(prepare: { [weak self] urlRequest in
-            self?.plugins.reduce(urlRequest) { $1.prepare($0, target: target) } ?? urlRequest
-        })
+        return MoyaRequestInterceptor(prepare: { [weak self] urlRequest in
+            return self?.plugins.reduce(urlRequest) { $1.prepare($0, target: target) } ?? urlRequest
+       })
     }
 
     private func setup(interceptor: MoyaRequestInterceptor, with target: Target, and request: Request) {
