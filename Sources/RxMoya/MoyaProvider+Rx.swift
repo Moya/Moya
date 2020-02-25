@@ -33,11 +33,8 @@ public extension Reactive where Base: MoyaProviderType {
 
     /// Designated request-making method with progress.
     func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
-        let progressBlock: (AnyObserver) -> (ProgressResponse) -> Void = { observer in { progress in
-                observer.onNext(progress)
-            }
-        }
 
+        let progressBlock = AnyObserver<ProgressResponse>.onNext
         let response: Observable<ProgressResponse> = Observable.create { [weak base] observer in
             let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
