@@ -219,7 +219,7 @@ public extension NetworkLoggerPlugin.Configuration {
         // MARK: Defaults
 
         public static func defaultDataFormatter(_ data: Data) -> String {
-            String(decoding: data, as: UTF8.self)
+            return String(data: data, encoding: .utf8) ?? "## Cannot map data to String ##"
         }
 
         public static func defaultEntryFormatter(identifier: String, message: String, target: TargetType) -> String {
