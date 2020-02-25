@@ -24,13 +24,9 @@ extension GitHub: TargetType {
         }
     }
 
-    var method: Moya.Method {
-        .get
-    }
+    var method: Moya.Method { .get }
 
-    var task: Task {
-        .requestPlain
-    }
+    var task: Task { .requestPlain }
 
     var sampleData: Data {
         switch self {
@@ -166,9 +162,7 @@ extension GitHubUserContent: TargetType {
             return nil
         }
     }
-    public var parameterEncoding: ParameterEncoding {
-        URLEncoding.default
-    }
+    public var parameterEncoding: ParameterEncoding { URLEncoding.default }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
