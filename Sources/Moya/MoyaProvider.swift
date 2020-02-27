@@ -186,7 +186,8 @@ public extension MoyaProvider {
     final class func immediatelyStub(_: Target) -> Moya.StubBehavior { .immediate }
 
     /// Return a response after a delay.
-    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior { { _ in .delayed(seconds: seconds) }
+    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
+        return { _ in .delayed(seconds: seconds) }
     }
 }
 
