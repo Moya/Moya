@@ -9,7 +9,7 @@ HTTP身份验证是一个 username/password HTTP协议内置的验证方式. 如
 
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> URLCredential? in
-        return URLCredential(user: "user", password: "passwd", persistence: .none)
+        URLCredential(user: "user", password: "passwd", persistence: .none)
     }
 ])
 ```

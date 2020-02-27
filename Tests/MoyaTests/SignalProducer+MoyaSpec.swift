@@ -5,7 +5,7 @@ import Nimble
 import Foundation
 
 private func signalSendingData(_ data: Data, statusCode: Int = 200) -> SignalProducer<Response, MoyaError> {
-    return SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
+    SignalProducer(value: Response(statusCode: statusCode, data: data as Data, response: nil))
 }
 
 final class SignalProducerMoyaSpec: QuickSpec {

@@ -14,7 +14,7 @@ enum GitHub {
 }
 
 extension GitHub: TargetType {
-    var baseURL: URL { return URL(string: "https://api.github.com")! }
+    var baseURL: URL { URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
         case .zen:
@@ -24,13 +24,9 @@ extension GitHub: TargetType {
         }
     }
 
-    var method: Moya.Method {
-        return .get
-    }
+    var method: Moya.Method { .get }
 
-    var task: Task {
-        return .requestPlain
-    }
+    var task: Task { .requestPlain }
 
     var sampleData: Data {
         switch self {
@@ -41,13 +37,9 @@ extension GitHub: TargetType {
         }
     }
 
-    var validationType: ValidationType {
-        return .successAndRedirectCodes
-    }
+    var validationType: ValidationType { .successAndRedirectCodes }
 
-    var headers: [String: String]? {
-        return nil
-    }
+    var headers: [String: String]? { nil }
 }
 
 extension GitHub: Equatable {
@@ -61,7 +53,7 @@ extension GitHub: Equatable {
 }
 
 func url(_ route: TargetType) -> String {
-    return route.baseURL.appendingPathComponent(route.path).absoluteString
+    route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint in
@@ -77,7 +69,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case uploadMultipart([MultipartFormData], [String: Any]?)
     case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
-    var baseURL: URL { return URL(string: "http://httpbin.org")! }
+    var baseURL: URL { URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
@@ -124,9 +116,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         }
     }
 
-    var headers: [String: String]? {
-        return nil
-    }
+    var headers: [String: String]? { nil }
 
     var validationType: ValidationType {
         switch self {
@@ -153,7 +143,7 @@ public enum GitHubUserContent {
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
         case .downloadMoyaWebContent(let contentPath), .requestMoyaWebContent(let contentPath):
@@ -172,9 +162,7 @@ extension GitHubUserContent: TargetType {
             return nil
         }
     }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
+    public var parameterEncoding: ParameterEncoding { URLEncoding.default }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
@@ -190,9 +178,7 @@ extension GitHubUserContent: TargetType {
         }
     }
 
-    public var headers: [String: String]? {
-        return nil
-    }
+    public var headers: [String: String]? { nil }
 }
 
 // MARK: - Upload Multipart Helpers
@@ -214,7 +200,7 @@ extension HTTPBin {
 // MARK: - String Helpers
 extension String {
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
@@ -222,7 +208,7 @@ extension String {
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
 extension DispatchQueue {
     class var currentLabel: String? {
-        return String(validatingUTF8: __dispatch_queue_get_label(nil))
+        String(validatingUTF8: __dispatch_queue_get_label(nil))
     }
 }
 
@@ -250,12 +236,12 @@ extension ImageType {
     class TestClass { }
 
     static var testImage: ImageType {
-        return Image(data: testImageData)!
+        Image(data: testImageData)!
     }
 
     #if canImport(UIKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
-            return jpegData(compressionQuality: compression)
+            jpegData(compressionQuality: compression)
         }
     #elseif canImport(AppKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {

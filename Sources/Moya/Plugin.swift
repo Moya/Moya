@@ -21,10 +21,10 @@ public protocol PluginType {
 }
 
 public extension PluginType {
-    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { return request }
+    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { request }
     func willSend(_ request: RequestType, target: TargetType) { }
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) { }
-    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { return result }
+    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { result }
 }
 
 /// Request type used by `willSend` plugin function.

@@ -11,7 +11,7 @@ when initializing your provider.
 
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> URLCredential? in
-        return URLCredential(user: "user", password: "passwd", persistence: .none)
+        URLCredential(user: "user", password: "passwd", persistence: .none)
     }
 ])
 ```
