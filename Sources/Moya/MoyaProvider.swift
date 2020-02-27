@@ -35,9 +35,7 @@ public struct ProgressResponse {
     }
 
     /// A Boolean value stating whether the request is completed.
-    public var completed: Bool {
-        response != nil
-    }
+    public var completed: Bool { response != nil }
 }
 
 /// A protocol representing a minimal interface for a MoyaProvider.
@@ -198,17 +196,14 @@ public extension MoyaProvider {
     // at least add some class functions to allow easy access to common stubbing closures.
 
     /// Do not stub.
-    final class func neverStub(_: Target) -> Moya.StubBehavior {
-        .never
-    }
+    final class func neverStub(_: Target) -> Moya.StubBehavior { .never }
 
     /// Return a response immediately.
-    final class func immediatelyStub(_: Target) -> Moya.StubBehavior {
-        .immediate
-    }
+    final class func immediatelyStub(_: Target) -> Moya.StubBehavior { .immediate }
 
     /// Return a response after a delay.
-    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior { { _ in .delayed(seconds: seconds) }
+    final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
+        return { _ in .delayed(seconds: seconds) }
     }
 }
 

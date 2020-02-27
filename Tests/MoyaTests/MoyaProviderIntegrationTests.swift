@@ -120,18 +120,18 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
                     it("uses a background queue") {
 
-                        let isMainThread = Atomic<Bool?>(wrappedValue: nil)
+                        let callbackQueueLabel = Atomic<String?>(wrappedValue: nil)
                         let callbackQueue = DispatchQueue(label: "background_queue", attributes: .concurrent)
                         let target: GitHub = .zen
 
                         waitUntil { done in
                             provider.request(target, callbackQueue: callbackQueue) { _ in
-                                isMainThread.wrappedValue = Thread.isMainThread
+                                callbackQueueLabel.wrappedValue = DispatchQueue.currentLabel
                                 done()
                             }
                         }
 
-                        expect(isMainThread.wrappedValue) == false
+                        expect(callbackQueueLabel.wrappedValue) == "background_queue"
                     }
 
                     it("uses the main queue") {

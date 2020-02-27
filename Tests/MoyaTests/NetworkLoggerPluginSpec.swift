@@ -164,13 +164,9 @@ private class TestStreamRequest: RequestType {
         ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
@@ -191,13 +187,9 @@ private class TestBodyRequest: RequestType {
         ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
@@ -218,13 +210,9 @@ private class TestCurlBodyRequest: RequestType {
         ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler(["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"", "\"https://api.github.com/zen\""].joined(separator: " \\\n\t"))
@@ -233,21 +221,13 @@ private class TestCurlBodyRequest: RequestType {
 }
 
 private class TestNilRequest: RequestType {
-    var request: URLRequest? {
-        nil
-    }
+    var request: URLRequest? { nil }
 
-    var sessionHeaders: [String: String] {
-        [:]
-    }
+    var sessionHeaders: [String: String] { [:] }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")

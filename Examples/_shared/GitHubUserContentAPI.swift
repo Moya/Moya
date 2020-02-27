@@ -33,9 +33,8 @@ extension GitHubUserContent: TargetType {
             return Giphy.animatedBirdData
         }
     }
-    public var headers: [String: String]? {
-        nil
-    }
+    public var headers: [String: String]? { nil }
+
 }
 
 private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in

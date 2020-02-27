@@ -80,9 +80,7 @@ private extension String {
         addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 
-    var utf8Encoded: Data {
-        Data(self.utf8)
-    }
+    var utf8Encoded: Data { Data(self.utf8) }
 }
 ```
 
