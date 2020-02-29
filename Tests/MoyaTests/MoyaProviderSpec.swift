@@ -418,7 +418,7 @@ final class MoyaProviderSpec: QuickSpec {
         describe("a provider with custom sample response closures") {
             it("returns sample data") {
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    let url = target.baseURL.appendingPathComponent(target.path.endpoint).absoluteString
                     return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -453,7 +453,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("returns error") {
                 let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+                    let url = target.baseURL.appendingPathComponent(target.path.endpoint).absoluteString
                     return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
@@ -560,7 +560,7 @@ final class MoyaProviderSpec: QuickSpec {
         describe("struct targets") {
             struct StructAPI: TargetType {
                 let baseURL = URL(string: "http://example.com")!
-                let path = "/endpoint"
+                let path = Path.get(endpoint: "/endpoint")
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
@@ -659,7 +659,7 @@ final class MoyaProviderSpec: QuickSpec {
         describe("a target with empty path") {
             struct PathlessAPI: TargetType {
                 let baseURL = URL(string: "http://example.com/123/somepath?X-ABC-Asd=123")!
-                let path = ""
+                let path = Path.get(endpoint: "")
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!

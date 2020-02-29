@@ -7,11 +7,11 @@ public extension URL {
         // When a TargetType's path is empty, URL.appendingPathComponent may introduce trailing /, which may not be wanted in some cases
         // See: https://github.com/Moya/Moya/pull/1053
         // And: https://github.com/Moya/Moya/issues/1049
-        let targetPath = target.path
-        if targetPath.isEmpty {
+        let targetEndpoint = target.path.endpoint
+        if targetEndpoint.isEmpty {
             self = target.baseURL
         } else {
-            self = target.baseURL.appendingPathComponent(targetPath)
+            self = target.baseURL.appendingPathComponent(targetEndpoint)
         }
     }
 }

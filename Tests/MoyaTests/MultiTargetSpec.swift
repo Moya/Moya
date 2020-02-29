@@ -9,7 +9,7 @@ final class MultiTargetSpec: QuickSpec {
         describe("MultiTarget") {
             struct StructAPI: TargetType, AccessTokenAuthorizable {
                 let baseURL = URL(string: "http://example.com")!
-                let path = "/endpoint"
+                let path = Path.get(endpoint: "/endpoint")
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
@@ -28,8 +28,8 @@ final class MultiTargetSpec: QuickSpec {
                 expect(target.baseURL) == URL(string: "http://example.com")!
             }
 
-            it("uses correct path") {
-                expect(target.path) == "/endpoint"
+            it("uses correct Path") {
+                expect(target.path) == Path.get(endpoint: "/endpoint")
             }
 
             it("uses correct parameters") {

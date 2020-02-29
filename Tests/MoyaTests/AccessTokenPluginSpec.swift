@@ -6,7 +6,7 @@ import Foundation
 final class AccessTokenPluginSpec: QuickSpec {
     struct TestTarget: TargetType, AccessTokenAuthorizable {
         let baseURL = URL(string: "http://www.api.com/")!
-        let path = ""
+        let path = Path.get(endpoint: "")
         let method = Method.get
         let task = Task.requestPlain
         let sampleData = Data()

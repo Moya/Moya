@@ -10,8 +10,10 @@ public enum MultiTarget: TargetType {
         self = MultiTarget.target(target)
     }
 
-    /// The embedded target's base `URL`.
-    public var path: String { target.path }
+    /// The embedded target's base `URL` and the `HTTP` method.
+    public var path: Path {
+        return target.path
+    }
 
     /// The baseURL of the embedded target.
     public var baseURL: URL { target.baseURL }

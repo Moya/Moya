@@ -6,8 +6,8 @@ public protocol TargetType {
     /// The target's base `URL`.
     var baseURL: URL { get }
 
-    /// The path to be appended to `baseURL` to form the full `URL`.
-    var path: String { get }
+    /// The path has `URL` endpoint and `HTTP` method.
+    var path: Path { get }
 
     /// The HTTP method used in the request.
     var method: Moya.Method { get }

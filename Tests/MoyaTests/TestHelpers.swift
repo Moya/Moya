@@ -14,13 +14,13 @@ enum GitHub {
 }
 
 extension GitHub: TargetType {
-    var baseURL: URL { URL(string: "https://api.github.com")! }
-    var path: String {
+    var baseURL: URL { return URL(string: "https://api.github.com")! }
+    var path: Path {
         switch self {
         case .zen:
-            return "/zen"
+            return .get(endpoint: "/zen")
         case .userProfile(let name):
-            return "/users/\(name.urlEscaped)"
+            return .get(endpoint: "/users/\(name.urlEscaped)")
         }
     }
 
@@ -53,7 +53,7 @@ extension GitHub: Equatable {
 }
 
 func url(_ route: TargetType) -> String {
-    route.baseURL.appendingPathComponent(route.path).absoluteString
+    return route.baseURL.appendingPathComponent(route.path.endpoint).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint in
@@ -69,15 +69,15 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case uploadMultipart([MultipartFormData], [String: Any]?)
     case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
-    var baseURL: URL { URL(string: "http://httpbin.org")! }
-    var path: String {
+    var baseURL: URL { return URL(string: "http://httpbin.org")! }
+    var path: Path {
         switch self {
         case .basicAuth:
-            return "/basic-auth/user/passwd"
+            return .get(endpoint: "/basic-auth/user/passwd")
         case .bearer:
-            return "/bearer"
+            return .get(endpoint: "/bearer")
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
-            return "/post"
+            return .post(endpoint: "/post")
         }
     }
 
@@ -143,11 +143,11 @@ public enum GitHubUserContent {
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! }
-    public var path: String {
+    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var path: Path {
         switch self {
         case .downloadMoyaWebContent(let contentPath), .requestMoyaWebContent(let contentPath):
-            return "/Moya/Moya/master/web/\(contentPath)"
+            return .get(endpoint: "/Moya/Moya/master/web/\(contentPath)")
         }
     }
     public var method: Moya.Method {
