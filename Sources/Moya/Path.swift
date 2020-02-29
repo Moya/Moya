@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Path {
+public enum Path: Equatable {
     case connect(endpoint: String)
     case delete(endpoint: String)
     case get(endpoint: String)
