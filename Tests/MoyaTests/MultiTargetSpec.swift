@@ -49,10 +49,6 @@ final class MultiTargetSpec: QuickSpec {
                 }
             }
 
-            it("uses correct method") {
-                expect(target.method) == Method.get
-            }
-
             it("uses correct task") {
                 expect(String(describing: target.task)).to(beginWith("requestParameters")) // Hack to avoid implementing Equatable for Task
             }

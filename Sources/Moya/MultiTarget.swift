@@ -18,9 +18,6 @@ public enum MultiTarget: TargetType {
     /// The baseURL of the embedded target.
     public var baseURL: URL { target.baseURL }
 
-    /// The HTTP method of the embedded target.
-    public var method: Moya.Method { target.method }
-
     /// The sampleData of the embedded target.
     public var sampleData: Data { target.sampleData }
 

@@ -9,9 +9,6 @@ public protocol TargetType {
     /// The path has `URL` endpoint and `HTTP` method.
     var path: Path { get }
 
-    /// The HTTP method used in the request.
-    var method: Moya.Method { get }
-
     /// Provides stub data for use in testing.
     var sampleData: Data { get }
 
