@@ -9,16 +9,10 @@ public enum Giphy {
 
 extension Giphy: TargetType {
     public var baseURL: URL { URL(string: "https://upload.giphy.com")! } // swiftlint:disable:this force_unwrapping
-    public var path: String {
+    public var path: Path {
         switch self {
         case .upload:
-            return "/v1/gifs"
-        }
-    }
-    public var method: Moya.Method {
-        switch self {
-        case .upload:
-            return .post
+            return .post(endpoint: "/v1/gifs")
         }
     }
     public var task: Task {

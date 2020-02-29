@@ -9,16 +9,10 @@ public enum GitHubUserContent {
 
 extension GitHubUserContent: TargetType {
     public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! } // swiftlint:disable:this force_unwrapping
-    public var path: String {
+    public var path: Path {
         switch self {
         case .downloadMoyaWebContent(let contentPath):
-            return "/Moya/Moya/master/web/\(contentPath)"
-        }
-    }
-    public var method: Moya.Method {
-        switch self {
-        case .downloadMoyaWebContent:
-            return .get
+            return .get(endpoint: "/Moya/Moya/master/web/\(contentPath)")
         }
     }
     public var task: Task {

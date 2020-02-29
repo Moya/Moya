@@ -34,17 +34,16 @@ public enum GitHub {
 
 extension GitHub: TargetType {
     public var baseURL: URL { URL(string: "https://api.github.com")! }
-    public var path: String {
+    public var path: Path {
         switch self {
         case .zen:
-            return "/zen"
+            return .get(endpoint: "/zen")
         case .userProfile(let name):
-            return "/users/\(name.urlEscaped)"
+            return .get(endpoint: "/users/\(name.urlEscaped)")
         case .userRepositories(let name):
-            return "/users/\(name.urlEscaped)/repos"
+            return .get(endpoint: "/users/\(name.urlEscaped)/repos")
         }
     }
-    public var method: Moya.Method { .get }
 
     public var task: Task {
         switch self {
@@ -77,7 +76,7 @@ extension GitHub: TargetType {
 }
 
 public func url(_ route: TargetType) -> String {
-    route.baseURL.appendingPathComponent(route.path).absoluteString
+    route.baseURL.appendingPathComponent(route.path.endpoint).absoluteString
 }
 
 // MARK: - Response Handlers
