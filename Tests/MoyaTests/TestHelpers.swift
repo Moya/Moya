@@ -14,7 +14,7 @@ enum GitHub {
 }
 
 extension GitHub: TargetType {
-    var baseURL: URL { return URL(string: "https://api.github.com")! }
+    var baseURL: URL { URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
         case .zen:
@@ -24,13 +24,9 @@ extension GitHub: TargetType {
         }
     }
 
-    var method: Moya.Method {
-        return .get
-    }
+    var method: Moya.Method { .get }
 
-    var task: Task {
-        return .requestPlain
-    }
+    var task: Task { .requestPlain }
 
     var sampleData: Data {
         switch self {
@@ -41,13 +37,9 @@ extension GitHub: TargetType {
         }
     }
 
-    var validationType: ValidationType {
-        return .successAndRedirectCodes
-    }
+    var validationType: ValidationType { .successAndRedirectCodes }
 
-    var headers: [String: String]? {
-        return nil
-    }
+    var headers: [String: String]? { nil }
 }
 
 extension GitHub: Equatable {
@@ -61,7 +53,7 @@ extension GitHub: Equatable {
 }
 
 func url(_ route: TargetType) -> String {
-    return route.baseURL.appendingPathComponent(route.path).absoluteString
+    route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
 let failureEndpointClosure = { (target: GitHub) -> Endpoint in
@@ -69,18 +61,21 @@ let failureEndpointClosure = { (target: GitHub) -> Endpoint in
     return Endpoint(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 
-enum HTTPBin: TargetType {
+enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case basicAuth
+    case bearer
     case post
     case upload(file: URL)
     case uploadMultipart([MultipartFormData], [String: Any]?)
     case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
-    var baseURL: URL { return URL(string: "http://httpbin.org")! }
+    var baseURL: URL { URL(string: "http://httpbin.org")! }
     var path: String {
         switch self {
         case .basicAuth:
             return "/basic-auth/user/passwd"
+        case .bearer:
+            return "/bearer"
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return "/post"
         }
@@ -88,7 +83,7 @@ enum HTTPBin: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .basicAuth:
+        case .basicAuth, .bearer:
             return .get
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return .post
@@ -97,8 +92,8 @@ enum HTTPBin: TargetType {
 
     var task: Task {
         switch self {
-        case .basicAuth, .post:
-        return .requestParameters(parameters: [:], encoding: URLEncoding.default)
+        case .basicAuth, .post, .bearer:
+            return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
         case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters, _):
@@ -114,14 +109,14 @@ enum HTTPBin: TargetType {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
+        case .bearer:
+            return "{\"authenticated\": true, \"token\": \"4D4A9C7D-F6E7-4FD7-BDBD-03880550A80D\"}".data(using: String.Encoding.utf8)!
         case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
             return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
     }
 
-    var headers: [String: String]? {
-        return nil
-    }
+    var headers: [String: String]? { nil }
 
     var validationType: ValidationType {
         switch self {
@@ -129,6 +124,15 @@ enum HTTPBin: TargetType {
             return .customCodes(codes)
         default:
             return .none
+        }
+    }
+
+    var authorizationType: AuthorizationType? {
+        switch self {
+        case .bearer:
+            return  .bearer
+        default:
+            return nil
         }
     }
 }
@@ -139,7 +143,7 @@ public enum GitHubUserContent {
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! }
+    public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
         case .downloadMoyaWebContent(let contentPath), .requestMoyaWebContent(let contentPath):
@@ -158,9 +162,7 @@ extension GitHubUserContent: TargetType {
             return nil
         }
     }
-    public var parameterEncoding: ParameterEncoding {
-        return URLEncoding.default
-    }
+    public var parameterEncoding: ParameterEncoding { URLEncoding.default }
     public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
@@ -176,18 +178,14 @@ extension GitHubUserContent: TargetType {
         }
     }
 
-    public var headers: [String: String]? {
-        return nil
-    }
+    public var headers: [String: String]? { nil }
 }
 
 // MARK: - Upload Multipart Helpers
 
 extension HTTPBin {
     static func createTestMultipartFormData() -> [MultipartFormData] {
-        guard let url = Bundle(for: MoyaProviderSpec.self).url(forResource: "testImage", withExtension: "png") else {
-            fatalError("Resource testImage.png could not be found in bundle")
-        }
+        let url = testImageUrl
         let string = "some data"
         guard let data = string.data(using: .utf8) else {
             fatalError("Failed creating Data from String \(string)")
@@ -202,7 +200,7 @@ extension HTTPBin {
 // MARK: - String Helpers
 extension String {
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 
@@ -210,7 +208,7 @@ extension String {
 // https://lists.swift.org/pipermail/swift-users/Week-of-Mon-20160613/002280.html
 extension DispatchQueue {
     class var currentLabel: String? {
-        return String(validatingUTF8: __dispatch_queue_get_label(nil))
+        String(validatingUTF8: __dispatch_queue_get_label(nil))
     }
 }
 
@@ -224,20 +222,26 @@ private let defaultDownloadDestination: DownloadDestination = { temporaryURL, re
     return (temporaryURL, [])
 }
 
+extension URL {
+    static func random(withExtension extension: String) -> URL {
+        let directory = FileManager.default.temporaryDirectory
+        let name = UUID().uuidString + "." + `extension`
+        return directory.appendingPathComponent(name, isDirectory: false)
+    }
+}
+
 // MARK: - Image Test Helpers
 // Necessary since Image(named:) doesn't work correctly in the test bundle
 extension ImageType {
     class TestClass { }
 
-    class func testPNGImage(named name: String) -> ImageType {
-        let bundle = Bundle(for: type(of: TestClass()))
-        let path = bundle.path(forResource: name, ofType: "png")
-        return Image(contentsOfFile: path!)!
+    static var testImage: ImageType {
+        Image(data: testImageData)!
     }
 
     #if canImport(UIKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {
-            return jpegData(compressionQuality: compression)
+            jpegData(compressionQuality: compression)
         }
     #elseif canImport(AppKit)
         func asJPEGRepresentation(_ compression: CGFloat) -> Data? {

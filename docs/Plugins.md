@@ -17,13 +17,21 @@ Moya ships with some default plugins which can be used for common functions: aut
 You can use a plugin simply declaring it during the initialization of the provider:
 
 ```swift
-let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin(verbose: true)])
+let provider = MoyaProvider<GitHub>(plugins: [NetworkLoggerPlugin()])
 ```
 
 ### Authentication
+
+#### URLCredential
 The authentication plugin allows a user to assign an optional `URLCredential` per request. There is no action when a request is received.
 
 The plugin can be found at [`Sources/Moya/Plugins/CredentialsPlugin.swift`](../Sources/Moya/Plugins/CredentialsPlugin.swift)
+
+### Access Token
+The `AccessTokenPlugin` adds the `Authorization` field in the request's header if the target requires it.
+Before sending the request, the plugin will ask for a token of a specified type using its `tokenClosure`, and add the appropriate value to headers.
+
+The plugin can be found at [`Sources/Moya/Plugins/AccessTokenPlugin.swift`](../Sources/Moya/Plugins/AccessTokenPlugin.swift)
 
 ### Network Activity Indicator
 One very common task with iOS networking is to show a network activity indicator during network requests, and remove it when all requests have finished. The provided plugin adds callbacks which are called when a requests starts and finishes, which can be used to keep track of the number of requests in progress, and show / hide the network activity indicator accordingly.
@@ -36,6 +44,7 @@ During development it can be very useful to log network activity to the console.
 The provided plugin for logging is the most complex of the provided plugins, and can be configured to suit the amount of logging your app (and build type) require. When initializing the plugin, you can choose options for verbosity, whether to log curl commands, and provide functions for outputting data (useful if you are using your own log framework instead of `print`) and formatting data before printing (by default the response will be converted to a String using `String.Encoding.utf8` but if you'd like to convert to pretty-printed JSON for your responses you can pass in a formatter function, see the function `JSONResponseDataFormatter` in [`Examples/_shared/GitHubAPI.swift`](../Examples/_shared/GitHubAPI.swift) for an example that does exactly that)
 
 The plugin can be found at [`Sources/Moya/Plugins/NetworkLoggerPlugin.swift`](../Sources/Moya/Plugins/NetworkLoggerPlugin.swift)
+
 
 ## Custom plugins
 

@@ -3,6 +3,10 @@ import Nimble
 import ReactiveSwift
 import OHHTTPStubs
 
+#if canImport(OHHTTPStubsSwift)
+import OHHTTPStubsSwift
+#endif
+
 @testable import Moya
 @testable import ReactiveMoya
 
@@ -97,8 +101,8 @@ final class MoyaProviderReactiveSpec: QuickSpec {
         describe("provider with inflight tracking") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -142,8 +146,8 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                 try? FileManager.default.removeItem(at: file)
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }

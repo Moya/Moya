@@ -1,3 +1,4 @@
+import Foundation
 import Nimble
 import Quick
 import Alamofire
@@ -7,10 +8,10 @@ final class EndpointClosureSpec: QuickSpec {
 
     override func spec() {
         var provider: MoyaProvider<HTTPBin>!
-        var sessionManager: SessionManagerMock!
+        var session: SessionMock!
 
         beforeEach {
-            sessionManager = SessionManagerMock()
+            session = SessionMock()
             let endpointClosure: MoyaProvider<HTTPBin>.EndpointClosure = { target in
                 let task: Task
 
@@ -26,7 +27,7 @@ final class EndpointClosureSpec: QuickSpec {
 
                 return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: task, httpHeaderFields: target.headers)
             }
-            provider = MoyaProvider<HTTPBin>(endpointClosure: endpointClosure, manager: sessionManager)
+            provider = MoyaProvider<HTTPBin>(endpointClosure: endpointClosure, session: session)
         }
 
         it("appends additional multipart body in endpointClosure") {
@@ -37,18 +38,19 @@ final class EndpointClosureSpec: QuickSpec {
             let sentMultipartData = [multipartData1, multipartData2]
 
             _ = provider.request(.uploadMultipart(providedMultipartData, nil)) { _ in }
-            let stringData1 = String(data: try! sessionManager.uploadMultipartFormData!.encode(), encoding: .utf8)
+            let stringData1 = session.uploadMultipartString!
 
             let requestMultipartFormData = RequestMultipartFormData()
             requestMultipartFormData.applyMoyaMultipartFormData(sentMultipartData)
-            let stringData2 = String(data: try! requestMultipartFormData.encode(), encoding: .utf8)
+            let stringData2 = String(decoding: try! requestMultipartFormData.encode(), as: UTF8.self)
 
             let formData1 = "data; name=\"test1\"\r\n\r\ntest1\r\n"
             let formData2 = "data; name=\"test2\"\r\n\r\ntest2\r\n"
 
-            let splitString1 = stringData1?.split(separator: "-").map { String($0) }
-            let splitString2 = stringData2?.split(separator: "-").map { String($0) }
+            let splitString1 = stringData1.split(separator: "-").map { String($0) }
+            let splitString2 = stringData2.split(separator: "-").map { String($0) }
 
+            // flacky tes
             expect(splitString1).to(contain(formData1))
             expect(splitString1).to(contain(formData2))
             expect(splitString2).to(contain(formData1))
@@ -58,18 +60,14 @@ final class EndpointClosureSpec: QuickSpec {
     }
 }
 
-final class SessionManagerMock: SessionManager {
+final class SessionMock: Alamofire.Session {
 
-    var uploadMultipartFormData: Alamofire.MultipartFormData?
+    var uploadMultipartString: String?
 
-    override func upload(
-        multipartFormData: @escaping (Alamofire.MultipartFormData) -> Void,
-        usingThreshold encodingMemoryThreshold: UInt64,
-        with urlRequest: URLRequestConvertible,
-        queue: DispatchQueue?,
-        encodingCompletion: ((SessionManager.MultipartFormDataEncodingResult) -> Void)?) {
-        let uploadMultipartFormData = Alamofire.MultipartFormData()
-        multipartFormData(uploadMultipartFormData)
-        self.uploadMultipartFormData = uploadMultipartFormData
+    override func upload(multipartFormData: Alamofire.MultipartFormData, with request: URLRequestConvertible, usingThreshold encodingMemoryThreshold: UInt64 = MultipartFormData.encodingMemoryThreshold, interceptor: RequestInterceptor? = nil, fileManager: FileManager = .default) -> UploadRequest {
+        let data = try! multipartFormData.encode()
+        uploadMultipartString = String(decoding: data, as: UTF8.self)
+
+        return super.upload(multipartFormData: multipartFormData, with: request, usingThreshold: encodingMemoryThreshold, interceptor: interceptor, fileManager: fileManager)
     }
 }

@@ -1,5 +1,4 @@
 import Foundation
-import Result
 
 /// Network activity change notification type.
 public enum NetworkActivityChangeType {

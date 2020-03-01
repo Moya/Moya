@@ -1,14 +1,14 @@
 import Foundation
 import Moya
 
-let gitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(verbose: true)])
+let gitHubUserContentProvider = MoyaProvider<GitHubUserContent>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
 
 public enum GitHubUserContent {
     case downloadMoyaWebContent(String)
 }
 
 extension GitHubUserContent: TargetType {
-    public var baseURL: URL { return URL(string: "https://raw.githubusercontent.com")! } // swiftlint:disable:this force_unwrapping
+    public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! } // swiftlint:disable:this force_unwrapping
     public var path: String {
         switch self {
         case .downloadMoyaWebContent(let contentPath):
@@ -33,9 +33,8 @@ extension GitHubUserContent: TargetType {
             return Giphy.animatedBirdData
         }
     }
-    public var headers: [String: String]? {
-        return nil
-    }
+    public var headers: [String: String]? { nil }
+
 }
 
 private let defaultDownloadDestination: DownloadDestination = { temporaryURL, response in

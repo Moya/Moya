@@ -11,7 +11,7 @@ when initializing your provider.
 
 ```swift
 let provider = MoyaProvider<YourAPI>(plugins: [CredentialsPlugin { _ -> URLCredential? in
-        return URLCredential(user: "user", password: "passwd", persistence: .none)
+        URLCredential(user: "user", password: "passwd", persistence: .none)
     }
 ])
 ```
@@ -42,7 +42,7 @@ There are two steps required to start using an `AccessTokenPlugin`.
 1. You need to add an `AccessTokenPlugin` to your `MoyaProvider` like this:
 ```Swift
 let token = "eyeAm.AJsoN.weBTOKen"
-let authPlugin = AccessTokenPlugin { token }
+let authPlugin = AccessTokenPlugin { _ in token }
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
 The `AccessTokenPlugin` initializer accepts a `tokenClosure` that is responsible
@@ -57,7 +57,7 @@ extension YourAPI: TargetType, AccessTokenAuthorizable {
     case targetThatNeedsCustomAuth
     case targetDoesNotNeedAuth
 
-    var authorizationType: AuthorizationType {
+    var authorizationType: AuthorizationType? {
         switch self {
             case .targetThatNeedsBearerAuth:
                 return .bearer
@@ -66,7 +66,7 @@ extension YourAPI: TargetType, AccessTokenAuthorizable {
             case .targetThatNeedsCustomAuth:
                 return .custom("CustomAuthorizationType")
             case .targetDoesNotNeedAuth:
-                return .none
+                return nil
             }
         }
 }

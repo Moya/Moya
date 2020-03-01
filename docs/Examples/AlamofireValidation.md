@@ -5,7 +5,7 @@ When a request is configured with Alamofire validation, Moya will internally cal
 ```swift
 // MARK: - TargetType Protocol Implementation
 extension MyService: TargetType {
-    var baseURL: URL { return URL(string: "https://api.myservice.com")! }
+    var baseURL: URL { URL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
         case .zen:

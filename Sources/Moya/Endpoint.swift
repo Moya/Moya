@@ -50,12 +50,12 @@ open class Endpoint {
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with added HTTP header fields.
     open func adding(newHTTPHeaderFields: [String: String]) -> Endpoint {
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
+        Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: add(httpHeaderFields: newHTTPHeaderFields))
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
     open func replacing(task: Task) -> Endpoint {
-        return Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
+        Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 
     fileprivate func add(httpHeaderFields headers: [String: String]?) -> [String: String]? {
@@ -72,10 +72,10 @@ open class Endpoint {
 }
 
 /// Extension for converting an `Endpoint` into a `URLRequest`.
-extension Endpoint {
+public extension Endpoint {
     // swiftlint:disable cyclomatic_complexity
     /// Returns the `Endpoint` converted to a `URLRequest` if valid. Throws an error otherwise.
-    public func urlRequest() throws -> URLRequest {
+    func urlRequest() throws -> URLRequest {
         guard let requestURL = Foundation.URL(string: url) else {
             throw MoyaError.requestMapping(url)
         }

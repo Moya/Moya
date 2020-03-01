@@ -24,7 +24,7 @@ providers). Here's the beginning of our extension:
 
 ```swift
 extension GitHub: TargetType {
-    public var baseURL: URL { return URL(string: "https://api.github.com")! }
+    public var baseURL: URL { URL(string: "https://api.github.com")! }
 }
 ```
 
@@ -150,7 +150,7 @@ Here's an example extension that allows you to easily escape normal strings
 ```swift
 extension String {
     var urlEscaped: String {
-        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 ```

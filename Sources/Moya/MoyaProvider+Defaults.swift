@@ -1,9 +1,9 @@
 import Foundation
 
-/// These functions are default mappings to `MoyaProvider`'s properties: endpoints, requests, manager, etc.
+/// These functions are default mappings to `MoyaProvider`'s properties: endpoints, requests, session etc.
 public extension MoyaProvider {
     final class func defaultEndpointMapping(for target: Target) -> Endpoint {
-        return Endpoint(
+        Endpoint(
             url: URL(target: target).absoluteString,
             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
             method: target.method,
@@ -25,12 +25,10 @@ public extension MoyaProvider {
         }
     }
 
-    final class func defaultAlamofireManager() -> Manager {
+    final class func defaultAlamofireSession() -> Session {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
+        configuration.headers = .default
 
-        let manager = Manager(configuration: configuration)
-        manager.startRequestsImmediately = false
-        return manager
+        return Session(configuration: configuration, startRequestsImmediately: false)
     }
 }

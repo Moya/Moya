@@ -1,5 +1,4 @@
 import Foundation
-import Result
 
 /// A Moya Plugin receives callbacks to perform side effects wherever a request is sent or received.
 ///
@@ -25,11 +24,11 @@ public protocol PluginType {
 }
 
 public extension PluginType {
-    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { return request }
-    func prepare(_ request: URLRequest, multipartBody: [MultipartFormData], target: TargetType) -> (URLRequest, [MultipartFormData]) { return (request, multipartBody) }
+    func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { request }
+    func prepare(_ request: URLRequest, multipartBody: [MultipartFormData], target: TargetType) -> (URLRequest, [MultipartFormData]) { (request, multipartBody) }
     func willSend(_ request: RequestType, target: TargetType) { }
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) { }
-    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { return result }
+    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { result }
 }
 
 /// Request type used by `willSend` plugin function.
@@ -43,9 +42,17 @@ public protocol RequestType {
     /// Retrieve an `NSURLRequest` representation.
     var request: URLRequest? { get }
 
+    ///  Additional headers appended to the request when added to the session.
+    var sessionHeaders: [String: String] { get }
+
     /// Authenticates the request with a username and password.
-    func authenticate(user: String, password: String, persistence: URLCredential.Persistence) -> Self
+    func authenticate(username: String, password: String, persistence: URLCredential.Persistence) -> Self
 
     /// Authenticates the request with an `NSURLCredential` instance.
-    func authenticate(usingCredential credential: URLCredential) -> Self
+    func authenticate(with credential: URLCredential) -> Self
+
+    /// cURL representation of the instance.
+    ///
+    /// - Returns: The cURL equivalent of the instance.
+    func cURLDescription(calling handler: @escaping (String) -> Void) -> Self
 }

@@ -22,21 +22,15 @@ enum Asset: TargetType {
     }
   }
 
-  var path: String {
-    return "/assets/" + assetName
-  }
+  var path: String { "/assets/" + assetName }
 
-  var localLocation: URL {
-    return assetDir.appendingPathComponent(assetName)
-  }
+  var localLocation: URL { assetDir.appendingPathComponent(assetName) }
 
   var downloadDestination: DownloadDestination {
-    return { _, _ in return (self.localLocation, .removePreviousFile) }
+      return { _, _ in (self.localLocation, .removePreviousFile) }
   }
 
-  var task: Task {
-    return .downloadDestination(downloadDestination)
-  }
+  var task: Task { .downloadDestination(downloadDestination) }
 
   /*
     Rest of TargetType

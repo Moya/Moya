@@ -1,4 +1,5 @@
-import enum Result.Result
+import Foundation
+
 @testable import Moya
 
 final class TestingPlugin: PluginType {

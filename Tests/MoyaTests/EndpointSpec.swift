@@ -1,6 +1,7 @@
 import Quick
 import Moya
 import Nimble
+import Foundation
 
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
@@ -79,19 +80,19 @@ final class EndpointSpec: QuickSpec {
         describe("successful converting to urlRequest") {
             context("when task is .requestPlain") {
                 itBehavesLike("endpoint with no request property changed") {
-                    return ["task": Task.requestPlain, "endpoint": self.simpleGitHubEndpoint]
+                    ["task": Task.requestPlain, "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
             context("when task is .uploadFile") {
                 itBehavesLike("endpoint with no request property changed") {
-                    return ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
+                    ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
             context("when task is .uploadMultipart") {
                 itBehavesLike("endpoint with no request property changed") {
-                    return ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
+                    ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
@@ -345,14 +346,10 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            #if !SWIFT_PACKAGE
             context("when task is .requestCompositeParameters") {
                 it("throws an error when bodyEncoding is an URLEncoding.queryString") {
                     endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.queryString, urlParameters: [:]))
-                    expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
-                }
-
-                it("throws an error when bodyEncoding is an URLEncoding.methodDependent") {
-                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: [:], bodyEncoding: URLEncoding.methodDependent, urlParameters: [:]))
                     expect { _ = try? endpoint.urlRequest() }.to(throwAssertion())
                 }
 
@@ -366,6 +363,7 @@ final class EndpointSpec: QuickSpec {
                     expect { _ = try? endpoint.urlRequest() }.toNot(throwAssertion())
                 }
             }
+            #endif
         }
     }
 }
@@ -375,12 +373,12 @@ enum Empty {
 
 extension Empty: TargetType {
     // None of these matter since the Empty has no cases and can't be instantiated.
-    var baseURL: URL { return URL(string: "http://example.com")! }
-    var path: String { return "" }
-    var method: Moya.Method { return .get }
-    var parameters: [String: Any]? { return nil }
-    var parameterEncoding: ParameterEncoding { return URLEncoding.default }
-    var task: Task { return .requestPlain }
-    var sampleData: Data { return Data() }
-    var headers: [String: String]? { return nil }
+    var baseURL: URL { URL(string: "http://example.com")! }
+    var path: String { "" }
+    var method: Moya.Method { .get }
+    var parameters: [String: Any]? { nil }
+    var parameterEncoding: ParameterEncoding { URLEncoding.default }
+    var task: Task { .requestPlain }
+    var sampleData: Data { Data() }
+    var headers: [String: String]? { nil }
 }

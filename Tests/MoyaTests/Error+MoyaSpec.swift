@@ -2,7 +2,7 @@ import Nimble
 import Moya
 
 public func beOfSameErrorType(_ expectedValue: MoyaError) -> Predicate<MoyaError> {
-    return Predicate { expression -> PredicateResult in
+    Predicate { expression -> PredicateResult in
         let test: Bool
         if let value = try expression.evaluate() {
             switch value {
