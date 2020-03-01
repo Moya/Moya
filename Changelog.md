@@ -2,6 +2,8 @@
 
 ### Changed
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+- Add the possibility to modify the upload request in plugin. [#2002](https://github.com/Moya/Moya/pull/2002) by [@VincentSit](https://github.com/VincentSit).
+
 # [14.0.0] - 2020-02-15
 
 ### Changed
