@@ -272,6 +272,22 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .uploadCompositeFile") {
+                var urlParameters: [String: Any]!
+                var request: URLRequest!
+
+                beforeEach {
+                    urlParameters = ["Harvey": "Nemesis"]
+                    endpoint = endpoint.replacing(task: Task.uploadCompositeFile(URL(string: "https://google.com")!, urlParameters: urlParameters))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates url") {
+                    let expectedUrl = endpoint.url + "?Harvey=Nemesis"
+                    expect(request.url?.absoluteString).to(equal(expectedUrl))
+                }
+            }
+
             context("when task is .uploadCompositeMultipart") {
                 var urlParameters: [String: Any]!
                 var request: URLRequest!

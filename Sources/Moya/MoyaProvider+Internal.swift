@@ -89,7 +89,7 @@ public extension MoyaProvider {
             switch endpoint.task {
             case .requestPlain, .requestData, .requestJSONEncodable, .requestCustomJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
-            case .uploadFile(let file):
+            case .uploadFile(let file), .uploadCompositeFile(let file, _):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
             case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
                 guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
