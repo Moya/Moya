@@ -129,8 +129,14 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
         let plugins = self.plugins
         let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: preparedRequest, stubbedResult: stubBehavior.result)
 
-        let callbackQueue = callbackQueue ?? self.callbackQueue ?? DispatchQueue.main
-        callbackQueue.asyncAfter(deadline: .now() + stubBehavior.delay) { stub() }
+        let callbackQueue = callbackQueue ?? self.callbackQueue
+
+        if stubBehavior.delay == 0,
+            callbackQueue == nil {
+                stub()
+        } else {
+            (callbackQueue ?? DispatchQueue.main).asyncAfter(deadline: .now() + stubBehavior.delay) { stub() }
+        }
 
         return cancellableToken
     }
