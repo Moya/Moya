@@ -125,8 +125,9 @@ public extension MoyaProvider {
                     return .failure(error)
                 }
             }
-
-            let validatedResponse = stubbedResult.flatMap { validate($0) }
+            
+            let completeResult: MoyaResult = stubbedResult.map { Response(statusCode: $0.statusCode, data: $0.data, request: request, response: $0.response) }
+            let validatedResponse = completeResult.flatMap { validate($0) }
             plugins.forEach { $0.didReceive(validatedResponse, target: target) }
             completion(validatedResponse)
         }
