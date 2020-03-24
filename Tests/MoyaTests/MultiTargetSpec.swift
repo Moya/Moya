@@ -7,12 +7,12 @@ import Foundation
 final class MultiTargetSpec: QuickSpec {
     override func spec() {
         describe("MultiTarget") {
-            struct StructAPI: TargetType, AccessTokenAuthorizable {
+            struct StructAPI: StubbedTargetType, AccessTokenAuthorizable {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
-                let sampleData = "sample data".data(using: .utf8)!
+                let sampleData: Data? = "sample data".data(using: .utf8)
                 let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
                 let authorizationType: AuthorizationType? = .basic

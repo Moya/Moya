@@ -48,7 +48,7 @@ final class EndpointSpec: QuickSpec {
     private var simpleGitHubEndpoint: Endpoint {
         let target: GitHub = .zen
         let headerFields = ["Title": "Dominar"]
-        return Endpoint(url: url(target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
+        return Endpoint(url: url(target), method: Moya.Method.get, task: .requestPlain, httpHeaderFields: headerFields)
     }
 
     override func spec() {
@@ -72,7 +72,7 @@ final class EndpointSpec: QuickSpec {
         }
 
         it("returns a nil urlRequest for an invalid URL") {
-            let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+            let badEndpoint = Endpoint(url: "some invalid URL", method: .get, task: .requestPlain, httpHeaderFields: nil)
             let urlRequest = try? badEndpoint.urlRequest()
             expect(urlRequest).to(beNil())
         }
@@ -292,7 +292,7 @@ final class EndpointSpec: QuickSpec {
         describe("unsuccessful converting to urlRequest") {
             context("when url String is invalid") {
                 it("throws a .requestMapping error") {
-                    let badEndpoint = Endpoint(url: "some invalid URL", sampleResponseClosure: { .networkResponse(200, Data()) }, method: .get, task: .requestPlain, httpHeaderFields: nil)
+                    let badEndpoint = Endpoint(url: "some invalid URL", method: .get, task: .requestPlain, httpHeaderFields: nil)
                     let expectedError = MoyaError.requestMapping("some invalid URL")
                     var recievedError: MoyaError?
                     do {
@@ -371,7 +371,7 @@ final class EndpointSpec: QuickSpec {
 enum Empty {
 }
 
-extension Empty: TargetType {
+extension Empty: StubbedTargetType {
     // None of these matter since the Empty has no cases and can't be instantiated.
     var baseURL: URL { URL(string: "http://example.com")! }
     var path: String { "" }
@@ -379,6 +379,6 @@ extension Empty: TargetType {
     var parameters: [String: Any]? { nil }
     var parameterEncoding: ParameterEncoding { URLEncoding.default }
     var task: Task { .requestPlain }
-    var sampleData: Data { Data() }
+    var sampleData: Data? { Data() }
     var headers: [String: String]? { nil }
 }

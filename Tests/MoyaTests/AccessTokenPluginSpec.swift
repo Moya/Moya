@@ -4,12 +4,12 @@ import Moya
 import Foundation
 
 final class AccessTokenPluginSpec: QuickSpec {
-    struct TestTarget: TargetType, AccessTokenAuthorizable {
+    struct TestTarget: StubbedTargetType, AccessTokenAuthorizable {
         let baseURL = URL(string: "http://www.api.com/")!
         let path = ""
         let method = Method.get
         let task = Task.requestPlain
-        let sampleData = Data()
+        let sampleData: Data? = Data()
         let headers: [String: String]? = nil
         let authorizationType: AuthorizationType?
     }

@@ -25,7 +25,7 @@ final class EndpointClosureSpec: QuickSpec {
                     task = target.task
                 }
 
-                return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: task, httpHeaderFields: target.headers)
+                return Endpoint(url: URL(target: target).absoluteString, method: target.method, task: task, httpHeaderFields: target.headers)
             }
             provider = MoyaProvider<HTTPBin>(endpointClosure: endpointClosure, session: session)
         }

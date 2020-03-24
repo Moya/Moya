@@ -13,7 +13,7 @@ enum GitHub {
     case userProfile(String)
 }
 
-extension GitHub: TargetType {
+extension GitHub: StubbedTargetType {
     var baseURL: URL { URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
@@ -28,7 +28,7 @@ extension GitHub: TargetType {
 
     var task: Task { .requestPlain }
 
-    var sampleData: Data {
+    var sampleData: Data? {
         switch self {
         case .zen:
             return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
@@ -56,12 +56,7 @@ func url(_ route: TargetType) -> String {
     route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
-let failureEndpointClosure = { (target: GitHub) -> Endpoint in
-    let error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
-    return Endpoint(url: url(target), sampleResponseClosure: {.networkError(error)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
-}
-
-enum HTTPBin: TargetType, AccessTokenAuthorizable {
+enum HTTPBin: StubbedTargetType, AccessTokenAuthorizable {
     case basicAuth
     case bearer
     case post
@@ -105,7 +100,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         }
     }
 
-    var sampleData: Data {
+    var sampleData: Data? {
         switch self {
         case .basicAuth:
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
@@ -142,7 +137,7 @@ public enum GitHubUserContent {
     case requestMoyaWebContent(String)
 }
 
-extension GitHubUserContent: TargetType {
+extension GitHubUserContent: StubbedTargetType {
     public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
@@ -171,7 +166,7 @@ extension GitHubUserContent: TargetType {
             return .requestPlain
         }
     }
-    public var sampleData: Data {
+    public var sampleData: Data? {
         switch self {
         case .downloadMoyaWebContent, .requestMoyaWebContent:
             return Data(count: 4000)
@@ -269,4 +264,37 @@ struct Issue: Codable {
 struct OptionalIssue: Codable {
     let title: String?
     let createdAt: Date?
+}
+
+struct ImmediateStubPlugin: PluginType {
+    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
+        guard let data = target.sampleData else { return nil }
+        return StubBehavior(statusCode: 200, data: data)
+    }
+}
+
+struct StubPlugin: PluginType {
+    var statusCode: Int = 200
+
+    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
+        guard let data = target.sampleData else { return nil }
+        return StubBehavior(statusCode: statusCode, data: data)
+    }
+}
+
+struct ErrorStubPlugin: PluginType {
+    var error: Swift.Error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
+
+    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
+        return StubBehavior(error: error)
+    }
+}
+
+struct DelayedStubPlugin: PluginType {
+    var delay: TimeInterval = 0.5
+
+    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
+        guard let data = target.sampleData else { return nil }
+        return StubBehavior(delay: delay, statusCode: 200, data: data)
+    }
 }

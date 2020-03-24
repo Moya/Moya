@@ -8,19 +8,19 @@ public protocol StubbedTargetType: TargetType {
 /// Controls how stub responses are returned.
 public struct StubBehavior {
     let delay: TimeInterval
-    let result: MoyaResult    
+    let result: MoyaResult
 
-    init(delay: TimeInterval = 0, result: MoyaResult) {
+    public init(delay: TimeInterval = 0, result: MoyaResult) {
         self.result = result
         self.delay = delay
     }
 
-    init(delay: TimeInterval = 0, statusCode: Int, data: Data, request: URLRequest?, httpResponse: HTTPURLResponse?) {
-        let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: httpResponse)
+    public init(delay: TimeInterval = 0, statusCode: Int, data: Data, httpResponse: HTTPURLResponse? = nil) {
+        let response = Moya.Response(statusCode: statusCode, data: data, response: httpResponse)
         self.init(delay: delay, result: .success(response))
     }
 
-    init(delay: TimeInterval = 0, error: Swift.Error) {
+    public init(delay: TimeInterval = 0, error: Swift.Error) {
         let finalError: MoyaError
         if let moyaError = error as? MoyaError {
             finalError = moyaError

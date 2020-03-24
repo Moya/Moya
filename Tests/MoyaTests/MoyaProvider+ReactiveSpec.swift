@@ -16,7 +16,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(plugins: [ErrorStubPlugin()])
             }
 
             it("returns the correct error message") {
@@ -53,7 +53,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(plugins: [ImmediateStubPlugin()])
             }
 
             it("returns a Response object") {
@@ -90,7 +90,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                     }
                 }
 
-                let sampleData = target.sampleData
+                let sampleData = target.sampleData!
                 let sampleResponse = try! JSONSerialization.jsonObject(with: sampleData, options: []) as! NSDictionary
                 expect(receivedResponse).toNot(beNil())
                 expect(receivedResponse) == sampleResponse
@@ -102,7 +102,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -147,7 +147,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }

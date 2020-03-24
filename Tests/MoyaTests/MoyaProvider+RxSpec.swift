@@ -16,7 +16,7 @@ final class MoyaProviderRxSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(plugins: [ImmediateStubPlugin()])
             }
 
             it("emits a Response object") {
@@ -62,7 +62,7 @@ final class MoyaProviderRxSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(plugins: [ErrorStubPlugin()])
             }
 
             it("emits the correct error message") {
@@ -103,7 +103,7 @@ final class MoyaProviderRxSpec: QuickSpec {
 
             beforeEach {
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -155,7 +155,7 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -197,7 +197,7 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 beforeEach {
                     stubDescriptor = HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                        return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                        return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
                     })
                 }
 

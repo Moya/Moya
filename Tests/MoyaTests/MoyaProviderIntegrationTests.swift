@@ -25,24 +25,24 @@ func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Res
 
 final class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
-        let userMessage = String(data: GitHub.userProfile("ashfurrow").sampleData, encoding: .utf8)
-        let zenMessage = String(data: GitHub.zen.sampleData, encoding: .utf8)
+        let userMessage = String(data: GitHub.userProfile("ashfurrow").sampleData!, encoding: .utf8)
+        let zenMessage = String(data: GitHub.zen.sampleData!, encoding: .utf8)
 
         beforeEach {
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
             })
 
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/ashfurrow"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData, statusCode: 200, headers: nil)
+                return HTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData!, statusCode: 200, headers: nil)
             })
 
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData, statusCode: 400, headers: nil)
+                return HTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData!, statusCode: 400, headers: nil)
             })
 
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: HTTPBin.basicAuth.sampleData, statusCode: 200, headers: nil)
+                return HTTPStubsResponse(data: HTTPBin.basicAuth.sampleData!, statusCode: 200, headers: nil)
             })
 
         }
@@ -294,8 +294,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     beforeEach {
                         token = UUID().uuidString
                         plugin = AccessTokenPlugin { _ in token }
-                        provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub,
-                                                         plugins: [plugin])
+                        provider = MoyaProvider<HTTPBin>(plugins: [plugin, ImmediateStubPlugin()])
                     }
 
                     it("correctly modifies authorization header field") {

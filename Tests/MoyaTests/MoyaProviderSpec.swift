@@ -14,8 +14,10 @@ import OHHTTPStubsSwift
 final class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
+        let plugins: [PluginType] = [ImmediateStubPlugin()]
+
         beforeEach {
-            provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
+            provider = MoyaProvider<GitHub>(plugins: plugins)
         }
 
         it("returns stubbed data for zen request") {
@@ -29,7 +31,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             let sampleData = target.sampleData
-            expect(message).to(equal(String(data: sampleData, encoding: .utf8)))
+            expect(message).to(equal(String(data: sampleData!, encoding: .utf8)))
         }
 
         it("returns response with request for stubbed zen request") {
@@ -56,7 +58,7 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             let sampleData = target.sampleData
-            expect(message).to(equal(String(data: sampleData, encoding: .utf8)))
+            expect(message).to(equal(String(data: sampleData!, encoding: .utf8)))
         }
 
         it("returns equivalent Endpoint instances for the same target") {
@@ -89,7 +91,7 @@ final class MoyaProviderSpec: QuickSpec {
                 return nil
             }
 
-            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<HTTPBin>(plugins: [plugin, ImmediateStubPlugin()])
             let target: HTTPBin = .basicAuth
             provider.request(target) { _ in  }
 
@@ -103,7 +105,7 @@ final class MoyaProviderSpec: QuickSpec {
                 return URLCredential(user: "user", password: "passwd", persistence: .none)
             }
 
-            let provider = MoyaProvider<HTTPBin>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<HTTPBin>(plugins: [plugin, ImmediateStubPlugin()])
             let target: HTTPBin = .basicAuth
             provider.request(target) { _ in  }
 
@@ -128,7 +130,7 @@ final class MoyaProviderSpec: QuickSpec {
                 }
             }
 
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(plugins: [plugin, ImmediateStubPlugin()])
             let target: GitHub = .zen
             provider.request(target) { _ in  }
 
@@ -147,7 +149,7 @@ final class MoyaProviderSpec: QuickSpec {
                 }
             }
 
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(plugins: [plugin, ImmediateStubPlugin()])
             let target: GitHub = .zen
             provider.request(target) { _ in  }
 
@@ -159,7 +161,7 @@ final class MoyaProviderSpec: QuickSpec {
             var log = ""
             let plugin = NetworkLoggerPlugin(configuration: .init(output: { log += $1.joined() },
                                                                   logOptions: .verbose))
-            let provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub, plugins: [plugin])
+            let provider = MoyaProvider<GitHub>(plugins: [plugin, ImmediateStubPlugin()])
 
             waitUntil { done in
                 provider.request(.zen) { _ in done() }
@@ -182,7 +184,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 plugin = TestingPlugin()
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(delay), plugins: [plugin])
+                provider = MoyaProvider<GitHub>(plugins: [plugin, DelayedStubPlugin(delay: delay)])
             }
 
             it("delays execution") {
@@ -302,7 +304,7 @@ final class MoyaProviderSpec: QuickSpec {
                         }
                     }
                 }
-                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.delayedStub(responseTime))
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, plugins: [DelayedStubPlugin(delay: responseTime)])
             }
 
             it("returns success eventually") {
@@ -404,7 +406,7 @@ final class MoyaProviderSpec: QuickSpec {
                         done(.failure(MoyaError.parameterEncoding(error)))
                     }
                 }
-                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, plugins: [ImmediateStubPlugin()])
             }
 
             it("executes the endpoint resolver") {
@@ -412,64 +414,6 @@ final class MoyaProviderSpec: QuickSpec {
                 provider.request(target) { _ in  }
 
                 expect(executed).to(beTruthy())
-            }
-        }
-
-        describe("a provider with custom sample response closures") {
-            it("returns sample data") {
-                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
-                }
-                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
-
-                var data: Data?
-                provider.request(.zen) { result in
-                    if case .success(let response) = result {
-                        data = response.data
-                    }
-                }
-
-                expect(data) == GitHub.zen.sampleData
-            }
-
-            it("returns identical sample response") {
-                let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
-                }
-                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
-
-                var receivedResponse: HTTPURLResponse?
-                provider.request(.zen) { result in
-                    if case .success(let response) = result {
-                        receivedResponse = response.response
-                    }
-                }
-
-                expect(receivedResponse) === response
-            }
-
-            it("returns error") {
-                let error = NSError(domain: "Internal iOS Error", code: -1234, userInfo: nil)
-                let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-                    return Endpoint(url: url, sampleResponseClosure: { .networkError(error) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
-                }
-                let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
-
-                var receivedError: MoyaError?
-                provider.request(.zen) { result in
-                    if case .failure(let error) = result {
-                        receivedError = error
-                    }
-                }
-
-                if case .some(MoyaError.underlying(let underlyingError as NSError, _)) = receivedError {
-                    expect(underlyingError) == error
-                } else {
-                    fail("Expected to receive error, did not.")
-                }
             }
         }
 
@@ -481,7 +425,7 @@ final class MoyaProviderSpec: QuickSpec {
                     let underyingError = NSError(domain: "", code: 123, userInfo: nil)
                     done(.failure(.underlying(underyingError, nil)))
                 }
-                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider<GitHub>(requestClosure: endpointResolution, plugins: [ImmediateStubPlugin()])
             }
 
             it("returns failure for any given request") {
@@ -501,7 +445,7 @@ final class MoyaProviderSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                provider = MoyaProvider(plugins: [ErrorStubPlugin()])
             }
 
             it("returns stubbed data for zen request") {
@@ -558,12 +502,12 @@ final class MoyaProviderSpec: QuickSpec {
         }
 
         describe("struct targets") {
-            struct StructAPI: TargetType {
+            struct StructAPI: StubbedTargetType {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
-                let sampleData = "sample data".data(using: .utf8)!
+                let sampleData: Data? = "sample data".data(using: .utf8)
                 let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
@@ -580,7 +524,7 @@ final class MoyaProviderSpec: QuickSpec {
                         done(.failure(MoyaError.parameterEncoding(error)))
                     }
                 }
-                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, plugins: [ImmediateStubPlugin()])
 
                 waitUntil { done in
                     provider.request(MultiTarget(StructAPI())) { _ in
@@ -604,7 +548,7 @@ final class MoyaProviderSpec: QuickSpec {
                         done(.failure(MoyaError.parameterEncoding(error)))
                     }
                 }
-                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, plugins: [ImmediateStubPlugin()])
 
                 waitUntil { done in
                     provider.request(MultiTarget(StructAPI())) { _ in
@@ -617,7 +561,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("uses correct sample data") {
                 var dataString: String?
-                let provider = MoyaProvider<MultiTarget>(stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(plugins: [ImmediateStubPlugin()])
 
                 waitUntil { done in
                     provider.request(MultiTarget(StructAPI())) { result in
@@ -644,7 +588,7 @@ final class MoyaProviderSpec: QuickSpec {
                         done(.failure(MoyaError.parameterEncoding(error)))
                     }
                 }
-                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
+                let provider = MoyaProvider<MultiTarget>(requestClosure: endpointResolution, plugins: [ImmediateStubPlugin()])
 
                 waitUntil { done in
                     provider.request(MultiTarget(StructAPI())) { _ in
@@ -657,12 +601,12 @@ final class MoyaProviderSpec: QuickSpec {
         }
 
         describe("a target with empty path") {
-            struct PathlessAPI: TargetType {
+            struct PathlessAPI: StubbedTargetType {
                 let baseURL = URL(string: "http://example.com/123/somepath?X-ABC-Asd=123")!
                 let path = ""
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
-                let sampleData = "sample data".data(using: .utf8)!
+                let sampleData: Data? = "sample data".data(using: .utf8)
                 let headers: [String: String]? = nil
             }
 
@@ -680,7 +624,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -715,7 +659,7 @@ final class MoyaProviderSpec: QuickSpec {
             var provider: MoyaProvider<GitHub>!
 
             beforeEach {
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(0.5))
+                provider = MoyaProvider<GitHub>(plugins: [DelayedStubPlugin()])
             }
 
             it("invokes completion and returns. Failure if canceled immediately") {
@@ -754,7 +698,7 @@ final class MoyaProviderSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -834,7 +778,7 @@ final class MoyaProviderSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
+                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -983,7 +927,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 stubDescriptor = HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
                 })
             }
 
@@ -1081,14 +1025,13 @@ final class MoyaProviderSpec: QuickSpec {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
                         Endpoint(
                             url: URL(target: target).absoluteString,
-                            sampleResponseClosure: { .networkResponse(400, target.sampleData) },
                             method: target.method,
                             task: target.task,
                             httpHeaderFields: target.headers
                         )
                     }
 
-                    stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                    stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, plugins: [StubPlugin(statusCode: 400)])
 
                     var receivedError: Error?
                     var receivedResponse: Response?
@@ -1115,14 +1058,13 @@ final class MoyaProviderSpec: QuickSpec {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
                         Endpoint(
                             url: URL(target: target).absoluteString,
-                            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
                             method: target.method,
                             task: target.task,
                             httpHeaderFields: target.headers
                         )
                     }
 
-                    stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub)
+                    stubbedProvider = MoyaProvider<GitHub>(endpointClosure: endpointClosure, plugins: [StubPlugin()])
 
                     var receivedError: Error?
                     var receivedResponse: Response?
