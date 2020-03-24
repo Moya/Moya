@@ -19,9 +19,6 @@ public enum MultiTarget: TargetType {
     /// The HTTP method of the embedded target.
     public var method: Moya.Method { target.method }
 
-    /// The sampleData of the embedded target.
-    public var sampleData: Data { target.sampleData }
-
     /// The `Task` of the embedded target.
     public var task: Task { target.task }
 
@@ -43,5 +40,12 @@ extension MultiTarget: AccessTokenAuthorizable {
     public var authorizationType: AuthorizationType? {
         guard let authorizableTarget = target as? AccessTokenAuthorizable else { return nil }
         return authorizableTarget.authorizationType
+    }
+}
+
+extension MultiTarget: StubbedTargetType {
+    public var sampleData: Data? {
+        guard let stubbedTarget = target as? StubbedTargetType else { return nil }
+        return stubbedTarget.sampleData
     }
 }

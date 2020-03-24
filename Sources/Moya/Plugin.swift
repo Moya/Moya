@@ -13,6 +13,9 @@ public protocol PluginType {
     /// Called immediately before a request is sent over the network (or stubbed).
     func willSend(_ request: RequestType, target: TargetType)
 
+    /// Called when the request is ready to be sent. With this function, Moya asks whether you want to stub the request, and if so, how.
+    func stubBehavior(for target: StubbedTargetType) -> StubBehavior?
+
     /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType)
 
@@ -23,6 +26,7 @@ public protocol PluginType {
 public extension PluginType {
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { request }
     func willSend(_ request: RequestType, target: TargetType) { }
+    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? { nil }
     func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) { }
     func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { result }
 }
