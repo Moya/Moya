@@ -124,27 +124,13 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     /// Note: this was previously in an extension, however it must be in the original class declaration to allow subclasses to override.
     @discardableResult
     open func stubRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> CancellableToken {
-        let callbackQueue = callbackQueue ?? self.callbackQueue
         let cancellableToken = CancellableToken { }
         let preparedRequest = notifyPluginsOfImpendingStub(for: request, target: target)
         let plugins = self.plugins
-        let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: preparedRequest, stubResponseType: stubBehavior.responseType)
+        let stub: () -> Void = createStubFunction(cancellableToken, forTarget: target, withCompletion: completion, endpoint: endpoint, plugins: plugins, request: preparedRequest, stubbedResult: stubBehavior.result)
 
-        switch stubBehavior {
-        case .immediate:
-            switch callbackQueue {
-            case .none:
-                stub()
-            case .some(let callbackQueue):
-                callbackQueue.async(execute: stub)
-            }
-        case .delayed(_, let delay):
-            let killTimeOffset = Int64(CDouble(delay) * CDouble(NSEC_PER_SEC))
-            let killTime = DispatchTime.now() + Double(killTimeOffset) / Double(NSEC_PER_SEC)
-            (callbackQueue ?? DispatchQueue.main).asyncAfter(deadline: killTime) {
-                stub()
-            }
-        }
+        let callbackQueue = callbackQueue ?? self.callbackQueue ?? DispatchQueue.main
+        callbackQueue.asyncAfter(deadline: .now() + stubBehavior.delay) { stub() }
 
         return cancellableToken
     }

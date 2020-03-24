@@ -6,36 +6,27 @@ public protocol StubbedTargetType: TargetType {
 }
 
 /// Controls how stub responses are returned.
-public enum StubBehavior {
+public struct StubBehavior {
+    let delay: TimeInterval
+    let result: MoyaResult    
 
-    /// Return a response immediately.
-    case immediate(ResponseType)
-
-    /// Return a response after a delay.
-    case delayed(ResponseType, seconds: TimeInterval)
-}
-
-public extension StubBehavior {
-  enum ResponseType {
-    /// The network returned a response, including status code and data.
-    case networkResponse(Int, Data)
-
-    /// The network returned response which can be fully customized.
-    case response(HTTPURLResponse, Data)
-
-    /// The network failed to send the request, or failed to retrieve a response (eg a timeout).
-    case networkError(NSError)
+    init(delay: TimeInterval = 0, result: MoyaResult) {
+        self.result = result
+        self.delay = delay
     }
-}
 
-// MARK: - Utils
+    init(delay: TimeInterval = 0, statusCode: Int, data: Data, request: URLRequest?, httpResponse: HTTPURLResponse?) {
+        let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: httpResponse)
+        self.init(delay: delay, result: .success(response))
+    }
 
-public extension StubBehavior {
-    var responseType: ResponseType {
-        switch self {
-        case let .immediate(response),
-             let .delayed(response, _):
-            return response
+    init(delay: TimeInterval = 0, error: Swift.Error) {
+        let finalError: MoyaError
+        if let moyaError = error as? MoyaError {
+            finalError = moyaError
+        } else {
+            finalError = MoyaError.underlying(error, nil)
         }
+        self.init(delay: delay, result: .failure(finalError))
     }
 }

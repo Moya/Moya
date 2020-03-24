@@ -126,22 +126,9 @@ public extension MoyaProvider {
                 }
             }
 
-            switch stubResponseType {
-            case .networkResponse(let statusCode, let data):
-                let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
-                let result = validate(response)
-                plugins.forEach { $0.didReceive(result, target: target) }
-                completion(result)
-            case .response(let customResponse, let data):
-                let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
-                let result = validate(response)
-                plugins.forEach { $0.didReceive(result, target: target) }
-                completion(result)
-            case .networkError(let error):
-                let error = MoyaError.underlying(error, nil)
-                plugins.forEach { $0.didReceive(.failure(error), target: target) }
-                completion(.failure(error))
-            }
+            let validatedResponse = stubbedResult.flatMap { validate($0) }
+            plugins.forEach { $0.didReceive(validatedResponse, target: target) }
+            completion(validatedResponse)
         }
     }
 
