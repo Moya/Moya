@@ -107,14 +107,14 @@ public extension MoyaProvider {
     }
 
     /// Creates a function which, when called, executes the appropriate stubbing behavior for the given parameters.
-    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint, plugins: [PluginType], request: URLRequest, stubResponseType: StubBehavior.ResponseType) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
+    final func createStubFunction(_ token: CancellableToken, forTarget target: Target, withCompletion completion: @escaping Moya.Completion, endpoint: Endpoint, plugins: [PluginType], request: URLRequest, stubbedResult: MoyaResult) -> (() -> Void) { // swiftlint:disable:this function_parameter_count
         return {
             if token.isCancelled {
                 self.cancelCompletion(completion, target: target)
                 return
             }
 
-            let validate = { (response: Moya.Response) -> Result<Moya.Response, MoyaError> in
+            let validate = { (response: Moya.Response) -> MoyaResult in
                 let validCodes = target.validationType.statusCodes
                 guard !validCodes.isEmpty else { return .success(response) }
                 if validCodes.contains(response.statusCode) {

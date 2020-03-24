@@ -17,18 +17,18 @@ public protocol PluginType {
     func stubBehavior(for target: StubbedTargetType) -> StubBehavior?
 
     /// Called after a response has been received, but before the MoyaProvider has invoked its completion handler.
-    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType)
+    func didReceive(_ result: MoyaResult, target: TargetType)
 
     /// Called to modify a result before completion.
-    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError>
+    func process(_ result: MoyaResult, target: TargetType) -> MoyaResult
 }
 
 public extension PluginType {
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest { request }
     func willSend(_ request: RequestType, target: TargetType) { }
     func stubBehavior(for target: StubbedTargetType) -> StubBehavior? { nil }
-    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) { }
-    func process(_ result: Result<Moya.Response, MoyaError>, target: TargetType) -> Result<Moya.Response, MoyaError> { result }
+    func didReceive(_ result: MoyaResult, target: TargetType) { }
+    func process(_ result: MoyaResult, target: TargetType) -> MoyaResult { result }
 }
 
 /// Request type used by `willSend` plugin function.

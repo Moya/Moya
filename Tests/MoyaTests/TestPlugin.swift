@@ -4,7 +4,7 @@ import Foundation
 
 final class TestingPlugin: PluginType {
     var request: (RequestType, TargetType)?
-    var result: Result<Moya.Response, MoyaError>?
+    var result: MoyaResult?
     var didPrepare = false
 
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
@@ -21,7 +21,7 @@ final class TestingPlugin: PluginType {
         didPrepare = request.request?.allHTTPHeaderFields?["prepared"] == "yes"
     }
 
-    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+    func didReceive(_ result: MoyaResult, target: TargetType) {
         self.result = result
     }
 

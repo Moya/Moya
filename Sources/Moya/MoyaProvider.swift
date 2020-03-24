@@ -1,7 +1,9 @@
 import Foundation
 
+public typealias MoyaResult = Result<Moya.Response, MoyaError>
+
 /// Closure to be executed when a request has completed.
-public typealias Completion = (_ result: Result<Moya.Response, MoyaError>) -> Void
+public typealias Completion = (_ result: MoyaResult) -> Void
 
 /// Closure to be executed when progress changes.
 public typealias ProgressBlock = (_ progress: ProgressResponse) -> Void
@@ -149,9 +151,9 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     // swiftlint:enable function_parameter_count
 }
 
-/// A public function responsible for converting the result of a `URLRequest` to a Result<Moya.Response, MoyaError>.
+/// A public function responsible for converting the result of a `URLRequest` to a MoyaResult.
 public func convertResponseToResult(_ response: HTTPURLResponse?, request: URLRequest?, data: Data?, error: Swift.Error?) ->
-    Result<Moya.Response, MoyaError> {
+    MoyaResult {
         switch (response, data, error) {
         case let (.some(response), data, .none):
             let response = Moya.Response(statusCode: response.statusCode, data: data ?? Data(), request: request, response: response)
