@@ -27,12 +27,7 @@ extension GitHubUserContent: TargetType {
             return .downloadDestination(defaultDownloadDestination)
         }
     }
-    public var sampleData: Data {
-        switch self {
-        case .downloadMoyaWebContent:
-            return Giphy.animatedBirdData
-        }
-    }
+
     public var headers: [String: String]? { nil }
 
 }

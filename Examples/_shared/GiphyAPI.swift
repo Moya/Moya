@@ -28,12 +28,6 @@ extension Giphy: TargetType {
             return .uploadCompositeMultipart(multipartFormData, urlParameters: ["api_key": "dc6zaTOxFJmzC", "username": "Moya"])
         }
     }
-    public var sampleData: Data {
-        switch self {
-        case .upload:
-            return "{\"data\":{\"id\":\"your_new_gif_id\"},\"meta\":{\"status\":200,\"msg\":\"OK\"}}".data(using: String.Encoding.utf8)! // swiftlint:disable:this force_unwrapping
-        }
-    }
 
     public var headers: [String: String]? { nil }
 
