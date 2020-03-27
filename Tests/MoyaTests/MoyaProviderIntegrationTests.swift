@@ -25,7 +25,7 @@ func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Res
 
 final class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
-        
+
         let userMessage = "{\"login\": \"ashfurrow\", \"id\": 100}"
         let invalidUserMessage = "{\"login\": \"invalid\", \"id\": 100}"
         let zenMessage = "Half measures are as bad as nothing at all."

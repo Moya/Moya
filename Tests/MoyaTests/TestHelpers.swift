@@ -242,11 +242,11 @@ struct OptionalIssue: Codable {
 
 struct ImmediateStubPlugin: PluginType {
     var stubbedMessage: String? = "Half measures are as bad as nothing at all."
-    
-    
+
     func stubBehavior(for target: TargetType) -> StubBehavior? {
         guard let data = stubbedMessage?.data(using: .utf8) else { return nil }
-        return StubBehavior(statusCode: 200, data: data)
+        let response = Moya.Response(statusCode: 200, data: data)
+        return StubBehavior(result: .success(response))
     }
 }
 
@@ -254,7 +254,8 @@ struct StubPlugin: PluginType {
     var statusCode: Int = 200
 
     func stubBehavior(for target: TargetType) -> StubBehavior? {
-        return StubBehavior(statusCode: statusCode, data: Data())
+        let response = Moya.Response(statusCode: statusCode, data: Data())
+        return StubBehavior(result: .success(response))
     }
 }
 
@@ -262,7 +263,7 @@ struct ErrorStubPlugin: PluginType {
     var error: Swift.Error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
 
     func stubBehavior(for target: TargetType) -> StubBehavior? {
-        return StubBehavior(error: error)
+        return StubBehavior(result: .failure(MoyaError.underlying(error, nil)))
     }
 }
 
@@ -270,6 +271,7 @@ struct DelayedStubPlugin: PluginType {
     var delay: TimeInterval = 0.5
 
     func stubBehavior(for target: TargetType) -> StubBehavior? {
-        return StubBehavior(delay: delay, statusCode: 200, data: Data())
+        let response = Moya.Response(statusCode: 200, data: Data())
+        return StubBehavior(delay: delay, result: .success(response))
     }
 }

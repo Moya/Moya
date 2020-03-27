@@ -51,8 +51,8 @@ final class MoyaProviderRxSpec: QuickSpec {
             it("maps JSON data correctly for user profile request") {
                 var receivedResponse: [String: Any]?
                 let target: GitHub = .userProfile("ashfurrow")
-                
-                let userMessage = "{\"login\": \"ashfurrow\", \"id\": 100}"                
+
+                let userMessage = "{\"login\": \"ashfurrow\", \"id\": 100}"
                 provider = MoyaProvider<GitHub>(plugins: [ImmediateStubPlugin(stubbedMessage: userMessage)])
                 _ = provider.rx.request(target).asObservable().mapJSON().subscribe(onNext: { response in
                     receivedResponse = response as? [String: Any]
