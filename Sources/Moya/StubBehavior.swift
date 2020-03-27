@@ -1,10 +1,5 @@
 import Foundation
 
-public protocol StubbedTargetType: TargetType {
-    /// Provides stub data for use in testing.
-    var sampleData: Data? { get }
-}
-
 /// Controls how stub responses are returned.
 public struct StubBehavior {
     let delay: TimeInterval

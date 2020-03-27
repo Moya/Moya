@@ -13,7 +13,7 @@ enum GitHub {
     case userProfile(String)
 }
 
-extension GitHub: StubbedTargetType {
+extension GitHub: TargetType {
     var baseURL: URL { URL(string: "https://api.github.com")! }
     var path: String {
         switch self {
@@ -27,15 +27,6 @@ extension GitHub: StubbedTargetType {
     var method: Moya.Method { .get }
 
     var task: Task { .requestPlain }
-
-    var sampleData: Data? {
-        switch self {
-        case .zen:
-            return "Half measures are as bad as nothing at all.".data(using: String.Encoding.utf8)!
-        case .userProfile(let name):
-            return "{\"login\": \"\(name)\", \"id\": 100}".data(using: String.Encoding.utf8)!
-        }
-    }
 
     var validationType: ValidationType { .successAndRedirectCodes }
 
@@ -56,7 +47,7 @@ func url(_ route: TargetType) -> String {
     route.baseURL.appendingPathComponent(route.path).absoluteString
 }
 
-enum HTTPBin: StubbedTargetType, AccessTokenAuthorizable {
+enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case basicAuth
     case bearer
     case post
@@ -100,17 +91,6 @@ enum HTTPBin: StubbedTargetType, AccessTokenAuthorizable {
         }
     }
 
-    var sampleData: Data? {
-        switch self {
-        case .basicAuth:
-            return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
-        case .bearer:
-            return "{\"authenticated\": true, \"token\": \"4D4A9C7D-F6E7-4FD7-BDBD-03880550A80D\"}".data(using: String.Encoding.utf8)!
-        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
-            return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
-        }
-    }
-
     var headers: [String: String]? { nil }
 
     var validationType: ValidationType {
@@ -137,7 +117,7 @@ public enum GitHubUserContent {
     case requestMoyaWebContent(String)
 }
 
-extension GitHubUserContent: StubbedTargetType {
+extension GitHubUserContent: TargetType {
     public var baseURL: URL { URL(string: "https://raw.githubusercontent.com")! }
     public var path: String {
         switch self {
@@ -164,12 +144,6 @@ extension GitHubUserContent: StubbedTargetType {
             return .downloadDestination(defaultDownloadDestination)
         case .requestMoyaWebContent:
             return .requestPlain
-        }
-    }
-    public var sampleData: Data? {
-        switch self {
-        case .downloadMoyaWebContent, .requestMoyaWebContent:
-            return Data(count: 4000)
         }
     }
 
@@ -267,8 +241,11 @@ struct OptionalIssue: Codable {
 }
 
 struct ImmediateStubPlugin: PluginType {
-    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
-        guard let data = target.sampleData else { return nil }
+    var stubbedMessage: String? = "Half measures are as bad as nothing at all."
+    
+    
+    func stubBehavior(for target: TargetType) -> StubBehavior? {
+        guard let data = stubbedMessage?.data(using: .utf8) else { return nil }
         return StubBehavior(statusCode: 200, data: data)
     }
 }
@@ -276,16 +253,15 @@ struct ImmediateStubPlugin: PluginType {
 struct StubPlugin: PluginType {
     var statusCode: Int = 200
 
-    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
-        guard let data = target.sampleData else { return nil }
-        return StubBehavior(statusCode: statusCode, data: data)
+    func stubBehavior(for target: TargetType) -> StubBehavior? {
+        return StubBehavior(statusCode: statusCode, data: Data())
     }
 }
 
 struct ErrorStubPlugin: PluginType {
     var error: Swift.Error = NSError(domain: "com.moya.moyaerror", code: 0, userInfo: [NSLocalizedDescriptionKey: "Houston, we have a problem"])
 
-    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
+    func stubBehavior(for target: TargetType) -> StubBehavior? {
         return StubBehavior(error: error)
     }
 }
@@ -293,8 +269,7 @@ struct ErrorStubPlugin: PluginType {
 struct DelayedStubPlugin: PluginType {
     var delay: TimeInterval = 0.5
 
-    func stubBehavior(for target: StubbedTargetType) -> StubBehavior? {
-        guard let data = target.sampleData else { return nil }
-        return StubBehavior(delay: delay, statusCode: 200, data: data)
+    func stubBehavior(for target: TargetType) -> StubBehavior? {
+        return StubBehavior(delay: delay, statusCode: 200, data: Data())
     }
 }

@@ -22,10 +22,7 @@ public extension MoyaProvider {
     func requestNormal(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable {
         let endpoint = self.endpoint(target)
         let cancellableToken = CancellableWrapper()
-        var stubBehavior: StubBehavior?
-        if let stubbedTarget = target as? StubbedTargetType {
-            stubBehavior = plugins.compactMap { $0.stubBehavior(for: stubbedTarget) }.first
-        }
+        let stubBehavior = plugins.compactMap { $0.stubBehavior(for: target) }.first
 
         // Allow plugins to modify response
         let pluginsWithCompletion: Moya.Completion = { result in

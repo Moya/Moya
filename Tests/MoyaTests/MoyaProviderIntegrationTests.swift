@@ -25,24 +25,27 @@ func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Res
 
 final class MoyaProviderIntegrationTests: QuickSpec {
     override func spec() {
-        let userMessage = String(data: GitHub.userProfile("ashfurrow").sampleData!, encoding: .utf8)
-        let zenMessage = String(data: GitHub.zen.sampleData!, encoding: .utf8)
+        
+        let userMessage = "{\"login\": \"ashfurrow\", \"id\": 100}"
+        let invalidUserMessage = "{\"login\": \"invalid\", \"id\": 100}"
+        let zenMessage = "Half measures are as bad as nothing at all."
+        let basicAuthMessage = "{\"authenticated\": true, \"user\": \"user\"}"
 
         beforeEach {
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
+                return HTTPStubsResponse(data: zenMessage.data(using: .utf8)!, statusCode: 200, headers: nil)
             })
 
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/ashfurrow"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: GitHub.userProfile("ashfurrow").sampleData!, statusCode: 200, headers: nil)
+                return HTTPStubsResponse(data: userMessage.data(using: .utf8)!, statusCode: 200, headers: nil)
             })
 
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/users/invalid"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: GitHub.userProfile("invalid").sampleData!, statusCode: 400, headers: nil)
+                return HTTPStubsResponse(data: invalidUserMessage.data(using: .utf8)!, statusCode: 400, headers: nil)
             })
 
             HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/basic-auth/user/passwd"}, withStubResponse: { _ in
-                return HTTPStubsResponse(data: HTTPBin.basicAuth.sampleData!, statusCode: 200, headers: nil)
+                return HTTPStubsResponse(data: basicAuthMessage.data(using: .utf8)!, statusCode: 200, headers: nil)
             })
 
         }
@@ -187,7 +190,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                         }
 
                         expect(called) == true
-                        expect(returnedData) == target.sampleData
+                        expect(returnedData) == basicAuthMessage.data(using: .utf8)!
                     }
                 }
 

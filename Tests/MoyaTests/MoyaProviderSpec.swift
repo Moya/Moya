@@ -14,7 +14,8 @@ import OHHTTPStubsSwift
 final class MoyaProviderSpec: QuickSpec {
     override func spec() {
         var provider: MoyaProvider<GitHub>!
-        let plugins: [PluginType] = [ImmediateStubPlugin()]
+        let stubbedMessage = "Half measures are as bad as nothing at all."
+        let plugins: [PluginType] = [ImmediateStubPlugin(stubbedMessage: stubbedMessage)]
 
         beforeEach {
             provider = MoyaProvider<GitHub>(plugins: plugins)
@@ -30,8 +31,7 @@ final class MoyaProviderSpec: QuickSpec {
                 }
             }
 
-            let sampleData = target.sampleData
-            expect(message).to(equal(String(data: sampleData!, encoding: .utf8)))
+            expect(message).to(equal(stubbedMessage))
         }
 
         it("returns response with request for stubbed zen request") {
@@ -45,20 +45,6 @@ final class MoyaProviderSpec: QuickSpec {
             }
 
             expect(request).toNot(beNil())
-        }
-
-        it("returns stubbed data for user profile request") {
-            var message: String?
-
-            let target: GitHub = .userProfile("ashfurrow")
-            provider.request(target) { result in
-                if case let .success(response) = result {
-                    message = String(data: response.data, encoding: .utf8)
-                }
-            }
-
-            let sampleData = target.sampleData
-            expect(message).to(equal(String(data: sampleData!, encoding: .utf8)))
         }
 
         it("returns equivalent Endpoint instances for the same target") {
@@ -461,7 +447,6 @@ final class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                _ = target.sampleData
                 expect(errored) == true
             }
 
@@ -478,7 +463,6 @@ final class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                _ = target.sampleData
                 expect(errored) == true
             }
 
@@ -502,12 +486,11 @@ final class MoyaProviderSpec: QuickSpec {
         }
 
         describe("struct targets") {
-            struct StructAPI: StubbedTargetType {
+            struct StructAPI: TargetType {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
-                let sampleData: Data? = "sample data".data(using: .utf8)
                 let headers: [String: String]? = ["headerKey": "headerValue"]
             }
 
@@ -561,7 +544,8 @@ final class MoyaProviderSpec: QuickSpec {
 
             it("uses correct sample data") {
                 var dataString: String?
-                let provider = MoyaProvider<MultiTarget>(plugins: [ImmediateStubPlugin()])
+                let stubbedMessage = "sample data"
+                let provider = MoyaProvider<MultiTarget>(plugins: [ImmediateStubPlugin(stubbedMessage: stubbedMessage)])
 
                 waitUntil { done in
                     provider.request(MultiTarget(StructAPI())) { result in
@@ -572,7 +556,7 @@ final class MoyaProviderSpec: QuickSpec {
                     }
                 }
 
-                expect(dataString).to(equal("sample data"))
+                expect(dataString).to(equal(stubbedMessage))
             }
 
             it("uses correct headers") {
@@ -601,12 +585,11 @@ final class MoyaProviderSpec: QuickSpec {
         }
 
         describe("a target with empty path") {
-            struct PathlessAPI: StubbedTargetType {
+            struct PathlessAPI: TargetType {
                 let baseURL = URL(string: "http://example.com/123/somepath?X-ABC-Asd=123")!
                 let path = ""
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
-                let sampleData: Data? = "sample data".data(using: .utf8)
                 let headers: [String: String]? = nil
             }
 
@@ -624,7 +607,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -698,7 +681,7 @@ final class MoyaProviderSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: nil).responseTime(-4)
+                    return HTTPStubsResponse(data: Data(count: 4000), statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -778,7 +761,7 @@ final class MoyaProviderSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
+                    return HTTPStubsResponse(data: Data(count: 4000), statusCode: 200, headers: ["Content-Length": ""]).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
@@ -927,7 +910,7 @@ final class MoyaProviderSpec: QuickSpec {
 
             beforeEach {
                 stubDescriptor = HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: Data(), statusCode: 200, headers: nil)
                 })
             }
 

@@ -7,12 +7,11 @@ import Foundation
 final class MultiTargetSpec: QuickSpec {
     override func spec() {
         describe("MultiTarget") {
-            struct StructAPI: StubbedTargetType, AccessTokenAuthorizable {
+            struct StructAPI: TargetType, AccessTokenAuthorizable {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
                 let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
-                let sampleData: Data? = "sample data".data(using: .utf8)
                 let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
                 let authorizationType: AuthorizationType? = .basic
@@ -55,11 +54,6 @@ final class MultiTargetSpec: QuickSpec {
 
             it("uses correct task") {
                 expect(String(describing: target.task)).to(beginWith("requestParameters")) // Hack to avoid implementing Equatable for Task
-            }
-
-            it("uses correct sample data") {
-                let expectedData = "sample data".data(using: .utf8)!
-                expect(target.sampleData).to(equal(expectedData))
             }
 
             it("uses correct validation type") {

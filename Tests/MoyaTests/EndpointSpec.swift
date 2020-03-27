@@ -371,7 +371,7 @@ final class EndpointSpec: QuickSpec {
 enum Empty {
 }
 
-extension Empty: StubbedTargetType {
+extension Empty: TargetType {
     // None of these matter since the Empty has no cases and can't be instantiated.
     var baseURL: URL { URL(string: "http://example.com")! }
     var path: String { "" }
@@ -379,6 +379,5 @@ extension Empty: StubbedTargetType {
     var parameters: [String: Any]? { nil }
     var parameterEncoding: ParameterEncoding { URLEncoding.default }
     var task: Task { .requestPlain }
-    var sampleData: Data? { Data() }
     var headers: [String: String]? { nil }
 }

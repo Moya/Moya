@@ -42,10 +42,3 @@ extension MultiTarget: AccessTokenAuthorizable {
         return authorizableTarget.authorizationType
     }
 }
-
-extension MultiTarget: StubbedTargetType {
-    public var sampleData: Data? {
-        guard let stubbedTarget = target as? StubbedTargetType else { return nil }
-        return stubbedTarget.sampleData
-    }
-}

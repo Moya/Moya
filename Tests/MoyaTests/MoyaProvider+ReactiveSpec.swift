@@ -68,41 +68,28 @@ final class MoyaProviderReactiveSpec: QuickSpec {
 
             it("returns stubbed data for zen request") {
                 var message: String?
+                let stubbedMessage = "Half measures are as bad as nothing at all."
 
                 let target: GitHub = .zen
+
+                provider = MoyaProvider<GitHub>(plugins: [ImmediateStubPlugin(stubbedMessage: stubbedMessage)])
                 provider.reactive.request(target).startWithResult { result in
                     if case .success(let response) = result {
                         message = String(data: response.data, encoding: .utf8)
                     }
                 }
 
-                let sampleString = String(data: target.sampleData, encoding: .utf8)
-                expect(message!).to(equal(sampleString))
+                expect(message!).to(equal(stubbedMessage))
             }
-
-            it("returns correct data for user profile request") {
-                var receivedResponse: NSDictionary?
-
-                let target: GitHub = .userProfile("ashfurrow")
-                provider.reactive.request(target).startWithResult { result in
-                    if case .success(let response) = result {
-                        receivedResponse = try! JSONSerialization.jsonObject(with: response.data, options: []) as? NSDictionary
-                    }
-                }
-
-                let sampleData = target.sampleData!
-                let sampleResponse = try! JSONSerialization.jsonObject(with: sampleData, options: []) as! NSDictionary
-                expect(receivedResponse).toNot(beNil())
-                expect(receivedResponse) == sampleResponse
-            }
-
         }
 
         describe("provider with inflight tracking") {
             var provider: MoyaProvider<GitHub>!
             beforeEach {
+                let stubbedData = "Half measures are as bad as nothing at all.".data(using: .utf8)!
+
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHub.zen.sampleData!, statusCode: 200, headers: nil)
+                    return HTTPStubsResponse(data: stubbedData, statusCode: 200, headers: nil)
                 })
                 provider = MoyaProvider<GitHub>(trackInflights: true)
             }
@@ -147,7 +134,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
 
                 //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
                 HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                    return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData!, statusCode: 200, headers: nil).responseTime(-4)
+                    return HTTPStubsResponse(data: Data(count: 4000), statusCode: 200, headers: nil).responseTime(-4)
                 })
                 provider = MoyaProvider<GitHubUserContent>()
             }
