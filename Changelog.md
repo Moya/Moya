@@ -2,6 +2,7 @@
 
 ### Changed
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+- **Breaking Change** Stubbing requests is now simpler and is now centralized into a plugin. [#2016](https://github.com/Moya/Moya/pull/2016) by [@amaurydavid](https://github.com/amaurydavid).
 # [14.0.0] - 2020-02-15
 
 ### Changed
