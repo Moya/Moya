@@ -1,6 +1,7 @@
 #if canImport(Combine)
 
 import Combine
+import Moya
 
 // This should be already provided in Combine, but it's not.
 // Ideally we would like to remove it, in favor of a framework-provided solution, ASAP.
@@ -12,9 +13,9 @@ internal class MoyaPublisher<Output>: Publisher {
 
     private class Subscription: Combine.Subscription {
 
-        private let cancellable: Cancellable?
+        private let cancellable: Moya.Cancellable?
 
-        init(subscriber: AnySubscriber<Output, MoyaError>, callback: @escaping (AnySubscriber<Output, MoyaError>) -> Cancellable?) {
+        init(subscriber: AnySubscriber<Output, MoyaError>, callback: @escaping (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?) {
             self.cancellable = callback(subscriber)
         }
 
@@ -27,9 +28,9 @@ internal class MoyaPublisher<Output>: Publisher {
         }
     }
 
-    private let callback: (AnySubscriber<Output, MoyaError>) -> Cancellable?
+    private let callback: (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?
 
-    init(callback: @escaping (AnySubscriber<Output, MoyaError>) -> Cancellable?) {
+    init(callback: @escaping (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?) {
         self.callback = callback
     }
 

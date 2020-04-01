@@ -2,6 +2,7 @@
 import Quick
 import Nimble
 import Combine
+import CombineMoya
 
 #if canImport(OHHTTPStubs)
     import OHHTTPStubs
@@ -135,8 +136,8 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 var provider: MoyaProvider<GitHub>!
 
                 beforeEach {
-                    OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                        return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                    HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                        return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                     })
                     provider = MoyaProvider<GitHub>(trackInflights: true)
                 }
@@ -196,8 +197,8 @@ final class MoyaProviderCombineSpec: QuickSpec {
                     try? FileManager.default.removeItem(at: file)
 
                     //`responseTime(-4)` equals to 1000 bytes at a time. The sample data is 4000 bytes.
-                    OHHTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
-                        return OHHTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
+                    HTTPStubs.stubRequests(passingTest: {$0.url!.path.hasSuffix("logo_github.png")}, withStubResponse: { _ in
+                        return HTTPStubsResponse(data: GitHubUserContent.downloadMoyaWebContent("logo_github.png").sampleData, statusCode: 200, headers: nil).responseTime(-4)
                     })
                     provider = MoyaProvider<GitHubUserContent>()
                 }
@@ -240,16 +241,16 @@ final class MoyaProviderCombineSpec: QuickSpec {
                 }
 
                 describe("a custom callback queue") {
-                    var stubDescriptor: OHHTTPStubsDescriptor!
+                    var stubDescriptor: HTTPStubsDescriptor!
 
                     beforeEach {
-                        stubDescriptor = OHHTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
-                            return OHHTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
+                        stubDescriptor = HTTPStubs.stubRequests(passingTest: {$0.url!.path == "/zen"}, withStubResponse: { _ in
+                            return HTTPStubsResponse(data: GitHub.zen.sampleData, statusCode: 200, headers: nil)
                         })
                     }
 
                     afterEach {
-                        OHHTTPStubs.removeStub(stubDescriptor)
+                        HTTPStubs.removeStub(stubDescriptor)
                     }
 
                     describe("a provider with a predefined callback queue") {
