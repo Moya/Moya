@@ -21,9 +21,10 @@ Pod::Spec.new do |s|
   s.default_subspec = "Core"
   s.swift_version = '5.1'
   s.cocoapods_version = '>= 1.4.0'  
+  s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-weak_framework Combine' }
 
   s.subspec "Core" do |ss|
-    ss.source_files  = "Sources/Moya/", "Sources/Moya/Plugins/"
+    ss.source_files  = "Sources/Moya/", "Sources/Moya/Combine", "Sources/Moya/Plugins/"
     ss.dependency "Alamofire", "~> 5.0"
     ss.framework  = "Foundation"
   end
