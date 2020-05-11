@@ -90,6 +90,12 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .uploadData") {
+                itBehavesLike("endpoint with no request property changed") {
+                    ["task": Task.uploadData("test data".data(using: .utf8)!), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
             context("when task is .uploadMultipart") {
                 itBehavesLike("endpoint with no request property changed") {
                     ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]

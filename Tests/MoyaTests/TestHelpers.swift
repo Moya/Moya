@@ -66,6 +66,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case bearer
     case post
     case upload(file: URL)
+    case uploadData(Data)
     case uploadMultipart([MultipartFormData], [String: Any]?)
     case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
 
@@ -76,7 +77,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
             return "/basic-auth/user/passwd"
         case .bearer:
             return "/bearer"
-        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
+        case .post, .upload, .uploadData, .uploadMultipart, .validatedUploadMultipart:
             return "/post"
         }
     }
@@ -85,7 +86,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         switch self {
         case .basicAuth, .bearer:
             return .get
-        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
+        case .post, .upload, .uploadData, .uploadMultipart, .validatedUploadMultipart:
             return .post
         }
     }
@@ -96,6 +97,8 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
         case .upload(let fileURL):
             return .uploadFile(fileURL)
+        case .uploadData(let data):
+            return .uploadData(data)
         case .uploadMultipart(let data, let urlParameters), .validatedUploadMultipart(let data, let urlParameters, _):
             if let urlParameters = urlParameters {
                 return .uploadCompositeMultipart(data, urlParameters: urlParameters)
@@ -111,7 +114,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
             return "{\"authenticated\": true, \"user\": \"user\"}".data(using: String.Encoding.utf8)!
         case .bearer:
             return "{\"authenticated\": true, \"token\": \"4D4A9C7D-F6E7-4FD7-BDBD-03880550A80D\"}".data(using: String.Encoding.utf8)!
-        case .post, .upload, .uploadMultipart, .validatedUploadMultipart:
+        case .post, .upload, .uploadData, .uploadMultipart, .validatedUploadMultipart:
             return "{\"args\": {}, \"data\": \"\", \"files\": {}, \"form\": {}, \"headers\": { \"Connection\": \"close\", \"Content-Length\": \"0\", \"Host\": \"httpbin.org\" },  \"json\": null, \"origin\": \"198.168.1.1\", \"url\": \"https://httpbin.org/post\"}".data(using: String.Encoding.utf8)!
         }
     }

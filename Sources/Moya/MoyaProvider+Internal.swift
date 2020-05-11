@@ -84,6 +84,8 @@ public extension MoyaProvider {
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .uploadFile(let file):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
+            case .uploadData(let data):
+                return self.sendUploadData(target, request: request, callbackQueue: callbackQueue, data: data, progress: progress, completion: completion)
             case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
                 guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
                     fatalError("\(target) is not a multipart upload target.")
@@ -188,6 +190,16 @@ private extension MoyaProvider {
     func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
         let uploadRequest = session.upload(file, with: request, interceptor: interceptor)
+        setup(interceptor: interceptor, with: target, and: uploadRequest)
+
+        let validationCodes = target.validationType.statusCodes
+        let alamoRequest = validationCodes.isEmpty ? uploadRequest : uploadRequest.validate(statusCode: validationCodes)
+        return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+    }
+
+    func sendUploadData(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, data: Data, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
+        let interceptor = self.interceptor(target: target)
+        let uploadRequest = session.upload(data, with: request, interceptor: interceptor)
         setup(interceptor: interceptor, with: target, and: uploadRequest)
 
         let validationCodes = target.validationType.statusCodes
