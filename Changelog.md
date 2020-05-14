@@ -1,6 +1,7 @@
 # Next
 
 ### Changed
+- Add uploadData(Data) case to Task enum. [#2042](https://github.com/Moya/Moya/pull/2042) by [@julienbodet](https://github.com/julienbodet).
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
 # [14.0.0] - 2020-02-15
 
