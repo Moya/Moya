@@ -269,7 +269,11 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                                 let cancellable = provider.requestPublisher(.zen, callbackQueue: requestQueue)
                                     .sink(receiveCompletion: { _ in }, receiveValue: { _ in
-                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        let label = DispatchQueue.currentLabel
+
+                                        DispatchQueue.main.async {
+                                            callbackQueueLabel = label
+                                        }
                                     })
 
                                 // This is to silence the warning about unused variables
@@ -285,7 +289,11 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                                 let cancellable = provider.requestPublisher(.zen)
                                     .sink(receiveCompletion: { _ in }, receiveValue: { _ in
-                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        let label = DispatchQueue.currentLabel
+
+                                        DispatchQueue.main.async {
+                                            callbackQueueLabel = label
+                                        }
                                     })
                                 // This is to silence the warning about unused variables
                                 _ = cancellable
@@ -309,7 +317,11 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                                 let cancellable = provider.requestPublisher(.zen, callbackQueue: requestQueue)
                                     .sink(receiveCompletion: { _ in }, receiveValue: { _ in
-                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        let label = DispatchQueue.currentLabel
+
+                                        DispatchQueue.main.async {
+                                            callbackQueueLabel = label
+                                        }
                                     })
 
                                 // This is to silence the warning about unused variables
@@ -325,7 +337,11 @@ final class MoyaProviderCombineSpec: QuickSpec {
 
                                 let cancellable = provider.requestPublisher(.zen)
                                     .sink(receiveCompletion: { _ in }, receiveValue: { _ in
-                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        let label = DispatchQueue.currentLabel
+
+                                        DispatchQueue.main.async {
+                                            callbackQueueLabel = label
+                                        }
                                     })
 
                                 // This is to silence the warning about unused variables
