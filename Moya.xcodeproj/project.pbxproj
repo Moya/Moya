@@ -82,6 +82,8 @@
 		C1B5E2325B210232599B0D1A /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F112022D8F42844A7D5CB5C /* ErrorTests.swift */; };
 		CCB85FCA228B3D1800AAB253 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		D00AA2514CD6B1276B845BA7 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D195C09A24748730005F6E98 /* CombineMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B52E8E24747A6300C5FB76 /* CombineMoya.framework */; };
+		D195C09B24748730005F6E98 /* CombineMoya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1B52E8E24747A6300C5FB76 /* CombineMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1B52E8424747A6300C5FB76 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1B52E8A24747A6300C5FB76 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		D1B52E9024747B2B00C5FB76 /* AnyPublisher+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */; };
@@ -111,6 +113,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 958A3EDB11249C16A9186F42;
 			remoteInfo = ReactiveMoya;
+		};
+		D195C09C24748730005F6E98 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 37D7E3D7DB2F5106A68DAB51 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1B52E8124747A6300C5FB76;
+			remoteInfo = CombineMoya;
 		};
 		D1B52E9424747B5200C5FB76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -146,6 +155,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D195C09B24748730005F6E98 /* CombineMoya.framework in Embed Frameworks */,
 				1463B8811F8A8A7F002D9C4F /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -248,6 +258,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D195C09A24748730005F6E98 /* CombineMoya.framework in Frameworks */,
 				CCB85FCA228B3D1800AAB253 /* Moya.framework in Frameworks */,
 				1463B8801F8A8A7F002D9C4F /* Alamofire.framework in Frameworks */,
 			);
@@ -557,6 +568,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D195C09D24748730005F6E98 /* PBXTargetDependency */,
 			);
 			name = Basic;
 			productName = Basic;
@@ -1046,6 +1058,11 @@
 			name = Moya;
 			target = ED6C081A4AC105D3F62F3C49 /* Moya */;
 			targetProxy = 17924DA7239A397DF7BCAE7A /* PBXContainerItemProxy */;
+		};
+		D195C09D24748730005F6E98 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1B52E8124747A6300C5FB76 /* CombineMoya */;
+			targetProxy = D195C09C24748730005F6E98 /* PBXContainerItemProxy */;
 		};
 		D1B52E9524747B5200C5FB76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
