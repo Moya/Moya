@@ -44,6 +44,22 @@ let authPlugin = AccessTokenPlugin { _ in token }
 let provider = MoyaProvider<YourAPI>(plugins: [authPlugin])
 ```
 
+如果你使用 `MultiTarget` 且返回不同的令牌，你可以像下面这样:
+
+```swift
+let fooToken = "eyeAm.AJsoN.weBTOKen.foo"
+let barToken = "eyeAm.AJsoN.weBTOKen.bar"
+let authPlugin = AccessTokenPlugin { target in 
+    if target is FooService {
+        return fooToken    
+    } else if target is BarService {
+        return barToken
+    }
+    return ""
+}
+let provider = MoyaProvider<MultiTarget>(plugins: [authPlugin])
+```
+
 `AccessTokenPlugin` 构造器接收一个`tokenClosure`闭包来负责返回一个可以被添加到request头部的令牌 。
 
 2. 您的 `TargetType` 需要遵循`AccessTokenAuthorizable` 协议:
