@@ -2,6 +2,7 @@
 
 ### Changed
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+- **Breaking Change** In `AccessTokenPlugin`: Changed the parameter type `AuthorizationType` to `TargetType` in the token closure, support for `MultiTarget` with different tokens.[#2046](https://github.com/Moya/Moya/pull/2046) by [@Coder-ZJQ](https://github.com/Coder-ZJQ).
 # [14.0.0] - 2020-02-15
 
 ### Changed
