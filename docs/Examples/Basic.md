@@ -145,7 +145,7 @@ let failureEndpointClosure = { (target: MyService) -> Endpoint in
             return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint(url: URL(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    return Endpoint(url: URL(target: target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 
