@@ -124,7 +124,7 @@ You can also set up custom endpoints to alter the default behavior to your needs
 
 ```swift
 let endpointClosure = { (target: MyService) -> Endpoint in
-    return Endpoint(url: URL(target: target), sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 
@@ -145,7 +145,7 @@ let failureEndpointClosure = { (target: MyService) -> Endpoint in
             return .networkResponse(200, target.sampleData)
         }
     }
-    return Endpoint(url: url(target), sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task, httpHeaderFields: target.headers)
+    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: sampleResponseClosure, method: target.method, task: target.task, httpHeaderFields: target.headers)
 }
 ```
 
