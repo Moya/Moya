@@ -57,7 +57,7 @@ if (addedSwiftLibraryFiles || deletedSwiftLibraryFiles) && !modifiedCarthageXcod
     fail("Added or removed library files require the Carthage Xcode project to be updated. See the Readme")
 }
 
-let missingDocChanges = danger.git.modifiedFiles.contains { $0.contains("docs") }
+let missingDocChanges = !danger.git.modifiedFiles.contains { $0.contains("docs") }
 let docChangeRecommended = (danger.github.pullRequest.additions ?? 0) > 15
 if sourceChanges && missingDocChanges && docChangeRecommended && isNotTrivial {
     warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
