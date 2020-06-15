@@ -12,6 +12,7 @@ let package = Package(
     ],
     products: [
         .library(name: "Moya", targets: ["Moya"]),
+        .library(name: "CombineMoya", targets: ["CombineMoya"]),
         .library(name: "ReactiveMoya", targets: ["ReactiveMoya"]),
         .library(name: "RxMoya", targets: ["RxMoya"])
     ],
@@ -26,9 +27,10 @@ let package = Package(
     ],
     targets: [
         .target(name: "Moya", dependencies: ["Alamofire"]),
+        .target(name: "CombineMoya", dependencies: ["Moya"]),
         .target(name: "ReactiveMoya", dependencies: ["Moya", "ReactiveSwift"]),
         .target(name: "RxMoya", dependencies: ["Moya", "RxSwift"]),
-        .testTarget(name: "MoyaTests", dependencies: ["Moya", "RxMoya", "ReactiveMoya", "Quick", "Nimble", "OHHTTPStubsSwift"]) // dev
+        .testTarget(name: "MoyaTests", dependencies: ["Moya", "CombineMoya", "RxMoya", "ReactiveMoya", "Quick", "Nimble", "OHHTTPStubsSwift"]) // dev
     ]
 )
 
