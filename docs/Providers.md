@@ -121,13 +121,13 @@ all requests will route through the custom configured manager.
 ```swift
 let serverTrustManager = ServerTrustManager(evaluators: ["example.com": PinnedCertificatesTrustEvaluator()])
 
-let manager = Session(
+let session = Session(
     configuration: configuration, 
     startRequestsImmediately: false, 
     serverTrustManager: serverTrustManager
 )
 
-let provider = MoyaProvider<MyTarget>(session: manager)
+let provider = MoyaProvider<MyTarget>(session: session)
 ```
 
 ### plugins:
