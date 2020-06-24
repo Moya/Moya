@@ -100,41 +100,34 @@ let provider = MoyaProvider<MyTarget>(stubClosure: { (_: MyTarget) -> Moya.StubB
 let provider = MoyaProvider<MyTarget>(stubClosure: MoyaProvider.immediatelyStub)
 ```
 
-### manager:
+### session:
 
-Next, there's the `manager` parameter. By default you'll get a custom `Alamofire.Manager` instance with basic configurations.
+Next, there's the `session` parameter. By default you'll get a custom `Alamofire.Session` instance with basic configurations.
 
 ```swift
-public final class func defaultAlamofireManager() -> Manager {
+final class func defaultAlamofireSession() -> Session {
     let configuration = URLSessionConfiguration.default
-    configuration.httpAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders
-
-    let manager = Alamofire.Manager(configuration: configuration)
-    manager.startRequestsImmediately = false
-    return manager
+    configuration.headers = .default
+    
+    return Session(configuration: configuration, startRequestsImmediately: false)
 }
 ```
 
 There is only one particular thing: since construct an `Alamofire.Request` in AF will fire the request immediately by default, even when "stubbing" the requests for unit testing. Therefore in Moya, `startRequestsImmediately` is set to `false` by default.
 
-If you'd like to customize your own manager, for example, to add SSL pinning, create one and pass it in,
+If you'd like to customize your own session, for example, to add SSL pinning, create one and pass it in,
 all requests will route through the custom configured manager.
 
 ```swift
-let policies: [String: ServerTrustPolicy] = [
-    "example.com": .PinPublicKeys(
-        publicKeys: ServerTrustPolicy.publicKeysInBundle(),
-        validateCertificateChain: true,
-        validateHost: true
-    )
-]
+let serverTrustManager = ServerTrustManager(evaluators: ["example.com": PinnedCertificatesTrustEvaluator()])
 
-let manager = Manager(
-    configuration: URLSessionConfiguration.default,
-    serverTrustPolicyManager: ServerTrustPolicyManager(policies: policies)
+let session = Session(
+    configuration: configuration, 
+    startRequestsImmediately: false, 
+    serverTrustManager: serverTrustManager
 )
 
-let provider = MoyaProvider<MyTarget>(manager: manager)
+let provider = MoyaProvider<MyTarget>(session: session)
 ```
 
 ### plugins:
