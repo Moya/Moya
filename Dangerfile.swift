@@ -28,7 +28,7 @@ if danger.github.pullRequest.title.contains("WIP") {
 let enDocsModified = danger.git.modifiedFiles.contains { $0.contains("docs/") }
 let cnDocsModified = danger.git.modifiedFiles.contains { $0.contains("docs_CN/") }
 if (enDocsModified && !cnDocsModified) || (!enDocsModified && cnDocsModified) {
-    warn("Consider **also** updating the \(enDocsModified ? "English" : "Chinese") docs. For Chinese translations, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate, if you can't do so yourself.")
+    warn("Consider **also** updating the \(enDocsModified ? "Chinese" : "English") docs. For Chinese translations, request the modified file(s) to be added to the list [here](https://github.com/Moya/Moya/issues/1357) for someone else to translate, if you can't do so yourself.")
 }
 
 // Warn, asking to update Chinese README if only English README are updated and vice-versa
