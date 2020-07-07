@@ -4,7 +4,7 @@
 - We brought back Combine support! [#2024](https://github.com/Moya/Moya/pull/2024) by [@MaxDesiatov](https://github.com/MaxDesiatov).
 
 ### Changed
-- Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+- Moya's minimum Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
 
 # [14.0.0] - 2020-02-15
 
