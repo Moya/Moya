@@ -40,10 +40,8 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-dep-{{ checksum "Cartfile.resolved" }}
-      - restore_cache:
-          keys:
-            - v{{ .Environment.CACHE_VERSION }}-dep-{{ checksum "Dangerfile.swift" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
@@ -63,7 +61,7 @@ jobs:
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-dep-{{ checksum "Cartfile.resolved" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
           paths:
             - vendor/bundle
             - Carthage
@@ -89,7 +87,7 @@ jobs:
           name: Run Danger
           command: brew install danger/tap/danger-swift && danger-swift ci
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-dep-{{ checksum "Dangerfile.swift" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Dangerfile.swift" }}
           paths:
             - ~/.danger-swift
             - /usr/local/Homebrew
