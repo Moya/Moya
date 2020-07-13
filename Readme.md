@@ -157,15 +157,14 @@ If this is your first time using Carthage in the project, you'll need to go thro
 $ git init
 ```
 
-- Add Alamofire, Result & Moya as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following commands:
+- Add Alamofire & Moya as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following commands:
 
 ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
-$ git submodule add https://github.com/antitypical/Result.git
 $ git submodule add https://github.com/Moya/Moya.git
 ```
 
-- Open the new `Alamofire` folder, and drag the `Alamofire.xcodeproj` into the Project Navigator of your application's Xcode project. Do the same with the `Result.xcodeproj` in the `Result` folder and `Moya.xcodeproj` in the `Moya` folder.
+- Open the new `Alamofire` folder, and drag the `Alamofire.xcodeproj` into the Project Navigator of your application's Xcode project. Do the same with the `Moya.xcodeproj` in the `Moya` folder.
 
 > They should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
 
@@ -181,8 +180,7 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 > You can verify which one you selected by inspecting the build log for your project. The build target for `Alamofire` will be listed as either `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` or `Alamofire watchOS`.
 
-- Click on the `+` button under "Embedded Binaries" again and add the build target you need for `Result`.
-- Click on the `+` button again and add the correct build target for `Moya`.
+- Click on the `+` button under "Embedded Binaries" again and add the correct build target for `Moya`.
 
 - And that's it!
 
