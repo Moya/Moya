@@ -134,15 +134,14 @@ github "Moya/Moya" ~> 14.0
 $ git init
 ```
 
-- 通过运行以下命令来添加 Alamofire，Result & Moya 作为 git [submodule](http://git-scm.com/docs/git-submodule)：
+- 通过运行以下命令来添加 Alamofire & Moya 作为 git [submodule](http://git-scm.com/docs/git-submodule)：
 
 ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
-$ git submodule add https://github.com/antitypical/Result.git
 $ git submodule add https://github.com/Moya/Moya.git
 ```
 
-- 打开新建的 `Alamofire` 文件夹，把 `Alamofire.xcodeproj` 拖拽到你 XCode 的项目导航中。对 Result 文件夹下的 `Result.xcodeproj` 和 Moya 文件夹下的 `Moya.xcodeproj` 做同样的操作。
+- 打开新建的 `Alamofire` 文件夹，把 `Alamofire.xcodeproj` 拖拽到你 Xcode 的项目导航中。对 Moya 文件夹下的 `Moya.xcodeproj` 做同样的操作。
 
 > 它们应该嵌套在应用程序的蓝色项目图标下面，在其它 Xcode group 的上面或者下面都没关系。
 
@@ -158,7 +157,6 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 > 你可以通过检查项目的构建日志来验证你选择的是哪一个。`Alamofire` 的 build target 将被列为 `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` 或 `Alamofire watchOS`。
 
-- 点击 "Embedded Binaries" 下面的 `+` 按钮，为 `Result` 添加你需要的 build target。
 - 再次点击 `+` 按钮为 `Moya` 添加正确的 build target。
 
 - 这就完事了！
