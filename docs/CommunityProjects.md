@@ -17,6 +17,7 @@ We appreciate all the work being done by the community around Moya. If you would
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Marshal bindings for Moya for easier JSON serialization
 - [Moya-Decodable](https://github.com/xiaoyaogaojian/Moya-Decodable) - Decodable bindings for Moya for easier JSON serialization
 - [SwiftMoyaCodeGenerator](https://github.com/narlei/SwiftMoyaCodeGenerator) - Extension for [Paw Mac App](https://paw.cloud) to generate Moya files based in rest documentation.
+- [Moya-Integration-Testing](https://github.com/wvteijlingen/moya-integration-testing) - Flexible integration testing of your Moya network requests using XCTest
 
 ## Libraries
 
