@@ -23,3 +23,4 @@
 
 * [Creating a custom plugin](CustomPlugin.md)
 * [Creating an authorization plugin](AuthPlugin.md)
+* [Cache Policy plugin](CachePolicyPlugin.md)
