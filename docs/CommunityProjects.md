@@ -17,6 +17,7 @@ We appreciate all the work being done by the community around Moya. If you would
 - [Moya-Marshal](https://github.com/JARMourato/Moya-Marshal) - Marshal bindings for Moya for easier JSON serialization
 - [Moya-Decodable](https://github.com/xiaoyaogaojian/Moya-Decodable) - Decodable bindings for Moya for easier JSON serialization
 - [SwiftMoyaCodeGenerator](https://github.com/narlei/SwiftMoyaCodeGenerator) - Extension for [Paw Mac App](https://paw.cloud) to generate Moya files based in rest documentation.
+- [Moya-Integration-Testing](https://github.com/wvteijlingen/moya-integration-testing) - Flexible integration testing of your Moya network requests using XCTest
 
 ## Libraries
 
@@ -29,3 +30,4 @@ We appreciate all the work being done by the community around Moya. If you would
 - [Insights for Instagram](https://github.com/adimango/insights-for-instagram) - A simple iOS Instagram's media insights App written in Swift 4
 - [Papr](https://github.com/jdisho/Papr/tree/papr-moya-version) - An Unsplash app for iOS.
 - [SwiftHub](https://github.com/khoren93/SwiftHub) - Reactive Github iOS client written in RxSwift and MVVM.
+- [GitTime](https://github.com/87kangsw/GitTime) - GitHub iOS client using ReactorKit and Moya.

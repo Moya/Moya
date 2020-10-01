@@ -128,7 +128,7 @@ public extension NetworkLoggerPlugin {
         public var output: OutputType
         public var logOptions: LogOptions
 
-        /// The designated way to instanciate a Configuration.
+        /// The designated way to instantiate a Configuration.
         ///
         /// - Parameters:
         ///   - formatter: An object holding all formatter closures available for customization.
@@ -200,7 +200,7 @@ public extension NetworkLoggerPlugin.Configuration {
         public var requestData: DataFormatterType
         public var responseData: DataFormatterType
 
-        /// The designated way to instanciate a Formatter.
+        /// The designated way to instantiate a Formatter.
         ///
         /// - Parameters:
         ///   - entry: The closure formatting a message into a new log entry.
