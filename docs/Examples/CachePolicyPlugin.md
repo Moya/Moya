@@ -1,12 +1,12 @@
-# Creating a Cache Policy Plugin
+＃创建一个缓存策略插件
 
-Cache Policies are the rules of how a URL load should be loaded. These rules are determined by the client cache requirements, the server's content expiration requirements, and the server's revalidation requirements.
+缓存策略是应如何加载URL加载的规则。这些规则由客户端缓存要求，服务器的内容到期要求和服务器的重新验证要求确定。
 
-Moya automatically handles the policies on client's side based on server response policies. There are many times that we want to manually handle the client's side policies either in all our request or on specific targets.
+Moya根据服务器响应策略自动处理客户端的策略。很多时候，我们希望在所有请求中或在特定目标上手动处理客户端的边策略。
 
-## Plugin Creation
+##插件创建
 
-Let's define a `CachePolicyGettableType` protocol to implement in our Targets:
+让我们定义一个 `CachePolicyGettableType` 在我们的目标中实施的协议：
 
 ```swift
 protocol CachePolicyGettableType {
@@ -14,7 +14,7 @@ protocol CachePolicyGettableType {
 }
 ```
 
-Let's define our plugin:
+让我们定义我们的插件：
 
 ```swift
 final class CachePolicyPlugin: PluginType {
@@ -31,14 +31,14 @@ final class CachePolicyPlugin: PluginType {
 }
 ```
 
-## Plugin Implementation
-We need to add the `CachePolicyPlugin` to our `MoyaProvider`:
+##插件实现
+我们需要添加 `CachePolicyPlugin` 给我们 `MoyaProvider`:
 
 ```swift
 let provider = MoyaProvider<RequestTarget>(plugins: [CachePolicyPlugin()])
 ```
 
-Also, our targets need to conform to our `CachePolicyGettableType` protocol:
+另外，我们的目标必须符合我们的 `CachePolicyGettableType` 协议：
 
 ```swift
 extension RequestTarget: CachePolicyGettableType {
@@ -48,8 +48,9 @@ extension RequestTarget: CachePolicyGettableType {
 }
 ```
 
-## Using MultiTargets
-It's important to keep in mind that if we are using `MultiTarget` in our Moya Provider to use any target, we need to extend `MultiTarget` for it to conform our `CachePolicyGettableType`:
+##使用多目标
+
+重要的是要记住，如果我们使用 `MultiTarget` 在Moya提供商中使用任何目标，我们需要扩展 `MultiTarget` 让它符合我们的 `CachePolicyGettableType`:
 
 ```swift
 extension MultiTarget: CachePolicyGettableType {
@@ -66,4 +67,4 @@ extension MultiTarget: CachePolicyGettableType {
 
 ---
 
-This example is based on [Frederick Pietschmann](https://github.com/fredpi) `CachePolicyPlugin` proposal in the [Issue #1679](https://github.com/Moya/Moya/issues/1679)
+这个例子是基于 [Frederick Pietschmann](https://github.com/fredpi) `CachePolicyPlugin` 提案 [Issue #1679](https://github.com/Moya/Moya/issues/1679)
