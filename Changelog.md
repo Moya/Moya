@@ -1,5 +1,8 @@
 # Next
 
+### Changed
+- `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
+
 # [14.0.0] - 2020-02-15
 
 ### Changed
