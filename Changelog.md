@@ -1,18 +1,21 @@
 # Next
 
+### Changed
+- **Breaking Change** `AccessTokenPlugin` now uses `TargetType`, instead of `AuthorizationType`, in the closure to determine the token. Full `MultiTarget` integration added as well. [#2046](https://github.com/Moya/Moya/pull/2046) by [@Coder-ZJQ](https://github.com/Coder-ZJQ).
+
 # [15.0.0-alpha.1] - 2020-07-07
 
-## Added
+### Added
 - We brought back Combine support! [#2024](https://github.com/Moya/Moya/pull/2024) by [@MaxDesiatov](https://github.com/MaxDesiatov).
 
 ### Changed
-- Moya's minimum Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas).
+- Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas) and [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
 # [14.0.0] - 2020-02-15
 
 ### Changed
 - **Breaking Change** Minimum version of `Alamofire` is now 5.0. [#1992](https://github.com/Moya/Moya/pull/1992) by [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change**  `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
+- **Breaking Change** `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
 
 
 # [14.0.0-beta.6] - 2019-12-09
