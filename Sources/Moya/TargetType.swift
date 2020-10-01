@@ -12,7 +12,7 @@ public protocol TargetType {
     /// The HTTP method used in the request.
     var method: Moya.Method { get }
 
-    /// Provides stub data for use in testing.
+    /// Provides stub data for use in testing. Default is `Data()`.
     var sampleData: Data { get }
 
     /// The type of HTTP task to be performed.
@@ -29,4 +29,7 @@ public extension TargetType {
 
     /// The type of validation to perform on the request. Default is `.none`.
     var validationType: ValidationType { .none }
+
+    /// Provides stub data for use in testing. Default is `Data()`.
+    var sampleData: Data { Data() }
 }
