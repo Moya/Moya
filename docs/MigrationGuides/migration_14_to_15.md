@@ -6,7 +6,7 @@ This project follows [Semantic Versioning](http://semver.org).
 `AccessTokenPlugin` now uses `TargetType`, instead of `AuthorizationType`, in the closure to determine the token. This also supports `MultiTarget` out of the box, so if you were depending on the `authorizationType`, now you need to switch the logic to cover for `target` as well, e.g.:
 ```swift
 let plugin = AccessTokenPlugin { authorizationType in
-    guard authorizationType == .bearer else { return }
+    guard authorizationType == .bearer else { return "" }
 
     return "token"
 }
