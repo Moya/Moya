@@ -1,6 +1,6 @@
 # Creating a Cache Policy Plugin
 
-As we know, Cache Policies are the rules of how a URL load should be loaded. These rules are determined by the client cache requirements, the server's content expiration requirements, and the server's revalidation requirements.
+Cache Policies are the rules of how a URL load should be loaded. These rules are determined by the client cache requirements, the server's content expiration requirements, and the server's revalidation requirements.
 
 Moya automatically handles the policies on client's side based on server response policies. There are many times that we want to manually handle the client's side policies either in all our request or on specific targets.
 
@@ -38,7 +38,7 @@ We need to add the `CachePolicyPlugin` to our `MoyaProvider`:
 let provider = MoyaProvider<RequestTarget>(plugins: [CachePolicyPlugin()])
 ```
 
-Also, our targets must be conforming our `CachePolicyGettableType` protocol:
+Also, our targets need to conform to our `CachePolicyGettableType` protocol:
 
 ```swift
 extension RequestTarget: CachePolicyGettableType {
