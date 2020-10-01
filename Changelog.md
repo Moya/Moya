@@ -2,6 +2,7 @@
 
 ### Changed
 - **Breaking Change** `AccessTokenPlugin` now uses `TargetType`, instead of `AuthorizationType`, in the closure to determine the token. Full `MultiTarget` integration added as well. [#2046](https://github.com/Moya/Moya/pull/2046) by [@Coder-ZJQ](https://github.com/Coder-ZJQ).
+- `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
 
 # [15.0.0-alpha.1] - 2020-07-07
 
@@ -9,8 +10,7 @@
 - We brought back Combine support! [#2024](https://github.com/Moya/Moya/pull/2024) by [@MaxDesiatov](https://github.com/MaxDesiatov).
 
 ### Changed
-- Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas) and [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
-- `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
+- Moya's Swift minimum version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas) and [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
 
 # [14.0.0] - 2020-02-15
 

@@ -19,3 +19,6 @@ let plugin = AccessTokenPlugin { target in
     return "token"
 }
 ```
+
+### `Target.sampleData` updates
+With this update, `sampleData` is by default not needed to implement anymore - we've added a default implementation `Data()` and we plan to investigate possible improvements to the stubbing system in the near future.
