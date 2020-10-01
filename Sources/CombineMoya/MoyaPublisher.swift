@@ -12,15 +12,17 @@ internal class MoyaPublisher<Output>: Publisher {
     internal typealias Failure = MoyaError
 
     private class Subscription: Combine.Subscription {
-
-        private let cancellable: Moya.Cancellable?
+        private let performCall: () -> Moya.Cancellable?
+        private var cancellable: Moya.Cancellable?
 
         init(subscriber: AnySubscriber<Output, MoyaError>, callback: @escaping (AnySubscriber<Output, MoyaError>) -> Moya.Cancellable?) {
-            self.cancellable = callback(subscriber)
+            performCall = { callback(subscriber) }
         }
 
         func request(_ demand: Subscribers.Demand) {
-            // We don't care for the demand right now
+            guard demand > .none else { return }
+
+            cancellable = performCall()
         }
 
         func cancel() {
