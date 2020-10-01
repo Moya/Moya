@@ -10,6 +10,7 @@
 
 ### Changed
 - Moya's Swift version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas) and [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+- `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
 
 # [14.0.0] - 2020-02-15
 
