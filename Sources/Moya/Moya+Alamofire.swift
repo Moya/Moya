@@ -26,7 +26,7 @@ public typealias DownloadDestination = Alamofire.DownloadRequest.Destination
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType {
     public var sessionHeaders: [String: String] {
-        return delegate?.sessionConfiguration.httpAdditionalHeaders as? [String: String] ?? [:]
+        delegate?.sessionConfiguration.httpAdditionalHeaders as? [String: String] ?? [:]
     }
 }
 
@@ -107,22 +107,10 @@ extension DownloadRequest: Requestable {
 }
 
 final class MoyaRequestInterceptor: RequestInterceptor {
-    private let lock: NSRecursiveLock = NSRecursiveLock()
-
     var prepare: ((URLRequest) -> URLRequest)?
-    private var internalWillSend: ((URLRequest) -> Void)?
 
-    var willSend: ((URLRequest) -> Void)? {
-        get {
-            lock.lock(); defer { lock.unlock() }
-            return internalWillSend
-        }
-
-        set {
-            lock.lock(); defer { lock.unlock() }
-            internalWillSend = newValue
-        }
-    }
+    @Atomic
+    var willSend: ((URLRequest) -> Void)?
 
     init(prepare: ((URLRequest) -> URLRequest)? = nil, willSend: ((URLRequest) -> Void)? = nil) {
         self.prepare = prepare

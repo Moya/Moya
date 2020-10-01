@@ -11,39 +11,25 @@ public enum MultiTarget: TargetType {
     }
 
     /// The embedded target's base `URL`.
-    public var path: String {
-        return target.path
-    }
+    public var path: String { target.path }
 
     /// The baseURL of the embedded target.
-    public var baseURL: URL {
-        return target.baseURL
-    }
+    public var baseURL: URL { target.baseURL }
 
     /// The HTTP method of the embedded target.
-    public var method: Moya.Method {
-        return target.method
-    }
+    public var method: Moya.Method { target.method }
 
     /// The sampleData of the embedded target.
-    public var sampleData: Data {
-        return target.sampleData
-    }
+    public var sampleData: Data { target.sampleData }
 
     /// The `Task` of the embedded target.
-    public var task: Task {
-        return target.task
-    }
+    public var task: Task { target.task }
 
     /// The `ValidationType` of the embedded target.
-    public var validationType: ValidationType {
-        return target.validationType
-    }
+    public var validationType: ValidationType { target.validationType }
 
     /// The headers of the embedded target.
-    public var headers: [String: String]? {
-        return target.headers
-    }
+    public var headers: [String: String]? { target.headers }
 
     /// The embedded `TargetType`.
     public var target: TargetType {

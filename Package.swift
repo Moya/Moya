@@ -2,6 +2,16 @@
 
 import PackageDescription
 
+let rocketIfNeeded: [Package.Dependency]
+
+#if os(OSX) || os(Linux)
+rocketIfNeeded = [
+    .package(url: "https://github.com/shibapm/Rocket", .upToNextMajor(from: "1.0.0")) // dev
+]
+#else
+rocketIfNeeded = []
+#endif
+
 let package = Package(
     name: "Moya",
     platforms: [
@@ -12,6 +22,7 @@ let package = Package(
     ],
     products: [
         .library(name: "Moya", targets: ["Moya"]),
+        .library(name: "CombineMoya", targets: ["CombineMoya"]),
         .library(name: "ReactiveMoya", targets: ["ReactiveMoya"]),
         .library(name: "RxMoya", targets: ["RxMoya"])
     ],
@@ -21,14 +32,14 @@ let package = Package(
         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "2.0.0")), // dev
         .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "8.0.0")), // dev
-        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .upToNextMajor(from: "9.0.0")), // dev
-        .package(url: "https://github.com/shibapm/Rocket", .upToNextMajor(from: "1.0.0")) // dev
-    ],
+        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .upToNextMajor(from: "9.0.0")) // dev
+    ] + rocketIfNeeded,
     targets: [
         .target(name: "Moya", dependencies: ["Alamofire"]),
+        .target(name: "CombineMoya", dependencies: ["Moya"]),
         .target(name: "ReactiveMoya", dependencies: ["Moya", "ReactiveSwift"]),
         .target(name: "RxMoya", dependencies: ["Moya", "RxSwift"]),
-        .testTarget(name: "MoyaTests", dependencies: ["Moya", "RxMoya", "ReactiveMoya", "Quick", "Nimble", "OHHTTPStubsSwift"]) // dev
+        .testTarget(name: "MoyaTests", dependencies: ["Moya", "CombineMoya", "RxMoya", "ReactiveMoya", "Quick", "Nimble", "OHHTTPStubsSwift"]) // dev
     ]
 )
 

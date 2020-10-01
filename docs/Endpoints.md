@@ -115,7 +115,7 @@ method throws three possible errors:
 - `MoyaError.parameterEncoding(Swift.Error)` when parameters couldn't be encoded
 - `MoyaError.encodableMapping(Swift.Error)` when `Encodable` object couldn't be encoded into `Data`
 
-This closure receives an `Endpoint` instance and is responsible for invoking a
+This closure receives an `Endpoint` instance and is responsible for invoking
 its argument of `RequestResultClosure` (shorthand for `Result<URLRequest, MoyaError> -> Void`) with a request that represents the Endpoint.
 It's here that you'd do your OAuth signing or whatever. Since you may invoke the
 closure asynchronously, you can use whatever authentication library you like ([example](https://github.com/rheinfabrik/Heimdallr.swift)).

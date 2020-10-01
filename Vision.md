@@ -5,7 +5,7 @@
 - provide an API that makes it easy to stub network requests.
 - provide an API where common things are easy, and uncommon things are possible.
 - provide basics of response decoding while exposing customization points for other libraries to help.
-- provide (optional) RxSwift / ReactiveSwift extensions to the API.
+- provide (optional) reactive (RxSwift, ReactiveSwift, Combine) extensions to the API.
 - avoid leaky abstractions by providing thoughtful and easy-to-use extension points for customizing behaviour.
 - favour explicitly-defined behaviour over default implementations.
 - cultivate an inclusive open source community through respectful discussion.

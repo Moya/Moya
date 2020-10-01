@@ -15,56 +15,56 @@ public extension SignalProducerProtocol where Value == Response, Error == MoyaEr
 
     /// Filters out responses that don't fall within the given range, generating errors when others are encountered.
     func filter<R: RangeExpression>(statusCodes: R) -> SignalProducer<Value, MoyaError> where R.Bound == Int {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.filter(statusCodes: statusCodes) }
         }
     }
 
     /// Filters out responses that have the specified `statusCode`.
     func filter(statusCode: Int) -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.filter(statusCode: statusCode) }
         }
     }
 
     /// Filters out responses where `statusCode` falls within the range 200 - 299.
     func filterSuccessfulStatusCodes() -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.filterSuccessfulStatusCodes() }
         }
     }
 
     /// Filters out responses where `statusCode` falls within the range 200 - 399
     func filterSuccessfulStatusAndRedirectCodes() -> SignalProducer<Value, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.filterSuccessfulStatusAndRedirectCodes() }
         }
     }
 
     /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
     func mapImage() -> SignalProducer<Image, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.mapImage() }
         }
     }
 
     /// Maps data received from the signal into a JSON object. If the conversion fails, the signal errors.
     func mapJSON(failsOnEmptyData: Bool = true) -> SignalProducer<Any, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.mapJSON(failsOnEmptyData: failsOnEmptyData) }
         }
     }
 
     /// Maps received data at key path into a String. If the conversion fails, the signal errors.
     func mapString(atKeyPath keyPath: String? = nil) -> SignalProducer<String, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.mapString(atKeyPath: keyPath) }
         }
     }
 
     /// Maps received data at key path into a Decodable object. If the conversion fails, the signal errors.
     func map<D: Decodable>(_ type: D.Type, atKeyPath keyPath: String? = nil, using decoder: JSONDecoder = JSONDecoder(), failsOnEmptyData: Bool = true) -> SignalProducer<D, MoyaError> {
-        return producer.flatMap(.latest) { response in
+        producer.flatMap(.latest) { response in
             unwrapThrowable { try response.map(type, atKeyPath: keyPath, using: decoder, failsOnEmptyData: failsOnEmptyData) }
         }
     }
@@ -79,7 +79,7 @@ private func unwrapThrowable<T>(throwable: () throws -> T) -> SignalProducer<T, 
             return SignalProducer(error: error)
         } else {
             // The cast above should never fail, but just in case.
-            return SignalProducer(error: MoyaError.underlying(error as NSError, nil))
+            return SignalProducer(error: MoyaError.underlying(error, nil))
         }
     }
 }

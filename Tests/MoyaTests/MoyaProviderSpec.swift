@@ -436,7 +436,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("returns identical sample response") {
                 let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
+                    Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -1079,7 +1079,7 @@ final class MoyaProviderSpec: QuickSpec {
             context("response contains invalid status code") {
                 it("returns an error") {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
-                        return Endpoint(
+                        Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(400, target.sampleData) },
                             method: target.method,
@@ -1113,7 +1113,7 @@ final class MoyaProviderSpec: QuickSpec {
             context("response contains valid status code") {
                 it("returns a response") {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
-                        return Endpoint(
+                        Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
                             method: target.method,

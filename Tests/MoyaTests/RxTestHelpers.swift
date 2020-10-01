@@ -2,11 +2,7 @@ import Moya
 import RxSwift
 
 extension Response {
-    func asObservable() -> Observable<Response> {
-        return Observable.just(self)
-    }
+    func asObservable() -> Observable<Response> { Observable.just(self) }
 
-    func asSingle() -> Single<Response> {
-        return Single.just(self)
-    }
+    func asSingle() -> Single<Response> { Single.just(self) }
 }

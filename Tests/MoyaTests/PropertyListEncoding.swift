@@ -5,13 +5,13 @@ internal struct PropertyListEncoding: ParameterEncoding {
 
     // MARK: Properties
     /// Returns a default `PropertyListEncoding` instance.
-    static var `default`: PropertyListEncoding { return PropertyListEncoding() }
+    static var `default`: PropertyListEncoding { PropertyListEncoding() }
 
     /// Returns a `PropertyListEncoding` instance with xml formatting and default writing options.
-    static var xml: PropertyListEncoding { return PropertyListEncoding(format: .xml) }
+    static var xml: PropertyListEncoding { PropertyListEncoding(format: .xml) }
 
     /// Returns a `PropertyListEncoding` instance with binary formatting and default writing options.
-    static var binary: PropertyListEncoding { return PropertyListEncoding(format: .binary) }
+    static var binary: PropertyListEncoding { PropertyListEncoding(format: .binary) }
 
     /// The property list serialization format.
     let format: PropertyListSerialization.PropertyListFormat
