@@ -235,3 +235,15 @@ public extension NetworkLoggerPlugin.Configuration {
         }()
     }
 }
+
+public extension NetworkLoggerPlugin {
+    /// Returns the default logger plugin
+    class var `default`: NetworkLoggerPlugin {
+        return NetworkLoggerPlugin(configuration: Configuration(logOptions: .default))
+    }
+
+    /// Returns the default verbose logger plugin
+    class var verbose: NetworkLoggerPlugin {
+        return NetworkLoggerPlugin(configuration: Configuration(logOptions: .verbose))
+    }
+}
