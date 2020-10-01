@@ -73,7 +73,9 @@ _Note: If you are using Swift 4.2 in your project, but you are using Xcode 10.2,
 
 ### Swift Package Manager
 
-To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
+_Note: Instructions below are for using **SwiftPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add Moya from there._
+
+To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
 .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
