@@ -73,7 +73,9 @@ _Note: If you are using Swift 4.2 in your project, but you are using Xcode 10.2,
 
 ### Swift Package Manager
 
-To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
+_Note: Instructions below are for using **SwiftPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add Moya from there._
+
+To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
 .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
@@ -157,15 +159,14 @@ If this is your first time using Carthage in the project, you'll need to go thro
 $ git init
 ```
 
-- Add Alamofire, Result & Moya as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following commands:
+- Add Alamofire & Moya as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following commands:
 
 ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
-$ git submodule add https://github.com/antitypical/Result.git
 $ git submodule add https://github.com/Moya/Moya.git
 ```
 
-- Open the new `Alamofire` folder, and drag the `Alamofire.xcodeproj` into the Project Navigator of your application's Xcode project. Do the same with the `Result.xcodeproj` in the `Result` folder and `Moya.xcodeproj` in the `Moya` folder.
+- Open the new `Alamofire` folder, and drag the `Alamofire.xcodeproj` into the Project Navigator of your application's Xcode project. Do the same with the `Moya.xcodeproj` in the `Moya` folder.
 
 > They should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
 
@@ -181,8 +182,7 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 > You can verify which one you selected by inspecting the build log for your project. The build target for `Alamofire` will be listed as either `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` or `Alamofire watchOS`.
 
-- Click on the `+` button under "Embedded Binaries" again and add the build target you need for `Result`.
-- Click on the `+` button again and add the correct build target for `Moya`.
+- Click on the `+` button under "Embedded Binaries" again and add the correct build target for `Moya`.
 
 - And that's it!
 
