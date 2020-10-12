@@ -189,6 +189,16 @@ public extension MoyaProvider {
     final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
         return { _ in .delayed(seconds: seconds) }
     }
+
+    /// Return a response after a delay that is randomized based on the range parameter.
+    final class func delayedStub(_ range: ClosedRange<TimeInterval>) -> (Target) -> Moya.StubBehavior {
+        return { _ in .delayed(seconds: TimeInterval.random(in: range)) }
+    }
+
+    /// Return a response after a delay that is randomized based on the range parameter.
+    final class func delayedStub(_ range: Range<TimeInterval>) -> (Target) -> Moya.StubBehavior {
+        return { _ in .delayed(seconds: TimeInterval.random(in: range)) }
+    }
 }
 
 /// A public function responsible for converting the result of a `URLRequest` to a Result<Moya.Response, MoyaError>.

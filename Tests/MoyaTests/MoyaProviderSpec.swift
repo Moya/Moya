@@ -178,11 +178,11 @@ final class MoyaProviderSpec: QuickSpec {
         describe("a provider with delayed stubs") {
             var provider: MoyaProvider<GitHub>!
             var plugin: TestingPlugin!
-            let delay: TimeInterval = 0.5
+            let delayRange = 0.15...0.30
 
             beforeEach {
                 plugin = TestingPlugin()
-                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(delay), plugins: [plugin])
+                provider = MoyaProvider<GitHub>(stubClosure: MoyaProvider.delayedStub(delayRange), plugins: [plugin])
             }
 
             it("delays execution") {
@@ -196,8 +196,9 @@ final class MoyaProviderSpec: QuickSpec {
                     }
                     return
                 }
-
-                expect(endDate?.timeIntervalSince(startDate)) >= delay
+                let actualDelay = endDate?.timeIntervalSince(startDate) ?? 0.0
+                let delayRangeWithTeardown = delayRange.lowerBound...delayRange.upperBound + 0.2
+                expect(actualDelay).to(beWithin(range: delayRangeWithTeardown))
             }
 
             it("returns an error when request is canceled") {

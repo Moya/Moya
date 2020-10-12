@@ -16,3 +16,23 @@ public func containOne(of substrings: [String]) -> Predicate<String> {
         return .fail
     }
 }
+
+public func beWithin<T: Comparable>(range: Range<T>) -> Predicate<T> {
+    let errorMessage = "be within range <\(stringify(range))>"
+    return Predicate.simple(errorMessage) { actualExpression in
+        if let actual = try actualExpression.evaluate() {
+            return PredicateStatus(bool: range.contains(actual))
+        }
+        return .fail
+    }
+}
+
+public func beWithin<T: Comparable>(range: ClosedRange<T>) -> Predicate<T> {
+    let errorMessage = "be within range <\(stringify(range))>"
+    return Predicate.simple(errorMessage) { actualExpression in
+        if let actual = try actualExpression.evaluate() {
+            return PredicateStatus(bool: range.contains(actual))
+        }
+        return .fail
+    }
+}
