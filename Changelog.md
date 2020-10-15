@@ -4,10 +4,13 @@
 - Added `NetworkLoggerPlugin.default` and `NetworkLoggerPlugin.verbose` to conveniently access the default plugins. [#2095](https://github.com/Moya/Moya/pull/2095) by [@sunshinejr](https://github.com/sunshinejr).
 
 ### Changed
+- **Breaking Change** Changed `Hashable` && `Equatable` implementation of `Endpoint` since it was returning false positives. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** `MultiPartFormData` is now `Hashable`. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** `AccessTokenPlugin` now uses `TargetType`, instead of `AuthorizationType`, in the closure to determine the token. Full `MultiTarget` integration added as well. [#2046](https://github.com/Moya/Moya/pull/2046) by [@Coder-ZJQ](https://github.com/Coder-ZJQ).
 - `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
 
 ### Fixed
+- Fixed an issue where when using `trackInflights` option in certain circumstances would return a cached response for an endpoint that's not really the same. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
 - Fixed a crash where Combine Publisher would crash when using stubs.  [#2072](https://github.com/Moya/Moya/pull/2072) by [jshier](https://github.com/jshier).
 
 # [15.0.0-alpha.1] - 2020-07-07
