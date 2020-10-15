@@ -130,11 +130,23 @@ extension Endpoint: Equatable, Hashable {
     /// Note: If both Endpoints fail to produce a URLRequest the comparison will
     /// fall back to comparing each Endpoint's hashValue.
     public static func == (lhs: Endpoint, rhs: Endpoint) -> Bool {
+        let areEndpointsEqualInAdditionalProperties: Bool = {
+            switch (lhs.task, rhs.task) {
+            case (let .uploadFile(file1), let .uploadFile(file2)):
+                return file1 == file2
+            case (let .uploadMultipart(multipartData1), let .uploadMultipart(multipartData2)):
+                return multipartData1 == multipartData2
+            case (let .uploadCompositeMultipart(multipartData1, _), let .uploadCompositeMultipart(multipartData2, _)):
+                return multipartData1 == multipartData2
+            default:
+                return true
+            }
+        }()
         let lhsRequest = try? lhs.urlRequest()
         let rhsRequest = try? rhs.urlRequest()
         if lhsRequest != nil, rhsRequest == nil { return false }
         if lhsRequest == nil, rhsRequest != nil { return false }
-        if lhsRequest == nil, rhsRequest == nil { return lhs.hashValue == rhs.hashValue }
-        return (lhsRequest == rhsRequest)
+        if lhsRequest == nil, rhsRequest == nil { return lhs.hashValue == rhs.hashValue && areEndpointsEqualInAdditionalProperties }
+        return lhsRequest == rhsRequest && areEndpointsEqualInAdditionalProperties
     }
 }
