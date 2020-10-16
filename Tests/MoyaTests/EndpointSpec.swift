@@ -365,6 +365,244 @@ final class EndpointSpec: QuickSpec {
             }
             #endif
         }
+
+        describe("given endpoint comparison") {
+            context("when task is .uploadMultipart") {
+                it("should correctly acknowledge as equal for the same url, headers and form data") {
+                    endpoint = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")]))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different form data") {
+                    endpoint = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test")]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .uploadCompositeMultipart") {
+                it("should correctly acknowledge as equal for the same url, headers and form data") {
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different form data") {
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different url parameters") {
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: ["test": "test2"]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: ["test": "test3"]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .uploadFile") {
+                it("should correctly acknowledge as equal for the same url, headers and file") {
+                    endpoint = endpoint.replacing(task: .uploadFile(URL(string: "https://google.com")!))
+                    let endpointToCompare = endpoint.replacing(task: .uploadFile(URL(string: "https://google.com")!))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different file") {
+                    endpoint = endpoint.replacing(task: .uploadFile(URL(string: "https://google.com")!))
+                    let endpointToCompare = endpoint.replacing(task: .uploadFile(URL(string: "https://google.com?q=test")!))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .downloadDestination") {
+                it("should correctly acknowledge as equal for the same url, headers and download destination") {
+                    endpoint = endpoint.replacing(task: .downloadDestination { temporaryUrl, _ in
+                        return (destinationURL: temporaryUrl, options: [])
+                    })
+                    let endpointToCompare = endpoint.replacing(task: .downloadDestination { temporaryUrl, _ in
+                        return (destinationURL: temporaryUrl, options: [])
+                    })
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as equal for the same url, headers and different download destination") {
+                    endpoint = endpoint.replacing(task: .downloadDestination { temporaryUrl, _ in
+                        return (destinationURL: temporaryUrl, options: [])
+                    })
+                    let endpointToCompare = endpoint.replacing(task: .downloadDestination { _, _ in
+                        return (destinationURL: URL(string: "https://google.com")!, options: [])
+                    })
+
+                    expect(endpoint) == endpointToCompare
+                }
+            }
+
+            context("when task is .downloadParameters") {
+                it("should correctly acknowledge as equal for the same url, headers and download destination") {
+                    endpoint = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                        return (destinationURL: temporaryUrl, options: [])
+                    }))
+                    let endpointToCompare = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                        return (destinationURL: temporaryUrl, options: [])
+                    }))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, download destionation and different parameters") {
+                    endpoint = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                        return (destinationURL: temporaryUrl, options: [])
+                    }))
+                    let endpointToCompare = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test3"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                        return (destinationURL: temporaryUrl, options: [])
+                    }))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .requestCompositeData") {
+                it("should correctly acknowledge as equal for the same url, headers, body and url parameters") {
+                    endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: "test".data(using: .utf8)!, urlParameters: ["test": "test1"]))
+                    let endpointToCompare = endpoint.replacing(task: .requestCompositeData(bodyData: "test".data(using: .utf8)!, urlParameters: ["test": "test1"]))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, body and different url parameters") {
+                    endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: "test".data(using: .utf8)!, urlParameters: ["test": "test1"]))
+                    let endpointToCompare = endpoint.replacing(task: .requestCompositeData(bodyData: "test".data(using: .utf8)!, urlParameters: ["test": "test2"]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, url parameters and different body") {
+                    endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: "test".data(using: .utf8)!, urlParameters: ["test": "test1"]))
+                    let endpointToCompare = endpoint.replacing(task: .requestCompositeData(bodyData: "test2".data(using: .utf8)!, urlParameters: ["test": "test1"]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .requestPlain") {
+                it("should correctly acknowledge as equal for the same url, headers and body") {
+                    endpoint = endpoint.replacing(task: .requestPlain)
+                    let endpointToCompare = endpoint.replacing(task: .requestPlain)
+
+                    expect(endpoint) == endpointToCompare
+                }
+            }
+
+            context("when task is .requestData") {
+                it("should correctly acknowledge as equal for the same url, headers and data") {
+                    endpoint = endpoint.replacing(task: .requestData("test".data(using: .utf8)!))
+                    let endpointToCompare = endpoint.replacing(task: .requestData("test".data(using: .utf8)!))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different data") {
+                    endpoint = endpoint.replacing(task: .requestData("test".data(using: .utf8)!))
+                    let endpointToCompare = endpoint.replacing(task: .requestData("test1".data(using: .utf8)!))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .requestJSONEncodable") {
+                it("should correctly acknowledge as equal for the same url, headers and encodable") {
+                    let date = Date()
+                    endpoint = endpoint.replacing(task: .requestJSONEncodable(Issue(title: "T", createdAt: date, rating: 0)))
+                    let endpointToCompare = endpoint.replacing(task: .requestJSONEncodable(Issue(title: "T", createdAt: date, rating: 0)))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different encodable") {
+                    let date = Date()
+                    endpoint = endpoint.replacing(task: .requestJSONEncodable(Issue(title: "T", createdAt: date, rating: 0)))
+                    let endpointToCompare = endpoint.replacing(task: .requestJSONEncodable(Issue(title: "Ta", createdAt: date, rating: 0)))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .requestParameters") {
+                it("should correctly acknowledge as equal for the same url, headers and parameters") {
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["test": "test1"], encoding: URLEncoding.queryString))
+                    let endpointToCompare = endpoint.replacing(task: .requestParameters(parameters: ["test": "test1"], encoding: URLEncoding.queryString))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different parameters") {
+                    endpoint = endpoint.replacing(task: .requestParameters(parameters: ["test": "test1"], encoding: URLEncoding.queryString))
+                    let endpointToCompare = endpoint.replacing(task: .requestParameters(parameters: ["test": "test2"], encoding: URLEncoding.queryString))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .requestCompositeParameters") {
+                it("should correctly acknowledge as equal for the same url, headers, body and url parameters") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: ["test": "test1"], bodyEncoding: JSONEncoding.default, urlParameters: ["url_test": "test1"]))
+                    let endpointToCompare = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: ["test": "test1"], bodyEncoding: JSONEncoding.default, urlParameters: ["url_test": "test1"]))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, body parameters and different url parameters") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: ["test": "test1"], bodyEncoding: JSONEncoding.default, urlParameters: ["url_test": "test1"]))
+                    let endpointToCompare = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: ["test": "test1"], bodyEncoding: JSONEncoding.default, urlParameters: ["url_test": "test2"]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, url parameters and different body parameters") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: ["test": "test1"], bodyEncoding: JSONEncoding.default, urlParameters: ["url_test": "test1"]))
+                    let endpointToCompare = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: ["test": "test2"], bodyEncoding: JSONEncoding.default, urlParameters: ["url_test": "test1"]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .requestCustomJSONEncodable") {
+                it("should correctly acknowledge as equal for the same url, headers, encodable and encoder") {
+                    let date = Date()
+                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(Issue(title: "T", createdAt: date, rating: 0), encoder: JSONEncoder()))
+                    let endpointToCompare = endpoint.replacing(task: .requestCustomJSONEncodable(Issue(title: "T", createdAt: date, rating: 0), encoder: JSONEncoder()))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, encoder and different encodable") {
+                    let date = Date()
+                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(Issue(title: "T", createdAt: date, rating: 0), encoder: JSONEncoder()))
+                    let endpointToCompare = endpoint.replacing(task: .requestCustomJSONEncodable(Issue(title: "Ta", createdAt: date, rating: 0), encoder: JSONEncoder()))
+
+                    expect(endpoint) != endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers, encodable and different encoder") {
+                    let date = Date()
+                    endpoint = endpoint.replacing(task: .requestCustomJSONEncodable(Issue(title: "T", createdAt: date, rating: 0), encoder: JSONEncoder()))
+                    let snakeEncoder = JSONEncoder()
+                    snakeEncoder.keyEncodingStrategy = .convertToSnakeCase
+                    let endpointToCompare = endpoint.replacing(task: .requestCustomJSONEncodable(Issue(title: "T", createdAt: date, rating: 0), encoder: snakeEncoder))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+        }
     }
 }
 

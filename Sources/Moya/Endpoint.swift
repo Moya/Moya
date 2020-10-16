@@ -120,21 +120,41 @@ public extension Endpoint {
 /// Required for using `Endpoint` as a key type in a `Dictionary`.
 extension Endpoint: Equatable, Hashable {
     public func hash(into hasher: inout Hasher) {
-        guard let request = try? urlRequest() else {
-            hasher.combine(url)
-            return
+        switch task {
+        case let .uploadFile(file):
+            hasher.combine(file)
+        case let .uploadMultipart(multipartData), let .uploadCompositeMultipart(multipartData, _):
+            hasher.combine(multipartData)
+        default:
+            break
         }
-        hasher.combine(request)
+
+        if let request = try? urlRequest() {
+            hasher.combine(request)
+        } else {
+            hasher.combine(url)
+        }
     }
 
     /// Note: If both Endpoints fail to produce a URLRequest the comparison will
     /// fall back to comparing each Endpoint's hashValue.
     public static func == (lhs: Endpoint, rhs: Endpoint) -> Bool {
+        let areEndpointsEqualInAdditionalProperties: Bool = {
+            switch (lhs.task, rhs.task) {
+            case (let .uploadFile(file1), let .uploadFile(file2)):
+                return file1 == file2
+            case (let .uploadMultipart(multipartData1), let .uploadMultipart(multipartData2)),
+                 (let .uploadCompositeMultipart(multipartData1, _), let .uploadCompositeMultipart(multipartData2, _)):
+                return multipartData1 == multipartData2
+            default:
+                return true
+            }
+        }()
         let lhsRequest = try? lhs.urlRequest()
         let rhsRequest = try? rhs.urlRequest()
         if lhsRequest != nil, rhsRequest == nil { return false }
         if lhsRequest == nil, rhsRequest != nil { return false }
-        if lhsRequest == nil, rhsRequest == nil { return lhs.hashValue == rhs.hashValue }
-        return (lhsRequest == rhsRequest)
+        if lhsRequest == nil, rhsRequest == nil { return lhs.hashValue == rhs.hashValue && areEndpointsEqualInAdditionalProperties }
+        return lhsRequest == rhsRequest && areEndpointsEqualInAdditionalProperties
     }
 }
