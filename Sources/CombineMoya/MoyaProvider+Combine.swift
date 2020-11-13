@@ -32,6 +32,7 @@ public extension MoyaProvider {
     func requestWithProgressPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<ProgressResponse, MoyaError> {
         let progressBlock: (AnySubscriber<ProgressResponse, MoyaError>) -> (ProgressResponse) -> Void = { subscriber in
             return { progress in
+                guard !progress.completed else { return }
                 _ = subscriber.receive(progress)
             }
         }
@@ -39,7 +40,8 @@ public extension MoyaProvider {
         let response = MoyaPublisher<ProgressResponse> { [weak self] subscriber in
             let cancellableToken = self?.request(target, callbackQueue: callbackQueue, progress: progressBlock(subscriber)) { result in
                 switch result {
-                case .success:
+                case let .success(response):
+                    _ = subscriber.receive(ProgressResponse(progress: nil, response: response))
                     subscriber.receive(completion: .finished)
                 case let .failure(error):
                     subscriber.receive(completion: .failure(error))
