@@ -184,7 +184,7 @@ private extension MoyaProvider {
         formData.applyMoyaMultipartFormData(multipartBody)
 
         let interceptor = self.interceptor(target: target)
-        let request: UploadRequest = session.rootQueue.sync {
+        let request: UploadRequest = session.requestQueue.sync {
             let request = session.upload(multipartFormData: formData, with: request, interceptor: interceptor)
             setup(interceptor: interceptor, with: target, and: request)
 
@@ -198,7 +198,7 @@ private extension MoyaProvider {
 
     func sendUploadFile(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, file: URL, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
-        let uploadRequest: UploadRequest = session.rootQueue.sync {
+        let uploadRequest: UploadRequest = session.requestQueue.sync {
             let downloadRequest = session.upload(file, with: request, interceptor: interceptor)
             setup(interceptor: interceptor, with: target, and: downloadRequest)
 
@@ -212,7 +212,7 @@ private extension MoyaProvider {
 
     func sendDownloadRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, destination: @escaping DownloadDestination, progress: ProgressBlock? = nil, completion: @escaping Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
-        let downloadRequest: DownloadRequest = session.rootQueue.sync {
+        let downloadRequest: DownloadRequest = session.requestQueue.sync {
             let downloadRequest = session.download(request, interceptor: interceptor, to: destination)
             setup(interceptor: interceptor, with: target, and: downloadRequest)
 
@@ -226,7 +226,7 @@ private extension MoyaProvider {
 
     func sendRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> CancellableToken {
         let interceptor = self.interceptor(target: target)
-        let initialRequest: DataRequest = session.rootQueue.sync {
+        let initialRequest: DataRequest = session.requestQueue.sync {
             let initialRequest = session.request(request, interceptor: interceptor)
             setup(interceptor: interceptor, with: target, and: initialRequest)
 
