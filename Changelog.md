@@ -1,5 +1,8 @@
 # Next
 
+### Fixed
+- Fixed race condition that could prevent plugin's `willSend(_:target:)` from being fired.
+
 # [14.0.0] - 2020-02-15
 
 ### Changed
