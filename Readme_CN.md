@@ -7,8 +7,11 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya/master.svg)](https://circleci.com/gh/Moya/Moya/tree/master)
 [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Accio supported](https://img.shields.io/badge/Accio-supported-0A7CF5.svg?style=flat)](https://github.com/JamitLabs/Accio)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/Moya.svg)](https://cocoapods.org/pods/Moya)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+
+*在[这里](https://github.com/Moya/Moya/blob/master/Readme.md)查看英文版文档*
 
 你是个聪明的开发者。你可能使用 [Alamofire](https://github.com/Alamofire/Alamofire) 来抽象对 `URLSession` 的访问，以及所有那些你并不关心的糟糕细节。但是接下来，就像许多聪明开发者一样，你编写专有的网络抽象层，它们可能被称作 "APIManager" 或 "NetworkModel"，它们的下场总是很惨。
 
@@ -34,7 +37,7 @@ Moya 的一些特色功能：
 
 ## 示例项目
 
-我们在仓库中提供了两个示例项目。要使用它，请下载仓库，运行 `carthage update` 下载所需的库，然后打开 [Moya.xcodeproj]（https://github.com/Moya/Moya/tree/master/Moya.xcodeproj）。你会看到两个 scheme：`Basic` 和 `Multi-Target` ——选择一个然后构建并运行！这些源文件位于项目导航的 `Examples` 目录中。玩得开心！
+我们在仓库中提供了两个示例项目。要使用它，请下载仓库，运行 `carthage update` 下载所需的库，然后打开 [Moya.xcodeproj](https://github.com/Moya/Moya/tree/master/Moya.xcodeproj)。你会看到两个 scheme：`Basic` 和 `Multi-Target` ——选择一个然后构建并运行！这些源文件位于项目导航的 `Examples` 目录中。玩得开心！
 
 ## 项目状态
 
@@ -54,9 +57,13 @@ Moya 的一些特色功能：
 | 2.3   | 7.0.2 - 7.0.4  | 7.0.2 - 7.0.4   | 7.0.2 - 7.0.4  |
 | 2.2   | <= 7.0.1       | <= 7.0.1        | <= 7.0.1       |
 
+> 注意: 如果你在你的项目中使用 Swift 4.2, 但是同时使用了 Xcode 10.2, 那么 Moya 13 也能够正常工作, 即使我们使用了 Swift 5.0
+
 **升级到 Moya 的最新主版本？查看我们的 [迁移向导](https://github.com/Moya/Moya/blob/master/docs_CN/MigrationGuides)**。
 
 ### Swift Package Manager
+
+> 注意: 以下的说明都未使用 Xcode 内嵌的 UI 版 **Swift PM**. 使用 **Swift PM** 的最简单的方式是找到 Project Setting -> Swift Packages 并将 Moya 添加在其中
 
 要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
@@ -88,7 +95,11 @@ let package = Package(
 )
 ```
 
-注意从 Moya 10 开始，SPM 仅适用于 Swift 4 与更高版本的工具链。
+注意: 如果你正在使用 **ReactiveMoya**, 我们正在使用[我们自己 fork 版本的 ReactiveMoya](https://github.com/Moya/ReactiveSwift). 这个 fork 版本添加了 2 个 commits 用于移除在发行版(开始于 6.1.0)上的测试依赖. 这是为了防止 Xcode 在 Xcode 11/11.1 上的 Xcode Previews 建立测试依赖项(FB7316430). 如果你不想使用我们的 fork 版本, 你可以在你的 SPM package 列表中添加另一个依赖: `git@github.com:ReactiveCocoa/ReactiveSwift.git`, 这样它就会从原仓库拉取代码
+
+### Accio
+
+[Accio](https://github.com/JamitLabs/Accio) 是一个建立在 SwiftPM 之上的依赖管理器, 它为 iOS/macOS/tvOS/watchOS 创建 frameworks 库. 因此使用 Accio 集成 Moya 的步骤与以上几乎相同. 一旦你的 `Package.swift`文件配置完成, 运行 `accio update` 而不是 `swift package update` 即可
 
 ### CocoaPods
 
@@ -124,7 +135,7 @@ github "Moya/Moya" ~> 14.0
 
 如果这是你首次在项目中使用 Carthage，你将需要进行一些额外的步骤，它们在 [Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) 中有解释。
 
-> 注意：目前，Carthage 没有提供仅构建特定仓库子模块的方法。使用上述命令将构建所有子模块及其依赖项。但是，你不必将不使用的框架复制到项目中。例如，如果您没有使用 ReactiveSwift，请在 `carthage update` 完成后随意从 Carthage 的构建目录中删除框架 ReactiveMoya。或者如果你使用的是 ReactiveSwift 而不是 RxSwift，则可以安全地删除 RxMoya，RxTest，RxCocoa 等。
+> 注意：目前，Carthage 没有提供仅构建特定仓库子模块的方法。使用上述命令将构建所有子模块及其依赖项。但是，你不必将不使用的框架复制到项目中。例如，如果您没有使用 `ReactiveSwift`，请在 `carthage update` 完成后随意从 `Carthage` 的构建目录中删除框架 `ReactiveMoya`。或者如果你使用的是 `ReactiveSwift` 而不是 `RxSwift`，则可以安全地删除 `RxMoya`，`RxTest`，`RxCocoa` 等。
 
 ### 手动
 
