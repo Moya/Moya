@@ -64,9 +64,8 @@ public extension MoyaProvider {
 
             let networkCompletion: Moya.Completion = { result in
               if self.trackInflights {
-                self.inflightRequests[endpoint]?.forEach { $0(result) }
-
                 self.lock.lock()
+                self.inflightRequests[endpoint]?.forEach { $0(result) }
                 self.inflightRequests.removeValue(forKey: endpoint)
                 self.lock.unlock()
               } else {
