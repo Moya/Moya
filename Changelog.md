@@ -8,6 +8,7 @@
 - **Breaking Change** `MultiPartFormData` is now `Hashable`. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
 - **Breaking Change** `AccessTokenPlugin` now uses `TargetType`, instead of `AuthorizationType`, in the closure to determine the token. Full `MultiTarget` integration added as well. [#2046](https://github.com/Moya/Moya/pull/2046) by [@Coder-ZJQ](https://github.com/Coder-ZJQ).
 - `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
+- **Breaking Change** Minimum version of `RxSwift` is now 6.0. [#2120](https://github.com/Moya/Moya/pull/2120) by [@peagasilva](https://github.com/peagasilva).
 
 ### Fixed
 - Fixed an issue where when using `trackInflights` option in certain circumstances would return a cached response for an endpoint that's not really the same. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
