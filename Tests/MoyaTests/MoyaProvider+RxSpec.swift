@@ -24,8 +24,8 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 _ = provider.rx.request(.zen).subscribe { event in
                     switch event {
-                    case .success:          called = true
-                    case .error(let error): fail("errored: \(error)")
+                    case .success:            called = true
+                    case .failure(let error): fail("errored: \(error)")
                     }
                 }
 
@@ -39,7 +39,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 _ = provider.rx.request(target).subscribe { event in
                     switch event {
                     case .success(let response):    responseData = response.data
-                    case .error(let error):         fail("errored: \(error)")
+                    case .failure(let error):       fail("errored: \(error)")
                     }
                 }
 
@@ -70,8 +70,8 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 _ = provider.rx.request(.zen).subscribe { event in
                     switch event {
-                    case .success:          fail("should have errored")
-                    case .error(let error): receivedError = error as? MoyaError
+                    case .success:            fail("should have errored")
+                    case .failure(let error): receivedError = error as? MoyaError
                     }
                 }
 
@@ -90,7 +90,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 _ = provider.rx.request(target).subscribe { event in
                     switch event {
                     case .success:  fail("we should have errored")
-                    case .error:    errored = true
+                    case .failure:  errored = true
                     }
                 }
 
@@ -123,7 +123,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                         receivedResponse = response
                         expect(provider.inflightRequests.count).to(equal(1))
 
-                    case .error(let error):
+                    case .failure(let error):
                         fail("errored: \(error)")
                     }
                 }
@@ -135,7 +135,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                         expect(receivedResponse).to(beIdenticalToResponse(response))
                         expect(provider.inflightRequests.count).to(equal(1))
 
-                    case .error(let error):
+                    case .failure(let error):
                         fail("errored: \(error)")
                     }
                 }
