@@ -63,8 +63,8 @@ end
 
 def device_os
   return {
-    ios: "13.3",
-    tvos: "13.3"
+    ios: "13.7",
+    tvos: "13.4"
   }
 end
 
@@ -155,7 +155,7 @@ task :create_release, :version do |task, args|
   puts "Pushing as a GitHub Release."
   require 'octokit'
   version = args[:version]
-  changelog_filename = "CHANGELOG.md"	
+  changelog_filename = "CHANGELOG.md"
   changelog = File.read(changelog_filename)
   Octokit::Client.new(netrc: true).
     create_release('Moya/Moya',
