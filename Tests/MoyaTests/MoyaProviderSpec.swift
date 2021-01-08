@@ -238,7 +238,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("prepares the request using plugins") {
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    let token = provider.request(target) { _ in
+                    _ = provider.request(target) { _ in
                         done()
                     }
                 }
@@ -250,7 +250,7 @@ final class MoyaProviderSpec: QuickSpec {
 
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    let token = provider.request(target) { result in
+                    _ = provider.request(target) { result in
                         if case let .failure(error) = result {
                             receivedError = error
                         }
@@ -265,7 +265,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var receivedStatusCode: Int?
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    let token = provider.request(target) { result in
+                    _ = provider.request(target) { result in
                         if case let .success(response) = result {
                             receivedStatusCode = response.statusCode
                         }

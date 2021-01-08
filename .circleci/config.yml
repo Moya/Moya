@@ -1,9 +1,9 @@
 version: 2
 defaults: &defaults
   macos:
-    xcode: 11.7.0
+    xcode: 12.3.0
   parallelism: 1
-  shell: /bin/bash --login    
+  shell: /bin/bash --login
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
     CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -27,11 +27,11 @@ jobs:
           command: carthage checkout
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
-            - Carthage               
+            - Carthage
   build:
     <<: *defaults
     working_directory: ~/Moya/Moya
@@ -50,14 +50,14 @@ jobs:
           command: git clone git@github.com:realm/SwiftLint.git && cd SwiftLint && git submodule update --init --recursive && make install && cd ../
       - run:
           name: Add Python directory to PATH
-          command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
+          command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
-      - run: 
+      - run:
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
       - save_cache:
@@ -65,16 +65,16 @@ jobs:
           paths:
             - vendor/bundle
             - Carthage
-      - run: 
+      - run:
           name: Test on iOS
           command: rake test:ios
-      - run: 
+      - run:
           name: Test on macOS
           command: rake test:macos
       - run:
           name: Test on tvOS
           command: rake test:tvos
-      - run: 
+      - run:
           name: Test with Carthage
           command: rake test:carthage
       - run:
