@@ -964,19 +964,23 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1013,20 +1017,24 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1059,20 +1067,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -1161,20 +1173,24 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1218,7 +1234,8 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/**",
+					"$(PROJECT_DIR)/Carthage/Build/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1259,7 +1276,8 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/**",
+					"$(PROJECT_DIR)/Carthage/Build/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1297,7 +1315,8 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/**",
+					"$(PROJECT_DIR)/Carthage/Build/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1338,7 +1357,8 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/**",
+					"$(PROJECT_DIR)/Carthage/Build/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1368,20 +1388,24 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1482,19 +1506,23 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
 					"$(inherited)",
-					"$(SRCROOT)/Carthage/Build/**",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1526,20 +1554,24 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Sources/Supporting Files/Info.plist";
@@ -1571,20 +1603,24 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"FRAMEWORK_SEARCH_PATHS[sdk=appletv*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/tvOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphone*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/iOS",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=macosx*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/Mac",
 				);
 				"FRAMEWORK_SEARCH_PATHS[sdk=watch*]" = (
-					"$(SRCROOT)/Carthage/Build/**",
 					"$(inherited)",
+					"$(SRCROOT)/Carthage/Build/",
+					"$(SRCROOT)/Carthage/Build/watchOS",
 				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
