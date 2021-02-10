@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '3.0'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
-  s.swift_version = '5.1'
+  s.swift_version = '5.2'
   s.cocoapods_version = '>= 1.4.0'
 
   s.subspec "Core" do |ss|
@@ -47,6 +47,6 @@ Pod::Spec.new do |s|
   s.subspec "RxSwift" do |ss|
     ss.source_files = "Sources/RxMoya/"
     ss.dependency "Moya/Core"
-    ss.dependency "RxSwift", "~> 5.0"
+    ss.dependency "RxSwift", "~> 6.0"
   end
 end
