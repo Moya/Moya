@@ -160,7 +160,7 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                 let expectedFailedEventsCount = 0
                 let expectedInterruptedEventsCount = 0
                 let expectedCompletedEventsCount = 1
-                let timeout = 5.0
+                let timeout = 5
 
                 var nextProgressValues: [Double] = []
                 var nextResponseCount = 0
@@ -181,11 +181,11 @@ final class MoyaProviderReactiveSpec: QuickSpec {
                         }
                     })
 
-                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
-                expect(failedEventsCount).toEventually(equal(expectedFailedEventsCount), timeout: timeout)
-                expect(interruptedEventsCount).toEventually(equal(expectedInterruptedEventsCount), timeout: timeout)
-                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)
-                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)
+                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: .seconds(timeout))
+                expect(failedEventsCount).toEventually(equal(expectedFailedEventsCount), timeout: .seconds(timeout))
+                expect(interruptedEventsCount).toEventually(equal(expectedInterruptedEventsCount), timeout: .seconds(timeout))
+                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: .seconds(timeout))
+                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: .seconds(timeout))
             }
         }
     }

@@ -3,6 +3,7 @@ import Moya
 import RxSwift
 import Nimble
 import Foundation
+import CoreGraphics
 
 final class SingleMoyaSpec: QuickSpec {
     override func spec() {

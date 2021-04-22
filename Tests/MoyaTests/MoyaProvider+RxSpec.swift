@@ -167,7 +167,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 let expectedNextResponseCount = 1
                 let expectedErrorEventsCount = 0
                 let expectedCompletedEventsCount = 1
-                let timeout = 5.0
+                let timeout = 5
 
                 var nextProgressValues: [Double] = []
                 var nextResponseCount = 0
@@ -185,11 +185,11 @@ final class MoyaProviderRxSpec: QuickSpec {
                         case .completed: completedEventsCount += 1
                         }
                     })
-
-                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)
-                expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)
-                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)
-                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)
+                
+                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: .seconds(timeout))
+                expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: .seconds(timeout))
+                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: .seconds(timeout))
+                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: .seconds(timeout))
             }
 
             describe("a custom callback queue") {
