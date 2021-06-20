@@ -767,7 +767,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -799,7 +799,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -847,7 +847,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -878,7 +878,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -917,7 +917,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -935,8 +935,8 @@ final class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(error).to(beNil())
-                expect(progressValues.count) > 3
-                expect(completedValues.count) > 3
+                expect(progressValues.count) > 1
+                expect(completedValues.count) > 1
                 expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
                 expect(completedValues.last) == true // the last must be true
                 expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
@@ -952,7 +952,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -970,8 +970,8 @@ final class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(error).to(beNil())
-                expect(progressValues.count) > 3
-                expect(completedValues.count) > 3
+                expect(progressValues.count) > 1
+                expect(completedValues.count) > 1
                 expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
                 expect(completedValues.last) == true // the last must be true
                 expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
