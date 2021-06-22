@@ -1,7 +1,7 @@
-version: 2
+version: 2.1
 defaults: &defaults
   macos:
-    xcode: 11.7.0
+    xcode: 12.0.0
   parallelism: 1
   shell: /bin/bash --login    
   environment:
