@@ -132,7 +132,7 @@ let provider = MoyaProvider<MyTarget>(session: session)
 
 ### plugins:
 
-Finally, you may also provide an array of `plugins` to the provider. These receive callbacks
+You may also provide an array of `plugins` to the provider. These receive callbacks
 before a request is sent and after a response is received. There are a few plugins
 included already: one for network activity (`NetworkActivityPlugin`), one for logging
 all network activity (`NetworkLoggerPlugin`), and another for [HTTP Authentication](Authentication.md).
@@ -168,3 +168,7 @@ ends. This is useful for working with the [network activity indicator](https://g
 Note that signature of this closure is `(_ change: NetworkActivityChangeType, _ target: TargetType) -> Void`,
 so you will only be notified when a request has `.began`/`.ended` and for which `target` –
 you aren't provided any other details about the request itself.
+
+### trackInflights:
+
+Finally, if you set `trackInflights` to `true`, the provider will prevent duplicate requests by reusing the pending request.
