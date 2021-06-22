@@ -30,3 +30,7 @@ Demo/Pods
 .build
 Packages
 Package.pins
+
+# SPM
+
+.swiftpm
