@@ -23,11 +23,14 @@ jobs:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
       - run:
+          name: Upgrade Carthage
+          command: brew upgrade carthage
+      - run:
           name: Carthage checkout
           command: carthage checkout
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: carthage build --no-skip-current --no-use-binaries --verbose --use-xcframeworks         
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
@@ -57,6 +60,9 @@ jobs:
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
+      - run:
+          name: Upgrade Carthage
+          command: brew upgrade carthage
       - run: 
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh

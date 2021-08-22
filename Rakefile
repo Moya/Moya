@@ -143,7 +143,7 @@ namespace :test do
     Dir.mkdir("carthage_test")
     File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\" \"HEAD\"")
     Dir.chdir "carthage_test" do
-      sh "carthage bootstrap --platform 'iOS'"
+      sh "carthage bootstrap --platform 'iOS' --use-xcframeworks"
       has_artifacts = Dir.glob("Carthage/Build/*").count > 0
       raise("Carthage did not succeed") unless has_artifacts
     end

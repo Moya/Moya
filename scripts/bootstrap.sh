@@ -1,4 +1,4 @@
 #!/bin/sh
 
-carthage bootstrap
+carthage bootstrap --use-xcframeworks
 cp Cartfile.resolved Carthage
