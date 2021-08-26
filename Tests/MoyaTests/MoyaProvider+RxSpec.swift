@@ -167,7 +167,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 let expectedNextResponseCount = 1
                 let expectedErrorEventsCount = 0
                 let expectedCompletedEventsCount = 1
-                let timeout = 5.0
+                let timeout: DispatchTimeInterval = .seconds(5)
 
                 var nextProgressValues: [Double] = []
                 var nextResponseCount = 0
