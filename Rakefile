@@ -63,8 +63,8 @@ end
 
 def device_os
   return {
-    ios: "13.7",
-    tvos: "13.4"
+    ios: "14.4",
+    tvos: "14.3"
   }
 end
 
@@ -143,7 +143,7 @@ namespace :test do
     Dir.mkdir("carthage_test")
     File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\" \"HEAD\"")
     Dir.chdir "carthage_test" do
-      sh "carthage bootstrap --platform 'iOS'"
+      sh "./scripts/carthage bootstrap --platform 'iOS'"
       has_artifacts = Dir.glob("Carthage/Build/*").count > 0
       raise("Carthage did not succeed") unless has_artifacts
     end
