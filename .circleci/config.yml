@@ -57,6 +57,9 @@ jobs:
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
+      - run:
+          name: Upgrade Carthage
+          command: brew upgrade carthage
       - run: 
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
