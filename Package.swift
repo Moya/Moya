@@ -70,7 +70,7 @@ let package = Package(
                 "RxMoya",
                 .product(name: "Quick", package: "Quick"),
                 .product(name: "Nimble", package: "Nimble"),
-                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs"),
+                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
             ]
         )
     ]
