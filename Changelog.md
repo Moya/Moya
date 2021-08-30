@@ -14,6 +14,7 @@
 ### Fixed
 - Fixed an issue where when using `trackInflights` option in certain circumstances would return a cached response for an endpoint that's not really the same. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
 - Fixed a crash where Combine Publisher would crash when using stubs.  [#2072](https://github.com/Moya/Moya/pull/2072) by [jshier](https://github.com/jshier).
+- Fixed Unit Tests and CI  [#2187](https://github.com/Moya/Moya/pull/2187) by [OhKanghoon](https://github.com/OhKanghoon).
 
 # [15.0.0-alpha.1] - 2020-07-07
 
