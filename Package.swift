@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 
 import PackageDescription
 
@@ -35,11 +35,44 @@ let package = Package(
         .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", .upToNextMajor(from: "9.0.0")) // dev
     ] + rocketIfNeeded,
     targets: [
-        .target(name: "Moya", dependencies: ["Alamofire"]),
-        .target(name: "CombineMoya", dependencies: ["Moya"]),
-        .target(name: "ReactiveMoya", dependencies: ["Moya", "ReactiveSwift"]),
-        .target(name: "RxMoya", dependencies: ["Moya", "RxSwift"]),
-        .testTarget(name: "MoyaTests", dependencies: ["Moya", "CombineMoya", "RxMoya", "ReactiveMoya", "Quick", "Nimble", "OHHTTPStubsSwift"]) // dev
+        .target(
+            name: "Moya",
+            dependencies: [
+                .product(name: "Alamofire", package: "Alamofire")
+            ]
+        ),
+        .target(
+            name: "CombineMoya",
+            dependencies: [
+                "Moya"
+            ]
+        ),
+        .target(
+            name: "ReactiveMoya",
+            dependencies: [
+                "Moya",
+                .product(name: "ReactiveSwift", package: "ReactiveSwift")
+            ]
+        ),
+        .target(
+            name: "RxMoya",
+            dependencies: [
+                "Moya",
+                .product(name: "RxSwift", package: "RxSwift")
+            ]
+        ),
+        .testTarget(
+            name: "MoyaTests",  // dev
+            dependencies: [
+                "Moya",
+                "CombineMoya",
+                "ReactiveMoya",
+                "RxMoya",
+                .product(name: "Quick", package: "Quick"),
+                .product(name: "Nimble", package: "Nimble"),
+                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
+            ]
+        )
     ]
 )
 
@@ -48,14 +81,14 @@ import PackageConfig
 
 let config = PackageConfiguration([
     "rocket": [
-	"before": [
+        "before": [
             "scripts/update_changelog.sh",
             "scripts/update_podspec.sh"
-	],
-	"after": [
+        ],
+        "after": [
             "rake create_release\\[\"$VERSION\"\\]",
             "scripts/update_docs_website.sh"
-	]
+        ]
     ]
 ]).write()
 #endif
