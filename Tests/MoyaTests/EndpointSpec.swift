@@ -448,10 +448,10 @@ final class EndpointSpec: QuickSpec {
 
             context("when task is .downloadParameters") {
                 it("should correctly acknowledge as equal for the same url, headers and download destination") {
-                    endpoint = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                    endpoint = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, _ in
                         return (destinationURL: temporaryUrl, options: [])
                     }))
-                    let endpointToCompare = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                    let endpointToCompare = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, _ in
                         return (destinationURL: temporaryUrl, options: [])
                     }))
 
@@ -459,10 +459,10 @@ final class EndpointSpec: QuickSpec {
                 }
 
                 it("should correctly acknowledge as not equal for the same url, headers, download destionation and different parameters") {
-                    endpoint = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                    endpoint = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test2"], encoding: JSONEncoding.default, destination: { temporaryUrl, _ in
                         return (destinationURL: temporaryUrl, options: [])
                     }))
-                    let endpointToCompare = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test3"], encoding: JSONEncoding.default, destination: { temporaryUrl, response in
+                    let endpointToCompare = endpoint.replacing(task: .downloadParameters(parameters: ["test": "test3"], encoding: JSONEncoding.default, destination: { temporaryUrl, _ in
                         return (destinationURL: temporaryUrl, options: [])
                     }))
 
