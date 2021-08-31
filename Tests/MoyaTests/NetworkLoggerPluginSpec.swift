@@ -66,7 +66,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs a validation error message") {
             let response = Response(statusCode: 500, data: "Internal error".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-            let validationResponseError = AFError.responseValidationFailed(reason: .unacceptableStatusCode(code:500))
+            let validationResponseError = AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: 500))
             let result: Result<Moya.Response, MoyaError> = .failure(.underlying(validationResponseError, response))
 
             plugin.didReceive(result, target: GitHub.zen)
