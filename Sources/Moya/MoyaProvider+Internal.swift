@@ -179,7 +179,7 @@ private extension MoyaProvider {
         let interceptor = self.interceptor(target: target)
         let uploadRequest: UploadRequest = session.requestQueue.sync {
             let uploadRequest = session.upload(multipartFormData: formData, with: request, interceptor: interceptor)
-            setup(interceptor: interceptor, with: target, and: request)
+            setup(interceptor: interceptor, with: target, and: uploadRequest)
 
             return uploadRequest
         }
