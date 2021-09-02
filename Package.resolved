@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
         "state": {
           "branch": null,
-          "revision": "0c8cb78d05b6d067ee331c05058ff4dedcb45ffa",
-          "version": "5.0.0"
+          "revision": "f96b619bcb2383b43d898402283924b80e2c4bae",
+          "version": "5.4.3"
         }
       },
       {
@@ -75,11 +75,11 @@
       },
       {
         "package": "ReactiveSwift",
-        "repositoryURL": "https://github.com/Moya/ReactiveSwift.git",
+        "repositoryURL": "https://github.com/ReactiveCocoa/ReactiveSwift.git",
         "state": {
           "branch": null,
-          "revision": "f195d82bb30e412e70446e2b4a77e1b514099e88",
-          "version": "6.1.0"
+          "revision": "2c06e9421011a1a4cf57ea4bbcd8936843a6c9da",
+          "version": "6.6.1"
         }
       },
       {
@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/shibapm/Rocket",
         "state": {
           "branch": null,
-          "revision": "61166b38e229e09b53becef2e495eb99f437438a",
-          "version": "1.0.1"
+          "revision": "51a77ce5fa66c42715c14dcc542c01cd7a60fb27",
+          "version": "1.2.0"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/kareman/SwiftShell",
         "state": {
           "branch": null,
-          "revision": "fb7fc2c9ad8811caf324431a508fb79e3fb74f99",
-          "version": "5.0.1"
+          "revision": "a6014fe94c3dbff0ad500e8da4f251a5d336530b",
+          "version": "5.1.0-beta.1"
         }
       },
       {
@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/jpsim/Yams",
         "state": {
           "branch": null,
-          "revision": "c947a306d2e80ecb2c0859047b35c73b8e1ca27f",
-          "version": "2.0.0"
+          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+          "version": "4.0.6"
         }
       }
     ]
