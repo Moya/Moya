@@ -98,7 +98,7 @@ public extension Response {
         do {
             return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         } catch {
-            if data.count < 1 && !failsOnEmptyData {
+            if data.isEmpty && !failsOnEmptyData {
                 return NSNull()
             }
             throw MoyaError.jsonMapping(self)
@@ -171,7 +171,7 @@ public extension Response {
             jsonData = data
         }
         do {
-            if jsonData.count < 1 && !failsOnEmptyData {
+            if jsonData.isEmpty && !failsOnEmptyData {
                 if let emptyJSONObjectData = "{}".data(using: .utf8), let emptyDecodableValue = try? decoder.decode(D.self, from: emptyJSONObjectData) {
                     return emptyDecodableValue
                 } else if let emptyJSONArrayData = "[{}]".data(using: .utf8), let emptyDecodableValue = try? decoder.decode(D.self, from: emptyJSONArrayData) {
