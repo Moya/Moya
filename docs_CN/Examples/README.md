@@ -22,3 +22,4 @@
 
 * [创建自定义插件](CustomPlugin.md)
 * [创建授权插件](AuthPlugin.md)
+* [创建一个缓存策略插件](CachePolicyPlugin.md)
