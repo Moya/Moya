@@ -1,10 +1,35 @@
 # Next
 
+### Added
+- Added `NetworkLoggerPlugin.default` and `NetworkLoggerPlugin.verbose` to conveniently access the default plugins. [#2095](https://github.com/Moya/Moya/pull/2095) by [@sunshinejr](https://github.com/sunshinejr).
+
+### Changed
+- **Breaking Change** Changed `Hashable` && `Equatable` implementation of `Endpoint` since it was returning false positives. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** `MultiPartFormData` is now `Hashable`. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
+- **Breaking Change** `AccessTokenPlugin` now uses `TargetType`, instead of `AuthorizationType`, in the closure to determine the token. Full `MultiTarget` integration added as well. [#2046](https://github.com/Moya/Moya/pull/2046) by [@Coder-ZJQ](https://github.com/Coder-ZJQ).
+- `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
+- **Breaking Change** Minimum version of `RxSwift` is now 6.0. [#2120](https://github.com/Moya/Moya/pull/2120) by [@peagasilva](https://github.com/peagasilva).
+- Moya's Swift minimum version is now Swift 5.2. [#2120](https://github.com/Moya/Moya/pull/2120) by [@peagasilva](https://github.com/peagasilva).
+
+### Fixed
+- Fixed an issue where when using `trackInflights` option in certain circumstances would return a cached response for an endpoint that's not really the same. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
+- Fixed a crash where Combine Publisher would crash when using stubs.  [#2072](https://github.com/Moya/Moya/pull/2072) by [jshier](https://github.com/jshier).
+- Fixed Unit Tests and CI. [#2187](https://github.com/Moya/Moya/pull/2187) by [OhKanghoon](https://github.com/OhKanghoon).
+- Fixed a race condition that could prevent plugin's `willSend(_:target:)` from being fired. [#2192](https://github.com/Moya/Moya/pull/2192) by [anton-plebanovich](https://github.com/anton-plebanovich).
+
+# [15.0.0-alpha.1] - 2020-07-07
+
+### Added
+- We brought back Combine support! [#2024](https://github.com/Moya/Moya/pull/2024) by [@MaxDesiatov](https://github.com/MaxDesiatov).
+
+### Changed
+- Moya's Swift minimum version is now Swift 5.1. [#1931](https://github.com/Moya/Moya/pull/1931) by [@BasThomas](https://github.com/BasThomas) and [@LucianoPAlmeida](https://github.com/LucianoPAlmeida).
+
 # [14.0.0] - 2020-02-15
 
 ### Changed
 - **Breaking Change** Minimum version of `Alamofire` is now 5.0. [#1992](https://github.com/Moya/Moya/pull/1992) by [@sunshinejr](https://github.com/sunshinejr).
-- **Breaking Change**  `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
+- **Breaking Change** `MultiTarget` now implements `AccessTokenAuthorizable` so that the inner target's `authorizationType` is correctly returned to the `AccessTokenPlugin` when requested. [#1979](https://github.com/Moya/Moya/pull/1979) by [@amaurydavid](https://github.com/amaurydavid).
 
 
 # [14.0.0-beta.6] - 2019-12-09

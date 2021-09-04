@@ -2,7 +2,7 @@ import Nimble
 
 /// A Nimble matcher that succeeds when at least one of the substrings
 public func containOne(of substrings: String...) -> Predicate<String> {
-    return containOne(of: substrings)
+    containOne(of: substrings)
 }
 
 /// A Nimble matcher that succeeds when at least one of the substrings

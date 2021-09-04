@@ -20,7 +20,7 @@ target (at compile time). You can see that parameters needed for requests can be
 ```swift
 // MARK: - TargetType Protocol Implementation
 extension MyService: TargetType {
-    var baseURL: URL { return URL(string: "https://api.myservice.com")! }
+    var baseURL: URL { URL(string: "https://api.myservice.com")! }
     var path: String {
         switch self {
         case .zen:
@@ -77,12 +77,10 @@ extension MyService: TargetType {
 // MARK: - Helpers
 private extension String {
     var urlEscaped: String {
-        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 
-    var utf8Encoded: Data {
-        return data(using: .utf8)!
-    }
+    var utf8Encoded: Data { Data(self.utf8) }
 }
 ```
 

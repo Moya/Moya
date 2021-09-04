@@ -11,7 +11,7 @@ import OHHTTPStubsSwift
 @testable import ReactiveMoya
 
 func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Response> {
-    return Predicate { expression in
+    Predicate { expression in
         let test: Bool
         if let value = try expression.evaluate(), value == expectedValue {
             test = true
@@ -119,18 +119,19 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                     }
 
                     it("uses a background queue") {
-                        var isMainThread: Bool?
+
+                        let callbackQueueLabel = Atomic<String?>(wrappedValue: nil)
                         let callbackQueue = DispatchQueue(label: "background_queue", attributes: .concurrent)
                         let target: GitHub = .zen
 
                         waitUntil { done in
                             provider.request(target, callbackQueue: callbackQueue) { _ in
-                                isMainThread = Thread.isMainThread
+                                callbackQueueLabel.wrappedValue = DispatchQueue.currentLabel
                                 done()
                             }
                         }
 
-                        expect(isMainThread) == false
+                        expect(callbackQueueLabel.wrappedValue) == "background_queue"
                     }
 
                     it("uses the main queue") {
@@ -363,7 +364,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 var receievedResponse: Response?
                 var receivedError: Error?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     provider.request(target) { result in
                         switch result {
                         case .success(let response):
@@ -385,7 +386,7 @@ final class MoyaProviderIntegrationTests: QuickSpec {
                 var receievedResponse: Response?
                 var receivedError: Error?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     provider.request(target) { result in
                         switch result {
                         case .success(let response):

@@ -35,9 +35,7 @@ public struct ProgressResponse {
     }
 
     /// A Boolean value stating whether the request is completed.
-    public var completed: Bool {
-        return response != nil
-    }
+    public var completed: Bool { response != nil }
 }
 
 /// A protocol representing a minimal interface for a MoyaProvider.
@@ -83,7 +81,10 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     public let trackInflights: Bool
 
-    open internal(set) var inflightRequests: [Endpoint: [Moya.Completion]] = [:]
+    open var inflightRequests: [Endpoint: [Moya.Completion]] { internalInflightRequests }
+
+    @Atomic
+    var internalInflightRequests: [Endpoint: [Moya.Completion]] = [:]
 
     /// Propagated to Alamofire as callback queue. If nil - the Alamofire default (as of their API in 2017 - the main queue) will be used.
     let callbackQueue: DispatchQueue?
@@ -110,7 +111,7 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
 
     /// Returns an `Endpoint` based on the token, method, and parameters by invoking the `endpointClosure`.
     open func endpoint(_ token: Target) -> Endpoint {
-        return endpointClosure(token)
+        endpointClosure(token)
     }
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
@@ -179,18 +180,14 @@ public extension MoyaProvider {
     // at least add some class functions to allow easy access to common stubbing closures.
 
     /// Do not stub.
-    final class func neverStub(_: Target) -> Moya.StubBehavior {
-        return .never
-    }
+    final class func neverStub(_: Target) -> Moya.StubBehavior { .never }
 
     /// Return a response immediately.
-    final class func immediatelyStub(_: Target) -> Moya.StubBehavior {
-        return .immediate
-    }
+    final class func immediatelyStub(_: Target) -> Moya.StubBehavior { .immediate }
 
     /// Return a response after a delay.
     final class func delayedStub(_ seconds: TimeInterval) -> (Target) -> Moya.StubBehavior {
-        return { _ in return .delayed(seconds: seconds) }
+        return { _ in .delayed(seconds: seconds) }
     }
 }
 

@@ -17,7 +17,7 @@ Targets必须遵循 `TargetType`协议。 `TargetType`协议要求一个`baseURL
 
 ```swift
 extension GitHub: TargetType {
-    public var baseURL: URL { return URL(string: "https://api.github.com")! }
+    public var baseURL: URL { URL(string: "https://api.github.com")! }
 }
 ```
 
@@ -131,7 +131,7 @@ URLs的转义
 ```swift
 extension String {
     var urlEscaped: String {
-        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }
 ```

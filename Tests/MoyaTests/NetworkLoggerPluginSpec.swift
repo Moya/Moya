@@ -66,7 +66,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
 
         it("outputs a validation error message") {
             let response = Response(statusCode: 500, data: "Internal error".data(using: .utf8)!, response: HTTPURLResponse(url: URL(string: url(GitHub.zen))!, mimeType: nil, expectedContentLength: 0, textEncodingName: nil))
-            let validationResponseError = AFError.responseValidationFailed(reason: .unacceptableStatusCode(code:500))
+            let validationResponseError = AFError.responseValidationFailed(reason: .unacceptableStatusCode(code: 500))
             let result: Result<Moya.Response, MoyaError> = .failure(.underlying(validationResponseError, response))
 
             plugin.didReceive(result, target: GitHub.zen)
@@ -106,7 +106,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
                 let plugin = NetworkLoggerPlugin()
                 plugin.configuration.output = customLoggerOutput
                 plugin.configuration.logOptions = .verbose
-                plugin.configuration.formatter.requestData = { _ in return "formatted request body" }
+                plugin.configuration.formatter.requestData = { _ in "formatted request body" }
                 return plugin
             }()
 
@@ -120,7 +120,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             let pluginWithEntryFormatter: NetworkLoggerPlugin = {
                 let plugin = NetworkLoggerPlugin()
                 plugin.configuration.output = customLoggerOutput
-                plugin.configuration.formatter.entry = { _, _, _ in return "formatted log entry" }
+                plugin.configuration.formatter.entry = { _, _, _ in "formatted log entry" }
                 return plugin
             }()
 
@@ -136,7 +136,7 @@ final class NetworkLoggerPluginSpec: QuickSpec {
             let pluginWithResponseDataFormatter: NetworkLoggerPlugin = {
                 let plugin = NetworkLoggerPlugin()
                 plugin.configuration.output = customLoggerOutput
-                plugin.configuration.formatter.responseData = { _ in return "formatted response body" }
+                plugin.configuration.formatter.responseData = { _ in "formatted response body" }
                 plugin.configuration.logOptions = .verbose
                 return plugin
             }()
@@ -161,16 +161,12 @@ private class TestStreamRequest: RequestType {
     }
 
     var sessionHeaders: [String: String] {
-        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+        ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        return self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
@@ -188,16 +184,12 @@ private class TestBodyRequest: RequestType {
     }
 
     var sessionHeaders: [String: String] {
-        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+        ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        return self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")
@@ -215,16 +207,12 @@ private class TestCurlBodyRequest: RequestType {
     }
 
     var sessionHeaders: [String: String] {
-        return ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
+        ["Content-Type": "application/badJson", "Accept-Language": "en-US"]
     }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        return self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler(["$ curl -i", "-H \"Content-Type: application/json\"", "-d \"cool body\"", "\"https://api.github.com/zen\""].joined(separator: " \\\n\t"))
@@ -233,21 +221,13 @@ private class TestCurlBodyRequest: RequestType {
 }
 
 private class TestNilRequest: RequestType {
-    var request: URLRequest? {
-        return nil
-    }
+    var request: URLRequest? { nil }
 
-    var sessionHeaders: [String: String] {
-        return [:]
-    }
+    var sessionHeaders: [String: String] { [:] }
 
-    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self {
-        return self
-    }
+    func authenticate(username user: String, password: String, persistence: URLCredential.Persistence) -> Self { self }
 
-    func authenticate(with credential: URLCredential) -> Self {
-        return self
-    }
+    func authenticate(with credential: URLCredential) -> Self { self }
 
     func cURLDescription(calling handler: @escaping (String) -> Void) -> Self {
         handler("")

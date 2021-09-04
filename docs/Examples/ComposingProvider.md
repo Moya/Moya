@@ -33,7 +33,7 @@ final class OnlineProvider<Target> where Target: Moya.TargetType {
 Now we need a method to perform the request
 
 ```swift
-func request(_ token: Taget) -> Single<Moya.Response> {
+func request(_ token: Target) -> Single<Moya.Response> {
     let actualRequest = provider.rx.request(token)
 
     return online

@@ -238,7 +238,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("prepares the request using plugins") {
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    let token = provider.request(target) { _ in
+                    _ = provider.request(target) { _ in
                         done()
                     }
                 }
@@ -250,7 +250,7 @@ final class MoyaProviderSpec: QuickSpec {
 
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    let token = provider.request(target) { result in
+                    _ = provider.request(target) { result in
                         if case let .failure(error) = result {
                             receivedError = error
                         }
@@ -265,7 +265,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var receivedStatusCode: Int?
                 waitUntil { done in
                     let target: GitHub = .userProfile("ashfurrow")
-                    let token = provider.request(target) { result in
+                    _ = provider.request(target) { result in
                         if case let .success(response) = result {
                             receivedStatusCode = response.statusCode
                         }
@@ -436,7 +436,7 @@ final class MoyaProviderSpec: QuickSpec {
             it("returns identical sample response") {
                 let response = HTTPURLResponse(url: URL(string: "http://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
                 let endpointResolution: MoyaProvider<GitHub>.EndpointClosure = { target in
-                    return Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
+                    Endpoint(url: URL(target: target).absoluteString, sampleResponseClosure: { .response(response, target.sampleData) }, method: target.method, task: target.task, httpHeaderFields: target.headers)
                 }
                 let provider = MoyaProvider<GitHub>(endpointClosure: endpointResolution, stubClosure: MoyaProvider.immediatelyStub)
 
@@ -767,7 +767,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -799,7 +799,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -847,7 +847,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -878,7 +878,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -917,7 +917,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -935,8 +935,8 @@ final class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(error).to(beNil())
-                expect(progressValues.count) > 3
-                expect(completedValues.count) > 3
+                expect(progressValues.count) > 1
+                expect(completedValues.count) > 1
                 expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
                 expect(completedValues.last) == true // the last must be true
                 expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
@@ -952,7 +952,7 @@ final class MoyaProviderSpec: QuickSpec {
                 var completedValues: [Bool] = []
                 var error: MoyaError?
 
-                waitUntil(timeout: 10.0) { done in
+                waitUntil(timeout: .seconds(10)) { done in
                     let progressClosure: ProgressBlock = { progress in
                         progressObjects.append(progress.progressObject)
                         progressValues.append(progress.progress)
@@ -970,8 +970,8 @@ final class MoyaProviderSpec: QuickSpec {
                 }
 
                 expect(error).to(beNil())
-                expect(progressValues.count) > 3
-                expect(completedValues.count) > 3
+                expect(progressValues.count) > 1
+                expect(completedValues.count) > 1
                 expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
                 expect(completedValues.last) == true // the last must be true
                 expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
@@ -1079,7 +1079,7 @@ final class MoyaProviderSpec: QuickSpec {
             context("response contains invalid status code") {
                 it("returns an error") {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
-                        return Endpoint(
+                        Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(400, target.sampleData) },
                             method: target.method,
@@ -1113,7 +1113,7 @@ final class MoyaProviderSpec: QuickSpec {
             context("response contains valid status code") {
                 it("returns a response") {
                     let endpointClosure = { (target: GitHub) -> Endpoint in
-                        return Endpoint(
+                        Endpoint(
                             url: URL(target: target).absoluteString,
                             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
                             method: target.method,

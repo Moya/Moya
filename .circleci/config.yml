@@ -1,7 +1,7 @@
-version: 2
+version: 2.1
 defaults: &defaults
   macos:
-    xcode: 11.0.0
+    xcode: 12.5.1
   parallelism: 1
   shell: /bin/bash --login    
   environment:
@@ -27,7 +27,7 @@ jobs:
           command: carthage checkout
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose             
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
@@ -57,6 +57,9 @@ jobs:
           environment:
             BUNDLE_JOBS: 4
             BUNDLE_RETRY: 3
+      - run:
+          name: Upgrade Carthage
+          command: brew upgrade carthage
       - run: 
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh

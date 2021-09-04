@@ -24,16 +24,14 @@ public final class Response: CustomDebugStringConvertible, Equatable {
 
     /// A text description of the `Response`.
     public var description: String {
-        return "Status Code: \(statusCode), Data Length: \(data.count)"
+        "Status Code: \(statusCode), Data Length: \(data.count)"
     }
 
     /// A text description of the `Response`. Suitable for debugging.
-    public var debugDescription: String {
-        return description
-    }
+    public var debugDescription: String { description }
 
     public static func == (lhs: Response, rhs: Response) -> Bool {
-        return lhs.statusCode == rhs.statusCode
+        lhs.statusCode == rhs.statusCode
             && lhs.data == rhs.data
             && lhs.response == rhs.response
     }
@@ -63,7 +61,7 @@ public extension Response {
      - throws: `MoyaError.statusCode` when others are encountered.
     */
     func filter(statusCode: Int) throws -> Response {
-        return try filter(statusCodes: statusCode...statusCode)
+        try filter(statusCodes: statusCode...statusCode)
     }
 
     /**
@@ -72,7 +70,7 @@ public extension Response {
      - throws: `MoyaError.statusCode` when others are encountered.
     */
     func filterSuccessfulStatusCodes() throws -> Response {
-        return try filter(statusCodes: 200...299)
+        try filter(statusCodes: 200...299)
     }
 
     /**
@@ -81,7 +79,7 @@ public extension Response {
      - throws: `MoyaError.statusCode` when others are encountered.
     */
     func filterSuccessfulStatusAndRedirectCodes() throws -> Response {
-        return try filter(statusCodes: 200...399)
+        try filter(statusCodes: 200...399)
     }
 
     /// Maps data received from the signal into an Image.
@@ -100,7 +98,7 @@ public extension Response {
         do {
             return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
         } catch {
-            if data.count < 1 && !failsOnEmptyData {
+            if data.isEmpty && !failsOnEmptyData {
                 return NSNull()
             }
             throw MoyaError.jsonMapping(self)
@@ -173,7 +171,7 @@ public extension Response {
             jsonData = data
         }
         do {
-            if jsonData.count < 1 && !failsOnEmptyData {
+            if jsonData.isEmpty && !failsOnEmptyData {
                 if let emptyJSONObjectData = "{}".data(using: .utf8), let emptyDecodableValue = try? decoder.decode(D.self, from: emptyJSONObjectData) {
                     return emptyDecodableValue
                 } else if let emptyJSONArrayData = "[{}]".data(using: .utf8), let emptyDecodableValue = try? decoder.decode(D.self, from: emptyJSONArrayData) {

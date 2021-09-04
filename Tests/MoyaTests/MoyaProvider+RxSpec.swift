@@ -24,8 +24,8 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 _ = provider.rx.request(.zen).subscribe { event in
                     switch event {
-                    case .success:          called = true
-                    case .error(let error): fail("errored: \(error)")
+                    case .success:            called = true
+                    case .failure(let error): fail("errored: \(error)")
                     }
                 }
 
@@ -39,7 +39,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 _ = provider.rx.request(target).subscribe { event in
                     switch event {
                     case .success(let response):    responseData = response.data
-                    case .error(let error):         fail("errored: \(error)")
+                    case .failure(let error):       fail("errored: \(error)")
                     }
                 }
 
@@ -70,8 +70,8 @@ final class MoyaProviderRxSpec: QuickSpec {
 
                 _ = provider.rx.request(.zen).subscribe { event in
                     switch event {
-                    case .success:          fail("should have errored")
-                    case .error(let error): receivedError = error as? MoyaError
+                    case .success:            fail("should have errored")
+                    case .failure(let error): receivedError = error as? MoyaError
                     }
                 }
 
@@ -90,7 +90,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 _ = provider.rx.request(target).subscribe { event in
                     switch event {
                     case .success:  fail("we should have errored")
-                    case .error:    errored = true
+                    case .failure:  errored = true
                     }
                 }
 
@@ -123,7 +123,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                         receivedResponse = response
                         expect(provider.inflightRequests.count).to(equal(1))
 
-                    case .error(let error):
+                    case .failure(let error):
                         fail("errored: \(error)")
                     }
                 }
@@ -135,7 +135,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                         expect(receivedResponse).to(beIdenticalToResponse(response))
                         expect(provider.inflightRequests.count).to(equal(1))
 
-                    case .error(let error):
+                    case .failure(let error):
                         fail("errored: \(error)")
                     }
                 }
@@ -167,7 +167,7 @@ final class MoyaProviderRxSpec: QuickSpec {
                 let expectedNextResponseCount = 1
                 let expectedErrorEventsCount = 0
                 let expectedCompletedEventsCount = 1
-                let timeout = 5.0
+                let timeout = DispatchTimeInterval.seconds(5)
 
                 var nextProgressValues: [Double] = []
                 var nextResponseCount = 0
@@ -220,17 +220,17 @@ final class MoyaProviderRxSpec: QuickSpec {
                     context("the callback queue is provided with the request") {
                         it("invokes the callback on the request queue") {
                             let requestQueue = DispatchQueue(label: UUID().uuidString)
-                            var callbackQueueLabel: String?
+                            let callbackQueueLabel = Atomic<String?>(wrappedValue: nil)
 
                             waitUntil(action: { completion in
                                 provider.rx.request(.zen, callbackQueue: requestQueue)
                                     .subscribe(onSuccess: { _ in
-                                        callbackQueueLabel = DispatchQueue.currentLabel
+                                        callbackQueueLabel.wrappedValue = DispatchQueue.currentLabel
                                         completion()
                                     }).disposed(by: disposeBag)
                             })
 
-                            expect(callbackQueueLabel) == requestQueue.label
+                            expect(callbackQueueLabel.wrappedValue) == requestQueue.label
                         }
                     }
 
