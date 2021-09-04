@@ -2,7 +2,7 @@
   <img height="160" src="web/logo_github.png" />
 </p>
 
-# Moya 14.0.0
+# Moya 15.0.0
 
 [![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya/master.svg)](https://circleci.com/gh/Moya/Moya/tree/master)
 [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
@@ -78,16 +78,16 @@ _Note: Instructions below are for using **SwiftPM** without the Xcode UI. It's t
 To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0"))
 ```
 
 and then specify `"Moya"` as a dependency of the Target in which you wish to use Moya.
-If you want to use reactive extensions, add also `"ReactiveMoya"`,`"RxMoya"` or
+If you want to use reactive extensions, add also `"ReactiveMoya"`, `"RxMoya"` or
 `"CombineMoya"` as your target dependency respectively.
 Here's an example `PackageDescription`:
 
 ```swift
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -98,7 +98,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0"))
     ],
     targets: [
         .target(
@@ -123,19 +123,19 @@ a weakly linked framework to your application target.
 For Moya, use the following entry in your Podfile:
 
 ```rb
-pod 'Moya', '~> 14.0'
+pod 'Moya', '~> 15.0'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 14.0'
+pod 'Moya/RxSwift', '~> 15.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 14.0'
+pod 'Moya/ReactiveSwift', '~> 15.0'
 
 #or
 
-pod 'Moya/Combine', '~> 14.1'
+pod 'Moya/Combine', '~> 15.0'
 ```
 
 Then run `pod install`.
@@ -146,15 +146,16 @@ import the framework with `import Moya`.
 ### Carthage
 
 Carthage users can point to this repository and use whichever
-generated framework they'd like, `Moya`, `RxMoya`, or `ReactiveMoya`.
+generated framework they'd like, `Moya`, `RxMoya`, `ReactiveMoya`, or
+`CombineMoya`.
 
 Make the following entry in your Cartfile:
 
 ```
-github "Moya/Moya" ~> 14.0
+github "Moya/Moya" ~> 15.0
 ```
 
-Then run `carthage update`.
+Then run `carthage update --use-xcframeworks`.
 
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
