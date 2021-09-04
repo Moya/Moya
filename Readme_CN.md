@@ -2,7 +2,7 @@
   <img height="160" src="web/logo_github.png" />
 </p>
 
-# Moya 14.0.0
+# Moya 15.0.0
 
 [![CircleCI](https://img.shields.io/circleci/project/github/Moya/Moya/master.svg)](https://circleci.com/gh/Moya/Moya/tree/master)
 [![codecov.io](https://codecov.io/github/Moya/Moya/coverage.svg?branch=master)](https://codecov.io/github/Moya/Moya?branch=master)
@@ -68,13 +68,13 @@ Moya 的一些特色功能：
 要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
 ```swift
-.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
+.package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0"))
 ```
 
 然后指定 `"Moya"` 为你想要使用 Moya 的 Target 的依赖。如果你想要使用响应式扩展，将 `"ReactiveMoya"` 和 `"RxMoya"` 也也作为依赖加入进来。这里是一个 `PackageDescription` 实例：
 
 ```swift
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
@@ -85,7 +85,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "14.0.0"))
+        .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0"))
     ],
     targets: [
         .target(
@@ -106,15 +106,19 @@ let package = Package(
 在你的 Podfile 文件中添加 Moya：
 
 ```rb
-pod 'Moya', '~> 14.0'
+pod 'Moya', '~> 15.0'
 
 # or 
 
-pod 'Moya/RxSwift', '~> 14.0'
+pod 'Moya/RxSwift', '~> 15.0'
 
 # or
 
-pod 'Moya/ReactiveSwift', '~> 14.0'
+pod 'Moya/ReactiveSwift', '~> 15.0'
+
+#or
+
+pod 'Moya/Combine', '~> 15.0'
 ```
 
 然后运行 `pod install`。
@@ -128,10 +132,10 @@ Carthage 用户可以指向这个仓库并使用他们喜欢的生成框架，`M
 在你的 Cartfile 中添加下面的代码：
 
 ```
-github "Moya/Moya" ~> 14.0
+github "Moya/Moya" ~> 15.0
 ```
 
-然后运行 `carthage update`。
+然后运行 `carthage update --use-xcframeworks`。
 
 如果这是你首次在项目中使用 Carthage，你将需要进行一些额外的步骤，它们在 [Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application) 中有解释。
 
