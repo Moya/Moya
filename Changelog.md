@@ -1,5 +1,7 @@
 # Next
 
+# [15.0.0] - 2021-09-04
+
 ### Added
 - Added `NetworkLoggerPlugin.default` and `NetworkLoggerPlugin.verbose` to conveniently access the default plugins. [#2095](https://github.com/Moya/Moya/pull/2095) by [@sunshinejr](https://github.com/sunshinejr).
 
