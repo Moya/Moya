@@ -35,7 +35,7 @@ To make a release:
 
 1. Pull latest from master and make sure your git is clean (the script will fail if it's not).
 1. Run `bundle install`.
-1. Run `swift run X.Y.Z`.
+1. Run `swift run rocket X.Y.Z`.
 1. Grab a :tea: or :coffee:.
 1. Make sure everything went smoothly.
 
