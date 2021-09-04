@@ -10,6 +10,7 @@
 - `Target.sampleData` is now automatically implemented as `Data()` with default protocol extension. [#2015](https://github.com/Moya/Moya/pull/2015) by [jdisho](https://github.com/jdisho).
 - **Breaking Change** Minimum version of `RxSwift` is now 6.0. [#2120](https://github.com/Moya/Moya/pull/2120) by [@peagasilva](https://github.com/peagasilva).
 - Moya's Swift minimum version is now Swift 5.2. [#2120](https://github.com/Moya/Moya/pull/2120) by [@peagasilva](https://github.com/peagasilva).
+- Moya now depends on the latest versions of RxSwift, ReactiveSwift & Alamofire. [#2197](https://github.com/Moya/Moya/pull/2197) by [@BasThomas](https://github.com/BasThomas).
 
 ### Fixed
 - Fixed an issue where when using `trackInflights` option in certain circumstances would return a cached response for an endpoint that's not really the same. [#2101](https://github.com/Moya/Moya/pull/2101) by [@sunshinejr](https://github.com/sunshinejr).
