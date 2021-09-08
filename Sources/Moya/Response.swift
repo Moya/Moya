@@ -82,9 +82,9 @@ public extension Response {
         try filter(statusCodes: 200...399)
     }
 
-    /// Maps data received from the signal into an Image.
-    func mapImage() throws -> Image {
-        guard let image = Image(data: data) else {
+    /// Maps data received from the signal into a PlatformImage.
+    func mapImage() throws -> PlatformImage {
+        guard let image = PlatformImage(data: data) else {
             throw MoyaError.imageMapping(self)
         }
         return image

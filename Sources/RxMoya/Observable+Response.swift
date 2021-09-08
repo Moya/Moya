@@ -33,8 +33,8 @@ public extension ObservableType where Element == Response {
         flatMap { Observable.just(try $0.filterSuccessfulStatusAndRedirectCodes()) }
     }
 
-    /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
-    func mapImage() -> Observable<Image> {
+    /// Maps data received from the signal into a PlatformImage. If the conversion fails, the signal errors.
+    func mapImage() -> Observable<PlatformImage> {
         flatMap { Observable.just(try $0.mapImage()) }
     }
 

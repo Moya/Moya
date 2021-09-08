@@ -7,4 +7,4 @@
 #endif
 
 /// An alias for the SDK's image type.
-public typealias Image = ImageType
+public typealias PlatformImage = ImageType

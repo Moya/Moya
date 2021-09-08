@@ -230,13 +230,13 @@ extension URL {
     }
 }
 
-// MARK: - Image Test Helpers
-// Necessary since Image(named:) doesn't work correctly in the test bundle
+// MARK: - PlatformImage Test Helpers
+// Necessary since PlatformImage(named:) doesn't work correctly in the test bundle
 extension ImageType {
     class TestClass { }
 
     static var testImage: ImageType {
-        Image(data: testImageData)!
+        PlatformImage(data: testImageData)!
     }
 
     #if canImport(UIKit)

@@ -177,9 +177,9 @@ final class SingleMoyaSpec: QuickSpec {
 
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = Image.testImage
+                let image = PlatformImage.testImage
                 guard let data = image.asJPEGRepresentation(0.75) else {
-                    fatalError("Failed creating Data from Image")
+                    fatalError("Failed creating Data from PlatformImage")
                 }
 
                 let single = Response(statusCode: 200, data: data).asSingle()

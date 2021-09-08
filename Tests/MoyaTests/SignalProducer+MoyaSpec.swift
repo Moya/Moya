@@ -181,7 +181,7 @@ final class SignalProducerMoyaSpec: QuickSpec {
 
         describe("image maping") {
             it("maps data representing an image to an image") {
-                let image = Image.testImage
+                let image = PlatformImage.testImage
                 let data = image.asJPEGRepresentation(0.75)
                 let signal = signalSendingData(data!)
 

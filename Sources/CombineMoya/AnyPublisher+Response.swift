@@ -42,8 +42,8 @@ public extension AnyPublisher where Output == Response, Failure == MoyaError {
         }
     }
 
-    /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
-    func mapImage() -> AnyPublisher<Image, MoyaError> {
+    /// Maps data received from the signal into a PlatformImage. If the conversion fails, the signal errors.
+    func mapImage() -> AnyPublisher<PlatformImage, MoyaError> {
         return unwrapThrowable { response in
             try response.mapImage()
         }

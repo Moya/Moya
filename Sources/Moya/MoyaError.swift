@@ -69,7 +69,7 @@ extension MoyaError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .imageMapping:
-            return "Failed to map data to an Image."
+            return "Failed to map data to a PlatformImage."
         case .jsonMapping:
             return "Failed to map data to JSON."
         case .stringMapping:

@@ -41,8 +41,8 @@ public extension SignalProducerProtocol where Value == Response, Error == MoyaEr
         }
     }
 
-    /// Maps data received from the signal into an Image. If the conversion fails, the signal errors.
-    func mapImage() -> SignalProducer<Image, MoyaError> {
+    /// Maps data received from the signal into a PlatformImage. If the conversion fails, the signal errors.
+    func mapImage() -> SignalProducer<PlatformImage, MoyaError> {
         producer.flatMap(.latest) { response in
             unwrapThrowable { try response.mapImage() }
         }
