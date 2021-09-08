@@ -189,7 +189,7 @@ final class ObservableMoyaSpec: QuickSpec {
             }
         }
 
-        describe("image maping") {
+        describe("image mapping") {
             it("maps data representing an image to an image") {
                 let image = PlatformImage.testImage
                 guard let data = image.asJPEGRepresentation(0.75)  else { fatalError("Failed creating Data from PlatformImage") }
