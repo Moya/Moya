@@ -1,5 +1,9 @@
 # Next
 
+### Fixed
+
+- Pin dependencies to their major versions only, so no specific minor or patch versions are required. [#2207](https://github.com/Moya/Moya/pull/2207) by [@BasThomas](https://github.com/BasThomas).
+
 # [15.0.0] - 2021-09-04
 
 ### Added
