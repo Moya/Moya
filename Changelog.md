@@ -1,7 +1,7 @@
 # Next
 
 ### Changed
-- **Breaking Change** Changed the platform independent `Image` to `PlatformImage`, so it does not collide with `SwiftUI.Image`. [#2205](https://github.com/Moya/Moya/pull/2205) by [@BasThomas](https://github.com/BasThomas).
+- Changed the platform independent `Image` to `PlatformImage`, so it does not collide with `SwiftUI.Image`. [#2205](https://github.com/Moya/Moya/pull/2205) by [@BasThomas](https://github.com/BasThomas).
 
 # [15.0.0] - 2021-09-04
 

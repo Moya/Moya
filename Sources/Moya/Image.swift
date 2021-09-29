@@ -7,4 +7,8 @@
 #endif
 
 /// An alias for the SDK's image type.
+@available(*, deprecated, renamed: "ImageType")
+public typealias Image = ImageType
+
+/// An alias for the SDK's image type.
 public typealias PlatformImage = ImageType
