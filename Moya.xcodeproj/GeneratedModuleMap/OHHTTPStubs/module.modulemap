@@ -1,0 +1,4 @@
+module OHHTTPStubs {
+    umbrella "/Users/asb/Developer/Moya/.build/checkouts/OHHTTPStubs/Sources/OHHTTPStubs/include"
+    export *
+}
