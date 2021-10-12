@@ -301,16 +301,108 @@ respectively.
 
 Here's an example of `requestPublisher` usage:
 
-```swift
-provider = MoyaProvider<GitHub>()
-let cancellable = provider.requestPublisher(.userProfile("ashfurrow"))
-    .sink(receiveCompletion: { completion in
-        guard case let .failure(error) = completion else { return }
+Full project: [Moya-Combine-Example](https://github.com/fhefh2015/Moya-Combine-Example)
 
-        print(error)
-    }, receiveValue: { response in
-        image = UIImage(data: response.data)
-    })
+`Example.swift` file:
+
+```swift
+import Foundation
+import Moya
+
+enum Example {
+    case albums
+}
+
+extension Example: TargetType {
+    var baseURL: URL {
+        return URL(string: "https://jsonplaceholder.typicode.com")!
+    }
+
+    var path: String {
+        switch self {
+        case .albums:
+            return "/albums"
+        }
+    }
+
+    var method: Moya.Method {
+        switch self {
+        case .albums:
+            return .get
+        }
+    }
+
+    var sampleData: Data {
+        return Data()
+    }
+
+    var task: Task {
+        switch self {
+        case .albums:
+            return .requestPlain
+        }
+    }
+
+    var headers: [String: String]? {
+        return ["Content-Type": "application/json"]
+    }
+
+    var validationType: ValidationType {
+        return .successCodes
+    }
+}
+```
+
+`ViewController.swift` file:
+
+```swift
+import Moya
+import UIKit
+import Combine
+
+class ViewController: UIViewController {
+    let exampleProvider = MoyaProvider<Example>()
+    var cancellable: AnyCancellable?
+    var cancellableBox = Set<AnyCancellable>()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        test()
+    }
+}
+
+extension ViewController {
+
+    func test() {
+       cancellable = exampleProvider.requestPublisher(.albums)
+            .print("Test Example")
+            .sink(receiveCompletion: { completion in
+            guard case let .failure(error) = completion else { return }
+            print(error)
+        }, receiveValue: { response in
+            guard let data = try? response.mapJSON() else {
+                return
+            }
+            print("data: ", data)
+        })
+
+        // Or
+
+        exampleProvider.requestPublisher(.albums)
+            .print("Test Example")
+            .sink(receiveCompletion: { completion in
+            guard case let .failure(error) = completion else { return }
+            print(error)
+        }, receiveValue: { response in
+            guard let data = try? response.mapJSON() else {
+                return
+            }
+            print("data: ", data)
+        }).store(in: &cancellableBox)
+    }
+}
+
 ```
 
 ## Community Projects
