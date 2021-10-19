@@ -40,7 +40,6 @@ public extension MoyaProvider {
                 lock.unlock()
                 return cancellableToken
             } else {
-                lock.lock()
                 self.inflightRequests[endpoint] = [pluginsWithCompletion]
                 lock.unlock()
             }
