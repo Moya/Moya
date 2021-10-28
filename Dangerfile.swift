@@ -1,5 +1,4 @@
 import Danger
-import DangerSwiftProse // package: https://github.com/f-meloni/danger-swift-prose.git
 import DangerXCodeSummary // package: https://github.com/f-meloni/danger-swift-xcodesummary.git
 import Foundation
 
@@ -61,23 +60,6 @@ let missingDocChanges = !danger.git.modifiedFiles.contains { $0.contains("docs")
 let docChangeRecommended = (danger.github.pullRequest.additions ?? 0) > 15
 if sourceChanges && missingDocChanges && docChangeRecommended && isNotTrivial {
     warn("Consider adding supporting documentation to this change. Documentation can be found in the `docs` directory.")
-}
-
-// Run danger-prose to lint Chinese docs
-let addedAndModifiedCnDocsMarkdown = allSourceFiles.filter { $0.fileType == .markdown && $0.contains("docs_CN") }
-if #available(OSX 10.12, *),
-    !addedAndModifiedCnDocsMarkdown.isEmpty {
-    Proselint.performSpellCheck(files: addedAndModifiedCnDocsMarkdown, excludedRules: ["misc.scare_quotes", "typography.symbols"])
-}
-
-// Run danger-prose to lint and check spelling English docs
-let addedAndModifiedEnDocsMarkdown = allSourceFiles.filter { $0.fileType == .markdown && $0.contains("docs/") }
-if #available(OSX 10.12, *),
-    !addedAndModifiedEnDocsMarkdown.isEmpty {
-    Proselint.performSpellCheck(files: addedAndModifiedEnDocsMarkdown)
-
-    let ignoredWords = ["Auth", "auth", "Moya", "enum", "enums", "OAuth", "Artsy's", "Heimdallr.swift", "SwiftyJSONMapper", "ObjectMapper", "Argo", "ModelMapper", "ReactiveSwift", "RxSwift", "multipart", "JSONEncoder", "Alamofire", "CocoaPods", "URLSession", "plugin", "plugins", "stubClosure", "requestClosure", "endpointClosure", "Unsplash", "ReactorKit", "Dribbble", "EVReflection", "Unbox"]
-    Mdspell.performSpellCheck(files: addedAndModifiedEnDocsMarkdown, ignoredWords: ignoredWords, language: "en-us")
 }
 
 // Warning message for not updated package manifest(s)
