@@ -41,7 +41,6 @@ jobs:
       - restore_cache:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
@@ -86,11 +85,14 @@ jobs:
       - run:
           name: Install MDSpell
           command: sudo npm install -g orta/node-markdown-spellcheck
+      - restore_cache:
+          keys:
+          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Run Danger
           command: brew install danger/tap/danger-swift && danger-swift ci
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Dangerfile.swift" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
           paths:
             - ~/.danger-swift
             - /usr/local/Homebrew
