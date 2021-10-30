@@ -86,8 +86,8 @@ jobs:
           name: Install MDSpell
           command: sudo npm install -g orta/node-markdown-spellcheck
       - restore_cache:
-            keys:
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          keys:
+          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Run Danger
           command: brew install danger/tap/danger-swift && danger-swift ci
