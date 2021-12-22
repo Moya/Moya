@@ -116,7 +116,7 @@ pod 'Moya/RxSwift', '~> 15.0'
 
 pod 'Moya/ReactiveSwift', '~> 15.0'
 
-#or
+# or
 
 pod 'Moya/Combine', '~> 15.0'
 ```
@@ -288,10 +288,10 @@ Moya 社区拥有巨大的正能量，同时维护人员致力于让事情变得
 
 无论你是核心成员还是用户，你可以通过改进文档对 Moya 做出重大的贡献。如何帮助我们：
 
-- 向我们发送有关你认为令人困惑或缺少的意见
-- 建议更好的措辞或解释某些功能的方法
-- 通过 GitHub 向我们发送 pull requests
-- 改进 [中文文档](https://github.com/Moya/Moya/blob/master/Readme_CN.md)
+- 向我们发送有关你认为令人困惑或缺少的意见。
+- 建议更好的措辞或解释某些功能的方法。
+- 通过 GitHub 向我们发送 pull requests。
+- 改进 [中文文档](https://github.com/Moya/Moya/blob/master/Readme_CN.md)。
 
 ## 许可证
 
