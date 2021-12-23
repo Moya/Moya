@@ -49,4 +49,14 @@ Pod::Spec.new do |s|
     ss.dependency "Moya/Core"
     ss.dependency "RxSwift", "~> 6.0"
   end
+  
+  s.subspec "Async" do |ss|
+    ss.source_files  = "Sources/AsyncMoya/"
+    ss.dependency "Moya/Core"
+    ss.ios.deployment_target = '13.0'
+    ss.osx.deployment_target = '10.15'
+    ss.tvos.deployment_target = '13.0'
+    ss.watchos.deployment_target = '6.0'
+  end
+  
 end
