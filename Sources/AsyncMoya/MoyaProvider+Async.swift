@@ -9,16 +9,25 @@ public extension MoyaProvider {
     /// - Parameter target: Entity, with provides Moya.Target protocol
     /// - Returns: Result type with response and error
     func asyncRequest(_ target: Target) async -> Result<Response, MoyaError> {
-        return await withCheckedContinuation { moyaContinuation in
-            self.request(target) { result in
+        let asyncRequestWrapper = AsyncMoyaRequestWrapper { [weak self] continuation in
+            guard let self = self else { return nil }
+            return self.request(target) { result in
                 switch result {
                 case .success(let response):
-                    moyaContinuation.resume(returning: .success(response))
+                    continuation.resume(returning: .success(response))
                 case .failure(let moyaError):
-                    moyaContinuation.resume(returning: .failure(moyaError))
+                    continuation.resume(returning: .failure(moyaError))
                 }
             }
         }
+        
+        return await withTaskCancellationHandler(handler: {
+            asyncRequestWrapper.cancel()
+        }, operation: {
+            await withCheckedContinuation({ continuation in
+                asyncRequestWrapper.perform(continuation: continuation)
+            })
+        })
     }
     
     /// Async request with progress using `AsyncStream`
