@@ -13,7 +13,7 @@ After that simple setup, you're off to the races:
 
 ```swift
 AsyncTask {
-    let result = await provider.request(.zen) //return type `Result<Response, MoyaError>`
+    let result = await provider.asyncRequest(.zen) //return type `Result<Response, MoyaError>`
     switch result {
     case let .success(response):
         // do something with the data
@@ -30,32 +30,37 @@ AsyncTask {
 You can also use `requestWithProgress` to track progress of 
 your request:
 ```swift
-await provider.requestWithProgress(SimpleTarget.posts).forEach({ result in
-    switch result {
-    case let .success(progress):
-        if let response = progress.response {
-            // do something with response
-        } else {
-            print("Progress: \(progressResponse.progress)")
+AsyncTask {
+    try await provider.requestWithProgress(SimpleTarget.posts).forEach({ result in
+        switch result {
+        case let .success(progress):
+            if let response = progress.response {
+                // do something with response
+            } else {
+                print("Progress: \(progress.progress)")
+            }
+        case let .failure(error):
+            break
         }
-    case let .failure(error):
-        break
-    }
-})
+    })
+}
 ```
 
 or you can use `for in` loop:
 
 ```swift
-for await progressResponse in await provider.requestWithProgress(SimpleTarget.posts) {
-    case let .success(progress):
-        if let response = progress.response {
-            // do something with response
-        } else {
-            print("Progress: \(progressResponse.progress)")
+AsyncTask {
+    for await progressResponse in await provider.requestWithProgress(SimpleTarget.posts) {
+        switch progressResponse {
+        case let .success(progress):
+            if let response = progress.response {
+                // do something with response
+            } else {
+                print("Progress: \(progress.progress)")
+            }
+        case let .failure(error):
+            print(error.localizedDescription)
         }
-    case let .failure(error):
-        break
     }
 }
 ```
