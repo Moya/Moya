@@ -48,9 +48,7 @@ We have provided two sample projects in the repository. To use it download the r
 
 ## Project Status
 
-This project is actively under development, and is being used in [Artsy's
-new auction app](https://github.com/Artsy/eidolon). We consider it
-ready for production use.
+This project is actively under development, and is being used in [Artsy's auction app](https://github.com/Artsy/eidolon). We consider it ready for production use.
 
 ## Installation
 
@@ -131,7 +129,7 @@ pod 'Moya/RxSwift', '~> 15.0'
 
 pod 'Moya/ReactiveSwift', '~> 15.0'
 
-#or
+# or
 
 pod 'Moya/Combine', '~> 15.0'
 ```
@@ -336,7 +334,7 @@ If any of that sounds cool to you, send a pull request! After your first
 contribution, we will add you as a member to the repo so you can merge pull
 requests and help steer the ship :ship: You can read more details about that [in our contributor guidelines](https://github.com/Moya/Moya/blob/master/Contributing.md).
 
-Moya's community has a tremendous positive energy, and the maintainers are committed to keeping things awesome. Like [in the CocoaPods community](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules), always assume positive intent; even if a comment sounds mean-spirited, give the person the benefit of the doubt.
+Moya's community has a tremendous positive energy, and the maintainers are committed to keeping things awesome. Like [in the CocoaPods community](https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules), always assume positive intent. Even if a comment sounds mean-spirited, give the person the benefit of the doubt.
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by [its terms](https://github.com/Moya/Moya/blob/master/Code%20of%20Conduct.md).
 
@@ -345,12 +343,13 @@ Please note that this project is released with a Contributor Code of Conduct. By
 If you add or remove a source file from Moya, a corresponding change needs to be made to the `Moya.xcodeproj` project at the root of this repository. This project is used for Carthage. Don't worry, you'll get an automated warning when submitting a pull request if you forget.
 
 ### Help us improve Moya documentation
+
 Whether you’re a core member or a user trying it out for the first time, you can make a valuable contribution to Moya by improving the documentation. Help us by:
 
-- sending us feedback about something you thought was confusing or simply missing
-- suggesting better wording or ways of explaining certain topics
-- sending us a pull request via GitHub
-- improving the [Chinese documentation](https://github.com/Moya/Moya/blob/master/Readme_CN.md)
+- Sending us feedback about something you thought was confusing or simply missing.
+- Suggesting better wording or ways of explaining certain topics.
+- Sending us a pull request via GitHub.
+- Improving the [Chinese documentation](https://github.com/Moya/Moya/blob/master/Readme_CN.md).
 
 
 ## License
