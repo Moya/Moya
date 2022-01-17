@@ -214,7 +214,7 @@ URLs 不再有书写错误。不再会缺失参数值。也不再有混乱的参
 
 ## Reactive 扩展
 
-更酷的是响应式扩展。Moya 为 [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) 和 [RxSwift](https://github.com/ReactiveX/RxSwift) 提供了响应式扩展。
+更酷的是响应式扩展。Moya 为 [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift)、[RxSwift](https://github.com/ReactiveX/RxSwift) 和 [Combine](https://developer.apple.com/documentation/combine) 提供了响应式扩展。
 
 ### ReactiveSwift
 
@@ -255,6 +255,24 @@ provider.rx.request(.userProfile("ashfurrow")).subscribe { event in
 ```
 
 除了使用信号而不是回调闭包之外，RxSwift 和 ReactiveSwift 还有一系列信号操作符，它们可以把从网络响应接收到的数据分别通过 `mapImage()`，`mapJSON()` 以及 `mapString()` 映射成一个图片、一些 json 或者一个字符串。如果映射不成功，你会从信号中得到一个错误。你还可以使用一些方便的方法来过滤某些状态码。这意味着你可以将处理 API 错误（比如 400）的代码与处理无效响应的代码写在相同的位置。
+
+### Combine
+
+`Combine` extension 提供了 `requestPublisher(:callbackQueue:)` 和 `requestWithProgressPublisher(:callbackQueue)` 两种方法，分别返回 `AnyPublisher<Response, MoyaError>` 和 `AnyPublisher<ProgressResponse, MoyaError>`。
+
+下面是一个 `requestPublisher` 的使用案例：
+
+```swift
+provider = MoyaProvider<GitHub>()
+let cancellable = provider.requestPublisher(.userProfile("ashfurrow"))
+    .sink(receiveCompletion: { completion in
+        guard case let .failure(error) = completion else { return }
+
+        print(error)
+    }, receiveValue: { response in
+        image = UIImage(data: response.data)
+    })
+```
 
 ## 社区项目
 
