@@ -8,7 +8,7 @@ public extension MoyaProvider {
     /// Async request
     /// - Parameter target: Entity, with provides Moya.Target protocol
     /// - Returns: Result type with response and error
-    func asyncRequest(_ target: Target) async -> Result<Response, MoyaError> {
+    func request(_ target: Target) async -> Result<Response, MoyaError> {
         let asyncRequestWrapper = AsyncMoyaRequestWrapper { [weak self] continuation in
             guard let self = self else { return nil }
             return self.request(target) { result in

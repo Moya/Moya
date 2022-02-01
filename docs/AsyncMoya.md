@@ -13,14 +13,12 @@ After that simple setup, you're off to the races:
 
 ```swift
 AsyncTask {
-    let result = await provider.asyncRequest(.zen) //return type `Result<Response, MoyaError>`
+    let result = await provider.request(.zen) //return type `Result<Response, MoyaError>`
     switch result {
     case let .success(response):
         // do something with the data
     case let .failure(error):
         // handle the error
-    default:
-        break
     }
 }
 ```
@@ -65,4 +63,4 @@ AsyncTask {
 }
 ```
 
-Request with progress use `AsyncStream` mechanism you can use with him all functional operations like `.map`, `.filter`, `.flatMap` e.t.c.
+Request with progress use `AsyncStream` mechanism you can use functional operations like `.map`, `.filter`, `.flatMap` etc.
