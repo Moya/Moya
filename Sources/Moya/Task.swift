@@ -1,6 +1,7 @@
 import Foundation
 
 /// Represents an HTTP task.
+@available(*, deprecated, message: "Task naming will deprecated in future version, because Task naming conflict with Swift.Continuation.Task")
 public enum Task {
 
     /// A request with no additional data.
