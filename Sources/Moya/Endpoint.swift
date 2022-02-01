@@ -155,6 +155,6 @@ extension Endpoint: Equatable, Hashable {
         if lhsRequest != nil, rhsRequest == nil { return false }
         if lhsRequest == nil, rhsRequest != nil { return false }
         if lhsRequest == nil, rhsRequest == nil { return lhs.hashValue == rhs.hashValue && areEndpointsEqualInAdditionalProperties }
-        return lhsRequest == rhsRequest && areEndpointsEqualInAdditionalProperties
+        return lhsRequest == rhsRequest && lhsRequest?.httpBody == rhsRequest?.httpBody && areEndpointsEqualInAdditionalProperties
     }
 }
