@@ -3,7 +3,7 @@ import Moya
 
 #if swift(>=5.5)
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 internal class AsyncMoyaRequestWrapper {
     
     internal typealias MoyaContinuation = CheckedContinuation<Result<Response, MoyaError>, Never>

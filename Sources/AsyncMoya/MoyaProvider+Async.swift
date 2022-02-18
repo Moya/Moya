@@ -3,7 +3,7 @@ import Moya
 
 #if swift(>=5.5)
 
-@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+@available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension MoyaProvider {
     /// Async request
     /// - Parameter target: Entity, with provides Moya.Target protocol
