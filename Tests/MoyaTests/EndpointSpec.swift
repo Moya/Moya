@@ -6,7 +6,7 @@ import Foundation
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
     override static func configure(_ configuration: Configuration) {
         sharedExamples("endpoint with no request property changed") { (context: SharedExampleContext) in
-            let task = context()["task"] as! Task
+            let task = context()["task"] as! HTTPTask
             let oldEndpoint = context()["endpoint"] as! Endpoint
             let endpoint = oldEndpoint.replacing(task: task)
             let request = try! endpoint.urlRequest()
@@ -80,19 +80,19 @@ final class EndpointSpec: QuickSpec {
         describe("successful converting to urlRequest") {
             context("when task is .requestPlain") {
                 itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.requestPlain, "endpoint": self.simpleGitHubEndpoint]
+                    ["task": HTTPTask.requestPlain, "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
             context("when task is .uploadFile") {
                 itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
+                    ["task": HTTPTask.uploadFile(URL(string: "https://google.com")!), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
             context("when task is .uploadMultipart") {
                 itBehavesLike("endpoint with no request property changed") {
-                    ["task": Task.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
+                    ["task": HTTPTask.uploadMultipart([]), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
@@ -101,7 +101,7 @@ final class EndpointSpec: QuickSpec {
                     let destination: DownloadDestination = { url, response in
                         return (destinationURL: url, options: [])
                     }
-                    return ["task": Task.downloadDestination(destination), "endpoint": self.simpleGitHubEndpoint]
+                    return ["task": HTTPTask.downloadDestination(destination), "endpoint": self.simpleGitHubEndpoint]
                 }
             }
 
@@ -616,7 +616,7 @@ extension Empty: TargetType {
     var method: Moya.Method { .get }
     var parameters: [String: Any]? { nil }
     var parameterEncoding: ParameterEncoding { URLEncoding.default }
-    var task: Task { .requestPlain }
+    var task: HTTPTask { .requestPlain }
     var sampleData: Data { Data() }
     var headers: [String: String]? { nil }
 }

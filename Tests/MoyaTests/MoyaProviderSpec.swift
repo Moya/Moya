@@ -562,7 +562,7 @@ final class MoyaProviderSpec: QuickSpec {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
-                let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
+                let task = HTTPTask.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
                 let headers: [String: String]? = ["headerKey": "headerValue"]
             }
@@ -661,7 +661,7 @@ final class MoyaProviderSpec: QuickSpec {
                 let baseURL = URL(string: "http://example.com/123/somepath?X-ABC-Asd=123")!
                 let path = ""
                 let method = Moya.Method.get
-                let task = Task.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
+                let task = HTTPTask.requestParameters(parameters: ["key": "value"], encoding: URLEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
                 let headers: [String: String]? = nil
             }

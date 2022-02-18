@@ -21,7 +21,7 @@ extension GitHubUserContent: TargetType {
             return .get
         }
     }
-    public var task: Task {
+    public var task: HTTPTask {
         switch self {
         case .downloadMoyaWebContent:
             return .downloadDestination(defaultDownloadDestination)

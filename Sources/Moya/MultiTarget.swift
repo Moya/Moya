@@ -22,8 +22,8 @@ public enum MultiTarget: TargetType {
     /// The sampleData of the embedded target.
     public var sampleData: Data { target.sampleData }
 
-    /// The `Task` of the embedded target.
-    public var task: Task { target.task }
+    /// The `HTTPTask` of the embedded target.
+    public var task: HTTPTask { target.task }
 
     /// The `ValidationType` of the embedded target.
     public var validationType: ValidationType { target.validationType }
