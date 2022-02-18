@@ -20,7 +20,7 @@ public extension MoyaProvider {
                 }
             }
         }
-        
+
         return await withTaskCancellationHandler(handler: {
             asyncRequestWrapper.cancel()
         }, operation: {
@@ -29,15 +29,15 @@ public extension MoyaProvider {
             })
         })
     }
-    
+
     /// Async request with progress using `AsyncStream`
     /// - Parameter target: Entity, with provides Moya.Target protocol
     /// - Returns: `AsyncStream<Result<ProgressResponse, MoyaError>>`  with Result type of progress and error
     func requestWithProgress(_ target: Target) async -> AsyncStream<Result<ProgressResponse, MoyaError>> {
-        return AsyncStream { stream in
-            let cancelable = self.request(target) { progress in
+        AsyncStream { stream in
+            let cancellable = self.request(target, progress: { progress in
                 stream.yield(.success(progress))
-            } completion: { result in
+            }, completion: { result in
                 switch result {
                 case .success:
                     stream.finish()
@@ -45,9 +45,9 @@ public extension MoyaProvider {
                     stream.yield(.failure(error))
                     stream.finish()
                 }
-            }
+            })
             stream.onTermination = { @Sendable _ in
-                cancelable.cancel()
+                cancellable.cancel()
             }
         }
     }
