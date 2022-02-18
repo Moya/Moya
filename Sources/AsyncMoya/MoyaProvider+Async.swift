@@ -5,9 +5,12 @@ import Moya
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension MoyaProvider {
-    /// Async request
-    /// - Parameter target: Entity, with provides Moya.Target protocol
-    /// - Returns: Result type with response and error
+
+    /// Designated request-making method.
+    ///
+    /// - Parameters:
+    ///   - target: Entity, which provides specifications necessary for a `MoyaProvider`.
+    /// - Returns: `Result<Response, MoyaError>`
     func request(_ target: Target) async -> Result<Response, MoyaError> {
         let asyncRequestWrapper = AsyncMoyaRequestWrapper { [weak self] continuation in
             guard let self = self else { return nil }
@@ -30,9 +33,7 @@ public extension MoyaProvider {
         })
     }
 
-    /// Async request with progress using `AsyncStream`
-    /// - Parameter target: Entity, with provides Moya.Target protocol
-    /// - Returns: `AsyncStream<Result<ProgressResponse, MoyaError>>`  with Result type of progress and error
+    /// Designated request-making method with progress.
     func requestWithProgress(_ target: Target) async -> AsyncStream<Result<ProgressResponse, MoyaError>> {
         AsyncStream { stream in
             let cancellable = self.request(target, progress: { progress in

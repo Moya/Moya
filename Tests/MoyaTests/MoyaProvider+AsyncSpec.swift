@@ -15,14 +15,8 @@ import XCTest
 
 final class MoyaProviderAsyncSpec: QuickSpec {
 
-// MARK: - spec()
-
     override func spec() {
-
-// MARK: - Successful tests single request
-
         describe("provider") {
-
             let provider: MoyaProvider<GitHub> = MoyaProvider<GitHub>(stubClosure: MoyaProvider.immediatelyStub)
 
             it("one response object returned") {
@@ -67,8 +61,6 @@ final class MoyaProviderAsyncSpec: QuickSpec {
                 }
             }
         }
-
-// MARK: - Failing tests
 
         describe("failing") {
             let provider: MoyaProvider<GitHub> = MoyaProvider<GitHub>(endpointClosure: failureEndpointClosure, stubClosure: MoyaProvider.immediatelyStub)
@@ -120,8 +112,6 @@ final class MoyaProviderAsyncSpec: QuickSpec {
             }
         }
     }
-
-// MARK: - Progress request
 
     func testProgressRequest() async {
         let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
