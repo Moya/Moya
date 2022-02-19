@@ -29,8 +29,8 @@ open class Endpoint {
     /// The HTTP method for the request.
     public let method: Moya.Method
 
-    /// The `Task` for the request.
-    public let task: Task
+    /// The `HTTPTask` for the request.
+    public let task: HTTPTask
 
     /// The HTTP header fields for the request.
     public let httpHeaderFields: [String: String]?
@@ -38,7 +38,7 @@ open class Endpoint {
     public init(url: String,
                 sampleResponseClosure: @escaping SampleResponseClosure,
                 method: Moya.Method,
-                task: Task,
+                task: HTTPTask,
                 httpHeaderFields: [String: String]?) {
 
         self.url = url
@@ -54,7 +54,7 @@ open class Endpoint {
     }
 
     /// Convenience method for creating a new `Endpoint` with the same properties as the receiver, but with replaced `task` parameter.
-    open func replacing(task: Task) -> Endpoint {
+    open func replacing(task: HTTPTask) -> Endpoint {
         Endpoint(url: url, sampleResponseClosure: sampleResponseClosure, method: method, task: task, httpHeaderFields: httpHeaderFields)
     }
 

@@ -24,7 +24,8 @@ let package = Package(
         .library(name: "Moya", targets: ["Moya"]),
         .library(name: "CombineMoya", targets: ["CombineMoya"]),
         .library(name: "ReactiveMoya", targets: ["ReactiveMoya"]),
-        .library(name: "RxMoya", targets: ["RxMoya"])
+        .library(name: "RxMoya", targets: ["RxMoya"]),
+        .library(name: "AsyncMoya", targets: ["AsyncMoya"])
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.4.3")),
@@ -61,6 +62,12 @@ let package = Package(
                 .product(name: "RxSwift", package: "RxSwift")
             ]
         ),
+        .target(
+            name: "AsyncMoya",
+            dependencies: [
+                "Moya"
+            ]
+        ),
         .testTarget(
             name: "MoyaTests",  // dev
             dependencies: [
@@ -68,6 +75,7 @@ let package = Package(
                 "CombineMoya",
                 "ReactiveMoya",
                 "RxMoya",
+                "AsyncMoya",
                 .product(name: "Quick", package: "Quick"),
                 .product(name: "Nimble", package: "Nimble"),
                 .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")

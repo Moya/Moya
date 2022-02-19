@@ -46,7 +46,7 @@ extension GitHub: TargetType {
     }
     public var method: Moya.Method { .get }
 
-    public var task: Task {
+    public var task: HTTPTask {
         switch self {
         case .userRepositories:
             return .requestParameters(parameters: ["sort": "pushed"], encoding: URLEncoding.default)

@@ -8,7 +8,7 @@ final class AccessTokenPluginSpec: QuickSpec {
         let baseURL = URL(string: "http://www.api.com/")!
         let path = ""
         let method = Method.get
-        let task = Task.requestPlain
+        let task = HTTPTask.requestPlain
         let sampleData = Data()
         let headers: [String: String]? = nil
         let authorizationType: AuthorizationType?

@@ -11,7 +11,7 @@ final class MultiTargetSpec: QuickSpec {
                 let baseURL = URL(string: "http://example.com")!
                 let path = "/endpoint"
                 let method = Moya.Method.get
-                let task = Task.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
+                let task = HTTPTask.requestParameters(parameters: ["key": "value"], encoding: JSONEncoding.default)
                 let sampleData = "sample data".data(using: .utf8)!
                 let validationType: ValidationType = .successCodes
                 let headers: [String: String]? = ["headerKey": "headerValue"]
@@ -54,7 +54,7 @@ final class MultiTargetSpec: QuickSpec {
             }
 
             it("uses correct task") {
-                expect(String(describing: target.task)).to(beginWith("requestParameters")) // Hack to avoid implementing Equatable for Task
+                expect(String(describing: target.task)).to(beginWith("requestParameters")) // Hack to avoid implementing Equatable for HTTPTask
             }
 
             it("uses correct sample data") {
