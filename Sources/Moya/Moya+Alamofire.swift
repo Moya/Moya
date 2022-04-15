@@ -1,6 +1,7 @@
 import Foundation
 import Alamofire
 
+public typealias RedirectHandler = Alamofire.RedirectHandler
 public typealias Session = Alamofire.Session
 internal typealias Request = Alamofire.Request
 internal typealias DownloadRequest = Alamofire.DownloadRequest
