@@ -228,9 +228,6 @@ private extension MoyaProvider {
 
         let validationCodes = target.validationType.statusCodes
         let alamoRequest = validationCodes.isEmpty ? initialRequest : initialRequest.validate(statusCode: validationCodes)
-        if let redirectHandler = target.redirectHandler {
-            alamoRequest.redirect(using: redirectHandler)
-        }
         return sendAlamofireRequest(alamoRequest, target: target, callbackQueue: callbackQueue, progress: progress, completion: completion)
     }
 
@@ -249,6 +246,11 @@ private extension MoyaProvider {
             } else {
                 sendProgress()
             }
+        }
+        
+        // Prepare additional Alamofire request settings
+        if let redirectHandler = target.redirectHandler {
+            alamoRequest.redirect(using: redirectHandler)
         }
 
         // Perform the actual request
