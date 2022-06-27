@@ -63,7 +63,7 @@ Moya 的一些特色功能：
 
 ### Swift Package Manager
 
-> 注意：以下的说明都未使用 Xcode 内嵌的 UI 版 **Swift PM**。使用 **Swift PM** 的最简单的方式是找到 Project Setting -> Swift Packages 并将 Moya 添加在其中
+> 注意：以下的说明都未使用 Xcode 内嵌的 UI 版 **Swift PM**。使用 **Swift PM** 的最简单的方式是找到 Project Setting -> Swift Packages 并将 Moya 添加在其中。
 
 要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
