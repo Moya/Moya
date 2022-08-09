@@ -15,8 +15,8 @@ public extension Reactive where Base: MoyaProviderType {
     ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
     /// - Returns: Single response object.
     func request(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Single<Response> {
-        Single.create { [weak base] single in
-            let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: nil) { result in
+        Single.create { single in
+            let cancellableToken = base.request(token, callbackQueue: callbackQueue, progress: nil) { result in
                 switch result {
                 case let .success(response):
                     single(.success(response))
@@ -26,7 +26,7 @@ public extension Reactive where Base: MoyaProviderType {
             }
 
             return Disposables.create {
-                cancellableToken?.cancel()
+                cancellableToken.cancel()
             }
         }
     }
@@ -35,8 +35,8 @@ public extension Reactive where Base: MoyaProviderType {
     func requestWithProgress(_ token: Base.Target, callbackQueue: DispatchQueue? = nil) -> Observable<ProgressResponse> {
 
         let progressBlock = AnyObserver<ProgressResponse>.onNext
-        let response: Observable<ProgressResponse> = Observable.create { [weak base] observer in
-            let cancellableToken = base?.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
+        let response: Observable<ProgressResponse> = Observable.create { observer in
+            let cancellableToken = base.request(token, callbackQueue: callbackQueue, progress: progressBlock(observer)) { result in
                 switch result {
                 case .success:
                     observer.onCompleted()
@@ -46,7 +46,7 @@ public extension Reactive where Base: MoyaProviderType {
             }
 
             return Disposables.create {
-                cancellableToken?.cancel()
+                cancellableToken.cancel()
             }
         }
 
