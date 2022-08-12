@@ -1,9 +1,10 @@
 version: 2.1
-defaults: &defaults
+defaults:
+  &defaults
   macos:
     xcode: 12.5.1
   parallelism: 1
-  shell: /bin/bash --login    
+  shell: /bin/bash --login
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
     CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
@@ -18,7 +19,8 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+            - v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{
+              checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
@@ -27,11 +29,13 @@ jobs:
           command: carthage checkout
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: scripts/carthage.sh build --no-skip-current --cache-builds
+            --no-use-binaries --verbose
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+          key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum
+            "Cartfile.resolved" }}
           paths:
-            - Carthage               
+            - Carthage
   build:
     <<: *defaults
     working_directory: ~/Moya/Moya
@@ -40,16 +44,18 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum
+              "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
       - run:
           name: Install Swiftlint
-          command: git clone git@github.com:realm/SwiftLint.git && cd SwiftLint && git submodule update --init --recursive && make install && cd ../
+          command: git clone git@github.com:realm/SwiftLint.git && cd SwiftLint && git
+            submodule update --init --recursive && make install && cd ../
       - run:
           name: Add Python directory to PATH
-          command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
+          command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
@@ -59,24 +65,25 @@ jobs:
       - run:
           name: Upgrade Carthage
           command: brew upgrade carthage
-      - run: 
+      - run:
           name: Bootstrap Carthage
           command: scripts/bootstrap-if-needed.sh
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum
+            "Cartfile.resolved" }}
           paths:
             - vendor/bundle
             - Carthage
-      - run: 
+      - run:
           name: Test on iOS
           command: rake test:ios
-      - run: 
+      - run:
           name: Test on macOS
           command: rake test:macos
       - run:
           name: Test on tvOS
           command: rake test:tvos
-      - run: 
+      - run:
           name: Test with Carthage
           command: rake test:carthage
       - run:
@@ -87,12 +94,14 @@ jobs:
           command: sudo npm install -g orta/node-markdown-spellcheck
       - restore_cache:
           keys:
-          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch
+              }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: Run Danger
           command: brew install danger/tap/danger-swift && danger-swift ci
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{
+            checksum "Dangerfile.swift" }}
           paths:
             - ~/.danger-swift
             - /usr/local/Homebrew
@@ -104,13 +113,16 @@ jobs:
           command: bash <(curl -s https://codecov.io/bash) -J Moya
       - run:
           name: Store Xcode Activity Log
-          command: find $HOME/Library/Developer/Xcode/DerivedData -name '*.xcactivitylog' -exec cp {} $CIRCLE_ARTIFACTS/xcactivitylog \; || true
+          command: find $HOME/Library/Developer/Xcode/DerivedData -name '*.xcactivitylog'
+            -exec cp {} $CIRCLE_ARTIFACTS/xcactivitylog \; || true
       - store_test_results:
           path: /tmp/circleci-test-results
       - store_artifacts:
           path: /tmp/circleci-artifacts
       - store_artifacts:
           path: /tmp/circleci-test-results
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
 workflows:
   version: 2
   pr_build:
