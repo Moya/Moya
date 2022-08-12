@@ -1,5 +1,9 @@
 # Next
 
+### Fixed
+
+- Un-break Package.swift parsing when releasing through Rocket. [#2275](https://github.com/Moya/Moya/pull/2274) by [@AndrewSB](https://github.com/AndrewSB)
+
 # [15.0.1] - 2022-08-11
 
 ### Fixed

@@ -64,18 +64,18 @@ let package = Package(
                 .product(name: "RxSwift", package: "RxSwift")
             ]
         ),
-        .testTarget(
+        .testTarget( // dev
             name: "MoyaTests",  // dev
-            dependencies: [
-                "Moya",
-                "CombineMoya",
-                "ReactiveMoya",
-                "RxMoya",
-                .product(name: "Quick", package: "Quick"),
-                .product(name: "Nimble", package: "Nimble"),
-                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs")
-            ]
-        )
+            dependencies: [ // dev
+                "Moya", // dev
+                "CombineMoya", // dev
+                "ReactiveMoya", // dev
+                "RxMoya", // dev
+                .product(name: "Quick", package: "Quick"), // dev
+                .product(name: "Nimble", package: "Nimble"), // dev
+                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs") // dev
+            ] // dev
+        ) // dev
     ]
 )
 
