@@ -2,6 +2,12 @@
 
 ### Fixed
 
+- Un-break Package.swift parsing when releasing through Rocket. [#2275](https://github.com/Moya/Moya/pull/2274) by [@AndrewSB](https://github.com/AndrewSB)
+
+# [15.0.1] - 2022-08-11
+
+### Fixed
+
 - Pin dependencies to their major versions only, so no specific minor or patch versions are required. [#2207](https://github.com/Moya/Moya/pull/2207) by [@BasThomas](https://github.com/BasThomas).
 
 # [15.0.0] - 2021-09-04
