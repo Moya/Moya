@@ -73,7 +73,6 @@
 		A6304A7E74FA3B04C9B10B63 /* AccessTokenPluginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAAD7EC02607A52AD3EF1E /* AccessTokenPluginSpec.swift */; };
 		A8C55515DFA147BE4159B40A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EFCB6731C60D3830DA5D2CB /* Response.swift */; };
 		AB5048DC5042B016964EE958 /* MoyaProvider+Reactive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C174EF53873DE04BB159E /* MoyaProvider+Reactive.swift */; };
-		B2CD7F4F23A6F1BA007F67AC /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD7F4E23A6F1BA007F67AC /* Atomic.swift */; };
 		B4ABD55950B0E70BF44E79C6 /* MoyaProviderIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E52DC541FD052ABA625D2A /* MoyaProviderIntegrationTests.swift */; };
 		B5A7124CF285D8EC7F89C1AD /* CredentialsPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884642F58B074C95261DCA86 /* CredentialsPlugin.swift */; };
 		B950CAA84C0656EB11E316FB /* MultiTargetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D11E4BE1D5112E6972AD09F /* MultiTargetSpec.swift */; };
@@ -90,6 +89,7 @@
 		D1B52E9124747B2B00C5FB76 /* MoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */; };
 		D1B52E9224747B2B00C5FB76 /* MoyaProvider+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */; };
 		D1B52E9324747B4900C5FB76 /* CombineMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B52E8E24747A6300C5FB76 /* CombineMoya.framework */; };
+		D3A1E7DA271EB5FD00F73A63 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A1E7D9271EB5FD00F73A63 /* Atomic.swift */; };
 		D6A04B657A83CA2FF80ABCF4 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
 		DA631A5B37F36DA17E135F14 /* SignalProducer+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1AFAFEA29CDFABC559F0BE2 /* SignalProducer+MoyaSpec.swift */; };
 		E9B54EFE4EF4A96444BA76AA /* Observable+MoyaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461DEED329CE157E412CBCE0 /* Observable+MoyaSpec.swift */; };
@@ -233,12 +233,12 @@
 		9C38151BF038BA0B61EF5A62 /* TargetType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		B184F8E91A84A02E209EEB91 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultipartFormData.swift; sourceTree = "<group>"; };
 		B1F68927EA26EBDB45E82C8C /* MoyaProviderSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoyaProviderSpec.swift; sourceTree = "<group>"; };
-		B2CD7F4E23A6F1BA007F67AC /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		C79C5F376B4A2C3F70051980 /* Error+MoyaSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "Error+MoyaSpec.swift"; sourceTree = "<group>"; };
 		C841AA621AEC61FAEA0CA019 /* MoyaProvider+ReactiveSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+ReactiveSpec.swift"; sourceTree = "<group>"; };
 		CC115388D44D0DB7A753E9BB /* AccessTokenPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccessTokenPlugin.swift; sourceTree = "<group>"; };
 		D1B52E8E24747A6300C5FB76 /* CombineMoya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CombineMoya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38525FE207BE148B17084F3 /* Moya.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = Moya.h; sourceTree = "<group>"; };
+		D3A1E7D9271EB5FD00F73A63 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		D48555FB39336D99F8365F5E /* MoyaProvider+Rx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Rx.swift"; sourceTree = "<group>"; };
 		DCACC7B19F3FFC2DEE74E07B /* TestPlugin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TestPlugin.swift; sourceTree = "<group>"; };
 		E825A32256FC030B8BA2684D /* EndpointSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EndpointSpec.swift; sourceTree = "<group>"; };
@@ -349,8 +349,8 @@
 		331A6D3090D9773091435406 /* Moya */ = {
 			isa = PBXGroup;
 			children = (
-				B2CD7F4E23A6F1BA007F67AC /* Atomic.swift */,
 				149749421F8923EC00FA4900 /* AnyEncodable.swift */,
+				D3A1E7D9271EB5FD00F73A63 /* Atomic.swift */,
 				5C2B20158E599EDBE51D7AB2 /* Cancellable.swift */,
 				3FF1994427C5440527B03B31 /* Endpoint.swift */,
 				86F3C0EA472C23E786E23CE9 /* Image.swift */,
@@ -363,13 +363,13 @@
 				8F4EAC41B82FF5081DEC4808 /* MultiTarget.swift */,
 				61A693AF0E88E83E91A47A99 /* Plugin.swift */,
 				536E44826931EEDF3B8DFED4 /* Plugins */,
+				85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */,
 				7EFCB6731C60D3830DA5D2CB /* Response.swift */,
 				9C38151BF038BA0B61EF5A62 /* TargetType.swift */,
 				147E26EB1F5B14B300C1F513 /* Task.swift */,
 				1446FBB21F214C5200C1EFF2 /* URL+Moya.swift */,
 				149749441F892E2F00FA4900 /* URLRequest+Encoding.swift */,
 				1F8AA0BB1FE0630300C9D7B6 /* ValidationType.swift */,
-				85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */,
 			);
 			path = Moya;
 			sourceTree = "<group>";
@@ -938,7 +938,7 @@
 				3AF7063CBE1F9626FB32D933 /* Cancellable.swift in Sources */,
 				85F6042E22A018BB00063320 /* RequestTypeWrapper.swift in Sources */,
 				49C61E884A595E94758B5643 /* Endpoint.swift in Sources */,
-				B2CD7F4F23A6F1BA007F67AC /* Atomic.swift in Sources */,
+				D3A1E7DA271EB5FD00F73A63 /* Atomic.swift in Sources */,
 				FB223B5C3B7D4AA5261E25EA /* Image.swift in Sources */,
 				EDBA10DB0D0E35C1474AAB4D /* Moya+Alamofire.swift in Sources */,
 				15D3A2BD1223B59E2BBE09F0 /* MoyaError.swift in Sources */,

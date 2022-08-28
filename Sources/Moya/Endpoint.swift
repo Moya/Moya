@@ -146,6 +146,8 @@ extension Endpoint: Equatable, Hashable {
             case (let .uploadMultipart(multipartData1), let .uploadMultipart(multipartData2)),
                  (let .uploadCompositeMultipart(multipartData1, _), let .uploadCompositeMultipart(multipartData2, _)):
                 return multipartData1 == multipartData2
+            case (let .requestParameters(lhsParameters, _), let .requestParameters(rhsParameters, _)):
+                return lhsParameters as NSDictionary == rhsParameters as NSDictionary
             default:
                 return true
             }
