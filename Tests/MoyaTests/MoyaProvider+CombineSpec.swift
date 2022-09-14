@@ -16,7 +16,7 @@ import CombineMoya
 final class MoyaProviderCombineSpec: QuickSpec {
 
     override func spec() {
-        if #available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *) {
             describe("provider") {
                 var provider: MoyaProvider<GitHub>!
 

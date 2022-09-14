@@ -51,9 +51,9 @@ public extension MoyaProvider {
             var request: URLRequest!
 
             switch requestResult {
-            case .success(let urlRequest):
+            case let .success(urlRequest):
                 request = urlRequest
-            case .failure(let error):
+            case let .failure(error):
                 pluginsWithCompletion(.failure(error))
                 return
             }
@@ -82,14 +82,14 @@ public extension MoyaProvider {
             switch endpoint.task {
             case .requestPlain, .requestData, .requestJSONEncodable, .requestCustomJSONEncodable, .requestParameters, .requestCompositeData, .requestCompositeParameters:
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
-            case .uploadFile(let file):
+            case let .uploadFile(file):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
-            case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
+            case let .uploadMultipart(multipartBody), .uploadCompositeMultipart(multipartBody, _):
                 guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
                     fatalError("\(target) is not a multipart upload target.")
                 }
                 return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
-            case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
+            case let .downloadDestination(destination), .downloadParameters(_, _, destination):
                 return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
         default:
@@ -124,17 +124,17 @@ public extension MoyaProvider {
             }
 
             switch endpoint.sampleResponseClosure() {
-            case .networkResponse(let statusCode, let data):
+            case let .networkResponse(statusCode, data):
                 let response = Moya.Response(statusCode: statusCode, data: data, request: request, response: nil)
                 let result = validate(response)
                 plugins.forEach { $0.didReceive(result, target: target) }
                 completion(result)
-            case .response(let customResponse, let data):
+            case let .response(customResponse, data):
                 let response = Moya.Response(statusCode: customResponse.statusCode, data: data, request: request, response: customResponse)
                 let result = validate(response)
                 plugins.forEach { $0.didReceive(result, target: target) }
                 completion(result)
-            case .networkError(let error):
+            case let .networkError(error):
                 let error = MoyaError.underlying(error, nil)
                 plugins.forEach { $0.didReceive(.failure(error), target: target) }
                 completion(.failure(error))

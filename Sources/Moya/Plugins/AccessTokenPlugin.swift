@@ -27,7 +27,7 @@ public enum AuthorizationType {
         switch self {
         case .basic: return "Basic"
         case .bearer: return "Bearer"
-        case .custom(let customValue): return customValue
+        case let .custom(customValue): return customValue
         }
     }
 }
