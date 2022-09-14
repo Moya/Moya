@@ -141,10 +141,10 @@ extension Endpoint: Equatable, Hashable {
     public static func == (lhs: Endpoint, rhs: Endpoint) -> Bool {
         let areEndpointsEqualInAdditionalProperties: Bool = {
             switch (lhs.task, rhs.task) {
-            case (let .uploadFile(file1), let .uploadFile(file2)):
+            case let (.uploadFile(file1), .uploadFile(file2)):
                 return file1 == file2
-            case (let .uploadMultipart(multipartData1), let .uploadMultipart(multipartData2)),
-                 (let .uploadCompositeMultipart(multipartData1, _), let .uploadCompositeMultipart(multipartData2, _)):
+            case let (.uploadMultipart(multipartData1), .uploadMultipart(multipartData2)),
+                let (.uploadCompositeMultipart(multipartData1, _), .uploadCompositeMultipart(multipartData2, _)):
                 return multipartData1 == multipartData2
             default:
                 return true
