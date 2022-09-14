@@ -53,11 +53,11 @@ internal extension RequestMultipartFormData {
     func applyMoyaMultipartFormData(_ multipartBody: [Moya.MultipartFormData]) {
         for bodyPart in multipartBody {
             switch bodyPart.provider {
-            case .data(let data):
+            case let .data(data):
                 append(data: data, bodyPart: bodyPart)
-            case .file(let url):
+            case let .file(url):
                 append(fileURL: url, bodyPart: bodyPart)
-            case .stream(let stream, let length):
+            case let .stream(stream, length):
                 append(stream: stream, length: length, bodyPart: bodyPart)
             }
         }

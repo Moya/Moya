@@ -67,7 +67,7 @@ public extension ObservableType where Element == ProgressResponse {
             .flatMap { progress -> Observable<Response> in
                 // Just a formatlity to satisfy the compiler (completed progresses have responses).
                 switch progress.response {
-                case .some(let response): return .just(response)
+                case let .some(response): return .just(response)
                 case .none: return .empty()
                 }
             }

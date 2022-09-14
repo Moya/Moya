@@ -22,7 +22,7 @@ public enum ValidationType {
             return Array(200..<300)
         case .successAndRedirectCodes:
             return Array(200..<400)
-        case .customCodes(let codes):
+        case let .customCodes(codes):
             return codes
         case .none:
             return []
@@ -38,7 +38,7 @@ extension ValidationType: Equatable {
              (.successCodes, .successCodes),
              (.successAndRedirectCodes, .successAndRedirectCodes):
             return true
-        case (.customCodes(let code1), .customCodes(let code2)):
+        case let (.customCodes(code1), .customCodes(code2)):
             return code1 == code2
         default:
             return false
