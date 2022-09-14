@@ -4,7 +4,7 @@ import PackageDescription
 
 let rocketIfNeeded: [Package.Dependency]
 
-#if os(OSX) || os(Linux)
+#if os(macOS) || os(Linux)
 rocketIfNeeded = [
     .package(url: "https://github.com/shibapm/Rocket", .upToNextMajor(from: "1.2.0")) // dev
 ]
