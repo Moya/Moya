@@ -87,7 +87,7 @@ public extension Endpoint {
         switch task {
         case .requestPlain, .uploadFile, .uploadMultipart, .downloadDestination:
             return request
-        case .requestData(let data):
+        case let .requestData(data):
             request.httpBody = data
             return request
         case let .requestJSONEncodable(encodable):
