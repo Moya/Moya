@@ -12,24 +12,23 @@ public extension MoyaProvider {
     /// - Parameters:
     ///   - target: Entity, which provides specifications necessary for a `MoyaProvider`.
     ///   - callbackQueue: Callback queue. If nil - queue from provider initializer will be used.
-    /// - Returns: `AnyPublisher<Response, MoyaError`
-    func requestPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<Response, MoyaError> {
+    /// - Returns: `some Publisher<Response, MoyaError`
+    func requestPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> some Publisher<Response, MoyaError> {
         return MoyaPublisher { [weak self] subscriber in
-                return self?.request(target, callbackQueue: callbackQueue, progress: nil) { result in
-                    switch result {
-                    case let .success(response):
-                        _ = subscriber.receive(response)
-                        subscriber.receive(completion: .finished)
-                    case let .failure(error):
-                        subscriber.receive(completion: .failure(error))
-                    }
+            return self?.request(target, callbackQueue: callbackQueue, progress: nil) { result in
+                switch result {
+                case let .success(response):
+                    _ = subscriber.receive(response)
+                    subscriber.receive(completion: .finished)
+                case let .failure(error):
+                    subscriber.receive(completion: .failure(error))
                 }
             }
-            .eraseToAnyPublisher()
+        }
     }
 
     /// Designated request-making method with progress.
-    func requestWithProgressPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> AnyPublisher<ProgressResponse, MoyaError> {
+    func requestWithProgressPublisher(_ target: Target, callbackQueue: DispatchQueue? = nil) -> some Publisher<ProgressResponse, MoyaError> {
         let progressBlock: (AnySubscriber<ProgressResponse, MoyaError>) -> (ProgressResponse) -> Void = { subscriber in
             return { progress in
                 _ = subscriber.receive(progress)
@@ -50,13 +49,11 @@ public extension MoyaProvider {
         }
 
         // Accumulate all progress and combine them when the result comes
-        return response
-            .scan(ProgressResponse()) { last, progress in
-                let progressObject = progress.progressObject ?? last.progressObject
-                let response = progress.response ?? last.response
-                return ProgressResponse(progress: progressObject, response: response)
-            }
-            .eraseToAnyPublisher()
+        return response.scan(ProgressResponse()) { last, progress in
+            let progressObject = progress.progressObject ?? last.progressObject
+            let response = progress.response ?? last.response
+            return ProgressResponse(progress: progressObject, response: response)
+        }
     }
 }
 

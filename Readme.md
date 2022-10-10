@@ -294,7 +294,7 @@ responses.
 
 `Combine` extension provides `requestPublisher(:callbackQueue:)` and
 `requestWithProgressPublisher(:callbackQueue)` returning 
-`AnyPublisher<Response, MoyaError>` and `AnyPublisher<ProgressResponse, MoyaError>`
+`some Publisher<Response, MoyaError>` and `some Publisher<ProgressResponse, MoyaError>`
 respectively.
 
 Here's an example of `requestPublisher` usage:
