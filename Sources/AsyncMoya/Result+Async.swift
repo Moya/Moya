@@ -11,7 +11,7 @@ extension Result where Failure == Moya.MoyaError {
     }
 }
 
-extension Result where Success == Moya.Response, Failure == Moya.MoyaError {
+public extension Result where Success == Moya.Response, Failure == Moya.MoyaError {
     func filter<R: RangeExpression>(statusCodes: R) -> Result<Success, Failure> where R.Bound == Int {
         flatMap { response in Result { try response.filter(statusCodes: statusCodes) } }
     }
