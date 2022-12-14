@@ -4,7 +4,6 @@ internal extension URLRequest {
 
     mutating func encoded(encodable: Encodable, encoder: JSONEncoder = JSONEncoder()) throws -> URLRequest {
         do {
-            let encodable = AnyEncodable(encodable)
             httpBody = try encoder.encode(encodable)
 
             let contentTypeHeaderName = "Content-Type"
