@@ -45,9 +45,6 @@ jobs:
           name: Set Ruby Version
           command: echo "ruby-2.4" > ~/.ruby-version
       - run:
-          name: Install Swiftlint
-          command: brew install swiftlint
-      - run:
           name: Add Python directory to PATH
           command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
       - run:
