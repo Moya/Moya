@@ -73,9 +73,9 @@ jobs:
       - run:
           name: Test on tvOS
           command: rake test:tvos
-      - run: 
-          name: Test with Carthage
-          command: rake test:carthage
+      #- run: Carthage is broken
+        #  name: Test with Carthage
+        #  command: rake test:carthage
       - run:
           name: Build Example Project
           command: rake build_example
@@ -113,4 +113,5 @@ workflows:
   pr_build:
     jobs:
       - build
-      - carthage_without_swiftlint_integration
+      # Carthage is broken
+      #- carthage_without_swiftlint_integration 
