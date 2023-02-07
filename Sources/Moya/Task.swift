@@ -28,10 +28,10 @@ public enum Task {
     case uploadFile(URL)
 
     /// A "multipart/form-data" upload task.
-    case uploadMultipart([MultipartFormData])
+    case uploadMultipart([MultipartFormData], boundary: String? = nil)
 
     /// A "multipart/form-data" upload task  combined with url parameters.
-    case uploadCompositeMultipart([MultipartFormData], urlParameters: [String: Any])
+    case uploadCompositeMultipart([MultipartFormData], urlParameters: [String: Any], boundary: String? = nil)
 
     /// A file download task to a destination.
     case downloadDestination(DownloadDestination)

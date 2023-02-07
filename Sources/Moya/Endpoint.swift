@@ -96,7 +96,7 @@ public extension Endpoint {
             return try request.encoded(encodable: encodable, encoder: encoder)
         case let .requestParameters(parameters, parameterEncoding):
             return try request.encoded(parameters: parameters, parameterEncoding: parameterEncoding)
-        case let .uploadCompositeMultipart(_, urlParameters):
+        case let .uploadCompositeMultipart(_, urlParameters, _):
             let parameterEncoding = URLEncoding(destination: .queryString)
             return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
         case let .downloadParameters(parameters, parameterEncoding, _):
@@ -123,7 +123,7 @@ extension Endpoint: Equatable, Hashable {
         switch task {
         case let .uploadFile(file):
             hasher.combine(file)
-        case let .uploadMultipart(multipartData), let .uploadCompositeMultipart(multipartData, _):
+        case let .uploadMultipart(multipartData, _), let .uploadCompositeMultipart(multipartData, _, _):
             hasher.combine(multipartData)
         default:
             break
@@ -143,8 +143,8 @@ extension Endpoint: Equatable, Hashable {
             switch (lhs.task, rhs.task) {
             case (let .uploadFile(file1), let .uploadFile(file2)):
                 return file1 == file2
-            case (let .uploadMultipart(multipartData1), let .uploadMultipart(multipartData2)),
-                 (let .uploadCompositeMultipart(multipartData1, _), let .uploadCompositeMultipart(multipartData2, _)):
+            case (let .uploadMultipart(multipartData1, _), let .uploadMultipart(multipartData2, _)),
+                 (let .uploadCompositeMultipart(multipartData1, _, _), let .uploadCompositeMultipart(multipartData2, _, _)):
                 return multipartData1 == multipartData2
             default:
                 return true

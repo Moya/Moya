@@ -84,11 +84,11 @@ public extension MoyaProvider {
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .uploadFile(let file):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
-            case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
+            case .uploadMultipart(let multipartBody, let boundary), .uploadCompositeMultipart(let multipartBody, _, let boundary):
                 guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
                     fatalError("\(target) is not a multipart upload target.")
                 }
-                return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
+                return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, boundary: boundary,  progress: progress, completion: completion)
             case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
                 return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
@@ -172,8 +172,8 @@ private extension MoyaProvider {
         }
     }
 
-    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableToken {
-        let formData = RequestMultipartFormData()
+    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], boundary: String?,  progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableToken {
+        let formData = RequestMultipartFormData(boundary: boundary)
         formData.applyMoyaMultipartFormData(multipartBody)
 
         let interceptor = self.interceptor(target: target)
