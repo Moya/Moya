@@ -26,7 +26,7 @@ jobs:
           command: brew upgrade carthage
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: carthage build --no-skip-current --cache-builds --no-use-binaries --use-xcframeworks          
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
@@ -111,8 +111,9 @@ jobs:
       - store_artifacts:
           path: /tmp/circleci-test-results
 workflows:
-  version: 2
   pr_build:
+    machine: true
+    resource_class: frankois944/macos
     jobs:
       - build
       - carthage_without_swiftlint_integration
