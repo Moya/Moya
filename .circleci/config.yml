@@ -1,7 +1,7 @@
 version: 2.1
 defaults: &defaults
-  machine: true
-  resource_class: "frankois944/macos"
+  macos:
+    xcode: 14.2.0
   shell: /bin/bash --login    
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
