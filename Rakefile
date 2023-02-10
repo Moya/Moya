@@ -102,7 +102,7 @@ desc 'Build, then run all tests.'
 task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
-    xcodebuild 'test', platform, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'build test', platform, xcprety_args: '--test', xcode_summary: true
   end
 end
 
@@ -110,17 +110,17 @@ desc 'Individual test tasks.'
 namespace :test do
   desc 'Test on iOS.'
   task :ios do
-    xcodebuild 'test', :ios, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'build test', :ios, xcprety_args: '--test', xcode_summary: true
   end
 
   desc 'Test on macOS.'
   task :macos do
-    xcodebuild 'test', :macos, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'build test', :macos, xcprety_args: '--test', xcode_summary: true
   end
 
   desc 'Test on tvOS.'
   task :tvos do
-    xcodebuild 'test', :tvos, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'build test', :tvos, xcprety_args: '--test', xcode_summary: true
   end
 
   desc 'Run a local copy of Carthage on this current directory.'
