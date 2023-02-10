@@ -70,7 +70,8 @@ end
 
 def open_simulator_and_sleep(platform)
   return if platform == :macos # Don't need a sleep on macOS because it runs first.
-  sh "xcrun instruments -w '#{device_names[platform]} (#{device_os[platform]})' || sleep 15"
+  #Not working on xcode > 14
+  #sh "xcrun instruments -w '#{device_names[platform]} (#{device_os[platform]})' || sleep 15"
 end
 
 def xcodebuild(tasks, platform, xcprety_args: '', xcode_summary: false)
