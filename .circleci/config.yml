@@ -64,6 +64,8 @@ jobs:
             - vendor/bundle
             - Carthage
             - node_modules
+            - /usr/local/Cellar/carthage
+            - /usr/local/Cellar/swiftlint
       - run: 
           name: Test on iOS
           command: rake test:ios
@@ -89,10 +91,11 @@ jobs:
           key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-only-danger-dependencies-{{ checksum "Dangerfile.swift" }}
           paths:
             - .danger-swift
-            - /opt/homebrew/Cellar/danger-swift
+            - /usr/local/Cellar/danger-swift
+            - /usr/local/Cellar/danger-js
       - run:
           name: CocoaPods Spec linting
-          command: bundle exec pod lib lint --allow-warnings --platforms=ios,macos,tvos #watchos is broken right now 
+          command: bundle exec pod lib lint --allow-warnings --verbose --platforms=ios,macos,tvos #watchos is broken right now 
       - run:
           name: Send Code Coverage to Codecov.io
           command: bash <(curl -s https://codecov.io/bash) -J Moya
