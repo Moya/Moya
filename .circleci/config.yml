@@ -25,6 +25,9 @@ jobs:
           name: Upgrade Carthage
           command: brew upgrade carthage
       - run:
+          name: Carthage checkout
+          command: carthage checkout
+      - run:
           name: Test Carthage Build before installing SwiftLint
           command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose --use-xcframeworks
       - save_cache:
