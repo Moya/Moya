@@ -15,7 +15,7 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-build-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+            - v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Upgrade Carthage
           command: brew outdated carthage || brew upgrade carthage
@@ -26,7 +26,7 @@ jobs:
           name: Test Carthage Build before installing SwiftLint
           command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose --use-xcframeworks
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-build-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
+          key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
             - Carthage               
   build:
@@ -36,7 +36,7 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-build-dep-ruby-carthage-{{ checksum "Cartfile.resolved" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
           command: echo "3.1.2" > .ruby-version
@@ -62,7 +62,7 @@ jobs:
           name: Bootstrap Carthage
           command: carthage build --use-xcframeworks --cache-builds --platform iOS,macOS,tvOS
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-build-dep-ruby-carthage-{{ checksum "Cartfile.resolved" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
           paths:
             - vendor/bundle
             - Carthage
