@@ -38,9 +38,6 @@ jobs:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-all-dep-{{ checksum "Cartfile.resolved" }}
       - run:
-          name: Set Ruby Version
-          command: echo "3.1.2" > .ruby-version
-      - run:
           name: Install Swiftlint
           command: brew outdated swiftlint || brew install swiftlint
       - run:
