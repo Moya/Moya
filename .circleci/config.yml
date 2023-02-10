@@ -39,7 +39,7 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-all-dep-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Install Swiftlint
-          command: brew outdated swiftlint || brew install swiftlint
+          command: brew install swiftlint
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
@@ -48,7 +48,7 @@ jobs:
             BUNDLE_RETRY: 3
       - run:
           name: Upgrade Carthage
-          command: brew outdated carthage || brew upgrade carthage
+          command: brew upgrade carthage
       - run:
           name: Npm install
           command: npm install
