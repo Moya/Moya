@@ -60,7 +60,7 @@ jobs:
           command: brew upgrade carthage
       - run: 
           name: Bootstrap Carthage
-          command: scripts/bootstrap-if-needed.sh
+          command: carthage build --use-xcframeworks     
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
           paths:
