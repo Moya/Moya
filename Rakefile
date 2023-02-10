@@ -48,9 +48,9 @@ end
 
 def devices
   return {
-    ios: "OS=#{device_os[:ios]},name=#{device_names[:ios]}",
-    macos: "arch=#{`uname -m`}",
-    tvos: "OS=#{device_os[:tvos]},name=#{device_names[:tvos]}"
+    ios: "platform=iOS Simulator,OS=#{device_os[:ios]},name=#{device_names[:ios]}",
+    macos: "platform=macOS,arch=#{`uname -m | tr -d '\n'`}",
+    tvos: "platform=tvOS Simulator,OS=#{device_os[:tvos]},name=#{device_names[:tvos]}"
   }
 end
 
