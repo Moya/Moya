@@ -2,6 +2,8 @@ version: 2.1
 defaults: &defaults
   macos:
     xcode: 14.2.0
+  machine: true
+    resource_class: frankois944/macos
   shell: /bin/bash --login    
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
@@ -112,8 +114,6 @@ jobs:
           path: /tmp/circleci-test-results
 workflows:
   pr_build:
-    machine: true
-    resource_class: frankois944/macos
     jobs:
       - build
       - carthage_without_swiftlint_integration
