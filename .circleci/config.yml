@@ -10,7 +10,7 @@ defaults: &defaults
 jobs:
   carthage_without_swiftlint_integration:
     <<: *defaults
-    working_directory: ./Moya_Carthage_1
+    working_directory: ./Moya/Moya_Carthage_1
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
@@ -35,7 +35,7 @@ jobs:
             - Carthage               
   build:
     <<: *defaults
-    working_directory: ./Moya
+    working_directory: ./Moya/Moya
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
