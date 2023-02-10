@@ -1,16 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (3.0.5)
+    CFPropertyList (3.0.6)
       rexml
-    activesupport (6.1.6.1)
+    activesupport (6.1.7.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     algoliasearch (1.27.5)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
@@ -54,14 +54,14 @@ GEM
       netrc (~> 0.11)
     cocoapods-try (1.2.0)
     colored2 (3.1.2)
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     escape (0.0.4)
-    ethon (0.15.0)
+    ethon (0.16.0)
       ffi (>= 1.15.0)
-    faraday (2.5.2)
+    faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.0)
+    faraday-net_http (3.0.2)
     ffi (1.15.5)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
@@ -69,8 +69,8 @@ GEM
     httpclient (2.8.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    json (2.6.2)
-    minitest (5.16.2)
+    json (2.6.3)
+    minitest (5.17.0)
     molinillo (0.8.0)
     nanaimo (0.3.0)
     nap (1.1.0)
@@ -89,7 +89,7 @@ GEM
       faraday (>= 0.17.3, < 3)
     typhoeus (1.4.0)
       ethon (>= 0.9.0)
-    tzinfo (2.0.5)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     xcodeproj (1.22.0)
       CFPropertyList (>= 2.3.3, < 4.0)
@@ -102,17 +102,17 @@ GEM
       rouge (~> 2.0.7)
     xcpretty-json-formatter (0.1.1)
       xcpretty (~> 0.2, >= 0.0.7)
-    zeitwerk (2.6.0)
+    zeitwerk (2.6.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods (~> 1.6)
+  cocoapods (~> 1.11.0)
   octokit (~> 4.3)
   rake
   xcpretty
   xcpretty-json-formatter
 
 BUNDLED WITH
-   2.2.23
+   2.3.7

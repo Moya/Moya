@@ -13,10 +13,10 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "License.md" }
   s.author             = { "Ash Furrow" => "ash@ashfurrow.com" }
   s.social_media_url   = "http://twitter.com/ashfurrow"
-  s.ios.deployment_target = '10.0'
-  s.osx.deployment_target = '10.12'
-  s.tvos.deployment_target = '10.0'
-  s.watchos.deployment_target = '3.0'
+  s.ios.deployment_target = '11.0'
+  s.osx.deployment_target = '10.14'
+  s.tvos.deployment_target = '11.0'
+  s.watchos.deployment_target = '4.0'
   s.source       = { :git => "https://github.com/Moya/Moya.git", :tag => s.version }
   s.default_subspec = "Core"
   s.swift_version = '5.3'
