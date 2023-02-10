@@ -49,22 +49,22 @@ end
 def devices
   return {
     ios: "OS=#{device_os[:ios]},name=#{device_names[:ios]}",
-    macos: "arch=x86_64",
+    macos: "arch=#{`uname -m`}",
     tvos: "OS=#{device_os[:tvos]},name=#{device_names[:tvos]}"
   }
 end
 
 def device_names
   return {
-    ios: "iPhone 8",
-    tvos: "Apple TV 4K (at 1080p) (2nd generation)"
+    ios: "iPhone SE (3rd generation)",
+    tvos: "Apple TV 4K (3rd generation) (at 1080p)"
   }
 end
 
 def device_os
   return {
-    ios: "14.5",
-    tvos: "14.5"
+    ios: "16.2",
+    tvos: "16.1"
   }
 end
 
