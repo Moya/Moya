@@ -1,18 +1,5 @@
 # xcodebuild often ends with error code 65 and needs to be restarted.
 # This function will re-run a command up to three times if it yeilds a 65 exit code.
-def safe_sh(command)
-  attempt_count = 0
-  while true
-    begin
-      attempt_count += 1
-      sh command # Attempt command
-      break      # If command was successful, break out of the loop.
-    rescue => exception
-      puts "Received non-zero exit code: #{$1}"
-      raise exception unless attempt_count < 2 # Ignore exit code 65
-    end
-  end
-end
 
 def moya_project
   return 'Moya.xcodeproj'
@@ -32,9 +19,9 @@ end
 
 def schemes
   return {
-    ios: 'MoyaTests',
-    macos: 'MoyaTests',
-    tvos: 'MoyaTests'
+    ios: 'Moya',
+    macos: 'Moya',
+    tvos: 'Moya'
   }
 end
 
@@ -48,9 +35,9 @@ end
 
 def devices
   return {
-    ios: "platform=iOS Simulator,OS=#{device_os[:ios]},name=#{device_names[:ios]}",
+    ios: "OS=#{device_os[:ios]},name=#{device_names[:ios]}",
     macos: "platform=macOS,arch=#{`uname -m | tr -d '\n'`}",
-    tvos: "platform=tvOS Simulator,OS=#{device_os[:tvos]},name=#{device_names[:tvos]}"
+    tvos: "OS=#{device_os[:tvos]},name=#{device_names[:tvos]}"
   }
 end
 
@@ -82,7 +69,7 @@ def xcodebuild(tasks, platform, xcprety_args: '', xcode_summary: false)
   open_simulator_and_sleep(platform)
   xcpretty_json_output_name = xcode_summary == true ? " XCPRETTY_JSON_FILE_OUTPUT=\"xcodebuild-#{platform}.json\"" : ""
   xcpretty_formatter = xcode_summary == true ? " -f `bundle exec xcpretty-json-formatter`" : ""
-  safe_sh "set -o pipefail && xcodebuild -project '#{moya_project}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} |#{xcpretty_json_output_name} bundle exec xcpretty -c #{xcprety_args}#{xcpretty_formatter}"
+  system "set -o pipefail && xcodebuild -project '#{moya_project}' -scheme '#{scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} |#{xcpretty_json_output_name} bundle exec xcpretty -c #{xcprety_args}#{xcpretty_formatter}"
 end
 
 def xcodebuild_example(tasks, xcprety_args: '')
@@ -93,7 +80,7 @@ def xcodebuild_example(tasks, xcprety_args: '')
   demo_scheme = 'Basic'
 
   open_simulator_and_sleep(platform)
-  safe_sh "set -o pipefail && xcodebuild -project '#{demo_project}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
+  system "set -o pipefail && xcodebuild -project '#{demo_project}' -scheme '#{demo_scheme}' -configuration '#{configuration}' -sdk #{sdk} -destination '#{destination}' #{tasks} | bundle exec xcpretty -c #{xcprety_args}"
 end
 
 desc 'Build Moya.'
@@ -115,7 +102,7 @@ desc 'Build, then run all tests.'
 task :test do
   targets.map do |platform|
     puts "Testing on #{platform}."
-    xcodebuild 'build test', platform, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'test', platform, xcprety_args: '--test', xcode_summary: true
   end
 end
 
@@ -123,17 +110,17 @@ desc 'Individual test tasks.'
 namespace :test do
   desc 'Test on iOS.'
   task :ios do
-    xcodebuild 'build test', :ios, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'test', :ios, xcprety_args: '--test', xcode_summary: true
   end
 
   desc 'Test on macOS.'
   task :macos do
-    xcodebuild 'build test', :macos, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'test', :macos, xcprety_args: '--test', xcode_summary: true
   end
 
   desc 'Test on tvOS.'
   task :tvos do
-    xcodebuild 'build test', :tvos, xcprety_args: '--test', xcode_summary: true
+    xcodebuild 'test', :tvos, xcprety_args: '--test', xcode_summary: true
   end
 
   desc 'Run a local copy of Carthage on this current directory.'
