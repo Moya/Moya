@@ -23,7 +23,7 @@ jobs:
           command: echo "3.1.2" > ~/.ruby-version
       - run:
           name: Upgrade Carthage
-          command: brew upgrade carthage
+          command: brew outdated carthage || brew upgrade carthage
       - run:
           name: Carthage checkout
           command: carthage checkout
@@ -60,10 +60,13 @@ jobs:
             BUNDLE_RETRY: 3
       - run:
           name: Upgrade Carthage
-          command: brew upgrade carthage
+          command: brew outdated carthage || brew upgrade carthage
+      - run:
+          name: Carthage checkout
+          command: carthage checkout
       - run: 
           name: Bootstrap Carthage
-          command: carthage bootstrap --use-xcframeworks     
+          command: carthage build --use-xcframeworks --cache-builds --platform iOS,macOS,tvOS
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-ruby-carthage-{{ checksum "Cartfile.resolved" }}
           paths:
