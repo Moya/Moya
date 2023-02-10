@@ -18,7 +18,7 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-all-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Upgrade Carthage
-          command: brew link carthage@0.39.0 || brew upgrade carthage
+          command: brew upgrade carthage
       - run:
           name: Carthage checkout
           command: carthage checkout
@@ -29,7 +29,7 @@ jobs:
           key: v{{ .Environment.CACHE_VERSION }}-all-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
             - Carthage       
-            - /usr/local/Cellar/carthage        
+
   build:
     <<: *defaults
     steps:
@@ -49,7 +49,7 @@ jobs:
             BUNDLE_RETRY: 3
       - run:
           name: Upgrade Carthage
-          command: brew link carthage@0.39.0 || brew upgrade carthage
+          command: brew upgrade carthage
       - run:
           name: Carthage checkout
           command: carthage checkout
@@ -61,7 +61,6 @@ jobs:
           paths:
             - vendor/bundle
             - Carthage
-            - /usr/local/Cellar/carthage
             - /usr/local/Cellar/swiftlint
       - run: 
           name: Test on iOS
