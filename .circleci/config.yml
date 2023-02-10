@@ -2,16 +2,15 @@ version: 2.1
 defaults: &defaults
   machine: true
   resource_class: frankois944/macos
-  shell: /bin/bash --login    
+  shell: /bin/bash --login
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
     CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
     LANG: en_US.UTF-8
-    BUNDLE_PATH: vendor/bundle
 jobs:
   carthage_without_swiftlint_integration:
     <<: *defaults
-    working_directory: ~/Moya/Moya_Carthage_1
+    working_directory: ./Moya_Carthage_1
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
@@ -20,7 +19,7 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
-          command: echo "3.1.2" > ~/.ruby-version
+          command: echo "3.1.2" > .ruby-version
       - run:
           name: Upgrade Carthage
           command: brew outdated carthage || brew upgrade carthage
@@ -36,7 +35,7 @@ jobs:
             - Carthage               
   build:
     <<: *defaults
-    working_directory: ~/Moya/Moya
+    working_directory: ./Moya
     steps:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
@@ -45,13 +44,10 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-ruby-carthage-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
-          command: echo "3.1.2" > ~/.ruby-version
+          command: echo "3.1.2" > .ruby-version
       - run:
           name: Install Swiftlint
-          command: brew install swiftlint
-      - run:
-          name: Add Python directory to PATH
-          command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
+          command: brew install swiftlint    
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
@@ -99,8 +95,7 @@ jobs:
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}
           paths:
-            - ~/.danger-swift
-            - /usr/local/Homebrew
+            - .danger-swift
       - run:
           name: CocoaPods Spec linting
           command: bundle exec pod lib lint --allow-warnings
