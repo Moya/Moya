@@ -63,7 +63,7 @@ jobs:
           command: brew upgrade carthage
       - run: 
           name: Bootstrap Carthage
-          command: carthage build --use-xcframeworks     
+          command: carthage bootstrap --use-xcframeworks     
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-ruby-carthage-{{ checksum "Cartfile.resolved" }}
           paths:
