@@ -76,11 +76,8 @@ jobs:
       - run:
           name: Test on tvOS
           command: rake test:tvos
-      - run: 
-          name: Test with Carthage
-          command: rake test:carthage
       - run:
-          name: Build Example Project
+          name: Build Example Project with Carthage
           command: rake build_example
       - restore_cache:
           keys:

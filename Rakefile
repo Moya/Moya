@@ -122,20 +122,6 @@ namespace :test do
   task :tvos do
     xcodebuild 'build test', :tvos, xcprety_args: '--test', xcode_summary: true
   end
-
-  desc 'Run a local copy of Carthage on this current directory.'
-  task :carthage do
-    # make a folder, put a cartfile in and make it a consumer
-    # of the root dir
-
-    Dir.mkdir("carthage_test")
-    File.write(File.join("carthage_test", "Cartfile"), "git \"file://#{Dir.pwd}\" \"HEAD\"")
-    Dir.chdir "carthage_test" do
-      sh "../scripts/carthage.sh bootstrap --platform 'iOS'"
-      has_artifacts = Dir.glob("Carthage/Build/*").count > 0
-      raise("Carthage did not succeed") unless has_artifacts
-    end
-  end
 end
 
 desc 'Release a version, specified as an argument.'
