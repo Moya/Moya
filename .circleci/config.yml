@@ -42,7 +42,7 @@ jobs:
           command: echo "3.1.2" > .ruby-version
       - run:
           name: Install Swiftlint
-          command: brew install swiftlint
+          command: brew outdated swiftlint || brew install swiftlint
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install

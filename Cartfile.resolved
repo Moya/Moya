@@ -1,6 +1,6 @@
 github "Alamofire/Alamofire" "5.6.4"
 github "AliSoftware/OHHTTPStubs" "9.1.0"
 github "Quick/Nimble" "v11.2.1"
-github "Quick/Quick" "v6.1.0"
+github "Quick/Quick" "v5.0.1"
 github "ReactiveCocoa/ReactiveSwift" "6.7.0"
 github "ReactiveX/RxSwift" "6.5.0"
