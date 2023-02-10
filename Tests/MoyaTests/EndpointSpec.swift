@@ -4,7 +4,7 @@ import Nimble
 import Foundation
 
 final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
-    override static func configure(_ configuration: Configuration) {
+    override static func configure(_ configuration: QCKConfiguration) {
         sharedExamples("endpoint with no request property changed") { (context: SharedExampleContext) in
             let task = context()["task"] as! Task
             let oldEndpoint = context()["endpoint"] as! Endpoint
@@ -22,7 +22,7 @@ final class NonUpdatingRequestEndpointConfiguration: QuickConfiguration {
 }
 
 final class ParametersEncodedEndpointConfiguration: QuickConfiguration {
-    override static func configure(_ configuration: Configuration) {
+    override static func configure(_ configuration: QCKConfiguration) {
         sharedExamples("endpoint with encoded parameters") { (context: SharedExampleContext) in
             let parameters = context()["parameters"] as! [String: Any]
             let encoding = context()["encoding"] as! ParameterEncoding
