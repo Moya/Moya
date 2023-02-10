@@ -26,7 +26,7 @@ jobs:
           command: brew upgrade carthage
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: carthage build --no-skip-current --cache-builds --no-use-binaries --use-xcframeworks          
+          command: carthage build --no-skip-current --cache-builds --no-use-binaries --verbose --use-xcframeworks
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
