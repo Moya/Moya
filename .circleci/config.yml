@@ -80,7 +80,7 @@ jobs:
           - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-danger-js-swift-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: install Danger
-          command: brew link danger-swift || brew install danger/tap/danger-swift
+          command: brew link danger-js && brew link danger-swift || brew install danger/tap/danger-swift
       - run:
           name: Run Danger
           command: danger-swift ci

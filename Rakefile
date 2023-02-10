@@ -44,14 +44,14 @@ end
 def device_names
   return {
     ios: "iPhone SE (3rd generation)",
-    tvos: "Apple TV 4K (3rd generation) (at 1080p)"
+    tvos: "Apple TV 4K (at 1080p) (2nd generation)"
   }
 end
 
 def device_os
   return {
-    ios: "16.2",
-    tvos: "16.1"
+    ios: "15.5",
+    tvos: "15.4"
   }
 end
 
