@@ -28,7 +28,8 @@ jobs:
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-all-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
-            - Carthage               
+            - Carthage       
+            - /usr/local/Cellar/carthage        
   build:
     <<: *defaults
     steps:
