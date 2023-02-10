@@ -18,7 +18,7 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-all-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Upgrade Carthage
-          command: brew link carthage;brew upgrade carthage
+          command: brew link carthage || brew upgrade carthage
       - run:
           name: Carthage checkout
           command: carthage checkout
@@ -40,7 +40,7 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install Swiftlint
-          command: brew link swiftlint;brew install swiftlint
+          command: brew link swiftlint || brew install swiftlint
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
@@ -49,7 +49,7 @@ jobs:
             BUNDLE_RETRY: 3
       - run:
           name: Upgrade Carthage
-          command: brew link carthage;brew upgrade carthage
+          command: brew link carthage || brew upgrade carthage
       - run:
           name: Carthage checkout
           command: carthage checkout
@@ -80,7 +80,7 @@ jobs:
           - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-danger-js-swift-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: install Danger
-          command: brew link danger-swift;brew install danger/tap/danger-swift
+          command: brew link danger-swift || brew install danger/tap/danger-swift
       - run:
           name: Run Danger
           command: danger-swift ci
