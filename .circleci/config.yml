@@ -1,7 +1,7 @@
 version: 2.1
 defaults: &defaults
   machine: true
-    resource_class: frankois944/macos
+  resource_class: "frankois944/macos"
   shell: /bin/bash --login    
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
