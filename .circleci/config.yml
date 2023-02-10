@@ -37,7 +37,7 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "package-lock.json" }}-{{ checksum "Gemfile.lock" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
@@ -57,7 +57,7 @@ jobs:
           name: Bootstrap Carthage
           command: carthage build --use-xcframeworks --cache-builds --platform iOS,macOS,tvOS
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "package-lock.json" }}-{{ checksum "Gemfile.lock" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
             - Carthage
