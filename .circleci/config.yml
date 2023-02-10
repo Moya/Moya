@@ -36,7 +36,7 @@ jobs:
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - restore_cache:
           keys:
-            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-all-dep-{{ checksum "Cartfile.resolved" }}
+            - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "package-lock.json" }}-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install Swiftlint
           command: brew install swiftlint
@@ -59,7 +59,7 @@ jobs:
           name: Bootstrap Carthage
           command: carthage build --use-xcframeworks --cache-builds --platform iOS,macOS,tvOS
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-all-dep-{{ checksum "Cartfile.resolved" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-deps-{{ checksum "Cartfile.resolved" }}-{{ checksum "package-lock.json" }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
             - Carthage
@@ -80,7 +80,7 @@ jobs:
           command: rake build_example
       - restore_cache:
           keys:
-          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-only-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-danger-js-swift-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: install Danger
           command: brew install danger/tap/danger-swift
@@ -88,7 +88,7 @@ jobs:
           name: Run Danger
           command: danger-swift ci
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-only-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-danger-js-swift-dependencies-{{ checksum "Dangerfile.swift" }}
           paths:
             - .danger-swift
             - /usr/local/Cellar/danger-swift
