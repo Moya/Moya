@@ -1,0 +1,1523 @@
+{
+  "warnings": [
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'.",
+    "Found a configuration for 'file_length' rule, but it is disabled on 'disabled_rules'."
+  ],
+  "ld_warnings": [
+
+  ],
+  "compile_warnings": [
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:164:13",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "            waitUntil { done in",
+      "cursor": "            ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:192:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:206:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:223:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:239:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:251:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:266:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:311:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:328:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:350:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:373:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:496:39",
+      "reason": "instance method 'toEventuallyNot' is unavailable from asynchronous contexts; the sync version of `toEventuallyNot` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(receivedError).toEventuallyNot(beNil())",
+      "cursor": "                                      ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:511:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:528:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:585:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:609:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:622:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:649:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:709:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually( equal(0) )",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:723:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:770:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:802:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:850:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:881:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:920:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:955:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1008:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1023:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1047:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1062:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1096:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1130:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:186:61",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(provider.inflightRequests.count).toEventually(equal(0))",
+      "cursor": "                                                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:237:50",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)",
+      "cursor": "                                                 ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:238:46",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)",
+      "cursor": "                                             ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:239:47",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)",
+      "cursor": "                                              ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:240:48",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)",
+      "cursor": "                                               ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:282:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(requestQueue.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:301:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(callbackQueue.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:330:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(requestQueue.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:350:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(DispatchQueue.main.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:65:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:80:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:96:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:114:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:127:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:140:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:162:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:180:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:208:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:229:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:251:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:273:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:304:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:327:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:342:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:367:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:389:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:164:13",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "            waitUntil { done in",
+      "cursor": "            ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:192:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:206:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:223:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:239:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:251:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:266:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:311:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:328:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:350:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:373:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:496:39",
+      "reason": "instance method 'toEventuallyNot' is unavailable from asynchronous contexts; the sync version of `toEventuallyNot` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(receivedError).toEventuallyNot(beNil())",
+      "cursor": "                                      ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:511:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:528:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:585:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:609:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:622:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:649:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:709:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually( equal(0) )",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:723:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:770:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:802:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:850:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:881:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:920:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:955:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1008:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1023:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1047:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1062:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1096:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1130:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:25:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:135:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually( equal(0) )",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:184:46",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)",
+      "cursor": "                                             ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:185:43",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(failedEventsCount).toEventually(equal(expectedFailedEventsCount), timeout: timeout)",
+      "cursor": "                                          ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:186:48",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(interruptedEventsCount).toEventually(equal(expectedInterruptedEventsCount), timeout: timeout)",
+      "cursor": "                                               ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:187:43",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)",
+      "cursor": "                                          ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:188:44",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)",
+      "cursor": "                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:144:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually(equal(0))",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:189:46",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)",
+      "cursor": "                                             ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:190:42",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)",
+      "cursor": "                                         ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:191:43",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)",
+      "cursor": "                                          ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:192:44",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)",
+      "cursor": "                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:225:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:241:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:268:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:285:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:164:13",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "            waitUntil { done in",
+      "cursor": "            ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:192:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:206:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:223:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:239:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:251:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:266:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:311:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:328:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:350:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:373:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:496:39",
+      "reason": "instance method 'toEventuallyNot' is unavailable from asynchronous contexts; the sync version of `toEventuallyNot` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(receivedError).toEventuallyNot(beNil())",
+      "cursor": "                                      ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:511:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:528:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:585:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:609:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:622:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:649:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:709:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually( equal(0) )",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:723:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:770:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:802:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:850:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:881:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:920:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:955:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1008:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1023:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1047:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1062:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1096:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1130:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:186:61",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(provider.inflightRequests.count).toEventually(equal(0))",
+      "cursor": "                                                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:237:50",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)",
+      "cursor": "                                                 ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:238:46",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)",
+      "cursor": "                                             ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:239:47",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)",
+      "cursor": "                                              ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:240:48",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)",
+      "cursor": "                                               ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:282:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(requestQueue.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:301:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(callbackQueue.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:330:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(requestQueue.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+CombineSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+CombineSpec.swift:350:60",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                                expect(callbackQueueLabel).toEventually(equal(DispatchQueue.main.label))",
+      "cursor": "                                                           ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:65:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:80:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:96:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:114:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:127:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:140:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:162:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:180:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:208:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:229:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:251:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:273:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:304:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil { done in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:327:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:342:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:367:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderIntegrationTests.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderIntegrationTests.swift:389:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:164:13",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "            waitUntil { done in",
+      "cursor": "            ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:192:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:206:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:223:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:239:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:251:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:266:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:311:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:328:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:350:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:373:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:496:39",
+      "reason": "instance method 'toEventuallyNot' is unavailable from asynchronous contexts; the sync version of `toEventuallyNot` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(receivedError).toEventuallyNot(beNil())",
+      "cursor": "                                      ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:511:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:528:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:585:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:609:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:622:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:649:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:709:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually( equal(0) )",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:723:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:770:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:802:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:850:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:881:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:920:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:955:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil(timeout: .seconds(10)) { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1008:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1023:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1047:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1062:25",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                        waitUntil(action: { completion in",
+      "cursor": "                        ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1096:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProviderSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProviderSpec.swift:1130:21",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                    waitUntil { done in",
+      "cursor": "                    ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:25:17",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                waitUntil { done in",
+      "cursor": "                ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:135:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually( equal(0) )",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:184:46",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)",
+      "cursor": "                                             ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:185:43",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(failedEventsCount).toEventually(equal(expectedFailedEventsCount), timeout: timeout)",
+      "cursor": "                                          ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:186:48",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(interruptedEventsCount).toEventually(equal(expectedInterruptedEventsCount), timeout: timeout)",
+      "cursor": "                                               ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:187:43",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)",
+      "cursor": "                                          ^"
+    },
+    {
+      "file_name": "MoyaProvider+ReactiveSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+ReactiveSpec.swift:188:44",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)",
+      "cursor": "                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:144:57",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(provider.inflightRequests.count).toEventually(equal(0))",
+      "cursor": "                                                        ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:189:46",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(completedEventsCount).toEventually(equal(expectedCompletedEventsCount), timeout: timeout)",
+      "cursor": "                                             ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:190:42",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(errorEventsCount).toEventually(equal(expectedErrorEventsCount), timeout: timeout)",
+      "cursor": "                                         ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:191:43",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextResponseCount).toEventually(equal(expectedNextResponseCount), timeout: timeout)",
+      "cursor": "                                          ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:192:44",
+      "reason": "instance method 'toEventually' is unavailable from asynchronous contexts; the sync version of `toEventually` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                expect(nextProgressValues).toEventually(equal(expectedNextProgressValues), timeout: timeout)",
+      "cursor": "                                           ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:225:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:241:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:268:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    },
+    {
+      "file_name": "MoyaProvider+RxSpec.swift",
+      "file_path": "/Users/francoisdabonot/DEV/Moya/Tests/MoyaTests/MoyaProvider+RxSpec.swift:285:29",
+      "reason": "global function 'waitUntil' is unavailable from asynchronous contexts; the sync version of `waitUntil` does not work in async contexts. Use the async version with the same name as a drop-in replacement; this is an error in Swift 6",
+      "line": "                            waitUntil(action: { completion in",
+      "cursor": "                            ^"
+    }
+  ],
+  "errors": [
+
+  ],
+  "compile_errors": [
+
+  ],
+  "file_missing_errors": [
+
+  ],
+  "undefined_symbols_errors": [
+
+  ],
+  "duplicate_symbols_errors": [
+
+  ],
+  "tests_failures": {
+  },
+  "tests_summary_messages": [
+    "\t Executed 321 tests, with 3 failures (0 unexpected) in 0.328 (0.378) seconds\n"
+  ]
+}

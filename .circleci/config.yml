@@ -17,9 +17,6 @@ jobs:
           keys:
             - v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
-          name: Set Ruby Version
-          command: echo "3.1.2" > .ruby-version
-      - run:
           name: Upgrade Carthage
           command: brew outdated carthage || brew upgrade carthage
       - run:
@@ -45,7 +42,7 @@ jobs:
           command: echo "3.1.2" > .ruby-version
       - run:
           name: Install Swiftlint
-          command: brew install swiftlint    
+          command: brew install swiftlint
       - run:
           name: Install Ruby Dependencies
           command: bundle check || bundle install
@@ -55,6 +52,9 @@ jobs:
       - run:
           name: Upgrade Carthage
           command: brew outdated carthage || brew upgrade carthage
+      - run:
+          name: Npm install
+          command: npm install
       - run:
           name: Carthage checkout
           command: carthage checkout
@@ -66,6 +66,7 @@ jobs:
           paths:
             - vendor/bundle
             - Carthage
+            - node_modules
       - run: 
           name: Test on iOS
           command: rake test:ios
@@ -81,9 +82,6 @@ jobs:
       - run:
           name: Build Example Project
           command: rake build_example
-      - run:
-          name: Install MDSpell
-          command: sudo npm install -g orta/node-markdown-spellcheck
       - restore_cache:
           keys:
           - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-danger-dependencies-{{ checksum "Dangerfile.swift" }}

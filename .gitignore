@@ -32,3 +32,4 @@ Packages
 Package.pins
 .swiftpm
 vendor
+node_modules
