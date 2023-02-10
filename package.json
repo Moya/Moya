@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "markdown-spellcheck": "github:orta/node-markdown-spellcheck"
-  }
-}

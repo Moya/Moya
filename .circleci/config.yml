@@ -1,7 +1,7 @@
 version: 2.1
 defaults: &defaults
   macos:
-    xcode: 14.2.0
+    xcode: 13.4.1
   shell: /bin/bash --login
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
@@ -50,9 +50,6 @@ jobs:
           name: Upgrade Carthage
           command: brew upgrade carthage
       - run:
-          name: Npm install
-          command: npm install
-      - run:
           name: Carthage checkout
           command: carthage checkout
       - run: 
@@ -63,7 +60,6 @@ jobs:
           paths:
             - vendor/bundle
             - Carthage
-            - node_modules
             - /usr/local/Cellar/carthage
             - /usr/local/Cellar/swiftlint
       - run: 
