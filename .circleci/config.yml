@@ -81,7 +81,7 @@ jobs:
           command: rake build_example
       - restore_cache:
           keys:
-          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-only-danger-dependencies-{{ checksum "Dangerfile.swift" }}
       - run:
           name: install Danger
           command: brew install danger/tap/danger-swift
@@ -89,13 +89,13 @@ jobs:
           name: Run Danger
           command: danger-swift ci
       - save_cache:
-          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-danger-dependencies-{{ checksum "Dangerfile.swift" }}
+          key: v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-with-only-danger-dependencies-{{ checksum "Dangerfile.swift" }}
           paths:
             - .danger-swift
-            - /opt/homebrew/Cellar/
+            - /opt/homebrew/Cellar/danger-swift
       - run:
           name: CocoaPods Spec linting
-          command: bundle exec pod lib lint --allow-warnings --platforms=ios,macos,tvos #watchos is broken right now https://github.com/CocoaPods/CocoaPods/issues/11558
+          command: bundle exec pod lib lint --allow-warnings --platforms=ios,macos,tvos #watchos is broken right now 
       - run:
           name: Send Code Coverage to Codecov.io
           command: bash <(curl -s https://codecov.io/bash) -J Moya
