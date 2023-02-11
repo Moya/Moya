@@ -21,7 +21,7 @@ extension Giphy: TargetType {
             return .post
         }
     }
-    public var task: HTTPTask {
+    public var task: Task {
         switch self {
         case let .upload(data):
             let multipartFormData = [MultipartFormData(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")]

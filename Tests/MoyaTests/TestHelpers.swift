@@ -26,7 +26,7 @@ extension GitHub: TargetType {
 
     var method: Moya.Method { .get }
 
-    var task: HTTPTask { .requestPlain }
+    var task: Task { .requestPlain }
 
     var sampleData: Data {
         switch self {
@@ -90,7 +90,7 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
         }
     }
 
-    var task: HTTPTask {
+    var task: Task {
         switch self {
         case .basicAuth, .post, .bearer:
             return .requestParameters(parameters: [:], encoding: URLEncoding.default)
@@ -163,7 +163,7 @@ extension GitHubUserContent: TargetType {
         }
     }
     public var parameterEncoding: ParameterEncoding { URLEncoding.default }
-    public var task: HTTPTask {
+    public var task: Task {
         switch self {
         case .downloadMoyaWebContent:
             return .downloadDestination(defaultDownloadDestination)

@@ -1,10 +1,7 @@
 import Foundation
 
-@available(*, deprecated, renamed: "HTTPTask", message: "Task has been renamed to HTTPTask, to make it clearer and to differentiate it from _Concurrency.task")
-typealias Task = HTTPTask
-
 /// Represents an HTTP task.
-public enum HTTPTask {
+public enum Task {
 
     /// A request with no additional data.
     case requestPlain

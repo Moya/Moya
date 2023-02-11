@@ -13,7 +13,7 @@ final class EndpointClosureSpec: QuickSpec {
         beforeEach {
             session = SessionMock()
             let endpointClosure: MoyaProvider<HTTPBin>.EndpointClosure = { target in
-                let task: HTTPTask
+                let task: Task
 
                 switch target.task {
                 case let .uploadMultipart(multipartFormData):

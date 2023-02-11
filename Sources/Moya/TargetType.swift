@@ -16,7 +16,7 @@ public protocol TargetType {
     var sampleData: Data { get }
 
     /// The type of HTTP task to be performed.
-    var task: HTTPTask { get }
+    var task: Task { get }
 
     /// The type of validation to perform on the request. Default is `.none`.
     var validationType: ValidationType { get }
