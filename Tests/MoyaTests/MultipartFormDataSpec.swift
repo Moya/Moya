@@ -8,7 +8,7 @@ final class MultiPartFormData: QuickSpec {
     override func spec() {
         it("initializes correctly") {
             let fileURL = URL(fileURLWithPath: "/tmp.txt")
-            let data = MultipartFormData(
+            let data = MultipartFormBodyPart(
                 provider: .file(fileURL),
                 name: "MyName",
                 fileName: "tmp.txt",

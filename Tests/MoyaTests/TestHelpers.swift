@@ -66,8 +66,8 @@ enum HTTPBin: TargetType, AccessTokenAuthorizable {
     case bearer
     case post
     case upload(file: URL)
-    case uploadMultipart([MultipartFormData], [String: Any]?)
-    case validatedUploadMultipart([MultipartFormData], [String: Any]?, [Int])
+    case uploadMultipart(MultipartFormData, [String: Any]?)
+    case validatedUploadMultipart(MultipartFormData, [String: Any]?, [Int])
 
     var baseURL: URL { URL(string: "http://httpbin.org")! }
     var path: String {
@@ -184,15 +184,15 @@ extension GitHubUserContent: TargetType {
 // MARK: - Upload Multipart Helpers
 
 extension HTTPBin {
-    static func createTestMultipartFormData() -> [MultipartFormData] {
+    static func createTestMultipartFormData() -> MultipartFormData {
         let url = testImageUrl
         let string = "some data"
         guard let data = string.data(using: .utf8) else {
             fatalError("Failed creating Data from String \(string)")
         }
         return [
-            MultipartFormData(provider: .file(url), name: "file", fileName: "testImage"),
-            MultipartFormData(provider: .data(data), name: "data")
+            MultipartFormBodyPart(provider: .file(url), name: "file", fileName: "testImage"),
+            MultipartFormBodyPart(provider: .data(data), name: "data")
         ]
     }
 }

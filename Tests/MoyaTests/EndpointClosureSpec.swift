@@ -17,9 +17,8 @@ final class EndpointClosureSpec: QuickSpec {
 
                 switch target.task {
                 case let .uploadMultipart(multipartFormData):
-                    let additional = Moya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
-                    var newMultipartFormData = multipartFormData
-                    newMultipartFormData.append(additional)
+                    let additionalBodyPart = Moya.MultipartFormBodyPart(provider: .data("test2".data(using: .utf8)!), name: "test2")
+                    let newMultipartFormData = MultipartFormData(parts: multipartFormData.parts + CollectionOfOne(additionalBodyPart))
                     task = .uploadMultipart(newMultipartFormData)
                 default:
                     task = target.task
@@ -31,16 +30,16 @@ final class EndpointClosureSpec: QuickSpec {
         }
 
         it("appends additional multipart body in endpointClosure") {
-            let multipartData1 = Moya.MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test1")
-            let multipartData2 = Moya.MultipartFormData(provider: .data("test2".data(using: .utf8)!), name: "test2")
+            let multipartData1 = Moya.MultipartFormBodyPart(provider: .data("test1".data(using: .utf8)!), name: "test1")
+            let multipartData2 = Moya.MultipartFormBodyPart(provider: .data("test2".data(using: .utf8)!), name: "test2")
 
-            let providedMultipartData = [multipartData1]
-            let sentMultipartData = [multipartData1, multipartData2]
+            let providedMultipartData: Moya.MultipartFormData = [multipartData1]
+            let sentMultipartData: Moya.MultipartFormData = [multipartData1, multipartData2]
 
             _ = provider.request(.uploadMultipart(providedMultipartData, nil)) { _ in }
             let stringData1 = session.uploadMultipartString!
 
-            let requestMultipartFormData = RequestMultipartFormData()
+            let requestMultipartFormData = RequestMultipartFormData(fileManager: sentMultipartData.fileManager, boundary: sentMultipartData.boundary)
             requestMultipartFormData.applyMoyaMultipartFormData(sentMultipartData)
             let stringData2 = String(decoding: try! requestMultipartFormData.encode(), as: UTF8.self)
 
