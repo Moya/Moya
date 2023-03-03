@@ -360,7 +360,28 @@ final class MoyaProviderIntegrationTests: QuickSpec {
             let formData = HTTPBin.createTestMultipartFormData()
 
             it("returns an error for status code different than 287") {
-                let target = HTTPBin.validatedUploadMultipart(formData, nil, [287])
+                let target = HTTPBin.validatedUploadMultipartFormData(MultipartFormData(parts: formData), nil, [287])
+                var receievedResponse: Response?
+                var receivedError: Error?
+
+                waitUntil(timeout: .seconds(10)) { done in
+                    provider.request(target) { result in
+                        switch result {
+                        case .success(let response):
+                            receievedResponse = response
+                        case .failure(let error):
+                            receivedError = error
+                        }
+                        done()
+                    }
+                }
+
+                expect(receievedResponse).to(beNil())
+                expect(receivedError).toNot(beNil())
+            }
+
+            it("returns an error for status code different than 287") {
+                let target = HTTPBin.validatedUploadMultipartBodyParts(formData, nil, [287])
                 var receievedResponse: Response?
                 var receivedError: Error?
 
@@ -382,7 +403,29 @@ final class MoyaProviderIntegrationTests: QuickSpec {
 
             it("returns a valid response for .succesCodes") {
                 let successCodes = ValidationType.successCodes.statusCodes
-                let target = HTTPBin.validatedUploadMultipart(formData, nil, successCodes)
+                let target = HTTPBin.validatedUploadMultipartFormData(MultipartFormData(parts: formData), nil, successCodes)
+                var receievedResponse: Response?
+                var receivedError: Error?
+
+                waitUntil(timeout: .seconds(10)) { done in
+                    provider.request(target) { result in
+                        switch result {
+                        case .success(let response):
+                            receievedResponse = response
+                        case .failure(let error):
+                            receivedError = error
+                        }
+                        done()
+                    }
+                }
+
+                expect(receievedResponse).toNot(beNil())
+                expect(receivedError).to(beNil())
+            }
+
+            it("returns a valid response for .succesCodes") {
+                let successCodes = ValidationType.successCodes.statusCodes
+                let target = HTTPBin.validatedUploadMultipartBodyParts(formData, nil, successCodes)
                 var receievedResponse: Response?
                 var receivedError: Error?
 

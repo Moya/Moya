@@ -125,6 +125,8 @@ extension Endpoint: Equatable, Hashable {
             hasher.combine(file)
         case let .uploadMultipart(multipartData), let .uploadCompositeMultipart(multipartData, _):
             hasher.combine(multipartData)
+        case let .uploadMultipartFormData(multipartFormData), let .uploadCompositeMultipartFormData(multipartFormData, _):
+            hasher.combine(multipartFormData)
         default:
             break
         }
@@ -146,6 +148,9 @@ extension Endpoint: Equatable, Hashable {
             case (let .uploadMultipart(multipartData1), let .uploadMultipart(multipartData2)),
                  (let .uploadCompositeMultipart(multipartData1, _), let .uploadCompositeMultipart(multipartData2, _)):
                 return multipartData1 == multipartData2
+            case (let .uploadMultipartFormData(multipartFormData1), let .uploadMultipartFormData(multipartFormData2)),
+                 (let .uploadCompositeMultipartFormData(multipartFormData1, _), let .uploadCompositeMultipartFormData(multipartFormData2, _)):
+                return multipartFormData1 == multipartFormData2
             default:
                 return true
             }
