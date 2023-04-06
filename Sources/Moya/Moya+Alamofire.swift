@@ -23,6 +23,11 @@ public typealias RequestMultipartFormData = Alamofire.MultipartFormData
 /// Multipart form data encoding result.
 public typealias DownloadDestination = Alamofire.DownloadRequest.Destination
 
+extension URLEncoding {
+    /// URL encoding into the query string
+    public static var queryStringEncoding: URLEncoding { .queryString }
+}
+
 /// Make the Alamofire Request type conform to our type, to prevent leaking Alamofire to plugins.
 extension Request: RequestType {
     public var sessionHeaders: [String: String] {
