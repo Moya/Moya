@@ -77,6 +77,14 @@ public extension MoyaProvider {
 
     // swiftlint:disable:next function_parameter_count
     private func performRequest(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion, endpoint: Endpoint, stubBehavior: Moya.StubBehavior) -> Cancellable {
+
+        let onSendUploadMultipart: (MultipartFormData) -> Cancellable = { multipartFormData in
+            guard !multipartFormData.parts.isEmpty && endpoint.method.supportsMultipart else {
+                fatalError("\(target) is not a multipart upload target.")
+            }
+            return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartFormData: multipartFormData, progress: progress, completion: completion)
+        }
+
         switch stubBehavior {
         case .never:
             switch endpoint.task {
@@ -84,11 +92,10 @@ public extension MoyaProvider {
                 return self.sendRequest(target, request: request, callbackQueue: callbackQueue, progress: progress, completion: completion)
             case .uploadFile(let file):
                 return self.sendUploadFile(target, request: request, callbackQueue: callbackQueue, file: file, progress: progress, completion: completion)
-            case .uploadMultipart(let multipartBody), .uploadCompositeMultipart(let multipartBody, _):
-                guard !multipartBody.isEmpty && endpoint.method.supportsMultipart else {
-                    fatalError("\(target) is not a multipart upload target.")
-                }
-                return self.sendUploadMultipart(target, request: request, callbackQueue: callbackQueue, multipartBody: multipartBody, progress: progress, completion: completion)
+            case .uploadMultipartFormData(let multipartFormData), .uploadCompositeMultipartFormData(let multipartFormData, _):
+                return onSendUploadMultipart(multipartFormData)
+            case .uploadMultipart(let multipartFormBodyParts), .uploadCompositeMultipart(let multipartFormBodyParts, _):
+                return onSendUploadMultipart(MultipartFormData(parts: multipartFormBodyParts))
             case .downloadDestination(let destination), .downloadParameters(_, _, let destination):
                 return self.sendDownloadRequest(target, request: request, callbackQueue: callbackQueue, destination: destination, progress: progress, completion: completion)
             }
@@ -172,9 +179,9 @@ private extension MoyaProvider {
         }
     }
 
-    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartBody: [MultipartFormData], progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableToken {
-        let formData = RequestMultipartFormData()
-        formData.applyMoyaMultipartFormData(multipartBody)
+    func sendUploadMultipart(_ target: Target, request: URLRequest, callbackQueue: DispatchQueue?, multipartFormData: MultipartFormData, progress: Moya.ProgressBlock? = nil, completion: @escaping Moya.Completion) -> CancellableToken {
+        let formData = RequestMultipartFormData(fileManager: multipartFormData.fileManager, boundary: multipartFormData.boundary)
+        formData.applyMoyaMultipartFormData(multipartFormData)
 
         let interceptor = self.interceptor(target: target)
         let uploadRequest: UploadRequest = session.requestQueue.sync {

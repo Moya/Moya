@@ -96,6 +96,12 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .uploadMultipartFormData") {
+                itBehavesLike("endpoint with no request property changed") {
+                    ["task": Task.uploadMultipartFormData([]), "endpoint": self.simpleGitHubEndpoint]
+                }
+            }
+
             context("when task is .downloadDestination") {
                 itBehavesLike("endpoint with no request property changed") {
                     let destination: DownloadDestination = { url, response in
@@ -287,6 +293,22 @@ final class EndpointSpec: QuickSpec {
                     expect(request.url?.absoluteString).to(equal(expectedUrl))
                 }
             }
+
+            context("when task is .uploadCompositeMultipartFormData") {
+                var urlParameters: [String: Any]!
+                var request: URLRequest!
+
+                beforeEach {
+                    urlParameters = ["Harvey": "Nemesis"]
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipartFormData([], urlParameters: urlParameters))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates url") {
+                    let expectedUrl = endpoint.url + "?Harvey=Nemesis"
+                    expect(request.url?.absoluteString).to(equal(expectedUrl))
+                }
+            }
         }
 
         describe("unsuccessful converting to urlRequest") {
@@ -369,15 +391,31 @@ final class EndpointSpec: QuickSpec {
         describe("given endpoint comparison") {
             context("when task is .uploadMultipart") {
                 it("should correctly acknowledge as equal for the same url, headers and form data") {
-                    endpoint = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")]))
-                    let endpointToCompare = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")]))
+                    endpoint = endpoint.replacing(task: .uploadMultipart([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadMultipart([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]))
 
                     expect(endpoint) == endpointToCompare
                 }
 
                 it("should correctly acknowledge as not equal for the same url, headers and different form data") {
-                    endpoint = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")]))
-                    let endpointToCompare = endpoint.replacing(task: .uploadMultipart([MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test")]))
+                    endpoint = endpoint.replacing(task: .uploadMultipart([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadMultipart([MultipartFormBodyPart(provider: .data("test1".data(using: .utf8)!), name: "test")]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .uploadMultipartFormData") {
+                it("should correctly acknowledge as equal for the same url, headers and form data") {
+                    endpoint = endpoint.replacing(task: .uploadMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")])))
+                    let endpointToCompare = endpoint.replacing(task: .uploadMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")])))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different form data") {
+                    endpoint = endpoint.replacing(task: .uploadMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")])))
+                    let endpointToCompare = endpoint.replacing(task: .uploadMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test1".data(using: .utf8)!), name: "test")])))
 
                     expect(endpoint) != endpointToCompare
                 }
@@ -385,22 +423,45 @@ final class EndpointSpec: QuickSpec {
 
             context("when task is .uploadCompositeMultipart") {
                 it("should correctly acknowledge as equal for the same url, headers and form data") {
-                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
-                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
 
                     expect(endpoint) == endpointToCompare
                 }
 
                 it("should correctly acknowledge as not equal for the same url, headers and different form data") {
-                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
-                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test1".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: [:]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormBodyPart(provider: .data("test1".data(using: .utf8)!), name: "test")], urlParameters: [:]))
 
                     expect(endpoint) != endpointToCompare
                 }
 
                 it("should correctly acknowledge as not equal for the same url, headers and different url parameters") {
-                    endpoint = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: ["test": "test2"]))
-                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipart([MultipartFormData(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: ["test": "test3"]))
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipartFormData([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: ["test": "test2"]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipartFormData([MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")], urlParameters: ["test": "test3"]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+            }
+
+            context("when task is .uploadCompositeMultipartFormData") {
+                it("should correctly acknowledge as equal for the same url, headers and form data") {
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]), urlParameters: [:]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]), urlParameters: [:]))
+
+                    expect(endpoint) == endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different form data") {
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]), urlParameters: [:]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test1".data(using: .utf8)!), name: "test")]), urlParameters: [:]))
+
+                    expect(endpoint) != endpointToCompare
+                }
+
+                it("should correctly acknowledge as not equal for the same url, headers and different url parameters") {
+                    endpoint = endpoint.replacing(task: .uploadCompositeMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]), urlParameters: ["test": "test2"]))
+                    let endpointToCompare = endpoint.replacing(task: .uploadCompositeMultipartFormData(MultipartFormData(parts: [MultipartFormBodyPart(provider: .data("test".data(using: .utf8)!), name: "test")]), urlParameters: ["test": "test3"]))
 
                     expect(endpoint) != endpointToCompare
                 }

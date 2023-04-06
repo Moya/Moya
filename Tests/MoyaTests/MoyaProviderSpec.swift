@@ -945,7 +945,42 @@ final class MoyaProviderSpec: QuickSpec {
             it("tracks progress of multipart request") {
 
                 let formData = HTTPBin.createTestMultipartFormData()
-                let target = HTTPBin.uploadMultipart(formData, nil)
+                let target = HTTPBin.uploadMultipartFormData(MultipartFormData(parts: formData), nil)
+
+                var progressObjects: [Progress?] = []
+                var progressValues: [Double] = []
+                var completedValues: [Bool] = []
+                var error: MoyaError?
+
+                waitUntil(timeout: .seconds(10)) { done in
+                    let progressClosure: ProgressBlock = { progress in
+                        progressObjects.append(progress.progressObject)
+                        progressValues.append(progress.progress)
+                        completedValues.append(progress.completed)
+                    }
+
+                    let progressCompletionClosure: Completion = { (result) in
+                        if case .failure(let err) = result {
+                            error = err
+                        }
+                        done()
+                    }
+
+                    provider.request(target, callbackQueue: nil, progress: progressClosure, completion: progressCompletionClosure)
+                }
+
+                expect(error).to(beNil())
+                expect(progressValues.count) > 1
+                expect(completedValues.count) > 1
+                expect(completedValues.filter { !$0 }.count) == completedValues.count - 1 // only false except one
+                expect(completedValues.last) == true // the last must be true
+                expect(progressObjects.filter { $0 != nil }.count) == progressObjects.count // no nil object
+            }
+
+            it("tracks progress of multipart request") {
+
+                let formData = HTTPBin.createTestMultipartFormData()
+                let target = HTTPBin.uploadMultipartBodyParts(formData, nil)
 
                 var progressObjects: [Progress?] = []
                 var progressValues: [Double] = []
