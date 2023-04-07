@@ -1,7 +1,7 @@
 version: 2.1
 defaults: &defaults
   macos:
-    xcode: 12.5.1
+    xcode: 14.2.0
   parallelism: 1
   shell: /bin/bash --login    
   environment:
@@ -21,13 +21,13 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
-          command: echo "ruby-2.4" > ~/.ruby-version
+          command: echo "ruby-2.7.7" > ~/.ruby-version
       - run:
           name: Carthage checkout
           command: carthage checkout
       - run:
           name: Test Carthage Build before installing SwiftLint
-          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose             
+          command: scripts/carthage.sh build --no-skip-current --cache-builds --no-use-binaries --verbose
       - save_cache:
           key: v{{ .Environment.CACHE_VERSION }}-carthage-no-swiftlint-deps-{{ checksum "Cartfile.resolved" }}
           paths:
@@ -43,10 +43,10 @@ jobs:
             - v{{ .Environment.CACHE_VERSION }}-{{ .Branch }}-dep-{{ checksum "Cartfile.resolved" }}
       - run:
           name: Set Ruby Version
-          command: echo "ruby-2.4" > ~/.ruby-version
+          command: echo "ruby-2.7.7" > ~/.ruby-version
       - run:
           name: Install Swiftlint
-          command: git clone git@github.com:realm/SwiftLint.git && cd SwiftLint && git submodule update --init --recursive && make install && cd ../
+          command: brew install swiftlint
       - run:
           name: Add Python directory to PATH
           command: echo 'export PATH=~/Library/Python/2.7/bin:$PATH' >> $BASH_ENV        
