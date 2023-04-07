@@ -101,9 +101,8 @@ public extension Endpoint {
             return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
         case let .downloadParameters(parameters, parameterEncoding, _):
             return try request.encoded(parameters: parameters, parameterEncoding: parameterEncoding)
-        case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters):
+        case let .requestCompositeData(bodyData: bodyData, urlParameters: urlParameters, parameterEncoding: parameterEncoding):
             request.httpBody = bodyData
-            let parameterEncoding = URLEncoding(destination: .queryString)
             return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
         case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
             if let bodyParameterEncoding = bodyParameterEncoding as? URLEncoding, bodyParameterEncoding.destination != .httpBody {

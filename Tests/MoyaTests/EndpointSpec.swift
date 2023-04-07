@@ -221,15 +221,57 @@ final class EndpointSpec: QuickSpec {
                 var request: URLRequest!
 
                 beforeEach {
-                    parameters = ["Nemesis": "Harvey"]
+                    parameters = ["Nemesis": "Harvey", "Enable": true, "Array": [1, 2]]
                     data = "test data".data(using: .utf8)
                     endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: data, urlParameters: parameters))
                     request = try! endpoint.urlRequest()
                 }
 
                 it("updates url") {
-                    let expectedUrl = endpoint.url + "?Nemesis=Harvey"
-                    expect(request.url?.absoluteString).to(equal(expectedUrl))
+                    let expectedQueryItems = [
+                        URLQueryItem(name: "Array[]", value: "1"),
+                        URLQueryItem(name: "Array[]", value: "2"),
+                        URLQueryItem(name: "Enable", value: "1"),
+                        URLQueryItem(name: "Nemesis", value: "Harvey")
+                    ]
+                    let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)
+                    let sortedComponents = components?.queryItems?.sorted(by: { $0.name < $1.name })
+                    expect(sortedComponents).to(equal(expectedQueryItems))
+                }
+
+                it("updates httpBody") {
+                    expect(request.httpBody).to(equal(data))
+                }
+
+                it("doesn't update any of the other properties") {
+                    expect(request?.allHTTPHeaderFields).to(equal(endpoint.httpHeaderFields))
+                    expect(request?.httpMethod).to(equal(endpoint.method.rawValue))
+                }
+            }
+
+            context("when task is .requestCompositeData with custom parameter encoding") {
+                var parameters: [String: Any]!
+                var data: Data!
+                var request: URLRequest!
+
+                beforeEach {
+                    parameters = ["Nemesis": "Harvey", "Enable": true, "Array": [1, 2]]
+                    data = "test data".data(using: .utf8)
+                    let encoding = URLEncoding(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
+                    endpoint = endpoint.replacing(task: .requestCompositeData(bodyData: data, urlParameters: parameters, parameterEncoding: encoding))
+                    request = try! endpoint.urlRequest()
+                }
+
+                it("updates url") {
+                    let expectedQueryItems = [
+                        URLQueryItem(name: "Array", value: "1"),
+                        URLQueryItem(name: "Array", value: "2"),
+                        URLQueryItem(name: "Enable", value: "true"),
+                        URLQueryItem(name: "Nemesis", value: "Harvey")
+                    ]
+                    let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)
+                    let sortedComponents = components?.queryItems?.sorted(by: { $0.name < $1.name })
+                    expect(sortedComponents).to(equal(expectedQueryItems))
                 }
 
                 it("updates httpBody") {
