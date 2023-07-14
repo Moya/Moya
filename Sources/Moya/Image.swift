@@ -1,10 +1,7 @@
 #if canImport(UIKit)
     import UIKit.UIImage
-    public typealias ImageType = UIImage
+    public typealias Image = UIImage
 #elseif canImport(AppKit)
     import AppKit.NSImage
-    public typealias ImageType = NSImage
+    public typealias Image = NSImage
 #endif
-
-/// An alias for the SDK's image type.
-public typealias Image = ImageType

@@ -82,6 +82,7 @@ public extension Response {
         try filter(statusCodes: 200...399)
     }
 
+#if canImport(UIKit) || canImport(AppKit)
     /// Maps data received from the signal into an Image.
     func mapImage() throws -> Image {
         guard let image = Image(data: data) else {
@@ -89,6 +90,7 @@ public extension Response {
         }
         return image
     }
+#endif
 
     /// Maps data received from the signal into a JSON object.
     ///

@@ -240,10 +240,10 @@ extension URL {
 
 // MARK: - Image Test Helpers
 // Necessary since Image(named:) doesn't work correctly in the test bundle
-extension ImageType {
+extension Image {
     class TestClass { }
 
-    static var testImage: ImageType {
+    static var testImage: Image {
         Image(data: testImageData)!
     }
 
