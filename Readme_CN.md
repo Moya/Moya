@@ -25,7 +25,7 @@
 
 所以 Moya 的基本思想是，提供一些网络抽象层，它们经过充分地封装，并直接调用 Alamofire。它们应该足够简单，可以很轻松地应对常见任务，也应该足够全面，应对复杂任务也同样容易。
 
-> 如果你使用 Alamofire 来抽象 `URLSession`, 那为什么不使用某些方式来进一步抽象 URLs 和 parameters 等等的本质呢？
+> 如果你使用 Alamofire 来抽象 `URLSession`，那为什么不使用某些方式来进一步抽象 URLs 和 parameters 等等的本质呢？
 
 Moya 的一些特色功能：
 
@@ -57,13 +57,13 @@ Moya 的一些特色功能：
 | 2.3   | 7.0.2 - 7.0.4  | 7.0.2 - 7.0.4   | 7.0.2 - 7.0.4  |
 | 2.2   | <= 7.0.1       | <= 7.0.1        | <= 7.0.1       |
 
-> 注意: 如果你在你的项目中使用 Swift 4.2, 但是同时使用了 Xcode 10.2, 那么 Moya 13 也能够正常工作, 即使我们使用了 Swift 5.0
+> 注意：如果你在你的项目中使用 Swift 4.2，但是同时使用了 Xcode 10.2，那么 Moya 13 也能够正常工作，即使我们使用了 Swift 5.0。
 
 **升级到 Moya 的最新主版本？查看我们的 [迁移向导](https://github.com/Moya/Moya/blob/master/docs_CN/MigrationGuides)**。
 
 ### Swift Package Manager
 
-> 注意: 以下的说明都未使用 Xcode 内嵌的 UI 版 **Swift PM**. 使用 **Swift PM** 的最简单的方式是找到 Project Setting -> Swift Packages 并将 Moya 添加在其中
+> 注意：以下的说明都未使用 Xcode 内嵌的 UI 版 **Swift PM**。使用 **Swift PM** 的最简单的方式是找到 Project Setting -> Swift Packages 并将 Moya 添加在其中。
 
 要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
@@ -95,11 +95,11 @@ let package = Package(
 )
 ```
 
-注意: 如果你正在使用 **ReactiveMoya**, 我们正在使用[我们自己 fork 版本的 ReactiveMoya](https://github.com/Moya/ReactiveSwift). 这个 fork 版本添加了 2 个 commits 用于移除在发行版(开始于 6.1.0)上的测试依赖. 这是为了防止 Xcode 在 Xcode 11/11.1 上的 Xcode Previews 建立测试依赖项(FB7316430). 如果你不想使用我们的 fork 版本, 你可以在你的 SPM package 列表中添加另一个依赖: `git@github.com:ReactiveCocoa/ReactiveSwift.git`, 这样它就会从原仓库拉取代码
+注意：如果你正在使用 **ReactiveMoya**，我们正在使用[我们自己 fork 版本的 ReactiveMoya](https://github.com/Moya/ReactiveSwift)。这个 fork 版本添加了 2 个 commits 用于移除在发行版(开始于 6.1.0)上的测试依赖。这是为了防止 Xcode 在 Xcode 11/11.1 上的 Xcode Previews 建立测试依赖项(FB7316430)。如果你不想使用我们的 fork 版本，你可以在你的 SPM package 列表中添加另一个依赖：`git@github.com:ReactiveCocoa/ReactiveSwift.git`，这样它就会从原仓库拉取代码。
 
 ### Accio
 
-[Accio](https://github.com/JamitLabs/Accio) 是一个建立在 SwiftPM 之上的依赖管理器, 它为 iOS/macOS/tvOS/watchOS 创建 frameworks 库. 因此使用 Accio 集成 Moya 的步骤与以上几乎相同. 一旦你的 `Package.swift`文件配置完成, 运行 `accio update` 而不是 `swift package update` 即可
+[Accio](https://github.com/JamitLabs/Accio) 是一个建立在 SwiftPM 之上的依赖管理器，它为 iOS/macOS/tvOS/watchOS 创建 frameworks 库。因此使用 Accio 集成 Moya 的步骤与以上几乎相同。一旦你的 `Package.swift`文件配置完成，运行 `accio update` 而不是 `swift package update` 即可。
 
 ### CocoaPods
 
@@ -170,13 +170,13 @@ $ git submodule add https://github.com/Moya/Moya.git
 
 - 为 iOS 选择上边的 `Alamofire.framework`，下边的用于 macOS。
 
-> 你可以通过检查项目的构建日志来验证你选择的是哪一个。`Alamofire` 的 build target 将被列为 `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` 或 `Alamofire watchOS`。
+> 你可以通过检查项目的构建日志来验证你选择的是哪一个。`Alamofire` 的 build target 将被列为 `Alamofire iOS`、`Alamofire macOS`、`Alamofire tvOS` 或 `Alamofire watchOS`。
 
 - 再次点击 `+` 按钮为 `Moya` 添加正确的 build target。
 
 - 这就完事了！
 
-> 这三个框架会作为 target dependency，linked framework 和 embedded framework 被自动添加到一个 copy files build phase，这就是在模拟器和设备进行构建所需要的全部内容了。
+> 这三个框架会作为 target dependency、linked framework 和 embedded framework 被自动添加到一个 copy files build phase，这就是在模拟器和设备进行构建所需要的全部内容了。
 
 ## 用法
 
@@ -218,7 +218,7 @@ URLs 不再有书写错误。不再会缺失参数值。也不再有混乱的参
 
 ### ReactiveSwift
 
-[`ReactiveSwift` extension](https://github.com/Moya/Moya/blob/master/docs_CN/ReactiveSwift.md) 提供了 `reactive.request(:callbackQueue:)` 和 `reactive.requestWithProgress(:callbackQueue:)` 两种立即返回 `SignalProducer` 对象的方法，你可以 start，bind，map 或做任何你想做的。
+[`ReactiveSwift` extension](https://github.com/Moya/Moya/blob/master/docs_CN/ReactiveSwift.md) 提供了 `reactive.request(:callbackQueue:)` 和 `reactive.requestWithProgress(:callbackQueue:)` 两种立即返回 `SignalProducer` 对象的方法，你可以 start、bind、map 或做任何你想做的。
 
 对于错误处理，举例来说，我们可以像下面这样处理：
 
