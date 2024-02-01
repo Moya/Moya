@@ -56,7 +56,7 @@ extension AuthorizationType: Equatable {
  ```
  Authorization: Basic <token>
  Authorization: Bearer <token>
- Authorization: <Сustom> <token>
+ Authorization: <Custom> <token>
  ```
 
  */
