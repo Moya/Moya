@@ -19,7 +19,7 @@ provider.rx.request(.zen).subscribe { event in
     switch event {
     case .success(let response):
         // do something with the data
-    case .error(let error):
+    case .failure(let error):
         // handle the error
     }
 }
