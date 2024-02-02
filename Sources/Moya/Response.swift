@@ -96,7 +96,7 @@ public extension Response {
     /// whether the mapping should fail if the data is empty.
     func mapJSON(failsOnEmptyData: Bool = true) throws -> Any {
         do {
-            return try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            return try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
         } catch {
             if data.isEmpty && !failsOnEmptyData {
                 return NSNull()
