@@ -82,6 +82,7 @@ public extension Response {
         try filter(statusCodes: 200...399)
     }
 
+#if canImport(UIKit) || canImport(AppKit)
     /// Maps data received from the signal into an Image.
     func mapImage() throws -> Image {
         guard let image = Image(data: data) else {
@@ -89,6 +90,7 @@ public extension Response {
         }
         return image
     }
+#endif
 
     /// Maps data received from the signal into a JSON object.
     ///
@@ -110,12 +112,18 @@ public extension Response {
     /// - parameter atKeyPath: Optional key path at which to parse string.
     func mapString(atKeyPath keyPath: String? = nil) throws -> String {
         if let keyPath = keyPath {
+#if os(Linux)
+            fatalError("KeyPath is not supported on Linux")
+#else
+            
             // Key path was provided, try to parse string at key path
             guard let jsonDictionary = try mapJSON() as? NSDictionary,
                 let string = jsonDictionary.value(forKeyPath: keyPath) as? String else {
                     throw MoyaError.stringMapping(self)
             }
             return string
+
+#endif
         } else {
             // Key path was not provided, parse entire response as string
             guard let string = String(data: data, encoding: .utf8) else {
@@ -142,6 +150,10 @@ public extension Response {
         }
         let jsonData: Data
         keyPathCheck: if let keyPath = keyPath {
+#if os(Linux)
+            fatalError("KeyPath is not supported on Linux")
+#else
+            
             guard let jsonObject = (try mapJSON(failsOnEmptyData: failsOnEmptyData) as? NSDictionary)?.value(forKeyPath: keyPath) else {
                 if failsOnEmptyData {
                     throw MoyaError.jsonMapping(self)
@@ -167,6 +179,8 @@ public extension Response {
                     throw MoyaError.objectMapping(error, self)
                 }
             }
+            
+#endif
         } else {
             jsonData = data
         }
