@@ -86,7 +86,7 @@
 		D195C09B24748730005F6E98 /* CombineMoya.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1B52E8E24747A6300C5FB76 /* CombineMoya.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1B52E8424747A6300C5FB76 /* ReactiveMoya.h in Headers */ = {isa = PBXBuildFile; fileRef = 019BF5A88BB928EBDFD944FE /* ReactiveMoya.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1B52E8A24747A6300C5FB76 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559D567FD0DA37D6CC98FF92 /* Moya.framework */; };
-		D1B52E9024747B2B00C5FB76 /* AnyPublisher+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */; };
+		D1B52E9024747B2B00C5FB76 /* Publisher+Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98007231D4BE900AAAFB2 /* Publisher+Response.swift */; };
 		D1B52E9124747B2B00C5FB76 /* MoyaPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */; };
 		D1B52E9224747B2B00C5FB76 /* MoyaProvider+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */; };
 		D1B52E9324747B4900C5FB76 /* CombineMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B52E8E24747A6300C5FB76 /* CombineMoya.framework */; };
@@ -221,7 +221,7 @@
 		85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+Combine.swift"; sourceTree = "<group>"; };
 		85C98001231D3EC700AAAFB2 /* MoyaProvider+CombineSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+CombineSpec.swift"; sourceTree = "<group>"; };
 		85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaPublisher.swift; sourceTree = "<group>"; };
-		85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnyPublisher+Response.swift"; sourceTree = "<group>"; };
+		85C98007231D4BE900AAAFB2 /* Publisher+Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Response.swift"; sourceTree = "<group>"; };
 		85D527792302BEF30093E9C1 /* TestImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImage.swift; sourceTree = "<group>"; };
 		85F6042D22A018BB00063320 /* RequestTypeWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTypeWrapper.swift; sourceTree = "<group>"; };
 		86F3C0EA472C23E786E23CE9 /* Image.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -444,7 +444,7 @@
 		85C97FFE231D2D2D00AAAFB2 /* CombineMoya */ = {
 			isa = PBXGroup;
 			children = (
-				85C98007231D4BE900AAAFB2 /* AnyPublisher+Response.swift */,
+				85C98007231D4BE900AAAFB2 /* Publisher+Response.swift */,
 				85C98005231D41E400AAAFB2 /* MoyaPublisher.swift */,
 				85C97FFF231D2D4000AAAFB2 /* MoyaProvider+Combine.swift */,
 			);
@@ -1038,7 +1038,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1B52E9024747B2B00C5FB76 /* AnyPublisher+Response.swift in Sources */,
+				D1B52E9024747B2B00C5FB76 /* Publisher+Response.swift in Sources */,
 				D1B52E9124747B2B00C5FB76 /* MoyaPublisher.swift in Sources */,
 				D1B52E9224747B2B00C5FB76 /* MoyaProvider+Combine.swift in Sources */,
 			);

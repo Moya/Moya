@@ -16,7 +16,7 @@ public enum MyService {
 
 ## body中的参数
 
-当我们想在一个请求body中完成附加参数的多部分上传请求时，我们必须为每个创建一个`MultipartFormData`对象，然后在 `task`中返回一个`.uploadMultipart(_:)`实例对象 :
+当我们想在一个请求body中完成附加参数的多部分上传请求时，我们必须为每个创建一个`MultipartFormData`对象，然后在 `task`中返回一个`.uploadMultipartFormData(_:)`实例对象 :
 
 ```swift
 extension MyService: TargetType {
@@ -24,11 +24,13 @@ extension MyService: TargetType {
     public var task: Task {
         switch self {
         case let .uploadGif(data, description):
-            let gifData = MultipartFormData(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")
-            let descriptionData = MultipartFormData(provider: .data(description.data(using: .utf8)!), name: "description")
-            let multipartData = [gifData, descriptionData]
+            let gifData = MultipartFormBodyPart(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")
+            let descriptionData = MultipartFormBodyPart(provider: .data(description.data(using: .utf8)!), name: "description")
+            let multipartData: MultipartFormData = [gifData, descriptionData]
+            // Or if you want to specify the boundary and file manager:
+            // let multipartData = MultipartFormData(fileManager: .default, boundary: "...", parts: [gifData, descriptionData])
 
-            return .uploadMultipart(multipartData)
+            return .uploadMultipartFormData(multipartData)
         }
     }
 //...
@@ -37,7 +39,7 @@ extension MyService: TargetType {
 
 ## 在 URL中的参数
 
-在 URL中的附加参数, 我们只需要使用新的 `Task` 类型, `uploadCompositeMultipart(_:urlParameters)`:
+在 URL中的附加参数, 我们只需要使用新的 `Task` 类型, `uploadCompositeMultipartFormData(_:urlParameters)`:
 
 ```swift
 extension MyService: TargetType {
@@ -45,11 +47,14 @@ extension MyService: TargetType {
     public var task: Task {
         switch self {
         case let .uploadGif(data, description):
-            let gifData = MultipartFormData(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")
-            let multipartData = [gifData]
+            let gifData = MultipartFormBodyPart(provider: .data(data), name: "file", fileName: "gif.gif", mimeType: "image/gif")
+            let multipartData: MultipartFormData = [gifData]
+            // Or if you want to specify the boundary and file manager:
+            // let multipartData = MultipartFormData(fileManager: .default, boundary: "...", parts: [gifData])
+            
             let urlParameters = ["description": description]
 
-            return .uploadCompositeMultipart(multipartData, urlParameters: urlParameters)
+            return .uploadCompositeMultipartFormData(multipartData, urlParameters: urlParameters)
         }
     }
 //...

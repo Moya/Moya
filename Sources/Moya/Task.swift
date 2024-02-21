@@ -28,10 +28,18 @@ public enum Task {
     case uploadFile(URL)
 
     /// A "multipart/form-data" upload task.
-    case uploadMultipart([MultipartFormData])
+    case uploadMultipartFormData(MultipartFormData)
+
+    /// A "multipart/form-data" upload task.
+    @available(*, deprecated, message: "use `uploadMultipartFormData(MultipartFormData)` instead")
+    case uploadMultipart([MultipartFormBodyPart])
 
     /// A "multipart/form-data" upload task  combined with url parameters.
-    case uploadCompositeMultipart([MultipartFormData], urlParameters: [String: Any])
+    case uploadCompositeMultipartFormData(MultipartFormData, urlParameters: [String: Any])
+
+    /// A "multipart/form-data" upload task  combined with url parameters.
+    @available(*, deprecated, message: "use `uploadCompositeMultipartFormData(MultipartFormData)` instead")
+    case uploadCompositeMultipart([MultipartFormBodyPart], urlParameters: [String: Any])
 
     /// A file download task to a destination.
     case downloadDestination(DownloadDestination)
