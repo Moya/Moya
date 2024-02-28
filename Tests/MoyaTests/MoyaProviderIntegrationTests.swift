@@ -10,7 +10,7 @@ import OHHTTPStubsSwift
 @testable import Moya
 @testable import ReactiveMoya
 
-func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Predicate<Moya.Response> {
+func beIdenticalToResponse(_ expectedValue: Moya.Response) -> Nimble.Predicate<Moya.Response> {
     Predicate { expression in
         let test: Bool
         if let value = try expression.evaluate(), value == expectedValue {
