@@ -4,6 +4,10 @@
 
 - Un-break Package.swift parsing when releasing through Rocket. [#2275](https://github.com/Moya/Moya/pull/2274) by [@AndrewSB](https://github.com/AndrewSB)
 
+### Changed
+
+- **Breaking Change** Minimum version of `ReactiveSwift` is now 7.0. [ #2344](https://github.com/Moya/Moya/pull/2344/) by [@iv-mexx](https://github.com/iv-mexx).
+
 # [15.0.1] - 2022-08-11
 
 ### Fixed
