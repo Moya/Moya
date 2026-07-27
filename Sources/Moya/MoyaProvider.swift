@@ -119,10 +119,11 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     open func request(_ target: Target,
                       callbackQueue: DispatchQueue? = .none,
                       progress: ProgressBlock? = .none,
+                      priority: Float = URLSessionTask.defaultPriority,
                       completion: @escaping Completion) -> Cancellable {
 
         let callbackQueue = callbackQueue ?? self.callbackQueue
-        return requestNormal(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+        return requestNormal(target, callbackQueue: callbackQueue, progress: progress, priority: priority, completion: completion)
     }
 
     // swiftlint:disable function_parameter_count
