@@ -2,6 +2,9 @@ import Foundation
 import Alamofire
 
 public typealias Session = Alamofire.Session
+public typealias CachedResponseHandler = Alamofire.CachedResponseHandler
+public typealias RedirectHandler = Alamofire.RedirectHandler
+
 internal typealias Request = Alamofire.Request
 internal typealias DownloadRequest = Alamofire.DownloadRequest
 internal typealias UploadRequest = Alamofire.UploadRequest

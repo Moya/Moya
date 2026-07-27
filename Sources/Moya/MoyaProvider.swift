@@ -45,7 +45,7 @@ public protocol MoyaProviderType: AnyObject {
     associatedtype Target: TargetType
 
     /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
-    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, completion: @escaping Moya.Completion) -> Cancellable
+    func request(_ target: Target, callbackQueue: DispatchQueue?, progress: Moya.ProgressBlock?, redirectHandler: RedirectHandler?, cachedResponseHandler: CachedResponseHandler?, completion: @escaping Moya.Completion) -> Cancellable
 }
 
 /// Request provider class. Requests should be made through this class only.
@@ -119,10 +119,12 @@ open class MoyaProvider<Target: TargetType>: MoyaProviderType {
     open func request(_ target: Target,
                       callbackQueue: DispatchQueue? = .none,
                       progress: ProgressBlock? = .none,
+                      redirectHandler: RedirectHandler? = nil,
+                      cachedResponseHandler: CachedResponseHandler? = nil,
                       completion: @escaping Completion) -> Cancellable {
 
         let callbackQueue = callbackQueue ?? self.callbackQueue
-        return requestNormal(target, callbackQueue: callbackQueue, progress: progress, completion: completion)
+        return requestNormal(target, callbackQueue: callbackQueue, progress: progress, redirectHandler: redirectHandler, cachedResponseHandler: cachedResponseHandler, completion: completion)
     }
 
     // swiftlint:disable function_parameter_count
