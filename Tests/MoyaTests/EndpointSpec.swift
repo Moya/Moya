@@ -278,6 +278,57 @@ final class EndpointSpec: QuickSpec {
                 }
             }
 
+            context("when task is .requestCompositeParameters with a custom urlEncoding") {
+                var bodyParameters: [String: Any]!
+                var bodyEncoding: ParameterEncoding!
+
+                beforeEach {
+                    bodyParameters = ["Nemesis": "Harvey"]
+                    bodyEncoding = JSONEncoding.default
+                }
+
+                func urlRequest(urlParameters: [String: Any], urlEncoding: URLEncoding) -> URLRequest {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: bodyParameters,
+                                                                                   bodyEncoding: bodyEncoding,
+                                                                                   urlParameters: urlParameters,
+                                                                                   urlEncoding: urlEncoding))
+                    return try! endpoint.urlRequest()
+                }
+
+                it("encodes bools numerically by default") {
+                    endpoint = endpoint.replacing(task: .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyEncoding, urlParameters: ["Harvey": true]))
+                    let request = try! endpoint.urlRequest()
+
+                    expect(request.url?.absoluteString).to(equal(endpoint.url + "?Harvey=1"))
+                }
+
+                it("encodes bools literally when boolEncoding is .literal") {
+                    let request = urlRequest(urlParameters: ["Harvey": true],
+                                             urlEncoding: URLEncoding(destination: .queryString, boolEncoding: .literal))
+
+                    expect(request.url?.absoluteString).to(equal(endpoint.url + "?Harvey=true"))
+                }
+
+                it("encodes arrays with the given arrayEncoding") {
+                    let request = urlRequest(urlParameters: ["Harvey": [1, 2]],
+                                             urlEncoding: URLEncoding(destination: .queryString, arrayEncoding: .noBrackets))
+
+                    expect(request.url?.absoluteString).to(equal(endpoint.url + "?Harvey=1&Harvey=2"))
+                }
+
+                it("keeps the encoded body when the given destination is not .queryString") {
+                    let request = urlRequest(urlParameters: ["Harvey": true],
+                                             urlEncoding: URLEncoding(destination: .httpBody, boolEncoding: .literal))
+
+                    let newEndpoint = endpoint.replacing(task: .requestPlain)
+                    let newRequest = try! newEndpoint.urlRequest()
+                    let newEncodedRequest = try? bodyEncoding.encode(newRequest, with: bodyParameters)
+
+                    expect(request.url?.absoluteString).to(equal(endpoint.url + "?Harvey=true"))
+                    expect(request.httpBody).to(equal(newEncodedRequest?.httpBody))
+                }
+            }
+
             context("when task is .uploadCompositeMultipart") {
                 var urlParameters: [String: Any]!
                 var request: URLRequest!

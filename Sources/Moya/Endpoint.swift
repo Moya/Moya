@@ -105,12 +105,16 @@ public extension Endpoint {
             request.httpBody = bodyData
             let parameterEncoding = URLEncoding(destination: .queryString)
             return try request.encoded(parameters: urlParameters, parameterEncoding: parameterEncoding)
-        case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters):
+        case let .requestCompositeParameters(bodyParameters: bodyParameters, bodyEncoding: bodyParameterEncoding, urlParameters: urlParameters, urlEncoding: urlParameterEncoding):
             if let bodyParameterEncoding = bodyParameterEncoding as? URLEncoding, bodyParameterEncoding.destination != .httpBody {
                 fatalError("Only URLEncoding that `bodyEncoding` accepts is URLEncoding.httpBody. Others like `default`, `queryString` or `methodDependent` are prohibited - if you want to use them, add your parameters to `urlParameters` instead.")
             }
             let bodyfulRequest = try request.encoded(parameters: bodyParameters, parameterEncoding: bodyParameterEncoding)
-            let urlEncoding = URLEncoding(destination: .queryString)
+            // `urlParameters` always belong in the query string, so the given `destination` is
+            // pinned to `.queryString` - otherwise it could overwrite the body encoded above.
+            let urlEncoding = URLEncoding(destination: .queryString,
+                                          arrayEncoding: urlParameterEncoding.arrayEncoding,
+                                          boolEncoding: urlParameterEncoding.boolEncoding)
             return try bodyfulRequest.encoded(parameters: urlParameters, parameterEncoding: urlEncoding)
         }
     }

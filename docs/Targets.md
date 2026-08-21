@@ -96,7 +96,23 @@ A `task` property represents how you are sending / receiving data and allows you
 - `.requestJSONEncodable(_:)` with which you can send objects that conform to the `Encodable` protocol
 - `.requestCustomJSONEncodable(_:encoder:)`  which allows you to send objects conforming to `Encodable` encoded with provided custom JSONEncoder
 - `.requestParameters(parameters:encoding:)` which allows you to send parameters with an encoding
-- `.requestCompositeData(bodyData:urlParameters:)` & `.requestCompositeParameters(bodyParameters:bodyEncoding:urlParameters)` which allow you to combine url encoded parameters with another type (data / parameters)
+- `.requestCompositeData(bodyData:urlParameters:)` & `.requestCompositeParameters(bodyParameters:bodyEncoding:urlParameters:)` which allow you to combine url encoded parameters with another type (data / parameters)
+
+`.requestCompositeParameters` also takes an optional `urlEncoding:` parameter for the cases where the
+default query string encoding does not fit the API you are talking to, e.g. when booleans have to be
+sent as `true` / `false` instead of `1` / `0`:
+
+```swift
+var task: Task {
+    .requestCompositeParameters(bodyParameters: ["some": "body"],
+                                bodyEncoding: JSONEncoding.default,
+                                urlParameters: ["flag": true],
+                                urlEncoding: URLEncoding(destination: .queryString, boolEncoding: .literal))
+}
+```
+
+Since `urlParameters` are always appended to the query string, only the `arrayEncoding` and
+`boolEncoding` options of the given `URLEncoding` are taken into account.
 
 Also, there are three upload types: 
 - `.uploadFile(_:)` to upload a file from a URL, 
