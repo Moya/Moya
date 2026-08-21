@@ -22,7 +22,11 @@ public enum Task {
     case requestCompositeData(bodyData: Data, urlParameters: [String: Any])
 
     /// A requests body set with encoded parameters combined with url parameters.
-    case requestCompositeParameters(bodyParameters: [String: Any], bodyEncoding: ParameterEncoding, urlParameters: [String: Any])
+    ///
+    /// - Note: `urlParameters` are always appended to the query string, so only the `arrayEncoding`
+    ///         and `boolEncoding` options of `urlEncoding` are taken into account - its `destination`
+    ///         is always treated as `.queryString` so that it can never overwrite the encoded body.
+    case requestCompositeParameters(bodyParameters: [String: Any], bodyEncoding: ParameterEncoding, urlParameters: [String: Any], urlEncoding: URLEncoding = URLEncoding(destination: .queryString))
 
     /// A file upload task.
     case uploadFile(URL)
