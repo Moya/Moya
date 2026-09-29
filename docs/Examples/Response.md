@@ -261,7 +261,7 @@ The above assumes your object is always at the root and that everything can be h
 But if it isn't, then it's not too difficult to change.
 To show how this is done we will consider another endpoint in our API: `/users`.
 This endpoint returns a list of users under a key called `"users"`.
-Futhermore each user now has an `updated` property, which is the unix timestamp.
+Furthermore each user now has an `updated` property, which is the unix timestamp.
 
 The data returned looks like this:
 

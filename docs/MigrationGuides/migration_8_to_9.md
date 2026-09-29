@@ -13,7 +13,7 @@ This project follows [Semantic Versioning](http://semver.org).
 
 ### AccessTokenPlugin Migration
 - Add `AccessTokenAuthorizable` conformance to `TargetType`'s using the `AccessTokenPlugin`.
-- Specificy an `AuthorizationType` of `.bearer` if `shouldAuthorize` is `true` or undefined.
+- Specify an `AuthorizationType` of `.bearer` if `shouldAuthorize` is `true` or undefined.
 
 ### Reactive MoyaProvider  Migration
 - Replace instances of `RxMoyaProvider<Target>` with `MoyaProvider<Target>` and use the `.rx` namespace to access the RxSwift API.
